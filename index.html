@@ -5061,7 +5061,13 @@
       { clave: "harina-maiz", nombre: "Harina de maíz precocida", categoriaCompra: "despensa_secos", densidad: 0.6, gramosPorUnidad: null, alias: ["harina PAN", "masarepa", "harina maíz arepas"] },
       { clave: "quesito", nombre: "Quesito o queso fresco", categoriaCompra: "lacteos_huevos", densidad: 1.0, gramosPorUnidad: null, alias: ["queso fresco", "queso campesino", "queso costeño", "queso para arepa"] },
       { clave: "leche-coco", nombre: "Leche de coco", categoriaCompra: "conservas", densidad: 0.97, gramosPorUnidad: 400, alias: ["coconut milk", "leche coco"] },
-      { clave: "naranja-agria", nombre: "Naranja agria", categoriaCompra: "verduras_fruta", densidad: null, gramosPorUnidad: 200, alias: ["naranja amarga"] }
+      { clave: "naranja-agria", nombre: "Naranja agria", categoriaCompra: "verduras_fruta", densidad: null, gramosPorUnidad: 200, alias: ["naranja amarga"] },
+      { clave: "salmon", nombre: "Salmón fresco", categoriaCompra: "carniceria", densidad: null, gramosPorUnidad: null, alias: ["salmón", "lomo de salmón", "filete de salmón"] },
+      { clave: "salmon-ahumado", nombre: "Salmón ahumado", categoriaCompra: "carniceria", densidad: null, gramosPorUnidad: null, alias: ["salmón ahumado"] },
+      { clave: "chalota", nombre: "Chalota", categoriaCompra: "verduras_fruta", densidad: null, gramosPorUnidad: 30, alias: ["escalonia", "shallot", "chalotas"] },
+      { clave: "eneldo", nombre: "Eneldo", categoriaCompra: "especias_condimentos", densidad: null, gramosPorUnidad: null, alias: ["eneldo fresco", "dill"] },
+      { clave: "pimienta-blanca", nombre: "Pimienta blanca", categoriaCompra: "especias_condimentos", densidad: null, gramosPorUnidad: null, alias: ["pimienta blanca molida"] },
+      { clave: "caldo-pescado", nombre: "Caldo de pescado", categoriaCompra: "otros", densidad: 1.00, gramosPorUnidad: null, alias: ["fumetto", "fumet", "fumet de pescado"] }
         ];
 
     const RECETAS_FIJAS = [
@@ -8800,6 +8806,51 @@
         notas: "Consejos de chefs y abuelas italianas: Usa una mezcla de setas frescas y secas hidratadas: las secas aportan un sabor más profundo y umami. El caldo debe estar siempre caliente: así no se corta la cocción del arroz. Añade un chorrito de aceite de trufa solo al final, nunca durante la cocción, para mantener su aroma. El risotto no espera: hay que servirlo enseguida, cremoso pero no caldoso.",
         creado:     "2026-06-04T10:00:00Z",
         modificado: "2026-06-04T10:00:00Z"
+      },
+      {
+        id: "risotto-al-salmone",
+        nombre: "Risotto al Salmone",
+        tipo: "arroces",
+        cocina: null,
+        pais: "Italia",
+        etiquetas: [],
+        tags: ["salmón", "arroz", "risotto", "all'onda"],
+        dieta: [],
+        racionesBase: 4,
+        tiempoPrep: 10, tiempoCoccion: 28,
+        dificultad: "media",
+        fuente: null, imagen: null,
+        ingredientes: [
+          { ref: "arroz", nombre: "riso Carnaroli", cantidad: 320, cantidadMax: null, unidad: "g", grupo: null, opcional: false, nota: "o Vialone Nano — nunca Arborio si puedes evitarlo" },
+          { ref: "salmon", nombre: "filete de salmón fresco, sin piel ni espinas, en cubos de 2-3 cm", cantidad: 300, cantidadMax: null, unidad: "g", grupo: null, opcional: false, nota: null },
+          { ref: "salmon-ahumado", nombre: "salmón ahumado, en tiras", cantidad: 80, cantidadMax: null, unidad: "g", grupo: null, opcional: false, nota: "se añade al final" },
+          { ref: "chalota", nombre: "escalonia (shallot / chalota), picada muy fina", cantidad: 1, cantidadMax: null, unidad: "ud", grupo: null, opcional: false, nota: null },
+          { ref: "mantequilla", nombre: "mantequilla MUY FRÍA, en cubos", cantidad: 60, cantidadMax: null, unidad: "g", grupo: null, opcional: false, nota: "para la mantecatura" },
+          { ref: "mantequilla", nombre: "mantequilla", cantidad: 15, cantidadMax: null, unidad: "g", grupo: null, opcional: false, nota: "para el soffritto" },
+          { ref: "aceite-oliva", nombre: "aceite de oliva virgen extra", cantidad: 2, cantidadMax: null, unidad: "cda", grupo: null, opcional: false, nota: null },
+          { ref: "vino-blanco", nombre: "vino blanco seco", cantidad: 150, cantidadMax: null, unidad: "ml", grupo: null, opcional: false, nota: "Pinot Grigio o Vermentino — nunca Chardonnay con barrica" },
+          { ref: "caldo-pescado", nombre: "caldo de pescado caliente (fumetto)", cantidad: 1200, cantidadMax: null, unidad: "ml", grupo: null, opcional: false, nota: "ver nota" },
+          { ref: "eneldo", nombre: "eneldo fresco, picado", cantidad: 3, cantidadMax: null, unidad: "cda", grupo: null, opcional: false, nota: null },
+          { ref: "limon", nombre: "limón", cantidad: 1, cantidadMax: null, unidad: "ud", grupo: null, opcional: false, nota: "ralladura + unas gotas de zumo al final" },
+          { ref: "sal", nombre: "sal fina", cantidad: 0.5, cantidadMax: null, unidad: "cdita", grupo: null, opcional: false, nota: null },
+          { ref: "pimienta-blanca", nombre: "pimienta blanca recién molida", cantidad: 1, cantidadMax: null, unidad: "pizca", grupo: null, opcional: false, nota: null }
+        ],
+        pasos: [
+          { n: 1, titulo: "Tener el caldo caliente SIEMPRE", texto: "Pon el caldo de pescado (1200 ml) en un cazo a fuego mínimo, justo al lado del risotto. Debe estar humeante pero no hirviendo. REGLA DE ORO: el caldo frío mata el risotto — baja la temperatura del arroz, detiene la gelatinización del almidón y arruina la cremosidad. Nunca, bajo ningún concepto, añadas caldo frío.", tiempo: null, temperatura: null, usa: ["caldo-pescado"] },
+          { n: 2, titulo: "Preparar el salmón fresco", texto: "Corta el salmón fresco (300 g) en cubos de 2-3 cm. Salpimienta ligeramente con la sal fina (½ cdita) y la pimienta blanca. Reserva en un plato. El salmón ahumado (80 g) lo reservas también, pero sin cocinar — se incorpora solo en la mantecatura final.", tiempo: null, temperatura: null, usa: ["salmon", "sal", "pimienta-blanca", "salmon-ahumado"] },
+          { n: 3, titulo: "Soffritto — la base suave", texto: "En una cazuela ancha y de fondo grueso (ideal: casserole de acero o cobre), calienta el aceite de oliva (2 cda) + la mantequilla del soffritto (15 g) a fuego BAJO. Añade la chalota picada y sofríe sin dejar que tome color, 5-6 minutos, hasta que esté completamente translúcida y blanda. TRAMPA FRECUENTE: si la chalota se dora, amarga el risotto. Debe quedar dulce y sedosa.", tiempo: 360, temperatura: null, usa: ["aceite-oliva", "mantequilla", "chalota"] },
+          { n: 4, titulo: "Tostatura — el secreto del grano", texto: "Sube el fuego a medio-alto. Añade el arroz (320 g) en seco sobre la chalota. Tuéstalo removiendo continuamente durante 2-3 minutos hasta que los granos estén recubiertos de grasa, los bordes se vean ligeramente translúcidos y oigas un leve crepitar. Este paso 'sella' el almidón exterior y permite que luego se libere de forma controlada, creando cremosidad sin pastosidad.", tiempo: 180, temperatura: null, usa: ["arroz"] },
+          { n: 5, titulo: "Sfumatura — desglasar con vino", texto: "Añade el vino blanco (150 ml) de golpe. Debe chisporrotear intensamente al contacto con el arroz caliente. Remueve hasta que el vino esté completamente absorbido y ya no huela a alcohol — unos 2 minutos. El ácido del vino equilibra la cremosidad final y añade estructura al sabor.", tiempo: 120, temperatura: null, usa: ["vino-blanco"] },
+          { n: 6, titulo: "Cottura — cocción cuchara a cuchara (min. 1-10)", texto: "Baja el fuego a medio. Añade el caldo cazo a cazo — unos 75-80 ml cada vez — removiendo con movimiento suave y rotatorio. Espera a que cada cazo esté casi completamente absorbido antes de añadir el siguiente. No remuevas en exceso: el Carnaroli aguanta bien, pero el exceso de remoción lo daña. Temperatura constante: el arroz debe burbujear suavemente todo el tiempo.", tiempo: null, temperatura: null, usa: ["caldo-pescado"] },
+          { n: 7, titulo: "Añadir el salmón fresco (min. 10-11)", texto: "En el minuto 10-11 de cocción, incorpora los cubos de salmón fresco distribuyéndolos por el risotto. Se cocinarán suavemente con el calor del arroz en los 6-8 minutos restantes. No los remuevas agresivamente — deja que se integren solos y se mantengan en trozos, no desmenuzados.", tiempo: null, temperatura: null, usa: ["salmon"] },
+          { n: 8, titulo: "Cottura final y punto all'onda (min. 11-18)", texto: "Continúa añadiendo caldo y removiendo. A los 16-18 minutos desde el inicio, prueba el arroz: debe estar al dente (ligeramente firme en el centro, sin dureza cruda). El risotto debe verse más líquido de lo que te parece correcto — esa humedad extra es FUNDAMENTAL. La mezcla debe 'ondular' al mover la cazuela. Apaga el fuego.", tiempo: null, temperatura: null, usa: ["caldo-pescado"] },
+          { n: 9, titulo: "MANTECATURA — el paso que lo cambia todo", texto: "Con el fuego APAGADO y el arroz aún muy caliente: añade la mantequilla MUY FRÍA (60 g) cortada en cubos pequeños, el salmón ahumado en tiras, la ralladura de limón y el eneldo picado. Ahora: agita la cazuela con movimiento vigoroso hacia adelante y atrás (o usa cuchara de madera con energía) durante 60-90 segundos hasta que la mantequilla se emulsione completamente con el almidón del caldo y el conjunto sea cremoso, sedoso y brillante. Añade unas gotas de zumo de limón. NUNCA hagas la mantecatura con el fuego encendido — la mantequilla se separa y el arroz se pasa.", tiempo: 90, temperatura: null, usa: ["mantequilla", "salmon-ahumado", "limon", "eneldo"] },
+          { n: 10, titulo: "Riposo — el reposo obligatorio", texto: "Cubre la cazuela y deja reposar 60-90 segundos. Este momento permite que la mantecatura termine de integrarse y los sabores se unifiquen. Es el tiempo de empezar a calentar los platos.", tiempo: 90, temperatura: null, usa: [] },
+          { n: 11, titulo: "Servir — all'onda en plato caliente", texto: "Sirve inmediatamente en platos CALIENTES (fundamentales: el risotto se enfría rápido y se endurece). El risotto debe fluir ligeramente al inclinar el plato — como una ola, all'onda. Si está demasiado espeso, añade un golpe de caldo caliente y remueve. Decora con unas tiras de salmón ahumado, una ramita de eneldo fresco, ralladura de limón extra y una vuelta de pimienta blanca.", tiempo: null, temperatura: null, usa: ["salmon-ahumado", "eneldo", "limon", "pimienta-blanca"] }
+        ],
+        notas: "🐟 CALDO (fumetto di pesce) — lo ideal vs. lo práctico\n• IDEAL: Haz un fumetto con espinas y cabezas de pescado blanco + 1 cebolla + 1 tallo de apio + vino blanco + agua fría. Hierve 20 min, cuela. Color claro, sabor limpio.\n• PRÁCTICO: Caldo de verduras de buena calidad + un chorro de vino blanco + unas hojas de laurel. Evita caldos de pescado industrial con glutamato (saben a lata).\n\n🌾 POR QUÉ CARNAROLI Y NO ARBORIO\n• Carnaroli tiene mayor proporción de amilosa → grano más firme, aguanta más la cocción, suelta almidón de forma más controlada → cremosidad superior sin pastosidad.\n• Vialone Nano es la alternativa preferida en el Véneto: grano pequeño, muy cremoso, ideal para risotto all'onda.\n• Arborio absorbe más agua pero se pasa fácilmente → para uso doméstico sin experiencia puede valer, pero los chefs lo evitan.\n\n🧈 POR QUÉ MANTEQUILLA MUY FRÍA\n• La diferencia de temperatura entre el arroz caliente y la mantequilla fría es lo que provoca la emulsión. La grasa de la mantequilla se incorpora en micro-gotitas al caldo almidonado, creando esa textura sedosa característica. Con mantequilla a temperatura ambiente, no emulsiona igual.\n\n🧀 ¿Y EL PARMESANO?\n• En cocina italiana tradicional, la regla es: NO se mezcla queso con pescado o marisco. En el risotto al salmone auténtico, la cremosidad viene 100% de la mantecatura con mantequilla (y el almidón del arroz). Si quieres un toque lácteo extra sin romper la regla, 1 cucharada de mascarpone en la mantecatura es aceptado y delicioso.\n\n⏱️ TIMING TOTAL: ~25-28 minutos desde el soffritto\n\n🚨 ERRORES FATALES A EVITAR\n1. Añadir caldo frío → baja temperatura, rompe la cocción\n2. Remover en exceso → destruye el grano\n3. Fuego demasiado alto → el arroz se cocina por fuera y queda crudo por dentro\n4. Hacer la mantecatura con fuego encendido → mantequilla se separa\n5. Dejar reposar el risotto 5+ min antes de servir → se endurece y pierde la onda\n6. Usar cuchara de metal para remover → raspa el grano",
+        creado:     "2026-06-21T10:00:00Z",
+        modificado: "2026-06-21T10:00:00Z"
       },
       {
         id: "salmon-en-salsa-de-yogur-champinon-y-romero",
