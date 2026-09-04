@@ -1,15 +1,19 @@
 {
-  "name": "Recetas",
-  "short_name": "Recetas",
-  "description": "Hub de recetas personal — biblioteca, planificador, lista de la compra y modo cocina.",
+  "name": "Niblo",
+  "short_name": "Niblo",
+  "description": "Recetas de casa, plan semanal de dieta y entreno, y el seguimiento de Pablo.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#f8fafc",
-  "theme_color": "#111111",
+  "background_color": "#f2ede0",
+  "theme_color": "#f2ede0",
   "lang": "es",
-  "categories": ["food", "lifestyle", "productivity"],
+  "categories": [
+    "food",
+    "lifestyle",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "icon.svg",
@@ -27,7 +31,7 @@
       "src": "icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }

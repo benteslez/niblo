@@ -1,9 +1,9 @@
-/* Service Worker — Recetas
+/* Service Worker — Niblo
    - HTML: NETWORK-first (siempre intenta versión nueva; cache como fallback offline).
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "recetas-v40";
+const CACHE_NAME = "niblo-v41";   // icono y nombre nuevos: invalida el cache anterior
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
