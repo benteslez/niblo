@@ -5981,7 +5981,7 @@
       <div class="hub">
         <p class="hub-saludo" id="hub-saludo">Hola</p>
         <h1 class="hub-titulo">&#191;Qu&eacute; abrimos hoy?</h1>
-        <p class="hub-sub">Tres zonas, un mismo sitio: el recetario de casa, el plan semanal de dieta y entreno, y el seguimiento de Pablo.</p>
+        <p class="hub-sub">Tres zonas, un mismo sitio: el seguimiento de Pablo, el plan semanal de dieta y entreno, y el recetario de casa.</p>
         <div class="hub-grid" id="hub-grid"></div>
       </div>
     </section>
@@ -14191,13 +14191,14 @@ function boot(vistaInicial) {
     /* Areas de la app: el hub de inicio lleva a una u otra. Cada area tiene
        sus propias secciones (chips de la nav), pero comparten cabecera,
        sistema de diseno y estado de sesion. */
+    /* El orden manda en el hub: lo primero que se ve al abrir la app. */
     const AREAS = [
-      { id: "recetas", label: "Recetas",      labelCorto: "Recetas", icono: "&#127859;",
-        desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." },
+      { id: "pablo",   label: "Pablo",        labelCorto: "Pablo",   icono: "&#128118;",
+        desc: "Alimentaci\u00f3n complementaria de Pablo: qu\u00e9 toca hoy, ficha de cada alimento, al\u00e9rgenos, crecimiento, sue\u00f1o y vacunas." },
       { id: "plan",    label: "Plan semanal", labelCorto: "Plan",    icono: "&#128197;",
         desc: "Dieta y entreno d\u00eda a d\u00eda: comidas con cantidades por comensales, macros y rutinas de gimnasio." },
-      { id: "pablo",   label: "Pablo",        labelCorto: "Pablo",   icono: "&#128118;",
-        desc: "Alimentaci\u00f3n complementaria de Pablo: qu\u00e9 toca hoy, ficha de cada alimento, al\u00e9rgenos, crecimiento, sue\u00f1o y vacunas." }
+      { id: "recetas", label: "Recetas",      labelCorto: "Recetas", icono: "&#127859;",
+        desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." }
     ];
 
     /* Catalogo de vistas: unica fuente de verdad para nav y secciones.
