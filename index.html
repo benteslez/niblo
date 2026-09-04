@@ -3171,6 +3171,7 @@
        ======================================================================== */
     html.a11y-fuente-1 { --fs-body: 17px; }
     html.a11y-fuente-1 .vista-titulo { font-size: 30px; }
+    html.a11y-fuente-1 .detalle .lista-paso .paso-texto { font-size: 17px; }
     @media (min-width: 720px) { html.a11y-fuente-1 .vista-titulo { font-size: 36px; } }
 
     html.a11y-fuente-2 { --fs-body: 19px; }
@@ -3178,12 +3179,14 @@
     @media (min-width: 720px) { html.a11y-fuente-2 .vista-titulo { font-size: 40px; } }
     html.a11y-fuente-2 .tarjeta-nombre { font-size: 22px; }
     html.a11y-fuente-2 .lista-ing li, html.a11y-fuente-2 .lista-paso li { font-size: 16px; }
+    html.a11y-fuente-2 .detalle .lista-paso .paso-texto { font-size: 18.5px; }
 
     html.a11y-fuente-3 { --fs-body: 22px; }
     html.a11y-fuente-3 .vista-titulo { font-size: 40px; }
     @media (min-width: 720px) { html.a11y-fuente-3 .vista-titulo { font-size: 48px; } }
     html.a11y-fuente-3 .tarjeta-nombre { font-size: 24px; }
     html.a11y-fuente-3 .lista-ing li, html.a11y-fuente-3 .lista-paso li { font-size: 18px; padding: 10px 12px; }
+    html.a11y-fuente-3 .detalle .lista-paso .paso-texto { font-size: 21px; }
     html.a11y-fuente-3 .mc-paso-texto { font-size: 26px; }
     html.a11y-fuente-3 .mc-paso-titulo { font-size: 42px; }
     @media (min-width: 720px) {
@@ -5882,6 +5885,45 @@
     }
     .pb-drawer .close:hover { background: var(--accent-bg); color: var(--text); }
     .pb-drawer .card:last-child { margin-bottom: 0; }
+
+    /* ---- Movil: subir el cuerpo de texto ---------------------------------
+       El CSS lleva muchos tamanos fijos por debajo del cuerpo (12-14 px) que
+       en un telefono se quedan cortos, sobre todo los pasos de la receta, que
+       se leen de pie y a distancia. Aqui se suben los que de verdad se leen. */
+    @media (max-width: 719px) {
+      :root { --fs-body: 17px; }
+
+      /* Receta abierta */
+      .detalle .lista-paso .paso-texto { font-size: 16px; line-height: 1.6; }
+      .detalle .lista-paso .paso-titulo { font-size: 16px; }
+      .detalle .lista-paso .paso-meta { font-size: 13px; }
+      .detalle .lista-ing .ing-unidad { font-size: 14.5px; }
+      .detalle .lista-ing .ing-nota { font-size: 13px; }
+      .detalle-tabs button { font-size: 15px; }
+      .detalle-eyebrow { font-size: 13px; }
+      .receta-notas { font-size: 15px; }
+      .bloque-head h2 { font-size: 21px; }
+
+      /* Biblioteca y navegacion */
+      .tarjeta-nombre { font-size: 21px; }
+      .tarjeta-lista-nombre { font-size: 16px; }
+      .vista-subtitulo { font-size: 15px; }
+      .chip { font-size: 15px; }
+      .pill { font-size: 13px; }
+      .filtro-chip, .biblio-tipo-chip, .biblio-tag-chip { font-size: 13px; }
+    }
+
+    @media (max-width: 719px) {
+      .pb-app .item-alimento .nombre-link { font-size: 16px; }
+      .pb-app .item-alimento .como-cuanto { font-size: 13.5px; }
+      .pb-app .item-alimento .como-dar { font-size: 13px; }
+      .pb-app .opciones-dia { font-size: 13.5px; }
+      .pb-app .receta-pasos, .pb-app .receta-ing li { font-size: 15px; }
+      .pb-app .guia-p, .pb-app .guia-lista, .pb-app .guia-cita { font-size: 15px; }
+      .pb-app table.tabla-simple { font-size: 13.5px; }
+      .pb-app .faint { font-size: 13.5px; }
+      .pb-app .card h2 { font-size: 18px; }
+    }
 
   </style>
 </head>
