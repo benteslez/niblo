@@ -5235,6 +5235,102 @@
     }
     .pb-app .cal-nav:hover { border-color: var(--blue); color: var(--blue); }
 
+    /* ---- Edicion de registros y modal ----------------------------------- */
+    .pb-app .ed-row {
+      border: none; background: transparent; color: var(--text-muted);
+      cursor: pointer; padding: 4px 8px; border-radius: 8px; font: inherit;
+      font-size: 0.8125rem;
+    }
+    .pb-app .ed-row:hover { background: var(--blue-soft); color: var(--blue); }
+    .pb-app td.acciones { white-space: nowrap; text-align: right; }
+
+    /* ---- Selector del informe completo ---------------------------------- */
+    .pb-app .infc-rango { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .pb-app .infc-cab {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 14px 0 6px; font-size: 0.875rem;
+    }
+    .pb-app .infc-lista { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    @media (max-width: 560px) { .pb-app .infc-lista, .pb-app .infc-rango { grid-template-columns: 1fr; } }
+    .pb-app .infc-op {
+      display: flex; align-items: flex-start; gap: 9px;
+      padding: 9px 11px; border: 1px solid var(--border); border-radius: 10px;
+      background: var(--bg-card); cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .pb-app .infc-op:hover { border-color: var(--blue); }
+    .pb-app .infc-op.on { background: var(--blue-soft); border-color: var(--blue); }
+    .pb-app .infc-op input { margin-top: 2px; flex: none; width: 16px; height: 16px; accent-color: var(--blue); }
+    .pb-app .infc-op span { display: block; min-width: 0; }
+    .pb-app .infc-op .et { font-size: 0.8125rem; font-weight: 700; }
+    .pb-app .infc-op .nota { font-size: 0.71875rem; color: var(--text-muted); }
+    .pb-app .infc-op.on .et { color: var(--blue); }
+
+    /* ---- Recordatorios --------------------------------------------------- */
+    .pb-app .avisos { display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--gap-4); }
+    .pb-app .aviso-card {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 14px; border-radius: var(--r-lg);
+      background: var(--amber-soft); border: 1px solid color-mix(in srgb, var(--amber) 22%, transparent);
+    }
+    .pb-app .aviso-card .ico { font-size: 1.125rem; line-height: 1.2; flex: none; }
+    .pb-app .aviso-card .cuerpo { flex: 1; min-width: 0; }
+    .pb-app .aviso-card .tit { font-weight: 700; font-size: 0.875rem; color: var(--amber); }
+    .pb-app .aviso-card .txt { font-size: 0.78125rem; color: var(--text-muted); margin-top: 2px; line-height: 1.45; }
+    .pb-app .aviso-card .acciones { display: flex; align-items: center; gap: 4px; flex: none; }
+    .pb-app .btn-aviso {
+      border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
+      background: var(--bg-card); color: var(--amber);
+      border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+    }
+    .pb-app .aviso-card .cerrar {
+      border: none; background: transparent; color: var(--text-muted);
+      cursor: pointer; font-size: 0.875rem; padding: 4px 6px; border-radius: 8px;
+    }
+    .pb-app .aviso-card .cerrar:hover { background: var(--bg-soft); color: var(--text); }
+    @media (max-width: 480px) {
+      .pb-app .aviso-card { flex-wrap: wrap; }
+      .pb-app .aviso-card .acciones { width: 100%; justify-content: flex-end; }
+    }
+
+    .pb-modal-bg {
+      position: fixed; inset: 0; z-index: 900;
+      background: color-mix(in srgb, #000 45%, transparent);
+      display: flex; align-items: center; justify-content: center;
+      padding: var(--gap-4);
+    }
+    .pb-modal-bg[hidden] { display: none; }
+    body.pb-modal-abierto { overflow: hidden; }
+    .pb-app .pb-modal, .pb-modal {
+      background: var(--bg-elev); color: var(--text);
+      border: 1px solid var(--line); border-radius: var(--r-lg);
+      box-shadow: var(--sh-3, 0 18px 48px -12px rgba(0,0,0,.4));
+      width: min(460px, 100%); max-height: 86vh; overflow: auto;
+      padding: var(--gap-4);
+    }
+    .pb-modal h3 { margin: 0 0 var(--gap-3); font-size: 1.0625rem; letter-spacing: -0.01em; }
+    .pb-modal .modal-p { margin: 0 0 8px; font-size: 0.875rem; line-height: 1.5; }
+    .pb-modal .modal-aviso { display: none; margin-top: 8px; font-size: 0.8125rem; color: var(--danger); }
+    .pb-modal .modal-aviso:not([hidden]) { display: block; }
+    .pb-modal-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: var(--gap-4); }
+    .pb-modal-btns button {
+      padding: 10px 18px; border-radius: 10px; font: inherit; font-weight: 700;
+      font-size: 0.875rem; cursor: pointer; border: 1px solid transparent;
+    }
+    .pb-modal-btns .btn-plano { background: transparent; border-color: var(--line); color: var(--text); }
+    .pb-modal-btns .btn-plano:hover { background: var(--bg-soft); }
+    .pb-modal-btns .btn-peligro { background: var(--danger); color: #fff; }
+    .pb-modal-btns .btn-primario { background: var(--btn-bg); color: var(--btn-fg); }
+    .pb-modal .campo input, .pb-modal .campo select, .pb-modal .campo textarea {
+      width: 100%; padding: 9px 10px; border-radius: 9px;
+      border: 1px solid var(--line); background: var(--bg); color: var(--text);
+      font: inherit; font-size: 1rem;
+    }
+    .pb-modal .campo label { display: block; font-size: 0.71875rem; color: var(--text-muted); font-weight: 700; margin-bottom: 3px; }
+    .pb-modal .campo { margin-bottom: 10px; min-width: 0; }
+    .pb-modal .grid-campos2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 480px) { .pb-modal .grid-campos2 { grid-template-columns: 1fr; } }
+
     /* Selector de rango del informe: celdas clicables, rejilla de meses/años
        y la fila de confirmacion con el rango ya resuelto. */
     .pb-app .day-cell.inf-cell { cursor: pointer; }
@@ -6079,7 +6175,11 @@
     #pb-informe .inf-kpis b { display: block; font-size: 17px; font-weight: 800; }
     #pb-informe .inf-kpis span { font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: #666; }
     #pb-informe .inf-nota { font-size: 11.5px; line-height: 1.6; color: #333; margin: 0 0 18px; }
-    #pb-informe h3 { font-size: 13px; margin: 18px 0 6px; letter-spacing: -0.01em; }
+    #pb-informe h3 {
+      font-size: 13px; margin: 20px 0 6px; letter-spacing: -0.01em;
+      border-bottom: 1px solid #ddd; padding-bottom: 4px; page-break-after: avoid;
+    }
+    #pb-informe h4 { font-size: 11px; margin: 12px 0 4px; color: #555; page-break-after: avoid; }
     #pb-informe .inf-graf { width: 100%; height: auto; display: block; margin-bottom: 6px; page-break-inside: avoid; }
     #pb-informe .inf-tabla { width: 100%; border-collapse: collapse; font-size: 11px; }
     #pb-informe .inf-tabla th {
@@ -6093,6 +6193,17 @@
     #pb-informe .inf-bajo  { background: #fee2e2; color: #991b1b; }
     #pb-informe .inf-alto  { background: #ede9fe; color: #5b21b6; }
     #pb-informe .inf-vacio { color: #999; font-size: 10.5px; }
+
+    /* En pantalla el informe se ve en un movil estrecho antes de imprimir: las
+       tablas anchas desplazan y los indicadores caben de dos en dos. En papel
+       no aplica nada de esto, que ahi el ancho es el de un A4. */
+    @media screen and (max-width: 620px) {
+      #pb-informe .inf-kpis { grid-template-columns: repeat(2, 1fr); }
+      #pb-informe .inf-tabla-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      #pb-informe .inf-tabla { min-width: 460px; }
+      #pb-informe .inf-cab { flex-direction: column; gap: 6px; }
+      #pb-informe .inf-meta { text-align: left; }
+    }
 
     @media print {
       @page { margin: 14mm; }
@@ -6857,10 +6968,16 @@ function cargarEstadoGlobal() {
   }
   return st;
 }
+let _onGuardar = null;
+/** El area de Recetas engancha aqui su auto-sync: hasta ahora lo que se
+    apuntaba de Pablo solo subia al abrir la app. */
+function setOnGuardar(fn) { _onGuardar = typeof fn === "function" ? fn : null; }
+
 function guardarEstado() {
   // Marca de tiempo para que la sincronizacion pueda decidir quien gana.
   STATE.modificado = new Date().toISOString();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+  if (_onGuardar) { try { _onGuardar(); } catch (_) {} }
 }
 
 /* ---- Puerta para la sincronizacion con Supabase ----------------------
@@ -6869,6 +6986,251 @@ function guardarEstado() {
    vacunas, notas) y viajan mejor como un unico JSON. */
 function exportarEstadoSync() { return STATE; }
 function marcaDeTiempo() { return STATE.modificado || ""; }
+/* Escape para meter valores del usuario en atributos y en HTML. El modulo
+   no tenia uno propio porque hasta ahora solo pintaba datos del libro. */
+function esc(v) {
+  return String(v == null ? "" : v)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+/* ---- edicion y borrado seguro de registros -----------------------------
+   Hasta ahora un registro mal metido solo se podia borrar y volver a escribir,
+   y la ✕ borraba a la primera: un roce con el pulgar y adios, sin deshacer. */
+
+/* Que campos tiene cada tipo de registro, para montar el formulario y para
+   volver a leerlo. Un solo sitio que tocar si algun dia cambia el modelo. */
+const CAMPOS_REGISTRO = {
+  sleep: { titulo: "sueño", col: "sleep", campos: [
+    { k: "type",  et: "Tipo",  tipo: "select", ops: [["siesta", "Siesta"], ["nocturno", "Sueño nocturno"]] },
+    { k: "start", et: "Desde", tipo: "datetime-local" },
+    { k: "end",   et: "Hasta", tipo: "datetime-local" },
+  ]},
+  diapers: { titulo: "pañal", col: "diapers", campos: [
+    { k: "type", et: "Tipo", tipo: "select", ops: [["pis", "Pis"], ["caca", "Caca"], ["mixto", "Mixto"], ["seco", "Seco"]] },
+    { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
+  ]},
+  growth: { titulo: "medida", col: "growth", campos: [
+    { k: "date",   et: "Fecha", tipo: "date" },
+    { k: "weight", et: "Peso (kg)", tipo: "number", paso: "0.01" },
+    { k: "height", et: "Longitud (cm)", tipo: "number", paso: "0.1" },
+    { k: "head",   et: "P. cefálico (cm)", tipo: "number", paso: "0.1" },
+  ]},
+  pediatricVisits: { titulo: "visita", col: "pediatricVisits", campos: [
+    { k: "date",   et: "Fecha", tipo: "date" },
+    { k: "reason", et: "Motivo", tipo: "text" },
+    { k: "weight", et: "Peso (kg)", tipo: "number", paso: "0.01" },
+    { k: "height", et: "Longitud (cm)", tipo: "number", paso: "0.1" },
+    { k: "head",   et: "P. cefálico (cm)", tipo: "number", paso: "0.1" },
+    { k: "notes",  et: "Notas", tipo: "textarea" },
+  ]},
+  notes: { titulo: "nota", col: "notes", campos: [
+    { k: "date", et: "Fecha", tipo: "date" },
+    { k: "text", et: "Texto", tipo: "textarea" },
+  ]},
+};
+
+let EDIT_ABIERTA = null;   // { col, id }
+
+function editarRegistro(col, id) {
+  EDIT_ABIERTA = { col, id };
+  const def = CAMPOS_REGISTRO[col];
+  const reg = (STATE[col] || []).find(r => r.id === id);
+  if (!def || !reg) return;
+  const campos = def.campos.map(c => {
+    const v = reg[c.k] == null ? "" : String(reg[c.k]);
+    if (c.tipo === "select") {
+      return `<div class="campo"><label>${c.et}</label><select id="ed-${c.k}">
+        ${c.ops.map(([val, et]) => `<option value="${val}"${val === v ? " selected" : ""}>${et}</option>`).join("")}</select></div>`;
+    }
+    if (c.tipo === "textarea") {
+      return `<div class="campo"><label>${c.et}</label><textarea id="ed-${c.k}" rows="3">${esc(v)}</textarea></div>`;
+    }
+    return `<div class="campo"><label>${c.et}</label><input type="${c.tipo}" id="ed-${c.k}"
+      ${c.paso ? `step="${c.paso}"` : ""} value="${esc(v)}"></div>`;
+  }).join("");
+  abrirModal(`Editar ${def.titulo}`, `<div class="grid-campos2">${campos}</div>
+    <div class="modal-aviso" id="ed-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarEdicion()" }]);
+}
+
+function guardarEdicion() {
+  if (!EDIT_ABIERTA) return;
+  const { col, id } = EDIT_ABIERTA;
+  const def = CAMPOS_REGISTRO[col];
+  const reg = (STATE[col] || []).find(r => r.id === id);
+  if (!def || !reg) return cerrarModal();
+  const nuevo = {};
+  for (const c of def.campos) {
+    const el = document.getElementById("ed-" + c.k);
+    if (!el) continue;
+    nuevo[c.k] = c.tipo === "number" ? (el.value === "" ? null : el.value) : el.value;
+  }
+  // El sueño es el unico con una regla que puede dejar el dato incoherente.
+  if (col === "sleep" && nuevo.end && new Date(nuevo.end) <= new Date(nuevo.start)) {
+    const a = document.getElementById("ed-aviso");
+    if (a) { a.textContent = "La hora de fin tiene que ser posterior a la de inicio."; a.hidden = false; }
+    return;
+  }
+  Object.assign(reg, nuevo);
+  sellar(reg);
+  guardarEstado();
+  cerrarModal();
+  irA(VISTA_ACTUAL);
+}
+
+/* Borrado con confirmacion: el registro se muestra antes de tirarlo. */
+function pedirBorrado(col, id, descripcion) {
+  abrirModal("¿Borrar este registro?",
+    `<p class="modal-p">${esc(descripcion)}</p><p class="modal-p faint">No se puede deshacer.</p>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Borrar", peligro: true, accion: `PB.confirmarBorrado('${col}','${id}')` }]);
+}
+function confirmarBorrado(col, id) {
+  const fn = { sleep: deleteSleep, diapers: deleteDiaper, growth: deleteGrowth,
+               notes: deleteNote, pediatricVisits: deletePediatricVisit }[col];
+  cerrarModal();
+  if (fn) fn(id);
+}
+
+/* ---- modal generico ---------------------------------------------------- */
+function abrirModal(titulo, cuerpo, botones) {
+  let m = document.getElementById("pb-modal");
+  if (!m) {
+    m = document.createElement("div");
+    m.id = "pb-modal";
+    m.className = "pb-modal-bg";
+    m.addEventListener("click", ev => { if (ev.target === m) cerrarModal(); });
+    (document.querySelector(".pb-app") || document.body).appendChild(m);
+  }
+  m.innerHTML = `<div class="pb-modal" role="dialog" aria-modal="true" aria-label="${esc(titulo)}">
+      <h3>${esc(titulo)}</h3>
+      <div class="pb-modal-cuerpo">${cuerpo}</div>
+      <div class="pb-modal-btns">${botones.map(b =>
+        `<button type="button" class="${b.primario ? "btn-primario" : b.peligro ? "btn-peligro" : "btn-plano"}"
+           onclick="${b.accion}">${b.et}</button>`).join("")}</div>
+    </div>`;
+  m.hidden = false;
+  document.body.classList.add("pb-modal-abierto");
+  const primero = m.querySelector("input,select,textarea,button");
+  if (primero) setTimeout(() => primero.focus(), 30);
+}
+function cerrarModal() {
+  const m = document.getElementById("pb-modal");
+  if (m) m.hidden = true;
+  document.body.classList.remove("pb-modal-abierto");
+  EDIT_ABIERTA = null;
+}
+
+/* ---- fusion de estados para la sincronizacion --------------------------
+   Antes ganaba el documento entero mas reciente, asi que si los dos moviles
+   habian apuntado cosas distintas sin sincronizar entremedias, el que subia
+   despues borraba los registros del otro sin avisar. Ahora se fusiona
+   registro a registro.
+
+   Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
+   una lapida en STATE.borrados, para que borrar en un movil no reviva el
+   registro desde el otro. */
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes"];
+const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone"];
+
+function sello() { return new Date().toISOString(); }
+
+/** Marca un registro como tocado ahora. Se llama al crear y al editar. */
+function sellar(reg) { reg.mod = sello(); return reg; }
+
+/** Deja constancia de un borrado para que la fusion no lo resucite. */
+function anotarBorrado(id) {
+  if (!STATE.borrados) STATE.borrados = {};
+  STATE.borrados[id] = sello();
+  // Las lapidas de mas de 90 dias ya no hacen falta: a esas alturas todos los
+  // dispositivos han sincronizado de sobra.
+  const limite = new Date(Date.now() - 90 * 86400000).toISOString();
+  for (const [k, v] of Object.entries(STATE.borrados)) if (v < limite) delete STATE.borrados[k];
+}
+
+/* Fecha de referencia de un registro cuando no tiene "mod" (los de antes de
+   este cambio): sirve para no perderlos en la primera fusion. */
+function modDe(reg) { return reg.mod || reg.start || reg.datetime || reg.date || reg.fecha || ""; }
+
+function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
+  if (!remoto || typeof remoto !== "object") return { estado: local, cambio: false };
+  const remotoGana = (tsRemoto || "") > (tsLocal || "");
+  const out = Object.assign({}, remotoGana ? remoto : local);
+  let cambio = false;
+
+  // Config y catalogo de vacunas: no son registros, gana el documento nuevo.
+  out.config = Object.assign({}, defaultState().config, (remotoGana ? remoto : local).config || {});
+  out.vaccines = (remotoGana ? remoto : local).vaccines || local.vaccines;
+
+  // Lapidas: la union de las dos partes.
+  const borrados = Object.assign({}, local.borrados || {}, remoto.borrados || {});
+  out.borrados = borrados;
+
+  // Colecciones con id: se unen por id y gana la version tocada mas tarde.
+  for (const col of COLECCIONES) {
+    const porId = new Map();
+    for (const reg of (local[col] || [])) if (reg && reg.id) porId.set(reg.id, reg);
+    for (const reg of (remoto[col] || [])) {
+      if (!reg || !reg.id) continue;
+      const mio = porId.get(reg.id);
+      if (!mio) { porId.set(reg.id, reg); cambio = true; continue; }
+      if (modDe(reg) > modDe(mio)) { porId.set(reg.id, reg); cambio = true; }
+    }
+    // Un borrado solo manda si es posterior a la ultima edicion del registro.
+    for (const [id, reg] of [...porId]) {
+      const lapida = borrados[id];
+      if (lapida && lapida >= modDe(reg)) { porId.delete(id); cambio = true; }
+    }
+    const antes = (local[col] || []).length;
+    out[col] = [...porId.values()];
+    if (out[col].length !== antes) cambio = true;
+  }
+
+  // Mapas de hitos/dientes/vacunas: union de claves; si ambos tienen la misma
+  // con distinto valor, se queda la del documento mas reciente.
+  for (const m of MAPAS) {
+    const base = Object.assign({}, local[m] || {});
+    for (const [k, v] of Object.entries(remoto[m] || {})) {
+      if (!(k in base)) { base[k] = v; cambio = true; }
+      else if (base[k] !== v && remotoGana) { base[k] = v; cambio = true; }
+    }
+    out[m] = base;
+  }
+
+  // Alimentos: el historial de cada uno se une por fecha.
+  const alim = {};
+  const ids = new Set([...Object.keys(local.alimentos || {}), ...Object.keys(remoto.alimentos || {})]);
+  for (const id of ids) {
+    const hl = (local.alimentos?.[id]?.historial) || [];
+    const hr = (remoto.alimentos?.[id]?.historial) || [];
+    const porFecha = new Map(hl.map(h => [h.fecha, h]));
+    for (const h of hr) {
+      if (!porFecha.has(h.fecha)) { porFecha.set(h.fecha, h); cambio = true; }
+      else if (porFecha.get(h.fecha).resultado !== h.resultado && remotoGana) { porFecha.set(h.fecha, h); cambio = true; }
+    }
+    alim[id] = { historial: [...porFecha.values()].sort((a, b) => a.fecha.localeCompare(b.fecha)) };
+  }
+  out.alimentos = alim;
+  out.modificado = (tsLocal || "") > (tsRemoto || "") ? tsLocal : tsRemoto;
+  return { estado: out, cambio };
+}
+
+/** La usa el area de Recetas: fusiona lo remoto con lo local y deja el
+    resultado guardado. Devuelve si ha cambiado algo en local. */
+function fusionarConRemoto(datosRemotos, tsRemoto) {
+  const { estado, cambio } = fusionarEstado(STATE, datosRemotos, STATE.modificado || "", tsRemoto || "");
+  if (!cambio) return false;
+  STATE = estado;
+  CONFIG = STATE.config;
+  ESTADO = STATE.alimentos || {};
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+  recalcularCalendario();
+  if (_arrancado) { renderHeader(); irA(VISTA_ACTUAL); }
+  return true;
+}
+
 function importarEstadoSync(remoto) {
   if (!remoto || typeof remoto !== "object") return false;
   STATE = Object.assign(defaultState(), remoto);
@@ -6911,7 +7273,7 @@ function tomasDelDia(fecha) { return STATE.tomas.filter(t => t.fecha === fecha).
 function totalMlDia(fecha) { return tomasDelDia(fecha).reduce((s,t)=>s+(Number(t.ml)||0), 0); }
 function agregarToma(fecha, hora, ml) {
   const id = "tm_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-  STATE.tomas.push({ id, fecha, hora, ml: Number(ml)||0 });
+  STATE.tomas.push(sellar({ id, fecha, hora, ml: Number(ml)||0 }));
   guardarEstado();
   return id;
 }
@@ -7236,12 +7598,14 @@ const TOMAS_HOY = accionesToma(() => renderHoy(document.getElementById("view-hoy
 
 function renderHoy(el) {
   let iso = HOY_ISO;
-  let banner = "";
+  // Los recordatorios van lo primero: si quedan debajo del plan del dia, no
+  // se ven en un movil sin hacer scroll.
+  let banner = `<div id="pb-avisos">${htmlAvisos()}</div>`;
   if (iso < FECHA_REGISTRO_DESDE) {
-    banner = `<div class="alerta limitar"><div class="titulo">El calendario empieza el ${fmtFechaLarga(FECHA_REGISTRO_DESDE)}</div>Esto es una vista previa.</div>`;
+    banner += `<div class="alerta limitar"><div class="titulo">El calendario empieza el ${fmtFechaLarga(FECHA_REGISTRO_DESDE)}</div>Esto es una vista previa.</div>`;
     iso = FECHA_REGISTRO_DESDE;
   } else if (iso > FECHA_FIN) {
-    banner = `<div class="alerta limitar"><div class="titulo">El calendario planificado terminó el ${fmtFechaLarga(FECHA_FIN)}</div>Pablo ya tiene más de un año probando alimentos — hora de ampliar el calendario.</div>`;
+    banner += `<div class="alerta limitar"><div class="titulo">El calendario planificado terminó el ${fmtFechaLarga(FECHA_FIN)}</div>Pablo ya tiene más de un año probando alimentos — hora de ampliar el calendario.</div>`;
     iso = FECHA_FIN;
   }
   const dia = diaDeCalendario(iso);
@@ -7891,7 +8255,7 @@ function renderSeguridad(el) {
 
 /* ======================== render: AJUSTES ======================== */
 function renderAjustes(el) {
-  el.innerHTML = `<div class="card"><h2>Perfil de Pablo</h2>
+  el.innerHTML = htmlAjustesAvisos() + `<div class="card"><h2>Perfil de Pablo</h2>
     <div class="settings-row"><label>Nombre</label><input type="text" id="cfg-nombre" value="${CONFIG.nombre || 'Pablo'}"></div>
     <div class="settings-row"><label>Fecha de nacimiento</label><input type="date" id="cfg-nacimiento" value="${CONFIG.fechaNacimiento}"></div>
     <div class="settings-row"><label>Método</label>
@@ -8127,20 +8491,20 @@ function renderCrecimiento(el) {
         <div class="stat-tile"><div class="num">${g.head || "—"}</div><div class="lab">cm · ${g.head?percentileForMeasure("head",gAge,Number(g.head)):"-"}</div></div>
       </div>
     </div>`;
-    ["weight","height","head"].forEach((k,i) => {
-      const titulos = { weight: "Peso", height: "Longitud/talla", head: "Perímetro cefálico" };
-      html += `<div class="card"><h2>Evolución — ${titulos[k]}</h2><div class="chart-wrap"><canvas id="chart-${k}"></canvas></div></div>`;
-    });
+    html += htmlGraficasOMS(sorted);
     html += `<div class="card"><h2>Historial</h2><div class="tabla-wrap"><table class="tabla-simple"><thead><tr><th>Fecha</th><th>Peso</th><th>Long.</th><th>P.cef.</th><th></th></tr></thead><tbody>`;
     sorted.forEach(g => {
-      html += `<tr><td>${fmtFechaCorta(g.date)}</td><td>${g.weight||"-"}</td><td>${g.height||"-"}</td><td>${g.head||"-"}</td><td><button class="del-row" onclick="PB.deleteGrowth('${g.id}')">Eliminar</button></td></tr>`;
+      html += `<tr><td>${fmtFechaCorta(g.date)}</td><td>${g.weight||"-"}</td><td>${g.height||"-"}</td><td>${g.head||"-"}</td><td class="acciones"><button class="ed-row" onclick="PB.editarRegistro('growth','${g.id}')" title="Editar">Editar</button><button class="del-row" onclick="PB.pedirBorrado('growth','${g.id}','Medida del ${fmtFechaCorta(g.date)}')">Eliminar</button></td></tr>`;
     });
     html += `</tbody></table></div></div>`;
   } else {
-    html += `<div class="card"><div class="faint">Aún no hay medidas registradas.</div></div>`;
+    /* Las curvas se enseñan igualmente: sirven de referencia y dejan ver
+       donde caeria la primera medida en cuanto se apunte. */
+    html += `<div class="card"><div class="faint">Aún no hay medidas registradas. Abajo tienes las curvas de la OMS: en cuanto guardes una medida aparecerá sobre ellas.</div></div>`;
+    html += htmlGraficasOMS([]);
   }
   el.innerHTML = html;
-  if (sorted.length) renderGrowthCharts();
+  renderGrowthCharts();
 }
 function addGrowth() {
   const date = document.getElementById("growth-date").value || HOY_ISO;
@@ -8148,41 +8512,587 @@ function addGrowth() {
   const height = document.getElementById("growth-height").value;
   const head = document.getElementById("growth-head").value;
   if (!weight && !height && !head) { alert("Introduce al menos una medida."); return; }
-  STATE.growth.push({ id: "gr_"+Date.now().toString(36), date, weight: weight||null, height: height||null, head: head||null });
+  STATE.growth.push(sellar({ id: "gr_"+Date.now().toString(36), date, weight: weight||null, height: height||null, head: head||null }));
   guardarEstado();
   renderCrecimiento(document.getElementById("view-crecimiento"));
 }
 function deleteGrowth(id) {
+  anotarBorrado(id);
   STATE.growth = STATE.growth.filter(g => g.id !== id);
   guardarEstado();
   renderCrecimiento(document.getElementById("view-crecimiento"));
 }
+const GROWTH_META = {
+  weight: { titulo: "Peso",               unidad: "kg", tabla: () => WHO_WEIGHT_BOYS },
+  height: { titulo: "Longitud / talla",   unidad: "cm", tabla: () => WHO_HEIGHT_BOYS },
+  head:   { titulo: "Perímetro cefálico", unidad: "cm", tabla: () => WHO_HEAD_BOYS },
+};
+function htmlGraficasOMS(medidas) {
+  const ultima = medidas.length ? medidas[0] : null;
+  return Object.entries(GROWTH_META).map(([k, m]) => {
+    let pill = "";
+    if (ultima && ultima[k]) {
+      const edad = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(ultima.date + "T00:00:00"));
+      pill = `<span class="n">${percentileForMeasure(k, edad, Number(ultima[k]))}</span>`;
+    }
+    return `<div class="card"><h2>${m.titulo} ${pill}</h2>
+      <div class="chart-wrap" style="height:260px"><canvas id="chart-${k}"></canvas></div>
+      <div class="pb-cal-leyenda">
+        <span><i class="punto" style="background:var(--blue)"></i>P50 · mediana OMS</span>
+        <span><i class="punto" style="background:color-mix(in srgb, var(--green) 45%, transparent)"></i>P3-P97 · rango normal</span>
+        <span><i class="punto" style="background:var(--red)"></i>${CONFIG.nombre || "Pablo"}</span>
+      </div></div>`;
+  }).join("");
+}
 function renderGrowthCharts() {
   if (typeof Chart === "undefined") return;
-  const sorted = [...STATE.growth].sort((a,b)=>new Date(a.date)-new Date(b.date));
-  const idx = { P3: WHO_PERCENTILES.indexOf(3), P15: WHO_PERCENTILES.indexOf(15), P50: WHO_PERCENTILES.indexOf(50), P85: WHO_PERCENTILES.indexOf(85), P97: WHO_PERCENTILES.indexOf(97) };
+  const sorted = [...STATE.growth].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const idx = Object.fromEntries([3, 15, 50, 85, 97].map(p => ["P" + p, WHO_PERCENTILES.indexOf(p)]));
+  const cont = document.querySelector(".pb-app") || document.documentElement;
+  const cs = getComputedStyle(cont);
+  const tok = (n, alt) => cs.getPropertyValue(n).trim() || alt;
+  const azul = tok("--blue", "#2563eb"), rojo = tok("--red", "#dc2626");
+  const verde = tok("--green", "#16a34a"), tinta = tok("--text-muted", "#94a3b8");
+  const rejilla = tok("--border", "rgba(148,163,184,.25)");
+  const banda = `color-mix(in srgb, ${verde} 12%, transparent)`;
+
+  /* El eje X se ajusta a la edad de Pablo, con unos meses de margen: fijarlo
+     a 0-36 dejaba los puntos apelotonados en el extremo izquierdo. */
+  const edadHoy = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL) || 0;
+  const maxX = Math.min(60, Math.max(6, Math.ceil(edadHoy + 3)));
+
   function build(canvasId, table, key, unidad, chartKey) {
     const ctx = document.getElementById(canvasId);
     if (!ctx) return;
-    const lineas = { P3: [], P15: [], P50: [], P85: [], P97: [] };
-    WHO_MONTHS.forEach((m,i) => { Object.keys(idx).forEach(p => lineas[p].push({ x: m, y: table[i][idx[p]] })); });
+    const linea = (p, extra) => ({
+      data: WHO_MONTHS.map((m, i) => ({ x: m, y: table[i][idx[p]] })),
+      borderWidth: 1, pointRadius: 0, tension: .3, ...extra,
+    });
     const puntos = sorted.filter(g => g[key]).map(g => {
-      const ageM = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(g.date+"T00:00:00"));
-      return { x: ageM==null?0:Number(ageM.toFixed(2)), y: Number(g[key]) };
+      const ageM = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(g.date + "T00:00:00"));
+      return { x: ageM == null ? 0 : Number(ageM.toFixed(2)), y: Number(g[key]) };
     });
     if (CHARTS[chartKey]) CHARTS[chartKey].destroy();
-    CHARTS[chartKey] = new Chart(ctx, { type:"line", data:{ datasets:[
-      { label:"P3", data:lineas.P3, borderColor:"#d8c9a3", borderWidth:1, pointRadius:0, tension:.3 },
-      { label:"P15", data:lineas.P15, borderColor:"#c7b98f", borderWidth:1, pointRadius:0, tension:.3 },
-      { label:"P50", data:lineas.P50, borderColor:"#5b8a9a", borderWidth:2, pointRadius:0, tension:.3 },
-      { label:"P85", data:lineas.P85, borderColor:"#c7b98f", borderWidth:1, pointRadius:0, tension:.3 },
-      { label:"P97", data:lineas.P97, borderColor:"#d8c9a3", borderWidth:1, pointRadius:0, tension:.3 },
-      { label: CONFIG.nombre||"Pablo", data:puntos, borderColor:"#c0555a", backgroundColor:"#c0555a", showLine:true, borderWidth:2, pointRadius:4, tension:0 },
-    ]}, options:{ responsive:true, maintainAspectRatio:false, scales:{ x:{type:"linear", title:{display:true,text:"Edad (meses)"}, min:0, max:36}, y:{title:{display:true,text:unidad}} }, plugins:{ legend:{position:"bottom", labels:{boxWidth:10, font:{size:9}}} } } });
+    CHARTS[chartKey] = new Chart(ctx, {
+      type: "line",
+      data: { datasets: [
+        // P3 y P97 delimitan la banda: se rellena entre ambas.
+        linea("P97", { label: "P97", borderColor: rejilla, fill: false }),
+        linea("P3",  { label: "P3",  borderColor: rejilla, fill: "-1", backgroundColor: banda }),
+        linea("P15", { label: "P15", borderColor: rejilla, borderDash: [4, 4] }),
+        linea("P85", { label: "P85", borderColor: rejilla, borderDash: [4, 4] }),
+        linea("P50", { label: "P50", borderColor: azul, borderWidth: 2 }),
+        { label: CONFIG.nombre || "Pablo", data: puntos, borderColor: rojo, backgroundColor: rojo,
+          showLine: true, borderWidth: 2.5, pointRadius: 4, pointHoverRadius: 6, tension: 0, fill: false },
+      ]},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: "nearest", intersect: false },
+        scales: {
+          x: { type: "linear", min: 0, max: maxX, grid: { color: rejilla },
+               title: { display: true, text: "Edad (meses)", color: tinta },
+               ticks: { color: tinta, stepSize: maxX > 24 ? 6 : maxX > 12 ? 3 : 1 } },
+          y: { grid: { color: rejilla }, title: { display: true, text: unidad, color: tinta },
+               ticks: { color: tinta } },
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { filter: it => it.datasetIndex === 5,
+            callbacks: { label: it => {
+              const p = percentileForMeasure(key, it.parsed.x, it.parsed.y);
+              return `${it.parsed.y} ${unidad} · ${p} · ${it.parsed.x.toFixed(1)} meses`;
+            } } },
+        },
+      },
+    });
   }
   build("chart-weight", WHO_WEIGHT_BOYS, "weight", "kg", "weight");
   build("chart-height", WHO_HEIGHT_BOYS, "height", "cm", "height");
-  build("chart-head", WHO_HEAD_BOYS, "head", "cm", "head");
+  build("chart-head",   WHO_HEAD_BOYS,   "head",   "cm", "head");
+}
+
+/* ======================== AVISOS =========================================
+   Recordatorios locales. No hay servidor de push ni hace falta: la app se
+   abre a diario, asi que basta con revisar al arrancar que toca y avisar.
+   Si el navegador da permiso se manda una notificacion del sistema; si no
+   (o si esta la pestaña abierta) se ve igualmente el panel dentro de la app,
+   que es lo que de verdad garantiza que no se pierda el aviso. */
+const AVISO_KEY_VISTO = "niblo.avisos.vistos";   // id de aviso -> fecha en que se descarto
+
+function avisosVistos() {
+  try { return JSON.parse(localStorage.getItem(AVISO_KEY_VISTO) || "{}"); } catch { return {}; }
+}
+function marcarAvisoVisto(id) {
+  const v = avisosVistos(); v[id] = HOY_ISO;
+  try { localStorage.setItem(AVISO_KEY_VISTO, JSON.stringify(v)); } catch (_) {}
+  renderAvisos();
+}
+
+/** Vacunas cuya edad prevista ya ha pasado y siguen sin marcar. */
+function vacunasPendientes() {
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+  if (meses == null) return [];
+  return (STATE.vaccines || []).filter(v => {
+    if (STATE.vaccinesDone[v.id]) return false;
+    const prevista = parseVaccineAgeMonths(v.age);
+    return meses >= prevista + 0.5;    // medio mes de cortesia
+  });
+}
+
+function calcularAvisos() {
+  const out = [];
+  const vistos = avisosVistos();
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+
+  /* Vitamina D: 400 UI al dia durante el primer año. Es la pauta que mas se
+     olvida y ya estaba en la guia, pero nadie la recordaba. */
+  if (meses != null && meses < 12 && vistos["vitd:" + HOY_ISO] !== HOY_ISO) {
+    out.push({ id: "vitd:" + HOY_ISO, tipo: "diario", icono: "💊",
+      titulo: "Vitamina D de hoy",
+      texto: "400 UI al día durante el primer año (Previnfad/AEPap). Márcalo cuando se la hayas dado.",
+      accion: { et: "Hecho", fn: `PB.marcarAvisoVisto('vitd:${HOY_ISO}')` } });
+  }
+
+  // Vacunas ya vencidas y sin marcar.
+  const vac = vacunasPendientes();
+  if (vac.length && vistos["vac:" + vac.length] !== HOY_ISO) {
+    out.push({ id: "vac:" + vac.length, tipo: "vacuna", icono: "💉",
+      titulo: vac.length === 1 ? "Una vacuna pendiente" : `${vac.length} vacunas pendientes`,
+      texto: vac.slice(0, 3).map(v => `${v.vaccine} (${v.age})`).join(" · ") + (vac.length > 3 ? "…" : ""),
+      accion: { et: "Ver vacunas", fn: `PB.irA('vacunas')` } });
+  }
+
+  /* Revisiones del pediatra: el calendario español las pone a los 2, 4, 6, 12,
+     15 y 18 meses. Se avisa si ya toca y no hay visita registrada cerca. */
+  const REVISIONES = [2, 4, 6, 12, 15, 18];
+  if (meses != null) {
+    const toca = REVISIONES.filter(m => meses >= m && meses < m + 2);
+    for (const m of toca) {
+      const hay = STATE.pediatricVisits.some(v => {
+        const em = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(v.date + "T00:00:00"));
+        return em != null && Math.abs(em - m) < 1.5;
+      });
+      if (!hay && vistos["rev:" + m] !== HOY_ISO) {
+        out.push({ id: "rev:" + m, tipo: "revision", icono: "🩺",
+          titulo: `Revisión de los ${m} meses`,
+          texto: "No hay ninguna visita registrada en esas fechas. Si ya fuisteis, apúntala para que quede en el informe.",
+          accion: { et: "Registrar visita", fn: `PB.irA('pediatra')` } });
+      }
+    }
+  }
+  return out;
+}
+
+function htmlAvisos() {
+  const avisos = calcularAvisos();
+  if (!avisos.length) return "";
+  return `<div class="avisos">${avisos.map(a => `
+    <div class="aviso-card">
+      <span class="ico" aria-hidden="true">${a.icono}</span>
+      <div class="cuerpo"><div class="tit">${esc(a.titulo)}</div><div class="txt">${esc(a.texto)}</div></div>
+      <div class="acciones">
+        <button type="button" class="btn-aviso" onclick="${a.accion.fn}">${a.accion.et}</button>
+        <button type="button" class="cerrar" title="Ocultar hoy" onclick="PB.marcarAvisoVisto('${a.id}')">✕</button>
+      </div>
+    </div>`).join("")}</div>`;
+}
+
+function htmlAjustesAvisos() {
+  const sop = typeof Notification !== "undefined";
+  const on = notificacionesActivas();
+  const denegado = sop && Notification.permission === "denied";
+  return `<div class="card"><h2>Recordatorios</h2>
+    <div class="faint" style="margin-top:-4px">Vitamina D diaria durante el primer año, vacunas que ya tocaban y revisiones del pediatra.
+      Siempre se ven dentro de la app, en <b>Hoy</b>. Si además activas las notificaciones, el móvil avisa una vez al día.</div>
+    <div class="settings-row" style="margin-top:10px">
+      <label>Notificaciones del sistema</label>
+      ${!sop ? `<span class="faint">No disponibles</span>`
+        : denegado ? `<span class="faint">Bloqueadas en el navegador</span>`
+        : on ? `<span class="pill tolerado">Activadas</span>`
+        : `<button class="btn-primario" style="margin:0;padding:8px 14px" onclick="PB.activarNotificaciones()">Activar</button>`}
+    </div>
+    ${denegado ? `<div class="faint">Las has bloqueado para este sitio. Se reactivan desde los ajustes del navegador.</div>` : ""}
+    ${!sop ? `<div class="faint">En iPhone hacen falta con Niblo añadido a la pantalla de inicio.</div>` : ""}
+  </div>`;
+}
+
+function renderAvisos() {
+  const c = document.getElementById("pb-avisos");
+  if (c) c.innerHTML = htmlAvisos();
+}
+
+/* ---- notificacion del sistema ------------------------------------------
+   Solo se pide el permiso cuando el usuario lo activa a proposito en Ajustes:
+   pedirlo al entrar es la forma mas rapida de que lo denieguen para siempre. */
+function avisosPermitidos() {
+  return typeof Notification !== "undefined" && Notification.permission === "granted";
+}
+async function activarNotificaciones() {
+  if (typeof Notification === "undefined") {
+    alert("Este navegador no admite notificaciones. En iPhone hay que añadir Niblo a la pantalla de inicio.");
+    return;
+  }
+  const p = await Notification.requestPermission();
+  if (p === "granted") {
+    localStorage.setItem("niblo.avisos.on", "1");
+    new Notification("Niblo", { body: "Listo: te avisaremos de la vitamina D, las vacunas y las revisiones.", icon: "icon-192.png" });
+  }
+  irA(VISTA_ACTUAL);
+}
+function notificacionesActivas() {
+  return avisosPermitidos() && localStorage.getItem("niblo.avisos.on") === "1";
+}
+/** Al abrir la app, si hay avisos y estan activadas, se manda una del sistema. */
+function notificarPendientes() {
+  if (!notificacionesActivas()) return;
+  const hoyKey = "niblo.avisos.notificado";
+  if (localStorage.getItem(hoyKey) === HOY_ISO) return;   // una al dia, no mas
+  const avisos = calcularAvisos();
+  if (!avisos.length) return;
+  try {
+    new Notification(avisos.length === 1 ? avisos[0].titulo : `${avisos.length} recordatorios en Niblo`, {
+      body: avisos.map(a => a.titulo).join(" · "), icon: "icon-192.png", tag: "niblo-avisos",
+    });
+    localStorage.setItem(hoyKey, HOY_ISO);
+  } catch (_) {}
+}
+
+/* ======================== INFORME COMPLETO (pediatra) ====================
+   Lo que se lleva a la consulta. Se eligen con casillas los apartados y el
+   rango de fechas antes de generarlo, porque no en todas las visitas interesa
+   lo mismo: en una revision rutinaria valen percentiles y alimentacion, y en
+   una consulta por mal dormir, el sueño. */
+const INFORME_SECCIONES = [
+  { k: "resumen",      et: "Resumen y datos del bebé", nota: "Edad, método y última medida" },
+  { k: "percentiles",  et: "Crecimiento y percentiles", nota: "Tabla de medidas y curvas OMS" },
+  { k: "sueno",        et: "Sueño",                     nota: "Totales por día y valoración" },
+  { k: "alimentacion", et: "Alimentación",              nota: "Alimentos probados, tolerados y reacciones" },
+  { k: "tomas",        et: "Tomas de leche",            nota: "Volumen diario" },
+  { k: "panales",      et: "Pañales",                   nota: "Recuento diario" },
+  { k: "desarrollo",   et: "Desarrollo y dientes",      nota: "Hitos OMS conseguidos" },
+  { k: "vacunas",      et: "Vacunas",                   nota: "Puestas y pendientes" },
+  { k: "visitas",      et: "Visitas al pediatra",       nota: "Motivo y notas de cada una" },
+  { k: "notas",        et: "Notas",                     nota: "Apuntes libres del periodo" },
+];
+let INFC_SEL = null;      // secciones marcadas
+let INFC_DESDE = null, INFC_HASTA = null;
+
+function infcIniciar() {
+  if (!INFC_SEL) INFC_SEL = new Set(["resumen", "percentiles", "sueno", "alimentacion", "desarrollo", "vacunas"]);
+  if (!INFC_HASTA) INFC_HASTA = HOY_ISO;
+  if (!INFC_DESDE) {
+    const d = new Date(); d.setMonth(d.getMonth() - 3);
+    INFC_DESDE = isoDeFecha(d);
+  }
+}
+function infcToggle(k) {
+  infcIniciar();
+  if (INFC_SEL.has(k)) INFC_SEL.delete(k); else INFC_SEL.add(k);
+  infcRefrescar();
+}
+function infcRango(cual, valor) {
+  infcIniciar();
+  if (cual === "desde") INFC_DESDE = valor; else INFC_HASTA = valor;
+  if (INFC_DESDE > INFC_HASTA) { if (cual === "desde") INFC_HASTA = INFC_DESDE; else INFC_DESDE = INFC_HASTA; }
+  infcRefrescar();
+}
+function infcAtajo(meses) {
+  infcIniciar();
+  INFC_HASTA = HOY_ISO;
+  if (meses === 0) { INFC_DESDE = CONFIG.fechaNacimiento || HOY_ISO; }
+  else { const d = new Date(); d.setMonth(d.getMonth() - meses); INFC_DESDE = isoDeFecha(d); }
+  infcRefrescar();
+}
+function infcTodas(marcar) {
+  infcIniciar();
+  INFC_SEL = marcar ? new Set(INFORME_SECCIONES.map(s => s.k)) : new Set();
+  infcRefrescar();
+}
+function infcRefrescar() {
+  const c = document.getElementById("infc-panel");
+  if (c) c.innerHTML = htmlInformeCompleto();
+}
+
+function htmlInformeCompleto() {
+  infcIniciar();
+  const n = INFC_SEL.size;
+  return `<div class="infc-rango">
+      <div class="campo"><label>Desde</label><input type="date" value="${INFC_DESDE}" max="${INFC_HASTA}"
+        onchange="PB.infcRango('desde', this.value)"></div>
+      <div class="campo"><label>Hasta</label><input type="date" value="${INFC_HASTA}" min="${INFC_DESDE}" max="${HOY_ISO}"
+        onchange="PB.infcRango('hasta', this.value)"></div>
+    </div>
+    <div class="sueno-modo" style="margin-top:0">
+      <button type="button" onclick="PB.infcAtajo(1)">Último mes</button>
+      <button type="button" onclick="PB.infcAtajo(3)">3 meses</button>
+      <button type="button" onclick="PB.infcAtajo(6)">6 meses</button>
+      <button type="button" onclick="PB.infcAtajo(0)">Todo</button>
+    </div>
+    <div class="infc-cab">
+      <b>Qué incluir</b>
+      <span><button type="button" class="ed-row" onclick="PB.infcTodas(true)">Todo</button>
+            <button type="button" class="ed-row" onclick="PB.infcTodas(false)">Nada</button></span>
+    </div>
+    <div class="infc-lista">
+      ${INFORME_SECCIONES.map(sec => `
+        <label class="infc-op${INFC_SEL.has(sec.k) ? " on" : ""}">
+          <input type="checkbox" ${INFC_SEL.has(sec.k) ? "checked" : ""} onchange="PB.infcToggle('${sec.k}')">
+          <span><span class="et">${sec.et}</span><span class="nota">${sec.nota}</span></span>
+        </label>`).join("")}
+    </div>
+    <div class="inf-resumen">
+      <div><b>${n} ${n === 1 ? "apartado" : "apartados"}</b>
+        <div class="faint">Del ${fmtFechaCorta(INFC_DESDE)} al ${fmtFechaCorta(INFC_HASTA)}</div></div>
+      <button class="btn-primario" onclick="PB.generarInformeCompleto()" ${n ? "" : "disabled"}>Generar PDF</button>
+    </div>`;
+}
+
+function generarInformeCompleto() {
+  infcIniciar();
+  const desde = new Date(INFC_DESDE + "T00:00:00");
+  const hasta = new Date(INFC_HASTA + "T00:00:00"); hasta.setDate(hasta.getDate() + 1);
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+  const nombre = CONFIG.nombre || "Pablo";
+  const enRango = iso => iso >= INFC_DESDE && iso <= INFC_HASTA;
+  const fmtHM = h => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, "0")} min`; };
+
+  let doc = `<div class="inf-cab">
+      <div><div class="inf-app">Niblo</div><div class="inf-tit">Informe para el pediatra</div></div>
+      <div class="inf-meta">${esc(nombre)} · ${edadEnMeses(CONFIG.fechaNacimiento, HOY_REAL).texto}<br>
+        Del ${fmtFechaCorta(INFC_DESDE)} al ${fmtFechaCorta(INFC_HASTA)}<br>Generado el ${fmtFechaCorta(HOY_ISO)}</div>
+    </div>`;
+
+  const S = k => INFC_SEL.has(k);
+  const tabla = (cabs, filas) => filas.length
+    ? `<div class="inf-tabla-wrap"><table class="inf-tabla"><thead><tr>${cabs.map(c => `<th>${c}</th>`).join("")}</tr></thead>
+       <tbody>${filas.map(f => `<tr>${f.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`
+    : `<p class="inf-vacio">Sin datos en este periodo.</p>`;
+
+  /* ---- resumen ---- */
+  if (S("resumen")) {
+    const ult = [...STATE.growth].sort((a, b) => new Date(b.date) - new Date(a.date))[0];
+    const metodos = { papilla: "Papilla / cuchara", blw: "BLW", mixto: "Mixto" };
+    doc += `<h3>Resumen</h3><div class="inf-kpis">
+      <div><b>${edadEnMeses(CONFIG.fechaNacimiento, HOY_REAL).texto}</b><span>Edad</span></div>
+      <div><b>${ult && ult.weight ? ult.weight + " kg" : "—"}</b><span>Último peso</span></div>
+      <div><b>${ult && ult.height ? ult.height + " cm" : "—"}</b><span>Última talla</span></div>
+      <div><b>${metodos[CONFIG.metodo] || CONFIG.metodo}</b><span>Método</span></div>
+    </div>
+    <p class="inf-nota">Fecha de nacimiento: <b>${fmtFechaCorta(CONFIG.fechaNacimiento)}</b>.
+      ${CONFIG.troncoEstable ? "Aguanta el tronco erguido y estable." : CONFIG.sedestacionApoyo ? "Se sienta con apoyo; todavía no aguanta el tronco sin apuntalar." : "Todavía no se sienta con apoyo."}
+      ${CONFIG.ofrecerHigado ? "" : "No se le ofrece hígado."}</p>`;
+  }
+
+  /* ---- percentiles ---- */
+  if (S("percentiles")) {
+    const med = STATE.growth.filter(g => enRango(g.date)).sort((a, b) => new Date(a.date) - new Date(b.date));
+    doc += `<h3>Crecimiento</h3>`;
+    ["weight", "height", "head"].forEach(k => {
+      const m = GROWTH_META[k];
+      const filas = med.filter(g => g[k]).map(g => ({
+        x: ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(g.date + "T00:00:00")) || 0, y: Number(g[k]),
+      }));
+      if (!filas.length) return;
+      doc += `<h4>${m.titulo}</h4>` + svgCrecimientoInforme(filas, m.tabla(), m.unidad);
+    });
+    doc += tabla(["Fecha", "Edad", "Peso", "Percentil", "Talla", "Percentil", "P. cefálico", "Percentil"],
+      med.map(g => {
+        const e = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(g.date + "T00:00:00"));
+        const pc = (k) => g[k] ? percentileForMeasure(k, e, Number(g[k])) : "—";
+        return [fmtFechaCorta(g.date), e == null ? "—" : e.toFixed(1) + " m",
+                g.weight ? g.weight + " kg" : "—", pc("weight"),
+                g.height ? g.height + " cm" : "—", pc("height"),
+                g.head ? g.head + " cm" : "—", pc("head")];
+      }));
+  }
+
+  /* ---- sueño ---- */
+  if (S("sueno")) {
+    const mapa = minutosPorDia();
+    const est = estandarSueno(meses);
+    const filas = [];
+    for (let d = new Date(desde); d < hasta; d.setDate(d.getDate() + 1)) {
+      const iso = isoDeFecha(d), h = horasDelDia(iso, mapa);
+      if (h) filas.push({ etiqueta: fmtFechaCorta(iso).replace(/ de \d+$/, ""), iso, horas: h, estado: estadoSueno(h, meses) });
+    }
+    const total = filas.reduce((s, f) => s + f.horas, 0);
+    const media = filas.length ? total / filas.length : 0;
+    doc += `<h3>Sueño</h3>`;
+    if (!filas.length) doc += `<p class="inf-vacio">Sin registros de sueño en este periodo.</p>`;
+    else {
+      doc += `<div class="inf-kpis">
+          <div><b>${fmtHM(media)}</b><span>Media diaria</span></div>
+          <div><b>${fmtHM(total)}</b><span>Total</span></div>
+          <div><b>${filas.length}</b><span>Días con registro</span></div>
+          <div><b>${est.rec[0]}-${est.rec[1]} h</b><span>Recomendado ${est.etiqueta}</span></div>
+        </div>
+        <p class="inf-nota">Referencia National Sleep Foundation 2015 y AASM 2016.
+          ${estadoSueno(media, meses) ? `La media queda <b>${SUENO_TEXTO[estadoSueno(media, meses)]}</b>.` : ""}</p>`;
+      // Con muchos dias la grafica diaria no se lee: se agrupa por semanas.
+      const puntos = filas.length > 45 ? agruparPorSemana(filas, meses) : filas;
+      doc += svgBarrasInforme(puntos, est, "día");
+    }
+  }
+
+  /* ---- alimentacion ---- */
+  if (S("alimentacion")) {
+    const probados = [], reacciones = [];
+    for (const [id, dat] of Object.entries(STATE.alimentos || {})) {
+      const hist = (dat.historial || []).filter(h => enRango(h.fecha));
+      if (!hist.length) continue;
+      const a = alimentoPorId(id);
+      const ultimo = hist[hist.length - 1];
+      probados.push([nombreLocal(a) || id, GRUPOS_LABEL[a?.grupo] || "—", fmtFechaCorta(hist[0].fecha),
+                     { tolerado: "Tolerado", reaccion: "Reacción", probando: "Probando" }[ultimo.resultado] || ultimo.resultado]);
+      if (hist.some(h => h.resultado === "reaccion")) reacciones.push(nombreLocal(a) || id);
+    }
+    doc += `<h3>Alimentación</h3>
+      <div class="inf-kpis">
+        <div><b>${probados.length}</b><span>Alimentos probados</span></div>
+        <div><b>${probados.filter(p => p[3] === "Tolerado").length}</b><span>Tolerados</span></div>
+        <div><b>${reacciones.length}</b><span>Con reacción</span></div>
+        <div><b>${CONFIG.metodo}</b><span>Método</span></div>
+      </div>`;
+    if (reacciones.length) doc += `<p class="inf-nota"><b>Reacciones registradas:</b> ${reacciones.map(esc).join(", ")}.</p>`;
+    doc += tabla(["Alimento", "Grupo", "Primera vez", "Estado"], probados.sort((a, b) => a[0].localeCompare(b[0])));
+  }
+
+  /* ---- tomas ---- */
+  if (S("tomas")) {
+    const porDia = new Map();
+    STATE.tomas.filter(t => enRango(t.fecha)).forEach(t => {
+      const p = porDia.get(t.fecha) || { ml: 0, n: 0 };
+      p.ml += Number(t.ml) || 0; p.n++; porDia.set(t.fecha, p);
+    });
+    const filas = [...porDia.entries()].sort().map(([f, p]) => [fmtFechaCorta(f), p.n, p.ml + " ml"]);
+    const totalMl = [...porDia.values()].reduce((s, p) => s + p.ml, 0);
+    doc += `<h3>Tomas de leche</h3>`;
+    if (filas.length) doc += `<p class="inf-nota">Media de <b>${Math.round(totalMl / filas.length)} ml/día</b> en ${filas.length} días con registro.</p>`;
+    doc += tabla(["Día", "Tomas", "Volumen"], filas);
+  }
+
+  /* ---- panales ---- */
+  if (S("panales")) {
+    const porDia = new Map();
+    STATE.diapers.filter(d => enRango(d.datetime.slice(0, 10))).forEach(d => {
+      const f = d.datetime.slice(0, 10);
+      const p = porDia.get(f) || { pis: 0, caca: 0 };
+      if (d.type === "pis" || d.type === "mixto") p.pis++;
+      if (d.type === "caca" || d.type === "mixto") p.caca++;
+      porDia.set(f, p);
+    });
+    doc += `<h3>Pañales</h3>` + tabla(["Día", "Pis", "Caca"],
+      [...porDia.entries()].sort().map(([f, p]) => [fmtFechaCorta(f), p.pis, p.caca]));
+  }
+
+  /* ---- desarrollo ---- */
+  if (S("desarrollo")) {
+    const hitos = OMS_MILESTONES.filter(m => STATE.milestonesAchieved[m.id])
+      .map(m => [m.text, fmtFechaCorta(STATE.milestonesAchieved[m.id]), `${m.min}-${m.max} m`]);
+    const dientes = Object.keys(STATE.teethErupted || {}).filter(k => STATE.teethErupted[k]).length;
+    doc += `<h3>Desarrollo</h3>
+      <p class="inf-nota">Hitos motores OMS conseguidos: <b>${hitos.length} de ${OMS_MILESTONES.length}</b>. Dientes salidos: <b>${dientes}</b>.</p>`
+      + tabla(["Hito", "Conseguido", "Ventana normal"], hitos);
+  }
+
+  /* ---- vacunas ---- */
+  if (S("vacunas")) {
+    const puestas = [], pendientes = [];
+    (STATE.vaccines || []).forEach(v => {
+      const hecha = STATE.vaccinesDone[v.id];   // guarda la fecha en que se marco
+      const fila = [esc(v.vaccine), esc(v.dose || "—"), esc(v.age)];
+      if (hecha) puestas.push(fila.concat(typeof hecha === "string" ? fmtFechaCorta(hecha) : "sí"));
+      else pendientes.push(fila);
+    });
+    doc += `<h3>Vacunas</h3><p class="inf-nota">Puestas: <b>${puestas.length}</b> · Pendientes: <b>${pendientes.length}</b>.</p>`
+      + tabla(["Vacuna", "Dosis", "Edad prevista", "Puesta"], puestas);
+    if (pendientes.length) doc += `<h4>Pendientes</h4>` + tabla(["Vacuna", "Dosis", "Edad prevista"], pendientes);
+  }
+
+  /* ---- visitas ---- */
+  if (S("visitas")) {
+    const motivos = { rutina: "Revisión rutinaria", vacunacion: "Vacunación", enfermedad: "Enfermedad/consulta", otro: "Otro" };
+    const vs = STATE.pediatricVisits.filter(v => enRango(v.date)).sort((a, b) => a.date.localeCompare(b.date));
+    doc += `<h3>Visitas al pediatra</h3>` + tabla(["Fecha", "Motivo", "Medidas", "Notas"],
+      vs.map(v => [fmtFechaCorta(v.date), motivos[v.reason] || v.reason,
+        [v.weight && v.weight + " kg", v.height && v.height + " cm", v.head && v.head + " cm"].filter(Boolean).join(" · ") || "—",
+        esc(v.notes || "—")]));
+  }
+
+  /* ---- notas ---- */
+  if (S("notas")) {
+    const ns = STATE.notes.filter(n => enRango(n.date)).sort((a, b) => a.date.localeCompare(b.date));
+    doc += `<h3>Notas</h3>` + tabla(["Fecha", "Nota"], ns.map(n => [fmtFechaCorta(n.date), esc(n.text)]));
+  }
+
+  imprimirDocumento(doc);
+}
+
+/* Agrupa dias en semanas para que una grafica de meses siga siendo legible. */
+function agruparPorSemana(filas, meses) {
+  const out = new Map();
+  filas.forEach(f => {
+    const d = new Date(f.iso + "T00:00:00");
+    const l = new Date(d); l.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    const k = isoDeFecha(l);
+    const p = out.get(k) || { suma: 0, n: 0 };
+    p.suma += f.horas; p.n++; out.set(k, p);
+  });
+  return [...out.entries()].sort().map(([k, p]) => {
+    const h = +(p.suma / p.n).toFixed(2);
+    return { etiqueta: fmtFechaCorta(k).replace(/ de \d+$/, ""), horas: h, estado: estadoSueno(h, meses) };
+  });
+}
+
+/* Curva de crecimiento para el papel: banda P3-P97, mediana y los puntos. */
+function svgCrecimientoInforme(puntos, tabla, unidad) {
+  const W = 720, H = 230, izq = 40, der = 10, arr = 10, aba = 26;
+  const au = W - izq - der, hu = H - arr - aba;
+  const i3 = WHO_PERCENTILES.indexOf(3), i50 = WHO_PERCENTILES.indexOf(50), i97 = WHO_PERCENTILES.indexOf(97);
+  const maxX = Math.min(60, Math.max(6, Math.ceil(Math.max(...puntos.map(p => p.x)) + 2)));
+  const vis = WHO_MONTHS.map((m, i) => ({ m, i })).filter(o => o.m <= maxX);
+  const maxY = Math.max(...vis.map(o => tabla[o.i][i97]), ...puntos.map(p => p.y)) * 1.05;
+  const minY = Math.min(...vis.map(o => tabla[o.i][i3]), ...puntos.map(p => p.y)) * 0.95;
+  const X = v => izq + au * (v / maxX);
+  const Y = v => arr + hu - hu * ((v - minY) / (maxY - minY));
+  const linea = (col) => vis.map((o, k) => `${k ? "L" : "M"}${X(o.m).toFixed(1)},${Y(tabla[o.i][col]).toFixed(1)}`).join(" ");
+
+  let g = `<svg class="inf-graf" viewBox="0 0 ${W} ${H}" role="img" aria-label="Curva de crecimiento">`;
+  g += `<path d="${linea(i97)} ${vis.slice().reverse().map(o => `L${X(o.m).toFixed(1)},${Y(tabla[o.i][i3]).toFixed(1)}`).join(" ")} Z" fill="#dcfce7" opacity="0.75"/>`;
+  g += `<path d="${linea(i50)}" fill="none" stroke="#2563eb" stroke-width="1.6"/>`;
+  [i3, i97].forEach(c => { g += `<path d="${linea(c)}" fill="none" stroke="#cbd5e1" stroke-width="1"/>`; });
+  const paso = maxX > 24 ? 6 : maxX > 12 ? 3 : 1;
+  for (let m = 0; m <= maxX; m += paso) g += `<text x="${X(m).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="8.5" fill="#888">${m}</text>`;
+  for (let k = 0; k <= 4; k++) {
+    const v = minY + (maxY - minY) * k / 4;
+    g += `<line x1="${izq}" x2="${W - der}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="#eee"/>`;
+    g += `<text x="${izq - 6}" y="${(Y(v) + 3).toFixed(1)}" text-anchor="end" font-size="8.5" fill="#888">${v.toFixed(1)}</text>`;
+  }
+  g += `<path d="${puntos.map((p, k) => `${k ? "L" : "M"}${X(p.x).toFixed(1)},${Y(p.y).toFixed(1)}`).join(" ")}" fill="none" stroke="#dc2626" stroke-width="2"/>`;
+  puntos.forEach(p => { g += `<circle cx="${X(p.x).toFixed(1)}" cy="${Y(p.y).toFixed(1)}" r="3.2" fill="#dc2626"/>`; });
+  // A la derecha: pegada al margen izquierdo se solapaba con el tick del 0.
+  g += `<text x="${W - der}" y="${H - 8}" text-anchor="end" font-size="8.5" fill="#888">edad en meses · ${unidad}</text></svg>`;
+  return g;
+}
+
+/* Un solo sitio que sepa maquetar e imprimir: lo usan el informe de sueño y este. */
+function imprimirDocumento(html) {
+  let cont = document.getElementById("pb-informe");
+  if (!cont) { cont = document.createElement("div"); cont.id = "pb-informe"; document.body.appendChild(cont); }
+  cont.innerHTML = html;
+  document.body.classList.add("imprimiendo");
+  const limpiar = () => {
+    document.body.classList.remove("imprimiendo");
+    window.removeEventListener("afterprint", limpiar);
+    document.removeEventListener("pointerdown", limpiar, true);
+    document.removeEventListener("keydown", limpiar, true);
+  };
+  window.addEventListener("afterprint", limpiar);
+  setTimeout(() => {
+    window.print();
+    document.addEventListener("pointerdown", limpiar, true);
+    document.addEventListener("keydown", limpiar, true);
+  }, 60);
 }
 
 /* ======================== render: PEDIATRA ======================== */
@@ -8205,6 +9115,11 @@ function renderPediatra(el) {
     <div class="campo"><label>Notas de la consulta</label><textarea id="pv-notes" placeholder="Qué dijo el pediatra, indicaciones..."></textarea></div>
     <button class="btn-primario" onclick="PB.savePediatricVisit()">Guardar visita</button>
   </div>`;
+  html += `<div class="card"><h2>Informe para la consulta</h2>
+    <div class="faint" style="margin-top:-4px">Marca lo que quieres incluir y el rango de fechas. Se abre el diálogo de impresión: elige <b>Guardar como PDF</b>.</div>
+    <div id="infc-panel">${htmlInformeCompleto()}</div>
+  </div>`;
+
   html += `<div class="card"><h2>Historial de visitas</h2>`;
   if (!sorted.length) html += `<div class="faint">Sin visitas registradas.</div>`;
   sorted.forEach(v => {
@@ -8212,7 +9127,8 @@ function renderPediatra(el) {
     html += `<div class="visit-card">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <b>${fmtFechaCorta(v.date)} · ${motivos[v.reason]||v.reason}</b>
-        <button class="del-row" onclick="PB.deletePediatricVisit('${v.id}')">Eliminar</button>
+        <button class="ed-row" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">Editar</button>
+        <button class="del-row" onclick="PB.pedirBorrado('pediatricVisits','${v.id}','Visita del ${fmtFechaCorta(v.date)}')">Eliminar</button>
       </div>
       ${(v.weight||v.height||v.head) ? `<div class="faint" style="margin-top:4px">${v.weight?`Peso: ${v.weight} kg · `:''}${v.height?`Long: ${v.height} cm · `:''}${v.head?`P.cef: ${v.head} cm`:''}</div>` : ''}
       ${v.notes ? `<div style="margin-top:6px;font-size:0.8125rem;white-space:pre-wrap">${v.notes}</div>` : ''}
@@ -8229,12 +9145,13 @@ function savePediatricVisit() {
   const head = document.getElementById("pv-head").value;
   const notes = document.getElementById("pv-notes").value.trim();
   const id = "pv_"+Date.now().toString(36);
-  STATE.pediatricVisits.push({ id, date, reason, weight: weight||null, height: height||null, head: head||null, notes });
-  if (weight || height || head) STATE.growth.push({ id: "gr_"+id, date, weight: weight||null, height: height||null, head: head||null, visitId: id });
+  STATE.pediatricVisits.push(sellar({ id, date, reason, weight: weight||null, height: height||null, head: head||null, notes }));
+  if (weight || height || head) STATE.growth.push(sellar({ id: "gr_"+id, date, weight: weight||null, height: height||null, head: head||null, visitId: id }));
   guardarEstado();
   renderPediatra(document.getElementById("view-pediatra"));
 }
 function deletePediatricVisit(id) {
+  anotarBorrado(id);
   STATE.pediatricVisits = STATE.pediatricVisits.filter(v => v.id !== id);
   STATE.growth = STATE.growth.filter(g => g.visitId !== id);
   guardarEstado();
@@ -8472,7 +9389,8 @@ function renderSueno(el) {
       <div style="flex:1"><div class="et">${s.type === 'siesta' ? 'Siesta' : 'Nocturno'} · ${fmtHoraCorta(s.start)}${s.end ? ` - ${fmtHoraCorta(s.end)}` : ''}</div>
       <div class="tag">${dur}</div></div>
       ${!s.end ? `<button class="stop-btn" style="padding:4px 12px;font-size:0.6875rem" onclick="PB.stopSleep('${s.id}')">STOP</button>` : ''}
-      <button class="del-row" onclick="PB.deleteSleep('${s.id}')">✕</button></div>`;
+      <button class="ed-row" onclick="PB.editarRegistro('sleep','${s.id}')" title="Editar">✎</button>
+      <button class="del-row" onclick="PB.pedirBorrado('sleep','${s.id}','${s.type === 'siesta' ? 'Siesta' : 'Sueño nocturno'} del ${fmtFechaCorta(s.start.slice(0, 10))}')">✕</button></div>`;
   });
   html += `</div>`;
 
@@ -8572,7 +9490,7 @@ function addSleepManual() {
   if (new Date(fin) <= new Date(ini)) return decir("La hora de fin tiene que ser posterior a la de inicio.");
   const horas = (new Date(fin) - new Date(ini)) / 3600000;
   if (horas > 24) return decir("Más de 24 horas seguidas: revisa las fechas.");
-  STATE.sleep.push({ id: "sl_" + Date.now().toString(36), type, start: ini, end: fin });
+  STATE.sleep.push(sellar({ id: "sl_" + Date.now().toString(36), type, start: ini, end: fin }));
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
   suenoModo("manual");
@@ -8871,26 +9789,7 @@ function suenoInforme() {
     doc += `</tbody></table>`;
   }
 
-  let cont = document.getElementById("pb-informe");
-  if (!cont) { cont = document.createElement("div"); cont.id = "pb-informe"; document.body.appendChild(cont); }
-  cont.innerHTML = doc;
-  document.body.classList.add("imprimiendo");
-  /* Quitar la clase con un temporizador seria arriesgado: si el navegador no
-     bloquea en print(), el informe desapareceria con el dialogo aun abierto y
-     saldria una hoja en blanco. Se limpia con "afterprint" y, como red por si
-     ese evento no llega, en la siguiente interaccion del usuario. */
-  const limpiar = () => {
-    document.body.classList.remove("imprimiendo");
-    window.removeEventListener("afterprint", limpiar);
-    document.removeEventListener("pointerdown", limpiar, true);
-    document.removeEventListener("keydown", limpiar, true);
-  };
-  window.addEventListener("afterprint", limpiar);
-  setTimeout(() => {
-    window.print();
-    document.addEventListener("pointerdown", limpiar, true);
-    document.addEventListener("keydown", limpiar, true);
-  }, 60);
+  imprimirDocumento(doc);
 }
 
 /* ---- helpers compartidos (los usa tambien Pañales) --------------------- */
@@ -8911,7 +9810,7 @@ function mismoDia(dtLocal, fecha) {
 function addSleep() {
   const type = document.getElementById("sleep-type").value;
   const start = document.getElementById("sleep-start").value || nowDatetimeLocal();
-  STATE.sleep.push({ id: "sl_" + Date.now().toString(36), type, start, end: null });
+  STATE.sleep.push(sellar({ id: "sl_" + Date.now().toString(36), type, start, end: null }));
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
 }
@@ -8919,10 +9818,12 @@ function stopSleep(id) {
   const s = STATE.sleep.find(x => x.id === id);
   if (!s) return;
   s.end = nowDatetimeLocal();
+  sellar(s);
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
 }
 function deleteSleep(id) {
+  anotarBorrado(id);
   STATE.sleep = STATE.sleep.filter(s => s.id !== id);
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
@@ -8952,7 +9853,8 @@ function renderPanales(el) {
   if (!sorted.length) html += `<div class="faint">Sin registros.</div>`;
   sorted.slice(0,80).forEach(d => {
     const labels = { pis:"Pis", caca:"Caca", mixto:"Mixto", seco:"Seco" };
-    html += `<div class="bloque-rutina"><div class="hora mono">${fmtHoraCorta(d.datetime)}</div><div style="flex:1"><div class="et">${labels[d.type]} · ${fmtFechaCorta(d.datetime.slice(0,10))}</div></div><button class="del-row" onclick="PB.deleteDiaper('${d.id}')">✕</button></div>`;
+    html += `<div class="bloque-rutina"><div class="hora mono">${fmtHoraCorta(d.datetime)}</div><div style="flex:1"><div class="et">${labels[d.type]} · ${fmtFechaCorta(d.datetime.slice(0,10))}</div></div><button class="ed-row" onclick="PB.editarRegistro('diapers','${d.id}')" title="Editar">✎</button>
+      <button class="del-row" onclick="PB.pedirBorrado('diapers','${d.id}','${labels[d.type]} del ${fmtFechaCorta(d.datetime.slice(0,10))}')">✕</button></div>`;
   });
   html += `</div>`;
   el.innerHTML = html;
@@ -8961,11 +9863,12 @@ function renderPanales(el) {
 function addDiaper() {
   const type = document.getElementById("diaper-type").value;
   const datetime = document.getElementById("diaper-dt").value || nowDatetimeLocal();
-  STATE.diapers.push({ id: "dp_"+Date.now().toString(36), type, datetime });
+  STATE.diapers.push(sellar({ id: "dp_"+Date.now().toString(36), type, datetime }));
   guardarEstado();
   renderPanales(document.getElementById("view-panales"));
 }
 function deleteDiaper(id) {
+  anotarBorrado(id);
   STATE.diapers = STATE.diapers.filter(d => d.id !== id);
   guardarEstado();
   renderPanales(document.getElementById("view-panales"));
@@ -9056,7 +9959,8 @@ function renderNotas(el) {
   html += `<div class="card"><h2>Historial</h2>`;
   if (!sorted.length) html += `<div class="faint">Sin notas todavía.</div>`;
   sorted.forEach(n => {
-    html += `<div class="milestone-row"><div style="flex:1"><div class="txt">${n.text}</div><div class="meta">${fmtFechaCorta(n.date)}</div></div><button class="del-row" onclick="PB.deleteNote('${n.id}')">✕</button></div>`;
+    html += `<div class="milestone-row"><div style="flex:1"><div class="txt">${n.text}</div><div class="meta">${fmtFechaCorta(n.date)}</div></div><button class="ed-row" onclick="PB.editarRegistro('notes','${n.id}')" title="Editar">✎</button>
+      <button class="del-row" onclick="PB.pedirBorrado('notes','${n.id}','Nota del ${fmtFechaCorta(n.date)}')">✕</button></div>`;
   });
   html += `</div>`;
   el.innerHTML = html;
@@ -9064,11 +9968,12 @@ function renderNotas(el) {
 function addNote() {
   const text = document.getElementById("note-text").value.trim();
   if (!text) return;
-  STATE.notes.push({ id: "nt_"+Date.now().toString(36), date: HOY_ISO, text });
+  STATE.notes.push(sellar({ id: "nt_"+Date.now().toString(36), date: HOY_ISO, text }));
   guardarEstado();
   renderNotas(document.getElementById("view-notas"));
 }
 function deleteNote(id) {
+  anotarBorrado(id);
   STATE.notes = STATE.notes.filter(n => n.id !== id);
   guardarEstado();
   renderNotas(document.getElementById("view-notas"));
@@ -9092,11 +9997,13 @@ function boot(vistaInicial) {
   calWiring();
   renderHeader();
   irA(vistaInicial || "hoy");
+  // Una notificacion al dia como mucho, y solo si el usuario las activo.
+  notificarPendientes();
 }
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, fusionarConRemoto, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
@@ -17312,18 +18219,23 @@ function boot(vistaInicial) {
       const localTs  = PB.marcaDeTiempo() || "";
       const remotoTs = (remoto && remoto.modificado) || "";
 
-      if (remoto && remotoTs > localTs) {
-        PB.importarEstadoSync(remoto.datos);
-        return "bajado";
-      }
-      if (!localTs) return "nada que subir";
-      if (!remoto || localTs > remotoTs) {
+      /* Fusion registro a registro en vez de "gana el documento entero mas
+         nuevo": si Ruben apunta una toma y Sergio un pañal sin sincronizar
+         entremedias, antes se perdia lo de uno de los dos. */
+      const cambioLocal = remoto ? PB.fusionarConRemoto(remoto.datos, remotoTs) : false;
+
+      const tsFinal = PB.marcaDeTiempo() || localTs;
+      if (!tsFinal) return "nada que subir";
+
+      // Se sube siempre que lo local aporte algo que el remoto no tenga: o
+      // bien somos mas nuevos, o bien la fusion ha juntado las dos partes.
+      if (!remoto || cambioLocal || tsFinal > remotoTs) {
         await supaFetch("/rest/v1/pablo_estado", {
           method: "POST",
           headers: { "Prefer": "resolution=merge-duplicates" },
-          body: JSON.stringify([{ id: PABLO_FILA, datos: PB.exportarEstadoSync(), modificado: localTs }])
+          body: JSON.stringify([{ id: PABLO_FILA, datos: PB.exportarEstadoSync(), modificado: tsFinal }])
         });
-        return "subido";
+        return cambioLocal ? "fusionado" : "subido";
       }
       return "al día";
     }
@@ -21445,7 +22357,12 @@ function boot(vistaInicial) {
         if (b) entrarEnArea(b.dataset.area);
       });
       pcWiring();
-      if (typeof PB !== "undefined") PB.setOnVista(pbSincronizarChip);
+      if (typeof PB !== "undefined") {
+        PB.setOnVista(pbSincronizarChip);
+        // Lo que se apunta de Pablo tambien dispara el sync diferido; antes
+        // solo subia al abrir la app.
+        PB.setOnGuardar(programarAutoSync);
+      }
       window.matchMedia("(max-width: 460px)").addEventListener("change", renderCabecera);
 
       // ---- Navegacion (delegacion: chips inyectados por renderNav) -------
