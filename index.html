@@ -5067,6 +5067,9 @@
       --amber-soft: var(--tipo-huevos-bg);
       --red:        var(--danger);
       --red-soft:   color-mix(in srgb, var(--danger) 14%, var(--bg-elev));
+      /* Exceso de sueño: violeta de la paleta de tipos, ya adaptado a los dos temas. */
+      --purple:      var(--tipo-desayunos-fg);
+      --purple-soft: var(--tipo-desayunos-bg);
 
       --radius:     var(--r-lg);
       --serif:      var(--font-num);
@@ -5176,6 +5179,99 @@
     .pb-app .day-cell.introduccion { background: var(--amber-soft); }
     .pb-app .day-cell .g { width: 5px; height: 5px; border-radius: 50%; position: absolute; bottom: 4px; }
     .pb-app .day-cell.empty { background: transparent; border-color: transparent; }
+
+    /* ---- SUEÑO ---------------------------------------------------------- */
+    /* Selector de modo/periodo: pastillas segmentadas, mas ligeras que
+       .seg-btns porque aqui no marcan un estado del bebe sino una vista. */
+    .pb-app .sueno-modo { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+    .pb-app .sueno-modo button {
+      flex: 1 1 auto; min-width: 74px; padding: 7px 12px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      border-radius: 999px; font: inherit; font-size: 0.8125rem; font-weight: 600;
+      color: var(--text-muted); cursor: pointer;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .pb-app .sueno-modo button:hover { color: var(--text); }
+    .pb-app .sueno-modo button.on { background: var(--blue-soft); color: var(--blue); border-color: transparent; }
+
+    .pb-app .sueno-resumen {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 4px 0 10px;
+    }
+    .pb-app .su-total { font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; }
+    .pb-app .su-badge {
+      font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+    }
+    .pb-app .su-badge.su-bien  { background: var(--green-soft); color: var(--green); }
+    .pb-app .su-badge.su-justo { background: var(--amber-soft); color: var(--amber); }
+    .pb-app .su-badge.su-bajo  { background: var(--red-soft);    color: var(--red); }
+    .pb-app .su-badge.su-alto  { background: var(--purple-soft); color: var(--purple); }
+
+    /* Semaforo compartido por el tile de hoy y las celdas del calendario. */
+    .pb-app .stat-tile.su-bien  { background: var(--green-soft); }
+    .pb-app .stat-tile.su-bien .num  { color: var(--green); }
+    .pb-app .stat-tile.su-justo { background: var(--amber-soft); }
+    .pb-app .stat-tile.su-justo .num { color: var(--amber); }
+    .pb-app .stat-tile.su-bajo  { background: var(--red-soft); }
+    .pb-app .stat-tile.su-bajo .num  { color: var(--red); }
+    .pb-app .stat-tile.su-alto  { background: var(--purple-soft); }
+    .pb-app .stat-tile.su-alto .num  { color: var(--purple); }
+
+    .pb-app .day-cell.su-cell { cursor: default; }
+    .pb-app .day-cell .su-h {
+      font-size: 0.625rem; font-weight: 700; font-family: var(--mono, inherit);
+      color: var(--text-faint); line-height: 1;
+    }
+    .pb-app .day-cell.su-bien  { background: var(--green-soft); border-color: transparent; }
+    .pb-app .day-cell.su-justo { background: var(--amber-soft); border-color: transparent; }
+    .pb-app .day-cell.su-bajo  { background: var(--red-soft);    border-color: transparent; }
+    .pb-app .day-cell.su-alto  { background: var(--purple-soft); border-color: transparent; }
+    .pb-app .day-cell.su-bien  .su-h { color: var(--green); }
+    .pb-app .day-cell.su-justo .su-h { color: var(--amber); }
+    .pb-app .day-cell.su-bajo  .su-h { color: var(--red); }
+    .pb-app .day-cell.su-alto  .su-h { color: var(--purple); }
+    .pb-app .cal-nav {
+      width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--bg-card); color: var(--text); font-size: 1.125rem; line-height: 1; cursor: pointer;
+    }
+    .pb-app .cal-nav:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* Selector de rango del informe: celdas clicables, rejilla de meses/años
+       y la fila de confirmacion con el rango ya resuelto. */
+    .pb-app .day-cell.inf-cell { cursor: pointer; }
+    .pb-app .day-cell.inf-cell:hover { border-color: var(--blue); }
+    .pb-app .day-cell.inf-cell.sel {
+      background: var(--blue-soft); border-color: var(--blue);
+    }
+    .pb-app .day-cell.inf-cell.sel .num { color: var(--blue); }
+    .pb-app .inf-rejilla { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .pb-app .inf-rejilla.anos { grid-template-columns: repeat(3, 1fr); }
+    .pb-app .inf-op {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      padding: 10px 4px; border: 1px solid var(--border); border-radius: 10px;
+      background: var(--bg-card); color: var(--text); font: inherit; cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .pb-app .inf-op:hover { border-color: var(--blue); }
+    .pb-app .inf-op .et { font-size: 0.8125rem; font-weight: 700; text-transform: capitalize; }
+    .pb-app .inf-op.sel { background: var(--blue-soft); border-color: var(--blue); }
+    .pb-app .inf-op.sel .et { color: var(--blue); }
+    .pb-app .inf-resumen {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; margin-top: 14px;
+      padding-top: 12px; border-top: 1px solid var(--border);
+    }
+    .pb-app .inf-resumen b { font-size: 0.9375rem; }
+    .pb-app .inf-resumen .btn-primario { margin: 0; flex: none; }
+    .pb-app .inf-resumen .btn-primario[disabled] { opacity: .45; cursor: not-allowed; }
+
+    @media (max-width: 480px) {
+      /* Cuatro tipos en una sola fila, y tres meses por fila para que la
+         media no parta en dos lineas y descuadre las celdas. */
+      .pb-app .sueno-modo button { min-width: 0; padding: 7px 4px; }
+      .pb-app .inf-rejilla { grid-template-columns: repeat(3, 1fr); }
+      .pb-app .inf-resumen { flex-direction: column; align-items: stretch; }
+      .pb-app .inf-resumen .btn-primario { width: 100%; }
+    }
     .pb-app .drawer-bg { position: fixed; inset: 0; background: rgba(10,14,20,.45); z-index: 40; display: none; }
     .pb-app .drawer-bg.open { display: block; }
     .pb-app .drawer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 41; background: var(--bg-card); border-radius: 18px 18px 0 0; max-width: 720px; margin: 0 auto; max-height: 82vh; overflow-y: auto; padding: 18px 18px calc(24px + env(safe-area-inset-bottom)); transform: translateY(100%); transition: transform .22s ease; }
@@ -5225,7 +5321,14 @@
     .pb-app input[type=date],
     .pb-app textarea { width: 100%; padding: 9px 11px; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-soft); color: var(--text); font-size: 0.875rem; font-family: var(--sans); }
     .pb-app textarea { resize: vertical; min-height: 60px; }
-    .pb-app .campo { margin-bottom: 10px; }
+    .pb-app .campo { margin-bottom: 10px; min-width: 0; }
+    /* Los input date/time nativos traen un ancho intrinseco grande: sin esto
+       se salen de su columna cuando la letra crece o la pantalla es estrecha. */
+    .pb-app .campo input, .pb-app .campo select, .pb-app .campo textarea { max-width: 100%; min-width: 0; }
+    /* Tres columnas de fecha no caben en un movil ni con letra normal. */
+    @media (max-width: 560px) {
+      .pb-app .grid-campos3 { grid-template-columns: 1fr; }
+    }
     .pb-app .campo label { display: block; font-size: 0.71875rem; color: var(--text-muted); font-weight: 700; margin-bottom: 3px; }
     .pb-app .grid-campos2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .pb-app .grid-campos3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
@@ -5946,6 +6049,62 @@
       .pb-app .settings-row label { font-size: 0.9375rem; }
     }
 
+
+    /* ========================================================================
+       INFORME IMPRIMIBLE — el "descargar PDF" del registro de sueño.
+       No hay libreria de PDF en el proyecto (y no se cargan scripts externos),
+       asi que el informe se maqueta aqui y se manda a imprimir: el propio
+       dialogo del sistema ofrece "Guardar como PDF". Colores fijos en claro,
+       porque el tema oscuro sale casi negro en papel.
+       ======================================================================== */
+    #pb-informe { display: none; }
+    body.imprimiendo #pb-informe {
+      display: block;
+      position: fixed; inset: 0; z-index: 99999;
+      overflow: auto; padding: 24px;
+      background: #ffffff; color: #111111;
+      font-family: var(--sans, system-ui, sans-serif);
+    }
+    #pb-informe .inf-cab {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+      border-bottom: 2px solid #111; padding-bottom: 10px; margin-bottom: 16px;
+    }
+    #pb-informe .inf-app { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #666; }
+    #pb-informe .inf-tit { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-top: 2px; }
+    #pb-informe .inf-meta { font-size: 11px; color: #666; text-align: right; line-height: 1.5; }
+    #pb-informe .inf-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+    #pb-informe .inf-kpis > div {
+      border: 1px solid #ddd; border-radius: 8px; padding: 10px 12px; text-align: center;
+    }
+    #pb-informe .inf-kpis b { display: block; font-size: 17px; font-weight: 800; }
+    #pb-informe .inf-kpis span { font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: #666; }
+    #pb-informe .inf-nota { font-size: 11.5px; line-height: 1.6; color: #333; margin: 0 0 18px; }
+    #pb-informe h3 { font-size: 13px; margin: 18px 0 6px; letter-spacing: -0.01em; }
+    #pb-informe .inf-graf { width: 100%; height: auto; display: block; margin-bottom: 6px; page-break-inside: avoid; }
+    #pb-informe .inf-tabla { width: 100%; border-collapse: collapse; font-size: 11px; }
+    #pb-informe .inf-tabla th {
+      text-align: left; font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em;
+      color: #666; border-bottom: 1px solid #bbb; padding: 5px 6px;
+    }
+    #pb-informe .inf-tabla td { padding: 5px 6px; border-bottom: 1px solid #eee; }
+    #pb-informe .inf-tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; }
+    #pb-informe .inf-bien  { background: #dcfce7; color: #166534; }
+    #pb-informe .inf-justo { background: #fef3c7; color: #92400e; }
+    #pb-informe .inf-bajo  { background: #fee2e2; color: #991b1b; }
+    #pb-informe .inf-alto  { background: #ede9fe; color: #5b21b6; }
+    #pb-informe .inf-vacio { color: #999; font-size: 10.5px; }
+
+    @media print {
+      @page { margin: 14mm; }
+      body.imprimiendo > *:not(#pb-informe) { display: none !important; }
+      body.imprimiendo #pb-informe {
+        position: static; padding: 0; overflow: visible;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+      #pb-informe .inf-tabla { page-break-inside: auto; }
+      #pb-informe tr { page-break-inside: avoid; }
+      #pb-informe thead { display: table-header-group; }
+    }
   </style>
 </head>
 <body>
@@ -8082,49 +8241,677 @@ function deletePediatricVisit(id) {
   renderPediatra(document.getElementById("view-pediatra"));
 }
 
-/* ======================== render: SUEÑO ======================== */
+/* ======================== render: SUEÑO ========================
+   Cuatro piezas: registro (cronometro o manual), calendario mensual,
+   grafica por periodo e informe imprimible. Todo cuelga de STATE.sleep,
+   cuyos registros son { id, type, start, end } con start/end en formato
+   datetime-local (hora local, sin zona). */
+
+/* Horas de sueño por cada 24 h, contando siestas. "rec" es el rango
+   recomendado y "ok" el margen que las guias admiten como aceptable; por
+   fuera de "ok" se considera insuficiente o excesivo.
+   Fuentes: National Sleep Foundation (Hirshkowitz, Sleep Health 2015) y
+   AASM (Paruthi, J Clin Sleep Med 2016). */
+const SUENO_ESTANDAR = [
+  { hastaMeses: 4,    etiqueta: "0-3 meses",  rec: [14, 17], ok: [11, 19] },
+  { hastaMeses: 12,   etiqueta: "4-11 meses", rec: [12, 15], ok: [10, 18] },
+  { hastaMeses: 36,   etiqueta: "1-2 años",   rec: [11, 14], ok: [9, 16] },
+  { hastaMeses: 72,   etiqueta: "3-5 años",   rec: [10, 13], ok: [8, 14] },
+  { hastaMeses: 1e4,  etiqueta: "6-12 años",  rec: [9, 12],  ok: [7, 13] },
+];
+function estandarSueno(meses) {
+  const m = (meses == null) ? 6 : meses;
+  return SUENO_ESTANDAR.find(e => m < e.hastaMeses) || SUENO_ESTANDAR[SUENO_ESTANDAR.length - 1];
+}
+/* "bien" dentro de lo recomendado, "justo" en el margen aceptable,
+   "mal" fuera. Sin datos devuelve null: un dia a cero puede ser
+   simplemente un dia sin registrar, y pintarlo en rojo enganaria. */
+function estadoSueno(horas, meses) {
+  if (!horas) return null;
+  const e = estandarSueno(meses);
+  if (horas >= e.rec[0] && horas <= e.rec[1]) return "bien";
+  if (horas >= e.ok[0]  && horas <= e.ok[1])  return "justo";
+  return horas < e.ok[0] ? "bajo" : "alto";
+}
+const SUENO_COLOR_VAR = { bien: "--green", justo: "--amber", bajo: "--red", alto: "--purple" };
+const SUENO_TEXTO = {
+  bien:  "dentro de lo recomendado",
+  justo: "en el margen aceptable",
+  bajo:  "por debajo de lo recomendado",
+  alto:  "por encima de lo recomendado",
+};
+function colorSueno(estado) {
+  const cont = document.querySelector(".pb-app") || document.documentElement;
+  const v = getComputedStyle(cont).getPropertyValue(SUENO_COLOR_VAR[estado] || "--text-muted").trim();
+  return v || "#94a3b8";
+}
+
+/* ---- agregacion -------------------------------------------------------- */
+function isoDeFecha(d) {
+  const p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+/* Minutos dormidos por dia natural. Un sueño que cruza la medianoche se
+   reparte entre los dos dias: si no, una noche de 23:00 a 07:00 dejaria el
+   dia siguiente a cero y el calendario mentiria. */
+function minutosPorDia() {
+  const mapa = new Map();
+  for (const s of STATE.sleep) {
+    if (!s.end) continue;
+    let ini = new Date(s.start), fin = new Date(s.end);
+    if (!(ini < fin)) continue;
+    while (ini < fin) {
+      const finDia = new Date(ini.getFullYear(), ini.getMonth(), ini.getDate() + 1);
+      const corte = fin < finDia ? fin : finDia;
+      const iso = isoDeFecha(ini);
+      mapa.set(iso, (mapa.get(iso) || 0) + (corte - ini) / 60000);
+      ini = corte;
+    }
+  }
+  return mapa;
+}
+function horasDelDia(iso, mapa) { return +(((mapa || minutosPorDia()).get(iso) || 0) / 60).toFixed(2); }
+
+/* Registros que solapan el rango [desde, hasta) — para el informe. */
+function registrosEnRango(desde, hasta) {
+  return STATE.sleep
+    .filter(s => { const i = new Date(s.start); const f = s.end ? new Date(s.end) : i; return f >= desde && i < hasta; })
+    .sort((a, b) => new Date(a.start) - new Date(b.start));
+}
+
+/* Cubos de la grafica segun el periodo elegido. Para "dia" cada barra es el
+   total de ese dia; para el resto es la MEDIA diaria del periodo, que es lo
+   unico comparable con un estandar expresado por 24 h. */
+const SUENO_PERIODOS = { dia: "Día", semana: "Semana", mes: "Mes", ano: "Año" };
+let SUENO_PERIODO = "dia";
+let SUENO_CAL_MES = null;   // Date del primer dia del mes mostrado
+
+function cubosSueno(periodo, mapa) {
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+  const manana = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 1);
+  const cubos = [];
+  /* Solo cuentan los dias ya transcurridos: dividir el mes o el año en curso
+     entre todos sus dias hundiria la media por los dias que aun no han sido. */
+  const sumaEntre = (a, b) => {
+    const tope = b < manana ? b : manana;
+    let min = 0, dias = 0, conDatos = 0;
+    for (let d = new Date(a); d < tope; d.setDate(d.getDate() + 1)) {
+      const m = mapa.get(isoDeFecha(d)) || 0;
+      min += m; dias++; if (m > 0) conDatos++;
+    }
+    return { min, dias: Math.max(dias, 1), conDatos };
+  };
+  if (periodo === "dia") {
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() - i);
+      const min = mapa.get(isoDeFecha(d)) || 0;
+      cubos.push({ etiqueta: `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`,
+                   horas: +(min / 60).toFixed(2), dias: 1, conDatos: min > 0 ? 1 : 0, desde: new Date(d) });
+    }
+  } else if (periodo === "semana") {
+    const lunes = new Date(hoy); lunes.setDate(hoy.getDate() - ((hoy.getDay() + 6) % 7));
+    for (let i = 11; i >= 0; i--) {
+      const a = new Date(lunes.getFullYear(), lunes.getMonth(), lunes.getDate() - i * 7);
+      const b = new Date(a.getFullYear(), a.getMonth(), a.getDate() + 7);
+      const { min, dias, conDatos } = sumaEntre(a, b);
+      cubos.push({ etiqueta: `${String(a.getDate()).padStart(2, "0")}/${String(a.getMonth() + 1).padStart(2, "0")}`,
+                   horas: +((min / 60) / dias).toFixed(2), dias, conDatos, desde: a });
+    }
+  } else if (periodo === "mes") {
+    for (let i = 11; i >= 0; i--) {
+      const a = new Date(hoy.getFullYear(), hoy.getMonth() - i, 1);
+      const b = new Date(a.getFullYear(), a.getMonth() + 1, 1);
+      const { min, dias, conDatos } = sumaEntre(a, b);
+      cubos.push({ etiqueta: a.toLocaleDateString("es-ES", { month: "short" }), horas: +((min / 60) / dias).toFixed(2), dias, conDatos, desde: a });
+    }
+  } else {
+    for (let i = 4; i >= 0; i--) {
+      const a = new Date(hoy.getFullYear() - i, 0, 1);
+      const b = new Date(a.getFullYear() + 1, 0, 1);
+      const { min, dias, conDatos } = sumaEntre(a, b);
+      cubos.push({ etiqueta: String(a.getFullYear()), horas: +((min / 60) / dias).toFixed(2), dias, conDatos, desde: a });
+    }
+  }
+  return cubos;
+}
+
+/* ---- vista ------------------------------------------------------------- */
 function renderSueno(el) {
-  const activos = STATE.sleep.filter(s => !s.end).sort((a,b)=>new Date(b.start)-new Date(a.start));
-  const hoy = STATE.sleep.filter(s => s.start.slice(0,10) === HOY_ISO);
-  const minHoy = hoy.reduce((s,x) => x.end ? s+(new Date(x.end)-new Date(x.start))/60000 : s, 0);
-  const siestasHoy = hoy.filter(s => s.type === "siesta").length;
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+  const est = estandarSueno(meses);
+  const mapa = minutosPorDia();
+  const activos = STATE.sleep.filter(s => !s.end).sort((a, b) => new Date(b.start) - new Date(a.start));
+  const hHoy = horasDelDia(HOY_ISO, mapa);
+  const estHoy = estadoSueno(hHoy, meses);
+  const siestasHoy = STATE.sleep.filter(s => s.type === "siesta" && s.start.slice(0, 10) === HOY_ISO).length;
+  if (!SUENO_CAL_MES) { const h = new Date(); SUENO_CAL_MES = new Date(h.getFullYear(), h.getMonth(), 1); }
 
   let html = `<h2 style="margin:0 0 12px">Sueño</h2>`;
+
   activos.forEach(s => {
-    html += `<div class="sleep-active"><div><b>${s.type==='siesta'?'Siesta':'Sueño nocturno'} en curso</b><div class="faint">Desde ${fmtHoraCorta(s.start)}</div></div><button class="stop-btn" onclick="PB.stopSleep('${s.id}')">STOP</button></div>`;
+    html += `<div class="sleep-active"><div><b>${s.type === 'siesta' ? 'Siesta' : 'Sueño nocturno'} en curso</b>
+      <div class="faint">Desde ${fmtHoraCorta(s.start)}</div></div>
+      <button class="stop-btn" onclick="PB.stopSleep('${s.id}')">STOP</button></div>`;
   });
+
+  /* Registro: cronometro (lo que ya habia) o entrada manual con fecha y hora. */
   html += `<div class="card"><h2>Registrar sueño</h2>
-    <div class="grid-campos2">
-      <div class="campo"><label>Tipo</label><select id="sleep-type"><option value="siesta">Siesta</option><option value="nocturno">Sueño nocturno</option></select></div>
-      <div class="campo"><label>Inicio</label><input type="datetime-local" id="sleep-start" value="${nowDatetimeLocal()}"></div>
+    <div class="sueno-modo">
+      <button type="button" class="on" data-modo="crono" onclick="PB.suenoModo('crono')">Cronómetro</button>
+      <button type="button" data-modo="manual" onclick="PB.suenoModo('manual')">Manual</button>
     </div>
-    <button class="btn-primario" onclick="PB.addSleep()">Empezar a dormir</button>
+    <div id="sueno-crono">
+      <div class="grid-campos2">
+        <div class="campo"><label>Tipo</label><select id="sleep-type"><option value="siesta">Siesta</option><option value="nocturno">Sueño nocturno</option></select></div>
+        <div class="campo"><label>Inicio</label><input type="datetime-local" id="sleep-start" value="${nowDatetimeLocal()}"></div>
+      </div>
+      <button class="btn-primario" onclick="PB.addSleep()">Empezar a dormir</button>
+    </div>
+    <div id="sueno-manual" hidden>
+      <div class="grid-campos3">
+        <div class="campo"><label>Tipo</label><select id="sleep-m-type"><option value="siesta">Siesta</option><option value="nocturno">Sueño nocturno</option></select></div>
+        <div class="campo"><label>Desde</label><input type="datetime-local" id="sleep-m-ini" value="${nowDatetimeLocal()}"></div>
+        <div class="campo"><label>Hasta</label><input type="datetime-local" id="sleep-m-fin" value="${nowDatetimeLocal()}"></div>
+      </div>
+      <div class="faint" id="sueno-m-aviso" style="margin:6px 0 0"></div>
+      <button class="btn-primario" onclick="PB.addSleepManual()">Guardar registro</button>
+    </div>
   </div>`;
-  html += `<div class="card"><h2>Hoy</h2><div class="stat-grid cols2">
-    <div class="stat-tile"><div class="num">${(minHoy/60).toFixed(1)} h</div><div class="lab">Sueño total hoy</div></div>
-    <div class="stat-tile"><div class="num">${siestasHoy}</div><div class="lab">Siestas hoy</div></div>
-  </div></div>`;
-  html += `<div class="card"><h2>Últimos 14 días</h2><div class="chart-wrap" style="height:180px"><canvas id="chart-sleep14"></canvas></div></div>`;
-  const sorted = [...STATE.sleep].sort((a,b)=>new Date(b.start)-new Date(a.start));
-  html += `<div class="card"><h2>Historial</h2>`;
+
+  html += `<div class="card"><h2>Hoy <span class="n">${est.etiqueta}: ${est.rec[0]}-${est.rec[1]} h</span></h2>
+    <div class="stat-grid cols2">
+      <div class="stat-tile${estHoy ? ' su-' + estHoy : ''}"><div class="num">${hHoy.toFixed(1)} h</div><div class="lab">Sueño total hoy</div></div>
+      <div class="stat-tile"><div class="num">${siestasHoy}</div><div class="lab">Siestas hoy</div></div>
+    </div>
+    ${estHoy ? `<div class="faint" style="margin-top:8px">Hoy va <b>${SUENO_TEXTO[estHoy]}</b> para ${est.etiqueta}.</div>` : ''}
+  </div>`;
+
+  /* Grafica por periodo */
+  html += `<div class="card"><h2>Cuánto duerme</h2>
+    <div class="sueno-modo" id="sueno-periodos">
+      ${Object.entries(SUENO_PERIODOS).map(([k, v]) =>
+        `<button type="button" class="${k === SUENO_PERIODO ? 'on' : ''}" onclick="PB.suenoPeriodo('${k}')">${v}</button>`).join("")}
+    </div>
+    <div id="sueno-resumen" class="sueno-resumen"></div>
+    <div class="chart-wrap" style="height:200px"><canvas id="chart-sueno"></canvas></div>
+    <div class="pb-cal-leyenda">
+      <span><i class="punto" style="background:var(--green)"></i>${est.rec[0]}-${est.rec[1]} h · recomendado</span>
+      <span><i class="punto" style="background:var(--amber)"></i>${est.ok[0]}-${est.ok[1]} h · aceptable</span>
+      <span><i class="punto" style="background:var(--red)"></i>menos de ${est.ok[0]} h · duerme poco</span>
+      <span><i class="punto" style="background:var(--purple)"></i>más de ${est.ok[1]} h · duerme de más</span>
+    </div>
+    <div class="faint" style="margin-top:8px">${SUENO_PERIODO === 'dia'
+      ? 'Cada barra es el total de ese día.'
+      : 'Cada barra es la media diaria del periodo: el estándar se define por cada 24 h.'}</div>
+  </div>`;
+
+  /* Calendario mensual */
+  html += `<div class="card"><h2>Calendario</h2>
+    <div class="mes-header">
+      <button class="cal-nav" onclick="PB.suenoMes(-1)" aria-label="Mes anterior">‹</button>
+      <h3 style="text-transform:none">${(m => m.charAt(0).toUpperCase() + m.slice(1))(SUENO_CAL_MES.toLocaleDateString("es-ES", { month: "long", year: "numeric" }))}</h3>
+      <button class="cal-nav" onclick="PB.suenoMes(1)" aria-label="Mes siguiente">›</button>
+    </div>
+    ${htmlCalendarioSueno(mapa, meses)}
+    <div class="faint" style="margin-top:8px">Las noches que cruzan la medianoche se reparten entre los dos días.</div>
+  </div>`;
+
+  /* Informe */
+  html += `<div class="card"><h2>Descargar informe</h2>
+    <div class="faint" style="margin-top:-4px">Elige el tipo de rango y después el rango concreto en el calendario. El PDF incluye la gráfica; se abre el diálogo de impresión y ahí eliges <b>Guardar como PDF</b>.</div>
+    <div id="sueno-selector">${htmlSelectorInforme()}</div>
+  </div>`;
+
+  /* Historial */
+  const sorted = [...STATE.sleep].sort((a, b) => new Date(b.start) - new Date(a.start));
+  html += `<div class="card"><h2>Historial <span class="n">${sorted.length}</span></h2>`;
   if (!sorted.length) html += `<div class="faint">Sin registros.</div>`;
-  sorted.slice(0,60).forEach(s => {
-    const dur = s.end ? (((new Date(s.end)-new Date(s.start))/60000)/60).toFixed(1)+" h" : "en curso";
-    html += `<div class="bloque-rutina"><div class="hora mono">${fmtFechaCorta(s.start.slice(0,10))}</div><div style="flex:1"><div class="et">${s.type==='siesta'?'Siesta':'Nocturno'} · ${fmtHoraCorta(s.start)}${s.end?` - ${fmtHoraCorta(s.end)}`:''}</div><div class="tag">${dur}</div></div>${!s.end?`<button class="stop-btn" style="padding:4px 12px;font-size:0.6875rem" onclick="PB.stopSleep('${s.id}')">STOP</button>`:''}<button class="del-row" onclick="PB.deleteSleep('${s.id}')">✕</button></div>`;
+  sorted.slice(0, 60).forEach(s => {
+    const dur = s.end ? (((new Date(s.end) - new Date(s.start)) / 60000) / 60).toFixed(1) + " h" : "en curso";
+    html += `<div class="bloque-rutina"><div class="hora mono">${fmtFechaCorta(s.start.slice(0, 10))}</div>
+      <div style="flex:1"><div class="et">${s.type === 'siesta' ? 'Siesta' : 'Nocturno'} · ${fmtHoraCorta(s.start)}${s.end ? ` - ${fmtHoraCorta(s.end)}` : ''}</div>
+      <div class="tag">${dur}</div></div>
+      ${!s.end ? `<button class="stop-btn" style="padding:4px 12px;font-size:0.6875rem" onclick="PB.stopSleep('${s.id}')">STOP</button>` : ''}
+      <button class="del-row" onclick="PB.deleteSleep('${s.id}')">✕</button></div>`;
   });
   html += `</div>`;
+
   el.innerHTML = html;
-  renderSleepChart14();
+  renderSuenoChart();
 }
+
+function htmlCalendarioSueno(mapa, meses) {
+  const primero = SUENO_CAL_MES;
+  const inicio = (primero.getDay() + 6) % 7;               // lunes = 0
+  const dias = new Date(primero.getFullYear(), primero.getMonth() + 1, 0).getDate();
+  let h = `<div class="grid-cal">` + ["L", "M", "X", "J", "V", "S", "D"].map(d => `<div class="dow">${d}</div>`).join("");
+  for (let i = 0; i < inicio; i++) h += `<div class="day-cell empty"></div>`;
+  for (let d = 1; d <= dias; d++) {
+    const fecha = new Date(primero.getFullYear(), primero.getMonth(), d);
+    const iso = isoDeFecha(fecha);
+    const hrs = horasDelDia(iso, mapa);
+    const est = estadoSueno(hrs, meses);
+    h += `<div class="day-cell su-cell${est ? ' su-' + est : ''}${iso === HOY_ISO ? ' hoy' : ''}"
+            title="${fmtFechaCorta(iso)}: ${hrs ? hrs.toFixed(1) + ' h' : 'sin registro'}">
+            <div class="num">${d}</div>
+            <div class="su-h">${hrs ? hrs.toFixed(1) : "·"}</div>
+          </div>`;
+  }
+  h += `</div>`;
+  return h;
+}
+
+function renderSuenoChart() {
+  if (typeof Chart === "undefined") return;
+  const ctx = document.getElementById("chart-sueno");
+  if (!ctx) return;
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+  const cubos = cubosSueno(SUENO_PERIODO, minutosPorDia());
+  const est = estandarSueno(meses);
+  const colores = cubos.map(c => { const e = estadoSueno(c.horas, meses); return e ? colorSueno(e) : "rgba(148,163,184,0.35)"; });
+
+  const resumen = document.getElementById("sueno-resumen");
+  if (resumen) {
+    const totalH = cubos.reduce((s, c) => s + c.horas * c.dias, 0);
+    const totalD = cubos.reduce((s, c) => s + (c.conDatos || 0), 0);
+    // La media se pondera por dias, no por cubos: un mes con 30 dias no puede
+    // pesar lo mismo que el mes en curso con 4.
+    const media = totalD ? totalH / totalD : 0;
+    const e = estadoSueno(media, meses);
+    resumen.innerHTML = `<div><span class="su-total">${totalH.toFixed(1)} h</span>
+        <span class="faint">en ${totalD} días registrados</span></div>
+      ${media ? `<div class="su-badge su-${e}">Media ${media.toFixed(1)} h/día · ${SUENO_TEXTO[e]}</div>` : `<div class="faint">Aún no hay sueño registrado en este periodo.</div>`}`;
+  }
+
+  if (CHARTS.sueno) CHARTS.sueno.destroy();
+  const cont = document.querySelector(".pb-app") || document.documentElement;
+  const cs = getComputedStyle(cont);
+  const rejilla = cs.getPropertyValue("--border").trim() || "rgba(148,163,184,.3)";
+  const tinta = cs.getPropertyValue("--text-muted").trim() || "#94a3b8";
+  CHARTS.sueno = new Chart(ctx, {
+    type: "bar",
+    data: { labels: cubos.map(c => c.etiqueta), datasets: [{ data: cubos.map(c => c.horas), backgroundColor: colores, borderRadius: 6, maxBarThickness: 46 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true, suggestedMax: Math.max(est.rec[1] + 2, ...cubos.map(c => c.horas)),
+             grid: { color: rejilla }, ticks: { color: tinta, callback: v => v + " h" } },
+        x: { grid: { display: false }, ticks: { color: tinta } },
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => {
+          const e = estadoSueno(c.parsed.y, meses);
+          return `${c.parsed.y.toFixed(1)} h${e ? " · " + SUENO_TEXTO[e] : ""}`;
+        } } },
+      },
+    },
+  });
+}
+
+/* ---- acciones ---------------------------------------------------------- */
+function suenoModo(modo) {
+  const crono = document.getElementById("sueno-crono"), man = document.getElementById("sueno-manual");
+  if (!crono || !man) return;
+  crono.hidden = modo !== "crono";
+  man.hidden = modo !== "manual";
+  document.querySelectorAll('.sueno-modo [data-modo]').forEach(b => b.classList.toggle("on", b.dataset.modo === modo));
+}
+function suenoPeriodo(p) { SUENO_PERIODO = p; renderSueno(document.getElementById("view-sueno")); }
+function suenoMes(delta) {
+  SUENO_CAL_MES = new Date(SUENO_CAL_MES.getFullYear(), SUENO_CAL_MES.getMonth() + delta, 1);
+  renderSueno(document.getElementById("view-sueno"));
+}
+function addSleepManual() {
+  const aviso = document.getElementById("sueno-m-aviso");
+  const type = document.getElementById("sleep-m-type").value;
+  const ini = document.getElementById("sleep-m-ini").value;
+  const fin = document.getElementById("sleep-m-fin").value;
+  const decir = t => { if (aviso) { aviso.textContent = t; aviso.style.color = "var(--red)"; } };
+  if (!ini || !fin) return decir("Rellena las dos fechas.");
+  if (new Date(fin) <= new Date(ini)) return decir("La hora de fin tiene que ser posterior a la de inicio.");
+  const horas = (new Date(fin) - new Date(ini)) / 3600000;
+  if (horas > 24) return decir("Más de 24 horas seguidas: revisa las fechas.");
+  STATE.sleep.push({ id: "sl_" + Date.now().toString(36), type, start: ini, end: fin });
+  guardarEstado();
+  renderSueno(document.getElementById("view-sueno"));
+  suenoModo("manual");
+  const a2 = document.getElementById("sueno-m-aviso");
+  if (a2) { a2.textContent = `Guardado: ${horas.toFixed(1)} h.`; a2.style.color = "var(--green)"; }
+}
+
+/* Colores fijos para el informe: la hoja va siempre en claro, asi que no
+   pueden salir de las variables del tema. Mismo significado que en pantalla. */
+const INF_COLOR = { bien: "#16a34a", justo: "#d97706", bajo: "#dc2626", alto: "#7c3aed" };
+
+/* Barras con la banda de referencia detras. Se dibuja en SVG y no con Chart.js
+   porque un <canvas> depende de que el navegador lo rasterice al imprimir;
+   el SVG entra en el PDF como vectores y siempre sale. */
+function svgBarrasInforme(filas, est, unidad) {
+  if (!filas.length) return "";
+  const W = 720, H = 210, izq = 36, der = 8, arr = 10, aba = 26;
+  const anchoUtil = W - izq - der, altoUtil = H - arr - aba;
+  const maxY = Math.max(est.ok[1] + 1, ...filas.map(f => f.horas)) || 1;
+  const y = v => arr + altoUtil - (v / maxY) * altoUtil;
+  const paso = anchoUtil / filas.length;
+  const ancho = Math.max(2, Math.min(paso - 3, 30));
+
+  let g = `<svg class="inf-graf" viewBox="0 0 ${W} ${H}" role="img" aria-label="Sueño por ${unidad}">`;
+  // banda recomendada + limites del margen aceptable
+  g += `<rect x="${izq}" y="${y(est.rec[1])}" width="${anchoUtil}" height="${y(est.rec[0]) - y(est.rec[1])}" fill="#dcfce7"/>`;
+  [est.ok[0], est.ok[1]].forEach(v => {
+    if (v > maxY) return;
+    g += `<line x1="${izq}" x2="${W - der}" y1="${y(v)}" y2="${y(v)}" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 3"/>`;
+  });
+  // eje Y
+  const pasoY = maxY > 16 ? 4 : 2;
+  for (let v = 0; v <= maxY; v += pasoY) {
+    g += `<line x1="${izq}" x2="${W - der}" y1="${y(v)}" y2="${y(v)}" stroke="#eee" stroke-width="1"/>`;
+    g += `<text x="${izq - 6}" y="${y(v) + 3}" text-anchor="end" font-size="9" fill="#888">${v}h</text>`;
+  }
+  // barras
+  const cada = Math.ceil(filas.length / 16);   // etiquetas sin amontonar
+  filas.forEach((f, i) => {
+    const cx = izq + paso * i + paso / 2;
+    if (f.horas > 0) {
+      const alto = Math.max(1, y(0) - y(f.horas));
+      g += `<rect x="${(cx - ancho / 2).toFixed(1)}" y="${y(f.horas).toFixed(1)}" width="${ancho.toFixed(1)}" height="${alto.toFixed(1)}" rx="2" fill="${INF_COLOR[f.estado] || "#cbd5e1"}"/>`;
+    }
+    if (i % cada === 0) g += `<text x="${cx.toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="8.5" fill="#888">${f.etiqueta}</text>`;
+  });
+  g += `<line x1="${izq}" x2="${W - der}" y1="${y(0)}" y2="${y(0)}" stroke="#bbb" stroke-width="1"/></svg>`;
+  return g;
+}
+
+/* Para un solo dia las barras no dicen nada: se dibuja la franja de 24 h con
+   los tramos dormidos donde caen de verdad. */
+function svgDiaInforme(regs, dia) {
+  const W = 720, H = 74, izq = 8, der = 8, arr = 20, altoBarra = 26;
+  const util = W - izq - der;
+  const iniDia = new Date(dia.getFullYear(), dia.getMonth(), dia.getDate());
+  const finDia = new Date(dia.getFullYear(), dia.getMonth(), dia.getDate() + 1);
+  const x = t => izq + util * Math.min(1, Math.max(0, (t - iniDia) / (finDia - iniDia)));
+
+  let g = `<svg class="inf-graf" viewBox="0 0 ${W} ${H}" role="img" aria-label="Sueño hora a hora">`;
+  g += `<rect x="${izq}" y="${arr}" width="${util}" height="${altoBarra}" rx="4" fill="#f1f5f9"/>`;
+  for (let h = 0; h <= 24; h += 3) {
+    const px = izq + util * (h / 24);
+    g += `<line x1="${px}" x2="${px}" y1="${arr}" y2="${arr + altoBarra}" stroke="#e2e8f0" stroke-width="1"/>`;
+    g += `<text x="${px}" y="${arr - 6}" text-anchor="middle" font-size="8.5" fill="#888">${String(h % 24).padStart(2, "0")}h</text>`;
+  }
+  regs.forEach(s => {
+    if (!s.end) return;
+    const a = new Date(s.start), b = new Date(s.end);
+    if (b <= iniDia || a >= finDia) return;
+    const x1 = x(a < iniDia ? iniDia : a), x2 = x(b > finDia ? finDia : b);
+    g += `<rect x="${x1.toFixed(1)}" y="${arr}" width="${Math.max(1.5, x2 - x1).toFixed(1)}" height="${altoBarra}" rx="3"
+           fill="${s.type === "siesta" ? "#7dd3fc" : "#4c6ef5"}"/>`;
+  });
+  g += `<text x="${izq}" y="${H - 6}" font-size="8.5" fill="#888">
+      <tspan fill="#4c6ef5">■</tspan> nocturno &#160;&#160; <tspan fill="#7dd3fc">■</tspan> siesta</text></svg>`;
+  return g;
+}
+
+/* ---- informe imprimible ------------------------------------------------ */
+/* ---- selector de rango del informe ------------------------------------- */
+/* El informe ya no exporta "lo de hoy": se elige tipo de rango y despues el
+   rango concreto en un calendario, para poder sacar cualquier semana o mes
+   pasados sin tener que navegar el calendario grande. */
+let INF_TIPO = "semana";
+let INF_ANCLA = null;      // un dia cualquiera dentro del rango elegido
+let INF_CAL = null;        // mes (o año) que muestra el selector
+
+function infIniciar() {
+  const h = new Date(); h.setHours(0, 0, 0, 0);
+  if (!INF_ANCLA) INF_ANCLA = h;
+  if (!INF_CAL) INF_CAL = new Date(h.getFullYear(), h.getMonth(), 1);
+}
+function lunesDe(d) { const a = new Date(d.getFullYear(), d.getMonth(), d.getDate()); a.setDate(a.getDate() - ((a.getDay() + 6) % 7)); return a; }
+
+function rangoInforme(tipo, ancla) {
+  const a = new Date(ancla.getFullYear(), ancla.getMonth(), ancla.getDate());
+  if (tipo === "dia") return { desde: a, hasta: new Date(a.getFullYear(), a.getMonth(), a.getDate() + 1), titulo: fmtFechaCorta(isoDeFecha(a)) };
+  if (tipo === "semana") {
+    const l = lunesDe(a), f = new Date(l.getFullYear(), l.getMonth(), l.getDate() + 7);
+    const ult = new Date(f.getFullYear(), f.getMonth(), f.getDate() - 1);
+    return { desde: l, hasta: f, titulo: `Semana del ${fmtFechaCorta(isoDeFecha(l))} al ${fmtFechaCorta(isoDeFecha(ult))}` };
+  }
+  if (tipo === "mes") {
+    const m = new Date(a.getFullYear(), a.getMonth(), 1);
+    const t = m.toLocaleDateString("es-ES", { month: "long", year: "numeric" });
+    return { desde: m, hasta: new Date(m.getFullYear(), m.getMonth() + 1, 1), titulo: t.charAt(0).toUpperCase() + t.slice(1) };
+  }
+  const y = new Date(a.getFullYear(), 0, 1);
+  return { desde: y, hasta: new Date(y.getFullYear() + 1, 0, 1), titulo: String(y.getFullYear()) };
+}
+
+/* Años con algun registro, para no ofrecer una lista infinita. */
+function anosConDatos() {
+  const s = new Set(STATE.sleep.map(r => +r.start.slice(0, 4)));
+  s.add(new Date().getFullYear());
+  return [...s].sort((a, b) => b - a);
+}
+
+function htmlSelectorInforme() {
+  infIniciar();
+  const mapa = minutosPorDia();
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+  const { desde, hasta, titulo } = rangoInforme(INF_TIPO, INF_ANCLA);
+
+  let sel = "";
+  if (INF_TIPO === "dia" || INF_TIPO === "semana") {
+    const primero = INF_CAL;
+    const hueco = (primero.getDay() + 6) % 7;
+    const nd = new Date(primero.getFullYear(), primero.getMonth() + 1, 0).getDate();
+    const t = primero.toLocaleDateString("es-ES", { month: "long", year: "numeric" });
+    sel = `<div class="mes-header">
+        <button class="cal-nav" onclick="PB.infNav(-1)" aria-label="Anterior">‹</button>
+        <h3 style="text-transform:none">${t.charAt(0).toUpperCase() + t.slice(1)}</h3>
+        <button class="cal-nav" onclick="PB.infNav(1)" aria-label="Siguiente">›</button>
+      </div><div class="grid-cal">`
+      + ["L","M","X","J","V","S","D"].map(d => `<div class="dow">${d}</div>`).join("");
+    for (let i = 0; i < hueco; i++) sel += `<div class="day-cell empty"></div>`;
+    for (let d = 1; d <= nd; d++) {
+      const f = new Date(primero.getFullYear(), primero.getMonth(), d);
+      const iso = isoDeFecha(f);
+      const h = horasDelDia(iso, mapa);
+      const dentro = f >= desde && f < hasta;
+      sel += `<div class="day-cell inf-cell${dentro ? " sel" : ""}${iso === HOY_ISO ? " hoy" : ""}"
+                onclick="PB.infElegir('${iso}')" title="${fmtFechaCorta(iso)}">
+                <div class="num">${d}</div><div class="su-h">${h ? h.toFixed(1) : "·"}</div></div>`;
+    }
+    sel += `</div>`;
+  } else if (INF_TIPO === "mes") {
+    const y = INF_CAL.getFullYear();
+    sel = `<div class="mes-header">
+        <button class="cal-nav" onclick="PB.infNav(-1)" aria-label="Año anterior">‹</button>
+        <h3 style="text-transform:none">${y}</h3>
+        <button class="cal-nav" onclick="PB.infNav(1)" aria-label="Año siguiente">›</button>
+      </div><div class="inf-rejilla">`;
+    for (let m = 0; m < 12; m++) {
+      const a = new Date(y, m, 1), b = new Date(y, m + 1, 1);
+      let min = 0, dias = 0;
+      for (let d = new Date(a); d < b; d.setDate(d.getDate() + 1)) { const v = mapa.get(isoDeFecha(d)) || 0; if (v) { min += v; dias++; } }
+      const activo = INF_ANCLA.getFullYear() === y && INF_ANCLA.getMonth() === m;
+      sel += `<button type="button" class="inf-op${activo ? " sel" : ""}" onclick="PB.infElegir('${isoDeFecha(a)}')">
+          <span class="et">${a.toLocaleDateString("es-ES", { month: "short" })}</span>
+          <span class="su-h">${dias ? (min / 60 / dias).toFixed(1) + " h" : "·"}</span></button>`;
+    }
+    sel += `</div>`;
+  } else {
+    sel = `<div class="inf-rejilla anos">`;
+    anosConDatos().forEach(y => {
+      const activo = INF_ANCLA.getFullYear() === y;
+      let min = 0, dias = 0;
+      mapa.forEach((v, iso) => { if (+iso.slice(0, 4) === y && v) { min += v; dias++; } });
+      sel += `<button type="button" class="inf-op${activo ? " sel" : ""}" onclick="PB.infElegir('${y}-01-01')">
+          <span class="et">${y}</span>
+          <span class="su-h">${dias ? (min / 60 / dias).toFixed(1) + " h" : "·"}</span></button>`;
+    });
+    sel += `</div>`;
+  }
+
+  /* Cuantos dias del rango tienen algo: exportar un mes vacio sorprende. */
+  let conDatos = 0, total = 0;
+  const tope = new Date(); tope.setHours(23, 59, 59, 999);
+  for (let d = new Date(desde); d < hasta && d <= tope; d.setDate(d.getDate() + 1)) {
+    const v = mapa.get(isoDeFecha(d)) || 0; if (v) { conDatos++; total += v; }
+  }
+
+  return `<div class="sueno-modo">
+      ${Object.entries(SUENO_PERIODOS).map(([k, v]) =>
+        `<button type="button" class="${k === INF_TIPO ? "on" : ""}" onclick="PB.infTipo('${k}')">${v}</button>`).join("")}
+    </div>
+    ${sel}
+    <div class="inf-resumen">
+      <div><b>${titulo}</b><div class="faint">${conDatos
+        ? `${conDatos} ${conDatos === 1 ? "día" : "días"} con registro · ${(total / 60).toFixed(1)} h en total`
+        : "Sin registros en este rango"}</div></div>
+      <button class="btn-primario" onclick="PB.suenoInforme()" ${conDatos ? "" : "disabled"}>Generar PDF</button>
+    </div>`;
+}
+
+function infRefrescar() {
+  const c = document.getElementById("sueno-selector");
+  if (c) c.innerHTML = htmlSelectorInforme();
+}
+function infTipo(t) {
+  INF_TIPO = t;
+  infIniciar();
+  // Al cambiar de tipo, el selector se coloca donde este el ancla.
+  INF_CAL = new Date(INF_ANCLA.getFullYear(), INF_ANCLA.getMonth(), 1);
+  infRefrescar();
+}
+function infNav(delta) {
+  infIniciar();
+  INF_CAL = (INF_TIPO === "mes")
+    ? new Date(INF_CAL.getFullYear() + delta, 0, 1)
+    : new Date(INF_CAL.getFullYear(), INF_CAL.getMonth() + delta, 1);
+  infRefrescar();
+}
+function infElegir(iso) {
+  const [y, m, d] = iso.split("-").map(Number);
+  INF_ANCLA = new Date(y, m - 1, d);
+  infRefrescar();
+}
+
+function suenoInforme() {
+  const periodo = INF_TIPO;
+  const { desde, hasta, titulo } = rangoInforme(INF_TIPO, INF_ANCLA);
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+  const est = estandarSueno(meses);
+  const mapa = minutosPorDia();
+  const regs = registrosEnRango(desde, hasta);
+
+  const filasDia = [];
+  for (let d = new Date(desde); d < hasta && d <= new Date(); d.setDate(d.getDate() + 1)) {
+    const iso = isoDeFecha(d), h = horasDelDia(iso, mapa);
+    filasDia.push({ iso, h, estado: estadoSueno(h, meses) });
+  }
+  const conDatos = filasDia.filter(f => f.h > 0);
+  const total = filasDia.reduce((s, f) => s + f.h, 0);
+  const media = conDatos.length ? total / conDatos.length : 0;
+  const estMedia = estadoSueno(media, meses);
+
+  /* Redondear los minutos por separado daba "12 h 60 min": se redondea el
+     total y luego se descompone. */
+  const fmtHM = h => { const m = Math.round(h * 60); return `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, "0")} min`; };
+  let doc = `<div class="inf-cab">
+      <div><div class="inf-app">Niblo</div><div class="inf-tit">Registro de sueño · ${titulo}</div></div>
+      <div class="inf-meta">Pablo · ${edadEnMeses(CONFIG.fechaNacimiento, HOY_REAL).texto}<br>Generado el ${fmtFechaCorta(HOY_ISO)}</div>
+    </div>
+    <div class="inf-kpis">
+      <div><b>${fmtHM(total)}</b><span>Sueño total</span></div>
+      <div><b>${media ? fmtHM(media) : "—"}</b><span>Media por día</span></div>
+      <div><b>${conDatos.length}</b><span>Días con registro</span></div>
+      <div><b>${regs.length}</b><span>Registros</span></div>
+    </div>
+    <p class="inf-nota">Referencia para ${est.etiqueta}: <b>${est.rec[0]}-${est.rec[1]} h</b> recomendadas por cada 24 h
+      (aceptable ${est.ok[0]}-${est.ok[1]} h). Fuente: National Sleep Foundation 2015 y AASM 2016.
+      ${estMedia ? `La media del periodo queda <b>${SUENO_TEXTO[estMedia]}</b>.` : ""}</p>`;
+
+  /* La grafica del periodo. Un solo dia se dibuja como franja horaria y un
+     año se agrega por meses: 365 barras no se leerian en papel. */
+  if (periodo === "dia") {
+    doc += `<h3>Cómo se repartió el día</h3>` + svgDiaInforme(regs, desde);
+  } else if (periodo === "ano") {
+    const meses12 = [];
+    for (let m = 0; m < 12; m++) {
+      const a = new Date(desde.getFullYear(), m, 1);
+      const b = new Date(desde.getFullYear(), m + 1, 1);
+      if (a > new Date()) break;
+      const dentro = filasDia.filter(f => { const d = new Date(f.iso); return d >= a && d < b; });
+      const dias = dentro.length || 1;
+      const media = dentro.reduce((x, f) => x + f.h, 0) / dias;
+      meses12.push({ etiqueta: a.toLocaleDateString("es-ES", { month: "short" }), horas: +media.toFixed(2), estado: estadoSueno(media, meses) });
+    }
+    doc += `<h3>Media diaria por mes</h3>` + svgBarrasInforme(meses12, est, "mes");
+  } else {
+    doc += `<h3>Horas por día</h3>` + svgBarrasInforme(
+      filasDia.map(f => ({ etiqueta: fmtFechaCorta(f.iso).replace(/ de \d+$/, ""), horas: f.h, estado: f.estado })), est, "día");
+  }
+
+  doc += `<h3>Total por día</h3><table class="inf-tabla"><thead><tr><th>Día</th><th>Horas</th><th>Valoración</th></tr></thead><tbody>`;
+  filasDia.forEach(f => {
+    doc += `<tr><td>${fmtFechaCorta(f.iso)}</td><td>${f.h ? fmtHM(f.h) : "—"}</td>
+      <td>${f.estado ? `<span class="inf-tag inf-${f.estado}">${SUENO_TEXTO[f.estado]}</span>` : "<span class=\"inf-vacio\">sin registro</span>"}</td></tr>`;
+  });
+  doc += `</tbody></table>`;
+
+  doc += `<h3>Registros</h3>`;
+  if (!regs.length) doc += `<p class="inf-vacio">Sin registros en este periodo.</p>`;
+  else {
+    doc += `<table class="inf-tabla"><thead><tr><th>Día</th><th>Tipo</th><th>Desde</th><th>Hasta</th><th>Duración</th></tr></thead><tbody>`;
+    regs.forEach(s => {
+      const dur = s.end ? (new Date(s.end) - new Date(s.start)) / 3600000 : null;
+      doc += `<tr><td>${fmtFechaCorta(s.start.slice(0, 10))}</td><td>${s.type === "siesta" ? "Siesta" : "Nocturno"}</td>
+        <td>${fmtHoraCorta(s.start)}</td><td>${s.end ? fmtHoraCorta(s.end) : "—"}</td>
+        <td>${dur == null ? "en curso" : fmtHM(dur)}</td></tr>`;
+    });
+    doc += `</tbody></table>`;
+  }
+
+  let cont = document.getElementById("pb-informe");
+  if (!cont) { cont = document.createElement("div"); cont.id = "pb-informe"; document.body.appendChild(cont); }
+  cont.innerHTML = doc;
+  document.body.classList.add("imprimiendo");
+  /* Quitar la clase con un temporizador seria arriesgado: si el navegador no
+     bloquea en print(), el informe desapareceria con el dialogo aun abierto y
+     saldria una hoja en blanco. Se limpia con "afterprint" y, como red por si
+     ese evento no llega, en la siguiente interaccion del usuario. */
+  const limpiar = () => {
+    document.body.classList.remove("imprimiendo");
+    window.removeEventListener("afterprint", limpiar);
+    document.removeEventListener("pointerdown", limpiar, true);
+    document.removeEventListener("keydown", limpiar, true);
+  };
+  window.addEventListener("afterprint", limpiar);
+  setTimeout(() => {
+    window.print();
+    document.addEventListener("pointerdown", limpiar, true);
+    document.addEventListener("keydown", limpiar, true);
+  }, 60);
+}
+
+/* ---- helpers compartidos (los usa tambien Pañales) --------------------- */
 function nowDatetimeLocal() {
-  const d = new Date(); const p = n=>String(n).padStart(2,"0");
-  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+  const d = new Date(); const p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
 }
-function fmtHoraCorta(dtLocal) { const d = new Date(dtLocal); return `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`; }
+function fmtHoraCorta(dtLocal) { const d = new Date(dtLocal); return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`; }
+function last14Dias() {
+  const dias = []; const hoy = new Date();
+  for (let i = 13; i >= 0; i--) dias.push(new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() - i));
+  return dias;
+}
+function mismoDia(dtLocal, fecha) {
+  const d = new Date(dtLocal);
+  return d.getFullYear() === fecha.getFullYear() && d.getMonth() === fecha.getMonth() && d.getDate() === fecha.getDate();
+}
 function addSleep() {
   const type = document.getElementById("sleep-type").value;
   const start = document.getElementById("sleep-start").value || nowDatetimeLocal();
-  STATE.sleep.push({ id: "sl_"+Date.now().toString(36), type, start, end: null });
+  STATE.sleep.push({ id: "sl_" + Date.now().toString(36), type, start, end: null });
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
 }
@@ -8139,28 +8926,6 @@ function deleteSleep(id) {
   STATE.sleep = STATE.sleep.filter(s => s.id !== id);
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
-}
-function last14Dias() {
-  const dias = []; const hoy = new Date();
-  for (let i=13;i>=0;i--) dias.push(new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()-i));
-  return dias;
-}
-function mismoDia(dtLocal, fecha) {
-  const d = new Date(dtLocal);
-  return d.getFullYear()===fecha.getFullYear() && d.getMonth()===fecha.getMonth() && d.getDate()===fecha.getDate();
-}
-function renderSleepChart14() {
-  if (typeof Chart === "undefined") return;
-  const ctx = document.getElementById("chart-sleep14");
-  if (!ctx) return;
-  const dias = last14Dias();
-  const labels = dias.map(d => `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`);
-  const horas = dias.map(d => {
-    const min = STATE.sleep.reduce((s,x) => (x.end && mismoDia(x.start,d)) ? s+(new Date(x.end)-new Date(x.start))/60000 : s, 0);
-    return +(min/60).toFixed(2);
-  });
-  if (CHARTS.sleep14) CHARTS.sleep14.destroy();
-  CHARTS.sleep14 = new Chart(ctx, { type:"bar", data:{ labels, datasets:[{ label:"Horas", data:horas, backgroundColor:"#5b8a9a", borderRadius:4 }] }, options:{ responsive:true, maintainAspectRatio:false, scales:{ y:{beginAtZero:true} }, plugins:{legend:{display:false}} } });
 }
 
 /* ======================== render: PAÑALES ======================== */
@@ -8332,7 +9097,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
