@@ -43,7 +43,9 @@ self.addEventListener("fetch", (event) => {
   const esHTML = event.request.mode === "navigate"
     || event.request.destination === "document"
     || url.pathname.endsWith(".html")
-    || url.pathname === "/" || url.pathname.endsWith("/recetas/");
+    // Raiz del scope del SW, sea cual sea la carpeta publicada: asi no depende
+    // del nombre del repositorio.
+    || url.pathname === new URL("./", self.location).pathname;
 
   if (esHTML) {
     // NETWORK-FIRST para HTML: usuarios reciben siempre la versión más nueva.
