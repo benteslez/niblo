@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v42";   // fichas de trigo corregidas
+const CACHE_NAME = "niblo-v43";   // escala tipografica en rem
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
