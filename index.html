@@ -300,6 +300,113 @@
       font-weight: 600;
     }
 
+    /* ---- Documentos ------------------------------------------------------ */
+    .doc-barra {
+      display: flex; gap: var(--gap-2); justify-content: flex-end;
+      flex-wrap: wrap; margin: var(--gap-4) 0 var(--gap-5);
+    }
+    .doc-grupo { margin-bottom: var(--gap-6); }
+    .doc-grupo-tit {
+      display: flex; align-items: baseline; gap: var(--gap-2);
+      font-size: 0.8125rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted);
+      padding-bottom: var(--gap-2); margin-bottom: var(--gap-3);
+      border-bottom: 1px solid var(--line);
+    }
+    .doc-grupo-tit .emoji { font-size: 1.0625rem; letter-spacing: 0; }
+    .doc-grupo-tit .doc-cuenta { font-weight: 500; letter-spacing: 0.02em; opacity: .7; }
+    .doc-lista { list-style: none; display: flex; flex-direction: column; gap: var(--gap-2); }
+    .doc-fila {
+      display: flex; align-items: stretch; gap: var(--gap-2);
+      background: var(--bg-elev); border: 1px solid var(--line);
+      border-radius: var(--r-md); box-shadow: var(--sh-1);
+      transition: border-color .12s, box-shadow .12s;
+    }
+    .doc-fila:hover { border-color: var(--line); box-shadow: var(--sh-2); }
+    .doc-abrir {
+      flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--gap-2);
+      padding: var(--gap-3) var(--gap-4); color: inherit; text-decoration: none;
+      border-radius: var(--r-md);
+    }
+    .doc-abrir:hover .doc-titulo { color: var(--accent); }
+    .doc-abrir:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+    .doc-titulo { font-weight: 600; font-size: 0.9375rem; }
+    .doc-notas {
+      color: var(--text-muted); font-size: 0.8125rem; min-width: 0;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .doc-notas::before { content: "·"; margin-right: var(--gap-2); }
+    .doc-ir { margin-left: auto; color: var(--text-muted); flex: none; }
+    .doc-acciones { display: flex; align-items: center; padding-right: var(--gap-2); flex: none; }
+
+    /* Modal de documentos: mismo .modal, solo lo propio de esta pantalla. */
+    #modal-documentos .modal { width: min(520px, 100%); }
+    .doc-aviso {
+      color: var(--danger); font-size: 0.8125rem; margin-top: calc(var(--gap-1) * -1);
+    }
+    .doc-aviso[hidden] { display: none; }
+    .doc-tipos { display: flex; flex-direction: column; gap: var(--gap-2); max-height: 46vh; overflow-y: auto; }
+    /* Rejilla, no flex-wrap: en movil la fila se parte en dos lineas
+       ordenadas (emoji+nombre+acciones arriba, plural debajo) en vez de
+       reordenarse sola de forma imprevisible. */
+    .doc-tipo-fila {
+      display: grid; align-items: center; gap: var(--gap-2);
+      grid-template-columns: 44px 1fr auto auto auto;
+      grid-template-areas: "emoji campos n ok del";
+      padding: var(--gap-2); border: 1px solid var(--line); border-radius: var(--r-md);
+    }
+    .doc-tipo-fila > .doc-emoji { grid-area: emoji; }
+    .doc-tipo-campos { grid-area: campos; display: flex; gap: var(--gap-2); min-width: 0; }
+    .doc-tipo-campos input { min-width: 0; flex: 1; }
+    .doc-tipo-fila > .doc-tipo-n { grid-area: n; }
+    .doc-tipo-fila > button:nth-of-type(1) { grid-area: ok; }
+    .doc-tipo-fila > button:nth-of-type(2) { grid-area: del; }
+    .doc-emoji { width: 44px; flex: none; text-align: center; }
+    .doc-tipo-n {
+      flex: none; min-width: 22px; text-align: center;
+      font-family: var(--font-num); font-size: 0.75rem; color: var(--text-muted);
+    }
+    .doc-tipo-nuevo {
+      display: flex; gap: var(--gap-2); align-items: center;
+      padding-top: var(--gap-3); border-top: 1px solid var(--line);
+    }
+    .doc-tipo-nuevo #nt-emoji { width: 44px; flex: none; text-align: center; }
+    .doc-tipo-nuevo input { min-width: 0; flex: 1; }
+    #modal-documentos input, #modal-documentos select {
+      width: 100%; padding: 10px 12px; border-radius: var(--r-sm);
+      border: 1px solid var(--line); background: var(--bg-input); color: var(--text);
+      font: inherit; font-size: 1rem;
+    }
+    #modal-documentos input:focus-visible, #modal-documentos select:focus-visible {
+      outline: 2px solid var(--focus); outline-offset: 1px;
+    }
+    #modal-documentos .modal-p { font-size: 0.9375rem; }
+    #modal-documentos .campo label { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: var(--gap-1); }
+
+    @media (max-width: 600px) {
+      /* Modal a pantalla casi completa, como el resto de la app en movil. */
+      #modal-documentos { padding: 0; align-items: flex-end; }
+      #modal-documentos .modal {
+        width: 100%; max-height: 92vh; overflow-y: auto;
+        border-radius: var(--r-lg) var(--r-lg) 0 0;
+      }
+      .doc-barra { justify-content: stretch; }
+      .doc-barra button { flex: 1; }
+      .doc-tipo-fila {
+        grid-template-columns: 44px 1fr auto auto auto;
+        grid-template-areas: "emoji campos n ok del"
+                             "campos2 campos2 campos2 campos2 campos2";
+      }
+      .doc-tipo-campos { display: contents; }
+      .doc-tipo-campos .doc-nombre { grid-area: campos; }
+      .doc-tipo-campos .doc-plural { grid-area: campos2; }
+      .doc-tipo-nuevo { flex-wrap: wrap; }
+      .doc-tipo-nuevo input:not(#nt-emoji) { flex-basis: calc(100% - 52px); }
+      .doc-tipo-nuevo button { flex-basis: 100%; }
+      .doc-notas { display: none; }
+    }
+
     /* ---- Main / secciones ------------------------------------------------ */
     main {
       max-width: 1100px;
@@ -3964,6 +4071,12 @@
       text-align: center;
     }
     .gate-secundario:hover { color: var(--text); }
+    .gate-campo select {
+      width: 100%; padding: 12px 14px; border-radius: var(--r-sm);
+      border: 1px solid var(--line); background: var(--bg-input);
+      color: var(--text); font: inherit; font-size: 1rem;
+    }
+    .gate-nota { display: block; font-size: 0.75rem; color: var(--text-muted); margin-top: var(--gap-1); }
     .gate-msg {
       font-size: 0.8125rem;
       text-align: center;
@@ -5234,6 +5347,7 @@
       background: var(--bg-card); color: var(--text); font-size: 1.125rem; line-height: 1; cursor: pointer;
     }
     .pb-app .cal-nav:hover { border-color: var(--blue); color: var(--blue); }
+    .pb-app.sin-cabecera .pb-cab { display: none; }
 
     /* ---- Edicion de registros y modal ----------------------------------- */
     .pb-app .ed-row {
@@ -5329,7 +5443,7 @@
     .pb-modal .campo label { display: block; font-size: 0.71875rem; color: var(--text-muted); font-weight: 700; margin-bottom: 3px; }
     .pb-modal .campo { margin-bottom: 10px; min-width: 0; }
     .pb-modal .grid-campos2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    @media (max-width: 480px) { .pb-modal .grid-campos2 { grid-template-columns: 1fr; } }
+    @media (max-width: 620px) { .pb-modal .grid-campos2 { grid-template-columns: 1fr; } }
 
     /* Selector de rango del informe: celdas clicables, rejilla de meses/años
        y la fila de confirmacion con el rango ya resuelto. */
@@ -5421,13 +5535,16 @@
     /* Los input date/time nativos traen un ancho intrinseco grande: sin esto
        se salen de su columna cuando la letra crece o la pantalla es estrecha. */
     .pb-app .campo input, .pb-app .campo select, .pb-app .campo textarea { max-width: 100%; min-width: 0; }
-    /* Tres columnas de fecha no caben en un movil ni con letra normal. */
-    @media (max-width: 560px) {
-      .pb-app .grid-campos3 { grid-template-columns: 1fr; }
-    }
     .pb-app .campo label { display: block; font-size: 0.71875rem; color: var(--text-muted); font-weight: 700; margin-bottom: 3px; }
     .pb-app .grid-campos2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .pb-app .grid-campos3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    /* En movil los campos de fecha y hora no caben en columnas: el control
+       nativo tiene un ancho minimo propio y se monta encima del de al lado.
+       Tiene que ir DESPUES de las dos reglas de arriba, o la base las pisa. */
+    @media (max-width: 620px) {
+      .pb-app .grid-campos2,
+      .pb-app .grid-campos3 { grid-template-columns: 1fr; }
+    }
     .pb-app .btn-primario { border: none; background: var(--blue); color: #fff; border-radius: 10px; padding: 10px 16px; font-size: 0.84375rem; font-weight: 700; cursor: pointer; }
     .pb-app .del-row { background: none; border: none; color: var(--red); font-size: 0.71875rem; font-weight: 700; cursor: pointer; padding: 4px 8px; }
     .pb-app .leyenda { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
@@ -6324,6 +6441,10 @@
     <!-- Pablo: alimentacion complementaria y crianza. Las secciones internas
          (view-*) las gobierna el modulo PB; los chips de la cabecera las
          seleccionan a traves de PB.irA(). -->
+    <section class="vista" data-vista="documentos">
+      <div id="documentos-contenedor"></div>
+    </section>
+
     <section class="vista" data-vista="pablo">
       <div id="pb-app" class="pb-app">
         <div class="pb-cab">
@@ -6383,8 +6504,14 @@
   <!-- Modal selector de receta (compartido por Compra y Planificador). -->
   <div id="modal-selector" class="modal-overlay" hidden aria-modal="true" role="dialog"></div>
 
+  <!-- Modal de Documentos (nuevo/editar y gestion de tipos). -->
+  <div id="modal-documentos" class="modal-overlay" hidden></div>
+
   <!-- Input file oculto para importar JSON. -->
   <input type="file" id="iox-archivo" class="iox-input-file" accept="application/json,.json">
+
+  <!-- Alta de hogar: primera vez que entra alguien sin hogar. -->
+  <div id="alta-hogar" class="gate" hidden></div>
 
   <!-- Pantalla de login obligatorio. Visible si no hay sesión Supabase. -->
   <div id="gate" class="gate" hidden>
@@ -6837,6 +6964,15 @@ const WHO_WEIGHT_BOYS = [[2.3,2.5,2.6,2.9,3.0,3.3,3.7,3.9,4.2,4.3,4.6],[3.2,3.4,
 const WHO_HEIGHT_BOYS = [[45.5,46.3,46.8,47.9,48.6,49.9,51.2,51.8,53.0,53.4,54.3],[50.2,51.1,51.5,52.7,53.4,54.7,56.0,56.7,57.9,58.4,59.3],[53.8,54.7,55.1,56.4,57.1,58.4,59.8,60.5,61.7,62.2,63.1],[56.7,57.6,58.1,59.3,60.1,61.4,62.8,63.5,64.8,65.3,66.2],[59.0,60.0,60.5,61.7,62.5,63.9,65.3,66.0,67.3,67.8,68.7],[61.0,61.9,62.4,63.7,64.5,65.9,67.3,68.1,69.4,69.9,70.8],[62.6,63.6,64.1,65.4,66.2,67.6,69.1,69.8,71.1,71.6,72.6],[64.1,65.1,65.6,66.9,67.7,69.2,70.6,71.4,72.7,73.2,74.2],[65.5,66.5,67.0,68.3,69.1,70.6,72.1,72.9,74.2,74.7,75.7],[66.8,67.7,68.3,69.6,70.5,72.0,73.5,74.3,75.7,76.2,77.2],[68.0,69.0,69.5,70.9,71.7,73.3,74.8,75.6,77.0,77.6,78.6],[69.1,70.2,70.7,72.1,73.0,74.5,76.1,77.0,78.4,78.9,80.0],[70.2,71.3,71.8,73.3,74.1,75.7,77.4,78.2,79.7,80.2,81.3],[71.3,72.4,72.9,74.4,75.3,76.9,78.6,79.4,80.9,81.5,82.6],[72.3,73.4,74.0,75.5,76.4,78.0,79.7,80.6,82.1,82.7,83.8],[73.3,74.4,75.0,76.5,77.4,79.1,80.9,81.8,83.3,83.9,85.0],[74.2,75.4,76.0,77.5,78.5,80.2,82.0,82.9,84.5,85.1,86.2],[75.1,76.3,76.9,78.5,79.5,81.2,83.0,84.0,85.6,86.2,87.4],[76.0,77.2,77.8,79.5,80.4,82.3,84.1,85.1,86.7,87.3,88.5],[76.8,78.1,78.7,80.4,81.4,83.2,85.1,86.1,87.8,88.4,89.7],[77.7,78.9,79.6,81.3,82.3,84.2,86.1,87.1,88.8,89.5,90.7],[78.4,79.7,80.4,82.2,83.2,85.1,87.1,88.1,89.9,90.5,91.8],[79.2,80.5,81.2,83.0,84.1,86.0,88.0,89.1,90.9,91.6,92.9],[80.0,81.3,82.0,83.8,84.9,86.9,89.0,90.0,91.9,92.6,93.9],[80.7,82.1,82.8,84.6,85.8,87.8,89.9,91.0,92.8,93.6,94.9],[82.1,83.5,84.3,86.3,87.4,89.6,91.8,93.0,94.9,95.7,97.1],[84.0,85.5,86.3,88.4,89.6,91.9,94.2,95.5,97.5,98.3,99.9],[85.8,87.4,88.2,90.4,91.7,94.1,96.5,97.8,99.9,100.8,102.4],[87.5,89.1,90.0,92.2,93.6,96.1,98.6,99.9,102.2,103.1,104.7],[89.1,90.8,91.7,94.0,95.4,98.0,100.6,102.0,104.3,105.2,106.9],[90.6,92.4,93.3,95.7,97.2,99.9,102.5,104.0,106.4,107.3,109.1],[92.1,93.9,94.9,97.4,98.9,101.6,104.4,105.8,108.3,109.3,111.1],[93.6,95.4,96.4,99.0,100.5,103.3,106.2,107.7,110.2,111.2,113.1],[95.0,96.9,97.9,100.5,102.1,105.0,107.9,109.5,112.1,113.1,115.0],[96.4,98.4,99.4,102.1,103.7,106.7,109.6,111.2,113.9,115.0,116.9],[97.8,99.8,100.9,103.6,105.3,108.3,111.4,113.0,115.8,116.8,118.8],[99.2,101.2,102.3,105.2,106.8,110.0,113.1,114.8,117.6,118.7,120.7]];
 const WHO_HEAD_BOYS = [[31.5,32.1,32.4,33.1,33.6,34.5,35.3,35.8,36.6,36.9,37.4],[34.6,35.1,35.4,36.1,36.5,37.3,38.1,38.5,39.2,39.5,40.0],[36.4,36.9,37.2,37.9,38.3,39.1,39.9,40.3,41.1,41.3,41.9],[37.8,38.3,38.6,39.3,39.7,40.5,41.3,41.7,42.5,42.7,43.3],[38.9,39.4,39.7,40.4,40.8,41.6,42.4,42.9,43.6,43.9,44.4],[39.7,40.3,40.6,41.3,41.7,42.6,43.4,43.8,44.5,44.8,45.4],[40.5,41.0,41.3,42.1,42.5,43.3,44.2,44.6,45.3,45.6,46.2],[41.1,41.7,42.0,42.7,43.1,44.0,44.8,45.3,46.0,46.3,46.8],[41.6,42.2,42.5,43.2,43.7,44.5,45.4,45.8,46.6,46.9,47.4],[42.1,42.6,42.9,43.7,44.2,45.0,45.8,46.3,47.1,47.4,47.9],[42.5,43.0,43.3,44.1,44.6,45.4,46.3,46.7,47.5,47.8,48.4],[42.8,43.4,43.7,44.4,44.9,45.8,46.6,47.1,47.9,48.2,48.7],[43.1,43.6,44.0,44.7,45.2,46.1,46.9,47.4,48.2,48.5,49.1],[43.3,43.9,44.2,45.0,45.5,46.3,47.2,47.7,48.5,48.8,49.3],[43.6,44.1,44.4,45.2,45.7,46.6,47.5,47.9,48.7,49.0,49.6],[43.8,44.3,44.7,45.5,45.9,46.8,47.7,48.2,49.0,49.3,49.8],[44.0,44.5,44.8,45.6,46.1,47.0,47.9,48.4,49.2,49.5,50.1],[44.1,44.7,45.0,45.8,46.3,47.2,48.1,48.6,49.4,49.7,50.3],[44.3,44.9,45.2,46.0,46.5,47.4,48.3,48.7,49.6,49.9,50.5],[44.4,45.0,45.3,46.2,46.6,47.5,48.4,48.9,49.7,50.0,50.6],[44.6,45.2,45.5,46.3,46.8,47.7,48.6,49.1,49.9,50.2,50.8],[44.7,45.3,45.6,46.4,46.9,47.8,48.7,49.2,50.1,50.4,51.0],[44.8,45.4,45.8,46.6,47.1,48.0,48.9,49.4,50.2,50.5,51.1],[45.0,45.6,45.9,46.7,47.2,48.1,49.0,49.5,50.3,50.7,51.3],[45.1,45.7,46.0,46.8,47.3,48.3,49.2,49.7,50.5,50.8,51.4],[45.4,46.0,46.3,47.2,47.7,48.6,49.5,50.0,50.9,51.2,51.8],[45.7,46.3,46.6,47.5,48.0,48.9,49.9,50.4,51.2,51.6,52.2],[45.9,46.6,46.9,47.8,48.3,49.2,50.2,50.7,51.5,51.9,52.5],[46.2,46.8,47.1,48.0,48.5,49.5,50.4,50.9,51.8,52.1,52.8],[46.3,47.0,47.3,48.2,48.7,49.7,50.6,51.2,52.0,52.4,53.0],[46.5,47.2,47.5,48.4,48.9,49.9,50.8,51.4,52.2,52.6,53.2],[46.7,47.3,47.7,48.5,49.1,50.1,51.0,51.6,52.4,52.8,53.4],[46.8,47.5,47.8,48.7,49.2,50.2,51.2,51.7,52.6,53.0,53.6],[46.9,47.6,47.9,48.8,49.4,50.4,51.3,51.9,52.8,53.1,53.8],[47.1,47.7,48.1,49.0,49.5,50.5,51.5,52.0,52.9,53.3,53.9],[47.2,47.8,48.2,49.1,49.6,50.6,51.6,52.2,53.1,53.4,54.1],[47.3,47.9,48.3,49.2,49.7,50.7,51.7,52.3,53.2,53.5,54.2]];
 
+/* Tablas de la OMS para niñas (percentiles publicados, mismas edades y mismos
+   percentiles que las de niño). Fuente: WHO Child Growth Standards, tablas
+   "expanded" de weight-for-age, length/height-for-age y head-circumference-
+   for-age, descargadas de who.int. Sin ellas, una niña veria sus percentiles
+   calculados contra las curvas de niño, que van bastante mas altas. */
+const WHO_WEIGHT_GIRLS = [[2.3,2.4,2.5,2.8,2.9,3.2,3.6,3.7,4.0,4.2,4.4],[3.0,3.2,3.3,3.6,3.8,4.2,4.6,4.8,5.2,5.4,5.7],[3.8,4.0,4.1,4.5,4.7,5.1,5.6,5.9,6.3,6.5,6.9],[4.4,4.6,4.7,5.1,5.4,5.8,6.4,6.7,7.2,7.4,7.8],[4.8,5.1,5.2,5.6,5.9,6.4,7.0,7.3,7.9,8.1,8.6],[5.2,5.5,5.6,6.1,6.4,6.9,7.5,7.8,8.4,8.7,9.2],[5.5,5.8,6.0,6.4,6.7,7.3,7.9,8.3,8.9,9.2,9.7],[5.8,6.1,6.3,6.7,7.0,7.6,8.3,8.7,9.4,9.6,10.2],[6.0,6.3,6.5,7.0,7.3,7.9,8.6,9.0,9.7,10.0,10.6],[6.2,6.6,6.8,7.3,7.6,8.2,8.9,9.3,10.1,10.4,11.0],[6.4,6.8,7.0,7.5,7.8,8.5,9.2,9.6,10.4,10.7,11.3],[6.6,7.0,7.2,7.7,8.0,8.7,9.5,9.9,10.7,11.0,11.7],[6.8,7.1,7.3,7.9,8.2,8.9,9.7,10.2,11.0,11.3,12.0],[6.9,7.3,7.5,8.1,8.4,9.2,10.0,10.4,11.3,11.6,12.3],[7.1,7.5,7.7,8.3,8.6,9.4,10.2,10.7,11.5,11.9,12.6],[7.3,7.7,7.9,8.5,8.8,9.6,10.4,10.9,11.8,12.2,12.9],[7.4,7.8,8.1,8.7,9.0,9.8,10.7,11.2,12.1,12.5,13.2],[7.6,8.0,8.2,8.8,9.2,10.0,10.9,11.4,12.3,12.7,13.5],[7.8,8.2,8.4,9.0,9.4,10.2,11.1,11.6,12.6,13.0,13.8],[7.9,8.3,8.6,9.2,9.6,10.4,11.4,11.9,12.9,13.3,14.1],[8.1,8.5,8.7,9.4,9.8,10.6,11.6,12.1,13.1,13.5,14.4],[8.2,8.7,8.9,9.6,10.0,10.9,11.8,12.4,13.4,13.8,14.6],[8.4,8.8,9.1,9.8,10.2,11.1,12.0,12.6,13.6,14.1,14.9],[8.5,9.0,9.2,9.9,10.4,11.3,12.3,12.8,13.9,14.3,15.2],[8.7,9.2,9.4,10.1,10.6,11.5,12.5,13.1,14.2,14.6,15.5],[9.2,9.6,9.9,10.7,11.1,12.1,13.2,13.8,15.0,15.4,16.4],[9.6,10.1,10.4,11.2,11.7,12.7,13.8,14.5,15.7,16.2,17.3],[10.0,10.5,10.8,11.7,12.2,13.3,14.5,15.2,16.5,17.0,18.1],[10.4,11.0,11.3,12.1,12.7,13.9,15.1,15.9,17.3,17.8,19.0],[10.8,11.4,11.7,12.6,13.2,14.4,15.8,16.6,18.0,18.6,19.9],[11.1,11.8,12.1,13.1,13.7,15.0,16.4,17.3,18.8,19.5,20.8],[11.5,12.1,12.5,13.5,14.2,15.5,17.0,17.9,19.6,20.3,21.7],[11.8,12.5,12.9,14.0,14.7,16.1,17.7,18.6,20.4,21.1,22.6],[12.2,12.9,13.3,14.4,15.1,16.6,18.3,19.3,21.2,22.0,23.5],[12.5,13.2,13.7,14.8,15.6,17.2,18.9,20.0,22.0,22.8,24.5],[12.8,13.6,14.0,15.3,16.1,17.7,19.6,20.7,22.7,23.6,25.4],[13.2,14.0,14.4,15.7,16.5,18.2,20.2,21.3,23.5,24.4,26.3]];
+const WHO_HEIGHT_GIRLS = [[44.8,45.6,46.1,47.2,47.9,49.1,50.4,51.1,52.2,52.7,53.5],[49.1,50.0,50.5,51.7,52.4,53.7,55.0,55.7,56.9,57.4,58.2],[52.3,53.2,53.7,55.0,55.7,57.1,58.4,59.2,60.4,60.9,61.8],[54.9,55.8,56.3,57.6,58.4,59.8,61.2,62.0,63.3,63.8,64.7],[57.1,58.0,58.5,59.8,60.6,62.1,63.5,64.3,65.7,66.2,67.1],[58.9,59.9,60.4,61.7,62.5,64.0,65.5,66.3,67.7,68.2,69.2],[60.5,61.5,62.0,63.4,64.2,65.7,67.3,68.1,69.5,70.0,71.0],[61.9,62.9,63.5,64.9,65.7,67.3,68.8,69.7,71.1,71.6,72.7],[63.2,64.3,64.9,66.3,67.2,68.7,70.3,71.2,72.6,73.2,74.3],[64.5,65.6,66.2,67.6,68.5,70.1,71.8,72.6,74.1,74.7,75.8],[65.7,66.8,67.4,68.9,69.8,71.5,73.1,74.0,75.5,76.1,77.2],[66.9,68.0,68.6,70.2,71.1,72.8,74.5,75.4,76.9,77.5,78.6],[68.0,69.2,69.8,71.3,72.3,74.0,75.8,76.7,78.3,78.9,80.0],[69.1,70.3,70.9,72.5,73.4,75.2,77.0,77.9,79.5,80.2,81.3],[70.1,71.3,72.0,73.6,74.6,76.4,78.2,79.2,80.8,81.4,82.6],[71.1,72.4,73.0,74.7,75.7,77.5,79.4,80.3,82.0,82.7,83.9],[72.1,73.3,74.0,75.7,76.7,78.6,80.5,81.5,83.2,83.9,85.1],[73.0,74.3,75.0,76.7,77.7,79.7,81.6,82.6,84.4,85.0,86.3],[74.0,75.2,75.9,77.7,78.7,80.7,82.7,83.7,85.5,86.2,87.5],[74.8,76.2,76.9,78.7,79.7,81.7,83.7,84.8,86.6,87.3,88.6],[75.7,77.0,77.7,79.6,80.7,82.7,84.7,85.8,87.7,88.4,89.7],[76.5,77.9,78.6,80.5,81.6,83.7,85.7,86.8,88.7,89.4,90.8],[77.3,78.7,79.5,81.4,82.5,84.6,86.7,87.8,89.7,90.5,91.9],[78.1,79.6,80.3,82.2,83.4,85.5,87.7,88.8,90.7,91.5,92.9],[78.2,79.6,80.4,82.4,83.5,85.7,87.9,89.1,91.0,91.8,93.2],[80.4,81.9,82.7,84.8,86.0,88.3,90.6,91.8,93.8,94.6,96.1],[82.5,84.0,84.9,87.0,88.3,90.7,93.1,94.3,96.5,97.3,98.9],[84.4,86.0,86.9,89.1,90.4,92.9,95.4,96.7,99.0,99.8,101.5],[86.2,87.9,88.8,91.1,92.5,95.1,97.6,99.0,101.3,102.2,103.9],[87.9,89.7,90.6,93.0,94.4,97.1,99.7,101.2,103.6,104.5,106.3],[89.6,91.4,92.4,94.8,96.3,99.0,101.8,103.3,105.7,106.7,108.5],[91.2,93.0,94.0,96.6,98.1,100.9,103.7,105.3,107.8,108.8,110.7],[92.7,94.6,95.6,98.3,99.8,102.7,105.6,107.2,109.8,110.8,112.8],[94.2,96.2,97.2,99.9,101.5,104.5,107.5,109.1,111.8,112.8,114.8],[95.6,97.6,98.7,101.5,103.1,106.2,109.2,110.9,113.6,114.7,116.7],[97.0,99.1,100.2,103.0,104.7,107.8,111.0,112.6,115.5,116.6,118.6],[98.4,100.5,101.6,104.5,106.2,109.4,112.6,114.4,117.2,118.4,120.5]];
+const WHO_HEAD_GIRLS = [[31.1,31.7,31.9,32.7,33.1,33.9,34.7,35.1,35.8,36.1,36.6],[33.8,34.3,34.6,35.3,35.8,36.5,37.3,37.8,38.5,38.8,39.3],[35.4,36.0,36.3,37.0,37.4,38.3,39.1,39.5,40.2,40.5,41.1],[36.6,37.2,37.5,38.2,38.7,39.5,40.4,40.8,41.6,41.9,42.4],[37.6,38.2,38.5,39.3,39.7,40.6,41.4,41.9,42.7,43.0,43.5],[38.5,39.0,39.3,40.1,40.6,41.5,42.3,42.8,43.6,43.9,44.5],[39.2,39.7,40.1,40.8,41.3,42.2,43.1,43.5,44.3,44.6,45.2],[39.8,40.4,40.7,41.5,41.9,42.8,43.7,44.2,45.0,45.3,45.9],[40.3,40.9,41.2,42.0,42.5,43.4,44.3,44.7,45.6,45.9,46.5],[40.7,41.3,41.6,42.4,42.9,43.8,44.7,45.2,46.0,46.3,46.9],[41.1,41.7,42.0,42.8,43.3,44.2,45.1,45.6,46.4,46.8,47.4],[41.4,42.0,42.4,43.2,43.7,44.6,45.5,46.0,46.8,47.1,47.7],[41.7,42.3,42.7,43.5,44.0,44.9,45.8,46.3,47.1,47.5,48.1],[42.0,42.6,42.9,43.8,44.3,45.2,46.1,46.6,47.4,47.7,48.3],[42.2,42.9,43.2,44.0,44.5,45.4,46.3,46.8,47.7,48.0,48.6],[42.5,43.1,43.4,44.2,44.7,45.7,46.6,47.1,47.9,48.2,48.8],[42.7,43.3,43.6,44.4,44.9,45.9,46.8,47.3,48.1,48.5,49.1],[42.9,43.5,43.8,44.6,45.1,46.1,47.0,47.5,48.3,48.7,49.3],[43.0,43.6,44.0,44.8,45.3,46.2,47.2,47.7,48.5,48.8,49.5],[43.2,43.8,44.1,45.0,45.5,46.4,47.3,47.8,48.7,49.0,49.6],[43.4,44.0,44.3,45.1,45.6,46.6,47.5,48.0,48.9,49.2,49.8],[43.5,44.1,44.5,45.3,45.8,46.7,47.7,48.2,49.0,49.4,50.0],[43.7,44.3,44.6,45.4,46.0,46.9,47.8,48.3,49.2,49.5,50.1],[43.8,44.4,44.7,45.6,46.1,47.0,48.0,48.5,49.3,49.7,50.3],[43.9,44.6,44.9,45.7,46.2,47.2,48.1,48.6,49.5,49.8,50.4],[44.3,44.9,45.3,46.1,46.6,47.6,48.5,49.0,49.9,50.2,50.8],[44.7,45.3,45.6,46.5,47.0,47.9,48.9,49.4,50.2,50.6,51.2],[45.0,45.6,45.9,46.8,47.3,48.2,49.2,49.7,50.6,50.9,51.5],[45.2,45.9,46.2,47.0,47.6,48.5,49.5,50.0,50.8,51.2,51.8],[45.5,46.1,46.4,47.3,47.8,48.7,49.7,50.2,51.1,51.4,52.0],[45.7,46.3,46.6,47.5,48.0,49.0,49.9,50.4,51.3,51.6,52.3],[45.9,46.5,46.8,47.7,48.2,49.2,50.1,50.6,51.5,51.8,52.5],[46.0,46.7,47.0,47.9,48.4,49.3,50.3,50.8,51.7,52.0,52.6],[46.2,46.8,47.2,48.0,48.5,49.5,50.5,51.0,51.8,52.2,52.8],[46.3,47.0,47.3,48.2,48.7,49.6,50.6,51.1,52.0,52.3,53.0],[46.5,47.1,47.4,48.3,48.8,49.8,50.7,51.3,52.1,52.5,53.1],[46.6,47.2,47.6,48.4,49.0,49.9,50.9,51.4,52.3,52.6,53.2]];
+
 const OMS_MILESTONES = [
   {id:"oms1", text:"Se sienta sin apoyo", median:5.9, min:3.8, max:9.2},
   {id:"oms2", text:"Se pone de pie con ayuda (agarrándose)", median:7.4, min:4.8, max:11.4},
@@ -6898,10 +7034,17 @@ function valueToPercentileLabel(value, row) {
   for (let i=0;i<row.length-1;i++) if (value>=row[i] && value<=row[i+1]) { const t=(row[i+1]-row[i])===0?0:(value-row[i])/(row[i+1]-row[i]); return "P"+(P[i]+t*(P[i+1]-P[i])).toFixed(1); }
   return "-";
 }
+/* Tabla que toca segun el sexo. Por defecto, niño: es lo que habia y es lo
+   que corresponde a Pablo; un hogar nuevo elige el suyo en el alta. */
+function tablaOMS(kind, sexo) {
+  const nina = (sexo || CONFIG.sexo) === "nina";
+  if (kind === "weight") return nina ? WHO_WEIGHT_GIRLS : WHO_WEIGHT_BOYS;
+  if (kind === "height") return nina ? WHO_HEIGHT_GIRLS : WHO_HEIGHT_BOYS;
+  return nina ? WHO_HEAD_GIRLS : WHO_HEAD_BOYS;
+}
 function percentileForMeasure(kind, ageMonths, value) {
   if (ageMonths==null || value==null || isNaN(value)) return null;
-  const table = kind==="weight"?WHO_WEIGHT_BOYS: kind==="height"?WHO_HEIGHT_BOYS: WHO_HEAD_BOYS;
-  return valueToPercentileLabel(value, interpolateRowAt(table, ageMonths));
+  return valueToPercentileLabel(value, interpolateRowAt(tablaOMS(kind), ageMonths));
 }
 function ageInMonthsDecimal(birthISO, atDate) {
   if (!birthISO) return null;
@@ -6927,6 +7070,7 @@ function defaultState() {
       fechaNacimiento: "2026-03-05",
       nombre: "Pablo",
       metodo: "mixto",            // "papilla" | "blw" | "mixto"
+      sexo: "nino",               // "nino" | "nina" — decide las tablas OMS
       /* Dos hitos distintos, como los separa la AEP y como insiste el planning:
          sentarse CON APOYO basta para empezar con papilla y chafado; para dar
          TROZOS hace falta que aguante el tronco erguido y estable, sin
@@ -7353,6 +7497,7 @@ let VISTA_ACTUAL = "hoy";
 let ORIGEN_ALIMENTO = null;
 const ORIGEN_LABEL = { buscar: "Buscar", progreso: "Progreso", alergenos: "Alérgenos", calendario: "Calendario", hoy: "Hoy" };
 
+const VISTAS_SIN_CABECERA = new Set(["sueno"]);
 function irA(vista, param) {
   if (vista === "alimento" && VISTA_ACTUAL !== "alimento") {
     ORIGEN_ALIMENTO = { vista: VISTA_ACTUAL, scrollY: window.scrollY };
@@ -7364,6 +7509,10 @@ function irA(vista, param) {
   document.querySelectorAll("#pb-app .view").forEach(v => v.classList.remove("active"));
   const el = document.getElementById("view-" + vista);
   el.classList.add("active");
+  /* Sueño arranca directamente en el registro: nombre, edad y metodo ya
+     salen en la cabecera de la app y ahi solo estorban. */
+  const app = document.getElementById("pb-app");
+  if (app) app.classList.toggle("sin-cabecera", VISTAS_SIN_CABECERA.has(vista));
   VISTA_ACTUAL = vista;
   RENDER[vista]?.(el, param);
   // Sincroniza el chip de seccion de la cabecera de Recetas.
@@ -8265,6 +8414,12 @@ function renderAjustes(el) {
         <option value="blw" ${CONFIG.metodo==='blw'?'selected':''}>Solo BLW</option>
       </select>
     </div>
+    <div class="settings-row"><label>Sexo <span class="faint">(decide las tablas OMS)</span></label>
+      <select id="cfg-sexo">
+        <option value="nino" ${CONFIG.sexo!=='nina'?'selected':''}>Niño</option>
+        <option value="nina" ${CONFIG.sexo==='nina'?'selected':''}>Niña</option>
+      </select>
+    </div>
     <div class="settings-row"><label>¿Le ofreces hígado de pollo?</label>
       <input type="checkbox" id="cfg-higado" ${CONFIG.ofrecerHigado?'checked':''} style="width:20px;height:20px">
     </div>
@@ -8316,6 +8471,7 @@ function renderAjustes(el) {
   };
   document.getElementById("cfg-nacimiento").addEventListener("change", e => { CONFIG.fechaNacimiento = e.target.value; tocado(true); });
   document.getElementById("cfg-metodo").addEventListener("change", e => { CONFIG.metodo = e.target.value; tocado(true); });
+  document.getElementById("cfg-sexo").addEventListener("change", e => { CONFIG.sexo = e.target.value; tocado(true); });
   document.getElementById("cfg-higado").addEventListener("change", e => { CONFIG.ofrecerHigado = e.target.checked; tocado(true); });
   document.getElementById("cfg-sedestacion").addEventListener("change", e => { CONFIG.sedestacionApoyo = e.target.checked; tocado(false); });
   document.getElementById("cfg-tronco").addEventListener("change", e => { CONFIG.troncoEstable = e.target.checked; tocado(false); });
@@ -8523,9 +8679,9 @@ function deleteGrowth(id) {
   renderCrecimiento(document.getElementById("view-crecimiento"));
 }
 const GROWTH_META = {
-  weight: { titulo: "Peso",               unidad: "kg", tabla: () => WHO_WEIGHT_BOYS },
-  height: { titulo: "Longitud / talla",   unidad: "cm", tabla: () => WHO_HEIGHT_BOYS },
-  head:   { titulo: "Perímetro cefálico", unidad: "cm", tabla: () => WHO_HEAD_BOYS },
+  weight: { titulo: "Peso",               unidad: "kg", tabla: () => tablaOMS("weight") },
+  height: { titulo: "Longitud / talla",   unidad: "cm", tabla: () => tablaOMS("height") },
+  head:   { titulo: "Perímetro cefálico", unidad: "cm", tabla: () => tablaOMS("head") },
 };
 function htmlGraficasOMS(medidas) {
   const ultima = medidas.length ? medidas[0] : null;
@@ -8606,9 +8762,9 @@ function renderGrowthCharts() {
       },
     });
   }
-  build("chart-weight", WHO_WEIGHT_BOYS, "weight", "kg", "weight");
-  build("chart-height", WHO_HEIGHT_BOYS, "height", "cm", "height");
-  build("chart-head",   WHO_HEAD_BOYS,   "head",   "cm", "head");
+  build("chart-weight", tablaOMS("weight"), "weight", "kg", "weight");
+  build("chart-height", tablaOMS("height"), "height", "cm", "height");
+  build("chart-head",   tablaOMS("head"),   "head",   "cm", "head");
 }
 
 /* ======================== AVISOS =========================================
@@ -9303,7 +9459,7 @@ function renderSueno(el) {
   const siestasHoy = STATE.sleep.filter(s => s.type === "siesta" && s.start.slice(0, 10) === HOY_ISO).length;
   if (!SUENO_CAL_MES) { const h = new Date(); SUENO_CAL_MES = new Date(h.getFullYear(), h.getMonth(), 1); }
 
-  let html = `<h2 style="margin:0 0 12px">Sueño</h2>`;
+  let html = "";
 
   activos.forEach(s => {
     html += `<div class="sleep-active"><div><b>${s.type === 'siesta' ? 'Siesta' : 'Sueño nocturno'} en curso</b>
@@ -15918,7 +16074,9 @@ function boot(vistaInicial) {
       { id: "plan",    label: "Plan semanal", labelCorto: "Plan",    icono: "&#128197;",
         desc: "Dieta y entreno d\u00eda a d\u00eda: comidas con cantidades por comensales, macros y rutinas de gimnasio." },
       { id: "recetas", label: "Recetas",      labelCorto: "Recetas", icono: "&#127859;",
-        desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." }
+        desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." },
+      { id: "documentos", label: "Documentos", labelCorto: "Docs",    icono: "&#128194;",
+        desc: "Enlaces a la documentaci\u00f3n de casa: DNI, pasaportes, seguros, titulaciones. Agrupados por tipo." }
     ];
 
     /* Catalogo de vistas: unica fuente de verdad para nav y secciones.
@@ -15950,7 +16108,8 @@ function boot(vistaInicial) {
       { id: "pb_crecimiento",label: "Crecimiento", area: "pablo", seccion: "pablo" },
       { id: "pb_desarrollo", label: "Desarrollo",  area: "pablo", seccion: "pablo" },
       { id: "pb_pediatra",   label: "Pediatra",    area: "pablo", seccion: "pablo" },
-      { id: "pb_mas",        label: "M\u00e1s",        area: "pablo", seccion: "pablo" }
+      { id: "pb_mas",        label: "M\u00e1s",        area: "pablo", seccion: "pablo" },
+      { id: "documentos",    label: "Documentos",  area: "documentos" }
     ];
 
     /* Puente entre los chips de Recetas y el router interno de Pablo. */
@@ -16006,7 +16165,11 @@ function boot(vistaInicial) {
     }
 
     /* Perfiles permitidos. */
-    const PERFILES = ["ruben", "sergio", "invitado"];
+    /* Perfiles del hogar. Arranca con los historicos para que lo ya guardado
+       en estado_usuario siga reconociendose, y se completa al cargar los
+       miembros. */
+    let PERFILES = ["ruben", "sergio", "invitado"];
+    let MIEMBROS = [];   // [{ user_id, perfil, nombre }]
 
     /* Etiquetas legibles para enums (no se persisten, solo presentacion). */
     const ETIQUETA_TIPO = {
@@ -16233,6 +16396,9 @@ function boot(vistaInicial) {
         estadoSync:    "idle",  // idle | syncing | error
         ultimoError:   null
       },
+      /* Hogar al que pertenece el usuario. Decide de quien son los datos y que
+         areas ve. null = todavia no cargado; false = no tiene (alta pendiente). */
+      hogar: null,
       /* Conversores — estado efimero de los formularios. */
       conv: {
         masa: { ref: null, cantidad: 100, desde: "g" },
@@ -16515,6 +16681,7 @@ function boot(vistaInicial) {
       renderNav();
       renderVistaActiva();
       // Las vistas del plan comparten estado: al mostrarlas, refrescar su DOM.
+      if (id === "documentos") docsCargar(false);
       if (id === "pc_calendario") renderPcCalendario();
       if (id === "pc_hoy")      { pcEstado.diaHoy = null; renderPcHoy(); }
       if (areaDeVista(id) === "pablo") pbEntrar(id);
@@ -16579,7 +16746,7 @@ function boot(vistaInicial) {
       localStorage.setItem(KEY_SUPABASE, JSON.stringify({
         url: s.url, anonKey: s.anonKey,
         token: s.token, refreshToken: s.refreshToken,
-        email: s.email, ultimoSync: s.ultimoSync,
+        email: s.email, userId: s.userId, ultimoSync: s.ultimoSync,
         autoSync: s.autoSync
       }));
     }
@@ -17764,15 +17931,10 @@ function boot(vistaInicial) {
       } catch (_) { return false; }
     }
 
-    /* Mapping email -> perfil. Si no aparece, va a "invitado". */
-    const EMAIL_A_PERFIL = {
-      "benteslez@gmail.com": "ruben",
-      "rubenfuentesgonzalez@gmail.com": "sergio"
-    };
-    function perfilDesdeEmail(email) {
-      const em = (email || "").toLowerCase().trim();
-      return EMAIL_A_PERFIL[em] || "invitado";
-    }
+    /* Quien eres sale de hogar_miembros, no de una lista de correos en el
+       codigo: los correos ya viven en Supabase Auth y ahi cualquier usuario
+       nuevo se identifica solo, sin tocar el fuente. */
+    function perfilDesdeSesion() { return perfilActivo; }
 
     function gateNecesario() {
       return !sesion.supabase.token;
@@ -17832,6 +17994,7 @@ function boot(vistaInicial) {
       s.token = data.access_token;
       s.refreshToken = data.refresh_token;
       s.email = (data.user && data.user.email) || email;
+      s.userId = (data.user && data.user.id) || null;
       guardarSupabase();
     }
 
@@ -18057,9 +18220,56 @@ function boot(vistaInicial) {
 
     /* --------- Sync bidireccional last-write-wins ----------------------- */
 
+    /* Trae el hogar del usuario. RLS ya filtra: solo llegan los suyos. Si no
+       tiene ninguno, queda en false y la app pide el alta. */
+    async function cargarHogar() {
+      if (!sesion.supabase.token) { sesion.hogar = null; return null; }
+      try {
+        const filas = await supaFetch("/rest/v1/hogares?select=id,nombre,areas");
+        sesion.hogar = (filas && filas[0]) || false;
+      } catch (e) {
+        // Si la tabla no existe aun (migracion sin ejecutar) no se bloquea la
+        // app: se sigue con el comportamiento de antes.
+        if (/(42P01|does not exist|Could not find the table)/i.test(e.message || "")) {
+          sesion.hogar = null;
+          return null;
+        }
+        throw e;
+      }
+      return sesion.hogar;
+    }
+    function hogarId() { return sesion.hogar && sesion.hogar.id ? sesion.hogar.id : null; }
+
+    /* Miembros del hogar: de aqui salen el perfil con el que se guardan
+       favoritos y el nombre que se muestra arriba. RLS ya filtra por hogar. */
+    async function cargarMiembros() {
+      if (!hogarId()) return;
+      try {
+        const filas = await supaFetch("/rest/v1/hogar_miembros?select=user_id,perfil,nombre");
+        MIEMBROS = (filas || []).filter(m => m.perfil);
+        if (MIEMBROS.length) {
+          PERFILES = MIEMBROS.map(m => m.perfil);
+          const yo = MIEMBROS.find(m => m.user_id === sesion.supabase.userId);
+          if (yo) fijarPerfil(yo.perfil);
+        }
+      } catch (e) {
+        // Migracion 003 sin ejecutar: se sigue con los perfiles historicos.
+        if (!/(42P01|column|does not exist)/i.test(e.message || "")) throw e;
+      }
+      renderPerfil();
+    }
+    /* Areas visibles: las del hogar. Sin hogar cargado, las de siempre. */
+    function areasVisibles() {
+      const h = sesion.hogar;
+      if (!h || !Array.isArray(h.areas)) return AREAS;
+      return AREAS.filter(a => h.areas.indexOf(a.id) >= 0);
+    }
+
     async function sincronizar() {
       const s = sesion.supabase;
       if (!s.token) throw new Error("Inicia sesión primero");
+      if (sesion.hogar === null) await cargarHogar();
+      if (sesion.hogar === false) { s.estadoSync = "idle"; return { sinHogar: true }; }
       s.estadoSync = "syncing";
       s.ultimoError = null;
       renderDatos();
@@ -18129,15 +18339,19 @@ function boot(vistaInicial) {
           }
         });
 
+        /* Cada fila viaja con su hogar: es lo que la RLS comprueba y tambien
+           la clave por la que el upsert decide si actualiza o inserta. */
+        const hid = hogarId();
+        const conHogar = arr => hid ? arr.map(x => Object.assign({ hogar_id: hid }, x)) : arr;
         const upsertHdr = { "Prefer": "resolution=merge-duplicates,return=minimal" };
-        if (subirIng.length) await supaFetch("/rest/v1/ingredientes", {
-          method: "POST", headers: upsertHdr, body: JSON.stringify(subirIng)
+        if (subirIng.length) await supaFetch("/rest/v1/ingredientes?on_conflict=hogar_id,clave", {
+          method: "POST", headers: upsertHdr, body: JSON.stringify(conHogar(subirIng))
         });
-        if (subirRec.length) await supaFetch("/rest/v1/recetas", {
-          method: "POST", headers: upsertHdr, body: JSON.stringify(subirRec)
+        if (subirRec.length) await supaFetch("/rest/v1/recetas?on_conflict=hogar_id,id", {
+          method: "POST", headers: upsertHdr, body: JSON.stringify(conHogar(subirRec))
         });
-        if (subirEU.length)  await supaFetch("/rest/v1/estado_usuario", {
-          method: "POST", headers: upsertHdr, body: JSON.stringify(subirEU)
+        if (subirEU.length)  await supaFetch("/rest/v1/estado_usuario?on_conflict=hogar_id,perfil,id_receta", {
+          method: "POST", headers: upsertHdr, body: JSON.stringify(conHogar(subirEU))
         });
 
         // 4) Detectar BORRADOS REMOTOS: si una receta/ingrediente NO está en
@@ -18207,7 +18421,9 @@ function boot(vistaInicial) {
       if (typeof PB === "undefined" || !PB.exportarEstadoSync) return "sin módulo";
       let remoto = null;
       try {
-        const filas = await supaFetch("/rest/v1/pablo_estado?id=eq." + PABLO_FILA);
+        const hid = hogarId();
+        if (!hid) return "sin hogar";
+        const filas = await supaFetch("/rest/v1/pablo_estado?hogar_id=eq." + encodeURIComponent(hid));
         remoto = (filas && filas[0]) || null;
       } catch (e) {
         // La tabla puede no existir todavia: no debe tumbar el resto del sync.
@@ -18230,10 +18446,10 @@ function boot(vistaInicial) {
       // Se sube siempre que lo local aporte algo que el remoto no tenga: o
       // bien somos mas nuevos, o bien la fusion ha juntado las dos partes.
       if (!remoto || cambioLocal || tsFinal > remotoTs) {
-        await supaFetch("/rest/v1/pablo_estado", {
+        await supaFetch("/rest/v1/pablo_estado?on_conflict=hogar_id", {
           method: "POST",
           headers: { "Prefer": "resolution=merge-duplicates" },
-          body: JSON.stringify([{ id: PABLO_FILA, datos: PB.exportarEstadoSync(), modificado: tsFinal }])
+          body: JSON.stringify([{ id: PABLO_FILA, hogar_id: hid, datos: PB.exportarEstadoSync(), modificado: tsFinal }])
         });
         return cambioLocal ? "fusionado" : "subido";
       }
@@ -19237,6 +19453,8 @@ function boot(vistaInicial) {
 
     function renderNav() {
       const nav = document.getElementById("nav-secciones");
+      // Un hogar que solo tenga "pablo" no debe ver chips de las demas areas.
+      const permitidas = new Set(areasVisibles().map(a => a.id));
       const sub = document.getElementById("nav-subsecciones");
       nav.innerHTML = "";
       sub.innerHTML = "";
@@ -19254,6 +19472,7 @@ function boot(vistaInicial) {
         return b;
       };
 
+      if (!permitidas.has(areaActiva)) return;
       VISTAS.filter(v => v.area === areaActiva && !v.sub)
             .forEach(v => nav.appendChild(crear(v, "chip", v.id === padre)));
 
@@ -19305,7 +19524,7 @@ function boot(vistaInicial) {
     /** Hub de inicio: una tarjeta por area. */
     function renderHub() {
       const saludo = document.getElementById("hub-saludo");
-      if (saludo) saludo.textContent = "Hola, " + (NOMBRE_PERFIL[perfilActivo] || perfilActivo);
+      if (saludo) saludo.textContent = "Hola, " + nombreDePerfil(perfilActivo);
       const grid = document.getElementById("hub-grid");
       if (!grid) return;
       let nRecetas = 0;
@@ -19315,9 +19534,10 @@ function boot(vistaInicial) {
       const meta = {
         recetas: `<span><b class="num">${nRecetas}</b> recetas</span>`,
         plan:    `<span><b class="num">${PC_PLAN.length}</b> días planificados</span>`,
-        pablo:   `<span><b class="num">${nAlimentos}</b> alimentos</span>`
+        pablo:   `<span><b class="num">${nAlimentos}</b> alimentos</span>`,
+        documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`
       };
-      grid.innerHTML = AREAS.map(a => `
+      grid.innerHTML = areasVisibles().map(a => `
         <button type="button" class="hub-card" data-area="${a.id}">
           <span class="hub-card-icono" aria-hidden="true">${a.icono}</span>
           <span class="hub-card-nombre">${a.label}</span>
@@ -19325,6 +19545,439 @@ function boot(vistaInicial) {
           <span class="hub-card-meta">${meta[a.id] || ""}
             <span class="hub-card-ir" aria-hidden="true">&#8594;</span></span>
         </button>`).join("");
+    }
+
+    /* ========================================================================
+       DOCUMENTOS — enlaces a la documentacion de casa
+       Ninguna URL vive en el codigo: se piden a Supabase con la sesion del
+       usuario y se quedan solo en memoria. No pasan por localStorage, ni por
+       la URL, ni por consola.
+       ======================================================================== */
+    const DOCS = {
+      tipos: [], documentos: [],
+      cargado: false, cargando: false, error: null,
+    };
+
+    /* Tipos que se siembran la primera vez que un hogar abre la pestaña. */
+    const DOCS_TIPOS_INICIALES = [
+      { emoji: "\u{1FAAA}", name: "DNI",                 plural_label: "DNI",                 sort_order: 10 },
+      { emoji: "\u{1F6C2}", name: "Pasaporte",           plural_label: "PASAPORTES",          sort_order: 20 },
+      { emoji: "✈️", name: "Visa",             plural_label: "VISAS",               sort_order: 30 },
+      { emoji: "\u{1F194}", name: "Cédula",         plural_label: "CÉDULAS",        sort_order: 40 },
+      { emoji: "\u{1F697}", name: "Permiso de conducir", plural_label: "PERMISOS DE CONDUCIR", sort_order: 50 },
+      { emoji: "\u{1F4DC}", name: "Certificado",         plural_label: "CERTIFICADOS",        sort_order: 60 },
+      { emoji: "\u{1F46A}", name: "Libro de familia",    plural_label: "LIBRO DE FAMILIA",    sort_order: 70 },
+      { emoji: "\u{1F6E1}️", name: "Seguros",       plural_label: "SEGUROS",             sort_order: 80 },
+      { emoji: "\u{1F393}", name: "Titulación",     plural_label: "TITULACIONES",        sort_order: 90 },
+      { emoji: "\u{1F4C1}", name: "Otros",               plural_label: "OTROS",               sort_order: 100 },
+    ];
+
+    /* Un enlace solo se acepta si es https. http:// viajaria en claro y
+       javascript:/data: serian ejecutables al pinchar. */
+    function docsUrlValida(u) {
+      const t = (u || "").trim();
+      if (!/^https:\/\//i.test(t)) return false;
+      try { new URL(t); return true; } catch { return false; }
+    }
+
+    async function docsCargar(forzar) {
+      // Sin sesion no se consulta nada: requisito de la pestaña.
+      if (!sesion.supabase.token) { DOCS.cargado = false; return; }
+      if (!hogarId()) { DOCS.cargado = false; return; }
+      if (DOCS.cargado && !forzar) return;
+      DOCS.cargando = true; DOCS.error = null; renderDocumentos();
+      try {
+        const [tipos, docs] = await Promise.all([
+          supaFetch("/rest/v1/document_types?select=id,name,plural_label,emoji,sort_order&order=sort_order.asc,name.asc"),
+          supaFetch("/rest/v1/documents?select=id,type_id,title,url,notes&order=title.asc"),
+        ]);
+        DOCS.tipos = tipos || [];
+        DOCS.documentos = docs || [];
+        if (!DOCS.tipos.length) await docsSembrarTipos();
+        DOCS.cargado = true;
+      } catch (e) {
+        DOCS.error = /(42P01|does not exist|Could not find the table)/i.test(e.message || "")
+          ? "Falta ejecutar la migración de documentos en Supabase."
+          : "No se han podido cargar los documentos. Revisa la conexión.";
+      } finally {
+        DOCS.cargando = false;
+        renderDocumentos();
+        renderHub();
+      }
+    }
+
+    /* Idempotente: solo siembra si el hogar no tiene ni un tipo. */
+    async function docsSembrarTipos() {
+      const hid = hogarId();
+      if (!hid) return;
+      const filas = DOCS_TIPOS_INICIALES.map(t => Object.assign({ hogar_id: hid }, t));
+      await supaFetch("/rest/v1/document_types", {
+        method: "POST",
+        headers: { "Prefer": "return=representation" },
+        body: JSON.stringify(filas),
+      }).then(r => { DOCS.tipos = r || []; });
+    }
+
+    function docsTipo(id) { return DOCS.tipos.find(t => t.id === id) || null; }
+    function docsCuenta(typeId) { return DOCS.documentos.filter(d => d.type_id === typeId).length; }
+
+    /* ---- vista principal ------------------------------------------------- */
+    function renderDocumentos() {
+      const cont = document.getElementById("documentos-contenedor");
+      if (!cont) return;
+
+      if (!sesion.supabase.token) { cont.innerHTML = ""; return; }
+      if (DOCS.cargando && !DOCS.cargado) {
+        cont.innerHTML = docsCabecera() + `<div class="empty-state">Cargando documentos…</div>`;
+        return;
+      }
+      if (DOCS.error) {
+        cont.innerHTML = docsCabecera() +
+          `<div class="empty-state"><p>${esc(DOCS.error)}</p>
+           <button type="button" class="btn-primario" onclick="DOCSUI.recargar()">Reintentar</button></div>`;
+        return;
+      }
+      if (!DOCS.documentos.length) {
+        cont.innerHTML = docsCabecera() +
+          `<div class="empty-state"><p>Todavía no hay ningún enlace guardado.</p>
+           <button type="button" class="btn-primario" onclick="DOCSUI.nuevo()">Añadir el primero</button></div>`;
+        return;
+      }
+
+      // Una seccion por tipo CON documentos; los vacios solo salen al gestionar.
+      const conDocs = DOCS.tipos
+        .filter(t => docsCuenta(t.id) > 0)
+        .sort((a, b) => (a.sort_order - b.sort_order) || a.name.localeCompare(b.name, "es"));
+
+      cont.innerHTML = docsCabecera() + conDocs.map(t => {
+        const items = DOCS.documentos
+          .filter(d => d.type_id === t.id)
+          .sort((a, b) => a.title.localeCompare(b.title, "es"));
+        return `<section class="doc-grupo">
+          <h3 class="doc-grupo-tit">
+            <span class="emoji" aria-hidden="true">${esc(t.emoji)}</span>
+            <span>${esc((t.plural_label || t.name).toUpperCase())}</span>
+            <span class="doc-cuenta">· ${items.length}</span>
+          </h3>
+          <ul class="doc-lista">${items.map(d => `
+            <li class="doc-fila">
+              <a class="doc-abrir" href="${esc(d.url)}" target="_blank" rel="noopener noreferrer">
+                <span class="doc-titulo">${esc(d.title)}</span>
+                ${d.notes ? `<span class="doc-notas">${esc(d.notes)}</span>` : ""}
+                <span class="doc-ir" aria-hidden="true">&#8599;</span>
+              </a>
+              <span class="doc-acciones">
+                <button type="button" class="icon-btn txt" title="Editar" aria-label="Editar ${esc(d.title)}"
+                  onclick="DOCSUI.editar('${d.id}')">&#9998;</button>
+                <button type="button" class="icon-btn txt" title="Eliminar" aria-label="Eliminar ${esc(d.title)}"
+                  onclick="DOCSUI.borrar('${d.id}')">&#10005;</button>
+              </span>
+            </li>`).join("")}</ul>
+        </section>`;
+      }).join("");
+    }
+
+    function docsCabecera() {
+      return `
+        <h1 class="vista-titulo">Documentos</h1>
+        <p class="vista-subtitulo">Enlaces a la documentación de casa, agrupados por tipo.</p>
+        <div class="doc-barra">
+          <button type="button" class="btn-plano" onclick="DOCSUI.tipos()">Gestionar tipos</button>
+          <button type="button" class="btn-primario" onclick="DOCSUI.nuevo()">+ Nuevo documento</button>
+        </div>`;
+    }
+
+    /* ---- modal generico de Documentos ------------------------------------
+       Reutiliza .modal-overlay / .modal / .campo / .btn-* que ya usan el
+       temporizador y el selector de recetas. Añade lo que pedia el encargo:
+       Escape, clic en el fondo, foco al primer campo y foco atrapado. */
+    let DOCS_ESC = null;
+    function docsModal(titulo, cuerpo, botones, alAbrir) {
+      const ov = document.getElementById("modal-documentos");
+      ov.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="doc-modal-tit">
+          <h3 id="doc-modal-tit">${esc(titulo)}</h3>
+          ${cuerpo}
+          <div class="modal-acciones">${botones}</div>
+        </div>`;
+      ov.hidden = false;
+      ov.onclick = ev => { if (ev.target === ov) docsCerrarModal(); };
+      DOCS_ESC = ev => {
+        if (ev.key === "Escape") { ev.preventDefault(); docsCerrarModal(); return; }
+        if (ev.key !== "Tab") return;
+        // Foco atrapado: del ultimo se salta al primero y al reves.
+        const f = ov.querySelectorAll('a[href],button:not([disabled]),input,select,textarea');
+        if (!f.length) return;
+        const primero = f[0], ultimo = f[f.length - 1];
+        if (ev.shiftKey && document.activeElement === primero) { ev.preventDefault(); ultimo.focus(); }
+        else if (!ev.shiftKey && document.activeElement === ultimo) { ev.preventDefault(); primero.focus(); }
+      };
+      document.addEventListener("keydown", DOCS_ESC, true);
+      const primero = ov.querySelector("input,select,textarea,button");
+      if (primero) setTimeout(() => primero.focus(), 40);
+      if (alAbrir) alAbrir(ov);
+    }
+    function docsCerrarModal() {
+      const ov = document.getElementById("modal-documentos");
+      if (ov) { ov.hidden = true; ov.innerHTML = ""; ov.onclick = null; }
+      if (DOCS_ESC) { document.removeEventListener("keydown", DOCS_ESC, true); DOCS_ESC = null; }
+    }
+    function docsAviso(txt) {
+      const a = document.getElementById("doc-aviso");
+      if (a) { a.textContent = txt; a.hidden = !txt; }
+    }
+
+    /* ---- alta y edicion de un documento ---------------------------------- */
+    let DOCS_EDIT_ID = null;
+    function docsFormulario(doc) {
+      DOCS_EDIT_ID = doc ? doc.id : null;
+      const tipos = [...DOCS.tipos].sort((a, b) => (a.sort_order - b.sort_order) || a.name.localeCompare(b.name, "es"));
+      if (!tipos.length) { toast("Crea antes un tipo de documento"); return docsGestionTipos(); }
+      const sel = doc ? doc.type_id : tipos[0].id;
+      docsModal(doc ? "Editar documento" : "Nuevo documento", `
+        <div class="campo"><label for="doc-tipo">Tipo</label>
+          <select id="doc-tipo">${tipos.map(t =>
+            `<option value="${t.id}"${t.id === sel ? " selected" : ""}>${esc(t.emoji)} ${esc(t.name)}</option>`).join("")}</select></div>
+        <div class="campo"><label for="doc-titulo">Título</label>
+          <input type="text" id="doc-titulo" value="${esc(doc ? doc.title : "")}" placeholder="Pasaporte Rubén — cad. 2031" autocomplete="off"></div>
+        <div class="campo"><label for="doc-url">Enlace</label>
+          <input type="url" id="doc-url" value="${esc(doc ? doc.url : "")}" placeholder="https://drive.google.com/…" autocomplete="off" spellcheck="false"></div>
+        <div class="campo"><label for="doc-notas">Notas <span class="faint">(opcional)</span></label>
+          <input type="text" id="doc-notas" value="${esc(doc && doc.notes ? doc.notes : "")}" autocomplete="off"></div>
+        <div id="doc-aviso" class="doc-aviso" hidden></div>`,
+        `<button type="button" class="btn-plano" onclick="DOCSUI.cerrar()">Cancelar</button>
+         <button type="button" class="btn-primario" onclick="DOCSUI.guardar()">Guardar</button>`);
+    }
+
+    async function docsGuardar() {
+      const type_id = document.getElementById("doc-tipo").value;
+      const title = document.getElementById("doc-titulo").value.trim();
+      const url = document.getElementById("doc-url").value.trim();
+      const notes = document.getElementById("doc-notas").value.trim();
+      if (!title) return docsAviso("Ponle un título.");
+      if (!docsUrlValida(url)) return docsAviso("El enlace tiene que empezar por https://");
+      docsAviso("");
+      const fila = { type_id, title, url, notes: notes || null };
+      try {
+        if (DOCS_EDIT_ID) {
+          await supaFetch("/rest/v1/documents?id=eq." + encodeURIComponent(DOCS_EDIT_ID), {
+            method: "PATCH", headers: { "Prefer": "return=minimal" }, body: JSON.stringify(fila),
+          });
+        } else {
+          fila.hogar_id = hogarId();
+          await supaFetch("/rest/v1/documents", {
+            method: "POST", headers: { "Prefer": "return=minimal" }, body: JSON.stringify([fila]),
+          });
+        }
+        docsCerrarModal();
+        await docsCargar(true);
+        toast(DOCS_EDIT_ID ? "Documento actualizado" : "Documento guardado");
+      } catch (e) {
+        docsAviso("No se ha podido guardar. Inténtalo de nuevo.");
+      }
+    }
+
+    function docsBorrar(id) {
+      const d = DOCS.documentos.find(x => x.id === id);
+      if (!d) return;
+      docsModal("¿Borrar este documento?",
+        `<p class="modal-p">${esc(d.title)}</p><p class="modal-p faint">Se borra el enlace guardado, no el archivo en Drive.</p>`,
+        `<button type="button" class="btn-plano" onclick="DOCSUI.cerrar()">Cancelar</button>
+         <button type="button" class="btn-peligro" onclick="DOCSUI.borrarConfirmado('${id}')">Borrar</button>`);
+    }
+    async function docsBorrarConfirmado(id) {
+      try {
+        await supaFetch("/rest/v1/documents?id=eq." + encodeURIComponent(id), { method: "DELETE" });
+        docsCerrarModal();
+        await docsCargar(true);
+        toast("Documento borrado");
+      } catch (e) { docsAviso("No se ha podido borrar."); }
+    }
+
+    /* ---- gestion de tipos ------------------------------------------------- */
+    function docsGestionTipos() {
+      const tipos = [...DOCS.tipos].sort((a, b) => (a.sort_order - b.sort_order) || a.name.localeCompare(b.name, "es"));
+      docsModal("Tipos de documento", `
+        <div class="doc-tipos">
+          ${tipos.map(t => `
+            <div class="doc-tipo-fila" data-id="${t.id}">
+              <input class="doc-emoji" type="text" value="${esc(t.emoji)}" maxlength="4" aria-label="Emoji de ${esc(t.name)}">
+              <span class="doc-tipo-campos">
+                <input class="doc-nombre" type="text" value="${esc(t.name)}" aria-label="Nombre">
+                <input class="doc-plural" type="text" value="${esc(t.plural_label)}" aria-label="Etiqueta en plural">
+              </span>
+              <span class="doc-tipo-n">${docsCuenta(t.id)}</span>
+              <button type="button" class="icon-btn txt" title="Guardar cambios" onclick="DOCSUI.guardarTipo('${t.id}')">&#10003;</button>
+              <button type="button" class="icon-btn txt" title="Eliminar" onclick="DOCSUI.borrarTipo('${t.id}')">&#10005;</button>
+            </div>`).join("")}
+        </div>
+        <div class="doc-tipo-nuevo">
+          <input id="nt-emoji" type="text" placeholder="📄" maxlength="4" aria-label="Emoji">
+          <input id="nt-nombre" type="text" placeholder="Nombre (singular)" aria-label="Nombre">
+          <input id="nt-plural" type="text" placeholder="PLURAL" aria-label="Etiqueta en plural">
+          <button type="button" class="btn-primario" onclick="DOCSUI.crearTipo()">Añadir</button>
+        </div>
+        <div id="doc-aviso" class="doc-aviso" hidden></div>`,
+        `<button type="button" class="btn-plano" onclick="DOCSUI.cerrar()">Cerrar</button>`);
+    }
+
+    async function docsGuardarTipo(id) {
+      const fila = document.querySelector(`.doc-tipo-fila[data-id="${id}"]`);
+      if (!fila) return;
+      const emoji = fila.querySelector(".doc-emoji").value.trim();
+      const name = fila.querySelector(".doc-nombre").value.trim();
+      const plural = fila.querySelector(".doc-plural").value.trim();
+      if (!emoji || !name || !plural) return docsAviso("Emoji, nombre y plural son obligatorios.");
+      try {
+        await supaFetch("/rest/v1/document_types?id=eq." + encodeURIComponent(id), {
+          method: "PATCH", headers: { "Prefer": "return=minimal" },
+          body: JSON.stringify({ emoji, name, plural_label: plural }),
+        });
+        await docsCargar(true);
+        docsGestionTipos();
+        toast("Tipo actualizado");
+      } catch (e) {
+        docsAviso(/duplicate|unique/i.test(e.message || "") ? "Ya tienes un tipo con ese nombre." : "No se ha podido guardar.");
+      }
+    }
+
+    async function docsCrearTipo() {
+      const emoji = document.getElementById("nt-emoji").value.trim();
+      const name = document.getElementById("nt-nombre").value.trim();
+      const plural = document.getElementById("nt-plural").value.trim() || name.toUpperCase();
+      if (!emoji || !name) return docsAviso("Hacen falta al menos el emoji y el nombre.");
+      try {
+        await supaFetch("/rest/v1/document_types", {
+          method: "POST", headers: { "Prefer": "return=minimal" },
+          body: JSON.stringify([{ hogar_id: hogarId(), emoji, name, plural_label: plural, sort_order: 200 }]),
+        });
+        await docsCargar(true);
+        docsGestionTipos();
+        toast("Tipo añadido");
+      } catch (e) {
+        docsAviso(/duplicate|unique/i.test(e.message || "") ? "Ya tienes un tipo con ese nombre." : "No se ha podido crear.");
+      }
+    }
+
+    function docsBorrarTipo(id) {
+      const t = docsTipo(id);
+      if (!t) return;
+      const n = docsCuenta(id);
+      if (n > 0) {
+        return docsAviso(`No puedes eliminar este tipo: tiene ${n} ${n === 1 ? "documento asociado" : "documentos asociados"}.`);
+      }
+      docsModal("¿Borrar este tipo?",
+        `<p class="modal-p">${esc(t.emoji)} ${esc(t.name)}</p>`,
+        `<button type="button" class="btn-plano" onclick="DOCSUI.tipos()">Cancelar</button>
+         <button type="button" class="btn-peligro" onclick="DOCSUI.borrarTipoConfirmado('${id}')">Borrar</button>`);
+    }
+    async function docsBorrarTipoConfirmado(id) {
+      try {
+        await supaFetch("/rest/v1/document_types?id=eq." + encodeURIComponent(id), { method: "DELETE" });
+        await docsCargar(true);
+        docsGestionTipos();
+        toast("Tipo borrado");
+      } catch (e) {
+        // La FK con ON DELETE RESTRICT es la ultima defensa si el recuento
+        // local estaba desfasado (p. ej. Sergio acaba de añadir uno).
+        const n = docsCuenta(id);
+        docsGestionTipos();
+        docsAviso(/foreign key|violates/i.test(e.message || "")
+          ? `No puedes eliminar este tipo: tiene ${n || "varios"} documentos asociados.`
+          : "No se ha podido borrar.");
+      }
+    }
+
+    /* Puente para los onclick del HTML generado. */
+    const DOCSUI = {
+      nuevo: () => docsFormulario(null),
+      editar: id => docsFormulario(DOCS.documentos.find(d => d.id === id)),
+      guardar: docsGuardar,
+      borrar: docsBorrar,
+      borrarConfirmado: docsBorrarConfirmado,
+      tipos: docsGestionTipos,
+      crearTipo: docsCrearTipo,
+      guardarTipo: docsGuardarTipo,
+      borrarTipo: docsBorrarTipo,
+      borrarTipoConfirmado: docsBorrarTipoConfirmado,
+      cerrar: docsCerrarModal,
+      recargar: () => docsCargar(true),
+    };
+    window.DOCSUI = DOCSUI;
+
+    /* ========================================================================
+       ALTA DE HOGAR — cuando entra alguien que no pertenece a ninguno.
+       Crea su hogar (solo con el area de seguimiento del bebe) y el estado
+       inicial con lo que rellene. Lo hace una funcion SECURITY DEFINER en la
+       base de datos, que solo te añade a ti mismo.
+       ======================================================================== */
+    function altaNecesaria() { return !!sesion.supabase.token && sesion.hogar === false; }
+
+    /* Punto unico tras iniciar sesion: mira si el usuario tiene hogar y, o
+       bien le pide el alta, o bien sincroniza y pinta lo que le corresponde. */
+    async function arrancarConHogar() {
+      try { await cargarHogar(); } catch (_) {}
+      try { await cargarMiembros(); } catch (_) {}
+      if (altaNecesaria()) { mostrarAlta(); return; }
+      ocultarAlta();
+      renderTodo();
+      sincronizar().catch(() => {});
+    }
+
+    function mostrarAlta() {
+      const el = document.getElementById("alta-hogar");
+      if (!el) return;
+      const hoy = new Date().toISOString().slice(0, 10);
+      el.innerHTML = `<form class="gate-box" id="alta-form" autocomplete="off">
+          <h1 class="gate-titulo">Bienvenida a Niblo</h1>
+          <p class="gate-subtitulo">Cuéntanos de quién vas a llevar el seguimiento. Tus datos son solo tuyos: nadie más los ve.</p>
+          <div class="gate-campo"><label for="alta-bebe">Nombre del bebé</label>
+            <input type="text" id="alta-bebe" required autocomplete="off"></div>
+          <div class="gate-campo"><label for="alta-sexo">Sexo</label>
+            <select id="alta-sexo">
+              <option value="nina">Niña</option>
+              <option value="nino">Niño</option>
+            </select>
+            <span class="gate-nota">Decide qué tablas de la OMS se usan para los percentiles.</span></div>
+          <div class="gate-campo"><label for="alta-fecha">Fecha de nacimiento</label>
+            <input type="date" id="alta-fecha" max="${hoy}" required></div>
+          <div class="gate-campo"><label for="alta-casa">Nombre de la casa <span class="faint">(opcional)</span></label>
+            <input type="text" id="alta-casa" placeholder="Mi casa" autocomplete="off"></div>
+          <div class="gate-acciones"><button type="submit" class="btn-principal">Empezar</button></div>
+          <div class="gate-msg" id="alta-msg"></div>
+        </form>`;
+      el.hidden = false;
+      document.body.classList.add("gate-activo");
+      document.getElementById("alta-form").addEventListener("submit", ev => { ev.preventDefault(); crearHogar(); });
+      setTimeout(() => document.getElementById("alta-bebe").focus(), 60);
+    }
+    function ocultarAlta() {
+      const el = document.getElementById("alta-hogar");
+      if (el) { el.hidden = true; el.innerHTML = ""; }
+      document.body.classList.remove("gate-activo");
+    }
+
+    async function crearHogar() {
+      const msg = document.getElementById("alta-msg");
+      const nombre = document.getElementById("alta-bebe").value.trim();
+      const sexo   = document.getElementById("alta-sexo").value;
+      const fecha  = document.getElementById("alta-fecha").value;
+      if (!nombre || !fecha) { if (msg) msg.textContent = "Rellena el nombre y la fecha de nacimiento."; return; }
+      if (msg) msg.textContent = "Creando…";
+      try {
+        await supaFetch("/rest/v1/rpc/crear_hogar", {
+          method: "POST",
+          body: JSON.stringify({
+            p_nombre: document.getElementById("alta-casa").value.trim() || "Mi casa",
+            p_bebe_nombre: nombre, p_bebe_sexo: sexo, p_bebe_nacimiento: fecha,
+          }),
+        });
+        await cargarHogar();
+        ocultarAlta();
+        await sincronizar().catch(() => {});
+        renderTodo();
+      } catch (e) {
+        if (msg) msg.textContent = esFalloDeRed(e) ? MSG_RED : "No se ha podido crear. Inténtalo de nuevo.";
+      }
     }
 
     function renderVistaActiva() {
@@ -19335,10 +19988,15 @@ function boot(vistaInicial) {
       });
     }
 
+    /* Nombres historicos como respaldo; los de verdad llegan con los miembros. */
     const NOMBRE_PERFIL = { ruben: "Rubén", sergio: "Sergio", invitado: "Invitado" };
+    function nombreDePerfil(p) {
+      const m = MIEMBROS.find(x => x.perfil === p);
+      return (m && m.nombre) || NOMBRE_PERFIL[p] || p;
+    }
     function renderPerfil() {
       const el = document.getElementById("usuario-actual");
-      if (el) el.textContent = NOMBRE_PERFIL[perfilActivo] || perfilActivo;
+      if (el) el.textContent = nombreDePerfil(perfilActivo);
     }
 
     /* ---- Biblioteca: orquestador ---------------------------------------- */
@@ -22210,6 +22868,7 @@ function boot(vistaInicial) {
       renderConversores();
       renderDatos();
       renderPlanSemanal();
+      renderDocumentos();
       renderTimers();
     }
 
@@ -23228,8 +23887,7 @@ function boot(vistaInicial) {
           if (msg) msg.textContent = "Iniciando sesión…";
           iniciarSesionPassword(em, pw).then(() => {
             renderDatos();
-            // Primer sync automático tras login
-            sincronizar().catch(() => {});
+            arrancarConHogar();
           }).catch(e => {
             if (msg) msg.innerHTML = `<span style="color:var(--danger);">${esc(e.message)}</span>`;
           });
@@ -23609,20 +24267,16 @@ function boot(vistaInicial) {
       // Procesar callback de magic link (#access_token=... en la URL)
       procesarCallbackAuth().then(ok => {
         if (ok) {
-          fijarPerfil(perfilDesdeEmail(sesion.supabase.email));
           ocultarGate();
           renderTodo();
           aplicarHash();              // navegar a #/receta/... si lo había
-          sincronizar().catch(() => {});
+          arrancarConHogar();
         } else if (gateNecesario()) {
           mostrarGate();
         } else {
           // Ya autenticado: asegurar perfil correcto según email
-          const p = perfilDesdeEmail(sesion.supabase.email);
-          if (p !== perfilActivo) fijarPerfil(p);
           aplicarHash();              // abrir receta del hash si la URL la tiene
-          // Sync silencioso de fondo al cargar
-          sincronizar().catch(() => {});
+          arrancarConHogar();
         }
       });
 
@@ -23643,10 +24297,9 @@ function boot(vistaInicial) {
         }
         if (msg) msg.textContent = "Iniciando sesión…";
         iniciarSesionPassword(em, pw).then(() => {
-          fijarPerfil(perfilDesdeEmail(em));
           ocultarGate();
           renderTodo();
-          sincronizar().catch(() => {});
+          arrancarConHogar();
         }).catch(e => {
           if (msg) msg.innerHTML = `<span style="color:var(--danger);">${esc(e.message)}</span>`;
         });
