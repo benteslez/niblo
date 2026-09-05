@@ -5349,6 +5349,118 @@
     .pb-app .cal-nav:hover { border-color: var(--blue); color: var(--blue); }
     .pb-app.sin-cabecera .pb-cab { display: none; }
 
+    /* Boton que despliega el formulario de registro de cada pestaña. */
+    .pb-app .btn-registro {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; margin-bottom: var(--gap-3);
+      padding: 13px 18px; border-radius: 999px;
+      border: 1px dashed var(--border); background: var(--bg-card);
+      color: var(--blue); font: inherit; font-size: 0.9375rem; font-weight: 700;
+      cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+    }
+    .pb-app .btn-registro:hover { border-color: var(--blue); background: var(--blue-soft); }
+    .pb-app .btn-registro .signo { font-size: 1.125rem; line-height: 1; font-weight: 800; }
+    .pb-app .btn-registro.abierto {
+      border-style: solid; border-color: transparent;
+      background: var(--bg-soft); color: var(--text-muted);
+    }
+    .pb-app .registro-campos { animation: fadeIn .15s; }
+
+    /* ---- Vista de hoy: comida del dia y linea temporal -------------------
+       Filas limpias con la hora a la izquierda y el dato a la derecha, sin
+       campos abiertos: se apunta desde un modal. */
+    .pb-app .comida-lista { display: flex; flex-direction: column; }
+    .pb-app .comida-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 0; border-bottom: 1px solid var(--line-soft);
+    }
+    .pb-app .comida-item:last-child { border-bottom: none; }
+    .pb-app .comida-punto {
+      width: 8px; height: 8px; border-radius: 50%; flex: none; margin-top: 7px;
+    }
+    .pb-app .comida-cuerpo { flex: 1; min-width: 0; }
+    .pb-app .comida-nombre {
+      font-weight: 700; font-size: 0.9375rem; letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    }
+    .pb-app .comida-nombre[onclick] { cursor: pointer; }
+    .pb-app .comida-nombre[onclick]:hover { color: var(--blue); }
+    .pb-app .comida-meta { font-size: 0.78125rem; color: var(--text-muted); margin-top: 2px; }
+    .pb-app .comida-hecho {
+      font-size: 0.75rem; font-weight: 700; color: var(--green); margin-top: 4px;
+    }
+    .pb-app .comida-item.est-reaccion .comida-hecho { color: var(--red); }
+    .pb-app .comida-acciones { display: flex; gap: 6px; flex: none; }
+    .pb-app .pill-accion {
+      border: 1px solid var(--border); background: var(--bg-card); color: var(--text-muted);
+      border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 0.75rem;
+      font-weight: 700; cursor: pointer; white-space: nowrap;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .pb-app .pill-accion:hover { color: var(--text); }
+    .pb-app .pill-accion.on-si { background: var(--green-soft); color: var(--green); border-color: transparent; }
+    .pb-app .pill-accion.on-no { background: var(--red-soft);   color: var(--red);   border-color: transparent; }
+
+    .pb-app .linea-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .pb-app .linea-cab h2 { margin: 0; }
+    .pb-app .btn-anadir {
+      border: none; background: var(--blue-soft); color: var(--blue);
+      border-radius: 999px; padding: 7px 14px; font: inherit;
+      font-size: 0.8125rem; font-weight: 700; cursor: pointer; flex: none;
+    }
+    .pb-app .btn-anadir:hover { background: var(--blue); color: #fff; }
+
+    .pb-app .linea-resumen {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      margin: 12px 0 4px; padding-bottom: 12px; border-bottom: 1px solid var(--line-soft);
+    }
+    .pb-app .linea-resumen > div { text-align: center; }
+    .pb-app .linea-resumen b {
+      display: block; font-size: 1.0625rem; font-weight: 800;
+      font-family: var(--serif); letter-spacing: -0.02em; white-space: nowrap;
+    }
+    .pb-app .linea-resumen span {
+      font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .pb-app .linea { display: flex; flex-direction: column; }
+    .pb-app .linea-fila {
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      padding: 11px 0; border: none; background: none; text-align: left;
+      border-bottom: 1px solid var(--line-soft); font: inherit; color: inherit;
+      cursor: pointer;
+    }
+    .pb-app .linea-fila.estatica { cursor: default; }
+    .pb-app .linea-fila:last-child { border-bottom: none; }
+    .pb-app .linea-fila:not(.estatica):hover { background: var(--bg-soft); }
+    .pb-app .linea-hora {
+      flex: none; width: 46px; font-size: 0.8125rem; color: var(--text-muted);
+    }
+    .pb-app .linea-icono { flex: none; font-size: 1rem; width: 22px; text-align: center; }
+    .pb-app .linea-texto { flex: 1; min-width: 0; font-size: 0.9375rem; font-weight: 600; }
+    .pb-app .linea-sub {
+      display: block; font-size: 0.78125rem; font-weight: 400; color: var(--text-muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pb-app .linea-valor {
+      flex: none; font-family: var(--serif); font-size: 0.875rem; font-weight: 700;
+    }
+    .pb-app .linea-chevron { flex: none; color: var(--text-faint); font-size: 1.125rem; }
+    .pb-app .linea-fila.pendiente .linea-texto,
+    .pb-app .linea-fila.pendiente .linea-hora { color: var(--text-faint); font-weight: 500; }
+    .pb-app .linea-valor.apuntar {
+      font-family: inherit; font-size: 0.75rem; color: var(--blue);
+      background: var(--blue-soft); border-radius: 999px; padding: 4px 10px;
+    }
+    .pb-app .linea-pie { font-size: 0.75rem; color: var(--text-muted); margin: 12px 0 0; }
+
+    @media (max-width: 420px) {
+      .pb-app .comida-item { flex-wrap: wrap; }
+      .pb-app .comida-acciones { width: 100%; padding-left: 18px; }
+      .pb-app .pill-accion { flex: 1; text-align: center; }
+    }
+
     /* ---- Edicion de registros y modal ----------------------------------- */
     .pb-app .ed-row {
       border: none; background: transparent; color: var(--text-muted);
@@ -7406,7 +7518,8 @@ function marcarEstado(id, resultado, fecha = HOY_ISO) {
   } else if (idx >= 0) {
     ESTADO[id].historial[idx].resultado = resultado;
   } else {
-    ESTADO[id].historial.push({ fecha, resultado });
+    // La hora sirve para enseñar "Probado a las 12:40" en la vista de hoy.
+    ESTADO[id].historial.push({ fecha, resultado, hora: nuevaHoraSugerida() });
   }
   ESTADO[id].historial.sort((a, b) => a.fecha.localeCompare(b.fecha));
   guardarEstado();
@@ -7497,7 +7610,9 @@ let VISTA_ACTUAL = "hoy";
 let ORIGEN_ALIMENTO = null;
 const ORIGEN_LABEL = { buscar: "Buscar", progreso: "Progreso", alergenos: "Alérgenos", calendario: "Calendario", hoy: "Hoy" };
 
-const VISTAS_SIN_CABECERA = new Set(["sueno"]);
+/* La cabecera con nombre, edad y metodo se repetia en las 17 vistas y ya sale
+   arriba en la barra de la app: fuera de todas. La edad sigue estando en el
+   hub y en cualquier informe. */
 function irA(vista, param) {
   if (vista === "alimento" && VISTA_ACTUAL !== "alimento") {
     ORIGEN_ALIMENTO = { vista: VISTA_ACTUAL, scrollY: window.scrollY };
@@ -7509,10 +7624,8 @@ function irA(vista, param) {
   document.querySelectorAll("#pb-app .view").forEach(v => v.classList.remove("active"));
   const el = document.getElementById("view-" + vista);
   el.classList.add("active");
-  /* Sueño arranca directamente en el registro: nombre, edad y metodo ya
-     salen en la cabecera de la app y ahi solo estorban. */
   const app = document.getElementById("pb-app");
-  if (app) app.classList.toggle("sin-cabecera", VISTAS_SIN_CABECERA.has(vista));
+  if (app) app.classList.add("sin-cabecera");
   VISTA_ACTUAL = vista;
   RENDER[vista]?.(el, param);
   // Sincroniza el chip de seccion de la cabecera de Recetas.
@@ -7740,6 +7853,12 @@ function accionesToma(refrescar) {
       refrescar();
       document.getElementById(`ml-${id}`)?.focus();
     },
+    // La vista de hoy ya no lleva campos abiertos: se apunta desde un modal.
+    nuevaToma(fecha, hora) { modalToma(fecha, hora, null); },
+    editarToma(id) {
+      const t = STATE.tomas.find(x => x.id === id);
+      if (t) modalToma(t.fecha, t.hora, id);
+    },
   };
 }
 
@@ -7785,9 +7904,208 @@ function renderHoy(el) {
   }
   html += `</div>`;
 
-  html += `<div class="card"><h2>Día por horas</h2>${htmlDiaCompleto(dia, "PB.marcarEstadoRapidoHoy", "PB.TOMAS_HOY")}</div>`;
+  html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoHoy");
+  html += htmlLineaDelDia(dia, "PB.TOMAS_HOY");
 
   el.innerHTML = html;
+}
+
+/* ---- Alimentacion complementaria del dia -------------------------------
+   Antes se listaba cada comida del plan con su ficha entera. Ahora solo se
+   ve el alimento que toca, con dos botones y la hora a la que se le dio: es
+   lo unico que hay que hacer y lo unico que hay que registrar. */
+/* Ojo: ya existe otra "alimentosDelDia" mas abajo que devuelve un Map para
+   el calendario. Como las declaraciones de funcion se elevan, la de abajo
+   ganaba y esta se quedaba sin usar; de ahi el nombre propio. */
+function alimentosParaMarcar(dia) {
+  const vistos = new Map();
+  for (const b of dia.comidas) {
+    for (const a of b.alimentos) {
+      const clave = a.id || a.nombre;
+      if (!vistos.has(clave)) vistos.set(clave, { a, horas: [] });
+      vistos.get(clave).horas.push(b.hora);
+    }
+  }
+  return [...vistos.values()];
+}
+
+function htmlComidaDelDia(dia, marcarFn) {
+  const lista = alimentosParaMarcar(dia);
+  if (!lista.length) return "";
+  return `<div class="card">
+    <h2>Qué le toca hoy <span class="n">${lista.length} ${lista.length === 1 ? "alimento" : "alimentos"}</span></h2>
+    <div class="comida-lista">${lista.map(({ a, horas }) => {
+      const est = a.id ? estadoActual(a.id) : null;
+      const marca = a.id ? marcaDeHoy(a.id) : null;
+      const cuanto = a.cantidad || (a.porcion && a.porcion.gramos) || "";
+      return `<div class="comida-item${est ? " est-" + est : ""}">
+        <span class="comida-punto" style="background:${GRUPOS_COLOR[a.grupo] || "var(--slate)"}"></span>
+        <div class="comida-cuerpo">
+          <div class="comida-nombre"${a.id ? ` onclick="PB.irA('alimento','${a.id}')"` : ""}>
+            ${capitalizar(a.nombre)}${a.esNuevo ? '<span class="nuevo-badge">NUEVO</span>' : ''}
+          </div>
+          <div class="comida-meta">${horas.join(" · ")}${cuanto ? " · " + cuanto : ""}</div>
+          ${marca ? `<div class="comida-hecho">${est === "reaccion" ? "Reacción" : "Probado"} a las ${marca}</div>` : ""}
+        </div>
+        ${a.id ? `<div class="comida-acciones">
+          <button type="button" class="pill-accion${est === 'tolerado' ? ' on-si' : ''}"
+            onclick="${marcarFn}('${a.id}','tolerado')" aria-pressed="${est === 'tolerado'}">Probado</button>
+          <button type="button" class="pill-accion${est === 'reaccion' ? ' on-no' : ''}"
+            onclick="${marcarFn}('${a.id}','reaccion')" aria-pressed="${est === 'reaccion'}">Reacción</button>
+        </div>` : ""}
+      </div>`;
+    }).join("")}</div>
+  </div>`;
+}
+
+/* Hora a la que se marco hoy ese alimento, si se marco. */
+function marcaDeHoy(id) {
+  const h = (ESTADO[id]?.historial || []).filter(x => x.fecha === HOY_ISO);
+  const ult = h[h.length - 1];
+  return ult && ult.hora ? ult.hora : null;
+}
+
+/* ---- Linea del dia -----------------------------------------------------
+   Solo lo que ha pasado de verdad: tomas apuntadas y sueño registrado en su
+   pestaña, ordenado por hora. Las tomas que la rutina espera y todavia no se
+   han dado salen en gris, para poder apuntarlas de un toque. */
+function sueniosDelDia(fecha) {
+  const ini0 = new Date(fecha + "T00:00:00");
+  const fin0 = new Date(ini0.getFullYear(), ini0.getMonth(), ini0.getDate() + 1);
+  const out = [];
+  for (const s of STATE.sleep) {
+    const a = new Date(s.start);
+    const b = s.end ? new Date(s.end) : new Date();
+    if (b <= ini0 || a >= fin0) continue;
+    const desde = a < ini0 ? ini0 : a;
+    const hasta = b > fin0 ? fin0 : b;
+    out.push({
+      id: s.id, tipo: s.type, enCurso: !s.end,
+      hora: `${String(desde.getHours()).padStart(2, "0")}:${String(desde.getMinutes()).padStart(2, "0")}`,
+      fin: `${String(hasta.getHours()).padStart(2, "0")}:${String(hasta.getMinutes()).padStart(2, "0")}`,
+      minutos: Math.round((hasta - desde) / 60000),
+    });
+  }
+  return out;
+}
+function duracionCorta(min) {
+  const h = Math.floor(min / 60), m = min % 60;
+  return h ? `${h} h${m ? " " + m + " min" : ""}` : `${m} min`;
+}
+/* En la fila de totales solo hay ~100 px por dato: "8 h 10 min" se parte en
+   dos lineas y descuadra la rejilla. */
+function duracionCompacta(min) {
+  const h = Math.floor(min / 60), m = min % 60;
+  return h ? `${h}h${m ? " " + m + "m" : ""}` : `${m}m`;
+}
+
+function htmlLineaDelDia(dia, refrescarFn) {
+  const tomas = tomasDelDia(dia.fecha);
+  const horasHechas = new Set(tomas.map(t => t.hora));
+  const pendientes = dia.tomasSugeridas.filter(t => !horasHechas.has(t.hora));
+  const suenios = sueniosDelDia(dia.fecha);
+
+  const filas = [
+    ...tomas.map(t => ({ hora: t.hora, html: `
+      <button type="button" class="linea-fila" onclick="${refrescarFn}.editarToma('${t.id}')">
+        <span class="linea-hora mono">${t.hora}</span>
+        <span class="linea-icono toma" aria-hidden="true">🍼</span>
+        <span class="linea-texto">Toma</span>
+        <span class="linea-valor">${t.ml} ml</span>
+        <span class="linea-chevron" aria-hidden="true">›</span>
+      </button>` })),
+    ...suenios.map(s => ({ hora: s.hora, html: `
+      <div class="linea-fila estatica">
+        <span class="linea-hora mono">${s.hora}</span>
+        <span class="linea-icono sueno" aria-hidden="true">😴</span>
+        <span class="linea-texto">${s.tipo === "siesta" ? "Siesta" : "Sueño nocturno"}
+          <span class="linea-sub">${s.enCurso ? "en curso" : "hasta las " + s.fin}</span></span>
+        <span class="linea-valor">${s.enCurso ? "—" : duracionCorta(s.minutos)}</span>
+      </div>` })),
+    ...dia.comidas.map(b => ({ hora: b.hora, html: `
+      <div class="linea-fila estatica">
+        <span class="linea-hora mono">${b.hora}</span>
+        <span class="linea-icono comida" aria-hidden="true">🥣</span>
+        <span class="linea-texto">${b.etiqueta}
+          <span class="linea-sub">${b.alimentos.map(a => capitalizar(a.nombre)).join(", ") || "—"}</span></span>
+      </div>` })),
+    ...pendientes.map(t => ({ hora: t.hora, html: `
+      <button type="button" class="linea-fila pendiente" onclick="${refrescarFn}.nuevaToma('${dia.fecha}','${t.hora}')">
+        <span class="linea-hora mono">${t.hora}</span>
+        <span class="linea-icono toma" aria-hidden="true">🍼</span>
+        <span class="linea-texto">${t.etiqueta}</span>
+        <span class="linea-valor apuntar">Apuntar</span>
+      </button>` })),
+  ].sort((a, b) => a.hora.localeCompare(b.hora));
+
+  const total = totalMlDia(dia.fecha);
+  const minSueno = suenios.reduce((s, x) => s + (x.enCurso ? 0 : x.minutos), 0);
+
+  return `<div class="card">
+    <div class="linea-cab">
+      <h2>Día por horas</h2>
+      <button type="button" class="btn-anadir" onclick="${refrescarFn}.nuevaToma('${dia.fecha}')">+ Toma</button>
+    </div>
+    <div class="linea-resumen">
+      <div><b>${total}</b><span>ml de leche</span></div>
+      <div><b>${tomas.length}</b><span>${tomas.length === 1 ? "toma" : "tomas"}</span></div>
+      <div><b>${minSueno ? duracionCompacta(minSueno) : "—"}</b><span>de sueño</span></div>
+    </div>
+    ${filas.length
+      ? `<div class="linea">${filas.map(f => f.html).join("")}</div>`
+      : `<div class="empty-state">Todavía no hay nada apuntado hoy.</div>`}
+    <p class="linea-pie">Las siestas salen de lo que apuntes en <b>Sueño</b>.</p>
+  </div>`;
+}
+
+/* ---- alta y edicion de una toma, en modal ------------------------------ */
+function modalToma(fecha, hora, id) {
+  const t = id ? STATE.tomas.find(x => x.id === id) : null;
+  abrirModal(t ? "Editar toma" : "Nueva toma", `
+    <div class="grid-campos2">
+      <div class="campo"><label for="tm-hora">Hora</label>
+        <input type="time" id="tm-hora" value="${t ? t.hora : (hora || nuevaHoraSugerida())}"></div>
+      <div class="campo"><label for="tm-ml">Cantidad (ml)</label>
+        <input type="number" id="tm-ml" min="0" step="10" inputmode="numeric" value="${t ? t.ml : ""}" placeholder="140"></div>
+    </div>
+    <div class="modal-aviso" id="tm-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     ...(t ? [{ et: "Borrar", peligro: true, accion: `PB.borrarToma('${t.id}')` }] : []),
+     { et: "Guardar", primario: true, accion: `PB.guardarToma('${fecha}'${t ? `,'${t.id}'` : ""})` }]);
+}
+function guardarToma(fecha, id) {
+  const hora = document.getElementById("tm-hora").value;
+  const ml = document.getElementById("tm-ml").value;
+  const av = document.getElementById("tm-aviso");
+  if (!hora) { if (av) { av.textContent = "Pon la hora."; av.hidden = false; } return; }
+  if (ml === "" || Number(ml) < 0) { if (av) { av.textContent = "Pon los mililitros."; av.hidden = false; } return; }
+  if (id) editarToma(id, hora, ml); else agregarToma(fecha, hora, ml);
+  cerrarModal();
+  renderHoy(document.getElementById("view-hoy"));
+}
+function borrarToma(id) {
+  eliminarToma(id);
+  cerrarModal();
+  renderHoy(document.getElementById("view-hoy"));
+}
+
+/* ---- Formularios de registro plegados ----------------------------------
+   Antes cada pestaña abria con su formulario desplegado, aunque casi siempre
+   entras a mirar y no a apuntar. Ahora van detras de un "+": la pestaña se
+   abre limpia y el formulario aparece cuando lo pides. */
+const REGISTRO_ABIERTO = {};
+function toggleRegistro(vista) {
+  REGISTRO_ABIERTO[vista] = !REGISTRO_ABIERTO[vista];
+  irA(vista);
+}
+function cerrarRegistro(vista) { REGISTRO_ABIERTO[vista] = false; }
+function htmlRegistro(vista, etiqueta, cuerpo) {
+  const abierto = !!REGISTRO_ABIERTO[vista];
+  return `<button type="button" class="btn-registro${abierto ? " abierto" : ""}"
+      onclick="PB.toggleRegistro('${vista}')" aria-expanded="${abierto}">
+      <span class="signo" aria-hidden="true">${abierto ? "\u00d7" : "+"}</span>${abierto ? "Cerrar" : etiqueta}
+    </button>
+    ${abierto ? `<div class="card registro-campos">${cuerpo}</div>` : ""}`;
 }
 
 /* ======================== render: CALENDARIO ======================== */
@@ -8550,7 +8868,7 @@ function volverAMas() { irA("mas"); }
 /* ======================== render: DESARROLLO (hitos + dientes) ======================== */
 function renderDesarrollo(el) {
   const ageM = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
-  let html = `<h2 style="margin:0 0 12px">Desarrollo</h2>`;
+  let html = "";
 
   html += `<div class="card"><h2>Hitos motores oficiales (OMS)</h2>
     <div class="faint" style="margin-top:-6px;margin-bottom:8px">Los 6 hitos del WHO Motor Development Study (2006), con la ventana de edad normal (percentil 1-99).</div>`;
@@ -8624,9 +8942,9 @@ function toggleTooth(id, checked) {
 let CHARTS = {};
 function renderCrecimiento(el) {
   const sorted = [...STATE.growth].sort((a,b) => new Date(b.date)-new Date(a.date));
-  let html = `<h2 style="margin:0 0 12px">Crecimiento</h2>`;
+  let html = "";
 
-  html += `<div class="card"><h2>Registrar medida</h2>
+  html += htmlRegistro('crecimiento', 'Registrar medida', `
     <div class="campo"><label>Fecha</label><input type="date" id="growth-date" value="${HOY_ISO}"></div>
     <div class="grid-campos3">
       <div class="campo"><label>Peso (kg)</label><input type="number" id="growth-weight" step="0.01" min="0" placeholder="7.85"></div>
@@ -8635,7 +8953,7 @@ function renderCrecimiento(el) {
     </div>
     <button class="btn-primario" onclick="PB.addGrowth()">Guardar medida</button>
     <div class="faint" style="margin-top:8px">Percentiles con tablas OMS niños 0-60 meses. Las visitas al pediatra añaden medidas aquí automáticamente.</div>
-  </div>`;
+  `);
 
   if (sorted.length) {
     const g = sorted[0];
@@ -8670,6 +8988,7 @@ function addGrowth() {
   if (!weight && !height && !head) { alert("Introduce al menos una medida."); return; }
   STATE.growth.push(sellar({ id: "gr_"+Date.now().toString(36), date, weight: weight||null, height: height||null, head: head||null }));
   guardarEstado();
+  cerrarRegistro("crecimiento");
   renderCrecimiento(document.getElementById("view-crecimiento"));
 }
 function deleteGrowth(id) {
@@ -9254,8 +9573,8 @@ function imprimirDocumento(html) {
 /* ======================== render: PEDIATRA ======================== */
 function renderPediatra(el) {
   const sorted = [...STATE.pediatricVisits].sort((a,b) => new Date(b.date)-new Date(a.date));
-  let html = `<h2 style="margin:0 0 12px">Pediatra</h2>`;
-  html += `<div class="card"><h2>Registrar visita</h2>
+  let html = "";
+  html += htmlRegistro('pediatra', 'Registrar visita', `
     <div class="grid-campos2">
       <div class="campo"><label>Fecha</label><input type="date" id="pv-date" value="${HOY_ISO}"></div>
       <div class="campo"><label>Motivo</label><select id="pv-reason">
@@ -9270,7 +9589,7 @@ function renderPediatra(el) {
     </div>
     <div class="campo"><label>Notas de la consulta</label><textarea id="pv-notes" placeholder="Qué dijo el pediatra, indicaciones..."></textarea></div>
     <button class="btn-primario" onclick="PB.savePediatricVisit()">Guardar visita</button>
-  </div>`;
+  `);
   html += `<div class="card"><h2>Informe para la consulta</h2>
     <div class="faint" style="margin-top:-4px">Marca lo que quieres incluir y el rango de fechas. Se abre el diálogo de impresión: elige <b>Guardar como PDF</b>.</div>
     <div id="infc-panel">${htmlInformeCompleto()}</div>
@@ -9304,6 +9623,7 @@ function savePediatricVisit() {
   STATE.pediatricVisits.push(sellar({ id, date, reason, weight: weight||null, height: height||null, head: head||null, notes }));
   if (weight || height || head) STATE.growth.push(sellar({ id: "gr_"+id, date, weight: weight||null, height: height||null, head: head||null, visitId: id }));
   guardarEstado();
+  cerrarRegistro("pediatra");
   renderPediatra(document.getElementById("view-pediatra"));
 }
 function deletePediatricVisit(id) {
@@ -9467,8 +9787,8 @@ function renderSueno(el) {
       <button class="stop-btn" onclick="PB.stopSleep('${s.id}')">STOP</button></div>`;
   });
 
-  /* Registro: cronometro (lo que ya habia) o entrada manual con fecha y hora. */
-  html += `<div class="card"><h2>Registrar sueño</h2>
+  /* Registro: cronometro o entrada manual, detras del "+". */
+  html += htmlRegistro("sueno", "Registrar sueño", `
     <div class="sueno-modo">
       <button type="button" class="on" data-modo="crono" onclick="PB.suenoModo('crono')">Cronómetro</button>
       <button type="button" data-modo="manual" onclick="PB.suenoModo('manual')">Manual</button>
@@ -9489,7 +9809,7 @@ function renderSueno(el) {
       <div class="faint" id="sueno-m-aviso" style="margin:6px 0 0"></div>
       <button class="btn-primario" onclick="PB.addSleepManual()">Guardar registro</button>
     </div>
-  </div>`;
+  `);
 
   html += `<div class="card"><h2>Hoy <span class="n">${est.etiqueta}: ${est.rec[0]}-${est.rec[1]} h</span></h2>
     <div class="stat-grid cols2">
@@ -9648,6 +9968,7 @@ function addSleepManual() {
   if (horas > 24) return decir("Más de 24 horas seguidas: revisa las fechas.");
   STATE.sleep.push(sellar({ id: "sl_" + Date.now().toString(36), type, start: ini, end: fin }));
   guardarEstado();
+  cerrarRegistro("sueno");
   renderSueno(document.getElementById("view-sueno"));
   suenoModo("manual");
   const a2 = document.getElementById("sueno-m-aviso");
@@ -9968,6 +10289,7 @@ function addSleep() {
   const start = document.getElementById("sleep-start").value || nowDatetimeLocal();
   STATE.sleep.push(sellar({ id: "sl_" + Date.now().toString(36), type, start, end: null }));
   guardarEstado();
+  cerrarRegistro("sueno");
   renderSueno(document.getElementById("view-sueno"));
 }
 function stopSleep(id) {
@@ -9990,14 +10312,14 @@ function renderPanales(el) {
   const hoy = STATE.diapers.filter(d => d.datetime.slice(0,10) === HOY_ISO);
   const pis = hoy.filter(d => d.type==='pis'||d.type==='mixto').length;
   const caca = hoy.filter(d => d.type==='caca'||d.type==='mixto').length;
-  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span><h2 style="margin:0 0 12px">Pañales</h2>`;
-  html += `<div class="card"><h2>Registrar pañal</h2>
+  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span>`;
+  html += htmlRegistro('panales', 'Registrar pañal', `
     <div class="grid-campos2">
       <div class="campo"><label>Tipo</label><select id="diaper-type"><option value="pis">Pis</option><option value="caca">Caca</option><option value="mixto">Mixto</option><option value="seco">Seco</option></select></div>
       <div class="campo"><label>Fecha y hora</label><input type="datetime-local" id="diaper-dt" value="${nowDatetimeLocal()}"></div>
     </div>
     <button class="btn-primario" onclick="PB.addDiaper()">Guardar</button>
-  </div>`;
+  `);
   html += `<div class="card"><h2>Hoy</h2><div class="stat-grid">
     <div class="stat-tile"><div class="num">${hoy.length}</div><div class="lab">Cambios</div></div>
     <div class="stat-tile"><div class="num">${pis}</div><div class="lab">Pis</div></div>
@@ -10021,6 +10343,7 @@ function addDiaper() {
   const datetime = document.getElementById("diaper-dt").value || nowDatetimeLocal();
   STATE.diapers.push(sellar({ id: "dp_"+Date.now().toString(36), type, datetime }));
   guardarEstado();
+  cerrarRegistro("panales");
   renderPanales(document.getElementById("view-panales"));
 }
 function deleteDiaper(id) {
@@ -10091,7 +10414,7 @@ function renderGuia(el) {
 
 /* ======================== render: VACUNAS ======================== */
 function renderVacunas(el) {
-  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span><h2 style="margin:0 0 12px">Vacunas</h2>`;
+  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span>`;
   html += `<div class="card"><div class="faint">Calendario común de vacunación infantil (Consejo Interterritorial del SNS, España). Puede variar según comunidad autónoma: confirma con la cartilla oficial y el pediatra.</div></div>`;
   html += `<div class="card"><div class="tabla-wrap"><table class="tabla-simple"><thead><tr><th>Edad</th><th>Vacuna</th><th>Dosis</th><th>Puesta</th></tr></thead><tbody>`;
   STATE.vaccines.forEach(v => {
@@ -10109,8 +10432,8 @@ function toggleVaccine(id, checked) {
 
 /* ======================== render: NOTAS ======================== */
 function renderNotas(el) {
-  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span><h2 style="margin:0 0 12px">Notas</h2>`;
-  html += `<div class="card"><div class="campo"><label>Nueva nota</label><textarea id="note-text" placeholder="Escribe aquí..."></textarea></div><button class="btn-primario" onclick="PB.addNote()">Guardar nota</button></div>`;
+  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span>`;
+  html += htmlRegistro("notas", "Nueva nota", `<div class="campo"><label>Nueva nota</label><textarea id="note-text" placeholder="Escribe aquí..."></textarea></div><button class="btn-primario" onclick="PB.addNote()">Guardar nota</button>`);
   const sorted = [...STATE.notes].sort((a,b)=>new Date(b.date)-new Date(a.date));
   html += `<div class="card"><h2>Historial</h2>`;
   if (!sorted.length) html += `<div class="faint">Sin notas todavía.</div>`;
@@ -10126,6 +10449,7 @@ function addNote() {
   if (!text) return;
   STATE.notes.push(sellar({ id: "nt_"+Date.now().toString(36), date: HOY_ISO, text }));
   guardarEstado();
+  cerrarRegistro("notas");
   renderNotas(document.getElementById("view-notas"));
 }
 function deleteNote(id) {
@@ -10159,7 +10483,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, fusionarConRemoto, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
@@ -17935,6 +18259,11 @@ function boot(vistaInicial) {
        codigo: los correos ya viven en Supabase Auth y ahi cualquier usuario
        nuevo se identifica solo, sin tocar el fuente. */
     function perfilDesdeSesion() { return perfilActivo; }
+    /* "ana.lopez@gmail.com" -> "Ana". Solo para el nombre que se muestra. */
+    function nombreDesdeCorreo(email) {
+      const local = String(email || "").split("@")[0].split(/[._-]/)[0];
+      return local ? local.charAt(0).toUpperCase() + local.slice(1) : "Cuidador";
+    }
 
     function gateNecesario() {
       return !sesion.supabase.token;
@@ -19969,6 +20298,8 @@ function boot(vistaInicial) {
           body: JSON.stringify({
             p_nombre: document.getElementById("alta-casa").value.trim() || "Mi casa",
             p_bebe_nombre: nombre, p_bebe_sexo: sexo, p_bebe_nacimiento: fecha,
+            // Nombre visible del cuidador: la parte del correo, que ya conocemos.
+            p_mi_nombre: nombreDesdeCorreo(sesion.supabase.email),
           }),
         });
         await cargarHogar();

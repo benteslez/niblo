@@ -50,6 +50,10 @@ update public.hogar_miembros
  where perfil is null;
 
 -- El alta de un hogar nuevo ya deja el perfil puesto.
+-- Antes hay que tirar la version de 4 argumentos de 001: si conviven las dos,
+-- PostgREST no sabe a cual llamar y devuelve PGRST203.
+drop function if exists public.crear_hogar(text, text, text, date);
+
 create or replace function public.crear_hogar(
   p_nombre text,
   p_bebe_nombre text,
