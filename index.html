@@ -272,6 +272,34 @@
       color: var(--text-inv);
     }
 
+    /* Segunda fila de nav: subsecciones de la seccion activa. Deliberadamente
+       mas discreta que la primera para que se lea como dependiente de ella. */
+    .subnav { padding-top: 0; padding-bottom: var(--gap-3); }
+    .chip-sub {
+      flex: 0 0 auto;
+      padding: 6px 14px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      border-radius: var(--r-pill);
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .subnav .chip-sub:hover { color: var(--text); background: var(--bg-soft); }
+    /* El activo de la fila principal es negro solido (tema editorial); este se
+       queda en un relleno suave para leerse subordinado. Solo tokens definidos
+       en :root (--text-faint y --border no lo estan fuera de .pb-app), y con
+       !important porque la regla del tema tambien lo usa. */
+    .subnav .chip-sub[aria-current="page"] {
+      background: var(--bg-soft) !important;
+      color: var(--text) !important;
+      box-shadow: none !important;
+      border-color: var(--line-soft);
+      font-weight: 600;
+    }
+
     /* ---- Main / secciones ------------------------------------------------ */
     main {
       max-width: 1100px;
@@ -5966,6 +5994,9 @@
     <nav class="nav" id="nav-secciones" aria-label="Secciones">
       <!-- Chips inyectados por JS para mantener un unico origen de verdad -->
     </nav>
+    <nav class="nav subnav" id="nav-subsecciones" aria-label="Subsecciones" hidden>
+      <!-- Segunda fila: solo cuando la seccion activa tiene hijas -->
+    </nav>
   </header>
 
   <main id="main">
@@ -7819,14 +7850,11 @@ function borrarTodo() {
 /* ======================== boot ======================== */
 /* ======================== render: MAS (hub) ======================== */
 function renderMas(el) {
+  // Sueno, Crecimiento, Desarrollo y Pediatra viven ya en el menu principal, y
+  // Alergenos en el submenu de Alimentacion: aqui solo queda lo secundario.
   const items = [
-    { v: "desarrollo", ico: "🧎", t: "Desarrollo", s: "Hitos OMS/CDC · dientes" },
-    { v: "crecimiento", ico: "📏", t: "Crecimiento", s: "Peso, talla, percentiles" },
-    { v: "pediatra", ico: "🩺", t: "Pediatra", s: "Visitas y revisiones" },
-    { v: "sueno", ico: "😴", t: "Sueño", s: "Siestas y noche" },
     { v: "panales", ico: "🧷", t: "Pañales", s: "Registro diario" },
     { v: "vacunas", ico: "💉", t: "Vacunas", s: "Calendario vacunal" },
-    { v: "alergenos", ico: "⚠️", t: "Alérgenos", s: "Reacciones y alergias" },
     { v: "seguridad", ico: "🛟", t: "Seguridad", s: "Qué evitar y por qué" },
     { v: "notas", ico: "📝", t: "Notas", s: "Apuntes libres" },
     { v: "ajustes", ico: "⚙️", t: "Ajustes", s: "Perfil y copia de seguridad" },
@@ -7843,7 +7871,7 @@ function volverAMas() { irA("mas"); }
 /* ======================== render: DESARROLLO (hitos + dientes) ======================== */
 function renderDesarrollo(el) {
   const ageM = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
-  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span><h2 style="margin:0 0 12px">Desarrollo</h2>`;
+  let html = `<h2 style="margin:0 0 12px">Desarrollo</h2>`;
 
   html += `<div class="card"><h2>Hitos motores oficiales (OMS)</h2>
     <div class="faint" style="margin-top:-6px;margin-bottom:8px">Los 6 hitos del WHO Motor Development Study (2006), con la ventana de edad normal (percentil 1-99).</div>`;
@@ -7917,7 +7945,7 @@ function toggleTooth(id, checked) {
 let CHARTS = {};
 function renderCrecimiento(el) {
   const sorted = [...STATE.growth].sort((a,b) => new Date(b.date)-new Date(a.date));
-  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span><h2 style="margin:0 0 12px">Crecimiento</h2>`;
+  let html = `<h2 style="margin:0 0 12px">Crecimiento</h2>`;
 
   html += `<div class="card"><h2>Registrar medida</h2>
     <div class="campo"><label>Fecha</label><input type="date" id="growth-date" value="${HOY_ISO}"></div>
@@ -8001,7 +8029,7 @@ function renderGrowthCharts() {
 /* ======================== render: PEDIATRA ======================== */
 function renderPediatra(el) {
   const sorted = [...STATE.pediatricVisits].sort((a,b) => new Date(b.date)-new Date(a.date));
-  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span><h2 style="margin:0 0 12px">Pediatra</h2>`;
+  let html = `<h2 style="margin:0 0 12px">Pediatra</h2>`;
   html += `<div class="card"><h2>Registrar visita</h2>
     <div class="grid-campos2">
       <div class="campo"><label>Fecha</label><input type="date" id="pv-date" value="${HOY_ISO}"></div>
@@ -8061,7 +8089,7 @@ function renderSueno(el) {
   const minHoy = hoy.reduce((s,x) => x.end ? s+(new Date(x.end)-new Date(x.start))/60000 : s, 0);
   const siestasHoy = hoy.filter(s => s.type === "siesta").length;
 
-  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span><h2 style="margin:0 0 12px">Sueño</h2>`;
+  let html = `<h2 style="margin:0 0 12px">Sueño</h2>`;
   activos.forEach(s => {
     html += `<div class="sleep-active"><div><b>${s.type==='siesta'?'Siesta':'Sueño nocturno'} en curso</b><div class="faint">Desde ${fmtHoraCorta(s.start)}</div></div><button class="stop-btn" onclick="PB.stopSleep('${s.id}')">STOP</button></div>`;
   });
@@ -14237,26 +14265,39 @@ function boot(vistaInicial) {
       { id: "pc_entrenos",   label: "Entrenos",    area: "plan"    },
       // Todas las vistas de Pablo viven dentro de la misma <section>: el
       // modulo PB decide cual de sus sub-vistas se muestra dentro.
-      { id: "pb_hoy",        label: "Hoy",         area: "pablo", seccion: "pablo" },
-      { id: "pb_calendario", label: "Calendario",  area: "pablo", seccion: "pablo" },
-      { id: "pb_buscar",     label: "Alimentos",   area: "pablo", seccion: "pablo" },
-      { id: "pb_progreso",   label: "Progreso",    area: "pablo", seccion: "pablo" },
-      { id: "pb_guia",       label: "Gu\u00eda",       area: "pablo", seccion: "pablo" },
+      // Nivel 1 de Pablo. Las entradas con "sub" no salen aqui: son la segunda
+      // fila que aparece cuando su padre esta activo.
+      { id: "pb_alimentacion", label: "Alimentaci\u00f3n", area: "pablo", seccion: "pablo" },
+      { id: "pb_hoy",        label: "Hoy",         area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
+      { id: "pb_calendario", label: "Calendario",  area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
+      { id: "pb_buscar",     label: "Alimentos",   area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
+      { id: "pb_progreso",   label: "Progreso",    area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
+      { id: "pb_alergenos",  label: "Al\u00e9rgenos",   area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
+      { id: "pb_guia",       label: "Gu\u00eda",       area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
+      { id: "pb_sueno",      label: "Sue\u00f1o",       area: "pablo", seccion: "pablo" },
+      { id: "pb_crecimiento",label: "Crecimiento", area: "pablo", seccion: "pablo" },
+      { id: "pb_desarrollo", label: "Desarrollo",  area: "pablo", seccion: "pablo" },
+      { id: "pb_pediatra",   label: "Pediatra",    area: "pablo", seccion: "pablo" },
       { id: "pb_mas",        label: "M\u00e1s",        area: "pablo", seccion: "pablo" }
     ];
 
     /* Puente entre los chips de Recetas y el router interno de Pablo. */
     const PB_CHIP_A_VISTA = {
+      pb_alimentacion: "hoy",
       pb_hoy: "hoy", pb_calendario: "calendario", pb_buscar: "buscar",
-      pb_progreso: "progreso", pb_guia: "guia", pb_mas: "mas"
+      pb_progreso: "progreso", pb_alergenos: "alergenos", pb_guia: "guia",
+      pb_sueno: "sueno", pb_crecimiento: "crecimiento",
+      pb_desarrollo: "desarrollo", pb_pediatra: "pediatra",
+      pb_mas: "mas"
     };
     /* Vista interna -> chip. Las secundarias cuelgan de "M\u00e1s"; "alimento" no
        cambia de chip porque se abre desde varias secciones. */
     const PB_VISTA_A_CHIP = {
-      hoy: "pb_hoy", calendario: "pb_calendario", buscar: "pb_buscar", progreso: "pb_progreso",
-      guia: "pb_guia",
-      mas: "pb_mas", desarrollo: "pb_mas", crecimiento: "pb_mas", pediatra: "pb_mas",
-      sueno: "pb_mas", panales: "pb_mas", vacunas: "pb_mas", alergenos: "pb_mas",
+      hoy: "pb_hoy", calendario: "pb_calendario", buscar: "pb_buscar",
+      progreso: "pb_progreso", alergenos: "pb_alergenos", guia: "pb_guia",
+      sueno: "pb_sueno", crecimiento: "pb_crecimiento",
+      desarrollo: "pb_desarrollo", pediatra: "pb_pediatra",
+      mas: "pb_mas", panales: "pb_mas", vacunas: "pb_mas",
       seguridad: "pb_mas", notas: "pb_mas", ajustes: "pb_mas"
     };
 
@@ -14271,6 +14312,8 @@ function boot(vistaInicial) {
     function pbSincronizarChip(vista) {
       const chip = PB_VISTA_A_CHIP[vista];
       if (!chip || chip === vistaActiva) return;
+      const v = VISTAS.find(x => x.id === chip);
+      if (v && v.sub) ultimaSubseccion[v.sub] = chip;
       vistaActiva = chip;
       areaActiva = "pablo";
       ultimaVistaArea.pablo = chip;
@@ -14780,8 +14823,15 @@ function boot(vistaInicial) {
       try { localStorage.setItem(KEY_VISTA_AREA, JSON.stringify(ultimaVistaArea)); } catch (_) {}
     }
 
+    /* Al volver a "Alimentacion" se recupera donde estabas, no siempre Hoy. */
+    let ultimaSubseccion = { pb_alimentacion: "pb_hoy" };
+
     function fijarVista(id) {
       if (!VISTAS.some(x => x.id === id)) return;
+      // Los chips padre no tienen vista propia: abren su subseccion.
+      if (ultimaSubseccion[id]) return fijarVista(ultimaSubseccion[id]);
+      const v = VISTAS.find(x => x.id === id);
+      if (v && v.sub) ultimaSubseccion[v.sub] = id;
       vistaActiva = id;
       areaActiva = areaDeVista(id);
       if (areaActiva) {
@@ -17501,19 +17551,50 @@ function boot(vistaInicial) {
        (d) RENDER por seccion
        ======================================================================== */
 
+    /* Seccion de primer nivel a la que pertenece una vista: ella misma, o su
+       padre si es una subseccion (Hoy/Calendario/... cuelgan de Alimentacion). */
+    function seccionPadre(id) {
+      const v = VISTAS.find(x => x.id === id);
+      return v && v.sub ? v.sub : id;
+    }
+
     function renderNav() {
       const nav = document.getElementById("nav-secciones");
+      const sub = document.getElementById("nav-subsecciones");
       nav.innerHTML = "";
+      sub.innerHTML = "";
+      sub.hidden = true;
       if (!areaActiva) return;   // en el hub no hay chips de seccion
-      VISTAS.filter(v => v.area === areaActiva).forEach(v => {
+      const padre = seccionPadre(vistaActiva);
+
+      const crear = (v, clase, activo) => {
         const b = document.createElement("button");
         b.type = "button";
-        b.className = "chip";
+        b.className = clase;
         b.textContent = v.label;
         b.dataset.vista = v.id;
-        if (v.id === vistaActiva) b.setAttribute("aria-current", "page");
-        nav.appendChild(b);
-      });
+        if (activo) b.setAttribute("aria-current", "page");
+        return b;
+      };
+
+      VISTAS.filter(v => v.area === areaActiva && !v.sub)
+            .forEach(v => nav.appendChild(crear(v, "chip", v.id === padre)));
+
+      const hijas = VISTAS.filter(v => v.sub === padre);
+      if (hijas.length) {
+        sub.hidden = false;
+        hijas.forEach(v => sub.appendChild(crear(v, "chip chip-sub", v.id === vistaActiva)));
+      }
+
+      // Las dos filas desplazan en horizontal: si el chip activo cae fuera no
+      // se ve donde estas. Se centra a mano (scrollIntoView movería la pagina).
+      const centrar = (cont) => {
+        const b = cont.querySelector('[aria-current="page"]');
+        if (!b) return;
+        cont.scrollLeft = Math.max(0, b.offsetLeft - (cont.clientWidth - b.offsetWidth) / 2);
+      };
+      centrar(nav);
+      if (!sub.hidden) centrar(sub);
     }
 
     /* Icono de Niblo en pequeno, el mismo de favicon.png e icon.svg. */
@@ -20603,9 +20684,11 @@ function boot(vistaInicial) {
       window.matchMedia("(max-width: 460px)").addEventListener("change", renderCabecera);
 
       // ---- Navegacion (delegacion: chips inyectados por renderNav) -------
-      document.getElementById("nav-secciones").addEventListener("click", (ev) => {
-        const b = ev.target.closest("button.chip");
-        if (b && b.dataset.vista) fijarVista(b.dataset.vista);
+      ["nav-secciones", "nav-subsecciones"].forEach(idNav => {
+        document.getElementById(idNav).addEventListener("click", (ev) => {
+          const b = ev.target.closest("button.chip");
+          if (b && b.dataset.vista) fijarVista(b.dataset.vista);
+        });
       });
 
       // ---- Biblioteca: clicks (delegacion) -------------------------------
