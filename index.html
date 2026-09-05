@@ -6108,6 +6108,7 @@
       <div class="gate-acciones">
         <button type="submit" class="btn-principal" data-accion="gate-login">Iniciar sesión</button>
         <button type="button" class="gate-secundario" data-accion="gate-magic">¿Olvidaste la contraseña?</button>
+        <button type="button" class="gate-secundario" data-accion="gate-probar">Probar conexión</button>
       </div>
       <div id="gate-msg" class="gate-msg"></div>
     </form>
@@ -6673,7 +6674,29 @@ function cargarEstadoGlobal() {
   }
   return st;
 }
-function guardarEstado() { localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE)); }
+function guardarEstado() {
+  // Marca de tiempo para que la sincronizacion pueda decidir quien gana.
+  STATE.modificado = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+}
+
+/* ---- Puerta para la sincronizacion con Supabase ----------------------
+   El area de Recetas sube y baja este documento entero: los registros de
+   Pablo no son relacionales (tomas, sueno, panales, crecimiento, hitos,
+   vacunas, notas) y viajan mejor como un unico JSON. */
+function exportarEstadoSync() { return STATE; }
+function marcaDeTiempo() { return STATE.modificado || ""; }
+function importarEstadoSync(remoto) {
+  if (!remoto || typeof remoto !== "object") return false;
+  STATE = Object.assign(defaultState(), remoto);
+  STATE.config = Object.assign(defaultState().config, remoto.config || {});
+  CONFIG = STATE.config;
+  ESTADO = STATE.alimentos || {};
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+  recalcularCalendario();
+  if (_arrancado) { renderHeader(); irA(VISTA_ACTUAL); }
+  return true;
+}
 function guardarConfig() { guardarEstado(); }
 
 let STATE = cargarEstadoGlobal();
@@ -8284,7 +8307,8 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, numeroAlimentos, irASeccionGuia, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+  return { setOnVista, numeroAlimentos, irASeccionGuia,
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
@@ -16053,13 +16077,30 @@ function boot(vistaInicial) {
     }
 
     /** Inicia sesión con email + contraseña. */
+    /* Traduce el error crudo del navegador. Safari dice "Load failed" y Chrome
+       "Failed to fetch" cuando la peticion no llega a salir: eso NO es que la
+       contrasena este mal, es que no se alcanza el servidor. */
+    function esFalloDeRed(e) {
+      const m = (e && e.message) || "";
+      return /load failed|failed to fetch|networkerror|network request failed/i.test(m);
+    }
+    const MSG_RED = "No se ha podido contactar con el servidor. No es la contraseña: " +
+      "la petición no llega a salir. Comprueba la conexión y, sobre todo, si el proyecto " +
+      "de Supabase está pausado (los gratuitos se pausan solos tras unos días sin uso; " +
+      "se reactiva desde el panel de Supabase). Usa «Probar conexión» para verlo.";
+
     async function iniciarSesionPassword(email, password) {
       const s = sesion.supabase;
-      const res = await fetch(s.url + "/auth/v1/token?grant_type=password", {
-        method: "POST",
-        headers: { "apikey": s.anonKey, "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
+      let res;
+      try {
+        res = await fetch(s.url + "/auth/v1/token?grant_type=password", {
+          method: "POST",
+          headers: { "apikey": s.anonKey, "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+      } catch (e) {
+        throw new Error(esFalloDeRed(e) ? MSG_RED : (e.message || String(e)));
+      }
       if (!res.ok) {
         const t = await res.text();
         let msg = "Email o contraseña incorrectos.";
@@ -16074,6 +16115,23 @@ function boot(vistaInicial) {
       s.refreshToken = data.refresh_token;
       s.email = (data.user && data.user.email) || email;
       guardarSupabase();
+    }
+
+    /** Comprueba si el servidor responde, sin usar credenciales. */
+    async function probarConexionSupabase() {
+      const s = sesion.supabase;
+      if (!s.url) return "No hay URL de Supabase configurada.";
+      const t0 = Date.now();
+      try {
+        const res = await fetch(s.url + "/auth/v1/health", { headers: { "apikey": s.anonKey } });
+        const ms = Date.now() - t0;
+        if (res.ok) return `Servidor accesible (${res.status}, ${ms} ms). Si aun asi no entras, revisa email y contraseña.`;
+        if (res.status === 401 || res.status === 403) return `El servidor responde pero rechaza la clave anónima (${res.status}). Revisa la anon key en la configuración avanzada.`;
+        return `El servidor responde con ${res.status}. Puede estar pausado o reiniciándose.`;
+      } catch (e) {
+        if (esFalloDeRed(e)) return MSG_RED;
+        return "Error al contactar: " + (e.message || String(e));
+      }
     }
 
     /** Pide a Supabase que envíe un magic link al email indicado. */
@@ -16399,6 +16457,9 @@ function boot(vistaInicial) {
           if (borradosLocal) guardarEstado();
         }
 
+        // 6) Registros de Pablo: documento unico, ultima escritura gana.
+        const pablo = await sincronizarPablo();
+
         s.ultimoSync = nowISO();
         s.estadoSync = "idle";
         guardarSupabase();
@@ -16406,7 +16467,8 @@ function boot(vistaInicial) {
         return {
           aplicados,
           subidos: subirIng.length + subirRec.length + subirEU.length,
-          borradosLocal
+          borradosLocal,
+          pablo
         };
       } catch (e) {
         s.estadoSync = "error";
@@ -16414,6 +16476,45 @@ function boot(vistaInicial) {
         renderDatos();
         throw e;
       }
+    }
+
+    /* Los registros de Pablo (tomas, sueno, panales, crecimiento, hitos,
+       dientes, vacunas, notas, visitas y estados de alimento) no son
+       relacionales: viajan como un unico documento JSON en la tabla
+       pablo_estado, con una sola fila compartida por los dos perfiles —
+       son datos del bebe, no de cada padre. Ultima escritura gana. */
+    const PABLO_FILA = "pablo";
+
+    async function sincronizarPablo() {
+      if (typeof PB === "undefined" || !PB.exportarEstadoSync) return "sin módulo";
+      let remoto = null;
+      try {
+        const filas = await supaFetch("/rest/v1/pablo_estado?id=eq." + PABLO_FILA);
+        remoto = (filas && filas[0]) || null;
+      } catch (e) {
+        // La tabla puede no existir todavia: no debe tumbar el resto del sync.
+        if (/(42P01|does not exist|Could not find the table)/i.test(e.message || "")) {
+          return "tabla pablo_estado no creada";
+        }
+        throw e;
+      }
+      const localTs  = PB.marcaDeTiempo() || "";
+      const remotoTs = (remoto && remoto.modificado) || "";
+
+      if (remoto && remotoTs > localTs) {
+        PB.importarEstadoSync(remoto.datos);
+        return "bajado";
+      }
+      if (!localTs) return "nada que subir";
+      if (!remoto || localTs > remotoTs) {
+        await supaFetch("/rest/v1/pablo_estado", {
+          method: "POST",
+          headers: { "Prefer": "resolution=merge-duplicates" },
+          body: JSON.stringify([{ id: PABLO_FILA, datos: PB.exportarEstadoSync(), modificado: localTs }])
+        });
+        return "subido";
+      }
+      return "al día";
     }
 
     /** Auto-sync ligero: solo si está autenticado y autoSync está activo. */
@@ -21790,6 +21891,14 @@ function boot(vistaInicial) {
         });
       });
       gateForm.addEventListener("click", (ev) => {
+        if (ev.target.closest("[data-accion='gate-probar']")) {
+          const msg = document.getElementById("gate-msg");
+          if (msg) msg.textContent = "Probando…";
+          probarConexionSupabase().then(t => {
+            if (msg) msg.innerHTML = `<span style="color:var(--text-muted);">${esc(t)}</span>`;
+          });
+          return;
+        }
         if (ev.target.closest("[data-accion='gate-magic']")) {
           const em  = (document.getElementById("gate-email") || {}).value || "";
           const msg = document.getElementById("gate-msg");
