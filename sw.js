@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v87";   // misma pastilla de sueño y la mezcla en el plato
+const CACHE_NAME = "niblo-v88";   // patron de 7 dias, lo que suele venir y comparativa
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
