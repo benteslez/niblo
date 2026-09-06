@@ -5309,13 +5309,20 @@
     /* "Nuevo" va relleno y no en pastel como los otros tres: no es un estado
        del historial, es la ausencia de historial, y conviene que se distinga. */
     .pb-app .pill.nuevo { background: var(--verde-nuevo); color: #fff; }
-    /* Triangulo de "alguna vez le sento mal", al lado de la pastilla. */
-    .pb-app .comida-alerta {
+    /* Marcas de historial junto a la pastilla: el triangulo rojo si alguna vez
+       le sento mal, la (i) gris si alguna vez no lo quiso. */
+    /* Ojo con los nombres: "alerta" e "info" ya son componentes con su propio
+       padding, y usarlos aqui de modificador dejaba el boton en 32x24 con el
+       glifo aplastado a 0 px de ancho. De ahi el prefijo "de-". */
+    .pb-app .comida-marca {
       flex: none; display: inline-flex; align-items: center; justify-content: center;
-      width: 22px; height: 22px; border-radius: 50%; border: none; cursor: pointer;
-      background: var(--red-soft); color: var(--red); padding: 0;
+      width: 22px; height: 22px; border-radius: 50%; border: none; cursor: pointer; padding: 0;
     }
-    .pb-app .comida-alerta:hover { background: var(--red); color: #fff; }
+    .pb-app .comida-marca svg { flex: none; }
+    .pb-app .comida-marca.de-reaccion { background: var(--red-soft); color: var(--red); }
+    .pb-app .comida-marca.de-reaccion:hover { background: var(--red); color: #fff; }
+    .pb-app .comida-marca.de-rechazo { background: var(--bg-soft); color: var(--text-muted); }
+    .pb-app .comida-marca.de-rechazo:hover { background: var(--text-muted); color: var(--bg-card); }
     .pb-app .pill.info { background: var(--blue-soft); color: var(--blue); }
     .pb-app .pill.neutro { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
@@ -5385,6 +5392,10 @@
     .pb-app .seg-btns button.on.tolerado { background: var(--green-soft); color: var(--green); border-color: transparent; }
     .pb-app .seg-btns button.on.probando { background: var(--amber-soft); color: var(--amber); border-color: transparent; }
     .pb-app .seg-btns button.on.reaccion { background: var(--red-soft); color: var(--red); border-color: transparent; }
+    /* Rechazo no es un problema de salud, es una preferencia: gris, no color. */
+    .pb-app .seg-btns button.on.rechazo { background: var(--bg-soft); color: var(--text); border-color: var(--border); }
+    /* Con cuatro botones ya no caben a 6,5 em: se aprieta la caja, no la letra. */
+    .pb-app .seg-btns.cuatro button { min-width: 4.6em; padding-left: 4px; padding-right: 4px; }
     .pb-app .mes-header { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px; }
     .pb-app .mes-header h3 { font-size: 0.9375rem; margin: 0; text-transform: capitalize; }
     .pb-app .grid-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
@@ -5576,6 +5587,7 @@
     .pb-app .linea-icono.i-comida { background: var(--green-soft);  color: var(--green); }
     .pb-app .linea-icono.i-alerta { background: var(--amber-soft);  color: var(--amber); }
     .pb-app .linea-icono.i-probando { background: var(--amber-soft); color: var(--amber); }
+    .pb-app .linea-icono.i-rechazo { background: var(--bg-soft); color: var(--text-muted); }
     /* El que cede al estrecharse es el dato secundario, no el titulo: antes se
        leia "Sueno nocturno hast..." y lo que sobraba era justo lo que importa. */
     .pb-app .linea-texto {
@@ -8288,6 +8300,7 @@ function alimentosParaMarcar(dia) {
 const PASTILLA_ESTADO = {
   probando: { cls: "limite", et: "Probando" },
   tolerado: { cls: "ok",     et: "Tolerado" },
+  rechazo:  { cls: "neutro", et: "Rechazo"  },
   reaccion: { cls: "evitar", et: "Reacción" },
 };
 function pastillaAlimento(id) {
@@ -8296,25 +8309,35 @@ function pastillaAlimento(id) {
   const ultimo = hist[hist.length - 1].resultado;   // historial ordenado por fecha
   const p = PASTILLA_ESTADO[ultimo];
   if (!p) return null;
-  /* Si ya esta en rojo, la pastilla avisa de sobra; el triangulo es para el
-     caso contrario: hoy lo tolera, pero un dia le sento mal. */
-  const reacciones = ultimo === "reaccion" ? []
-    : hist.filter(h => h.resultado === "reaccion").map(h => h.fecha);
-  return { cls: p.cls, et: p.et, reacciones };
+  /* Si el estado actual ya es ese, la pastilla avisa de sobra; las marcas son
+     para el caso contrario: hoy lo tolera, pero un dia le sento mal o no lo
+     quiso, y eso no se recuerda un mes despues. */
+  const pasadas = r => ultimo === r ? [] : hist.filter(h => h.resultado === r).map(h => h.fecha);
+  return { cls: p.cls, et: p.et, reacciones: pasadas("reaccion"), rechazos: pasadas("rechazo") };
 }
 
-/* Detalle del triangulo: cuando le sento mal, con la fecha exacta. */
-function verReacciones(id) {
-  const hist = (ESTADO[id] && ESTADO[id].historial) || [];
-  const fechas = hist.filter(h => h.resultado === "reaccion").map(h => h.fecha);
+/* Detalle de las marcas: cuando le sento mal o cuando no lo quiso. */
+function fechasDe(id, resultado) {
+  return ((ESTADO[id] && ESTADO[id].historial) || [])
+    .filter(h => h.resultado === resultado).map(h => h.fecha);
+}
+function avisoAlimento(id, resultado, titulo, pie) {
+  const fechas = fechasDe(id, resultado);
   if (!fechas.length) return;
   const a = alimentoPorId(id);
   const dmy = iso => { const [y, m, d] = iso.split("-"); return `${d}/${m}/${y}`; };
   abrirModal((a ? nombreLocal(a) : "Alimento") || "Alimento", `
-    <p class="modal-p"><b>Reacción el ${fechas.map(dmy).join(", el ")}.</b></p>
-    <p class="modal-p faint">Después se marcó como tolerado, así que la pastilla va en verde.
-      Aun así conviene tenerlo presente al volver a ofrecérselo.</p>`,
+    <p class="modal-p"><b>${titulo} el ${fechas.map(dmy).join(", el ")}.</b></p>
+    <p class="modal-p faint">${pie}</p>`,
     [{ et: "Cerrar", primario: true, accion: "PB.cerrarModal()" }]);
+}
+function verReacciones(id) {
+  avisoAlimento(id, "reaccion", "Reacción",
+    "Después se marcó de otra forma, así que la pastilla ya no va en rojo. Aun así conviene tenerlo presente al volver a ofrecérselo.");
+}
+function verRechazos(id) {
+  avisoAlimento(id, "rechazo", "No lo quiso",
+    "Después acabó aceptándolo. Se apunta por si vuelve a costarle: rechazar un alimento la primera vez es lo normal y no significa que no le guste.");
 }
 
 /* Por que hoy toca ese alimento. Antes vivia suelto en la cabecera del dia. */
@@ -8349,11 +8372,17 @@ function htmlComidaDelDia(dia, marcarFn) {
         <div class="comida-cab">
           <span class="comida-punto" style="background:${GRUPOS_COLOR[a.grupo] || "var(--slate)"}"></span>
           <span class="comida-nombre"${a.id ? ` onclick="PB.irA('alimento','${a.id}')"` : ""}>${capitalizar(a.nombre)}</span>
-          ${a.id ? (p => !p ? "" : `<span class="pill ${p.cls}">${p.et}</span>` + (p.reacciones.length
-            ? `<button type="button" class="comida-alerta" onclick="PB.verReacciones('${a.id}')"
-                 aria-label="Le dio reacción alguna vez. Ver cuándo" title="Le dio reacción alguna vez">
-                 <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">${LINEA_GLIFOS.alerta}</svg>
-               </button>` : ""))(pastillaAlimento(a.id)) : ""}
+          ${a.id ? (p => !p ? "" : `<span class="pill ${p.cls}">${p.et}</span>`
+            + (p.reacciones.length
+              ? `<button type="button" class="comida-marca de-reaccion" onclick="PB.verReacciones('${a.id}')"
+                   aria-label="Le dio reacción alguna vez. Ver cuándo" title="Le dio reacción alguna vez">
+                   <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">${LINEA_GLIFOS.alerta}</svg>
+                 </button>` : "")
+            + (p.rechazos.length
+              ? `<button type="button" class="comida-marca de-rechazo" onclick="PB.verRechazos('${a.id}')"
+                   aria-label="Alguna vez no lo quiso. Ver cuándo" title="Alguna vez no lo quiso">
+                   <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">${LINEA_GLIFOS.info}</svg>
+                 </button>` : ""))(pastillaAlimento(a.id)) : ""}
           ${esElNuevo ? `<span class="comida-dia">Día ${nuevo.dia} de ${nuevo.total}</span>` : ''}
         </div>
         ${esElNuevo ? `<div class="progreso-bar">${Array.from({ length: nuevo.total })
@@ -8361,12 +8390,15 @@ function htmlComidaDelDia(dia, marcarFn) {
         <div class="comida-meta">${horas.join(" · ")}${cuanto ? " · " + cuanto : ""}</div>
         <div class="comida-como">${formaDeDarlo(a)}</div>
         ${marca ? `<div class="comida-hecho">${
-          { reaccion: "Reacción", probando: "Probando", tolerado: "Tolerado" }[est] || "Marcado"} a las ${marca}</div>` : ""}
-        ${a.id ? `<div class="seg-btns">
+          { reaccion: "Reacción", probando: "Probando", tolerado: "Tolerado", rechazo: "Rechazo" }[est]
+          || "Marcado"} a las ${marca}</div>` : ""}
+        ${a.id ? `<div class="seg-btns cuatro">
           <button type="button" class="${est === 'probando' ? 'on probando' : ''}"
             onclick="${marcarFn}('${a.id}','probando')" aria-pressed="${est === 'probando'}">Probando</button>
           <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}"
             onclick="${marcarFn}('${a.id}','tolerado')" aria-pressed="${est === 'tolerado'}">Tolerado</button>
+          <button type="button" class="${est === 'rechazo' ? 'on rechazo' : ''}"
+            onclick="${marcarFn}('${a.id}','rechazo')" aria-pressed="${est === 'rechazo'}">Rechazo</button>
           <button type="button" class="${est === 'reaccion' ? 'on reaccion' : ''}"
             onclick="${marcarFn}('${a.id}','reaccion')" aria-pressed="${est === 'reaccion'}">Reacción</button>
         </div>` : ""}
@@ -8432,6 +8464,8 @@ const LINEA_GLIFOS = {
   alerta: '<path d="M12 3.4l9.6 17.2H2.4zM11.1 9.4h1.8v5.4h-1.8zm0 6.8h1.8v1.8h-1.8z"/>',
 };
 LINEA_GLIFOS.probando = LINEA_GLIFOS.comida;   // mismo cuenco, circulo ambar
+LINEA_GLIFOS.rechazo = '<path d="M12 2.6A9.4 9.4 0 1 0 21.4 12 9.4 9.4 0 0 0 12 2.6zm4 10.3H8v-1.8h8z"/>';
+LINEA_GLIFOS.info = '<path d="M12 2.6A9.4 9.4 0 1 0 21.4 12 9.4 9.4 0 0 0 12 2.6zm-.9 4.1h1.8v1.8h-1.8zm0 3.4h1.8v7h-1.8z"/>';
 function iconoLinea(tipo) {
   return `<span class="linea-icono i-${tipo}" aria-hidden="true"><svg viewBox="0 0 24 24"
     width="14" height="14" fill="currentColor">${LINEA_GLIFOS[tipo]}</svg></span>`;
@@ -8453,6 +8487,7 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   const MARCA = {
     probando: { icono: "probando", texto: "probando" },
     tolerado: { icono: "comida",   texto: "tolerado" },
+    rechazo:  { icono: "rechazo",  texto: "no lo quiso" },
     reaccion: { icono: "alerta",   texto: "con reacción" },
   };
 
@@ -8995,9 +9030,10 @@ function renderAlimento(el, id) {
       ${a.flags.alergenico ? '<span class="pill limite">⚠️ alergénico</span>' : ''}
       ${a.flags.asfixia ? '<span class="pill evitar">🚫 asfixia</span>' : ''}
     </div>
-    <div class="seg-btns">
+    <div class="seg-btns cuatro">
       <button class="${est==='probando'?'on probando':''}" onclick="PB.marcarEstadoDesdeFicha('${a.id}','probando')">Probando</button>
       <button class="${est==='tolerado'?'on tolerado':''}" onclick="PB.marcarEstadoDesdeFicha('${a.id}','tolerado')">Tolerado</button>
+      <button class="${est==='rechazo'?'on rechazo':''}" onclick="PB.marcarEstadoDesdeFicha('${a.id}','rechazo')">Rechazo</button>
       <button class="${est==='reaccion'?'on reaccion':''}" onclick="PB.marcarEstadoDesdeFicha('${a.id}','reaccion')">Reacción</button>
     </div>
     ${esDeGuia(a) ? `<div class="alerta limitar" style="margin-top:10px">
@@ -9109,6 +9145,7 @@ function editarMarcaAlimento(id, fecha) {
         <select id="ma-res">
           <option value="probando"${h.resultado === "probando" ? " selected" : ""}>Probando</option>
           <option value="tolerado"${h.resultado === "tolerado" ? " selected" : ""}>Tolerado</option>
+          <option value="rechazo"${h.resultado === "rechazo" ? " selected" : ""}>Rechazo</option>
           <option value="reaccion"${h.resultado === "reaccion" ? " selected" : ""}>Reacción</option>
         </select></div>
       <div class="campo"><label for="ma-hora">Hora</label>
@@ -10084,7 +10121,7 @@ function generarInformeCompleto() {
      Estado actual de cada alimento, sin filtrar por fechas: lo que importa
      para dar de comer hoy es como quedo la ultima vez, sea de cuando sea. */
   if (S("listaAlimentos")) {
-    const grupos = { tolerado: [], probando: [], reaccion: [] };
+    const grupos = { tolerado: [], probando: [], rechazo: [], reaccion: [] };
     for (const [id, dat] of Object.entries(STATE.alimentos || {})) {
       const hist = dat.historial || [];
       if (!hist.length) continue;
@@ -10106,6 +10143,7 @@ function generarInformeCompleto() {
       <div class="inf-kpis">
         <div><b>${grupos.tolerado.length}</b><span>Puede comer</span></div>
         <div><b>${grupos.probando.length}</b><span>En prueba</span></div>
+        <div><b>${grupos.rechazo.length}</b><span>No los quiere</span></div>
         <div><b>${grupos.reaccion.length}</b><span>Evitar</span></div>
       </div>`;
 
@@ -10120,6 +10158,8 @@ function generarInformeCompleto() {
     bloque("Tolerados", grupos.tolerado, "Ya los ha probado sin problema. Se le pueden dar.");
     bloque("En prueba", grupos.probando,
       "Están en sus días de introducción. Ofrecer solo si lo indican los padres, y vigilar tras la toma.");
+    bloque("No los quiere", grupos.rechazo,
+      "Los ha rechazado la última vez que se le ofrecieron. Se pueden ofrecer igual, sin insistir: rechazar un alimento las primeras veces es lo normal.");
     bloque("Con reacción", grupos.reaccion,
       "<b>No dárselos.</b> Han dado alguna reacción y están pendientes de valoración.");
   }
@@ -11317,7 +11357,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verReacciones, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verReacciones, verRechazos, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
