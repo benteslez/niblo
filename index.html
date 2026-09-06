@@ -5309,6 +5309,13 @@
     /* "Nuevo" va relleno y no en pastel como los otros tres: no es un estado
        del historial, es la ausencia de historial, y conviene que se distinga. */
     .pb-app .pill.nuevo { background: var(--verde-nuevo); color: #fff; }
+    /* Triangulo de "alguna vez le sento mal", al lado de la pastilla. */
+    .pb-app .comida-alerta {
+      flex: none; display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%; border: none; cursor: pointer;
+      background: var(--red-soft); color: var(--red); padding: 0;
+    }
+    .pb-app .comida-alerta:hover { background: var(--red); color: #fff; }
     .pb-app .pill.info { background: var(--blue-soft); color: var(--blue); }
     .pb-app .pill.neutro { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
@@ -8278,14 +8285,36 @@ function alimentosParaMarcar(dia) {
    ofrecer un mes despues, que es justo cuando ya nadie se acuerda.
    "Nuevo" es no haberlo probado nunca, no el dia 1 del plan: si ya se le dio
    antes por su cuenta, de nuevo no tiene nada. */
+const PASTILLA_ESTADO = {
+  probando: { cls: "limite", et: "Probando" },
+  tolerado: { cls: "ok",     et: "Tolerado" },
+  reaccion: { cls: "evitar", et: "Reacción" },
+};
 function pastillaAlimento(id) {
   const hist = (ESTADO[id] && ESTADO[id].historial) || [];
-  if (!hist.length) return { cls: "nuevo", et: "Nuevo" };
-  if (hist.some(h => h.resultado === "reaccion")) return { cls: "evitar", et: "Reacción" };
-  const ultimo = hist[hist.length - 1].resultado;
-  if (ultimo === "probando") return { cls: "limite", et: "Probando" };
-  if (ultimo === "tolerado") return { cls: "ok", et: "Tolerado" };
-  return null;
+  if (!hist.length) return { cls: "nuevo", et: "Nuevo", reacciones: [] };
+  const ultimo = hist[hist.length - 1].resultado;   // historial ordenado por fecha
+  const p = PASTILLA_ESTADO[ultimo];
+  if (!p) return null;
+  /* Si ya esta en rojo, la pastilla avisa de sobra; el triangulo es para el
+     caso contrario: hoy lo tolera, pero un dia le sento mal. */
+  const reacciones = ultimo === "reaccion" ? []
+    : hist.filter(h => h.resultado === "reaccion").map(h => h.fecha);
+  return { cls: p.cls, et: p.et, reacciones };
+}
+
+/* Detalle del triangulo: cuando le sento mal, con la fecha exacta. */
+function verReacciones(id) {
+  const hist = (ESTADO[id] && ESTADO[id].historial) || [];
+  const fechas = hist.filter(h => h.resultado === "reaccion").map(h => h.fecha);
+  if (!fechas.length) return;
+  const a = alimentoPorId(id);
+  const dmy = iso => { const [y, m, d] = iso.split("-"); return `${d}/${m}/${y}`; };
+  abrirModal((a ? nombreLocal(a) : "Alimento") || "Alimento", `
+    <p class="modal-p"><b>Reacción el ${fechas.map(dmy).join(", el ")}.</b></p>
+    <p class="modal-p faint">Después se marcó como tolerado, así que la pastilla va en verde.
+      Aun así conviene tenerlo presente al volver a ofrecérselo.</p>`,
+    [{ et: "Cerrar", primario: true, accion: "PB.cerrarModal()" }]);
 }
 
 /* Por que hoy toca ese alimento. Antes vivia suelto en la cabecera del dia. */
@@ -8320,7 +8349,11 @@ function htmlComidaDelDia(dia, marcarFn) {
         <div class="comida-cab">
           <span class="comida-punto" style="background:${GRUPOS_COLOR[a.grupo] || "var(--slate)"}"></span>
           <span class="comida-nombre"${a.id ? ` onclick="PB.irA('alimento','${a.id}')"` : ""}>${capitalizar(a.nombre)}</span>
-          ${a.id ? (p => p ? `<span class="pill ${p.cls}">${p.et}</span>` : "")(pastillaAlimento(a.id)) : ""}
+          ${a.id ? (p => !p ? "" : `<span class="pill ${p.cls}">${p.et}</span>` + (p.reacciones.length
+            ? `<button type="button" class="comida-alerta" onclick="PB.verReacciones('${a.id}')"
+                 aria-label="Le dio reacción alguna vez. Ver cuándo" title="Le dio reacción alguna vez">
+                 <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">${LINEA_GLIFOS.alerta}</svg>
+               </button>` : ""))(pastillaAlimento(a.id)) : ""}
           ${esElNuevo ? `<span class="comida-dia">Día ${nuevo.dia} de ${nuevo.total}</span>` : ''}
         </div>
         ${esElNuevo ? `<div class="progreso-bar">${Array.from({ length: nuevo.total })
@@ -11284,7 +11317,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verReacciones, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
