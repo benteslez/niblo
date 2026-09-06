@@ -5448,53 +5448,100 @@
     }
     .pb-app .btn-anadir:hover { background: var(--blue); color: #fff; }
 
+    /* Resumen del dia al estilo de las tarjetas de Salud: cifra grande con la
+       unidad pequena al lado y la etiqueta en minusculas debajo. Las
+       mayusculas y el centrado de antes hacian que tres datos gritaran. */
     .pb-app .linea-resumen {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-      margin: 12px 0 4px; padding-bottom: 12px; border-bottom: 1px solid var(--line-soft);
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-2);
+      margin: 0 0 var(--gap-3); padding-bottom: var(--gap-3);
+      border-bottom: 1px solid var(--line-soft);
     }
-    .pb-app .linea-resumen > div { text-align: center; }
     .pb-app .linea-resumen b {
-      display: block; font-size: 1.0625rem; font-weight: 800;
-      font-family: var(--serif); letter-spacing: -0.02em; white-space: nowrap;
+      display: block; font-family: var(--serif); font-size: 1.375rem; font-weight: 700;
+      letter-spacing: -0.03em; white-space: nowrap; line-height: 1.15;
+    }
+    .pb-app .linea-resumen i {
+      font-style: normal; font-size: 0.65em; font-weight: 500;
+      color: var(--text-faint); margin-left: 2px;
     }
     .pb-app .linea-resumen span {
-      font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.05em;
-      color: var(--text-muted);
+      display: block; margin-top: 2px; font-size: 0.75rem; color: var(--text-muted);
     }
 
+    /* Una fila por registro y en una sola linea. Antes cada uno ocupaba dos,
+       con emoji a color, hora en grande y chevron: diez registros llenaban la
+       pantalla. El glifo va plano dentro de un circulo tintado, un color por
+       tipo, y la raya separadora arranca despues del icono como en iOS. */
     .pb-app .linea { display: flex; flex-direction: column; }
     .pb-app .linea-fila {
+      position: relative;
       display: flex; align-items: center; gap: 10px; width: 100%;
-      padding: 11px 0; border: none; background: none; text-align: left;
-      border-bottom: 1px solid var(--line-soft); font: inherit; color: inherit;
-      cursor: pointer;
+      padding: 8px 0; border: none; background: none; text-align: left;
+      font: inherit; color: inherit; cursor: pointer;
+      border-radius: 8px;
+    }
+    .pb-app .linea-fila + .linea-fila::before {
+      content: ""; position: absolute; top: 0; left: 78px; right: 0;
+      border-top: 1px solid var(--line-soft);
     }
     .pb-app .linea-fila.estatica { cursor: default; }
-    .pb-app .linea-fila:last-child { border-bottom: none; }
-    .pb-app .linea-fila:not(.estatica):hover { background: var(--bg-soft); }
+    .pb-app .linea-fila:not(.estatica):hover,
+    .pb-app .linea-fila:not(.estatica):active { background: var(--bg-soft); }
     .pb-app .linea-hora {
-      flex: none; width: 46px; font-size: 0.8125rem; color: var(--text-muted);
+      flex: none; width: 42px; font-family: var(--serif);
+      font-size: 0.75rem; letter-spacing: -0.02em; color: var(--text-faint);
     }
-    .pb-app .linea-icono { flex: none; font-size: 1rem; width: 22px; text-align: center; }
-    .pb-app .linea-texto { flex: 1; min-width: 0; font-size: 0.9375rem; font-weight: 600; }
+    .pb-app .linea-icono {
+      flex: none; width: 26px; height: 26px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--bg-soft); color: var(--text-muted);
+    }
+    .pb-app .linea-icono.i-toma   { background: var(--blue-soft);   color: var(--blue); }
+    .pb-app .linea-icono.i-sueno  { background: var(--purple-soft); color: var(--purple); }
+    .pb-app .linea-icono.i-comida { background: var(--green-soft);  color: var(--green); }
+    .pb-app .linea-icono.i-alerta { background: var(--amber-soft);  color: var(--amber); }
+    /* El que cede al estrecharse es el dato secundario, no el titulo: antes se
+       leia "Sueno nocturno hast..." y lo que sobraba era justo lo que importa. */
+    .pb-app .linea-texto {
+      flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 6px;
+      font-size: 0.9375rem; font-weight: 600;
+    }
+    .pb-app .linea-texto > b { flex: none; font-weight: 600; white-space: nowrap; }
     .pb-app .linea-sub {
-      display: block; font-size: 0.78125rem; font-weight: 400; color: var(--text-muted);
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      min-width: 0; font-size: 0.8125rem; font-weight: 400; color: var(--text-faint);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .pb-app .linea-valor {
-      flex: none; font-family: var(--serif); font-size: 0.875rem; font-weight: 700;
+      flex: none; font-family: var(--serif); font-size: 0.875rem; font-weight: 600;
+      letter-spacing: -0.02em; white-space: nowrap;
     }
-    .pb-app .linea-chevron { flex: none; color: var(--text-faint); font-size: 1.125rem; }
-    .pb-app .linea-fila.pendiente .linea-texto,
-    .pb-app .linea-fila.pendiente .linea-hora { color: var(--text-faint); font-weight: 500; }
-    .pb-app .linea-valor.apuntar {
-      font-family: inherit; font-size: 0.75rem; color: var(--blue);
-      background: var(--blue-soft); border-radius: 999px; padding: 4px 10px;
+    .pb-app .linea-valor i {
+      font-style: normal; font-weight: 500; color: var(--text-faint); margin-left: 2px;
     }
-    .pb-app .linea-fila.rutina .linea-texto,
-    .pb-app .linea-fila.rutina .linea-hora { color: var(--text-faint); font-weight: 500; }
-    .pb-app .linea-fila.rutina .linea-icono { color: var(--text-faint); font-size: 1.25rem; line-height: 0.6; }
-    .pb-app .linea-pie { font-size: 0.75rem; color: var(--text-muted); margin: 12px 0 0; }
+    /* Accesos directos de "Hoy". Mismo glifo que la linea del dia para que se
+       lea como "esto apunta una de estas dos cosas". */
+    .pb-app .acc-rapido {
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-3);
+      margin-bottom: var(--gap-3); max-width: 640px;
+    }
+    .pb-app .acc-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 10px; border: 1px solid var(--border); border-radius: var(--r-lg);
+      background: var(--bg-card); color: inherit; font: inherit;
+      font-size: 0.875rem; font-weight: 600; cursor: pointer; min-width: 0;
+      transition: border-color .15s, background .15s;
+    }
+    .pb-app .acc-btn:hover { border-color: var(--blue); background: var(--bg-soft); }
+    /* Con el texto a tamano grande "Registrar sueno" no cabe en media pantalla:
+       si se recorta, los dos botones acaban diciendo "Registrar ...". Que parta
+       en dos lineas y crezca el boton. */
+    .pb-app .acc-btn span { min-width: 0; }
+    @media (max-width: 359px) { .pb-app .acc-rapido { grid-template-columns: 1fr; } }
+
+    /* En escritorio la tarjeta pasa de 1000 px de ancho y el valor se iba solo
+       al borde derecho, a 800 px del titulo. Se limita el ancho de lectura de
+       las listas, no el de la tarjeta. */
+    .pb-app .linea, .pb-app .linea-resumen, .pb-app .avisos .aviso-card { max-width: 640px; }
 
     /* ---- Vacunas --------------------------------------------------------- */
     .pb-app .vac-lista { display: flex; flex-direction: column; }
@@ -5648,31 +5695,48 @@
     .pb-app .infc-op.on .et { color: var(--blue); }
 
     /* ---- Recordatorios --------------------------------------------------- */
-    .pb-app .avisos { display: flex; flex-direction: column; gap: 8px; margin-bottom: var(--gap-4); }
-    .pb-app .aviso-card {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 12px 14px; border-radius: var(--r-lg);
-      background: var(--amber-soft); border: 1px solid color-mix(in srgb, var(--amber) 22%, transparent);
+    /* Los recordatorios eran tres bloques ambar a pantalla completa: lo primero
+       que veias al abrir "Hoy" y lo mas ruidoso de la vista. Ahora son filas de
+       una tarjeta normal, con la misma anatomia que la linea del dia (circulo
+       tintado, titulo, texto en gris, raya que arranca despues del icono). */
+    .pb-app .avisos .aviso-card {
+      position: relative;
+      display: flex; align-items: center; gap: 10px; padding: 9px 0;
     }
-    .pb-app .aviso-card .ico { font-size: 1.125rem; line-height: 1.2; flex: none; }
-    .pb-app .aviso-card .cuerpo { flex: 1; min-width: 0; }
-    .pb-app .aviso-card .tit { font-weight: 700; font-size: 0.875rem; color: var(--amber); }
-    .pb-app .aviso-card .txt { font-size: 0.78125rem; color: var(--text-muted); margin-top: 2px; line-height: 1.45; }
-    .pb-app .aviso-card .acciones { display: flex; align-items: center; gap: 4px; flex: none; }
+    .pb-app .avisos .aviso-card + .aviso-card::before {
+      content: ""; position: absolute; top: 0; left: 36px; right: 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .pb-app .aviso-card .ico {
+      flex: none; width: 26px; height: 26px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--amber-soft); font-size: 0.8125rem; line-height: 1;
+    }
+    /* Una linea para el titulo y otra para el detalle: en cuanto el titulo se
+       partia en dos, la fila crecia a cuatro renglones y volvia el bloque. */
+    .pb-app .aviso-card .cuerpo {
+      flex: 1; min-width: 0; border: none; background: none; padding: 0;
+      font: inherit; color: inherit; text-align: left;
+    }
+    .pb-app button.aviso-card .cuerpo, .pb-app .aviso-card button.cuerpo { cursor: pointer; }
+    .pb-app .aviso-card .tit,
+    .pb-app .aviso-card .txt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pb-app .aviso-card .tit { font-weight: 600; font-size: 0.9375rem; }
+    .pb-app .aviso-card .txt {
+      font-size: 0.8125rem; color: var(--text-faint); margin-top: 1px; line-height: 1.4;
+    }
+    .pb-app .aviso-chevron { flex: none; color: var(--text-faint); font-size: 1.0625rem; }
     .pb-app .btn-aviso {
-      border: 1px solid color-mix(in srgb, var(--amber) 35%, transparent);
-      background: var(--bg-card); color: var(--amber);
-      border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+      flex: none; border: none; background: var(--blue-soft); color: var(--blue);
+      padding: 6px 12px; font: inherit; font-size: 0.8125rem; font-weight: 600;
+      cursor: pointer; border-radius: 999px; white-space: nowrap;
     }
+    .pb-app .btn-aviso:hover { background: var(--blue); color: #fff; }
     .pb-app .aviso-card .cerrar {
-      border: none; background: transparent; color: var(--text-muted);
-      cursor: pointer; font-size: 0.875rem; padding: 4px 6px; border-radius: 8px;
+      border: none; background: transparent; color: var(--text-faint);
+      cursor: pointer; font-size: 0.8125rem; padding: 4px 6px; border-radius: 8px;
     }
     .pb-app .aviso-card .cerrar:hover { background: var(--bg-soft); color: var(--text); }
-    @media (max-width: 480px) {
-      .pb-app .aviso-card { flex-wrap: wrap; }
-      .pb-app .aviso-card .acciones { width: 100%; justify-content: flex-end; }
-    }
 
     .pb-modal-bg {
       position: fixed; inset: 0; z-index: 900;
@@ -8076,7 +8140,15 @@ function renderHoy(el) {
   const dia = diaDeCalendario(iso);
   if (!dia) { el.innerHTML = `<div class="empty-state">Sin datos de calendario todavía.</div>`; return; }
 
-  let html = banner;
+  /* Los dos registros que se apuntan varias veces al dia, arriba del todo:
+     antes la toma estaba al final de la vista y el sueno en otra pestana. */
+  let html = `<div class="acc-rapido">
+    <button type="button" class="acc-btn" onclick="PB.TOMAS_HOY.nuevaToma('${dia.fecha}')">
+      ${iconoLinea("toma")}<span>Registrar toma</span></button>
+    <button type="button" class="acc-btn" onclick="PB.irARegistro('sueno')">
+      ${iconoLinea("sueno")}<span>Registrar sueño</span></button>
+  </div>`;
+  html += banner;
   html += `<div class="card">
     <div class="hero-fecha">${fmtFechaLarga(dia.fecha)}</div>
     <div class="hero-titulo">${dia.edadTexto}</div>`;
@@ -8102,7 +8174,7 @@ function renderHoy(el) {
   html += `</div>`;
 
   html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoHoy");
-  html += htmlLineaDelDia(dia, "PB.TOMAS_HOY");
+  html += htmlLineaDelDia(dia, "PB.TOMAS_HOY", false);
 
   el.innerHTML = html;
 }
@@ -8186,18 +8258,33 @@ function sueniosDelDia(fecha) {
   }
   return out;
 }
-function duracionCorta(min) {
+/* Igual que duracionCorta pero con la unidad marcada, para poder pintarla en
+   gris y mas pequena que la cifra, como hace Salud. */
+function duracionHtml(min) {
   const h = Math.floor(min / 60), m = min % 60;
-  return h ? `${h} h${m ? " " + m + " min" : ""}` : `${m} min`;
-}
-/* En la fila de totales solo hay ~100 px por dato: "8 h 10 min" se parte en
-   dos lineas y descuadra la rejilla. */
-function duracionCompacta(min) {
-  const h = Math.floor(min / 60), m = min % 60;
-  return h ? `${h}h${m ? " " + m + "m" : ""}` : `${m}m`;
+  const trozos = [];
+  if (h) trozos.push(`${h}<i>h</i>`);
+  if (m || !h) trozos.push(`${m}<i>min</i>`);
+  return trozos.join(" ");
 }
 
-function htmlLineaDelDia(dia, refrescarFn) {
+/* Glifos de la linea del dia. Planos y monocromos: el emoji trae su propia
+   paleta y en una lista larga es lo primero que ensucia. */
+const LINEA_GLIFOS = {
+  toma:   '<path d="M12 3.2c3.2 3.7 5.4 6.6 5.4 9.1a5.4 5.4 0 1 1-10.8 0c0-2.5 2.2-5.4 5.4-9.1z"/>',
+  sueno:  '<path d="M20.2 14.8A8.4 8.4 0 0 1 9.2 3.8a8.6 8.6 0 1 0 11 11z"/>',
+  comida: '<path d="M3.2 11h17.6a8.8 8.8 0 0 1-17.6 0zM4 20.2h16V22H4z"/>',
+  alerta: '<path d="M12 3.4l9.6 17.2H2.4zM11.1 9.4h1.8v5.4h-1.8zm0 6.8h1.8v1.8h-1.8z"/>',
+};
+function iconoLinea(tipo) {
+  return `<span class="linea-icono i-${tipo}" aria-hidden="true"><svg viewBox="0 0 24 24"
+    width="14" height="14" fill="currentColor">${LINEA_GLIFOS[tipo]}</svg></span>`;
+}
+
+/* conBoton: en "Hoy" el acceso directo de arriba ya abre el alta de toma, asi
+   que el "+ Toma" de la cabecera seria el mismo boton dos veces en la misma
+   pantalla. En el panel de un dia del calendario es la unica via, y se queda. */
+function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   const tomas = tomasDelDia(dia.fecha);
   const suenios = sueniosDelDia(dia.fecha);
   /* Solo lo que ha pasado de verdad. Antes se mezclaban aqui las tomas que la
@@ -8207,29 +8294,31 @@ function htmlLineaDelDia(dia, refrescarFn) {
     .filter(({ a }) => a.id && marcaDeHoy(a.id))
     .map(({ a }) => ({ a, hora: marcaDeHoy(a.id), estado: estadoActual(a.id) }));
 
+  /* Cada registro en una sola linea: hora, glifo, que fue y cuanto. Lo
+     secundario (hasta que hora durmio, si el alimento le sento mal) va detras
+     del titulo en gris, no en un segundo renglon. */
   const filas = [
     ...tomas.map(t => ({ hora: t.hora, html: `
       <button type="button" class="linea-fila" onclick="${refrescarFn}.editarToma('${t.id}')">
-        <span class="linea-hora mono">${t.hora}</span>
-        <span class="linea-icono toma" aria-hidden="true">🍼</span>
-        <span class="linea-texto">Toma</span>
-        <span class="linea-valor">${t.ml} ml</span>
-        <span class="linea-chevron" aria-hidden="true">›</span>
+        <span class="linea-hora">${t.hora}</span>
+        ${iconoLinea("toma")}
+        <span class="linea-texto"><b>Toma</b></span>
+        <span class="linea-valor">${t.ml}<i>ml</i></span>
       </button>` })),
     ...suenios.map(s => ({ hora: s.hora, html: `
       <div class="linea-fila estatica">
-        <span class="linea-hora mono">${s.hora}</span>
-        <span class="linea-icono sueno" aria-hidden="true">😴</span>
-        <span class="linea-texto">${s.tipo === "siesta" ? "Siesta" : "Sueño nocturno"}
-          <span class="linea-sub">${s.enCurso ? "en curso" : "hasta las " + s.fin}</span></span>
-        <span class="linea-valor">${s.enCurso ? "—" : duracionCorta(s.minutos)}</span>
+        <span class="linea-hora">${s.hora}</span>
+        ${iconoLinea("sueno")}
+        <span class="linea-texto"><b>${s.tipo === "siesta" ? "Siesta" : "Nocturno"}</b><span
+          class="linea-sub">${s.enCurso ? "en curso" : "hasta " + s.fin}</span></span>
+        <span class="linea-valor">${s.enCurso ? "—" : duracionHtml(s.minutos)}</span>
       </div>` })),
     ...marcados.map(m => ({ hora: m.hora, html: `
       <div class="linea-fila estatica">
-        <span class="linea-hora mono">${m.hora}</span>
-        <span class="linea-icono" aria-hidden="true">${m.estado === "reaccion" ? "⚠️" : "🥣"}</span>
-        <span class="linea-texto">${capitalizar(m.a.nombre)}
-          <span class="linea-sub">${m.estado === "reaccion" ? "con reacción" : "probado"}</span></span>
+        <span class="linea-hora">${m.hora}</span>
+        ${iconoLinea(m.estado === "reaccion" ? "alerta" : "comida")}
+        <span class="linea-texto"><b>${capitalizar(m.a.nombre)}</b><span
+          class="linea-sub">${m.estado === "reaccion" ? "con reacción" : "probado"}</span></span>
       </div>` })),
   ].sort((a, b) => a.hora.localeCompare(b.hora));
 
@@ -8239,12 +8328,13 @@ function htmlLineaDelDia(dia, refrescarFn) {
   return `<div class="card">
     <div class="linea-cab">
       <h2>Registrado hoy</h2>
-      <button type="button" class="btn-anadir" onclick="${refrescarFn}.nuevaToma('${dia.fecha}')">+ Toma</button>
+      ${conBoton ? `<button type="button" class="btn-anadir"
+        onclick="${refrescarFn}.nuevaToma('${dia.fecha}')">+ Toma</button>` : ""}
     </div>
     <div class="linea-resumen">
-      <div><b>${total}</b><span>ml de leche</span></div>
-      <div><b>${tomas.length}</b><span>${tomas.length === 1 ? "toma" : "tomas"}</span></div>
-      <div><b>${minSueno ? duracionCompacta(minSueno) : "—"}</b><span>de sueño</span></div>
+      <div><b>${total}<i>ml</i></b><span>Leche</span></div>
+      <div><b>${tomas.length}</b><span>${tomas.length === 1 ? "Toma" : "Tomas"}</span></div>
+      <div><b>${minSueno ? duracionHtml(minSueno) : "—"}</b><span>Sueño</span></div>
     </div>
     ${filas.length
       ? `<div class="linea">${filas.map(f => f.html).join("")}</div>`
@@ -8302,6 +8392,9 @@ function toggleRegistro(clave) {
   irA(clave.split("-")[0]);
 }
 function cerrarRegistro(vista) { REGISTRO_ABIERTO[vista] = false; }
+/* Acceso directo desde "Hoy": lleva a la pestana con el formulario ya
+   desplegado, en vez de dejarte buscar el "+" al llegar. */
+function irARegistro(vista) { REGISTRO_ABIERTO[vista] = true; irA(vista); }
 function htmlRegistro(vista, etiqueta, cuerpo) {
   const abierto = !!REGISTRO_ABIERTO[vista];
   return `<button type="button" class="btn-registro${abierto ? " abierto" : ""}"
@@ -8569,7 +8662,7 @@ function abrirDiaCalendario(iso) {
      con la version antigua de campos abiertos y las dos pantallas del mismo
      dato se veian distintas. */
   html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoDrawer");
-  html += htmlLineaDelDia(dia, "PB.TOMAS_DRAWER");
+  html += htmlLineaDelDia(dia, "PB.TOMAS_DRAWER", true);
   abrirDrawer(html);
 }
 
@@ -9371,15 +9464,27 @@ function calcularAvisos() {
 function htmlAvisos() {
   const avisos = calcularAvisos();
   if (!avisos.length) return "";
-  return `<div class="avisos">${avisos.map(a => `
-    <div class="aviso-card">
+  return `<div class="card avisos">
+    <h2>Pendientes <span class="n">${avisos.length}</span></h2>
+    ${avisos.map(a => {
+      /* En la vitamina D el boton "Hecho" y la ✕ hacian exactamente lo mismo
+         (marcar el aviso como visto): sobraba uno. En los demas la accion es
+         ir a otra pestana, asi que el cuerpo de la fila lleva alli y la ✕ se
+         queda solo para ocultar el aviso por hoy. */
+      const accionEsCerrar = a.accion.fn.indexOf(`marcarAvisoVisto('${a.id}')`) >= 0;
+      const cuerpo = `<div class="tit">${esc(a.titulo)}</div><div class="txt">${esc(a.texto)}</div>`;
+      return `<div class="aviso-card">
       <span class="ico" aria-hidden="true">${a.icono}</span>
-      <div class="cuerpo"><div class="tit">${esc(a.titulo)}</div><div class="txt">${esc(a.texto)}</div></div>
-      <div class="acciones">
-        <button type="button" class="btn-aviso" onclick="${a.accion.fn}">${a.accion.et}</button>
-        <button type="button" class="cerrar" title="Ocultar hoy" onclick="PB.marcarAvisoVisto('${a.id}')">✕</button>
-      </div>
-    </div>`).join("")}</div>`;
+      ${accionEsCerrar
+        ? `<div class="cuerpo">${cuerpo}</div>
+           <button type="button" class="btn-aviso" onclick="${a.accion.fn}">${a.accion.et}</button>`
+        : `<button type="button" class="cuerpo" onclick="${a.accion.fn}">${cuerpo}</button>
+           <span class="aviso-chevron" aria-hidden="true">›</span>
+           <button type="button" class="cerrar" title="Ocultar hoy"
+             onclick="PB.marcarAvisoVisto('${a.id}')">✕</button>`}
+    </div>`;
+    }).join("")}
+  </div>`;
 }
 
 /* Hasta ahora un fallo de sincronizacion no se veia por ningun lado: se
@@ -10871,7 +10976,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, irARegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
@@ -16809,8 +16914,10 @@ function boot(vistaInicial) {
       // modulo PB decide cual de sus sub-vistas se muestra dentro.
       // Nivel 1 de Pablo. Las entradas con "sub" no salen aqui: son la segunda
       // fila que aparece cuando su padre esta activo.
+      // "Hoy" va en el primer nivel: resume el dia entero (tomas, sueno y
+      // alimento), no solo la alimentacion, asi que colgarlo de ahi confundia.
+      { id: "pb_hoy",        label: "Hoy",         area: "pablo", seccion: "pablo" },
       { id: "pb_alimentacion", label: "Alimentaci\u00f3n", area: "pablo", seccion: "pablo" },
-      { id: "pb_hoy",        label: "Hoy",         area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
       { id: "pb_calendario", label: "Calendario",  area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
       { id: "pb_buscar",     label: "Alimentos",   area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
       { id: "pb_progreso",   label: "Progreso",    area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
@@ -16826,7 +16933,7 @@ function boot(vistaInicial) {
 
     /* Puente entre los chips de Recetas y el router interno de Pablo. */
     const PB_CHIP_A_VISTA = {
-      pb_alimentacion: "hoy",
+      pb_alimentacion: "calendario",
       pb_hoy: "hoy", pb_calendario: "calendario", pb_buscar: "buscar",
       pb_progreso: "progreso", pb_alergenos: "alergenos", pb_guia: "guia",
       pb_sueno: "sueno", pb_crecimiento: "crecimiento",
@@ -17374,7 +17481,7 @@ function boot(vistaInicial) {
     }
 
     /* Al volver a "Alimentacion" se recupera donde estabas, no siempre Hoy. */
-    let ultimaSubseccion = { pb_alimentacion: "pb_hoy" };
+    let ultimaSubseccion = { pb_alimentacion: "pb_calendario" };
 
     function fijarVista(id) {
       if (!VISTAS.some(x => x.id === id)) return;
