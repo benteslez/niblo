@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v74";   // el hub no parpadea con areas de otro hogar
+const CACHE_NAME = "niblo-v75";   // tres estados en Hoy + hoja de que puede comer
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",

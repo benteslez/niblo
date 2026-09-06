@@ -5483,6 +5483,9 @@
     .pb-app .pill-accion:hover { color: var(--text); }
     .pb-app .pill-accion.on-si { background: var(--green-soft); color: var(--green); border-color: transparent; }
     .pb-app .pill-accion.on-no { background: var(--red-soft);   color: var(--red);   border-color: transparent; }
+    /* "Probando" es el mismo estado intermedio que en la ficha del alimento:
+       mismo ambar, para que un boton signifique lo mismo en las dos pantallas. */
+    .pb-app .pill-accion.on-quiza { background: var(--amber-soft); color: var(--amber); border-color: transparent; }
 
     .pb-app .linea-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .pb-app .linea-cab h2 { margin: 0; }
@@ -5545,6 +5548,7 @@
     .pb-app .linea-icono.i-sueno  { background: var(--purple-soft); color: var(--purple); }
     .pb-app .linea-icono.i-comida { background: var(--green-soft);  color: var(--green); }
     .pb-app .linea-icono.i-alerta { background: var(--amber-soft);  color: var(--amber); }
+    .pb-app .linea-icono.i-probando { background: var(--amber-soft); color: var(--amber); }
     /* El que cede al estrecharse es el dato secundario, no el titulo: antes se
        leia "Sueno nocturno hast..." y lo que sobraba era justo lo que importa. */
     .pb-app .linea-texto {
@@ -6674,6 +6678,12 @@
       border-bottom: 1px solid #ddd; padding-bottom: 4px; page-break-after: avoid;
     }
     #pb-informe h4 { font-size: 11px; margin: 12px 0 4px; color: #555; page-break-after: avoid; }
+    /* Subtitulos de la hoja de "que puede comer": mas peso que un h4 normal
+       porque en esa hoja son la division que hay que ver de un vistazo. */
+    #pb-informe h4.inf-sub {
+      font-size: 12px; font-weight: 800; color: #111; margin: 16px 0 4px;
+    }
+    #pb-informe .inf-n { font-weight: 500; color: #888; }
     #pb-informe .inf-graf { width: 100%; height: auto; display: block; margin-bottom: 6px; page-break-inside: avoid; }
     #pb-informe .inf-tabla { width: 100%; border-collapse: collapse; font-size: 11px; }
     #pb-informe .inf-tabla th {
@@ -7988,6 +7998,10 @@ function fmtEdadLimite(meses) {
 }
 
 function nombreLocal(alimento) {
+  /* STATE.alimentos puede guardar ids que ya no estan en el libro (renombrados
+     o retirados en una version posterior). Devolver "" deja que quien llama
+     use su propio respaldo en vez de romper la pantalla entera. */
+  if (!alimento || !alimento.nombre) return "";
   const campo = CONFIG.pais;
   let nombre = alimento.nombre[campo];
   if (!nombre) {
@@ -8278,8 +8292,10 @@ function htmlComidaDelDia(dia, marcarFn) {
           ${marca ? `<div class="comida-hecho">${est === "reaccion" ? "Reacción" : "Probado"} a las ${marca}</div>` : ""}
         </div>
         ${a.id ? `<div class="comida-acciones">
+          <button type="button" class="pill-accion${est === 'probando' ? ' on-quiza' : ''}"
+            onclick="${marcarFn}('${a.id}','probando')" aria-pressed="${est === 'probando'}">Probando</button>
           <button type="button" class="pill-accion${est === 'tolerado' ? ' on-si' : ''}"
-            onclick="${marcarFn}('${a.id}','tolerado')" aria-pressed="${est === 'tolerado'}">Probado</button>
+            onclick="${marcarFn}('${a.id}','tolerado')" aria-pressed="${est === 'tolerado'}">Tolerado</button>
           <button type="button" class="pill-accion${est === 'reaccion' ? ' on-no' : ''}"
             onclick="${marcarFn}('${a.id}','reaccion')" aria-pressed="${est === 'reaccion'}">Reacción</button>
         </div>` : ""}
@@ -8336,6 +8352,7 @@ const LINEA_GLIFOS = {
   comida: '<path d="M3.2 11h17.6a8.8 8.8 0 0 1-17.6 0zM4 20.2h16V22H4z"/>',
   alerta: '<path d="M12 3.4l9.6 17.2H2.4zM11.1 9.4h1.8v5.4h-1.8zm0 6.8h1.8v1.8h-1.8z"/>',
 };
+LINEA_GLIFOS.probando = LINEA_GLIFOS.comida;   // mismo cuenco, circulo ambar
 function iconoLinea(tipo) {
   return `<span class="linea-icono i-${tipo}" aria-hidden="true"><svg viewBox="0 0 24 24"
     width="14" height="14" fill="currentColor">${LINEA_GLIFOS[tipo]}</svg></span>`;
@@ -8353,6 +8370,12 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   const marcados = alimentosParaMarcar(dia)
     .filter(({ a }) => a.id && marcaDeHoy(a.id))
     .map(({ a }) => ({ a, hora: marcaDeHoy(a.id), estado: estadoActual(a.id) }));
+  /* Los tres estados que puede tener un alimento, con su glifo y su texto. */
+  const MARCA = {
+    probando: { icono: "probando", texto: "probando" },
+    tolerado: { icono: "comida",   texto: "tolerado" },
+    reaccion: { icono: "alerta",   texto: "con reacción" },
+  };
 
   /* Cada registro en una sola linea: hora, glifo, que fue y cuanto. Lo
      secundario (hasta que hora durmio, si el alimento le sento mal) va detras
@@ -8380,9 +8403,9 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
       <button type="button" class="linea-fila"
         onclick="PB.editarMarcaAlimento('${m.a.id}','${dia.fecha}')">
         <span class="linea-hora">${m.hora}</span>
-        ${iconoLinea(m.estado === "reaccion" ? "alerta" : "comida")}
+        ${iconoLinea((MARCA[m.estado] || MARCA.tolerado).icono)}
         <span class="linea-texto"><b>${capitalizar(m.a.nombre)}</b><span
-          class="linea-sub">${m.estado === "reaccion" ? "con reacción" : "probado"}</span></span>
+          class="linea-sub">${(MARCA[m.estado] || MARCA.tolerado).texto}</span></span>
       </button>` })),
   ].sort((a, b) => a.hora.localeCompare(b.hora));
 
@@ -8953,7 +8976,8 @@ function editarMarcaAlimento(id, fecha) {
     <div class="grid-campos2">
       <div class="campo"><label for="ma-res">Resultado</label>
         <select id="ma-res">
-          <option value="tolerado"${h.resultado === "tolerado" ? " selected" : ""}>Probado</option>
+          <option value="probando"${h.resultado === "probando" ? " selected" : ""}>Probando</option>
+          <option value="tolerado"${h.resultado === "tolerado" ? " selected" : ""}>Tolerado</option>
           <option value="reaccion"${h.resultado === "reaccion" ? " selected" : ""}>Reacción</option>
         </select></div>
       <div class="campo"><label for="ma-hora">Hora</label>
@@ -9730,6 +9754,11 @@ const INFORME_SECCIONES = [
   { k: "percentiles",  et: "Crecimiento y percentiles", nota: "Tabla de medidas y curvas OMS" },
   { k: "sueno",        et: "Sueño",                     nota: "Totales por día y valoración" },
   { k: "alimentacion", et: "Alimentación",              nota: "Alimentos probados, tolerados y reacciones" },
+  /* Va aparte de "alimentacion" a proposito: aquella mira solo el rango de
+     fechas del informe y esta es la foto de hoy, la que sirve para dejarsela a
+     quien se quede con el peque. */
+  { k: "listaAlimentos", et: "Qué puede comer (hoja aparte)",
+    nota: "Tolerados, en prueba y con reacción. Al día de hoy, no depende del rango" },
   { k: "tomas",        et: "Tomas de leche",            nota: "Volumen diario" },
   { k: "panales",      et: "Pañales",                   nota: "Recuento diario" },
   { k: "desarrollo",   et: "Desarrollo y dientes",      nota: "Hitos OMS conseguidos" },
@@ -9918,6 +9947,50 @@ function generarInformeCompleto() {
       </div>`;
     if (reacciones.length) doc += `<p class="inf-nota"><b>Reacciones registradas:</b> ${reacciones.map(esc).join(", ")}.</p>`;
     doc += tabla(["Alimento", "Grupo", "Primera vez", "Estado"], probados.sort((a, b) => a[0].localeCompare(b[0])));
+  }
+
+  /* ---- lista de alimentos: la hoja para quien se queda con el peque ----
+     Estado actual de cada alimento, sin filtrar por fechas: lo que importa
+     para dar de comer hoy es como quedo la ultima vez, sea de cuando sea. */
+  if (S("listaAlimentos")) {
+    const grupos = { tolerado: [], probando: [], reaccion: [] };
+    for (const [id, dat] of Object.entries(STATE.alimentos || {})) {
+      const hist = dat.historial || [];
+      if (!hist.length) continue;
+      const estado = hist[hist.length - 1].resultado;
+      if (!grupos[estado]) continue;
+      const a = alimentoPorId(id);
+      grupos[estado].push({
+        nombre: (a ? nombreLocal(a) : null) || id,
+        grupo: GRUPOS_LABEL[a && a.grupo] || "—",
+        desde: hist[0].fecha,
+        alergenico: !!(a && a.flags && a.flags.alergenico),
+      });
+    }
+    for (const k of Object.keys(grupos)) grupos[k].sort((x, y) => x.nombre.localeCompare(y.nombre, "es"));
+
+    doc += `<h3>Qué puede comer ${esc(nombre)}</h3>
+      <p class="inf-nota">Estado a ${fmtFechaCorta(HOY_ISO)}. Esta hoja no depende del rango del informe:
+        vale para dejarla a quien se quede con ${esc(nombre)}.</p>
+      <div class="inf-kpis">
+        <div><b>${grupos.tolerado.length}</b><span>Puede comer</span></div>
+        <div><b>${grupos.probando.length}</b><span>En prueba</span></div>
+        <div><b>${grupos.reaccion.length}</b><span>Evitar</span></div>
+      </div>`;
+
+    const bloque = (titulo, lista, pie) => {
+      doc += `<h4 class="inf-sub">${titulo} <span class="inf-n">${lista.length}</span></h4>`;
+      doc += pie ? `<p class="inf-nota">${pie}</p>` : "";
+      doc += lista.length
+        ? tabla(["Alimento", "Grupo", "Desde"], lista.map(x =>
+            [esc(x.nombre) + (x.alergenico ? ' <b>· alérgeno</b>' : ""), esc(x.grupo), fmtFechaCorta(x.desde)]))
+        : `<p class="inf-vacio">Ninguno todavía.</p>`;
+    };
+    bloque("Tolerados", grupos.tolerado, "Ya los ha probado sin problema. Se le pueden dar.");
+    bloque("En prueba", grupos.probando,
+      "Están en sus días de introducción. Ofrecer solo si lo indican los padres, y vigilar tras la toma.");
+    bloque("Con reacción", grupos.reaccion,
+      "<b>No dárselos.</b> Han dado alguna reacción y están pendientes de valoración.");
   }
 
   /* ---- tomas ---- */
