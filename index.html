@@ -5323,6 +5323,13 @@
     .pb-app .comida-marca.de-reaccion:hover { background: var(--red); color: #fff; }
     .pb-app .comida-marca.de-rechazo { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .comida-marca.de-rechazo:hover { background: var(--text-muted); color: var(--bg-card); }
+    .pb-app .hist-lista { display: flex; flex-direction: column; }
+    .pb-app .hist-fila {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 9px 0; border-top: 1px solid var(--line-soft);
+    }
+    .pb-app .hist-fila:first-child { border-top: none; }
+    .pb-app .hist-fecha { font-family: var(--serif); font-size: 0.875rem; color: var(--text-muted); }
     .pb-app .pill.info { background: var(--blue-soft); color: var(--blue); }
     .pb-app .pill.neutro { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
@@ -7975,10 +7982,20 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
     const hr = (remoto.alimentos?.[id]?.historial) || [];
     const porFecha = new Map(hl.map(h => [h.fecha, h]));
     for (const h of hr) {
+      /* Igual que con las vacunas: sin lapida, desmarcar un alimento no servia
+         de nada porque la union por fecha lo devolvia desde la otra copia. */
+      const lapida = borrados["alimentos:" + id + ":" + h.fecha];
+      if (lapida && lapida > (tsRemoto || "")) { porFecha.delete(h.fecha); cambio = true; continue; }
       if (!porFecha.has(h.fecha)) { porFecha.set(h.fecha, h); cambio = true; }
       else if (porFecha.get(h.fecha).resultado !== h.resultado && remotoGana) { porFecha.set(h.fecha, h); cambio = true; }
     }
-    alim[id] = { historial: [...porFecha.values()].sort((a, b) => a.fecha.localeCompare(b.fecha)) };
+    // Y un apunte borrado aqui no sobrevive por estar en la copia local.
+    for (const f of [...porFecha.keys()]) {
+      const lapida = borrados["alimentos:" + id + ":" + f];
+      if (lapida && !hr.some(h => h.fecha === f)) porFecha.delete(f);
+    }
+    const historial = [...porFecha.values()].sort((a, b) => a.fecha.localeCompare(b.fecha));
+    if (historial.length) alim[id] = { historial };
   }
   out.alimentos = alim;
   out.modificado = (tsLocal || "") > (tsRemoto || "") ? tsLocal : tsRemoto;
@@ -8032,13 +8049,17 @@ function marcarEstado(id, resultado, fecha = HOY_ISO) {
   const idx = ESTADO[id].historial.findIndex(e => e.fecha === fecha);
   if (idx >= 0 && ESTADO[id].historial[idx].resultado === resultado) {
     ESTADO[id].historial.splice(idx, 1); // toggle off
+    anotarBorradoClave("alimentos", id + ":" + fecha);
   } else if (idx >= 0) {
     ESTADO[id].historial[idx].resultado = resultado;
+    olvidarBorradoClave("alimentos", id + ":" + fecha);
   } else {
     // La hora sirve para enseñar "Probado a las 12:40" en la vista de hoy.
     ESTADO[id].historial.push({ fecha, resultado, hora: nuevaHoraSugerida() });
+    olvidarBorradoClave("alimentos", id + ":" + fecha);
   }
   ESTADO[id].historial.sort((a, b) => a.fecha.localeCompare(b.fecha));
+  if (!ESTADO[id].historial.length) delete ESTADO[id];
   guardarEstado();
 }
 
@@ -8382,37 +8403,34 @@ function pastillaAlimento(id) {
   const ultimo = hist.length ? hist[hist.length - 1].resultado : null;   // ordenado por fecha
   const p = ultimo ? PASTILLA_ESTADO[ultimo] : { cls: "nuevo", et: "Nuevo" };
   if (!p) return null;
-  /* Si el estado actual ya es ese, la pastilla avisa de sobra; las marcas son
-     para el caso contrario: hoy lo tolera, pero un dia le sento mal o no lo
-     quiso, y eso no se recuerda un mes despues.
-     Una sola salida a proposito: con dos, la rama de "Nuevo" se quedo sin
-     "rechazos" y cualquier alimento sin probar reventaba la tarjeta entera. */
-  const pasadas = r => ultimo === r ? [] : hist.filter(h => h.resultado === r).map(h => h.fecha);
-  return { cls: p.cls, et: p.et, reacciones: pasadas("reaccion"), rechazos: pasadas("rechazo") };
+  /* La pastilla dice como quedo la ultima vez. Si antes hubo otra cosa, al
+     lado sale una marca para abrir el historial: un alimento que hoy tolera
+     pero que un dia le sento mal no se recuerda un mes despues.
+     Una sola salida a proposito: con dos, la rama de "Nuevo" se quedo sin una
+     de las listas y cualquier alimento sin probar reventaba la tarjeta. */
+  const huboReaccion = hist.some(h => h.resultado === "reaccion") && ultimo !== "reaccion";
+  return { cls: p.cls, et: p.et, historial: hist.length > 1, huboReaccion };
 }
 
-/* Detalle de las marcas: cuando le sento mal o cuando no lo quiso. */
-function fechasDe(id, resultado) {
-  return ((ESTADO[id] && ESTADO[id].historial) || [])
-    .filter(h => h.resultado === resultado).map(h => h.fecha);
-}
-function avisoAlimento(id, resultado, titulo, pie) {
-  const fechas = fechasDe(id, resultado);
-  if (!fechas.length) return;
+/* Historial de cambios de un alimento: que se marco y cuando, de lo mas
+   reciente a lo mas antiguo. Es lo que abre la marca de al lado de la
+   pastilla cuando ha habido mas de un apunte. */
+function verHistorialAlimento(id) {
+  const hist = [...((ESTADO[id] && ESTADO[id].historial) || [])]
+    .sort((a, b) => b.fecha.localeCompare(a.fecha));
+  if (!hist.length) return;
   const a = alimentoPorId(id);
   const dmy = iso => { const [y, m, d] = iso.split("-"); return `${d}/${m}/${y}`; };
-  abrirModal((a ? nombreLocal(a) : "Alimento") || "Alimento", `
-    <p class="modal-p"><b>${titulo} el ${fechas.map(dmy).join(", el ")}.</b></p>
-    <p class="modal-p faint">${pie}</p>`,
+  const filas = hist.map(h => {
+    const p = PASTILLA_ESTADO[h.resultado] || { cls: "neutro", et: h.resultado };
+    return `<div class="hist-fila">
+      <span class="hist-fecha">${dmy(h.fecha)}${h.hora ? ` · ${esc(h.hora)}` : ""}</span>
+      <span class="pill ${p.cls}">${p.et}</span>
+    </div>`;
+  }).join("");
+  abrirModal((a ? nombreLocal(a) : "Alimento") || "Alimento",
+    `<div class="hist-lista">${filas}</div>`,
     [{ et: "Cerrar", primario: true, accion: "PB.cerrarModal()" }]);
-}
-function verReacciones(id) {
-  avisoAlimento(id, "reaccion", "Reacción",
-    "Después se marcó de otra forma, así que la pastilla ya no va en rojo. Aun así conviene tenerlo presente al volver a ofrecérselo.");
-}
-function verRechazos(id) {
-  avisoAlimento(id, "rechazo", "No lo quiso",
-    "Después acabó aceptándolo. Se apunta por si vuelve a costarle: rechazar un alimento la primera vez es lo normal y no significa que no le guste.");
 }
 
 /* Por que hoy toca ese alimento. Antes vivia suelto en la cabecera del dia. */
@@ -8437,8 +8455,10 @@ function htmlComidaDelDia(dia, marcarFn) {
   return `<div class="card">
     <h2>Qué le toca hoy <span class="n">${lista.length} ${lista.length === 1 ? "alimento" : "alimentos"}</span></h2>
     <div class="comida-lista">${lista.map(({ a, horas }) => {
-      const est = a.id ? estadoActual(a.id) : null;
-      const marca = a.id ? marcaDeHoy(a.id) : null;
+      /* Los botones dicen lo que se marco ESE dia; la pastilla, en cambio,
+         dice como esta el alimento hoy por hoy (su ultimo apunte). */
+      const marca = a.id ? marcaDelDia(a.id, dia.fecha) : null;
+      const est = marca ? marca.resultado : null;
       const cuanto = a.cantidad || (a.porcion && a.porcion.gramos) || "";
       /* El de la rueda de introduccion: es el que lleva "Dia X de Y" y el
          desplegable con el porque. */
@@ -8448,15 +8468,13 @@ function htmlComidaDelDia(dia, marcarFn) {
           <span class="comida-punto" style="background:${GRUPOS_COLOR[a.grupo] || "var(--slate)"}"></span>
           <span class="comida-nombre"${a.id ? ` onclick="PB.irA('alimento','${a.id}')"` : ""}>${capitalizar(a.nombre)}</span>
           ${a.id ? (p => !p ? "" : `<span class="pill ${p.cls}">${p.et}</span>`
-            + (p.reacciones.length
-              ? `<button type="button" class="comida-marca de-reaccion" onclick="PB.verReacciones('${a.id}')"
-                   aria-label="Le dio reacción alguna vez. Ver cuándo" title="Le dio reacción alguna vez">
-                   <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">${LINEA_GLIFOS.alerta}</svg>
-                 </button>` : "")
-            + (p.rechazos.length
-              ? `<button type="button" class="comida-marca de-rechazo" onclick="PB.verRechazos('${a.id}')"
-                   aria-label="Alguna vez no lo quiso. Ver cuándo" title="Alguna vez no lo quiso">
-                   <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">${LINEA_GLIFOS.info}</svg>
+            + (p.historial
+              ? `<button type="button" class="comida-marca ${p.huboReaccion ? "de-reaccion" : "de-rechazo"}"
+                   onclick="PB.verHistorialAlimento('${a.id}')"
+                   aria-label="Ver el historial de ${esc(a.nombre)}"
+                   title="${p.huboReaccion ? "Alguna vez le dio reacción" : "Ha cambiado de estado"}">
+                   <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">${
+                     p.huboReaccion ? LINEA_GLIFOS.alerta : LINEA_GLIFOS.info}</svg>
                  </button>` : ""))(pastillaAlimento(a.id)) : ""}
           ${esElNuevo ? `<span class="comida-dia">Día ${nuevo.dia} de ${nuevo.total}</span>` : ''}
         </div>
@@ -8464,9 +8482,8 @@ function htmlComidaDelDia(dia, marcarFn) {
           .map((_, i) => `<div class="${i < nuevo.dia ? "done" : ""}"></div>`).join("")}</div>` : ''}
         <div class="comida-meta">${horas.join(" · ")}${cuanto ? " · " + cuanto : ""}</div>
         <div class="comida-como">${formaDeDarlo(a)}</div>
-        ${marca ? `<div class="comida-hecho">${
-          { reaccion: "Reacción", probando: "Probando", tolerado: "Tolerado", rechazo: "Rechazo" }[est]
-          || "Marcado"} a las ${marca}</div>` : ""}
+        ${marca && marca.hora ? `<div class="comida-hecho">${
+          (PASTILLA_ESTADO[est] || {}).et || "Marcado"} a las ${esc(marca.hora)}</div>` : ""}
         ${a.id ? `<div class="seg-btns">
           <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}"
             onclick="${marcarFn}('${a.id}','tolerado')" aria-pressed="${est === 'tolerado'}">Tolerado</button>
@@ -8487,11 +8504,12 @@ function htmlComidaDelDia(dia, marcarFn) {
   </div>`;
 }
 
-/* Hora a la que se marco hoy ese alimento, si se marco. */
-function marcaDeHoy(id) {
-  const h = (ESTADO[id]?.historial || []).filter(x => x.fecha === HOY_ISO);
-  const ult = h[h.length - 1];
-  return ult && ult.hora ? ult.hora : null;
+/* Lo que se marco de ese alimento ESE dia, si se marco. Antes miraba siempre
+   HOY_ISO, asi que al abrir un dia pasado del calendario se veia la marca de
+   hoy y los botones no correspondian al dia que estabas mirando. */
+function marcaDelDia(id, fecha) {
+  const h = (ESTADO[id]?.historial || []).filter(x => x.fecha === fecha);
+  return h[h.length - 1] || null;
 }
 
 /* ---- Linea del dia -----------------------------------------------------
@@ -8554,8 +8572,9 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
      rutina espera y los bloques del plan, y la lista se llenaba de filas
      "Apuntar" que no eran registros: el plan ya esta arriba. */
   const marcados = alimentosParaMarcar(dia)
-    .filter(({ a }) => a.id && marcaDeHoy(a.id))
-    .map(({ a }) => ({ a, hora: marcaDeHoy(a.id), estado: estadoActual(a.id) }));
+    .map(({ a }) => ({ a, m: a.id ? marcaDelDia(a.id, dia.fecha) : null }))
+    .filter(({ m }) => m && m.hora)
+    .map(({ a, m }) => ({ a, hora: m.hora, estado: m.resultado }));
   /* Los tres estados que puede tener un alimento, con su glifo y su texto. */
   const MARCA = {
     probando: { icono: "probando", texto: "probando" },
@@ -8971,7 +8990,9 @@ let DRAWER_ISO_ACTUAL = null;
 const TOMAS_DRAWER = accionesToma(() => { if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL); });
 
 function marcarEstadoRapidoDrawer(id, estado) {
-  marcarEstado(id, estado);
+  /* En el panel del dia se apunta en la fecha de ese dia, no en la de hoy:
+     antes, marcar algo en un dia pasado escribia el apunte en el de hoy. */
+  marcarEstado(id, estado, DRAWER_ISO_ACTUAL || HOY_ISO);
   if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
 }
 
@@ -9219,11 +9240,8 @@ function marcarEstadoRapidoHoy(id, estado) {
 /* La marca de un alimento no vive en STATE como los demas registros: cuelga de
    ESTADO[id].historial, asi que no le vale CAMPOS_REGISTRO y lleva su dialogo. */
 let MARCA_ABIERTA = null;
-function marcaDeFecha(id, fecha) {
-  return (ESTADO[id]?.historial || []).find(x => x.fecha === fecha);
-}
 function editarMarcaAlimento(id, fecha) {
-  const h = marcaDeFecha(id, fecha);
+  const h = marcaDelDia(id, fecha);
   if (!h) return;
   MARCA_ABIERTA = { id, fecha };
   const a = alimentoPorId(id);
@@ -9245,7 +9263,7 @@ function editarMarcaAlimento(id, fecha) {
 }
 function guardarMarcaAlimento() {
   if (!MARCA_ABIERTA) return;
-  const h = marcaDeFecha(MARCA_ABIERTA.id, MARCA_ABIERTA.fecha);
+  const h = marcaDelDia(MARCA_ABIERTA.id, MARCA_ABIERTA.fecha);
   if (h) {
     h.resultado = document.getElementById("ma-res").value;
     h.hora = document.getElementById("ma-hora").value || h.hora;
@@ -9260,7 +9278,12 @@ function borrarMarcaAlimento() {
   const { id, fecha } = MARCA_ABIERTA;
   const hist = ESTADO[id]?.historial || [];
   const i = hist.findIndex(x => x.fecha === fecha);
-  if (i >= 0) { hist.splice(i, 1); guardarEstado(); }
+  if (i >= 0) {
+    hist.splice(i, 1);
+    anotarBorradoClave("alimentos", id + ":" + fecha);
+    if (!hist.length) delete ESTADO[id];
+    guardarEstado();
+  }
   MARCA_ABIERTA = null;
   cerrarModal();
   refrescarTrasToma();
@@ -11445,7 +11468,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verReacciones, verRechazos, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
@@ -17985,14 +18008,62 @@ function boot(vistaInicial) {
     }
 
     /** Entra en un area por su ultima vista visitada. */
+    /* Areas que abren siempre por el mismo sitio en vez de por donde te
+       quedaste: en Pablo lo que se quiere al entrar es el dia de hoy, no la
+       pantalla de vacunas de la ultima vez. */
+    const ENTRADA_FIJA = { pablo: "pb_hoy" };
+
     function entrarEnArea(area) {
       const def = AREAS.find(a => a.id === area);
       if (!def || def.url) return;   // las externas se abren con su enlace
-      const destino = areaDeVista(ultimaVistaArea[area]) === area
+      const destino = ENTRADA_FIJA[area]
+        || (areaDeVista(ultimaVistaArea[area]) === area
         ? ultimaVistaArea[area]
-        : primeraVistaDeArea(area);
+        : primeraVistaDeArea(area));
       fijarVista(destino);
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* Deslizar en horizontal cambia de pestaña, como en una app nativa. Se
+       mueve por los chips de primer nivel, que son los que se ven arriba: un
+       chip padre abre la subseccion donde lo dejaste, igual que al tocarlo. */
+    function moverPestana(dir) {
+      const chips = [...document.querySelectorAll("#nav-secciones .chip")];
+      if (chips.length < 2) return;
+      const actual = seccionPadre(vistaActiva);
+      const i = chips.findIndex(c => c.dataset.vista === actual);
+      const j = i + dir;
+      if (i < 0 || j < 0 || j >= chips.length) return;   // sin dar la vuelta
+      fijarVista(chips[j].dataset.vista);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* Un gesto solo cuenta si es claramente horizontal y no empieza dentro de
+       algo que ya se desplaza a lo ancho (graficas, tablas del informe): si no,
+       arrastrar una tabla cambiaria de pestaña. */
+    const SIN_GESTO = ".chart-wrap, .inf-tabla-wrap, .nav, table, .pb-cal-scroll, input, textarea, select";
+    function wiringGestos() {
+      const main = document.getElementById("main");
+      if (!main) return;
+      let x0 = null, y0 = null, ignorar = false;
+      main.addEventListener("touchstart", ev => {
+        if (ev.touches.length !== 1) { x0 = null; return; }
+        const t = ev.touches[0];
+        x0 = t.clientX; y0 = t.clientY;
+        ignorar = !!(ev.target.closest && ev.target.closest(SIN_GESTO));
+      }, { passive: true });
+      main.addEventListener("touchend", ev => {
+        const inicio = x0; x0 = null;
+        if (inicio === null || ignorar || !ev.changedTouches.length) return;
+        // Con un modal o el panel del dia delante, el gesto es de ellos.
+        if (document.body.classList.contains("pb-modal-abierto")) return;
+        const dr = document.getElementById("pb-drawer");
+        if (dr && dr.classList.contains("open")) return;
+        const t = ev.changedTouches[0];
+        const dx = t.clientX - inicio, dy = t.clientY - y0;
+        if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.8) return;
+        moverPestana(dx < 0 ? 1 : -1);
+      }, { passive: true });
     }
 
     /** Vuelve al hub de inicio. */
@@ -24568,6 +24639,7 @@ function boot(vistaInicial) {
         if (b) entrarEnArea(b.dataset.area);
       });
       pcWiring();
+      wiringGestos();
       if (typeof PB !== "undefined") {
         PB.setOnVista(pbSincronizarChip);
         // Para que Pablo pueda enseñar si la sincronizacion va bien y forzarla.
