@@ -79,6 +79,8 @@
       --accent-bg: #dbeafe;       /* blue-100 */
       --focus:     #2563eb;
       --danger:    #dc2626;
+      --aqua:      #0d9488;       /* teal-600, la pastilla de "nuevo" */
+      --aqua-bg:   #ccfbf1;       /* teal-100 */
     }
 
     /* ---- Tema oscuro ------------------------------------------------------ */
@@ -96,6 +98,8 @@
       --accent-bg: #1e3a5f;
       --focus:     #93c5fd;
       --danger:    #f87171;
+      --aqua:      #5eead4;       /* teal-300, legible sobre fondo oscuro */
+      --aqua-bg:   #134e4a;       /* teal-900 */
     }
 
     /* ---- Colores por tipo de receta — paleta variada y distinguible ----
@@ -2569,6 +2573,8 @@
       --accent-bg: #ffd9ce;
       --focus:     #0040d0;
       --danger:    #a00000;
+      --aqua:      #00504a;       /* mas tinta: en alto contraste el teal-600 se queda corto */
+      --aqua-bg:   #b8f2e6;
       --sh-1: 0 0 0 1px #000;
       --sh-2: 0 0 0 1px #000;
       --sh-3: 0 0 0 2px #000;
@@ -2587,6 +2593,8 @@
       --accent-bg: #5c2e00;
       --focus:     #60a5fa;
       --danger:    #ff8a8a;
+      --aqua:      #7ffcea;
+      --aqua-bg:   #00312c;
       --sh-1: 0 0 0 1px #fff;
       --sh-2: 0 0 0 1px #fff;
       --sh-3: 0 0 0 2px #fff;
@@ -5296,6 +5304,7 @@
     .pb-app .pill.ok { background: var(--green-soft); color: var(--green); }
     .pb-app .pill.limite { background: var(--amber-soft); color: var(--amber); }
     .pb-app .pill.evitar { background: var(--red-soft); color: var(--red); }
+    .pb-app .pill.nuevo { background: var(--aqua-bg); color: var(--aqua); letter-spacing: .04em; }
     .pb-app .pill.info { background: var(--blue-soft); color: var(--blue); }
     .pb-app .pill.neutro { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
@@ -5353,8 +5362,6 @@
     .pb-app .lista-alimento .grupo { font-size: 0.71875rem; color: var(--text-faint); }
     .pb-app .lista-alimento .estado-dot { margin-left: auto; }
     .pb-app .tachado { text-decoration: line-through; color: var(--text-faint); }
-    .pb-app .libro-box { background: var(--bg-soft); border-radius: 10px; padding: 12px; margin-top: 8px; }
-    .pb-app .libro-box .pagina { font-family: var(--serif); font-size: 0.6875rem; color: var(--text-faint); }
     .pb-app .textura-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
     .pb-app .textura-grid div { background: var(--bg-soft); border-radius: 8px; padding: 8px 6px; text-align: center; }
     .pb-app .textura-grid .edad-t { font-size: 0.65625rem; color: var(--text-faint); font-family: var(--serif); }
@@ -6368,8 +6375,6 @@
     }
     .pb-app .tooth-card { border: 1px solid var(--line-soft); border-radius: var(--r-md); }
     .pb-app .tooth-card input[type=checkbox] { accent-color: var(--accent); }
-    .pb-app .libro-box { border-radius: var(--r-md); }
-    .pb-app .libro-box .pagina { font-family: var(--serif); }
     .pb-app .textura-grid div { border-radius: var(--r-sm); }
     .pb-app .textura-grid .edad-t { font-family: var(--serif); }
     .pb-app .sleep-active { border-radius: var(--r-md); }
@@ -6432,13 +6437,6 @@
     .pb-app .tabla-wrap + .guia-p,
     .pb-app .tabla-wrap + .guia-h { margin-top: var(--gap-4); }
     .pb-app .tabla-simple td:first-child { font-weight: 500; }
-    .pb-app .libro-box .nuevo-titulo {
-      font-weight: 600; font-size: 1rem; letter-spacing: -0.015em;
-      cursor: pointer; margin-top: 2px;
-    }
-    .pb-app .libro-box .nuevo-titulo:hover { color: var(--accent); }
-    .pb-app .libro-box .nuevo-titulo.sin-ficha { cursor: default; }
-    .pb-app .libro-box .nuevo-titulo.sin-ficha:hover { color: var(--text); }
     .pb-app .pb-nota-plan {
       margin: var(--gap-3) 0 0;
       padding: var(--gap-3) var(--gap-4);
@@ -8295,12 +8293,15 @@ function htmlComidaDelDia(dia, marcarFn) {
       const est = a.id ? estadoActual(a.id) : null;
       const marca = a.id ? marcaDeHoy(a.id) : null;
       const cuanto = a.cantidad || (a.porcion && a.porcion.gramos) || "";
+      /* La pastilla "NUEVO" solo el primer dia de los tres: el segundo y el
+         tercero son repeticion para confirmar tolerancia, no una novedad. Es
+         el mismo criterio con el que el calendario pinta su punto. */
       const esElNuevo = !!(nuevo && a.id && nuevo.id === a.id);
       return `<div class="comida-item${est ? " est-" + est : ""}">
         <div class="comida-cab">
           <span class="comida-punto" style="background:${GRUPOS_COLOR[a.grupo] || "var(--slate)"}"></span>
           <span class="comida-nombre"${a.id ? ` onclick="PB.irA('alimento','${a.id}')"` : ""}>${capitalizar(a.nombre)}</span>
-          ${a.esNuevo ? '<span class="nuevo-badge">NUEVO</span>' : ''}
+          ${esElNuevo && nuevo.primerDia ? '<span class="pill nuevo">NUEVO</span>' : ''}
           ${esElNuevo ? `<span class="comida-dia">Día ${nuevo.dia} de ${nuevo.total}</span>` : ''}
         </div>
         ${esElNuevo ? `<div class="progreso-bar">${Array.from({ length: nuevo.total })
@@ -8809,17 +8810,10 @@ function abrirDiaCalendario(iso) {
   if (!dia) return;
   DRAWER_ISO_ACTUAL = iso;
   let html = `<div class="hero-fecha">${fmtFechaLarga(dia.fecha)}</div><div class="hero-titulo">${dia.edadTexto}</div>`;
+  /* Igual que en "Hoy": el alimento con su dia y su nombre ya sale en la
+     tarjeta de abajo, asi que aqui sobraba el bloque que lo repetia. */
   if (dia.fase === "pre") {
     html += `<div class="faint" style="margin-top:6px">Todavía no ha empezado la alimentación complementaria.</div>`;
-  } else if (dia.alimentoNuevo) {
-    const color = GRUPOS_COLOR[dia.alimentoNuevo.grupo] || "var(--text-faint)";
-    const nombre = dia.alimentoNuevo.id
-      ? `<div class="nuevo-titulo" onclick="PB.cerrarDrawer();PB.irA('alimento','${dia.alimentoNuevo.id}')">${dia.alimentoNuevo.nombre} →</div>`
-      : `<div class="nuevo-titulo sin-ficha">${dia.alimentoNuevo.nombre}</div>`;
-    html += `<div class="libro-box" style="border-left:3px solid ${color}">
-      <div class="faint">ALIMENTO NUEVO · DÍA ${dia.alimentoNuevo.dia} DE ${dia.alimentoNuevo.total}</div>
-      ${nombre}
-    </div>`;
   }
   // Textura y cantidad del mes (o nota de la semana en los meses 12-15): es la
   // parte del planning que dice como servirlo, no solo que servir.
