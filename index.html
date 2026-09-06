@@ -7638,6 +7638,15 @@ function sello() { return new Date().toISOString(); }
 /** Marca un registro como tocado ahora. Se llama al crear y al editar. */
 function sellar(reg) { reg.mod = sello(); return reg; }
 
+/* Los mapas (vacunas, hitos, dientes) se fusionaban uniendo claves, asi que
+   desmarcar algo aqui y sincronizar lo volvia a marcar: la clave seguia en el
+   otro dispositivo y volvia. Ahora un borrado de clave tambien deja lapida. */
+function anotarBorradoClave(mapa, clave) { anotarBorrado(mapa + ":" + clave); }
+/** Volver a marcar algo anula su borrado. */
+function olvidarBorradoClave(mapa, clave) {
+  if (STATE.borrados) delete STATE.borrados[mapa + ":" + clave];
+}
+
 /** Deja constancia de un borrado para que la fusion no lo resucite. */
 function anotarBorrado(id) {
   if (!STATE.borrados) STATE.borrados = {};
@@ -7691,8 +7700,17 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
   for (const m of MAPAS) {
     const base = Object.assign({}, local[m] || {});
     for (const [k, v] of Object.entries(remoto[m] || {})) {
+      /* Si aqui se borro esa clave DESPUES de lo que sabe el otro documento,
+         manda el borrado: si no, desmarcar una vacuna no serviria de nada. */
+      const lapida = borrados[m + ":" + k];
+      if (lapida && lapida > (tsRemoto || "")) { delete base[k]; cambio = true; continue; }
       if (!(k in base)) { base[k] = v; cambio = true; }
       else if (base[k] !== v && remotoGana) { base[k] = v; cambio = true; }
+    }
+    // Y una clave borrada aqui no puede sobrevivir por estar en la copia local.
+    for (const k of Object.keys(base)) {
+      const lapida = borrados[m + ":" + k];
+      if (lapida && !(remoto[m] && k in remoto[m])) { delete base[k]; }
     }
     out[m] = base;
   }
@@ -9089,15 +9107,18 @@ function renderDesarrollo(el) {
   el.innerHTML = html;
 }
 function toggleOmsMilestone(id, checked) {
-  if (checked) STATE.milestonesAchieved[id] = HOY_ISO; else delete STATE.milestonesAchieved[id];
+  if (checked) { STATE.milestonesAchieved[id] = HOY_ISO; olvidarBorradoClave("milestonesAchieved", id); }
+  else { delete STATE.milestonesAchieved[id]; anotarBorradoClave("milestonesAchieved", id); }
   guardarEstado(); renderDesarrollo(document.getElementById("view-desarrollo"));
 }
 function toggleCdcMilestone(key, checked) {
-  if (checked) STATE.cdcAchieved[key] = HOY_ISO; else delete STATE.cdcAchieved[key];
+  if (checked) { STATE.cdcAchieved[key] = HOY_ISO; olvidarBorradoClave("cdcAchieved", key); }
+  else { delete STATE.cdcAchieved[key]; anotarBorradoClave("cdcAchieved", key); }
   guardarEstado(); renderDesarrollo(document.getElementById("view-desarrollo"));
 }
 function toggleTooth(id, checked) {
-  if (checked) STATE.teethErupted[id] = HOY_ISO; else delete STATE.teethErupted[id];
+  if (checked) { STATE.teethErupted[id] = HOY_ISO; olvidarBorradoClave("teethErupted", id); }
+  else { delete STATE.teethErupted[id]; anotarBorradoClave("teethErupted", id); }
   guardarEstado(); renderDesarrollo(document.getElementById("view-desarrollo"));
 }
 
@@ -10744,7 +10765,7 @@ function guardarInfoVacuna(id) {
   if (!STATE.vaccinesInfo) STATE.vaccinesInfo = {};
   const val = k => (document.getElementById(`vd-${k}-${id}`) || {}).value || "";
   const info = { pais: val("pais"), lote: val("lote").trim(), lab: val("lab").trim(), notas: val("notas").trim() };
-  if (!info.pais && !info.lote && !info.lab && !info.notas) delete STATE.vaccinesInfo[id];
+  if (!info.pais && !info.lote && !info.lab && !info.notas) { delete STATE.vaccinesInfo[id]; anotarBorradoClave("vaccinesInfo", id); }
   else STATE.vaccinesInfo[id] = info;
   guardarEstado();
   renderVacunas(document.getElementById("view-vacunas"));
@@ -10753,8 +10774,14 @@ function guardarInfoVacuna(id) {
 /* Lo que importa es cuando se PUSO, no cuando se apunta: al marcarla se
    propone hoy y se corrige a la fecha real del carnet. */
 function toggleVaccine(id, marcar) {
+  // Volver a marcarla anula el borrado anterior.
+  if (marcar) { olvidarBorradoClave("vaccinesDone", id); olvidarBorradoClave("vaccinesInfo", id); }
   if (marcar) STATE.vaccinesDone[id] = HOY_ISO;
-  else { delete STATE.vaccinesDone[id]; if (STATE.vaccinesInfo) delete STATE.vaccinesInfo[id]; }
+  else {
+    delete STATE.vaccinesDone[id];
+    anotarBorradoClave("vaccinesDone", id);
+    if (STATE.vaccinesInfo) { delete STATE.vaccinesInfo[id]; anotarBorradoClave("vaccinesInfo", id); }
+  }
   guardarEstado();
   renderVacunas(document.getElementById("view-vacunas"));
 }

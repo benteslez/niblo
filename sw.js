@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v62";   // cronometro de sueño a prueba de cambio de zona horaria
+const CACHE_NAME = "niblo-v63";   // ARREGLO: desmarcar vacunas e hitos ya no se deshace
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
