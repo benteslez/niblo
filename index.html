@@ -352,6 +352,26 @@
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .doc-notas::before { content: "·"; margin-right: var(--gap-2); }
+    /* Chip de caducidad. Solo se tine cuando hay algo que hacer: si falta mas
+       de la ventana de aviso es un dato mas, no una alarma. */
+    .doc-cad {
+      flex: none; font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+      padding: 2px 8px; border-radius: var(--r-pill);
+      background: var(--bg-soft); color: var(--text-muted);
+    }
+    .doc-cad.cad-pronto   { background: var(--tipo-huevos-bg); color: var(--tipo-huevos-fg); }
+    .doc-cad.cad-caducado { background: color-mix(in srgb, var(--danger) 14%, var(--bg-elev)); color: var(--danger); }
+    .doc-alerta {
+      background: var(--tipo-huevos-bg);
+      border: 1px solid color-mix(in srgb, var(--tipo-huevos-fg) 22%, transparent);
+      border-radius: var(--r-lg); padding: var(--gap-3) var(--gap-4);
+      margin-bottom: var(--gap-4); font-size: 0.875rem;
+    }
+    .doc-alerta-tit { display: block; font-weight: 700; color: var(--tipo-huevos-fg); }
+    .doc-alerta ul { margin: var(--gap-2) 0 0; padding-left: 1.1em; color: var(--text-muted); }
+    .doc-alerta li { margin-top: 2px; }
+    .doc-fechas { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-3); }
+    @media (max-width: 480px) { .doc-fechas { grid-template-columns: 1fr; } }
     .doc-ir { margin-left: auto; color: var(--text-muted); flex: none; }
     .doc-acciones { display: flex; align-items: center; padding-right: var(--gap-2); flex: none; }
 
@@ -419,7 +439,13 @@
       .doc-tipo-nuevo { flex-wrap: wrap; }
       .doc-tipo-nuevo input:not(#nt-emoji) { flex-basis: calc(100% - 52px); }
       .doc-tipo-nuevo button { flex-basis: 100%; }
-      .doc-notas { display: none; }
+      .doc-notas { display: none; }   /* la caducidad si se queda: es lo accionable */
+      /* En movil el chip no cabe al lado del titulo: el titulo se partia en dos
+         y la flecha se metia encima del lapiz. Baja a su propia linea. */
+      .doc-abrir { flex-wrap: wrap; }
+      .doc-titulo { flex: 1; min-width: 0; }
+      .doc-ir { order: 1; }
+      .doc-cad { order: 2; flex-basis: 100%; margin-top: 2px; }
     }
 
     /* ---- Main / secciones ------------------------------------------------ */
@@ -4862,6 +4888,9 @@
       padding: var(--gap-5);
       box-shadow: var(--sh-1);
       transition: transform .14s, box-shadow .14s, border-color .14s;
+      /* La tarjeta es <button> para las secciones y <a> para las apps
+         externas: hay que igualar lo que cada uno trae de serie. */
+      font: inherit; color: inherit; cursor: pointer; text-decoration: none;
     }
     .hub-card:hover {
       transform: translateY(-2px);
@@ -10101,6 +10130,13 @@ function estandarSueno(meses) {
   const m = (meses == null) ? 6 : meses;
   return SUENO_ESTANDAR.find(e => m < e.hastaMeses) || SUENO_ESTANDAR[SUENO_ESTANDAR.length - 1];
 }
+/* El margen aceptable es lo que queda FUERA de lo recomendado pero dentro de
+   "ok". Escrito como "10-18 h" al lado de "12-15 h · recomendado" parecia que
+   un rango se comia al otro; son los dos flancos, no el intervalo entero. */
+function margenAceptable(e) {
+  return `${e.ok[0]}-${e.rec[0]} h y ${e.rec[1]}-${e.ok[1]} h`;
+}
+
 /* "bien" dentro de lo recomendado, "justo" en el margen aceptable,
    "mal" fuera. Sin datos devuelve null: un dia a cero puede ser
    simplemente un dia sin registrar, y pintarlo en rojo enganaria. */
@@ -10272,7 +10308,7 @@ function renderSueno(el) {
     <div class="chart-wrap" style="height:200px"><canvas id="chart-sueno"></canvas></div>
     <div class="pb-cal-leyenda">
       <span><i class="punto" style="background:var(--green)"></i>${est.rec[0]}-${est.rec[1]} h · recomendado</span>
-      <span><i class="punto" style="background:var(--amber)"></i>${est.ok[0]}-${est.ok[1]} h · aceptable</span>
+      <span><i class="punto" style="background:var(--amber)"></i>${margenAceptable(est)} · aceptable</span>
       <span><i class="punto" style="background:var(--red)"></i>menos de ${est.ok[0]} h · duerme poco</span>
       <span><i class="punto" style="background:var(--purple)"></i>más de ${est.ok[1]} h · duerme de más</span>
     </div>
@@ -10665,7 +10701,7 @@ function suenoInforme() {
       <div><b>${regs.length}</b><span>Registros</span></div>
     </div>
     <p class="inf-nota">Referencia para ${est.etiqueta}: <b>${est.rec[0]}-${est.rec[1]} h</b> recomendadas por cada 24 h
-      (aceptable ${est.ok[0]}-${est.ok[1]} h). Fuente: National Sleep Foundation 2015 y AASM 2016.
+      (aceptable ${margenAceptable(est)}). Fuente: National Sleep Foundation 2015 y AASM 2016.
       ${estMedia ? `La media del periodo queda <b>${SUENO_TEXTO[estMedia]}</b>.` : ""}</p>`;
 
   /* La grafica del periodo. Un solo dia se dibuja como franja horaria y un
@@ -16969,7 +17005,16 @@ function boot(vistaInicial) {
       { id: "recetas", label: "Recetas",      labelCorto: "Recetas", icono: "&#127859;",
         desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." },
       { id: "documentos", label: "Documentos", labelCorto: "Docs",    icono: "&#128194;",
-        desc: "Enlaces a la documentaci\u00f3n de casa: DNI, pasaportes, seguros, titulaciones. Agrupados por tipo." }
+        desc: "Enlaces a la documentaci\u00f3n de casa: DNI, pasaportes, seguros, titulaciones. Agrupados por tipo." },
+      /* Estas dos no son secciones de Niblo: son otras apps del mismo autor y
+         la tarjeta solo abre su web en otra pestana. Se filtran por hogar como
+         las demas, para que un invitado no vea lo que no le toca. */
+      { id: "viajes",  label: "Viajes",  labelCorto: "Viajes",  icono: "&#9992;&#65039;",
+        url: "https://benteslez.github.io/viajes/",
+        desc: "Planificaci\u00f3n de viajes: itinerarios, reservas y todo lo que hay que llevar." },
+      { id: "idiomas", label: "Idiomas", labelCorto: "Idiomas", icono: "&#128218;",
+        url: "https://benteslez.github.io/idiomas/",
+        desc: "Vocabulario y ejercicios de ingl\u00e9s, franc\u00e9s e italiano." }
     ];
 
     /* Catalogo de vistas: unica fuente de verdad para nav y secciones.
@@ -17584,7 +17629,8 @@ function boot(vistaInicial) {
 
     /** Entra en un area por su ultima vista visitada. */
     function entrarEnArea(area) {
-      if (!AREAS.some(a => a.id === area)) return;
+      const def = AREAS.find(a => a.id === area);
+      if (!def || def.url) return;   // las externas se abren con su enlace
       const destino = areaDeVista(ultimaVistaArea[area]) === area
         ? ultimaVistaArea[area]
         : primeraVistaDeArea(area);
@@ -20554,14 +20600,20 @@ function boot(vistaInicial) {
         pablo:   `<span><b class="num">${nAlimentos}</b> alimentos</span>`,
         documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`
       };
-      grid.innerHTML = areasVisibles().map(a => `
-        <button type="button" class="hub-card" data-area="${a.id}">
-          <span class="hub-card-icono" aria-hidden="true">${a.icono}</span>
+      /* Las areas externas se pintan como enlace, no como boton: asi el
+         navegador hace su trabajo (abrir en otra pestana, copiar el enlace) y
+         el listener del grid, que busca button.hub-card, no las intercepta. */
+      grid.innerHTML = areasVisibles().map(a => {
+        const cuerpo = `<span class="hub-card-icono" aria-hidden="true">${a.icono}</span>
           <span class="hub-card-nombre">${a.label}</span>
           <span class="hub-card-desc">${a.desc}</span>
-          <span class="hub-card-meta">${meta[a.id] || ""}
-            <span class="hub-card-ir" aria-hidden="true">&#8594;</span></span>
-        </button>`).join("");
+          <span class="hub-card-meta">${a.url ? "<span>otra app</span>" : (meta[a.id] || "")}
+            <span class="hub-card-ir" aria-hidden="true">${a.url ? "&#8599;" : "&#8594;"}</span></span>`;
+        return a.url
+          ? `<a class="hub-card" data-area="${a.id}" href="${a.url}"
+               target="_blank" rel="noopener noreferrer">${cuerpo}</a>`
+          : `<button type="button" class="hub-card" data-area="${a.id}">${cuerpo}</button>`;
+      }).join("");
     }
 
     /* ========================================================================
@@ -20606,12 +20658,13 @@ function boot(vistaInicial) {
       try {
         const [tipos, docs] = await Promise.all([
           supaFetch("/rest/v1/document_types?select=id,name,plural_label,emoji,sort_order&order=sort_order.asc,name.asc"),
-          supaFetch("/rest/v1/documents?select=id,type_id,title,url,notes&order=title.asc"),
+          supaFetch("/rest/v1/documents?select=id,type_id,title,url,notes,issued_on,expires_on&order=title.asc"),
         ]);
         DOCS.tipos = tipos || [];
         DOCS.documentos = docs || [];
         if (!DOCS.tipos.length) await docsSembrarTipos();
         DOCS.cargado = true;
+        docsNotificarCaducidades();
       } catch (e) {
         DOCS.error = /(42P01|does not exist|Could not find the table)/i.test(e.message || "")
           ? "Falta ejecutar la migración de documentos en Supabase."
@@ -20633,6 +20686,59 @@ function boot(vistaInicial) {
         headers: { "Prefer": "return=representation" },
         body: JSON.stringify(filas),
       }).then(r => { DOCS.tipos = r || []; });
+    }
+
+    /* Aviso 60 dias antes: margen suficiente para renovar un pasaporte o un
+       permiso sin agobios, que es lo que tarda una cita en muchos consulados. */
+    const DOCS_DIAS_AVISO = 60;
+
+    /** Dias que faltan para que caduque, o null si no tiene fecha. */
+    function docsDiasParaCaducar(doc) {
+      if (!doc || !doc.expires_on) return null;
+      const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+      const cad = new Date(doc.expires_on + "T00:00:00");
+      return Math.round((cad - hoy) / 86400000);
+    }
+    /** null | "caducado" | "pronto" | "ok" */
+    function docsEstadoCaducidad(doc) {
+      const d = docsDiasParaCaducar(doc);
+      if (d === null) return null;
+      return d < 0 ? "caducado" : d <= DOCS_DIAS_AVISO ? "pronto" : "ok";
+    }
+    function docsTextoCaducidad(doc) {
+      const d = docsDiasParaCaducar(doc);
+      if (d === null) return "";
+      const fecha = new Date(doc.expires_on + "T00:00:00")
+        .toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
+      if (d < 0) return `Caducó el ${fecha}`;
+      if (d === 0) return `Caduca hoy`;
+      if (d <= DOCS_DIAS_AVISO) return `Caduca en ${d} ${d === 1 ? "día" : "días"} · ${fecha}`;
+      return `Caduca el ${fecha}`;
+    }
+    /** Los que caducan dentro del margen o ya caducaron, primero los urgentes. */
+    function docsPorCaducar() {
+      return DOCS.documentos
+        .filter(d => { const e = docsEstadoCaducidad(d); return e === "pronto" || e === "caducado"; })
+        .sort((a, b) => a.expires_on.localeCompare(b.expires_on));
+    }
+
+    /* Notificacion del sistema al abrir la app, como mucho una al dia. No hay
+       servidor detras: una PWA solo puede avisar cuando se la abre. Para un
+       margen de 60 dias sobra, pero por eso conviene el correo (ver README). */
+    function docsNotificarCaducidades() {
+      if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+      if (localStorage.getItem("niblo.avisos.on") !== "1") return;
+      const hoy = new Date().toISOString().slice(0, 10);
+      if (localStorage.getItem("niblo.docs.notificado") === hoy) return;
+      const urgentes = docsPorCaducar();
+      if (!urgentes.length) return;
+      try {
+        new Notification(
+          urgentes.length === 1 ? "Un documento caduca pronto" : `${urgentes.length} documentos caducan pronto`,
+          { body: urgentes.map(d => `${d.title}: ${docsTextoCaducidad(d).toLowerCase()}`).join(" · "),
+            icon: "icon-192.png", tag: "niblo-docs" });
+        localStorage.setItem("niblo.docs.notificado", hoy);
+      } catch (_) {}
     }
 
     function docsTipo(id) { return DOCS.tipos.find(t => t.id === id) || null; }
@@ -20681,6 +20787,7 @@ function boot(vistaInicial) {
               <a class="doc-abrir" href="${esc(d.url)}" target="_blank" rel="noopener noreferrer">
                 <span class="doc-titulo">${esc(d.title)}</span>
                 ${d.notes ? `<span class="doc-notas">${esc(d.notes)}</span>` : ""}
+                ${d.expires_on ? `<span class="doc-cad cad-${docsEstadoCaducidad(d)}">${esc(docsTextoCaducidad(d))}</span>` : ""}
                 <span class="doc-ir" aria-hidden="true">&#8599;</span>
               </a>
               <span class="doc-acciones">
@@ -20695,9 +20802,18 @@ function boot(vistaInicial) {
     }
 
     function docsCabecera() {
+      const urgentes = docsPorCaducar();
+      const aviso = urgentes.length ? `
+        <div class="doc-alerta">
+          <span class="doc-alerta-tit">${urgentes.length === 1
+            ? "Un documento caduca pronto" : `${urgentes.length} documentos caducan pronto`}</span>
+          <ul>${urgentes.map(d =>
+            `<li><b>${esc(d.title)}</b> · ${esc(docsTextoCaducidad(d))}</li>`).join("")}</ul>
+        </div>` : "";
       return `
         <h1 class="vista-titulo">Documentos</h1>
         <p class="vista-subtitulo">Enlaces a la documentación de casa, agrupados por tipo.</p>
+        ${aviso}
         <div class="doc-barra">
           <button type="button" class="btn-plano" onclick="DOCSUI.tipos()">Gestionar tipos</button>
           <button type="button" class="btn-primario" onclick="DOCSUI.nuevo()">+ Nuevo documento</button>
@@ -20758,6 +20874,13 @@ function boot(vistaInicial) {
           <input type="text" id="doc-titulo" value="${esc(doc ? doc.title : "")}" placeholder="Pasaporte Rubén — cad. 2031" autocomplete="off"></div>
         <div class="campo"><label for="doc-url">Enlace</label>
           <input type="url" id="doc-url" value="${esc(doc ? doc.url : "")}" placeholder="https://drive.google.com/…" autocomplete="off" spellcheck="false"></div>
+        <div class="doc-fechas">
+          <div class="campo"><label for="doc-expedicion">Expedición <span class="faint">(opcional)</span></label>
+            <input type="date" id="doc-expedicion" value="${esc(doc && doc.issued_on ? doc.issued_on : "")}"></div>
+          <div class="campo"><label for="doc-caducidad">Caducidad <span class="faint">(opcional)</span></label>
+            <input type="date" id="doc-caducidad" value="${esc(doc && doc.expires_on ? doc.expires_on : "")}"></div>
+        </div>
+        <p class="faint" style="margin:-4px 0 0">Con fecha de caducidad, Niblo avisa ${DOCS_DIAS_AVISO} días antes.</p>
         <div class="campo"><label for="doc-notas">Notas <span class="faint">(opcional)</span></label>
           <input type="text" id="doc-notas" value="${esc(doc && doc.notes ? doc.notes : "")}" autocomplete="off"></div>
         <div id="doc-aviso" class="doc-aviso" hidden></div>`,
@@ -20770,10 +20893,15 @@ function boot(vistaInicial) {
       const title = document.getElementById("doc-titulo").value.trim();
       const url = document.getElementById("doc-url").value.trim();
       const notes = document.getElementById("doc-notas").value.trim();
+      const issued_on = document.getElementById("doc-expedicion").value || null;
+      const expires_on = document.getElementById("doc-caducidad").value || null;
       if (!title) return docsAviso("Ponle un título.");
       if (!docsUrlValida(url)) return docsAviso("El enlace tiene que empezar por https://");
+      if (issued_on && expires_on && expires_on <= issued_on) {
+        return docsAviso("La caducidad tiene que ser posterior a la expedición.");
+      }
       docsAviso("");
-      const fila = { type_id, title, url, notes: notes || null };
+      const fila = { type_id, title, url, notes: notes || null, issued_on, expires_on };
       try {
         if (DOCS_EDIT_ID) {
           await supaFetch("/rest/v1/documents?id=eq." + encodeURIComponent(DOCS_EDIT_ID), {
