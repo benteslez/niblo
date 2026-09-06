@@ -9672,6 +9672,20 @@ function renderAvisos() {
 function avisosPermitidos() {
   return typeof Notification !== "undefined" && Notification.permission === "granted";
 }
+/* En iOS el constructor Notification no vale ni con la app en la pantalla de
+   inicio: Safari solo pinta notificaciones desde el service worker. Se intenta
+   esa via primero y el constructor queda de reserva para escritorio. */
+async function notificar(titulo, opciones) {
+  if (typeof Notification === "undefined" || Notification.permission !== "granted") return false;
+  try {
+    if (navigator.serviceWorker) {
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (reg && reg.showNotification) { await reg.showNotification(titulo, opciones); return true; }
+    }
+  } catch (_) {}
+  try { new Notification(titulo, opciones); return true; } catch (_) { return false; }
+}
+
 async function activarNotificaciones() {
   if (typeof Notification === "undefined") {
     alert("Este navegador no admite notificaciones. En iPhone hay que añadir Niblo a la pantalla de inicio.");
@@ -9680,7 +9694,7 @@ async function activarNotificaciones() {
   const p = await Notification.requestPermission();
   if (p === "granted") {
     localStorage.setItem("niblo.avisos.on", "1");
-    new Notification("Niblo", { body: "Listo: te avisaremos de la vitamina D, las vacunas y las revisiones.", icon: "icon-192.png" });
+    await notificar("Niblo", { body: "Listo: te avisaremos de la vitamina D, las vacunas y las revisiones.", icon: "icon-192.png" });
   }
   irA(VISTA_ACTUAL);
 }
@@ -9694,12 +9708,9 @@ function notificarPendientes() {
   if (localStorage.getItem(hoyKey) === HOY_ISO) return;   // una al dia, no mas
   const avisos = calcularAvisos();
   if (!avisos.length) return;
-  try {
-    new Notification(avisos.length === 1 ? avisos[0].titulo : `${avisos.length} recordatorios en Niblo`, {
-      body: avisos.map(a => a.titulo).join(" · "), icon: "icon-192.png", tag: "niblo-avisos",
-    });
-    localStorage.setItem(hoyKey, HOY_ISO);
-  } catch (_) {}
+  notificar(avisos.length === 1 ? avisos[0].titulo : `${avisos.length} recordatorios en Niblo`, {
+    body: avisos.map(a => a.titulo).join(" · "), icon: "icon-192.png", tag: "niblo-avisos",
+  }).then(ok => { if (ok) localStorage.setItem(hoyKey, HOY_ISO); });
 }
 
 /* ======================== INFORME COMPLETO (pediatra) ====================
@@ -11088,7 +11099,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, irARegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, irARegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
@@ -20732,13 +20743,11 @@ function boot(vistaInicial) {
       if (localStorage.getItem("niblo.docs.notificado") === hoy) return;
       const urgentes = docsPorCaducar();
       if (!urgentes.length) return;
-      try {
-        new Notification(
-          urgentes.length === 1 ? "Un documento caduca pronto" : `${urgentes.length} documentos caducan pronto`,
-          { body: urgentes.map(d => `${d.title}: ${docsTextoCaducidad(d).toLowerCase()}`).join(" · "),
-            icon: "icon-192.png", tag: "niblo-docs" });
-        localStorage.setItem("niblo.docs.notificado", hoy);
-      } catch (_) {}
+      PB.notificar(
+        urgentes.length === 1 ? "Un documento caduca pronto" : `${urgentes.length} documentos caducan pronto`,
+        { body: urgentes.map(d => `${d.title}: ${docsTextoCaducidad(d).toLowerCase()}`).join(" · "),
+          icon: "icon-192.png", tag: "niblo-docs" }
+      ).then(ok => { if (ok) localStorage.setItem("niblo.docs.notificado", hoy); });
     }
 
     function docsTipo(id) { return DOCS.tipos.find(t => t.id === id) || null; }
@@ -21067,6 +21076,10 @@ function boot(vistaInicial) {
       renderTodo();
       sincronizar().catch(() => {});
       rtConectar();
+      /* Los documentos se cargaban solo al entrar en su pestaña, asi que el
+         aviso de caducidad no saltaba nunca si no la abrias. Con sesion y
+         hogar, la consulta es de datos propios y protegidos por RLS. */
+      if (sesion.hogar) docsCargar(false).catch(() => {});
     }
 
     function mostrarAlta() {

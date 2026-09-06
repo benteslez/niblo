@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v72";   // tarjetas Viajes/Idiomas + caducidad de documentos
+const CACHE_NAME = "niblo-v73";   // notificaciones por service worker (iOS)
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
