@@ -4832,13 +4832,10 @@
     .hub-titulo {
       font-size: 2rem;
       letter-spacing: -0.03em;
-      margin-bottom: var(--gap-2);
+      /* El aire hasta las tarjetas lo daba el subtitulo, que ya no esta. */
+      margin-bottom: var(--gap-6);
     }
     @media (min-width: 720px) { .hub-titulo { font-size: 2.5rem; } }
-    .hub-sub {
-      color: var(--text-muted);
-      margin: 0 0 var(--gap-6);
-    }
     .hub-grid {
       display: grid;
       gap: var(--gap-4);
@@ -4910,6 +4907,36 @@
       transition: transform .14s;
     }
     .hub-card:hover .hub-card-ir { transform: translateX(3px); }
+
+    /* En movil las cuatro areas caben en pantalla sin desplazar: rejilla 2x2
+       de cuadrados, como la de "Mas". Se esconde la descripcion larga (la
+       tarjeta ya dice a donde va) y se aprieta el encabezado. */
+    @media (max-width: 639px) {
+      .hub-saludo { font-size: 0.6875rem; margin-bottom: var(--gap-1); }
+      .hub-titulo { font-size: 1.5rem; margin-bottom: var(--gap-5); }
+      .hub-grid { grid-template-columns: 1fr 1fr; gap: var(--gap-3); }
+      .hub-card {
+        align-items: center; text-align: center; justify-content: center;
+        gap: var(--gap-2); padding: var(--gap-4) var(--gap-3);
+        aspect-ratio: 1 / 1;
+      }
+      .hub-card-icono { width: 44px; height: 44px; font-size: 1.375rem; }
+      .hub-card-nombre { font-size: 1rem; }
+      .hub-card-desc { display: none; }
+      .hub-card-ir { display: none; }
+      .hub-card-meta {
+        margin-top: 0; padding-top: 0; justify-content: center;
+        font-size: 0.6875rem;
+      }
+
+      /* Con la letra grande en un movil pequeño las cuatro ya no caben: se va
+         soltando lastre por orden de importancia — primero el subtitulo,
+         despues el contador y el cuadrado exacto. */
+      html.a11y-fuente-3 .hub-saludo { display: none; }
+      html.a11y-fuente-3 .hub-card { aspect-ratio: auto; padding: var(--gap-3); }
+      html.a11y-fuente-3 .hub-card-meta { display: none; }
+      html.a11y-fuente-3 .hub-card-icono { width: 38px; height: 38px; font-size: 1.125rem; }
+    }
 
     /* Marca de la cabecera: en el hub es titulo; dentro de un area, vuelve al hub. */
     .marca-btn {
@@ -6634,7 +6661,6 @@
       <div class="hub">
         <p class="hub-saludo" id="hub-saludo">Hola</p>
         <h1 class="hub-titulo">&#191;Qu&eacute; abrimos hoy?</h1>
-        <p class="hub-sub">Tres zonas, un mismo sitio: el seguimiento de Pablo, el plan semanal de dieta y entreno, y el recetario de casa.</p>
         <div class="hub-grid" id="hub-grid"></div>
       </div>
     </section>
