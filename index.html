@@ -5222,7 +5222,10 @@
       --purple-soft: var(--tipo-desayunos-bg);
 
       --radius:     var(--r-lg);
-      --serif:      var(--font-num);
+      /* Los numeros de Pablo van en Manrope con cifras tabulares, no en una
+         monoespaciada de codigo: alinean igual en columna y se leen como dato,
+         no como terminal. Recetas y Plan mantienen --font-num. */
+      --serif:      var(--font-ui);
       --sans:       var(--font-ui);
 
       /* Grupos de alimento: paleta earth-tone de los tipos de receta. */
@@ -5238,6 +5241,10 @@
 
     .pb-app a { color: var(--blue); }
     .pb-app button { font-family: inherit; }
+    /* Cifras tabulares en toda la seccion: sin monoespaciada, es lo que
+       mantiene las horas y los mililitros alineados en columna. */
+    .pb-app { font-variant-numeric: tabular-nums; }
+    .pb-app .num { font-family: var(--serif); }
     .pb-app .mono { font-family: var(--serif); letter-spacing: -0.02em; }
     .pb-app .view { display: none; }
     .pb-app .view.active { display: block; animation: pb-fade .15s ease; }
@@ -5457,11 +5464,11 @@
       border-bottom: 1px solid var(--line-soft);
     }
     .pb-app .linea-resumen b {
-      display: block; font-family: var(--serif); font-size: 1.375rem; font-weight: 700;
+      display: block; font-family: var(--serif); font-size: 1.5rem; font-weight: 700;
       letter-spacing: -0.03em; white-space: nowrap; line-height: 1.15;
     }
     .pb-app .linea-resumen i {
-      font-style: normal; font-size: 0.65em; font-weight: 500;
+      font-style: normal; font-size: 0.6em; font-weight: 600;
       color: var(--text-faint); margin-left: 2px;
     }
     .pb-app .linea-resumen span {
@@ -5489,7 +5496,7 @@
     .pb-app .linea-fila:not(.estatica):active { background: var(--bg-soft); }
     .pb-app .linea-hora {
       flex: none; width: 42px; font-family: var(--serif);
-      font-size: 0.75rem; letter-spacing: -0.02em; color: var(--text-faint);
+      font-size: 0.8125rem; font-weight: 500; color: var(--text-faint);
     }
     .pb-app .linea-icono {
       flex: none; width: 26px; height: 26px; border-radius: 50%;
@@ -5512,11 +5519,12 @@
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .pb-app .linea-valor {
-      flex: none; font-family: var(--serif); font-size: 0.875rem; font-weight: 600;
-      letter-spacing: -0.02em; white-space: nowrap;
+      flex: none; font-family: var(--serif); font-size: 0.9375rem; font-weight: 600;
+      letter-spacing: -0.01em; white-space: nowrap;
     }
     .pb-app .linea-valor i {
-      font-style: normal; font-weight: 500; color: var(--text-faint); margin-left: 2px;
+      font-style: normal; font-size: 0.8em; font-weight: 500;
+      color: var(--text-faint); margin-left: 2px;
     }
     /* Accesos directos de "Hoy". Mismo glifo que la linea del dia para que se
        lea como "esto apunta una de estas dos cosas". */
@@ -5646,7 +5654,7 @@
     /* Los recuadros de datos, sin caja dentro de caja. */
     .pb-app .stat-grid { gap: var(--gap-3); }
     .pb-app .stat-tile { background: transparent; padding: 0; text-align: center; }
-    .pb-app .stat-tile .num { font-size: 1.375rem; letter-spacing: -0.02em; }
+    .pb-app .stat-tile .num { font-size: 1.375rem; font-weight: 700; letter-spacing: -0.03em; }
     .pb-app .stat-tile .lab {
       font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.05em;
       color: var(--text-muted);
@@ -5909,7 +5917,7 @@
     .pb-app .card h2 .n {
       font-size: 0.75rem;
       color: var(--text-muted);
-      font-family: var(--font-num);
+      font-family: var(--serif);
       font-weight: 500;
       margin-left: auto;
     }
@@ -6018,7 +6026,7 @@
       background: var(--bg-soft);
       border: 1px solid var(--line);
       border-radius: var(--r-sm);
-      font-family: var(--font-num);
+      font-family: var(--serif);
       padding: 6px 9px;
       font-size: 0.8125rem;
     }
@@ -6058,7 +6066,7 @@
       color: var(--text-muted);
     }
     .pb-app .bloque-comida .hora, .pb-app .bloque-rutina .hora, .pb-app .bloque-toma .hora {
-      font-family: var(--font-num);
+      font-family: var(--serif);
       font-variant-numeric: tabular-nums;
       font-size: 0.75rem;
     }
@@ -6179,7 +6187,7 @@
       margin-bottom: var(--gap-4);
     }
     .pb-cal-resumen b { color: var(--text); font-weight: 600; }
-    .pb-cal-resumen b.num { font-family: var(--font-num); }
+    .pb-cal-resumen b.num { font-family: var(--serif); }
     .pb-cal-sep { opacity: 0.5; }
     .pb-cal-resumen .plan-hoy { margin-left: auto; background: var(--bg-elev); }
 
@@ -6217,7 +6225,7 @@
     }
     .pb-app .day-cell:hover { border-color: var(--accent); box-shadow: var(--sh-1); }
     .pb-app .day-cell .num {
-      font-family: var(--font-num);
+      font-family: var(--serif);
       font-variant-numeric: tabular-nums;
       font-weight: 600;
       font-size: 0.9375rem;
@@ -6310,9 +6318,9 @@
     .pb-app .tooth-card { border: 1px solid var(--line-soft); border-radius: var(--r-md); }
     .pb-app .tooth-card input[type=checkbox] { accent-color: var(--accent); }
     .pb-app .libro-box { border-radius: var(--r-md); }
-    .pb-app .libro-box .pagina { font-family: var(--font-num); }
+    .pb-app .libro-box .pagina { font-family: var(--serif); }
     .pb-app .textura-grid div { border-radius: var(--r-sm); }
-    .pb-app .textura-grid .edad-t { font-family: var(--font-num); }
+    .pb-app .textura-grid .edad-t { font-family: var(--serif); }
     .pb-app .sleep-active { border-radius: var(--r-md); }
     .pb-app .settings-row { border-bottom: 1px solid var(--line-soft); }
     .pb-app .settings-row label { font-weight: 500; font-size: 0.875rem; }
