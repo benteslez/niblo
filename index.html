@@ -5638,6 +5638,11 @@
       font-size: 0.8125rem; font-weight: 600; cursor: pointer;
     }
     .pb-app .en-curso-stop:hover { filter: brightness(1.1); }
+    /* Con el texto grande no cabe la hora: lo que se cae es el "desde", que es
+       el dato accesorio. "Siesta en curso" y el boton no se tocan. */
+    html.a11y-fuente-2 .pb-app .en-curso-txt span,
+    html.a11y-fuente-3 .pb-app .en-curso-txt span { display: none; }
+    @media (max-width: 359px) { .pb-app .en-curso-txt span { display: none; } }
 
     .pb-app .linea-parar {
       flex: none; font-size: 0.75rem; font-weight: 700; white-space: nowrap;
