@@ -5568,6 +5568,11 @@
       font-style: normal; font-size: 0.8em; font-weight: 500;
       color: var(--text-faint); margin-left: 2px;
     }
+    .pb-app .linea-parar {
+      flex: none; font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+      padding: 4px 10px; border-radius: var(--r-pill);
+      background: var(--purple-soft); color: var(--purple);
+    }
     /* Accesos directos de "Hoy". Mismo glifo que la linea del dia para que se
        lea como "esto apunta una de estas dos cosas". */
     .pb-app .acc-rapido {
@@ -8219,7 +8224,7 @@ function renderHoy(el) {
   let html = `<div class="acc-rapido">
     <button type="button" class="acc-btn" onclick="PB.TOMAS_HOY.nuevaToma('${dia.fecha}')">
       ${iconoLinea("toma")}<span>Registrar toma</span></button>
-    <button type="button" class="acc-btn" onclick="PB.irARegistro('sueno')">
+    <button type="button" class="acc-btn" onclick="PB.modalSueno()">
       ${iconoLinea("sueno")}<span>Registrar sueño</span></button>
   </div>`;
   html += banner;
@@ -8336,7 +8341,8 @@ function sueniosDelDia(fecha) {
 }
 /* Igual que duracionCorta pero con la unidad marcada, para poder pintarla en
    gris y mas pequena que la cifra, como hace Salud. */
-function duracionHtml(min) {
+function duracionHtml(minutos) {
+  const min = Math.max(0, minutos || 0);
   const h = Math.floor(min / 60), m = min % 60;
   const trozos = [];
   if (h) trozos.push(`${h}<i>h</i>`);
@@ -8388,17 +8394,19 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
         <span class="linea-texto"><b>Toma</b></span>
         <span class="linea-valor">${t.ml}<i>ml</i></span>
       </button>` })),
-    /* Un sueno en curso todavia no tiene fin que editar: se para desde su
-       pestana. El resto de filas abren su dialogo al tocarlas. */
+    /* Un sueño en curso no tiene fin que editar, asi que su fila hace lo unico
+       que hace falta: pararlo. El resto abren su dialogo al tocarlas. */
     ...suenios.map(s => ({ hora: s.hora, html: `
-      <${s.enCurso ? "div" : "button"} type="button" class="linea-fila${s.enCurso ? " estatica" : ""}"
-        ${s.enCurso ? "" : `onclick="PB.editarRegistro('sleep','${s.id}')"`}>
+      <button type="button" class="linea-fila"
+        onclick="PB.${s.enCurso ? `stopSleep('${s.id}')` : `editarRegistro('sleep','${s.id}')`}">
         <span class="linea-hora">${s.hora}</span>
         ${iconoLinea("sueno")}
         <span class="linea-texto"><b>${s.tipo === "siesta" ? "Siesta" : "Nocturno"}</b><span
           class="linea-sub">${s.enCurso ? "en curso" : "hasta " + s.fin}</span></span>
-        <span class="linea-valor">${s.enCurso ? "—" : duracionHtml(s.minutos)}</span>
-      </${s.enCurso ? "div" : "button"}>` })),
+        ${s.enCurso
+          ? `<span class="linea-parar">Parar</span>`
+          : `<span class="linea-valor">${duracionHtml(s.minutos)}</span>`}
+      </button>` })),
     ...marcados.map(m => ({ hora: m.hora, html: `
       <button type="button" class="linea-fila"
         onclick="PB.editarMarcaAlimento('${m.a.id}','${dia.fecha}')">
@@ -8455,6 +8463,54 @@ function guardarToma(fecha, id) {
   cerrarModal();
   refrescarTrasToma();
 }
+/* Alta de sueño sin salir de "Hoy". Ids propios: todas las vistas viven a la
+   vez en el DOM y los del formulario de la pestaña de Sueño ya existen, asi
+   que reutilizarlos leeria el formulario equivocado.
+   Un solo formulario para los dos casos: con "hasta" queda un sueño cerrado y
+   sin "hasta" queda en curso, que es lo que hacia el cronometro. */
+function modalSueno() {
+  abrirModal("Registrar sueño", `
+    <div class="campo"><label for="sh-tipo">Tipo</label>
+      <select id="sh-tipo">
+        <option value="siesta">Siesta</option>
+        <option value="nocturno">Sueño nocturno</option>
+      </select></div>
+    <div class="grid-campos2">
+      <div class="campo"><label for="sh-ini">Desde</label>
+        <input type="datetime-local" id="sh-ini" value="${nowDatetimeLocal()}"></div>
+      <div class="campo"><label for="sh-fin">Hasta</label>
+        <input type="datetime-local" id="sh-fin"></div>
+    </div>
+    <p class="faint" style="margin:8px 0 0">Deja <b>Hasta</b> en blanco si se está durmiendo ahora:
+      queda en curso y lo paras desde la propia lista.</p>
+    <div class="modal-aviso" id="sh-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarSuenoRapido()" }]);
+}
+function guardarSuenoRapido() {
+  const av = document.getElementById("sh-aviso");
+  const decir = t => { if (av) { av.textContent = t; av.hidden = false; } };
+  const type = document.getElementById("sh-tipo").value;
+  const ini = document.getElementById("sh-ini").value;
+  const fin = document.getElementById("sh-fin").value;
+  if (!ini) return decir("Pon la hora de inicio.");
+  /* Sin "hasta" el registro queda en curso, y no se puede estar durmiendo
+     desde una hora que todavia no ha llegado: al pararlo daria negativo. */
+  if (!fin && new Date(ini) > new Date()) return decir("Para dejarlo en curso, el inicio no puede ser futuro.");
+  if (fin) {
+    if (new Date(fin) <= new Date(ini)) return decir("La hora de fin tiene que ser posterior a la de inicio.");
+    if ((new Date(fin) - new Date(ini)) / 3600000 > 24) return decir("Más de 24 horas seguidas: revisa las fechas.");
+  }
+  const reg = { id: "sl_" + Date.now().toString(36), type, start: ini, end: fin || null };
+  /* Igual que el cronometro: sin el instante absoluto del inicio, un cambio de
+     zona horaria mientras duerme falsearia la duracion al pararlo. */
+  if (!fin) reg.startMs = new Date(ini).getTime();
+  STATE.sleep.push(sellar(reg));
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasToma();
+}
+
 function borrarToma(id) {
   eliminarToma(id);
   cerrarModal();
@@ -8479,9 +8535,6 @@ function toggleRegistro(clave) {
   irA(clave.split("-")[0]);
 }
 function cerrarRegistro(vista) { REGISTRO_ABIERTO[vista] = false; }
-/* Acceso directo desde "Hoy": lleva a la pestana con el formulario ya
-   desplegado, en vez de dejarte buscar el "+" al llegar. */
-function irARegistro(vista) { REGISTRO_ABIERTO[vista] = true; irA(vista); }
 function htmlRegistro(vista, etiqueta, cuerpo) {
   const abierto = !!REGISTRO_ABIERTO[vista];
   return `<button type="button" class="btn-registro${abierto ? " abierto" : ""}"
@@ -10885,10 +10938,17 @@ function stopSleep(id) {
       fin = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
     }
   }
+  /* Red de seguridad para registros antiguos con el inicio en el futuro: sin
+     esto la fila enseñaba duraciones negativas. */
+  if (new Date(fin) < new Date(s.start)) fin = s.start;
   s.end = fin;
   sellar(s);
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
+  /* Se puede parar desde la linea del dia: hay que repintar donde esta el
+     usuario, y el panel del calendario si lo tiene abierto. */
+  if (VISTA_ACTUAL !== "sueno") irA(VISTA_ACTUAL);
+  if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
 }
 function deleteSleep(id) {
   anotarBorrado(id);
@@ -11179,7 +11239,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, irARegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
