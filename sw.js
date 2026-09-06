@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v58";   // sincronizacion en vivo por WebSocket
+const CACHE_NAME = "niblo-v59";   // punto de sync, carnet de Pablo y vacunas por fecha
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
