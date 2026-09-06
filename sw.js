@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v60";   // el carnet sembrado ahora si se sube
+const CACHE_NAME = "niblo-v61";   // diagnostico del canal en vivo + carnet sembrado sube
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
