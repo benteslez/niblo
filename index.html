@@ -7615,6 +7615,29 @@ const CARNET_PABLO = {
     x_menb:   { fecha: "2026-08-07", pais: "es", lote: "ABXG42AA",  lab: "Bexsero",                    notas: "Cad. 06-2029" },
   },
 };
+/* "Probando" dejo de ser un estado que se pueda poner, asi que se borran los
+   apuntes que lo usaban: un alimento no puede quedarse con una pastilla de
+   algo que ya no existe. El que se queda sin historial vuelve a "sin probar",
+   que es lo que era en realidad.
+   Se pasa en cada carga y despues de cada fusion, sin bandera: es un filtro
+   sobre menos de cien entradas y asi no hay forma de que uno vuelva desde un
+   dispositivo que todavia no se haya actualizado. */
+function limpiarProbando(st) {
+  const alim = st.alimentos || {};
+  let quitados = 0;
+  for (const [id, dat] of Object.entries(alim)) {
+    const hist = dat && Array.isArray(dat.historial) ? dat.historial : [];
+    const limpio = hist.filter(h => h && h.resultado !== "probando");
+    quitados += hist.length - limpio.length;
+    if (limpio.length) dat.historial = limpio;
+    else delete alim[id];          // sin apuntes, no hay nada que guardar
+  }
+  /* Solo se marca como modificado si de verdad habia algo: si no, cada
+     arranque dispararia una sincronizacion para nada. */
+  if (quitados) st.modificado = new Date().toISOString();
+  return quitados;
+}
+
 function sembrarCarnet(st) {
   if (st.config && st.config.carnetSembrado) return st;
   if (!st.config || st.config.fechaNacimiento !== CARNET_PABLO.nacimiento) return st;
@@ -7654,6 +7677,12 @@ function cargarEstadoGlobal() {
   st.config = Object.assign(defaultState().config, st.config || {});
   st.vaccines = normalizarVacunas(st.vaccines, st.vaccinesDone);
   sembrarCarnet(st);
+  /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
+     sucia y en cada arranque volveria a limpiarse y a marcar el estado como
+     modificado, subiendolo una vez por carga sin necesidad. */
+  if (limpiarProbando(st)) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(st)); } catch (_) {}
+  }
   if (typeof st.config.sedestacionLograda === "boolean") {
     if (typeof st.config.sedestacionApoyo !== "boolean" || !st.config.sedestacionApoyo) {
       st.config.sedestacionApoyo = st.config.sedestacionLograda;
@@ -7962,6 +7991,9 @@ function fusionarConRemoto(datosRemotos, tsRemoto) {
   const { estado, cambio } = fusionarEstado(STATE, datosRemotos, STATE.modificado || "", tsRemoto || "");
   if (!cambio) return false;
   STATE = estado;
+  /* La fusion une historiales por fecha: si el otro dispositivo aun no se ha
+     actualizado, podria devolver un "probando" que aqui ya se habia quitado. */
+  limpiarProbando(STATE);
   CONFIG = STATE.config;
   ESTADO = STATE.alimentos || {};
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
