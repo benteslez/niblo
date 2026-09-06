@@ -5609,9 +5609,9 @@
       margin-left: 5px; font-size: 0.6875rem; font-weight: 700;
       padding: 1px 6px; border-radius: var(--r-pill); white-space: nowrap;
     }
-    .pb-app .cmp.mas   { background: var(--green-soft); color: var(--green); }
-    .pb-app .cmp.igual { background: var(--green-soft); color: var(--green); }
-    .pb-app .cmp.menos { background: var(--amber-soft); color: var(--amber); }
+    .pb-app .cmp.mas      { background: var(--green-soft); color: var(--green); }
+    .pb-app .cmp.parecido { background: var(--blue-soft);  color: var(--blue); }
+    .pb-app .cmp.menos    { background: var(--amber-soft); color: var(--amber); }
     .pb-app .linea-resumen span {
       display: block; margin-top: 2px; font-size: 0.75rem; color: var(--text-muted);
     }
@@ -8733,16 +8733,26 @@ function htmlLoQueSueleVenir() {
   </div>`;
 }
 
-/* Comparacion con el dia de antes, para la leche y el sueño. Verde si va
-   igual o por encima, naranja si por debajo. Si el dia anterior no tiene nada
-   registrado no se enseña nada: comparar contra un cero que solo significa
-   "no lo apuntamos" seria mentir. */
+/* Comparacion con el dia de antes, para la leche y el sueño. Azul si el dia
+   se parece, verde si va por encima, ambar si por debajo. Si el dia anterior
+   no tiene nada registrado no se enseña nada: comparar contra un cero que solo
+   significa "no lo apuntamos" seria mentir.
+   El margen es relativo con un suelo absoluto: un 3% de 600 ml son 18 ml, pero
+   un 3% de 100 ml son 3, y a esa escala 10 ml arriba o abajo no es un dia
+   distinto, es la misma toma servida con otra mano. */
+const CMP_MARGEN = 0.03;
+const CMP_SUELO = { ml: 10, min: 10 };
 function htmlComparativa(hoyVal, ayerVal, unidad, hayAyer) {
   if (!hayAyer) return "";
   const d = Math.round(hoyVal - ayerVal);
-  if (d === 0) return `<span class="cmp igual">=</span>`;
+  const margen = Math.max(Math.abs(ayerVal) * CMP_MARGEN, CMP_SUELO[unidad] || 0);
+  if (Math.abs(d) <= margen) {
+    return `<span class="cmp parecido" title="Parecido a ayer">≈ igual</span>`;
+  }
   const txt = unidad === "min" ? duracionCorta(Math.abs(d)) : Math.abs(d) + " ml";
-  return `<span class="cmp ${d > 0 ? "mas" : "menos"}">${d > 0 ? "↑" : "↓"} ${txt}</span>`;
+  const mas = d > 0;
+  return `<span class="cmp ${mas ? "mas" : "menos"}"
+    title="${mas ? "Más" : "Menos"} que ayer">${mas ? "↑" : "↓"} ${txt}</span>`;
 }
 /** El dia natural anterior a un ISO. */
 function isoAyer(iso) {
