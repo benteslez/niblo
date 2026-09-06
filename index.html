@@ -5459,6 +5459,52 @@
     .pb-app .linea-fila.rutina .linea-icono { color: var(--text-faint); font-size: 1.25rem; line-height: 0.6; }
     .pb-app .linea-pie { font-size: 0.75rem; color: var(--text-muted); margin: 12px 0 0; }
 
+    /* ---- Vacunas --------------------------------------------------------- */
+    .pb-app .vac-lista { display: flex; flex-direction: column; }
+    .pb-app .vac-fila {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 0; border-bottom: 1px solid var(--line-soft);
+    }
+    .pb-app .vac-fila:last-child { border-bottom: none; }
+    .pb-app .vac-check {
+      width: 26px; height: 26px; flex: none; border-radius: 50%;
+      border: 2px solid var(--border); background: transparent;
+      color: #fff; font-size: 0.875rem; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s;
+    }
+    .pb-app .vac-check:hover { border-color: var(--green); }
+    .pb-app .vac-fila.puesta .vac-check { background: var(--green); border-color: var(--green); }
+    .pb-app .vac-cuerpo { flex: 1; min-width: 0; }
+    .pb-app .vac-nombre { font-size: 0.9375rem; font-weight: 600; }
+    .pb-app .vac-dosis { font-size: 0.78125rem; color: var(--text-muted); margin-top: 1px; }
+    /* Hay DOS reglas genericas de .pb-app input[type=date] con width:100%, y una
+       va despues de esta: hace falta ganar por especificidad, no por orden. */
+    .pb-app .vac-fila input.vac-fecha {
+      flex: none; width: 146px; padding: 6px 8px; font-size: 0.8125rem;
+      border-radius: 9px; border: 1px solid var(--border);
+      background: var(--bg-soft); color: var(--text); font-family: var(--serif);
+    }
+    .pb-app .vac-pendiente { flex: none; font-size: 0.75rem; color: var(--text-faint); }
+    .pb-app .vac-info {
+      flex: none; width: 30px; height: 30px; border-radius: 50%;
+      border: none; background: transparent; cursor: pointer;
+      font-size: 1rem; line-height: 1; display: flex; align-items: center; justify-content: center;
+      color: var(--text-faint);
+    }
+    .pb-app .vac-info:hover { background: var(--bg-soft); }
+    .pb-app .vac-info[aria-expanded="true"] { background: var(--blue-soft); }
+    .pb-app .vac-detalle {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      padding: 12px; margin: 0 0 10px; border-radius: var(--r-md);
+      background: var(--bg-soft); animation: fadeIn .15s;
+    }
+    .pb-app .vac-detalle .campo { margin: 0; }
+    @media (max-width: 480px) { .pb-app .vac-detalle { grid-template-columns: 1fr; } }
+    @media (max-width: 420px) {
+      .pb-app .vac-fila input.vac-fecha { width: 140px; padding: 6px; font-size: 0.75rem; }
+    }
+
     /* ---- Pasada de limpieza general -------------------------------------
        Tres estilos de fila convivian (bloque-rutina, milestone-row y las de
        la linea del dia) con separadores distintos: uno punteado, otro solido
@@ -7167,19 +7213,55 @@ const TEETH = [
   {id:"t17",name:"Segundo molar inferior",side:"Izquierdo",jaw:"Inferior",min:23,max:31},{id:"t18",name:"Segundo molar inferior",side:"Derecho",jaw:"Inferior",min:23,max:31},
   {id:"t19",name:"Segundo molar superior",side:"Izquierdo",jaw:"Superior",min:25,max:33},{id:"t20",name:"Segundo molar superior",side:"Derecho",jaw:"Superior",min:25,max:33}
 ];
-const VACCINES = [
-  {id:"v1",age:"Nacimiento",vaccine:"Hepatitis B",dose:"1ª dosis"},
-  {id:"v1b",age:"Nacimiento (temporada oct-mar)",vaccine:"Inmunización frente a VRS (nirsevimab)",dose:"Dosis única estacional"},
-  {id:"v2",age:"2 meses",vaccine:"Hexavalente (DTPa-VPI-Hib-HB)",dose:"1ª dosis"},{id:"v3",age:"2 meses",vaccine:"Neumococo conjugada (VNC)",dose:"1ª dosis"},
-  {id:"v4",age:"2 meses",vaccine:"Meningococo B",dose:"1ª dosis"},{id:"v5",age:"2 meses",vaccine:"Rotavirus",dose:"1ª dosis"},
-  {id:"v6",age:"4 meses",vaccine:"Hexavalente (DTPa-VPI-Hib-HB)",dose:"2ª dosis"},{id:"v7",age:"4 meses",vaccine:"Neumococo conjugada (VNC)",dose:"2ª dosis"},
-  {id:"v8",age:"4 meses",vaccine:"Meningococo B",dose:"2ª dosis"},{id:"v9",age:"4 meses",vaccine:"Rotavirus",dose:"2ª dosis"},
-  {id:"v9b",age:"4-6 meses (según preparado)",vaccine:"Rotavirus",dose:"3ª dosis (si la pauta del preparado la incluye)"},
-  {id:"v10",age:"11 meses",vaccine:"Hexavalente (DTPa-VPI-Hib-HB)",dose:"3ª dosis"},{id:"v11",age:"11 meses",vaccine:"Neumococo conjugada (VNC)",dose:"3ª dosis"},
-  {id:"v12",age:"12 meses",vaccine:"Triple vírica (sarampión-rubeola-parotiditis)",dose:"1ª dosis"},{id:"v13",age:"12 meses",vaccine:"Meningococo ACWY",dose:"1ª dosis"},
-  {id:"v14",age:"12 meses",vaccine:"Meningococo B",dose:"3ª dosis (refuerzo)"},{id:"v15",age:"15 meses",vaccine:"Varicela",dose:"1ª dosis"},
-  {id:"v16",age:"3-4 años",vaccine:"Triple vírica",dose:"2ª dosis"},{id:"v17",age:"3-4 años",vaccine:"Varicela",dose:"2ª dosis"},
-  {id:"v18",age:"6 años",vaccine:"DTPa-VPI (refuerzo)",dose:"Dosis de refuerzo"}
+/* Esquema del PAI de Colombia, transcrito literalmente del carnet de Pablo
+   (mismo orden, mismas edades y mismas dosis que la hoja impresa). Se cambia
+   del calendario español al colombiano porque es donde pasan mas tiempo y
+   donde le van a poner la mayoria de las dosis.
+   Las que no son del PAI base (meningococo, VRS) van al final como
+   complementarias: se las han puesto igual y tienen que constar. */
+const VACCINES= [
+  { id: "rn_bcg",    grupo: "Recién nacido", age: "Recién nacido", vaccine: "BCG",                          dose: "Única" },
+  { id: "rn_hb",     grupo: "Recién nacido", age: "Recién nacido", vaccine: "Hepatitis B",                  dose: "Recién nacido" },
+
+  { id: "m2_polio",  grupo: "2 meses",  age: "2 meses",  vaccine: "Poliomielitis",                  dose: "1ª" },
+  { id: "m2_penta",  grupo: "2 meses",  age: "2 meses",  vaccine: "Pentavalente (DTP-HB-Hib)",      dose: "1ª" },
+  { id: "m2_rota",   grupo: "2 meses",  age: "2 meses",  vaccine: "Rotavirus",                      dose: "1ª" },
+  { id: "m2_neumo",  grupo: "2 meses",  age: "2 meses",  vaccine: "Neumococo conjugada",            dose: "1ª" },
+
+  { id: "m4_polio",  grupo: "4 meses",  age: "4 meses",  vaccine: "Poliomielitis",                  dose: "2ª" },
+  { id: "m4_penta",  grupo: "4 meses",  age: "4 meses",  vaccine: "Pentavalente (DTP-HB-Hib)",      dose: "2ª" },
+  { id: "m4_neumo",  grupo: "4 meses",  age: "4 meses",  vaccine: "Neumococo conjugada",            dose: "2ª" },
+  { id: "m4_rota",   grupo: "4 meses",  age: "4 meses",  vaccine: "Rotavirus",                      dose: "2ª" },
+
+  { id: "m6_polio",  grupo: "6 meses",  age: "6 meses",  vaccine: "Poliomielitis",                  dose: "3ª" },
+  { id: "m6_penta",  grupo: "6 meses",  age: "6 meses",  vaccine: "Pentavalente (DTP-HB-Hib)",      dose: "3ª" },
+  { id: "m6_flu",    grupo: "6 meses",  age: "6 meses",  vaccine: "Influenza estacional",           dose: "1ª" },
+
+  { id: "m7_flu",    grupo: "7 meses",  age: "7 meses",  vaccine: "Influenza estacional",           dose: "2ª" },
+
+  { id: "m12_srp",   grupo: "12 meses", age: "12 meses", vaccine: "Sarampión, rubéola y paperas",   dose: "1ª" },
+  { id: "m12_neumo", grupo: "12 meses", age: "12 meses", vaccine: "Neumococo conjugada",            dose: "Refuerzo" },
+  { id: "m12_vari",  grupo: "12 meses", age: "12 meses", vaccine: "Varicela",                       dose: "1ª" },
+  { id: "m12_hepa",  grupo: "12 meses", age: "12 meses", vaccine: "Hepatitis A",                    dose: "Única" },
+  { id: "m12_flu",   grupo: "12 meses", age: "12 meses", vaccine: "Influenza estacional",           dose: "Anual" },
+
+  { id: "m18_polio", grupo: "18 meses", age: "18 meses", vaccine: "Poliomielitis",                  dose: "1er refuerzo" },
+  { id: "m18_penta", grupo: "18 meses", age: "18 meses", vaccine: "Pentavalente (DTP-HB-Hib)",      dose: "1er refuerzo" },
+  { id: "m18_srp",   grupo: "18 meses", age: "18 meses", vaccine: "Sarampión, rubéola y paperas",   dose: "Refuerzo" },
+  { id: "m18_fa",    grupo: "18 meses", age: "18 meses", vaccine: "Fiebre amarilla",                dose: "Única" },
+
+  { id: "a5_polio",  grupo: "5 años",   age: "5 años",   vaccine: "Poliomielitis",                  dose: "2do refuerzo" },
+  { id: "a5_dpt",    grupo: "5 años",   age: "5 años",   vaccine: "Difteria, tétanos y tosferina",  dose: "2do refuerzo" },
+  { id: "a5_vari",   grupo: "5 años",   age: "5 años",   vaccine: "Varicela",                       dose: "Refuerzo" },
+
+  { id: "a9_vph",    grupo: "9 años",   age: "A partir de los 9 años", vaccine: "Virus del papiloma humano (VPH)", dose: "Según esquema" },
+
+  { id: "x_covid",   grupo: "Otras",    age: "Sin rango de edad", vaccine: "Covid-19",              dose: "Según esquema" },
+  { id: "x_vrs",     grupo: "Otras",    age: "Recién nacido (temporada)", vaccine: "Nirsevimab (VRS)", dose: "Única estacional" },
+  { id: "x_menc",    grupo: "Otras",    age: "Complementaria",   vaccine: "Meningococo C",          dose: "Según pauta" },
+  { id: "x_menb",    grupo: "Otras",    age: "Complementaria",   vaccine: "Meningococo B",          dose: "1ª" },
+  { id: "x_menb2",   grupo: "Otras",    age: "Complementaria",   vaccine: "Meningococo B",          dose: "2ª" },
+  { id: "x_menacwy", grupo: "Otras",    age: "Complementaria",   vaccine: "Meningococo ACWY",       dose: "Según pauta" },
 ];
 
 function interpolateRowAt(table, ageMonths) {
@@ -7258,10 +7340,24 @@ function defaultState() {
     tomas: [],              // { id, fecha, hora, ml }
     milestonesAchieved: {}, cdcAchieved: {}, teethErupted: {},
     vaccines: JSON.parse(JSON.stringify(VACCINES)),
-    vaccinesDone: {},
+    vaccinesDone: {},      // id -> "YYYY-MM-DD" en que se puso
+    vaccinesInfo: {},      // id -> { pais, lote, lab, notas }
     growth: [], pediatricVisits: [], sleep: [], diapers: [], notes: [],
   };
 }
+/* El catalogo de vacunas paso del calendario español al PAI de Colombia y los
+   identificadores cambiaron. Lo guardado se sustituye por el catalogo actual y
+   se descartan las marcas cuyo id ya no existe, para que no queden colgando. */
+function normalizarVacunas(guardadas, hechas) {
+  const ids = new Set(VACCINES.map(v => v.id));
+  const alDia = Array.isArray(guardadas) && guardadas.length
+    && guardadas.every(v => v && ids.has(v.id)) && guardadas.length === VACCINES.length;
+  if (!alDia && hechas && typeof hechas === "object") {
+    for (const k of Object.keys(hechas)) if (!ids.has(k)) delete hechas[k];
+  }
+  return alDia ? guardadas : JSON.parse(JSON.stringify(VACCINES));
+}
+
 function cargarEstadoGlobal() {
   let st;
   try { st = Object.assign(defaultState(), JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || {}); }
@@ -7271,6 +7367,7 @@ function cargarEstadoGlobal() {
      preguntaba por la sedestacion CON APOYO, asi que ese es su heredero;
      el tronco estable arranca sin marcar, que es lo prudente. */
   st.config = Object.assign(defaultState().config, st.config || {});
+  st.vaccines = normalizarVacunas(st.vaccines, st.vaccinesDone);
   if (typeof st.config.sedestacionLograda === "boolean") {
     if (typeof st.config.sedestacionApoyo !== "boolean" || !st.config.sedestacionApoyo) {
       st.config.sedestacionApoyo = st.config.sedestacionLograda;
@@ -7281,6 +7378,17 @@ function cargarEstadoGlobal() {
   }
   return st;
 }
+let _sync = null;   // { estado(), forzar() } que inyecta el area de Recetas
+function setSync(api) { _sync = api; }
+function infoSync() { return _sync ? _sync.estado() : null; }
+async function sincronizarAhora() {
+  if (!_sync) return;
+  const btn = document.getElementById("btn-sync-ahora");
+  if (btn) { btn.disabled = true; btn.textContent = "Sincronizando…"; }
+  try { await _sync.forzar(); } catch (_) {}
+  irA(VISTA_ACTUAL);
+}
+
 let _onGuardar = null;
 /** El area de Recetas engancha aqui su auto-sync: hasta ahora lo que se
     apuntaba de Pablo solo subia al abrir la app. */
@@ -7446,7 +7554,7 @@ function cerrarModal() {
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
 const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes"];
-const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone"];
+const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo"];
 
 function sello() { return new Date().toISOString(); }
 
@@ -7475,7 +7583,7 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
 
   // Config y catalogo de vacunas: no son registros, gana el documento nuevo.
   out.config = Object.assign({}, defaultState().config, (remotoGana ? remoto : local).config || {});
-  out.vaccines = (remotoGana ? remoto : local).vaccines || local.vaccines;
+  out.vaccines = normalizarVacunas((remotoGana ? remoto : local).vaccines, null);
 
   // Lapidas: la union de las dos partes.
   const borrados = Object.assign({}, local.borrados || {}, remoto.borrados || {});
@@ -7548,6 +7656,7 @@ function importarEstadoSync(remoto) {
   if (!remoto || typeof remoto !== "object") return false;
   STATE = Object.assign(defaultState(), remoto);
   STATE.config = Object.assign(defaultState().config, remoto.config || {});
+  STATE.vaccines = normalizarVacunas(STATE.vaccines, STATE.vaccinesDone);
   CONFIG = STATE.config;
   ESTADO = STATE.alimentos || {};
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
@@ -8698,7 +8807,7 @@ function renderSeguridad(el) {
 
 /* ======================== render: AJUSTES ======================== */
 function renderAjustes(el) {
-  el.innerHTML = htmlAjustesAvisos() + `<div class="card"><h2>Perfil de Pablo</h2>
+  el.innerHTML = htmlEstadoSync() + htmlAjustesAvisos() + `<div class="card"><h2>Perfil de Pablo</h2>
     <div class="settings-row"><label>Nombre</label><input type="text" id="cfg-nombre" value="${CONFIG.nombre || 'Pablo'}"></div>
     <div class="settings-row"><label>Fecha de nacimiento</label><input type="date" id="cfg-nacimiento" value="${CONFIG.fechaNacimiento}"></div>
     <div class="settings-row"><label>Método</label>
@@ -9148,6 +9257,37 @@ function htmlAvisos() {
     </div>`).join("")}</div>`;
 }
 
+/* Hasta ahora un fallo de sincronizacion no se veia por ningun lado: se
+   tragaba con un catch vacio. Si algo no sube, aqui se dice. */
+function htmlEstadoSync() {
+  const i = infoSync();
+  if (!i) return "";
+  if (!i.autenticado) {
+    return `<div class="alerta evitar"><div class="titulo">Sin sesión</div>
+      Lo que apuntes se guarda en este dispositivo pero <b>no se está sincronizando</b>.</div>`;
+  }
+  const cuando = i.ultimoSync ? fmtFechaHoraCorta(i.ultimoSync) : "nunca";
+  if (i.estado === "error") {
+    return `<div class="alerta evitar"><div class="titulo">La sincronización está fallando</div>
+      Última vez que funcionó: <b>${cuando}</b>.${i.error ? `<div class="faint" style="margin-top:6px">${esc(i.error)}</div>` : ""}
+      <div style="margin-top:10px"><button id="btn-sync-ahora" class="btn-primario" onclick="PB.sincronizarAhora()">Reintentar ahora</button></div>
+    </div>`;
+  }
+  return `<div class="card"><h2>Sincronización</h2>
+    <div class="vac-fila" style="border:none;padding:0">
+      <div class="vac-cuerpo">
+        <div class="vac-nombre">${i.estado === "syncing" ? "Sincronizando…" : "Al día"}</div>
+        <div class="vac-dosis">Última: ${cuando}</div>
+      </div>
+      <button id="btn-sync-ahora" class="btn-anadir" onclick="PB.sincronizarAhora()">Sincronizar</button>
+    </div></div>`;
+}
+function fmtFechaHoraCorta(iso) {
+  const d = new Date(iso);
+  if (isNaN(d)) return "nunca";
+  return d.toLocaleString("es-ES", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+}
+
 function htmlAjustesAvisos() {
   const sop = typeof Notification !== "undefined";
   const on = notificacionesActivas();
@@ -9450,13 +9590,16 @@ function generarInformeCompleto() {
   if (S("vacunas")) {
     const puestas = [], pendientes = [];
     (STATE.vaccines || []).forEach(v => {
-      const hecha = STATE.vaccinesDone[v.id];   // guarda la fecha en que se marco
+      const hecha = STATE.vaccinesDone[v.id];   // fecha real en que se puso
+      const inf = infoVacuna(v.id);
+      const extra = [inf.pais === "co" ? "Colombia" : inf.pais === "es" ? "España" : "",
+                     inf.lab, inf.lote ? "lote " + inf.lote : ""].filter(Boolean).join(" · ");
       const fila = [esc(v.vaccine), esc(v.dose || "—"), esc(v.age)];
-      if (hecha) puestas.push(fila.concat(typeof hecha === "string" ? fmtFechaCorta(hecha) : "sí"));
+      if (hecha) puestas.push(fila.concat(typeof hecha === "string" ? fmtFechaCorta(hecha) : "sí", esc(extra || "—")));
       else pendientes.push(fila);
     });
     doc += `<h3>Vacunas</h3><p class="inf-nota">Puestas: <b>${puestas.length}</b> · Pendientes: <b>${pendientes.length}</b>.</p>`
-      + tabla(["Vacuna", "Dosis", "Edad prevista", "Puesta"], puestas);
+      + tabla(["Vacuna", "Dosis", "Edad prevista", "Puesta", "Detalles"], puestas);
     if (pendientes.length) doc += `<h4>Pendientes</h4>` + tabla(["Vacuna", "Dosis", "Edad prevista"], pendientes);
   }
 
@@ -10390,17 +10533,103 @@ function renderGuia(el) {
 /* ======================== render: VACUNAS ======================== */
 function renderVacunas(el) {
   let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span>`;
-  html += `<div class="card"><div class="faint">Calendario común de vacunación infantil (Consejo Interterritorial del SNS, España). Puede variar según comunidad autónoma: confirma con la cartilla oficial y el pediatra.</div></div>`;
-  html += `<div class="card"><div class="tabla-wrap"><table class="tabla-simple"><thead><tr><th>Edad</th><th>Vacuna</th><th>Dosis</th><th>Puesta</th></tr></thead><tbody>`;
+  html += `<div class="card"><div class="faint">Esquema del PAI de Colombia, el del carnet de Pablo. Las dosis puestas fuera del PAI (meningococo, VRS) van al final.</div></div>`;
+
+  /* Se agrupa por edad, como el propio carnet: una tarjeta por bloque. */
+  const grupos = [];
   STATE.vaccines.forEach(v => {
-    const done = STATE.vaccinesDone[v.id];
-    html += `<tr><td>${v.age}</td><td>${v.vaccine}</td><td>${v.dose}</td><td><input type="checkbox" ${done?"checked":""} onchange="PB.toggleVaccine('${v.id}', this.checked)">${done?` <span class="faint">${fmtFechaCorta(done)}</span>`:''}</td></tr>`;
+    const g = grupos.find(x => x.nombre === (v.grupo || v.age));
+    if (g) g.filas.push(v); else grupos.push({ nombre: v.grupo || v.age, filas: [v] });
   });
-  html += `</tbody></table></div></div>`;
+
+  const puestas = STATE.vaccines.filter(v => STATE.vaccinesDone[v.id]).length;
+  html += `<div class="card"><div class="stat-grid cols2">
+      <div class="stat-tile"><div class="num">${puestas}</div><div class="lab">Puestas</div></div>
+      <div class="stat-tile"><div class="num">${STATE.vaccines.length - puestas}</div><div class="lab">Pendientes</div></div>
+    </div></div>`;
+
+  grupos.forEach(g => {
+    html += `<div class="card"><h2>${esc(g.nombre)}</h2><div class="vac-lista">`;
+    g.filas.forEach(v => {
+      const fecha = STATE.vaccinesDone[v.id] || "";
+      html += `<div class="vac-fila${fecha ? " puesta" : ""}">
+        <button type="button" class="vac-check" role="checkbox" aria-checked="${!!fecha}"
+          aria-label="${esc(v.vaccine)} ${esc(v.dose)}"
+          onclick="PB.toggleVaccine('${v.id}', ${fecha ? "false" : "true"})">${fecha ? "✓" : ""}</button>
+        <div class="vac-cuerpo">
+          <div class="vac-nombre">${esc(v.vaccine)}</div>
+          <div class="vac-dosis">${esc(v.dose)}</div>
+        </div>
+        ${fecha
+          ? `<input type="date" class="vac-fecha" value="${fecha}" max="${HOY_ISO}"
+               aria-label="Fecha en que se puso" onchange="PB.fecharVacuna('${v.id}', this.value)">
+             <button type="button" class="vac-info" title="Lote, laboratorio y país"
+               aria-label="Detalles de ${esc(v.vaccine)}" aria-expanded="${VAC_ABIERTA === v.id}"
+               onclick="PB.detallesVacuna('${v.id}')">${banderaVacuna(v.id)}</button>`
+          : `<span class="vac-pendiente">pendiente</span>`}
+      </div>
+      ${VAC_ABIERTA === v.id ? htmlDetallesVacuna(v) : ""}`;
+    });
+    html += `</div></div>`;
+  });
   el.innerHTML = html;
 }
-function toggleVaccine(id, checked) {
-  if (checked) STATE.vaccinesDone[id] = HOY_ISO; else delete STATE.vaccinesDone[id];
+
+/* Lo que importa es cuando se PUSO, no cuando se apunto: al marcarla se
+   propone hoy y se puede corregir a la fecha real del carnet. */
+function toggleVaccine(id, marcar) {
+  if (marcar) STATE.vaccinesDone[id] = HOY_ISO;
+  else delete STATE.vaccinesDone[id];
+  guardarEstado();
+  renderVacunas(document.getElementById("view-vacunas"));
+}
+/* Los detalles (pais, lote, laboratorio) no se ven de primeras: solo la
+   bandera, y el resto al tocarla. Un carnet tiene mucho dato que casi nunca
+   hace falta pero que en la consulta te pueden pedir. */
+let VAC_ABIERTA = null;
+const VAC_PAISES = { co: "🇨🇴", es: "🇪🇸" };
+function infoVacuna(id) { return (STATE.vaccinesInfo && STATE.vaccinesInfo[id]) || {}; }
+function banderaVacuna(id) {
+  const p = infoVacuna(id).pais;
+  return VAC_PAISES[p] || "ⓘ";
+}
+function detallesVacuna(id) {
+  VAC_ABIERTA = VAC_ABIERTA === id ? null : id;
+  renderVacunas(document.getElementById("view-vacunas"));
+}
+function htmlDetallesVacuna(v) {
+  const i = infoVacuna(v.id);
+  return `<div class="vac-detalle">
+    <div class="campo"><label for="vd-pais-${v.id}">País</label>
+      <select id="vd-pais-${v.id}" onchange="PB.guardarInfoVacuna('${v.id}')">
+        <option value=""   ${!i.pais ? "selected" : ""}>Sin especificar</option>
+        <option value="co" ${i.pais === "co" ? "selected" : ""}>🇨🇴 Colombia</option>
+        <option value="es" ${i.pais === "es" ? "selected" : ""}>🇪🇸 España</option>
+      </select></div>
+    <div class="campo"><label for="vd-lote-${v.id}">Lote</label>
+      <input type="text" id="vd-lote-${v.id}" value="${esc(i.lote || "")}" placeholder="43C2701"
+        autocomplete="off" spellcheck="false" onchange="PB.guardarInfoVacuna('${v.id}')"></div>
+    <div class="campo"><label for="vd-lab-${v.id}">Laboratorio / producto</label>
+      <input type="text" id="vd-lab-${v.id}" value="${esc(i.lab || "")}" placeholder="Hexaxim · Sanofi"
+        autocomplete="off" onchange="PB.guardarInfoVacuna('${v.id}')"></div>
+    <div class="campo"><label for="vd-notas-${v.id}">Notas</label>
+      <input type="text" id="vd-notas-${v.id}" value="${esc(i.notas || "")}" placeholder="Centro, reacción…"
+        autocomplete="off" onchange="PB.guardarInfoVacuna('${v.id}')"></div>
+  </div>`;
+}
+function guardarInfoVacuna(id) {
+  if (!STATE.vaccinesInfo) STATE.vaccinesInfo = {};
+  const val = k => (document.getElementById(`vd-${k}-${id}`) || {}).value || "";
+  const info = { pais: val("pais"), lote: val("lote").trim(), lab: val("lab").trim(), notas: val("notas").trim() };
+  if (!info.pais && !info.lote && !info.lab && !info.notas) delete STATE.vaccinesInfo[id];
+  else STATE.vaccinesInfo[id] = info;
+  guardarEstado();
+  renderVacunas(document.getElementById("view-vacunas"));
+}
+
+function fecharVacuna(id, fecha) {
+  if (!fecha) return;
+  STATE.vaccinesDone[id] = fecha;
   guardarEstado();
   renderVacunas(document.getElementById("view-vacunas"));
 }
@@ -10458,8 +10687,8 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
@@ -18723,10 +18952,13 @@ function boot(vistaInicial) {
 
     async function sincronizarPablo() {
       if (typeof PB === "undefined" || !PB.exportarEstadoSync) return "sin módulo";
+      /* hid tiene que vivir fuera del try: tambien lo usa la subida de mas
+         abajo. Estaba declarado dentro y la subida petaba con "hid is not
+         defined", asi que desde que se introdujo el hogar no subia nada. */
+      const hid = hogarId();
+      if (!hid) return "sin hogar";
       let remoto = null;
       try {
-        const hid = hogarId();
-        if (!hid) return "sin hogar";
         const filas = await supaFetch("/rest/v1/pablo_estado?hogar_id=eq." + encodeURIComponent(hid));
         remoto = (filas && filas[0]) || null;
       } catch (e) {
@@ -23324,6 +23556,16 @@ function boot(vistaInicial) {
       pcWiring();
       if (typeof PB !== "undefined") {
         PB.setOnVista(pbSincronizarChip);
+        // Para que Pablo pueda enseñar si la sincronizacion va bien y forzarla.
+        PB.setSync({
+          estado: () => ({
+            autenticado: !!sesion.supabase.token,
+            estado: sesion.supabase.estadoSync,
+            ultimoSync: sesion.supabase.ultimoSync,
+            error: sesion.supabase.ultimoError,
+          }),
+          forzar: () => sincronizar(),
+        });
         // Lo que se apunta de Pablo tambien dispara el sync diferido; antes
         // solo subia al abrir la app.
         PB.setOnGuardar(programarAutoSync);
