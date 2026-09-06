@@ -7647,9 +7647,16 @@ function editarRegistro(col, id) {
     return `<div class="campo"><label>${c.et}</label><input type="${c.tipo}" id="ed-${c.k}"
       ${c.paso ? `step="${c.paso}"` : ""} value="${esc(v)}"></div>`;
   }).join("");
+  /* Con el dialogo accesible desde la linea del dia hace falta poder tirar el
+     registro aqui mismo: si no, una siesta mal metida solo se quita yendo a
+     buscar su ✕ en la pestana de Sueno. */
+  const iso = (reg.date || reg.start || reg.datetime || "").slice(0, 10);
+  const titulo = def.titulo.charAt(0).toUpperCase() + def.titulo.slice(1);
+  const desc = iso ? `${titulo} del ${fmtFechaCorta(iso)}` : titulo;
   abrirModal(`Editar ${def.titulo}`, `<div class="grid-campos2">${campos}</div>
     <div class="modal-aviso" id="ed-aviso"></div>`,
     [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Borrar", peligro: true, accion: `PB.pedirBorrado('${col}','${id}','${esc(desc)}')` },
      { et: "Guardar", primario: true, accion: "PB.guardarEdicion()" }]);
 }
 
@@ -7676,6 +7683,9 @@ function guardarEdicion() {
   guardarEstado();
   cerrarModal();
   irA(VISTA_ACTUAL);
+  /* El panel del dia del calendario no cuelga de VISTA_ACTUAL: si esta
+     abierto, hay que repintarlo aparte o se queda con el dato viejo. */
+  if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
 }
 
 /* Borrado con confirmacion: el registro se muestra antes de tirarlo. */
@@ -7690,6 +7700,10 @@ function confirmarBorrado(col, id) {
                notes: deleteNote, pediatricVisits: deletePediatricVisit }[col];
   cerrarModal();
   if (fn) fn(id);
+  /* Cada delete* repinta su propia pestana. Como ahora se puede borrar desde
+     la linea del dia, hay que repintar tambien donde esta el usuario. */
+  irA(VISTA_ACTUAL);
+  if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
 }
 
 /* ---- modal generico ---------------------------------------------------- */
@@ -8315,21 +8329,25 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
         <span class="linea-texto"><b>Toma</b></span>
         <span class="linea-valor">${t.ml}<i>ml</i></span>
       </button>` })),
+    /* Un sueno en curso todavia no tiene fin que editar: se para desde su
+       pestana. El resto de filas abren su dialogo al tocarlas. */
     ...suenios.map(s => ({ hora: s.hora, html: `
-      <div class="linea-fila estatica">
+      <${s.enCurso ? "div" : "button"} type="button" class="linea-fila${s.enCurso ? " estatica" : ""}"
+        ${s.enCurso ? "" : `onclick="PB.editarRegistro('sleep','${s.id}')"`}>
         <span class="linea-hora">${s.hora}</span>
         ${iconoLinea("sueno")}
         <span class="linea-texto"><b>${s.tipo === "siesta" ? "Siesta" : "Nocturno"}</b><span
           class="linea-sub">${s.enCurso ? "en curso" : "hasta " + s.fin}</span></span>
         <span class="linea-valor">${s.enCurso ? "—" : duracionHtml(s.minutos)}</span>
-      </div>` })),
+      </${s.enCurso ? "div" : "button"}>` })),
     ...marcados.map(m => ({ hora: m.hora, html: `
-      <div class="linea-fila estatica">
+      <button type="button" class="linea-fila"
+        onclick="PB.editarMarcaAlimento('${m.a.id}','${dia.fecha}')">
         <span class="linea-hora">${m.hora}</span>
         ${iconoLinea(m.estado === "reaccion" ? "alerta" : "comida")}
         <span class="linea-texto"><b>${capitalizar(m.a.nombre)}</b><span
           class="linea-sub">${m.estado === "reaccion" ? "con reacción" : "probado"}</span></span>
-      </div>` })),
+      </button>` })),
   ].sort((a, b) => a.hora.localeCompare(b.hora));
 
   const total = totalMlDia(dia.fecha);
@@ -8882,6 +8900,54 @@ function marcarEstadoDesdeFicha(id, estado) {
 function marcarEstadoRapidoHoy(id, estado) {
   marcarEstado(id, estado);
   renderHoy(document.getElementById("view-hoy"));
+}
+
+/* La marca de un alimento no vive en STATE como los demas registros: cuelga de
+   ESTADO[id].historial, asi que no le vale CAMPOS_REGISTRO y lleva su dialogo. */
+let MARCA_ABIERTA = null;
+function marcaDeFecha(id, fecha) {
+  return (ESTADO[id]?.historial || []).find(x => x.fecha === fecha);
+}
+function editarMarcaAlimento(id, fecha) {
+  const h = marcaDeFecha(id, fecha);
+  if (!h) return;
+  MARCA_ABIERTA = { id, fecha };
+  const a = alimentoPorId(id);
+  abrirModal(`Editar ${a ? nombreLocal(a) : "alimento"}`, `
+    <div class="grid-campos2">
+      <div class="campo"><label for="ma-res">Resultado</label>
+        <select id="ma-res">
+          <option value="tolerado"${h.resultado === "tolerado" ? " selected" : ""}>Probado</option>
+          <option value="reaccion"${h.resultado === "reaccion" ? " selected" : ""}>Reacción</option>
+        </select></div>
+      <div class="campo"><label for="ma-hora">Hora</label>
+        <input type="time" id="ma-hora" value="${esc(h.hora || "")}"></div>
+    </div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Quitar marca", peligro: true, accion: "PB.borrarMarcaAlimento()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarMarcaAlimento()" }]);
+}
+function guardarMarcaAlimento() {
+  if (!MARCA_ABIERTA) return;
+  const h = marcaDeFecha(MARCA_ABIERTA.id, MARCA_ABIERTA.fecha);
+  if (h) {
+    h.resultado = document.getElementById("ma-res").value;
+    h.hora = document.getElementById("ma-hora").value || h.hora;
+    guardarEstado();
+  }
+  MARCA_ABIERTA = null;
+  cerrarModal();
+  refrescarTrasToma();
+}
+function borrarMarcaAlimento() {
+  if (!MARCA_ABIERTA) return;
+  const { id, fecha } = MARCA_ABIERTA;
+  const hist = ESTADO[id]?.historial || [];
+  const i = hist.findIndex(x => x.fecha === fecha);
+  if (i >= 0) { hist.splice(i, 1); guardarEstado(); }
+  MARCA_ABIERTA = null;
+  cerrarModal();
+  refrescarTrasToma();
 }
 
 /* ======================== render: PROGRESO ======================== */
@@ -10986,7 +11052,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, irARegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, irARegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
