@@ -10502,7 +10502,15 @@ function mismoDia(dtLocal, fecha) {
 function addSleep() {
   const type = document.getElementById("sleep-type").value;
   const start = document.getElementById("sleep-start").value || nowDatetimeLocal();
-  STATE.sleep.push(sellar({ id: "sl_" + Date.now().toString(36), type, start, end: null }));
+  /* startMs es el instante absoluto del inicio. Las horas se guardan como
+     texto de reloj local (que es lo que se quiere ver en un diario), pero eso
+     solo da la duracion correcta si el reloj no cambia entremedias. Si el
+     movil cruza de Bogota a España con un cronometro en marcha, la resta de
+     los dos textos se iria siete horas. */
+  STATE.sleep.push(sellar({
+    id: "sl_" + Date.now().toString(36), type, start, end: null,
+    startMs: new Date(start).getTime(),
+  }));
   guardarEstado();
   cerrarRegistro("sueno");
   renderSueno(document.getElementById("view-sueno"));
@@ -10510,7 +10518,19 @@ function addSleep() {
 function stopSleep(id) {
   const s = STATE.sleep.find(x => x.id === id);
   if (!s) return;
-  s.end = nowDatetimeLocal();
+  let fin = nowDatetimeLocal();
+  if (s.startMs) {
+    const realMin = Math.round((Date.now() - s.startMs) / 60000);
+    const relojMin = Math.round((new Date(fin) - new Date(s.start)) / 60000);
+    // Mas de 5 min de desfase = ha cambiado la zona horaria: se recoloca el
+    // fin en el mismo marco que el inicio, para que la duracion sea la real.
+    if (Math.abs(realMin - relojMin) > 5) {
+      const d = new Date(new Date(s.start).getTime() + realMin * 60000);
+      const p = n => String(n).padStart(2, "0");
+      fin = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+    }
+  }
+  s.end = fin;
   sellar(s);
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
