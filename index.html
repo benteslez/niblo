@@ -7418,6 +7418,9 @@ function sembrarCarnet(st) {
     st.vaccinesInfo[id] = { pais: d.pais, lote: d.lote, lab: d.lab, notas: d.notas };
   }
   st.config.carnetSembrado = true;
+  /* Sin marca de tiempo el sync cree que no hay nada nuevo y el carnet no
+     llega nunca al otro dispositivo. */
+  st.modificado = new Date().toISOString();
   return st;
 }
 
