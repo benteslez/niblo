@@ -5386,6 +5386,7 @@
     .pb-app .comida-nombre[onclick] { cursor: pointer; }
     .pb-app .comida-nombre[onclick]:hover { color: var(--blue); }
     .pb-app .comida-meta { font-size: 0.78125rem; color: var(--text-muted); margin-top: 2px; }
+    .pb-app .comida-como { font-size: 0.8125rem; margin-top: 4px; line-height: 1.45; }
     .pb-app .comida-hecho {
       font-size: 0.75rem; font-weight: 700; color: var(--green); margin-top: 4px;
     }
@@ -5453,7 +5454,56 @@
       font-family: inherit; font-size: 0.75rem; color: var(--blue);
       background: var(--blue-soft); border-radius: 999px; padding: 4px 10px;
     }
+    .pb-app .linea-fila.rutina .linea-texto,
+    .pb-app .linea-fila.rutina .linea-hora { color: var(--text-faint); font-weight: 500; }
+    .pb-app .linea-fila.rutina .linea-icono { color: var(--text-faint); font-size: 1.25rem; line-height: 0.6; }
     .pb-app .linea-pie { font-size: 0.75rem; color: var(--text-muted); margin: 12px 0 0; }
+
+    /* ---- Pasada de limpieza general -------------------------------------
+       Tres estilos de fila convivian (bloque-rutina, milestone-row y las de
+       la linea del dia) con separadores distintos: uno punteado, otro solido
+       y otro suave. Se igualan al mas ligero, que es el que se lee mejor en
+       listas largas. */
+    .pb-app .bloque-rutina,
+    .pb-app .milestone-row {
+      border-bottom: 1px solid var(--line-soft);
+      padding: 11px 0;
+      align-items: center;
+    }
+    .pb-app .bloque-rutina .hora { color: var(--text-faint); font-size: 0.8125rem; }
+    .pb-app .bloque-rutina .et { font-size: 0.9375rem; font-weight: 600; }
+    .pb-app .bloque-rutina .tag { font-size: 0.78125rem; color: var(--text-muted); }
+    .pb-app .milestone-row .txt { font-size: 0.9375rem; }
+    .pb-app .milestone-row .meta { font-size: 0.78125rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* Tarjetas con mas aire y titulos menos gritones. */
+    .pb-app .card { padding: var(--gap-4) var(--gap-5); }
+    .pb-app .card h2 {
+      font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.02em;
+      margin: 0 0 var(--gap-3); text-transform: none;
+    }
+    .pb-app .card h2 .n {
+      font-weight: 500; font-size: 0.78125rem; color: var(--text-muted);
+      font-family: var(--serif); letter-spacing: 0;
+    }
+    .pb-app .empty-state, .pb-app .linea-vacio {
+      text-align: center; color: var(--text-muted); font-size: 0.875rem;
+      line-height: 1.6; padding: var(--gap-5) var(--gap-3);
+    }
+
+    /* Los recuadros de datos, sin caja dentro de caja. */
+    .pb-app .stat-grid { gap: var(--gap-3); }
+    .pb-app .stat-tile { background: transparent; padding: 0; text-align: center; }
+    .pb-app .stat-tile .num { font-size: 1.375rem; letter-spacing: -0.02em; }
+    .pb-app .stat-tile .lab {
+      font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    /* Salvo los que llevan semaforo, que necesitan su fondo para significar. */
+    .pb-app .stat-tile.su-bien, .pb-app .stat-tile.su-justo,
+    .pb-app .stat-tile.su-bajo, .pb-app .stat-tile.su-alto {
+      padding: var(--gap-3) var(--gap-2); border-radius: var(--r-md);
+    }
 
     @media (max-width: 420px) {
       .pb-app .comida-item { flex-wrap: wrap; }
@@ -6975,7 +7025,7 @@ function generarCalendario(opts) {
 
   for (let i = 0; i < totalDias; i++) {
     const fecha = new Date(inicio.getTime() + i * 86400000);
-    const iso = fecha.toISOString().slice(0, 10);
+    const iso = isoLocal(fecha);
     const edad = edadEnMeses(fechaNacimiento, fecha);
     const banda = bandaRutina(rutina, edad.meses);
     const formula = bandaFormula(edad.meses);
@@ -7173,7 +7223,14 @@ function parseVaccineAgeMonths(ageStr) {
 
 /* ======================== estado / persistencia ======================== */
 const HOY_REAL = new Date();
-const HOY_ISO = HOY_REAL.toISOString().slice(0,10);
+/* Fecha en HORA LOCAL, nunca con toISOString(): eso devuelve UTC, y en Bogota
+   (UTC-5) a partir de las 19:00 la app se creia que ya era el dia siguiente,
+   cambiando el plan del dia, "hoy" en el calendario y donde caen las tomas. */
+function isoLocal(d) {
+  const p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+const HOY_ISO = isoLocal(HOY_REAL);
 const STORAGE_KEY = "cuchara.estado.v2";
 
 function defaultState() {
@@ -7655,6 +7712,9 @@ function abrirDrawer(html) {
 function cerrarDrawer() {
   document.getElementById("pb-drawer-bg").classList.remove("open");
   document.getElementById("pb-drawer").classList.remove("open");
+  // Sin esto, quien mira "quien esta delante" seguiria creyendo que el panel
+  // sigue abierto y lo reabriria al guardar una toma desde Hoy.
+  DRAWER_ISO_ACTUAL = null;
 }
 
 /* ======================== render: header ======================== */
@@ -7721,104 +7781,10 @@ function comoTextoAlimento(a) {
   return partes.join(" · ");
 }
 
-function htmlBloqueComida(b, marcarFn) {
-  const items = b.alimentos.map(a => {
-    // La nota del planning ("½ cdita", "máx. 1 vez/semana") no sustituye a la
-    // cantidad: se muestran las dos salvo que la nota ya sea una cantidad.
-    const cuanto = a.cantidad || (a.porcion.gramos + " (" + a.porcion.cucharadas + ")");
-    const cuantoTexto = a.nota
-      ? `Cuánto: ${capitalizar(a.nota)}${/cdita|cucharad/i.test(a.nota) ? "" : " · " + cuanto}`
-      : `Cuánto: ${cuanto}`;
-    const nuevoBadge = a.esNuevo ? '<span class="nuevo-badge">● NUEVO</span>' : '';
-    // Algunos alimentos del planning (frutas locales colombianas, alcachofa)
-    // no tienen ficha propia: se muestran igual, pero sin enlace ni botones.
-    const titulo = a.id
-      ? `<span class="nombre-link" onclick="PB.cerrarDrawer();PB.irA('alimento','${a.id}')">${capitalizar(a.nombre)}${nuevoBadge}</span>`
-      : `<span class="nombre-link sin-ficha">${capitalizar(a.nombre)}${nuevoBadge}</span>`;
-    const como = comoTextoAlimento(a);
-    const forma = formaDeDarlo(a);
-    const est = a.id ? estadoActual(a.id) : null;
-    const acciones = a.id
-      ? `<div class="quick-actions">
-           <button class="${est === 'tolerado' ? 'on-tolerado' : ''}" onclick="${marcarFn}('${a.id}','tolerado')">✓ probado</button>
-           <button class="${est === 'reaccion' ? 'on-reaccion' : ''}" onclick="${marcarFn}('${a.id}','reaccion')">⚠️ reacción</button>
-         </div>`
-      : "";
-    return `<div class="item-alimento">
-      ${titulo}
-      ${forma ? `<div class="como-dar">${forma}</div>` : ""}
-      ${a.opciones ? `<div class="opciones-dia"><span class="op-tit">Qué le pones:</span>
-          <ul>${a.opciones.map(o => `<li>${o}</li>`).join("")}</ul></div>` : ""}
-      <div class="como-cuanto">${como ? como + " · " : ""}${cuantoTexto}</div>
-      ${a.id ? `<button type="button" class="ver-receta" onclick="PB.cerrarDrawer();PB.irA('alimento','${a.id}')">Ver la receta paso a paso →</button>` : ""}
-      ${acciones}
-    </div>`;
-  }).join("");
-  return `<div class="bloque-comida">
-    <div class="hora mono">${b.hora}</div>
-    <div style="flex:1">
-      <div class="et-comida">${b.etiqueta}</div>
-      ${items || '<div class="faint">Solo fórmula en este momento del día.</div>'}
-    </div>
-  </div>`;
-}
+/* Aqui vivian htmlDiaCompleto y sus bloques (comida, rutina, toma registrada
+   y toma sugerida): la vista del dia con campos abiertos. La sustituyo
+   htmlLineaDelDia, que usan tanto "Hoy" como el panel del calendario. */
 
-function htmlBloqueOtro(b) {
-  return `<div class="bloque-rutina"><div class="hora mono">${b.hora}</div><div><div class="et">${b.etiqueta}</div></div></div>`;
-}
-
-// Toma ya registrada: hora Y ml editables in situ, mas boton de quitar.
-function htmlBloqueTomaRegistrada(t, refrescarFn) {
-  return `<div class="bloque-toma">
-    <input class="hora-input mono" type="time" id="hora-${t.id}" value="${t.hora}" onchange="${refrescarFn}.editar('${t.id}', this.value, document.getElementById('ml-${t.id}').value)">
-    <span class="faint" style="flex:1">Toma</span>
-    <input class="ml-input" id="ml-${t.id}" type="number" min="0" step="10" value="${t.ml}" onchange="${refrescarFn}.editar('${t.id}', document.getElementById('hora-${t.id}').value, this.value)">
-    <span class="faint">ml</span>
-    <button class="anadir-toma-mini" onclick="${refrescarFn}.siguienteToma('${t.fecha}','${t.hora}')" title="Añadir otra toma después (p. ej. si comió poco)">+</button>
-    <button class="quitar-toma" onclick="${refrescarFn}.quitar('${t.id}')" title="Eliminar">✕</button>
-  </div>`;
-}
-
-// Hora sugerida por la rutina sin toma registrada todavia: fila compacta
-// para anadirla ahi mismo (la hora sigue siendo editable antes de guardar).
-function htmlBloqueTomaSugerida(fecha, sugerida, refrescarFn) {
-  const uid = `sug-${fecha}-${sugerida.hora}`;
-  return `<div class="bloque-toma toma-sugerida">
-    <input class="hora-input mono" type="time" id="hora-${uid}" value="${sugerida.hora}">
-    <span class="faint" style="flex:1">${sugerida.etiqueta}</span>
-    <input class="ml-input" type="number" min="0" step="10" placeholder="ml" id="ml-${uid}" onkeydown="if(event.key==='Enter'){${refrescarFn}.anadirDesde('${fecha}','${uid}');}">
-    <span class="faint">ml</span>
-    <button class="anadir-toma-mini" onclick="${refrescarFn}.anadirDesde('${fecha}','${uid}')" title="Registrar">+</button>
-  </div>`;
-}
-
-// Intercala comidas/colaciones, tomas (registradas y sugeridas pendientes) y
-// otros bloques (siesta, bano, sueno) por hora, todo en una sola linea de
-// tiempo — asi se ve de un vistazo el dia completo, como la version original.
-function htmlDiaCompleto(dia, marcarFn, refrescarFn) {
-  const registradas = tomasDelDia(dia.fecha);
-  const horasRegistradas = new Set(registradas.map(t => t.hora));
-  const sugeridasPendientes = dia.tomasSugeridas.filter(t => !horasRegistradas.has(t.hora));
-
-  const bloques = [
-    ...dia.comidas.map(b => ({ hora: b.hora, html: htmlBloqueComida(b, marcarFn) })),
-    ...dia.otros.map(b => ({ hora: b.hora, html: htmlBloqueOtro(b) })),
-    ...registradas.map(t => ({ hora: t.hora, html: htmlBloqueTomaRegistrada(t, refrescarFn) })),
-    ...sugeridasPendientes.map(t => ({ hora: t.hora, html: htmlBloqueTomaSugerida(dia.fecha, t, refrescarFn) })),
-  ].sort((a, b) => a.hora.localeCompare(b.hora));
-
-  let html = bloques.map(b => b.html).join("");
-  html += `<div class="bloque-toma toma-extra">
-    <input class="hora-input mono" type="time" id="hora-extra-${dia.fecha}" value="${nuevaHoraSugerida()}">
-    <span class="faint" style="flex:1">Toma extra</span>
-    <input class="ml-input" type="number" min="0" step="10" placeholder="ml" id="ml-extra-${dia.fecha}" onkeydown="if(event.key==='Enter'){${refrescarFn}.anadirExtra('${dia.fecha}');}">
-    <span class="faint">ml</span>
-    <button class="anadir-toma-mini" onclick="${refrescarFn}.anadirExtra('${dia.fecha}')" title="Añadir toma extra">+</button>
-  </div>`;
-  const total = totalMlDia(dia.fecha);
-  html += `<div class="faint" style="text-align:right;margin-top:6px">Total leche: <b>${total} ml</b></div>`;
-  return html;
-}
 function nuevaHoraSugerida() {
   const d = new Date();
   return `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
@@ -7945,6 +7911,7 @@ function htmlComidaDelDia(dia, marcarFn) {
             ${capitalizar(a.nombre)}${a.esNuevo ? '<span class="nuevo-badge">NUEVO</span>' : ''}
           </div>
           <div class="comida-meta">${horas.join(" · ")}${cuanto ? " · " + cuanto : ""}</div>
+          <div class="comida-como">${formaDeDarlo(a)}</div>
           ${marca ? `<div class="comida-hecho">${est === "reaccion" ? "Reacción" : "Probado"} a las ${marca}</div>` : ""}
         </div>
         ${a.id ? `<div class="comida-acciones">
@@ -8001,9 +7968,13 @@ function duracionCompacta(min) {
 
 function htmlLineaDelDia(dia, refrescarFn) {
   const tomas = tomasDelDia(dia.fecha);
-  const horasHechas = new Set(tomas.map(t => t.hora));
-  const pendientes = dia.tomasSugeridas.filter(t => !horasHechas.has(t.hora));
   const suenios = sueniosDelDia(dia.fecha);
+  /* Solo lo que ha pasado de verdad. Antes se mezclaban aqui las tomas que la
+     rutina espera y los bloques del plan, y la lista se llenaba de filas
+     "Apuntar" que no eran registros: el plan ya esta arriba. */
+  const marcados = alimentosParaMarcar(dia)
+    .filter(({ a }) => a.id && marcaDeHoy(a.id))
+    .map(({ a }) => ({ a, hora: marcaDeHoy(a.id), estado: estadoActual(a.id) }));
 
   const filas = [
     ...tomas.map(t => ({ hora: t.hora, html: `
@@ -8022,20 +7993,13 @@ function htmlLineaDelDia(dia, refrescarFn) {
           <span class="linea-sub">${s.enCurso ? "en curso" : "hasta las " + s.fin}</span></span>
         <span class="linea-valor">${s.enCurso ? "—" : duracionCorta(s.minutos)}</span>
       </div>` })),
-    ...dia.comidas.map(b => ({ hora: b.hora, html: `
+    ...marcados.map(m => ({ hora: m.hora, html: `
       <div class="linea-fila estatica">
-        <span class="linea-hora mono">${b.hora}</span>
-        <span class="linea-icono comida" aria-hidden="true">🥣</span>
-        <span class="linea-texto">${b.etiqueta}
-          <span class="linea-sub">${b.alimentos.map(a => capitalizar(a.nombre)).join(", ") || "—"}</span></span>
+        <span class="linea-hora mono">${m.hora}</span>
+        <span class="linea-icono" aria-hidden="true">${m.estado === "reaccion" ? "⚠️" : "🥣"}</span>
+        <span class="linea-texto">${capitalizar(m.a.nombre)}
+          <span class="linea-sub">${m.estado === "reaccion" ? "con reacción" : "probado"}</span></span>
       </div>` })),
-    ...pendientes.map(t => ({ hora: t.hora, html: `
-      <button type="button" class="linea-fila pendiente" onclick="${refrescarFn}.nuevaToma('${dia.fecha}','${t.hora}')">
-        <span class="linea-hora mono">${t.hora}</span>
-        <span class="linea-icono toma" aria-hidden="true">🍼</span>
-        <span class="linea-texto">${t.etiqueta}</span>
-        <span class="linea-valor apuntar">Apuntar</span>
-      </button>` })),
   ].sort((a, b) => a.hora.localeCompare(b.hora));
 
   const total = totalMlDia(dia.fecha);
@@ -8043,7 +8007,7 @@ function htmlLineaDelDia(dia, refrescarFn) {
 
   return `<div class="card">
     <div class="linea-cab">
-      <h2>Día por horas</h2>
+      <h2>Registrado hoy</h2>
       <button type="button" class="btn-anadir" onclick="${refrescarFn}.nuevaToma('${dia.fecha}')">+ Toma</button>
     </div>
     <div class="linea-resumen">
@@ -8053,8 +8017,8 @@ function htmlLineaDelDia(dia, refrescarFn) {
     </div>
     ${filas.length
       ? `<div class="linea">${filas.map(f => f.html).join("")}</div>`
-      : `<div class="empty-state">Todavía no hay nada apuntado hoy.</div>`}
-    <p class="linea-pie">Las siestas salen de lo que apuntes en <b>Sueño</b>.</p>
+      : `<div class="linea-vacio">Todavía no hay nada apuntado hoy.<br>
+           Las tomas se añaden con <b>+ Toma</b> y las siestas desde <b>Sueño</b>.</div>`}
   </div>`;
 }
 
@@ -8081,12 +8045,18 @@ function guardarToma(fecha, id) {
   if (ml === "" || Number(ml) < 0) { if (av) { av.textContent = "Pon los mililitros."; av.hidden = false; } return; }
   if (id) editarToma(id, hora, ml); else agregarToma(fecha, hora, ml);
   cerrarModal();
-  renderHoy(document.getElementById("view-hoy"));
+  refrescarTrasToma();
 }
 function borrarToma(id) {
   eliminarToma(id);
   cerrarModal();
-  renderHoy(document.getElementById("view-hoy"));
+  refrescarTrasToma();
+}
+/* El modal de toma se abre desde "Hoy" y tambien desde el panel del dia del
+   calendario: hay que repintar el que este delante, no siempre "Hoy". */
+function refrescarTrasToma() {
+  if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
+  else renderHoy(document.getElementById("view-hoy"));
 }
 
 /* ---- Formularios de registro plegados ----------------------------------
@@ -8094,9 +8064,11 @@ function borrarToma(id) {
    entras a mirar y no a apuntar. Ahora van detras de un "+": la pestaña se
    abre limpia y el formulario aparece cuando lo pides. */
 const REGISTRO_ABIERTO = {};
-function toggleRegistro(vista) {
-  REGISTRO_ABIERTO[vista] = !REGISTRO_ABIERTO[vista];
-  irA(vista);
+/* La clave puede no ser el id de la vista (p.ej. "pediatra-informe" vive en
+   la vista "pediatra"): se navega a la parte de antes del guion. */
+function toggleRegistro(clave) {
+  REGISTRO_ABIERTO[clave] = !REGISTRO_ABIERTO[clave];
+  irA(clave.split("-")[0]);
 }
 function cerrarRegistro(vista) { REGISTRO_ABIERTO[vista] = false; }
 function htmlRegistro(vista, etiqueta, cuerpo) {
@@ -8362,7 +8334,11 @@ function abrirDiaCalendario(iso) {
   if (dia.notaSemana) {
     html += `<p class="pb-nota-plan pb-nota-semana">${esc2(dia.notaSemana)}</p>`;
   }
-  html += `<div style="margin-top:12px">${htmlDiaCompleto(dia, "PB.marcarEstadoRapidoDrawer", "PB.TOMAS_DRAWER")}</div>`;
+  /* El panel del dia usa la misma linea temporal que "Hoy": antes se quedaba
+     con la version antigua de campos abiertos y las dos pantallas del mismo
+     dato se veian distintas. */
+  html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoDrawer");
+  html += htmlLineaDelDia(dia, "PB.TOMAS_DRAWER");
   abrirDrawer(html);
 }
 
@@ -8591,7 +8567,7 @@ function htmlRegistroLeche() {
   const lunes = new Date(hoy.getTime() - diaSemana * 86400000);
   let totalSemana = 0, diasConDatoSemana = 0;
   for (let i = 0; i < 7; i++) {
-    const f = new Date(lunes.getTime() + i * 86400000).toISOString().slice(0, 10);
+    const f = isoLocal(new Date(lunes.getTime() + i * 86400000));
     if (porDia[f]) { totalSemana += porDia[f]; diasConDatoSemana++; }
   }
 
@@ -9590,10 +9566,11 @@ function renderPediatra(el) {
     <div class="campo"><label>Notas de la consulta</label><textarea id="pv-notes" placeholder="Qué dijo el pediatra, indicaciones..."></textarea></div>
     <button class="btn-primario" onclick="PB.savePediatricVisit()">Guardar visita</button>
   `);
-  html += `<div class="card"><h2>Informe para la consulta</h2>
-    <div class="faint" style="margin-top:-4px">Marca lo que quieres incluir y el rango de fechas. Se abre el diálogo de impresión: elige <b>Guardar como PDF</b>.</div>
-    <div id="infc-panel">${htmlInformeCompleto()}</div>
-  </div>`;
+  /* El selector del informe ocupaba media pantalla nada mas entrar. Va detras
+     de su propio boton, como los formularios de registro. */
+  html += htmlRegistro("pediatra-informe", "Generar informe para la consulta",
+    `<div class="faint" style="margin-top:-4px;margin-bottom:10px">Marca lo que quieres incluir y el rango de fechas. Se abre el diálogo de impresión: elige <b>Guardar como PDF</b>.</div>
+     <div id="infc-panel">${htmlInformeCompleto()}</div>`);
 
   html += `<div class="card"><h2>Historial de visitas</h2>`;
   if (!sorted.length) html += `<div class="faint">Sin visitas registradas.</div>`;
@@ -9680,10 +9657,8 @@ function colorSueno(estado) {
 }
 
 /* ---- agregacion -------------------------------------------------------- */
-function isoDeFecha(d) {
-  const p = n => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
-}
+/* Alias historico de isoLocal: una sola implementacion para toda la app. */
+const isoDeFecha = isoLocal;
 /* Minutos dormidos por dia natural. Un sueño que cruza la medianoche se
    reparte entre los dos dias: si no, una noche de 23:00 a 07:00 dejaria el
    dia siguiente a cero y el calendario mentiria. */
@@ -9913,7 +9888,7 @@ function renderSuenoChart() {
     const media = totalD ? totalH / totalD : 0;
     const e = estadoSueno(media, meses);
     resumen.innerHTML = `<div><span class="su-total">${totalH.toFixed(1)} h</span>
-        <span class="faint">en ${totalD} días registrados</span></div>
+        <span class="faint">en ${totalD} ${totalD === 1 ? "día registrado" : "días registrados"}</span></div>
       ${media ? `<div class="su-badge su-${e}">Media ${media.toFixed(1)} h/día · ${SUENO_TEXTO[e]}</div>` : `<div class="faint">Aún no hay sueño registrado en este periodo.</div>`}`;
   }
 
@@ -20255,7 +20230,7 @@ function boot(vistaInicial) {
     function mostrarAlta() {
       const el = document.getElementById("alta-hogar");
       if (!el) return;
-      const hoy = new Date().toISOString().slice(0, 10);
+      const hoy = isoLocal(new Date());
       el.innerHTML = `<form class="gate-box" id="alta-form" autocomplete="off">
           <h1 class="gate-titulo">Bienvenida a Niblo</h1>
           <p class="gate-subtitulo">Cuéntanos de quién vas a llevar el seguimiento. Tus datos son solo tuyos: nadie más los ve.</p>
