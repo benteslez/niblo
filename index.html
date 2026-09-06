@@ -5390,12 +5390,9 @@
        En em, cuando la palabra no cabe, el boton salta de linea. */
     .pb-app .seg-btns button { flex: 1; min-width: 6.5em; border: 1px solid var(--border); background: var(--bg-card); border-radius: 10px; padding: 9px 6px; font-size: 0.78125rem; font-weight: 700; cursor: pointer; color: var(--text); }
     .pb-app .seg-btns button.on.tolerado { background: var(--green-soft); color: var(--green); border-color: transparent; }
-    .pb-app .seg-btns button.on.probando { background: var(--amber-soft); color: var(--amber); border-color: transparent; }
     .pb-app .seg-btns button.on.reaccion { background: var(--red-soft); color: var(--red); border-color: transparent; }
     /* Rechazo no es un problema de salud, es una preferencia: gris, no color. */
     .pb-app .seg-btns button.on.rechazo { background: var(--bg-soft); color: var(--text); border-color: var(--border); }
-    /* Con cuatro botones ya no caben a 6,5 em: se aprieta la caja, no la letra. */
-    .pb-app .seg-btns.cuatro button { min-width: 4.6em; padding-left: 4px; padding-right: 4px; }
     .pb-app .mes-header { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px; }
     .pb-app .mes-header h3 { font-size: 0.9375rem; margin: 0; text-transform: capitalize; }
     .pb-app .grid-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
@@ -6099,7 +6096,7 @@
       transition: background .15s, color .15s;
     }
     .pb-app .seg-btns button.on.tolerado,
-    .pb-app .seg-btns button.on.probando,
+    .pb-app .seg-btns button.on.rechazo,
     .pb-app .seg-btns button.on.reaccion { font-weight: 600; }
     .pb-app .item-alimento .quick-actions button {
       border: none;
@@ -8337,6 +8334,11 @@ function alimentosParaMarcar(dia) {
    ofrecer un mes despues, que es justo cuando ya nadie se acuerda.
    "Nuevo" es no haberlo probado nunca, no el dia 1 del plan: si ya se le dio
    antes por su cuenta, de nuevo no tiene nada. */
+/* "Probando" ya no tiene boton: era el unico de los cuatro que no es un
+   resultado, y el proceso ya lo cuenta el propio plan con su "Dia X de Y".
+   Se queda en el modelo para poder leer los apuntes antiguos —si no,
+   desaparecerian sin decir nada de la hoja de "que puede comer"— y se puede
+   corregir desde el dialogo de edicion, que mantiene la opcion. */
 const PASTILLA_ESTADO = {
   probando: { cls: "limite", et: "Probando" },
   tolerado: { cls: "ok",     et: "Tolerado" },
@@ -8345,13 +8347,14 @@ const PASTILLA_ESTADO = {
 };
 function pastillaAlimento(id) {
   const hist = (ESTADO[id] && ESTADO[id].historial) || [];
-  if (!hist.length) return { cls: "nuevo", et: "Nuevo", reacciones: [] };
-  const ultimo = hist[hist.length - 1].resultado;   // historial ordenado por fecha
-  const p = PASTILLA_ESTADO[ultimo];
+  const ultimo = hist.length ? hist[hist.length - 1].resultado : null;   // ordenado por fecha
+  const p = ultimo ? PASTILLA_ESTADO[ultimo] : { cls: "nuevo", et: "Nuevo" };
   if (!p) return null;
   /* Si el estado actual ya es ese, la pastilla avisa de sobra; las marcas son
      para el caso contrario: hoy lo tolera, pero un dia le sento mal o no lo
-     quiso, y eso no se recuerda un mes despues. */
+     quiso, y eso no se recuerda un mes despues.
+     Una sola salida a proposito: con dos, la rama de "Nuevo" se quedo sin
+     "rechazos" y cualquier alimento sin probar reventaba la tarjeta entera. */
   const pasadas = r => ultimo === r ? [] : hist.filter(h => h.resultado === r).map(h => h.fecha);
   return { cls: p.cls, et: p.et, reacciones: pasadas("reaccion"), rechazos: pasadas("rechazo") };
 }
@@ -8432,9 +8435,7 @@ function htmlComidaDelDia(dia, marcarFn) {
         ${marca ? `<div class="comida-hecho">${
           { reaccion: "Reacción", probando: "Probando", tolerado: "Tolerado", rechazo: "Rechazo" }[est]
           || "Marcado"} a las ${marca}</div>` : ""}
-        ${a.id ? `<div class="seg-btns cuatro">
-          <button type="button" class="${est === 'probando' ? 'on probando' : ''}"
-            onclick="${marcarFn}('${a.id}','probando')" aria-pressed="${est === 'probando'}">Probando</button>
+        ${a.id ? `<div class="seg-btns">
           <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}"
             onclick="${marcarFn}('${a.id}','tolerado')" aria-pressed="${est === 'tolerado'}">Tolerado</button>
           <button type="button" class="${est === 'rechazo' ? 'on rechazo' : ''}"
@@ -9086,8 +9087,7 @@ function renderAlimento(el, id) {
       ${a.flags.alergenico ? '<span class="pill limite">⚠️ alergénico</span>' : ''}
       ${a.flags.asfixia ? '<span class="pill evitar">🚫 asfixia</span>' : ''}
     </div>
-    <div class="seg-btns cuatro">
-      <button class="${est==='probando'?'on probando':''}" onclick="PB.marcarEstadoDesdeFicha('${a.id}','probando')">Probando</button>
+    <div class="seg-btns">
       <button class="${est==='tolerado'?'on tolerado':''}" onclick="PB.marcarEstadoDesdeFicha('${a.id}','tolerado')">Tolerado</button>
       <button class="${est==='rechazo'?'on rechazo':''}" onclick="PB.marcarEstadoDesdeFicha('${a.id}','rechazo')">Rechazo</button>
       <button class="${est==='reaccion'?'on reaccion':''}" onclick="PB.marcarEstadoDesdeFicha('${a.id}','reaccion')">Reacción</button>
