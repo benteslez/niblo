@@ -4892,6 +4892,13 @@
          externas: hay que igualar lo que cada uno trae de serie. */
       font: inherit; color: inherit; cursor: pointer; text-decoration: none;
     }
+    .hub-card-esqueleto {
+      pointer-events: none; box-shadow: none;
+      background: var(--bg-soft); border-color: transparent;
+      animation: hub-latido 1.1s ease-in-out infinite;
+    }
+    @keyframes hub-latido { 0%,100% { opacity: .55 } 50% { opacity: .85 } }
+    @media (prefers-reduced-motion: reduce) { .hub-card-esqueleto { animation: none } }
     .hub-card:hover {
       transform: translateY(-2px);
       box-shadow: var(--sh-3);
@@ -19179,7 +19186,14 @@ function boot(vistaInicial) {
 
     /* Trae el hogar del usuario. RLS ya filtra: solo llegan los suyos. Si no
        tiene ninguno, queda en false y la app pide el alta. */
+    /* sesion.hogar vale null tanto mientras se carga como cuando no hay tabla,
+       asi que no sirve para saber si ya se sabe algo. Esta bandera si. */
+    let hogarResuelto = false;
+
     async function cargarHogar() {
+      /* Sin sesion no se ha resuelto nada: si aqui se marcara como resuelto,
+         una llamada de antes de entrar dejaria la bandera en alto y el hub
+         volveria a pintar todas las areas al iniciar sesion. */
       if (!sesion.supabase.token) { sesion.hogar = null; return null; }
       try {
         const filas = await supaFetch("/rest/v1/hogares?select=id,nombre,areas");
@@ -19189,10 +19203,13 @@ function boot(vistaInicial) {
         // app: se sigue con el comportamiento de antes.
         if (/(42P01|does not exist|Could not find the table)/i.test(e.message || "")) {
           sesion.hogar = null;
+          hogarResuelto = true;
           return null;
         }
+        hogarResuelto = true;
         throw e;
       }
+      hogarResuelto = true;
       return sesion.hogar;
     }
     function hogarId() { return sesion.hogar && sesion.hogar.id ? sesion.hogar.id : null; }
@@ -19218,6 +19235,10 @@ function boot(vistaInicial) {
     /* Areas visibles: las del hogar. Sin hogar cargado, las de siempre. */
     function areasVisibles() {
       const h = sesion.hogar;
+      /* Hasta saber de que hogar es la sesion no se pinta ningun area: antes
+         se pintaban todas y luego se quitaban las que no tocan, asi que las de
+         otro hogar se veian medio segundo antes de desaparecer. */
+      if (sesion.supabase.token && !hogarResuelto) return null;
       if (!h || !Array.isArray(h.areas)) return AREAS;
       return AREAS.filter(a => h.areas.indexOf(a.id) >= 0);
     }
@@ -20528,7 +20549,7 @@ function boot(vistaInicial) {
     function renderNav() {
       const nav = document.getElementById("nav-secciones");
       // Un hogar que solo tenga "pablo" no debe ver chips de las demas areas.
-      const permitidas = new Set(areasVisibles().map(a => a.id));
+      const permitidas = new Set((areasVisibles() || []).map(a => a.id));
       const sub = document.getElementById("nav-subsecciones");
       nav.innerHTML = "";
       sub.innerHTML = "";
@@ -20614,7 +20635,13 @@ function boot(vistaInicial) {
       /* Las areas externas se pintan como enlace, no como boton: asi el
          navegador hace su trabajo (abrir en otra pestana, copiar el enlace) y
          el listener del grid, que busca button.hub-card, no las intercepta. */
-      grid.innerHTML = areasVisibles().map(a => {
+      const visibles = areasVisibles();
+      if (visibles === null) {
+        // Esqueleto del mismo tamaño: la pagina no da un salto al llegar.
+        grid.innerHTML = '<span class="hub-card hub-card-esqueleto" aria-hidden="true"></span>'.repeat(4);
+        return;
+      }
+      grid.innerHTML = visibles.map(a => {
         const cuerpo = `<span class="hub-card-icono" aria-hidden="true">${a.icono}</span>
           <span class="hub-card-nombre">${a.label}</span>
           <span class="hub-card-desc">${a.desc}</span>
@@ -21069,6 +21096,10 @@ function boot(vistaInicial) {
     /* Punto unico tras iniciar sesion: mira si el usuario tiene hogar y, o
        bien le pide el alta, o bien sincroniza y pinta lo que le corresponde. */
     async function arrancarConHogar() {
+      /* El hub ya esta pintado de antes de entrar, con todas las areas porque
+         entonces no habia sesion. Si no se repinta aqui, esas tarjetas se ven
+         hasta que responde el hogar y luego desaparecen las que no tocan. */
+      renderHub();
       try { await cargarHogar(); } catch (_) {}
       try { await cargarMiembros(); } catch (_) {}
       if (altaNecesaria()) { mostrarAlta(); return; }
