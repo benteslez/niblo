@@ -18,11 +18,11 @@
   <meta name="apple-mobile-web-app-title" content="Niblo">
   <meta name="mobile-web-app-capable" content="yes">
 
-  <!-- Google Fonts: Manrope (UI + títulos) y JetBrains Mono (números) -->
+  <!-- Google Fonts: Manrope (UI, titulos y numeros). El codigo usa la mono del sistema. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap">
 
   <style>
     /* ========================================================================
@@ -33,10 +33,12 @@
 
     /* ---- Variables base (independientes del tema) ------------------------- */
     :root {
-      /* tipografias — Manrope para todo (UI + titulos), JetBrains Mono para numeros */
+      /* tipografias — Manrope para todo, con cifras tabulares para los datos.
+         La monoespaciada queda solo para codigo y JSON, y es la del sistema. */
       --font-titulo: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
       --font-ui:     'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
-      --font-num:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+      --font-num:    'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --font-code:   ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 
       /* radios */
       --r-sm: 8px;
@@ -182,6 +184,9 @@
       margin: 0;
     }
     h1 { font-weight: 600; letter-spacing: -0.03em; }
+    /* Sin monoespaciada, lo que mantiene las columnas de numeros cuadradas son
+       las cifras tabulares de Manrope. Se activan para toda la pagina. */
+    body { font-variant-numeric: tabular-nums; }
     .num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
 
     /* ---- Header ---------------------------------------------------------- */
@@ -2406,7 +2411,7 @@
       background: var(--bg-soft);
       padding: 1px 6px;
       border-radius: 4px;
-      font-family: var(--font-num);
+      font-family: var(--font-code);
       font-size: 0.75rem;
     }
     .incidencias {
@@ -2453,7 +2458,7 @@
       border: 1px solid var(--line-soft);
       border-radius: var(--r-md);
       padding: 14px;
-      font-family: var(--font-num);
+      font-family: var(--font-code);
       font-size: 0.71875rem;
       line-height: 1.55;
       overflow: auto;
@@ -2468,7 +2473,7 @@
       background: var(--bg-soft);
       padding: 1px 6px;
       border-radius: 4px;
-      font-family: var(--font-num);
+      font-family: var(--font-code);
       font-size: 0.71875rem;
     }
 
@@ -2476,7 +2481,7 @@
     textarea.plantilla-json {
       width: 100%;
       resize: vertical;
-      font-family: var(--font-num);
+      font-family: var(--font-code);
       font-size: 0.71875rem;
       line-height: 1.55;
       tab-size: 2;
@@ -2510,7 +2515,7 @@
       background: var(--bg-elev);
       border: 1px solid var(--line);
       border-radius: var(--r-pill);
-      font-family: var(--font-num);
+      font-family: var(--font-code);
       font-size: 0.6875rem;
       color: var(--text);
     }
@@ -5241,9 +5246,6 @@
 
     .pb-app a { color: var(--blue); }
     .pb-app button { font-family: inherit; }
-    /* Cifras tabulares en toda la seccion: sin monoespaciada, es lo que
-       mantiene las horas y los mililitros alineados en columna. */
-    .pb-app { font-variant-numeric: tabular-nums; }
     .pb-app .num { font-family: var(--serif); }
     .pb-app .mono { font-family: var(--serif); letter-spacing: -0.02em; }
     .pb-app .view { display: none; }

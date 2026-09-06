@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v69";   // numeros de Pablo en Manrope tabular
+const CACHE_NAME = "niblo-v70";   // toda la app en Manrope tabular; mono solo para codigo
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
