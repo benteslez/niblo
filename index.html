@@ -5607,6 +5607,38 @@
       font-style: normal; font-size: 0.8em; font-weight: 500;
       color: var(--text-faint); margin-left: 2px;
     }
+    /* Aviso de sueño en curso. Rojo porque significa "esto esta pasando ahora
+       mismo", como el punto de una grabacion; el resto del sueño es violeta. */
+    .pb-app .en-curso {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 7px 7px 14px; margin-bottom: var(--gap-3);
+      background: var(--red-soft); border-radius: var(--r-pill);
+      max-width: 640px;
+    }
+    .pb-app .en-curso-punto {
+      flex: none; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--red); animation: pb-latido 1.4s ease-in-out infinite;
+    }
+    @keyframes pb-latido { 0%, 100% { opacity: 1 } 50% { opacity: .2 } }
+    @media (prefers-reduced-motion: reduce) {
+      .pb-app .en-curso-punto { animation: none; }
+    }
+    .pb-app .en-curso-txt {
+      flex: 1; min-width: 0; font-size: 0.875rem; color: var(--red);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pb-app .en-curso-txt b { font-weight: 600; }
+    .pb-app .en-curso-txt span {
+      margin-left: 6px; font-size: 0.8125rem; font-weight: 400;
+      color: color-mix(in srgb, var(--red) 70%, var(--text-muted));
+    }
+    .pb-app .en-curso-stop {
+      flex: none; border: none; background: var(--red); color: #fff;
+      border-radius: var(--r-pill); padding: 6px 14px; font: inherit;
+      font-size: 0.8125rem; font-weight: 600; cursor: pointer;
+    }
+    .pb-app .en-curso-stop:hover { filter: brightness(1.1); }
+
     .pb-app .linea-parar {
       flex: none; font-size: 0.75rem; font-weight: 700; white-space: nowrap;
       padding: 4px 10px; border-radius: var(--r-pill);
@@ -8244,9 +8276,12 @@ function renderHoy(el) {
   const dia = diaDeCalendario(iso);
   if (!dia) { el.innerHTML = `<div class="empty-state">Sin datos de calendario todavía.</div>`; return; }
 
+  /* Mientras duerme, lo unico que hace falta de esta pantalla es poder
+     pararlo: el aviso va por encima incluso de los accesos directos. */
+  let html = htmlSuenoEnCurso();
   /* Los dos registros que se apuntan varias veces al dia, arriba del todo:
      antes la toma estaba al final de la vista y el sueno en otra pestana. */
-  let html = `<div class="acc-rapido">
+  html += `<div class="acc-rapido">
     <button type="button" class="acc-btn" onclick="PB.TOMAS_HOY.nuevaToma('${dia.fecha}')">
       ${iconoLinea("toma")}<span>Registrar toma</span></button>
     <button type="button" class="acc-btn" onclick="PB.modalSueno()">
@@ -8571,6 +8606,22 @@ function guardarToma(fecha, id) {
   cerrarModal();
   refrescarTrasToma();
 }
+/* Sueño en curso: pastilla con el punto parpadeando y el boton de parar. Se
+   mira STATE.sleep entero y no el dia, porque un nocturno que empezo ayer y
+   sigue abierto tiene que salir igual. */
+function htmlSuenoEnCurso() {
+  const activos = STATE.sleep.filter(s => !s.end)
+    .sort((a, b) => new Date(b.start) - new Date(a.start));
+  return activos.map(s => `<div class="en-curso">
+    <span class="en-curso-punto" aria-hidden="true"></span>
+    <span class="en-curso-txt">
+      <b>${s.type === "siesta" ? "Siesta" : "Sueño nocturno"} en curso</b>
+      <span>desde ${fmtHoraCorta(s.start)}</span>
+    </span>
+    <button type="button" class="en-curso-stop" onclick="PB.stopSleep('${s.id}')">Parar</button>
+  </div>`).join("");
+}
+
 /* Alta de sueño sin salir de "Hoy", con los dos modos de la pestaña de Sueño:
    cronometro (queda en curso y se para luego) y manual (desde/hasta).
    Ids propios (sh-*): todas las vistas viven a la vez en el DOM y los del
