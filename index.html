@@ -5360,7 +5360,10 @@
     .pb-app .textura-grid .edad-t { font-size: 0.65625rem; color: var(--text-faint); font-family: var(--serif); }
     .pb-app .textura-grid .val { font-size: 0.75rem; font-weight: 700; margin-top: 3px; }
     .pb-app .seg-btns { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
-    .pb-app .seg-btns button { flex: 1; min-width: 90px; border: 1px solid var(--border); background: var(--bg-card); border-radius: 10px; padding: 9px 6px; font-size: 0.78125rem; font-weight: 700; cursor: pointer; color: var(--text); }
+    /* El minimo va en em, no en px: con el texto al maximo, tres botones de
+       90 px seguian cabiendo en la fila y era la palabra la que se recortaba.
+       En em, cuando la palabra no cabe, el boton salta de linea. */
+    .pb-app .seg-btns button { flex: 1; min-width: 6.5em; border: 1px solid var(--border); background: var(--bg-card); border-radius: 10px; padding: 9px 6px; font-size: 0.78125rem; font-weight: 700; cursor: pointer; color: var(--text); }
     .pb-app .seg-btns button.on.tolerado { background: var(--green-soft); color: var(--green); border-color: transparent; }
     .pb-app .seg-btns button.on.probando { background: var(--amber-soft); color: var(--amber); border-color: transparent; }
     .pb-app .seg-btns button.on.reaccion { background: var(--red-soft); color: var(--red); border-color: transparent; }
@@ -5451,41 +5454,47 @@
     /* ---- Vista de hoy: comida del dia y linea temporal -------------------
        Filas limpias con la hora a la izquierda y el dato a la derecha, sin
        campos abiertos: se apunta desde un modal. */
+    /* Bloque vertical: nombre arriba, detalle debajo y los botones en su propia
+       fila a todo lo ancho. En horizontal, con tres botones al lado del nombre,
+       al texto le quedaban dos palabras por linea. */
     .pb-app .comida-lista { display: flex; flex-direction: column; }
     .pb-app .comida-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      padding: 12px 0; border-bottom: 1px solid var(--line-soft);
+      padding: var(--gap-3) 0; border-bottom: 1px solid var(--line-soft);
     }
-    .pb-app .comida-item:last-child { border-bottom: none; }
-    .pb-app .comida-punto {
-      width: 8px; height: 8px; border-radius: 50%; flex: none; margin-top: 7px;
+    .pb-app .comida-item:first-child { padding-top: 0; }
+    .pb-app .comida-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .pb-app .comida-cab {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     }
-    .pb-app .comida-cuerpo { flex: 1; min-width: 0; }
+    .pb-app .comida-punto { width: 8px; height: 8px; border-radius: 50%; flex: none; }
     .pb-app .comida-nombre {
-      font-weight: 700; font-size: 0.9375rem; letter-spacing: -0.01em;
-      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.02em;
     }
     .pb-app .comida-nombre[onclick] { cursor: pointer; }
     .pb-app .comida-nombre[onclick]:hover { color: var(--blue); }
-    .pb-app .comida-meta { font-size: 0.78125rem; color: var(--text-muted); margin-top: 2px; }
-    .pb-app .comida-como { font-size: 0.8125rem; margin-top: 4px; line-height: 1.45; }
+    /* "Dia 2 de 3" se va a la derecha: es el dato de contexto, no el titulo. */
+    .pb-app .comida-dia {
+      margin-left: auto; font-size: 0.75rem; color: var(--text-faint); white-space: nowrap;
+    }
+    .pb-app .comida-meta { font-size: 0.8125rem; color: var(--text-muted); margin-top: 6px; }
+    .pb-app .comida-como { font-size: 0.875rem; margin-top: 2px; line-height: 1.5; }
     .pb-app .comida-hecho {
-      font-size: 0.75rem; font-weight: 700; color: var(--green); margin-top: 4px;
+      font-size: 0.8125rem; font-weight: 600; color: var(--green); margin-top: 6px;
     }
     .pb-app .comida-item.est-reaccion .comida-hecho { color: var(--red); }
-    .pb-app .comida-acciones { display: flex; gap: 6px; flex: none; }
-    .pb-app .pill-accion {
-      border: 1px solid var(--border); background: var(--bg-card); color: var(--text-muted);
-      border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 0.75rem;
-      font-weight: 700; cursor: pointer; white-space: nowrap;
-      transition: background .15s, color .15s, border-color .15s;
+    .pb-app .comida-item.est-probando .comida-hecho { color: var(--amber); }
+    /* El "por que" va plegado: es contexto que se lee una vez, no cada dia. */
+    .pb-app .comida-porque { margin-top: 10px; }
+    .pb-app .comida-porque > summary {
+      cursor: pointer; font-size: 0.8125rem; font-weight: 600; color: var(--blue);
+      list-style: none; padding: 2px 0;
     }
-    .pb-app .pill-accion:hover { color: var(--text); }
-    .pb-app .pill-accion.on-si { background: var(--green-soft); color: var(--green); border-color: transparent; }
-    .pb-app .pill-accion.on-no { background: var(--red-soft);   color: var(--red);   border-color: transparent; }
-    /* "Probando" es el mismo estado intermedio que en la ficha del alimento:
-       mismo ambar, para que un boton signifique lo mismo en las dos pantallas. */
-    .pb-app .pill-accion.on-quiza { background: var(--amber-soft); color: var(--amber); border-color: transparent; }
+    .pb-app .comida-porque > summary::-webkit-details-marker { display: none; }
+    .pb-app .comida-porque > summary::before { content: "\203A "; display: inline-block; transition: transform .15s; }
+    .pb-app .comida-porque[open] > summary::before { transform: rotate(90deg); }
+    .pb-app .comida-porque > p {
+      margin: 6px 0 0; font-size: 0.8125rem; line-height: 1.55; color: var(--text-muted);
+    }
 
     .pb-app .linea-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .pb-app .linea-cab h2 { margin: 0; }
@@ -5712,11 +5721,6 @@
       padding: var(--gap-3) var(--gap-2); border-radius: var(--r-md);
     }
 
-    @media (max-width: 420px) {
-      .pb-app .comida-item { flex-wrap: wrap; }
-      .pb-app .comida-acciones { width: 100%; padding-left: 18px; }
-      .pb-app .pill-accion { flex: 1; text-align: center; }
-    }
 
     /* ---- Edicion de registros y modal ----------------------------------- */
     .pb-app .ed-row {
@@ -8232,23 +8236,12 @@ function renderHoy(el) {
     <div class="hero-fecha">${fmtFechaLarga(dia.fecha)}</div>
     <div class="hero-titulo">${dia.edadTexto}</div>`;
 
+  /* El alimento nuevo salia aqui con su nombre, su dia y su explicacion, y
+     otra vez debajo en "Que le toca hoy" con la hora y los botones: la misma
+     informacion dos veces. Ahora todo eso vive en la tarjeta del alimento y
+     esta se queda solo con la fecha y la edad. */
   if (dia.fase === "pre") {
     html += `<div class="faint" style="margin-top:8px">Todavía no ha empezado la alimentación complementaria (empieza el ${fmtFechaLarga(FECHA_INICIO)}). Hoy solo se registran tomas de leche.</div>`;
-  } else if (dia.alimentoNuevo) {
-    html += `<div class="libro-box" style="margin-top:12px;border-left:3px solid ${GRUPOS_COLOR[dia.alimentoNuevo.grupo]}">
-      <div class="faint">ALIMENTO NUEVO · DÍA ${dia.alimentoNuevo.dia} DE ${dia.alimentoNuevo.total}</div>
-      <div style="font-weight:800;font-size:1rem;margin-top:2px;cursor:pointer" onclick="PB.irA('alimento','${dia.alimentoNuevo.id}')">${dia.alimentoNuevo.nombre} →</div>
-      <div class="progreso-bar">${Array.from({length: dia.alimentoNuevo.total}).map((_,i)=>`<div class="${i < dia.alimentoNuevo.dia ? "done" : ""}"></div>`).join("")}</div>
-      <div class="faint" style="margin-top:6px">${!dia.alimentoNuevo.primerDia
-        ? "Repetición del mismo alimento para confirmar tolerancia antes de introducir el siguiente. Se ofrece en cada comida del día, alternando con tomas de leche."
-        : (dia.fecha === FECHA_INICIO
-          ? "Primera vez que Pablo prueba un alimento complementario. Los primeros 2-3 días solo verás este alimento repetido — es así a propósito: sin nada más nuevo en la dieta, cualquier reacción se puede identificar con claridad antes de sumar el siguiente."
-          : "Primera vez que lo prueba. Ofrécelo en horario diurno, sin ayunas, y vigila 60–120 min tras la primera exposición si es un alérgeno.")
-      }</div>
-    </div>`;
-    dia.alimentoNuevo.alertas.forEach(reg => {
-      html += `<div class="alerta ${reg.tipo === 'evitar' ? 'evitar' : 'limitar'}"><div class="titulo">${reg.titulo}</div>${reg.detalle}<div class="fuente">${reg.fuente.organismo} · ${reg.fuente.anio}</div></div>`;
-    });
   }
   html += `</div>`;
 
@@ -8277,33 +8270,60 @@ function alimentosParaMarcar(dia) {
   return [...vistos.values()];
 }
 
+/* Por que hoy toca ese alimento. Antes vivia suelto en la cabecera del dia. */
+function textoAlimentoNuevo(dia) {
+  if (!dia.alimentoNuevo.primerDia) {
+    return "Repetición del mismo alimento para confirmar tolerancia antes de introducir el siguiente. Se ofrece en cada comida del día, alternando con tomas de leche.";
+  }
+  if (dia.fecha === FECHA_INICIO) {
+    return "Primera vez que Pablo prueba un alimento complementario. Los primeros 2-3 días solo verás este alimento repetido — es así a propósito: sin nada más nuevo en la dieta, cualquier reacción se puede identificar con claridad antes de sumar el siguiente.";
+  }
+  return "Primera vez que lo prueba. Ofrécelo en horario diurno, sin ayunas, y vigila 60–120 min tras la primera exposición si es un alérgeno.";
+}
+
+/* Un bloque por alimento, en vertical. Antes era una fila horizontal con los
+   botones al lado del nombre: con tres botones el texto se quedaba en una
+   columna de dos palabras. Aqui cada cosa ocupa su linea y no hay ancho que
+   repartir. */
 function htmlComidaDelDia(dia, marcarFn) {
   const lista = alimentosParaMarcar(dia);
   if (!lista.length) return "";
+  const nuevo = dia.alimentoNuevo;
   return `<div class="card">
     <h2>Qué le toca hoy <span class="n">${lista.length} ${lista.length === 1 ? "alimento" : "alimentos"}</span></h2>
     <div class="comida-lista">${lista.map(({ a, horas }) => {
       const est = a.id ? estadoActual(a.id) : null;
       const marca = a.id ? marcaDeHoy(a.id) : null;
       const cuanto = a.cantidad || (a.porcion && a.porcion.gramos) || "";
+      const esElNuevo = !!(nuevo && a.id && nuevo.id === a.id);
       return `<div class="comida-item${est ? " est-" + est : ""}">
-        <span class="comida-punto" style="background:${GRUPOS_COLOR[a.grupo] || "var(--slate)"}"></span>
-        <div class="comida-cuerpo">
-          <div class="comida-nombre"${a.id ? ` onclick="PB.irA('alimento','${a.id}')"` : ""}>
-            ${capitalizar(a.nombre)}${a.esNuevo ? '<span class="nuevo-badge">NUEVO</span>' : ''}
-          </div>
-          <div class="comida-meta">${horas.join(" · ")}${cuanto ? " · " + cuanto : ""}</div>
-          <div class="comida-como">${formaDeDarlo(a)}</div>
-          ${marca ? `<div class="comida-hecho">${est === "reaccion" ? "Reacción" : "Probado"} a las ${marca}</div>` : ""}
+        <div class="comida-cab">
+          <span class="comida-punto" style="background:${GRUPOS_COLOR[a.grupo] || "var(--slate)"}"></span>
+          <span class="comida-nombre"${a.id ? ` onclick="PB.irA('alimento','${a.id}')"` : ""}>${capitalizar(a.nombre)}</span>
+          ${a.esNuevo ? '<span class="nuevo-badge">NUEVO</span>' : ''}
+          ${esElNuevo ? `<span class="comida-dia">Día ${nuevo.dia} de ${nuevo.total}</span>` : ''}
         </div>
-        ${a.id ? `<div class="comida-acciones">
-          <button type="button" class="pill-accion${est === 'probando' ? ' on-quiza' : ''}"
+        ${esElNuevo ? `<div class="progreso-bar">${Array.from({ length: nuevo.total })
+          .map((_, i) => `<div class="${i < nuevo.dia ? "done" : ""}"></div>`).join("")}</div>` : ''}
+        <div class="comida-meta">${horas.join(" · ")}${cuanto ? " · " + cuanto : ""}</div>
+        <div class="comida-como">${formaDeDarlo(a)}</div>
+        ${marca ? `<div class="comida-hecho">${
+          { reaccion: "Reacción", probando: "Probando", tolerado: "Tolerado" }[est] || "Marcado"} a las ${marca}</div>` : ""}
+        ${a.id ? `<div class="seg-btns">
+          <button type="button" class="${est === 'probando' ? 'on probando' : ''}"
             onclick="${marcarFn}('${a.id}','probando')" aria-pressed="${est === 'probando'}">Probando</button>
-          <button type="button" class="pill-accion${est === 'tolerado' ? ' on-si' : ''}"
+          <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}"
             onclick="${marcarFn}('${a.id}','tolerado')" aria-pressed="${est === 'tolerado'}">Tolerado</button>
-          <button type="button" class="pill-accion${est === 'reaccion' ? ' on-no' : ''}"
+          <button type="button" class="${est === 'reaccion' ? 'on reaccion' : ''}"
             onclick="${marcarFn}('${a.id}','reaccion')" aria-pressed="${est === 'reaccion'}">Reacción</button>
         </div>` : ""}
+        ${esElNuevo ? `<details class="comida-porque">
+          <summary>Por qué toca hoy</summary>
+          <p>${textoAlimentoNuevo(dia)}</p>
+          ${nuevo.alertas.map(reg => `<div class="alerta ${reg.tipo === 'evitar' ? 'evitar' : 'limitar'}">
+            <div class="titulo">${reg.titulo}</div>${reg.detalle}
+            <div class="fuente">${reg.fuente.organismo} · ${reg.fuente.anio}</div></div>`).join("")}
+        </details>` : ""}
       </div>`;
     }).join("")}</div>
   </div>`;
@@ -8463,47 +8483,59 @@ function guardarToma(fecha, id) {
   cerrarModal();
   refrescarTrasToma();
 }
-/* Alta de sueño sin salir de "Hoy". Ids propios: todas las vistas viven a la
-   vez en el DOM y los del formulario de la pestaña de Sueño ya existen, asi
-   que reutilizarlos leeria el formulario equivocado.
-   Un solo formulario para los dos casos: con "hasta" queda un sueño cerrado y
-   sin "hasta" queda en curso, que es lo que hacia el cronometro. */
-function modalSueno() {
+/* Alta de sueño sin salir de "Hoy", con los dos modos de la pestaña de Sueño:
+   cronometro (queda en curso y se para luego) y manual (desde/hasta).
+   Ids propios (sh-*): todas las vistas viven a la vez en el DOM y los del
+   formulario de Sueño ya existen, asi que reutilizarlos leeria el otro.
+   Cambiar de modo repinta el dialogo entero, que es lo que deja que el boton
+   de guardar diga lo que va a hacer; el tipo elegido se conserva. */
+let SH_MODO = "crono";
+function modalSueno(modo, tipo) {
+  SH_MODO = modo || "crono";
+  const t = tipo || (document.getElementById("sh-tipo") || {}).value || "siesta";
+  const crono = SH_MODO === "crono";
+  const opts = ["siesta", "nocturno"].map(v =>
+    `<option value="${v}"${v === t ? " selected" : ""}>${v === "siesta" ? "Siesta" : "Sueño nocturno"}</option>`).join("");
   abrirModal("Registrar sueño", `
-    <div class="campo"><label for="sh-tipo">Tipo</label>
-      <select id="sh-tipo">
-        <option value="siesta">Siesta</option>
-        <option value="nocturno">Sueño nocturno</option>
-      </select></div>
-    <div class="grid-campos2">
-      <div class="campo"><label for="sh-ini">Desde</label>
-        <input type="datetime-local" id="sh-ini" value="${nowDatetimeLocal()}"></div>
-      <div class="campo"><label for="sh-fin">Hasta</label>
-        <input type="datetime-local" id="sh-fin"></div>
+    <div class="sueno-modo">
+      <button type="button" class="${crono ? "on" : ""}" onclick="PB.suenoModoRapido('crono')">Cronómetro</button>
+      <button type="button" class="${crono ? "" : "on"}" onclick="PB.suenoModoRapido('manual')">Manual</button>
     </div>
-    <p class="faint" style="margin:8px 0 0">Deja <b>Hasta</b> en blanco si se está durmiendo ahora:
-      queda en curso y lo paras desde la propia lista.</p>
+    <div class="campo"><label for="sh-tipo">Tipo</label><select id="sh-tipo">${opts}</select></div>
+    ${crono
+      ? `<div class="campo"><label for="sh-ini">Empieza</label>
+           <input type="datetime-local" id="sh-ini" value="${nowDatetimeLocal()}"></div>
+         <p class="faint" style="margin:8px 0 0">Queda en curso y lo paras desde la propia lista.</p>`
+      : `<div class="grid-campos2">
+           <div class="campo"><label for="sh-ini">Desde</label>
+             <input type="datetime-local" id="sh-ini" value="${nowDatetimeLocal()}"></div>
+           <div class="campo"><label for="sh-fin">Hasta</label>
+             <input type="datetime-local" id="sh-fin" value="${nowDatetimeLocal()}"></div>
+         </div>`}
     <div class="modal-aviso" id="sh-aviso"></div>`,
     [{ et: "Cancelar", accion: "PB.cerrarModal()" },
-     { et: "Guardar", primario: true, accion: "PB.guardarSuenoRapido()" }]);
+     { et: crono ? "Empezar a dormir" : "Guardar", primario: true, accion: "PB.guardarSuenoRapido()" }]);
+}
+function suenoModoRapido(modo) {
+  modalSueno(modo, (document.getElementById("sh-tipo") || {}).value);
 }
 function guardarSuenoRapido() {
   const av = document.getElementById("sh-aviso");
   const decir = t => { if (av) { av.textContent = t; av.hidden = false; } };
   const type = document.getElementById("sh-tipo").value;
   const ini = document.getElementById("sh-ini").value;
-  const fin = document.getElementById("sh-fin").value;
+  const fin = SH_MODO === "crono" ? "" : ((document.getElementById("sh-fin") || {}).value || "");
   if (!ini) return decir("Pon la hora de inicio.");
-  /* Sin "hasta" el registro queda en curso, y no se puede estar durmiendo
-     desde una hora que todavia no ha llegado: al pararlo daria negativo. */
-  if (!fin && new Date(ini) > new Date()) return decir("Para dejarlo en curso, el inicio no puede ser futuro.");
+  /* Un sueño en curso no puede empezar en el futuro: al pararlo daria una
+     duracion negativa. */
+  if (!fin && new Date(ini) > new Date()) return decir("El inicio no puede ser una hora futura.");
   if (fin) {
     if (new Date(fin) <= new Date(ini)) return decir("La hora de fin tiene que ser posterior a la de inicio.");
     if ((new Date(fin) - new Date(ini)) / 3600000 > 24) return decir("Más de 24 horas seguidas: revisa las fechas.");
   }
   const reg = { id: "sl_" + Date.now().toString(36), type, start: ini, end: fin || null };
-  /* Igual que el cronometro: sin el instante absoluto del inicio, un cambio de
-     zona horaria mientras duerme falsearia la duracion al pararlo. */
+  /* Igual que el cronometro de la pestaña: sin el instante absoluto del
+     inicio, un cambio de zona horaria mientras duerme falsearia la duracion. */
   if (!fin) reg.startMs = new Date(ini).getTime();
   STATE.sleep.push(sellar(reg));
   guardarEstado();
@@ -11239,7 +11271,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
