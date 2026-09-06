@@ -25289,8 +25289,12 @@ function boot(vistaInicial) {
       if (document.getElementById("banner-actualizar")) return;
       const div = document.createElement("div");
       div.id = "banner-actualizar";
-      div.style.cssText = "position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9999;background:#2563eb;color:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.18);font-family:Manrope,system-ui,sans-serif;font-size:0.875rem;font-weight:600;display:flex;align-items:center;gap:12px;";
-      div.innerHTML = '🔄 Hay una versión nueva disponible <button style="background:#fff;color:#2563eb;border:none;border-radius:999px;padding:6px 14px;font-weight:600;cursor:pointer;font-family:inherit;">Actualizar</button>';
+      /* Con left:50% el bloque contenedor solo mide media pantalla: sin
+         width:max-content el aviso se quedaba en 195 px y el texto caia en
+         una columna de una letra. El max-width lo mantiene dentro del movil. */
+      div.style.cssText = "position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:9999;width:max-content;max-width:calc(100vw - 32px);background:#2563eb;color:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.18);font-family:Manrope,system-ui,sans-serif;font-size:0.875rem;font-weight:600;display:flex;align-items:center;gap:12px;";
+      div.innerHTML = '<span style="flex:1 1 auto;min-width:0">🔄 Hay una versión nueva</span>'
+        + '<button style="flex:0 0 auto;background:#fff;color:#2563eb;border:none;border-radius:999px;padding:6px 14px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Actualizar</button>';
       div.querySelector("button").addEventListener("click", () => {
         navigator.serviceWorker.getRegistration().then(reg => {
           if (reg && reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });

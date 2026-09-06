@@ -3,7 +3,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v65";   // inicio sin subtitulo
+const CACHE_NAME = "niblo-v66";   // banner de actualizacion legible en movil
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
