@@ -5486,6 +5486,14 @@
       background: var(--bg-soft); color: var(--text); font-family: var(--serif);
     }
     .pb-app .vac-pendiente { flex: none; font-size: 0.75rem; color: var(--text-faint); }
+    .pb-app .sync-punto {
+      width: 9px; height: 9px; border-radius: 50%; flex: none;
+      background: var(--text-faint);
+    }
+    .pb-app .sync-punto.vivo {
+      background: var(--green);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 22%, transparent);
+    }
     .pb-app .vac-info {
       flex: none; width: 30px; height: 30px; border-radius: 50%;
       border: none; background: transparent; cursor: pointer;
@@ -9259,6 +9267,10 @@ function htmlAvisos() {
 
 /* Hasta ahora un fallo de sincronizacion no se veia por ningun lado: se
    tragaba con un catch vacio. Si algo no sube, aqui se dice. */
+/* Solo repinta si Ajustes esta delante: si no, no hay nada que actualizar. */
+function refrescarAjustes() {
+  if (VISTA_ACTUAL === "ajustes") renderAjustes(document.getElementById("view-ajustes"));
+}
 function htmlEstadoSync() {
   const i = infoSync();
   if (!i) return "";
@@ -9275,9 +9287,12 @@ function htmlEstadoSync() {
   }
   return `<div class="card"><h2>Sincronización</h2>
     <div class="vac-fila" style="border:none;padding:0">
+      <span class="sync-punto${i.enVivo ? " vivo" : ""}" aria-hidden="true"></span>
       <div class="vac-cuerpo">
-        <div class="vac-nombre">${i.estado === "syncing" ? "Sincronizando…" : "Al día"}</div>
-        <div class="vac-dosis">Última: ${cuando}</div>
+        <div class="vac-nombre">${i.estado === "syncing" ? "Sincronizando…" : i.enVivo ? "En vivo" : "Al día"}</div>
+        <div class="vac-dosis">${i.enVivo
+          ? "Los cambios del otro dispositivo llegan solos"
+          : "Última: " + cuando}</div>
       </div>
       <button id="btn-sync-ahora" class="btn-anadir" onclick="PB.sincronizarAhora()">Sincronizar</button>
     </div></div>`;
@@ -10687,7 +10702,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, marcarAvisoVisto, activarNotificaciones, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
@@ -18927,6 +18942,7 @@ function boot(vistaInicial) {
 
         s.ultimoSync = nowISO();
         s.estadoSync = "idle";
+        rtConectar();          // por si el canal se habia caido
         guardarSupabase();
         renderTodo();
         return {
@@ -18992,15 +19008,108 @@ function boot(vistaInicial) {
       return "al día";
     }
 
+
+    /* ========================================================================
+       TIEMPO REAL — el otro movil se entera al instante
+       Subir al guardar ya funcionaba, pero el otro dispositivo no se enteraba
+       hasta que alguien lo abria. Aqui se abre un WebSocket al Realtime de
+       Supabase y, en cuanto cambia la fila del hogar, se baja y se fusiona.
+       Se usa el WebSocket del navegador: sin librerias, como el resto.
+       ======================================================================== */
+    const RT = {
+      ws: null, ref: 0, latido: null, reintento: null, intentos: 0,
+      conectado: false, tablas: ["pablo_estado", "documents", "document_types", "recetas", "ingredientes", "estado_usuario"],
+    };
+
+    function rtEnviar(topic, event, payload) {
+      if (!RT.ws || RT.ws.readyState !== 1) return;
+      RT.ws.send(JSON.stringify({ topic, event, payload: payload || {}, ref: String(++RT.ref) }));
+    }
+
+    function rtConectar() {
+      const s = sesion.supabase;
+      if (!s.token || !s.url || !hogarId()) return;
+      if (RT.ws && (RT.ws.readyState === 0 || RT.ws.readyState === 1)) return;
+      const host = s.url.replace(/^https?:\/\//, "");
+      let ws;
+      try {
+        ws = new WebSocket(`wss://${host}/realtime/v1/websocket?apikey=${encodeURIComponent(s.anonKey)}&vsn=1.0.0`);
+      } catch (_) { return; }
+      RT.ws = ws;
+
+      ws.onopen = () => {
+        RT.intentos = 0;
+        /* Un solo canal con todas las tablas, filtrando por hogar en el propio
+           servidor: asi no llegan cambios de otros hogares ni de rebote. */
+        rtEnviar("realtime:niblo", "phx_join", {
+          config: {
+            broadcast: { self: false },
+            postgres_changes: RT.tablas.map(t => ({
+              event: "*", schema: "public", table: t, filter: `hogar_id=eq.${hogarId()}`,
+            })),
+          },
+          access_token: s.token,
+        });
+        clearInterval(RT.latido);
+        RT.latido = setInterval(() => rtEnviar("phoenix", "heartbeat", {}), 25000);
+      };
+
+      ws.onmessage = (ev) => {
+        let m; try { m = JSON.parse(ev.data); } catch (_) { return; }
+        if (m.event === "phx_reply" && m.topic === "realtime:niblo") {
+          RT.conectado = m.payload && m.payload.status === "ok";
+          renderEstadoSyncPablo();
+          return;
+        }
+        if (m.event !== "postgres_changes") return;
+        /* Llega un cambio del hogar: se baja y se fusiona. No se aplica el
+           payload directamente porque la fusion por registro vive en el sync
+           y hacerlo dos veces seria duplicar reglas. */
+        rtBajarPronto();
+      };
+
+      ws.onclose = () => { RT.conectado = false; clearInterval(RT.latido); rtReintentar(); renderEstadoSyncPablo(); };
+      ws.onerror  = () => { try { ws.close(); } catch (_) {} };
+    }
+
+    /* Varios cambios seguidos (guardar 3 tomas) no disparan 3 sincronizaciones. */
+    let _rtBajarTimer = null;
+    function rtBajarPronto() {
+      clearTimeout(_rtBajarTimer);
+      _rtBajarTimer = setTimeout(() => {
+        sincronizar().catch(() => {});
+      }, 400);
+    }
+
+    function rtReintentar() {
+      clearTimeout(RT.reintento);
+      // Espera creciente hasta 30 s: si no hay red, no machacar.
+      const espera = Math.min(30000, 1000 * Math.pow(2, RT.intentos++));
+      RT.reintento = setTimeout(rtConectar, espera);
+    }
+
+    function rtCerrar() {
+      clearTimeout(RT.reintento); clearInterval(RT.latido);
+      RT.conectado = false;
+      if (RT.ws) { try { RT.ws.onclose = null; RT.ws.close(); } catch (_) {} RT.ws = null; }
+    }
+
+    /* Repinta el estado de sincronizacion de Pablo si esa vista esta delante. */
+    function renderEstadoSyncPablo() {
+      if (typeof PB !== "undefined" && PB.refrescarAjustes) PB.refrescarAjustes();
+    }
+
     /** Auto-sync ligero: solo si está autenticado y autoSync está activo. */
     let _autoSyncTimer = null;
     function programarAutoSync() {
       if (!sesion.supabase.autoSync) return;
       if (!sesion.supabase.token) return;
       clearTimeout(_autoSyncTimer);
+      /* 400 ms: lo justo para agrupar varias pulsaciones seguidas sin que se
+         note la espera. Antes eran 1,5 s. */
       _autoSyncTimer = setTimeout(() => {
-        sincronizar().catch(() => {/* fallo silencioso, queda en estadoSync */});
-      }, 1500);
+        sincronizar().catch(() => {/* queda reflejado en estadoSync */});
+      }, 400);
     }
 
 
@@ -20457,6 +20566,7 @@ function boot(vistaInicial) {
       ocultarAlta();
       renderTodo();
       sincronizar().catch(() => {});
+      rtConectar();
     }
 
     function mostrarAlta() {
@@ -23563,6 +23673,7 @@ function boot(vistaInicial) {
             estado: sesion.supabase.estadoSync,
             ultimoSync: sesion.supabase.ultimoSync,
             error: sesion.supabase.ultimoError,
+            enVivo: RT.conectado,
           }),
           forzar: () => sincronizar(),
         });
@@ -24800,12 +24911,20 @@ function boot(vistaInicial) {
       // ---- Visibilidad: re-pedir wake lock al volver al modo cocina ------
       document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "visible") {
+          /* Al volver a la app se sincroniza ya: es el momento en que mas
+             probable es que el otro movil haya apuntado algo. */
+          if (sesion.supabase.token) { rtConectar(); sincronizar().catch(() => {}); }
           if (sesion.modoCocina.activo) pedirWakeLock();
           // T1: al volver, el siguiente tick recalcula desde finMs - Date.now();
           //     forzamos un tick inmediato para no esperar 250 ms.
           if (sesion.timers.length) tickTimers();
         }
       });
+
+      window.addEventListener("online", () => {
+        if (sesion.supabase.token) { rtConectar(); sincronizar().catch(() => {}); }
+      });
+      window.addEventListener("offline", rtCerrar);
 
       renderTodo();
 
