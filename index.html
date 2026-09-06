@@ -79,8 +79,7 @@
       --accent-bg: #dbeafe;       /* blue-100 */
       --focus:     #2563eb;
       --danger:    #dc2626;
-      --aqua:      #0d9488;       /* teal-600, la pastilla de "nuevo" */
-      --aqua-bg:   #ccfbf1;       /* teal-100 */
+      --verde-nuevo: #166534;     /* green-800, relleno de la pastilla "nuevo" */
     }
 
     /* ---- Tema oscuro ------------------------------------------------------ */
@@ -98,8 +97,7 @@
       --accent-bg: #1e3a5f;
       --focus:     #93c5fd;
       --danger:    #f87171;
-      --aqua:      #5eead4;       /* teal-300, legible sobre fondo oscuro */
-      --aqua-bg:   #134e4a;       /* teal-900 */
+      --verde-nuevo: #15803d;     /* green-700, algo mas vivo sobre fondo oscuro */
     }
 
     /* ---- Colores por tipo de receta — paleta variada y distinguible ----
@@ -2558,8 +2556,14 @@
        ======================================================================== */
     /* (El nivel de fuente ahora escala la raiz: ver "FUENTE" mas abajo.) */
 
-    /* Alto contraste: refuerza tinta y bordes en ambos temas. */
-    html.a11y-alto-contraste {
+    /* Alto contraste: refuerza tinta y bordes en ambos temas.
+       El selector lleva :root y repite [data-tema="claro"] a proposito. Con
+       "html.a11y-alto-contraste" a secas (especificidad 0,1,1) perdia contra
+       :root[data-tema="claro"] (0,2,0), asi que en cuanto tocabas una vez el
+       boton de tema —que es lo que escribe el atributo— el alto contraste
+       dejaba de pintar nada en claro: mismo fondo, misma tinta, mismo acento. */
+    :root.a11y-alto-contraste,
+    :root.a11y-alto-contraste[data-tema="claro"] {
       --bg:        #ffffff;
       --bg-elev:   #ffffff;
       --bg-soft:   #ededed;
@@ -2573,13 +2577,12 @@
       --accent-bg: #ffd9ce;
       --focus:     #0040d0;
       --danger:    #a00000;
-      --aqua:      #00504a;       /* mas tinta: en alto contraste el teal-600 se queda corto */
-      --aqua-bg:   #b8f2e6;
+      --verde-nuevo: #00401c;
       --sh-1: 0 0 0 1px #000;
       --sh-2: 0 0 0 1px #000;
       --sh-3: 0 0 0 2px #000;
     }
-    html.a11y-alto-contraste[data-tema="oscuro"] {
+    :root.a11y-alto-contraste[data-tema="oscuro"] {
       --bg:        #000000;
       --bg-elev:   #060606;
       --bg-soft:   #1a1a1a;
@@ -2593,8 +2596,7 @@
       --accent-bg: #5c2e00;
       --focus:     #60a5fa;
       --danger:    #ff8a8a;
-      --aqua:      #7ffcea;
-      --aqua-bg:   #00312c;
+      --verde-nuevo: #007a30;
       --sh-1: 0 0 0 1px #fff;
       --sh-2: 0 0 0 1px #fff;
       --sh-3: 0 0 0 2px #fff;
@@ -5304,7 +5306,9 @@
     .pb-app .pill.ok { background: var(--green-soft); color: var(--green); }
     .pb-app .pill.limite { background: var(--amber-soft); color: var(--amber); }
     .pb-app .pill.evitar { background: var(--red-soft); color: var(--red); }
-    .pb-app .pill.nuevo { background: var(--aqua-bg); color: var(--aqua); letter-spacing: .04em; }
+    /* "Nuevo" va relleno y no en pastel como los otros tres: no es un estado
+       del historial, es la ausencia de historial, y conviene que se distinga. */
+    .pb-app .pill.nuevo { background: var(--verde-nuevo); color: #fff; }
     .pb-app .pill.info { background: var(--blue-soft); color: var(--blue); }
     .pb-app .pill.neutro { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
@@ -8268,6 +8272,22 @@ function alimentosParaMarcar(dia) {
   return [...vistos.values()];
 }
 
+/* Pastilla de estado del alimento en la tarjeta del dia.
+   La reaccion manda sobre todo lo demas aunque despues se marcara tolerado:
+   si alguna vez le sento mal, eso es lo que hay que ver al volverselo a
+   ofrecer un mes despues, que es justo cuando ya nadie se acuerda.
+   "Nuevo" es no haberlo probado nunca, no el dia 1 del plan: si ya se le dio
+   antes por su cuenta, de nuevo no tiene nada. */
+function pastillaAlimento(id) {
+  const hist = (ESTADO[id] && ESTADO[id].historial) || [];
+  if (!hist.length) return { cls: "nuevo", et: "Nuevo" };
+  if (hist.some(h => h.resultado === "reaccion")) return { cls: "evitar", et: "Reacción" };
+  const ultimo = hist[hist.length - 1].resultado;
+  if (ultimo === "probando") return { cls: "limite", et: "Probando" };
+  if (ultimo === "tolerado") return { cls: "ok", et: "Tolerado" };
+  return null;
+}
+
 /* Por que hoy toca ese alimento. Antes vivia suelto en la cabecera del dia. */
 function textoAlimentoNuevo(dia) {
   if (!dia.alimentoNuevo.primerDia) {
@@ -8293,15 +8313,14 @@ function htmlComidaDelDia(dia, marcarFn) {
       const est = a.id ? estadoActual(a.id) : null;
       const marca = a.id ? marcaDeHoy(a.id) : null;
       const cuanto = a.cantidad || (a.porcion && a.porcion.gramos) || "";
-      /* La pastilla "NUEVO" solo el primer dia de los tres: el segundo y el
-         tercero son repeticion para confirmar tolerancia, no una novedad. Es
-         el mismo criterio con el que el calendario pinta su punto. */
+      /* El de la rueda de introduccion: es el que lleva "Dia X de Y" y el
+         desplegable con el porque. */
       const esElNuevo = !!(nuevo && a.id && nuevo.id === a.id);
       return `<div class="comida-item${est ? " est-" + est : ""}">
         <div class="comida-cab">
           <span class="comida-punto" style="background:${GRUPOS_COLOR[a.grupo] || "var(--slate)"}"></span>
           <span class="comida-nombre"${a.id ? ` onclick="PB.irA('alimento','${a.id}')"` : ""}>${capitalizar(a.nombre)}</span>
-          ${esElNuevo && nuevo.primerDia ? '<span class="pill nuevo">NUEVO</span>' : ''}
+          ${a.id ? (p => p ? `<span class="pill ${p.cls}">${p.et}</span>` : "")(pastillaAlimento(a.id)) : ""}
           ${esElNuevo ? `<span class="comida-dia">Día ${nuevo.dia} de ${nuevo.total}</span>` : ''}
         </div>
         ${esElNuevo ? `<div class="progreso-bar">${Array.from({ length: nuevo.total })
