@@ -1,9 +1,11 @@
 /* Service Worker — Niblo
-   - HTML: NETWORK-first (siempre intenta versión nueva; cache como fallback offline).
+   - HTML: stale-while-revalidate (abre al instante con la copia guardada y
+     descarga la versión nueva por detrás; el aviso de "versión nueva" que ya
+     tiene la app avisa cuando esté lista).
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v90";   // grafica de leche, colores en la lista y exportacion
+const CACHE_NAME = "niblo-v91";   // arranque instantaneo y uso sin conexion
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
@@ -15,8 +17,13 @@ const ASSETS_ESTATICOS = [
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(ASSETS_ESTATICOS))
+    caches.open(CACHE_NAME).then((cache) =>
+      cache.addAll(ASSETS_ESTATICOS)
+        /* El documento se guarda ya en la instalacion: asi la app abre sin
+           conexion desde la primera visita y no hace falta haber entrado dos
+           veces. Aparte, para que un fallo aqui no tumbe la instalacion. */
+        .then(() => cache.add("./").catch(() => {}))
+    )
   );
 });
 
@@ -48,16 +55,24 @@ self.addEventListener("fetch", (event) => {
     || url.pathname === new URL("./", self.location).pathname;
 
   if (esHTML) {
-    // NETWORK-FIRST para HTML: usuarios reciben siempre la versión más nueva.
+    /* STALE-WHILE-REVALIDATE para HTML. Antes se esperaba a la red en cada
+       arranque y el documento pasa de 2 MB, asi que con cobertura mala se
+       veia la pantalla de carga varios segundos. Ahora se sirve la copia
+       guardada al momento y la version nueva se descarga por detras: cuando
+       llega, el service worker nuevo dispara el aviso de "version nueva" que
+       ya existe en la app. */
     event.respondWith(
-      fetch(event.request)
-        .then((resp) => {
-          // Actualiza el cache en background
-          const copy = resp.clone();
-          caches.open(CACHE_NAME).then(c => c.put(event.request, copy));
-          return resp;
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.match(event.request).then((guardado) => {
+          const red = fetch(event.request)
+            .then((resp) => {
+              if (resp && resp.ok) cache.put(event.request, resp.clone());
+              return resp;
+            })
+            .catch(() => guardado || caches.match("./"));
+          return guardado || red;
         })
-        .catch(() => caches.match(event.request).then(c => c || caches.match("./")))
+      )
     );
     return;
   }

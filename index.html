@@ -18009,6 +18009,7 @@ function boot(vistaInicial) {
     const KEY_BIBLIOTECA_MODO = "recetas:biblioteca-modo"; // tarjetas | lista
     const KEY_SUPABASE        = "recetas:supabase";        // sesión + tokens auth
     const KEY_BORRADOS        = "recetas:borrados-pendientes"; // cola de DELETEs no enviados
+    const KEY_HOGAR_AREAS     = "recetas:hogar-areas";     // areas del hogar, para pintar el hub sin esperar a la red
     const KEY_MODO_DEV        = "recetas:modo-dev";        // "1" para mostrar config avanzada
 
     /* Configuración Supabase precargada (anon key es pública, no es secreta). */
@@ -18499,6 +18500,10 @@ function boot(vistaInicial) {
           if (typeof o.token === "string")        sesion.supabase.token = o.token;
           if (typeof o.refreshToken === "string") sesion.supabase.refreshToken = o.refreshToken;
           if (typeof o.email === "string")        sesion.supabase.email = o.email;
+          /* userId se guardaba pero no se recuperaba, asi que hasta que la red
+             contestaba la sesion no sabia de quien era. Hace falta al arrancar
+             para reconocer las areas guardadas de este usuario. */
+          if (typeof o.userId === "string")       sesion.supabase.userId = o.userId;
           if (typeof o.ultimoSync === "string")   sesion.supabase.ultimoSync = o.ultimoSync;
           if (typeof o.autoSync === "boolean")    sesion.supabase.autoSync = o.autoSync;
         }
@@ -19831,6 +19836,11 @@ function boot(vistaInicial) {
       sesion.supabase.token = null;
       sesion.supabase.refreshToken = null;
       sesion.supabase.email = null;
+      /* Las areas guardadas son de la sesion que se cierra: si no se borran,
+         la siguiente cuenta veria el hub de la anterior durante un instante. */
+      try { localStorage.removeItem(KEY_HOGAR_AREAS); } catch (_) {}
+      sesion.hogar = null;
+      hogarResuelto = false;
       guardarSupabase();
       mostrarGate();
     }
@@ -20003,11 +20013,13 @@ function boot(vistaInicial) {
       try {
         const filas = await supaFetch("/rest/v1/hogares?select=id,nombre,areas");
         sesion.hogar = (filas && filas[0]) || false;
+        guardarAreasEnCache();
       } catch (e) {
         // Si la tabla no existe aun (migracion sin ejecutar) no se bloquea la
         // app: se sigue con el comportamiento de antes.
         if (/(42P01|does not exist|Could not find the table)/i.test(e.message || "")) {
           sesion.hogar = null;
+          guardarAreasEnCache();
           hogarResuelto = true;
           return null;
         }
@@ -20038,13 +20050,48 @@ function boot(vistaInicial) {
       renderPerfil();
     }
     /* Areas visibles: las del hogar. Sin hogar cargado, las de siempre. */
+    /* El hub esperaba siempre a que Supabase contestara para saber que areas
+       tiene el hogar, asi que cada arranque empezaba por el esqueleto gris.
+       Se guarda la ultima respuesta junto al usuario que la pidio: al abrir,
+       si hay una guardada de ese mismo usuario, el hub se pinta al instante y
+       se corrige solo si el hogar hubiera cambiado. Va atada al userId para
+       que al cambiar de cuenta no se vean las areas de la anterior. */
+    function areasEnCache() {
+      try {
+        const uid = sesion.supabase.userId;
+        if (!uid) return null;
+        const raw = JSON.parse(localStorage.getItem(KEY_HOGAR_AREAS) || "null");
+        if (!raw || raw.uid !== uid || !Array.isArray(raw.areas)) return null;
+        return raw.areas;
+      } catch (_) { return null; }
+    }
+    function guardarAreasEnCache() {
+      try {
+        const uid = sesion.supabase.userId;
+        const h = sesion.hogar;
+        if (!uid || !h || !Array.isArray(h.areas)) { localStorage.removeItem(KEY_HOGAR_AREAS); return; }
+        localStorage.setItem(KEY_HOGAR_AREAS, JSON.stringify({ uid: uid, areas: h.areas }));
+      } catch (_) {}
+    }
+
     function areasVisibles() {
       const h = sesion.hogar;
       /* Hasta saber de que hogar es la sesion no se pinta ningun area: antes
          se pintaban todas y luego se quitaban las que no tocan, asi que las de
          otro hogar se veian medio segundo antes de desaparecer. */
-      if (sesion.supabase.token && !hogarResuelto) return null;
-      if (!h || !Array.isArray(h.areas)) return AREAS;
+      if (sesion.supabase.token && !hogarResuelto) {
+        const guardadas = areasEnCache();
+        if (!guardadas) return null;
+        return AREAS.filter(a => guardadas.indexOf(a.id) >= 0);
+      }
+      if (!h || !Array.isArray(h.areas)) {
+        /* hogar null es "no se ha podido saber" (sin conexion, por ejemplo) y
+           hogar false es "no hay hogar". En el primer caso vale mas lo ultimo
+           que se supo de este usuario que enseñar todas las areas. */
+        const guardadas = (h === null && sesion.supabase.token) ? areasEnCache() : null;
+        if (guardadas) return AREAS.filter(a => guardadas.indexOf(a.id) >= 0);
+        return AREAS;
+      }
       return AREAS.filter(a => h.areas.indexOf(a.id) >= 0);
     }
 
@@ -26402,9 +26449,11 @@ function boot(vistaInicial) {
     }
 
     /* ---- Service Worker (PWA, offline) --------------------------------
-       Estrategia: el SW usa network-first para HTML, así que normalmente
-       recibes la versión nueva al recargar. Si la red falla, sirve la cacheada.
-       Aviso al usuario cuando hay versión nueva instalada en background. */
+       Estrategia: el SW sirve el HTML guardado al instante y busca la versión
+       nueva por detrás (stale-while-revalidate), así que la app abre rápido y
+       funciona sin conexión. Como ya no se espera a la red, el aviso de
+       versión nueva es la única forma de enterarse: por eso se comprueba
+       también si quedó una instalada esperando de una visita anterior. */
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("sw.js").then((reg) => {
