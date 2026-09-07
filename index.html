@@ -5778,19 +5778,29 @@
     .pb-app .sem-card.verde { background: var(--green-soft); border-color: var(--green); }
     .pb-app .sem-card.ambar { background: var(--amber-soft); border-color: var(--amber); }
     .pb-app .sem-card.rojo  { background: var(--red-soft);   border-color: var(--red); }
-    .pb-app .sem-cab { display: flex; align-items: flex-start; gap: 12px; }
-    .pb-app .sem-cab h2 { margin: 0 0 2px; font-size: 1rem; }
-    /* Sobre el fondo tintado, --text-muted se queda en un contraste de 3,8 y
-       aqui hay texto de 11 px: el gris de siempre no vale, se usa el color de
-       texto normal y la jerarquia la hacen el tamaño y el peso. */
-    .pb-app .sem-cab p { margin: 0; font-size: 0.8125rem; line-height: 1.5; color: var(--text); }
+    /* La tarjeta entera es un <details>: cerrada deja solo el color y el
+       titulo. El resto del texto (sobre fondo tintado, y de 11 px) va en color
+       de texto normal, no en gris: --text-muted ahi se queda en 3,8 de
+       contraste. La jerarquia la hacen el tamaño y el peso. */
+    .pb-app .sem-cab {
+      display: flex; align-items: center; gap: 12px; cursor: pointer;
+      list-style: none;
+    }
+    .pb-app .sem-cab::-webkit-details-marker { display: none; }
+    .pb-app .sem-cab h2 { margin: 0; font-size: 1rem; flex: 1; min-width: 0; }
+    .pb-app .sem-chevron {
+      flex: none; font-size: 1.25rem; line-height: 1; color: var(--text);
+      opacity: .5; transition: transform .18s ease;
+    }
+    .pb-app .sem-card[open] .sem-chevron { transform: rotate(90deg); }
+    .pb-app .sem-cuerpo { margin-top: var(--gap-3); }
     .pb-app .sem-luz {
-      flex: none; width: 14px; height: 14px; border-radius: 50%; margin-top: 3px;
+      flex: none; width: 14px; height: 14px; border-radius: 50%;
     }
     .pb-app .sem-luz.verde { background: var(--green); box-shadow: 0 0 0 4px color-mix(in srgb, var(--green) 22%, transparent); }
     .pb-app .sem-luz.ambar { background: var(--amber); box-shadow: 0 0 0 4px color-mix(in srgb, var(--amber) 22%, transparent); }
     .pb-app .sem-luz.rojo  { background: var(--red);   box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 22%, transparent); }
-    .pb-app .sem-lista { display: flex; flex-direction: column; margin-top: var(--gap-3); }
+    .pb-app .sem-lista { display: flex; flex-direction: column; }
     .pb-app .sem-fila {
       display: flex; align-items: baseline; gap: 10px; padding: 8px 0;
       border-top: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
@@ -8889,11 +8899,7 @@ const SEM_FUENTES = {
   desarrollo: "WHO Motor Development Study 2006",
   panales: "Signo de hidratación (AEP)",
 };
-const SEM_CABECERA = {
-  verde: { et: "Todo en orden", txt: "Nada fuera de lo esperado con lo que hay apuntado." },
-  ambar: { et: "Algo que mirar", txt: "Nada alarmante, pero hay algo que conviene vigilar." },
-  rojo:  { et: "Algo a revisar", txt: "Hay algo que merece comentarlo con el pediatra." },
-};
+const SEM_CABECERA = { verde: "Todo en orden", ambar: "Algo que mirar", rojo: "Algo a revisar" };
 
 function htmlSemaforo(dia) {
   const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
@@ -8915,29 +8921,33 @@ function htmlSemaforo(dia) {
   const avisos = evaluadas.filter(d => d.nivel !== "verde")
     .sort((a, b) => SEM_ORDEN[b.nivel] - SEM_ORDEN[a.nivel]);
   const sinDatos = dims.filter(d => d.nivel === "sindatos");
-  const cab = SEM_CABECERA[peor];
 
   const fila = d => `<div class="sem-fila">
     <span class="sem-punto ${d.nivel}"></span>
     <span class="sem-txt"><b>${d.et}</b> ${d.txt}<span class="sem-fuente">${SEM_FUENTES[d.k] || ""}</span></span>
   </div>`;
 
-  return `<div class="card sem-card ${peor}">
-    <div class="sem-cab">
+  /* Cerrada solo se ve el color y el titulo, que es el 90% de las veces lo
+     unico que hace falta saber. El color sigue estando aunque no se abra. */
+  return `<details class="card sem-card ${peor}">
+    <summary class="sem-cab">
       <span class="sem-luz ${peor}" aria-hidden="true"></span>
-      <div><h2>${cab.et}</h2><p>${cab.txt}</p></div>
+      <h2>${SEM_CABECERA[peor]}</h2>
+      <span class="sem-chevron" aria-hidden="true">&#8250;</span>
+    </summary>
+    <div class="sem-cuerpo">
+      ${avisos.length ? `<div class="sem-lista">${avisos.map(fila).join("")}</div>` : ""}
+      <details class="sem-detalle">
+        <summary>Ver las ${dims.length} cosas que mira</summary>
+        <div class="sem-lista">${dims.map(fila).join("")}</div>
+        ${sinDatos.length ? `<p class="sem-nota">En gris, lo que no se puede valorar por falta de apuntes.
+          Un día sin registrar parece un día sin dormir, así que no cuenta para el color.</p>` : ""}
+      </details>
+      <p class="sem-nota"><b>Esto no es un diagnóstico.</b> Compara lo apuntado con guías publicadas y no
+        sustituye al pediatra. Y que salga verde no quiere decir que esté sano: lo que de verdad urge
+        —fiebre, dificultad para respirar, decaimiento, señales de deshidratación— no está aquí.</p>
     </div>
-    ${avisos.length ? `<div class="sem-lista">${avisos.map(fila).join("")}</div>` : ""}
-    <details class="sem-detalle">
-      <summary>Ver las ${dims.length} cosas que mira</summary>
-      <div class="sem-lista">${dims.map(fila).join("")}</div>
-      ${sinDatos.length ? `<p class="sem-nota">En gris, lo que no se puede valorar por falta de apuntes.
-        Un día sin registrar parece un día sin dormir, así que no cuenta para el color.</p>` : ""}
-    </details>
-    <p class="sem-nota"><b>Esto no es un diagnóstico.</b> Compara lo apuntado con guías publicadas y no
-      sustituye al pediatra. Y que salga verde no quiere decir que esté sano: lo que de verdad urge
-      —fiebre, dificultad para respirar, decaimiento, señales de deshidratación— no está aquí.</p>
-  </div>`;
+  </details>`;
 }
 
 /* ---- Receta del dia -----------------------------------------------------

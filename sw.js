@@ -5,7 +5,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v102";  // semaforo de como va todo
+const CACHE_NAME = "niblo-v103";  // semaforo plegable
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
