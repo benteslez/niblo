@@ -8057,7 +8057,7 @@ const CAMPOS_REGISTRO = {
     { k: "prueba", et: "Tipo de prueba", tipo: "text" },
     { k: "enlace", et: "Enlace a los resultados", tipo: "url" },
     { k: "resultado", et: "Cómo quedó", tipo: "select",
-      ops: [["","—"],["bien","Todo bien"],["revision","En revisión"],["tratamiento","En tratamiento"]] },
+      ops: [["","—"],["bien","Todo bien"],["revision","Seguimiento"],["tratamiento","En tratamiento"]] },
     { k: "weight", et: "Peso (kg)", tipo: "number", paso: "0.01" },
     { k: "height", et: "Longitud (cm)", tipo: "number", paso: "0.1" },
     { k: "head",   et: "P. cefálico (cm)", tipo: "number", paso: "0.1" },
@@ -11646,9 +11646,13 @@ const PV_MOTIVOS = {
   enfermedad: "Enfermedad / consulta",
   otro: "Otro",
 };
+/* "En revision" no decia lo que pasa de verdad, que es que hay que volver por
+   eso. "Seguimiento" es la palabra que se usa en consulta y cabe en la
+   pastilla; la clave guardada sigue siendo "revision" para no romper lo que
+   ya haya apuntado. */
 const PV_RESULTADOS = {
   bien:        { et: "Todo bien",      pill: "ok" },
-  revision:    { et: "En revisión",    pill: "limite" },
+  revision:    { et: "Seguimiento",    pill: "limite" },
   tratamiento: { et: "En tratamiento", pill: "info" },
 };
 let PV_RESULTADO = "";
@@ -11692,7 +11696,9 @@ function renderPediatra(el) {
       <div class="campo"><label>Cómo quedó</label>
         <div class="seg-btns" id="pv-resultado">${Object.entries(PV_RESULTADOS).map(([v, r]) =>
           `<button type="button" data-v="${v}" onclick="PB.pvResultado('${v}')">${r.et}</button>`).join("")}
-        </div></div>
+        </div>
+        <div class="faint" style="margin-top:6px">«Seguimiento» es que hay que volver por eso;
+          «en tratamiento», que ya hay algo pautado.</div></div>
     </div>
     <div class="grid-campos3">
       <div class="campo"><label>Peso (kg)</label><input type="number" id="pv-weight" step="0.01" min="0"></div>
