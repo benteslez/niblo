@@ -5407,10 +5407,54 @@
        90 px seguian cabiendo en la fila y era la palabra la que se recortaba.
        En em, cuando la palabra no cabe, el boton salta de linea. */
     .pb-app .seg-btns button { flex: 1; min-width: 6.5em; border: 1px solid var(--border); background: var(--bg-card); border-radius: 10px; padding: 9px 6px; font-size: 0.78125rem; font-weight: 700; cursor: pointer; color: var(--text); }
+    /* Como quedo una prueba medica: verde bien, ambar en revision, azul en
+       tratamiento — el azul no es alarma, es "hay algo en marcha". */
+    .pb-app .seg-btns button.on.bien        { background: var(--green-soft); color: var(--green); border-color: transparent; }
+    .pb-app .seg-btns button.on.revision    { background: var(--amber-soft); color: var(--amber); border-color: transparent; }
+    .pb-app .seg-btns button.on.tratamiento { background: var(--blue-soft);  color: var(--blue);  border-color: transparent; }
     .pb-app .seg-btns button.on.tolerado { background: var(--green-soft); color: var(--green); border-color: transparent; }
     .pb-app .seg-btns button.on.reaccion { background: var(--red-soft); color: var(--red); border-color: transparent; }
     /* Rechazo no es un problema de salud, es una preferencia: gris, no color. */
     .pb-app .seg-btns button.on.rechazo { background: var(--bg-soft); color: var(--text); border-color: var(--border); }
+    /* Historial de visitas: una fila por cita, plegada. Antes cada visita era
+       una tarjeta abierta con sus botones y la lista era un muro. */
+    .pb-app .visit-card { border-bottom: 1px solid var(--line-soft); }
+    .pb-app .visit-card:last-child { border-bottom: 0; }
+    .pb-app .visit-card > summary {
+      display: flex; align-items: center; gap: 10px; padding: 11px 0;
+      cursor: pointer; list-style: none;
+    }
+    .pb-app .visit-card > summary::-webkit-details-marker { display: none; }
+    .pb-app .visit-fecha {
+      flex: none; width: 58px; font-family: var(--serif); font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .pb-app .visit-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
+    /* El motivo en una linea: con la pastilla al lado, "Prueba médica" partia
+       en dos y la fila crecia al doble. Antes de partir, se recorta. */
+    .pb-app .visit-txt b {
+      display: block; font-weight: 600;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pb-app .visit-txt span {
+      display: block; font-size: 0.75rem; color: var(--text-muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pb-app .visit-chevron {
+      flex: none; font-size: 1.125rem; line-height: 1; color: var(--text-faint);
+      transition: transform .18s ease;
+    }
+    .pb-app .visit-card[open] > summary .visit-chevron { transform: rotate(90deg); }
+    .pb-app .visit-cuerpo { padding: 0 0 12px 68px; }
+    .pb-app .visit-dato { font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 6px; }
+    .pb-app .visit-dato a { color: var(--blue); font-weight: 600; }
+    .pb-app .visit-notas {
+      font-size: 0.8125rem; line-height: 1.55; white-space: pre-wrap;
+      margin-bottom: 10px;
+    }
+    .pb-app .visit-acciones { display: flex; gap: 8px; }
+    @media (max-width: 420px) { .pb-app .visit-cuerpo { padding-left: 0; } }
+
     .pb-app .mes-header { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px; }
     .pb-app .mes-header h3 { font-size: 0.9375rem; margin: 0; text-transform: capitalize; }
     .pb-app .grid-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
@@ -8007,7 +8051,13 @@ const CAMPOS_REGISTRO = {
   ]},
   pediatricVisits: { titulo: "visita", col: "pediatricVisits", campos: [
     { k: "date",   et: "Fecha", tipo: "date" },
-    { k: "reason", et: "Motivo", tipo: "text" },
+    { k: "reason", et: "Motivo", tipo: "select",
+      ops: [["rutina","Revisión rutinaria"],["vacunacion","Vacunación"],["prueba","Prueba médica"],
+            ["enfermedad","Enfermedad / consulta"],["otro","Otro"]] },
+    { k: "prueba", et: "Tipo de prueba", tipo: "text" },
+    { k: "enlace", et: "Enlace a los resultados", tipo: "url" },
+    { k: "resultado", et: "Cómo quedó", tipo: "select",
+      ops: [["","—"],["bien","Todo bien"],["revision","En revisión"],["tratamiento","En tratamiento"]] },
     { k: "weight", et: "Peso (kg)", tipo: "number", paso: "0.01" },
     { k: "height", et: "Longitud (cm)", tipo: "number", paso: "0.1" },
     { k: "head",   et: "P. cefálico (cm)", tipo: "number", paso: "0.1" },
@@ -11498,10 +11548,13 @@ function generarInformeCompleto() {
 
   /* ---- visitas ---- */
   if (S("visitas")) {
-    const motivos = { rutina: "Revisión rutinaria", vacunacion: "Vacunación", enfermedad: "Enfermedad/consulta", otro: "Otro" };
     const vs = STATE.pediatricVisits.filter(v => enRango(v.date)).sort((a, b) => a.date.localeCompare(b.date));
+    /* Una prueba medica sin decir cual fue ni como quedo no le sirve de nada
+       al pediatra, que es quien lee esto. */
     doc += `<h3>Visitas al pediatra</h3>` + tabla(["Fecha", "Motivo", "Medidas", "Notas"],
-      vs.map(v => [fmtFechaCorta(v.date), motivos[v.reason] || v.reason,
+      vs.map(v => [fmtFechaCorta(v.date),
+        [PV_MOTIVOS[v.reason] || v.reason, v.prueba && esc(v.prueba),
+         (PV_RESULTADOS[v.resultado] || {}).et].filter(Boolean).join(" · "),
         [v.weight && v.weight + " kg", v.height && v.height + " cm", v.head && v.head + " cm"].filter(Boolean).join(" · ") || "—",
         esc(v.notes || "—")]));
   }
@@ -11583,16 +11636,63 @@ function imprimirDocumento(html) {
 }
 
 /* ======================== render: PEDIATRA ======================== */
+/* ---- Pediatra: registro de citas ---------------------------------------
+   "Prueba medica" abre tres campos mas, los tres opcionales: que prueba fue,
+   un enlace a los resultados y como quedo la cosa. */
+const PV_MOTIVOS = {
+  rutina: "Revisión rutinaria",
+  vacunacion: "Vacunación",
+  prueba: "Prueba médica",
+  enfermedad: "Enfermedad / consulta",
+  otro: "Otro",
+};
+const PV_RESULTADOS = {
+  bien:        { et: "Todo bien",      pill: "ok" },
+  revision:    { et: "En revisión",    pill: "limite" },
+  tratamiento: { et: "En tratamiento", pill: "info" },
+};
+let PV_RESULTADO = "";
+/* El enlace lo escribe una persona y viaja entre moviles dentro del estado:
+   solo se pinta como enlace si es http(s). Asi un "javascript:" guardado a
+   mano —o llegado del otro dispositivo— no se convierte en algo pulsable. */
+function enlaceSeguro(u) {
+  const t = String(u || "").trim();
+  return /^https?:\/\//i.test(t) ? t : "";
+}
+function pvMotivo() {
+  const campos = document.getElementById("pv-prueba-campos");
+  if (campos) campos.hidden = document.getElementById("pv-reason").value !== "prueba";
+}
+function pvResultado(v) {
+  PV_RESULTADO = (PV_RESULTADO === v) ? "" : v;
+  document.querySelectorAll("#pv-resultado button").forEach(b => {
+    const suyo = b.dataset.v;
+    b.className = suyo === PV_RESULTADO ? "on " + suyo : "";
+    b.setAttribute("aria-pressed", suyo === PV_RESULTADO);
+  });
+}
+
 function renderPediatra(el) {
   const sorted = [...STATE.pediatricVisits].sort((a,b) => new Date(b.date)-new Date(a.date));
   let html = "";
   html += htmlRegistro('pediatra', 'Registrar visita', `
     <div class="grid-campos2">
       <div class="campo"><label>Fecha</label><input type="date" id="pv-date" value="${HOY_ISO}"></div>
-      <div class="campo"><label>Motivo</label><select id="pv-reason">
-        <option value="rutina">Revisión rutinaria</option><option value="vacunacion">Vacunación</option>
-        <option value="enfermedad">Enfermedad / consulta</option><option value="otro">Otro</option>
+      <div class="campo"><label>Motivo</label><select id="pv-reason" onchange="PB.pvMotivo()">
+        ${Object.entries(PV_MOTIVOS).map(([v, et]) => `<option value="${v}">${et}</option>`).join("")}
       </select></div>
+    </div>
+    <div id="pv-prueba-campos" hidden>
+      <div class="grid-campos2">
+        <div class="campo"><label for="pv-prueba">Tipo de prueba</label>
+          <input type="text" id="pv-prueba" placeholder="Ecografía de caderas, analítica…"></div>
+        <div class="campo"><label for="pv-enlace">Enlace a los resultados</label>
+          <input type="url" id="pv-enlace" placeholder="https://…" inputmode="url"></div>
+      </div>
+      <div class="campo"><label>Cómo quedó</label>
+        <div class="seg-btns" id="pv-resultado">${Object.entries(PV_RESULTADOS).map(([v, r]) =>
+          `<button type="button" data-v="${v}" onclick="PB.pvResultado('${v}')">${r.et}</button>`).join("")}
+        </div></div>
     </div>
     <div class="grid-campos3">
       <div class="campo"><label>Peso (kg)</label><input type="number" id="pv-weight" step="0.01" min="0"></div>
@@ -11608,19 +11708,36 @@ function renderPediatra(el) {
     `<div class="faint" style="margin-top:-4px;margin-bottom:10px">Marca lo que quieres incluir y el rango de fechas. Se abre el diálogo de impresión: elige <b>Guardar como PDF</b>.</div>
      <div id="infc-panel">${htmlInformeCompleto()}</div>`);
 
-  html += `<div class="card"><h2>Historial de visitas</h2>`;
+  html += `<div class="card"><h2>Historial de visitas <span class="n">${sorted.length}</span></h2>`;
   if (!sorted.length) html += `<div class="faint">Sin visitas registradas.</div>`;
+  /* Cada visita, plegada: la lista era un muro de tarjetas abiertas y para
+     encontrar una habia que leerlas todas. Cerrada deja fecha, motivo y como
+     quedo; lo demas sale al tocarla. */
   sorted.forEach(v => {
-    const motivos = { rutina:"Revisión rutinaria", vacunacion:"Vacunación", enfermedad:"Enfermedad/consulta", otro:"Otro" };
-    html += `<div class="visit-card">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <b>${fmtFechaCorta(v.date)} · ${motivos[v.reason]||v.reason}</b>
-        <button class="ed-row" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">Editar</button>
-        <button class="del-row" onclick="PB.pedirBorrado('pediatricVisits','${v.id}','Visita del ${fmtFechaCorta(v.date)}')">Eliminar</button>
+    const res = PV_RESULTADOS[v.resultado];
+    const medidas = [v.weight && `${v.weight} kg`, v.height && `${v.height} cm`,
+                     v.head && `${v.head} cm de perímetro`].filter(Boolean).join(" · ");
+    const url = enlaceSeguro(v.enlace);
+    html += `<details class="visit-card">
+      <summary>
+        <span class="visit-fecha">${fmtFechaCorta(v.date)}</span>
+        <span class="visit-txt"><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
+          v.prueba ? `<span>${esc(v.prueba)}</span>` : ""}</span>
+        ${res ? `<span class="pill ${res.pill}">${res.et}</span>` : ""}
+        <span class="visit-chevron" aria-hidden="true">&#8250;</span>
+      </summary>
+      <div class="visit-cuerpo">
+        ${medidas ? `<div class="visit-dato">${medidas}</div>` : ""}
+        ${url ? `<div class="visit-dato"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Ver los resultados</a></div>`
+              : (v.enlace ? `<div class="visit-dato faint">Enlace guardado: ${esc(v.enlace)}</div>` : "")}
+        ${v.notes ? `<div class="visit-notas">${esc(v.notes)}</div>` : ""}
+        ${!medidas && !url && !v.enlace && !v.notes ? `<div class="visit-dato faint">Sin más datos apuntados.</div>` : ""}
+        <div class="visit-acciones">
+          <button class="ed-row" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">Editar</button>
+          <button class="del-row" onclick="PB.pedirBorrado('pediatricVisits','${v.id}','Visita del ${fmtFechaCorta(v.date)}')">Eliminar</button>
+        </div>
       </div>
-      ${(v.weight||v.height||v.head) ? `<div class="faint" style="margin-top:4px">${v.weight?`Peso: ${v.weight} kg · `:''}${v.height?`Long: ${v.height} cm · `:''}${v.head?`P.cef: ${v.head} cm`:''}</div>` : ''}
-      ${v.notes ? `<div style="margin-top:6px;font-size:0.8125rem;white-space:pre-wrap">${v.notes}</div>` : ''}
-    </div>`;
+    </details>`;
   });
   html += `</div>`;
   el.innerHTML = html;
@@ -11632,8 +11749,14 @@ function savePediatricVisit() {
   const height = document.getElementById("pv-height").value;
   const head = document.getElementById("pv-head").value;
   const notes = document.getElementById("pv-notes").value.trim();
+  const esPrueba = reason === "prueba";
+  const prueba = esPrueba ? (document.getElementById("pv-prueba").value || "").trim() : "";
+  const enlace = esPrueba ? (document.getElementById("pv-enlace").value || "").trim() : "";
+  const resultado = esPrueba ? PV_RESULTADO : "";
   const id = "pv_"+Date.now().toString(36);
-  STATE.pediatricVisits.push(sellar({ id, date, reason, weight: weight||null, height: height||null, head: head||null, notes }));
+  STATE.pediatricVisits.push(sellar({ id, date, reason, weight: weight||null, height: height||null, head: head||null,
+    notes, prueba, enlace, resultado }));
+  PV_RESULTADO = "";
   if (weight || height || head) STATE.growth.push(sellar({ id: "gr_"+id, date, weight: weight||null, height: height||null, head: head||null, visitId: id }));
   guardarEstado();
   cerrarRegistro("pediatra");
@@ -12636,7 +12759,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
