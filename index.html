@@ -5831,6 +5831,9 @@
       list-style: none;
     }
     .pb-app .sem-cab::-webkit-details-marker { display: none; }
+    /* El titulo, el primero: con el punto delante empezaba 26 px mas a la
+       derecha que el de las demas tarjetas y la columna se veia torcida. La
+       luz se va al otro lado, junto al chevron. */
     .pb-app .sem-cab h2 { margin: 0; font-size: 1rem; flex: 1; min-width: 0; }
     .pb-app .sem-chevron {
       flex: none; font-size: 1.25rem; line-height: 1; color: var(--text);
@@ -8981,8 +8984,8 @@ function htmlSemaforo(dia) {
      unico que hace falta saber. El color sigue estando aunque no se abra. */
   return `<details class="card sem-card ${peor}">
     <summary class="sem-cab">
-      <span class="sem-luz ${peor}" aria-hidden="true"></span>
       <h2>${SEM_CABECERA[peor]}</h2>
+      <span class="sem-luz ${peor}" aria-hidden="true"></span>
       <span class="sem-chevron" aria-hidden="true">&#8250;</span>
     </summary>
     <div class="sem-cuerpo">
