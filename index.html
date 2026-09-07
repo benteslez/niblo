@@ -20239,7 +20239,27 @@ function boot(vistaInicial) {
       return AREAS.filter(a => h.areas.indexOf(a.id) >= 0);
     }
 
-    async function sincronizar() {
+/* Dos disparadores independientes (guardar algo en local y el aviso en vivo
+   del otro movil) pedian sincronizar casi a la vez y se solapaban: dos rondas
+   de peticiones en paralelo, cada una terminando en un repintado de toda la
+   app. Ahora solo hay una en vuelo; si llega otra peticion mientras tanto, se
+   encola una sola repeticion en lugar de arrancar otra ronda. */
+    let _syncEnVuelo = null, _syncRepetir = false;
+    function sincronizar() {
+      if (_syncEnVuelo) { _syncRepetir = true; return _syncEnVuelo; }
+      _syncEnVuelo = sincronizarInterno();
+      _syncEnVuelo.catch(() => {}).then(() => {
+        _syncEnVuelo = null;
+        if (_syncRepetir) { _syncRepetir = false; sincronizar().catch(() => {}); }
+      });
+      return _syncEnVuelo;
+    }
+
+    /* Momento de la ultima subida propia: sirve para no salir corriendo a
+       sincronizar por el eco de lo que acabamos de escribir nosotros. */
+    let _ultimaSubida = 0;
+
+    async function sincronizarInterno() {
       const s = sesion.supabase;
       if (!s.token) throw new Error("Inicia sesión primero");
       if (sesion.hogar === null) await cargarHogar();
@@ -20372,7 +20392,16 @@ function boot(vistaInicial) {
         pintarPuntoSync();
         rtConectar();          // por si el canal se habia caido
         guardarSupabase();
-        renderTodo();
+        /* Aqui se repintaba la app entera despues de CADA sincronizacion, y
+           casi todas no traen nada: son las nuestras, las de subir lo que
+           acabamos de apuntar. Repintar tira todos los nodos y vuelve a
+           crearlos, asi que si estabas pulsando un boton en ese momento tu
+           pulsacion se quedaba en un nodo que ya no existe — de ahi lo de
+           tener que darle dos veces. Solo se repinta si ha bajado algo. */
+        const subidos = subirIng.length + subirRec.length + subirEU.length;
+        if (subidos || pablo === "subido" || pablo === "fusionado") _ultimaSubida = Date.now();
+        if (aplicados || borradosLocal || pablo === "fusionado") renderTodo();
+        else renderEstadoSyncPablo();
         return {
           aplicados,
           subidos: subirIng.length + subirRec.length + subirEU.length,
@@ -20517,13 +20546,20 @@ function boot(vistaInicial) {
       ws.onerror  = () => { try { ws.close(); } catch (_) {} };
     }
 
-    /* Varios cambios seguidos (guardar 3 tomas) no disparan 3 sincronizaciones. */
+    /* Varios cambios seguidos (guardar 3 tomas) no disparan 3 sincronizaciones.
+       Y lo que llega puede ser el eco de lo que acabamos de subir nosotros:
+       Postgres reenvia el cambio tambien a quien lo escribe. No se descarta,
+       porque en esos mismos segundos puede escribir el otro movil, pero se
+       espera a que pase la ventana en vez de lanzar una ronda entera de
+       peticiones para no encontrar nada. */
+    const RT_ECO_MS = 5000;
     let _rtBajarTimer = null;
     function rtBajarPronto() {
       clearTimeout(_rtBajarTimer);
+      const espera = Math.max(400, RT_ECO_MS - (Date.now() - _ultimaSubida));
       _rtBajarTimer = setTimeout(() => {
         sincronizar().catch(() => {});
-      }, 400);
+      }, espera);
     }
 
     function rtReintentar() {
