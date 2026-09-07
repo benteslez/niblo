@@ -5561,7 +5561,7 @@
          llegar a "13h 20min" con el punto del cronometro al lado, que en un
          tercio de pantalla se salia por la derecha. Reparto fijo, no auto,
          para que las columnas no bailen al cambiar las cifras. */
-      display: grid; grid-template-columns: 1fr 0.6fr 1.4fr; gap: var(--gap-2);
+      display: grid; grid-template-columns: 1.1fr 0.55fr 1.35fr; gap: var(--gap-2);
       margin: 0 0 var(--gap-3); padding-bottom: var(--gap-3);
       border-bottom: 1px solid var(--line-soft);
     }
@@ -5707,9 +5707,16 @@
     .pb-app .cmp.mas      { background: var(--green-soft); color: var(--green); }
     .pb-app .cmp.parecido { background: var(--blue-soft);  color: var(--blue); }
     .pb-app .cmp.menos    { background: var(--amber-soft); color: var(--amber); }
-    .pb-app .linea-resumen span {
-      display: block; margin-top: 2px; font-size: 0.75rem; color: var(--text-muted);
+    /* Etiqueta y pastilla, una debajo de otra. En linea, la de "Leche" cabia
+       al lado o no segun lo ancha que fuera su columna, asi que las dos
+       pastillas acababan a distinta altura. Apiladas empiezan siempre en el
+       mismo sitio, quepa lo que quepa. El selector va con ">" para no tocar
+       los span de dentro (el punto del cronometro vive en el <b>). */
+    .pb-app .linea-resumen > div > span {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+      margin-top: 2px; font-size: 0.75rem; color: var(--text-muted);
     }
+    .pb-app .linea-resumen .cmp { margin-left: 0; }
 
     /* Una fila por registro y en una sola linea. Antes cada uno ocupaba dos,
        con emoji a color, hora en grande y chevron: diez registros llenaban la
