@@ -5765,13 +5765,42 @@
       font-style: normal; font-size: 0.8em; font-weight: 500;
       color: var(--text-faint); margin-left: 2px;
     }
+    /* Receta del dia: un paso por momento de comida, con la hora a la
+       izquierda como en la linea del dia. */
+    .pb-app .rd-pasos { display: flex; flex-direction: column; }
+    .pb-app .rd-paso {
+      display: flex; gap: 12px; padding: 10px 0;
+      border-bottom: 1px solid var(--line-soft); max-width: 640px;
+    }
+    .pb-app .rd-paso:last-child { border-bottom: 0; padding-bottom: 0; }
+    .pb-app .rd-paso:first-child { padding-top: 0; }
+    .pb-app .rd-hora {
+      flex: none; width: 58px; font-family: var(--serif); font-size: 0.8125rem;
+      font-weight: 700; color: var(--text); line-height: 1.4;
+    }
+    .pb-app .rd-hora span {
+      display: block; font-family: var(--font-ui); font-size: 0.6875rem;
+      font-weight: 600; color: var(--text-faint);
+    }
+    .pb-app .rd-cuerpo { flex: 1; min-width: 0; }
+    .pb-app .rd-cuerpo p { margin: 0; font-size: 0.875rem; line-height: 1.55; }
+    .pb-app .rd-cuerpo b { font-weight: 700; }
+    .pb-app .rd-que {
+      margin-top: 6px; font-size: 0.75rem; color: var(--text-muted);
+      font-family: var(--serif); line-height: 1.5;
+    }
+    .pb-app .rd-nota {
+      margin: var(--gap-3) 0 0; max-width: 640px;
+      font-size: 0.75rem; line-height: 1.5; color: var(--text-faint);
+    }
+
     /* Aviso de sueño en curso. Rojo porque significa "esto esta pasando ahora
        mismo", como el punto de una grabacion; el resto del sueño es violeta. */
     .pb-app .en-curso {
       display: flex; align-items: center; gap: 10px;
       padding: 7px 7px 7px 14px; margin-bottom: var(--gap-3);
       background: var(--red-soft); border-radius: var(--r-pill);
-      max-width: 640px;
+      box-sizing: border-box;
     }
     .pb-app .en-curso-punto {
       flex: none; width: 8px; height: 8px; border-radius: 50%;
@@ -5810,23 +5839,25 @@
     }
     /* Accesos directos de "Hoy". Mismo glifo que la linea del dia para que se
        lea como "esto apunta una de estas dos cosas". */
+    /* Sin tope de ancho: las tarjetas de debajo llegan al borde y estos dos
+       se quedaban a 640 px, con medio escritorio vacio a la derecha. El tope
+       de lectura tiene sentido en una lista de valores, no en una fila de
+       botones ni en un aviso de una linea. */
     .pb-app .acc-rapido {
-      display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-3);
-      margin-bottom: var(--gap-3); max-width: 640px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-2);
+      margin-bottom: var(--gap-3);
     }
     .pb-app .acc-btn {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 12px 10px; border: 1px solid var(--border); border-radius: var(--r-lg);
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      padding: 12px 6px; border: 1px solid var(--border); border-radius: var(--r-lg);
       background: var(--bg-card); color: inherit; font: inherit;
       font-size: 0.875rem; font-weight: 600; cursor: pointer; min-width: 0;
       transition: border-color .15s, background .15s;
     }
     .pb-app .acc-btn:hover { border-color: var(--blue); background: var(--bg-soft); }
-    /* Con el texto a tamano grande "Registrar sueno" no cabe en media pantalla:
-       si se recorta, los dos botones acaban diciendo "Registrar ...". Que parta
-       en dos lineas y crezca el boton. */
+    /* Con el texto a tamano grande la palabra no cabe en un tercio de pantalla:
+       que parta en dos lineas y crezca el boton, antes que recortarla. */
     .pb-app .acc-btn span { min-width: 0; }
-    @media (max-width: 359px) { .pb-app .acc-rapido { grid-template-columns: 1fr; } }
 
     /* En escritorio la tarjeta pasa de 1000 px de ancho y el valor se iba solo
        al borde derecho, a 800 px del titulo. Se limita el ancho de lectura de
@@ -8487,11 +8518,16 @@ function renderHoy(el) {
   html += htmlSuenoEnCurso();
   /* Los dos registros que se apuntan varias veces al dia, arriba del todo:
      antes la toma estaba al final de la vista y el sueno en otra pestana. */
+  /* Tres accesos en una sola fila: con "Registrar" delante no caben ni en el
+     movil ni en escritorio, y el icono ya dice de que va cada uno. El nombre
+     largo se queda en la etiqueta de accesibilidad. */
   html += `<div class="acc-rapido">
-    <button type="button" class="acc-btn" onclick="PB.TOMAS_HOY.nuevaToma('${dia.fecha}')">
-      ${iconoLinea("toma")}<span>Registrar toma</span></button>
-    <button type="button" class="acc-btn" onclick="PB.modalSueno()">
-      ${iconoLinea("sueno")}<span>Registrar sueño</span></button>
+    <button type="button" class="acc-btn" aria-label="Registrar toma"
+      onclick="PB.TOMAS_HOY.nuevaToma('${dia.fecha}')">${iconoLinea("toma")}<span>Toma</span></button>
+    <button type="button" class="acc-btn" aria-label="Registrar sueño"
+      onclick="PB.modalSueno()">${iconoLinea("sueno")}<span>Sueño</span></button>
+    <button type="button" class="acc-btn" aria-label="Registrar pañal"
+      onclick="PB.modalPanal()">${iconoLinea("panal")}<span>Pañal</span></button>
   </div>`;
   html += banner;
   if (dia.fase === "pre") {
@@ -8596,14 +8632,100 @@ function textoAlimentoNuevo(dia) {
    botones al lado del nombre: con tres botones el texto se quedaba en una
    columna de dos palabras. Aqui cada cosa ocupa su linea y no hay ancho que
    repartir. */
+/* ---- Receta del dia -----------------------------------------------------
+   La tarjeta de abajo dice QUE le toca; esta dice COMO se hace, que es lo que
+   hay que resolver delante de los fogones cuando el dia junta cuatro
+   alimentos. Un paso por momento de comida, porque es ahi donde esta la
+   respuesta a "esto se tritura junto o aparte": lo que va en el mismo plato
+   es lo que coincide en la misma hora. */
+const RD_ENCIMA = new Set(["aceite_de_oliva"]);
+function rdReparto(alimentos) {
+  const cocer = [], crudo = [], encima = [], lacteo = [];
+  for (const a of alimentos) {
+    const n = (a.nombre || "").toLowerCase();
+    if ((a.id && (RD_ENCIMA.has(a.id) || GRASAS_ADEREZO.has(a.id))) || n.includes("punta de cuchillo")) {
+      encima.push(a); continue;
+    }
+    if (a.id && LACTEOS.has(a.id)) { lacteo.push(a); continue; }
+    /* La fruta y el aguacate no se cuecen: se chafan crudos. */
+    if (a.grupo === "fruta" || a.id === "aguacate") { crudo.push(a); continue; }
+    cocer.push(a);
+  }
+  return { cocer, crudo, encima, lacteo };
+}
+/** "a", "a y b", "a, b y c" — con los nombres en negrita. */
+function rdNombres(lista) {
+  const n = lista.map(a => `<b>${capitalizar(a.nombre)}</b>`);
+  if (n.length <= 1) return n[0] || "";
+  return n.slice(0, -1).join(", ") + " y " + n[n.length - 1];
+}
+/* La textura no es la misma a los 6 meses que a los 11, ni con el tronco
+   estable que sin el: es la misma regla que usa la ficha de cada alimento. */
+function texturaDelDia(meses) {
+  const trozos = CONFIG.troncoEstable && CONFIG.metodo !== "papilla";
+  if (trozos) return meses < 9 ? "chafado con el tenedor, con grumos" : "picado fino o en trocitos blandos";
+  return meses < 8 ? "papilla fina, sin grumos" : "papilla espesa, con algún grumo";
+}
+function rdPasos(bloque, meses) {
+  const { cocer, crudo, encima, lacteo } = rdReparto(bloque.alimentos);
+  const tex = texturaDelDia(meses);
+  const frases = [];
+  if (cocer.length === 1) {
+    frases.push(`Cuece ${rdNombres(cocer)} hasta que esté blando y tritúralo: ${tex}.`);
+  } else if (cocer.length > 1) {
+    frases.push(`Cuece ${rdNombres(cocer)} hasta que estén blandos y tritúralo
+      <b>todo junto en el mismo plato</b>: ${tex}.`);
+  }
+  if (crudo.length) {
+    frases.push(cocer.length
+      ? `Añade ${rdNombres(crudo)} en crudo, chafado con el tenedor, y mezcla.`
+      : `Chafa ${rdNombres(crudo)} con el tenedor, sin cocer: ${tex}.`);
+  }
+  /* "Fuera del fuego" solo si ha habido fuego: en una merienda de fruta
+     chafada no hay nada que apartar del fogon. */
+  if (encima.length) {
+    frases.push(`${cocer.length ? "Fuera del fuego, añade" : "Añade"}
+      ${rdNombres(encima)} por encima y remueve.`);
+  }
+  /* El lacteo no se mezcla con el plato: es su propia toma. */
+  if (lacteo.length) frases.push(`${rdNombres(lacteo)}, aparte y sin azúcar, a cuchara.`);
+  return frases;
+}
+function htmlRecetaDelDia(dia) {
+  const bloques = (dia.comidas || []).filter(b => b.alimentos && b.alimentos.length);
+  if (!bloques.length) return "";
+  const meses = dia.edadMeses;
+  return `<div class="card">
+    <h2>Receta del día <span class="n">${bloques.length} ${bloques.length === 1 ? "momento" : "momentos"}</span></h2>
+    <div class="rd-pasos">${bloques.map(b => {
+      const cuantos = b.alimentos.map(a => {
+        const c = a.cantidad || (a.porcion && a.porcion.gramos) || "";
+        /* Hay alimentos que ya llevan la medida en el nombre del plan
+           ("Almendra molida (½ cdita)"): repetirla detras sobra. */
+        const yaLoDice = /cdita|cucharadit|cucharad|taza/i.test(a.nombre || "");
+        return `${capitalizar(a.nombre)}${c && !yaLoDice ? " " + c : ""}`;
+      }).join(" · ");
+      return `<div class="rd-paso">
+        <div class="rd-hora">${b.hora}<span>${b.etiqueta}</span></div>
+        <div class="rd-cuerpo">
+          <p>${rdPasos(b, meses).join(" ")}</p>
+          <div class="rd-que">${cuantos}</div>
+        </div>
+      </div>`;
+    }).join("")}</div>
+    ${bloques.length > 1 ? `<p class="rd-nota">Cada momento es un plato distinto: lo que coincide
+      a la misma hora va junto, lo de otra hora no se mezcla.</p>` : ""}
+  </div>`;
+}
+
 function htmlComidaDelDia(dia, marcarFn) {
   const lista = alimentosParaMarcar(dia);
   if (!lista.length) return "";
   const nuevo = dia.alimentoNuevo;
-  return `<div class="card">
+  return htmlRecetaDelDia(dia) + `<div class="card">
     <h2>Qué le toca hoy <span class="n">${lista.length} ${lista.length === 1 ? "alimento" : "alimentos"}</span></h2>
-    ${lista.length > 1 ? `<p class="comida-plato">Todo va en el <b>mismo plato</b>, chafado junto.
-      Lo que entra de uno en uno es el alimento nuevo, no las comidas.</p>` : ""}
+    ${lista.length > 1 ? `<p class="comida-plato">Lo que entra de uno en uno es el alimento nuevo,
+      no las comidas: la receta de arriba dice qué va junto y qué no.</p>` : ""}
     <div class="comida-lista">${lista.map(({ a, horas }) => {
       /* Los botones dicen lo que se marco ESE dia; la pastilla, en cambio,
          dice como esta el alimento hoy por hoy (su ultimo apunte). */
@@ -9003,6 +9125,16 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
           ? `<span class="linea-parar">Parar</span>`
           : `<span class="linea-valor">${duracionHtml(s.minutos)}</span>`}
       </button>` })),
+    /* Los pañales tambien: si se pueden apuntar desde aqui, tienen que verse
+       aqui. Antes solo salian en su propia pestaña. */
+    ...STATE.diapers.filter(p => (p.datetime || "").slice(0, 10) === dia.fecha).map(p => ({
+      hora: (p.datetime || "").slice(11, 16), html: `
+      <button type="button" class="linea-fila" onclick="PB.editarRegistro('diapers','${p.id}')">
+        <span class="linea-hora">${(p.datetime || "").slice(11, 16)}</span>
+        ${iconoLinea("panal")}
+        <span class="linea-texto"><b>Pañal</b><span
+          class="linea-sub">${PT_PANAL[p.type] || p.type}</span></span>
+      </button>` })),
     ...marcados.map(m => ({ hora: m.hora, html: `
       <button type="button" class="linea-fila"
         onclick="PB.editarMarcaAlimento('${m.a.id}','${dia.fecha}')">
@@ -9064,6 +9196,35 @@ function modalToma(fecha, hora, id) {
      ...(t ? [{ et: "Borrar", peligro: true, accion: `PB.borrarToma('${t.id}')` }] : []),
      { et: "Guardar", primario: true, accion: `PB.guardarToma('${fecha}'${t ? `,'${t.id}'` : ""})` }]);
 }
+/* Alta de pañal sin salir de "Hoy", como la toma y el sueño. Ids propios
+   (pn-*): los del formulario de la pestaña Pañales ya existen en el DOM y
+   reutilizarlos leeria el otro. */
+function modalPanal() {
+  const ops = [["pis", "Pis"], ["caca", "Caca"], ["mixto", "Mixto"], ["seco", "Seco"]];
+  abrirModal("Nuevo pañal", `
+    <div class="grid-campos2">
+      <div class="campo"><label for="pn-tipo">Tipo</label>
+        <select id="pn-tipo">${ops.map(([v, e]) => `<option value="${v}">${e}</option>`).join("")}</select></div>
+      <div class="campo"><label for="pn-dt">Fecha y hora</label>
+        <input type="datetime-local" id="pn-dt" value="${nowDatetimeLocal()}"></div>
+    </div>
+    <div class="modal-aviso" id="pn-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarPanalRapido()" }]);
+}
+function guardarPanalRapido() {
+  const dt = document.getElementById("pn-dt").value || nowDatetimeLocal();
+  const av = document.getElementById("pn-aviso");
+  if (new Date(dt) > new Date()) {
+    if (av) { av.textContent = "Esa hora todavía no ha llegado."; av.hidden = false; }
+    return;
+  }
+  STATE.diapers.push(sellar({ id: "dp_" + Date.now().toString(36), type: document.getElementById("pn-tipo").value, datetime: dt }));
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasToma();
+}
+
 function guardarToma(fecha, id) {
   const hora = document.getElementById("tm-hora").value;
   const ml = document.getElementById("tm-ml").value;
@@ -12156,7 +12317,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
