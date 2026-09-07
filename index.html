@@ -20283,6 +20283,16 @@ function boot(vistaInicial) {
    app. Ahora solo hay una en vuelo; si llega otra peticion mientras tanto, se
    encola una sola repeticion en lugar de arrancar otra ronda. */
     let _syncEnVuelo = null, _syncRepetir = false;
+    /* Los sellos de tiempo vienen de dos sitios con formatos distintos: el
+       cliente escribe "...Z" y Postgres devuelve "...+00:00". Comparados como
+       texto, el mismo instante sale siempre "mas nuevo" ('Z' va despues de
+       '+'), asi que cada sincronizacion creia tener algo que subir, la subida
+       disparaba el aviso en vivo, el aviso disparaba otra sincronizacion y
+       asi sin parar: de ahi el punto de arriba parpadeando entre verde y azul
+       todo el rato. Se comparan como instantes, no como cadenas. */
+    function tsMs(v) { const t = Date.parse(v || ""); return isNaN(t) ? 0 : t; }
+    function masNuevo(a, b) { return tsMs(a) > tsMs(b); }
+
     function sincronizar() {
       if (_syncEnVuelo) { _syncRepetir = true; return _syncEnVuelo; }
       _syncEnVuelo = sincronizarInterno();
@@ -20329,7 +20339,7 @@ function boot(vistaInicial) {
           const local = ingredientePorClave(rem.clave);
           const remL = ingSupaALocal(rem);
           if (!local) { estado.ingredientes.push(remL); aplicados++; }
-          else if (!local.modificado || (remL.modificado || "") > local.modificado) {
+          else if (!local.modificado || masNuevo(remL.modificado, local.modificado)) {
             Object.assign(local, remL); aplicados++;
           }
         }
@@ -20338,7 +20348,7 @@ function boot(vistaInicial) {
           const local = estado.recetas.find(x => x.id === rem.id);
           const remL = recetaSupaALocal(rem);
           if (!local) { estado.recetas.push(remL); aplicados++; }
-          else if (!local.modificado || (remL.modificado || "") > local.modificado) {
+          else if (!local.modificado || masNuevo(remL.modificado, local.modificado)) {
             const i = estado.recetas.indexOf(local);
             estado.recetas[i] = remL; aplicados++;
           }
@@ -20348,25 +20358,35 @@ function boot(vistaInicial) {
           if (!estado.estadoUsuario[rem.perfil]) estado.estadoUsuario[rem.perfil] = {};
           const local = estado.estadoUsuario[rem.perfil][rem.id_receta];
           const remL = euSupaALocal(rem);
-          if (!local || !local.modificado || (remL.modificado || "") > local.modificado) {
+          if (!local || !local.modificado || masNuevo(remL.modificado, local.modificado)) {
             estado.estadoUsuario[rem.perfil][rem.id_receta] = remL; aplicados++;
           }
         }
+        /* Lo que nunca ha tenido sello se lo lleva ahora. Sin el, el filtro de
+           mas abajo lo daba por pendiente en TODAS las sincronizaciones y se
+           volvia a subir para siempre. */
+        const selloAhora = nowISO();
+        estado.ingredientes.forEach(x => { if (!x.modificado) x.modificado = selloAhora; });
+        estado.recetas.forEach(x => { if (!x.modificado) x.modificado = selloAhora; });
+        PERFILES.forEach(p => {
+          const usu = estado.estadoUsuario[p] || {};
+          for (const idR in usu) { if (!usu[idR].modificado) usu[idR].modificado = selloAhora; }
+        });
         guardarEstado();
 
         // 3) Subir locales con modificado > desde (o todos si primer sync).
         const subirIng = estado.ingredientes
-          .filter(x => !desde || !x.modificado || x.modificado > desde || s.ultimoSync == null)
+          .filter(x => !desde || masNuevo(x.modificado, desde) || s.ultimoSync == null)
           .map(ingLocalASupa);
         const subirRec = estado.recetas
-          .filter(x => !desde || !x.modificado || x.modificado > desde || s.ultimoSync == null)
+          .filter(x => !desde || masNuevo(x.modificado, desde) || s.ultimoSync == null)
           .map(recetaLocalASupa);
         const subirEU = [];
         PERFILES.forEach(p => {
           const usu = estado.estadoUsuario[p] || {};
           for (const idR in usu) {
             const eu = usu[idR];
-            if (!s.ultimoSync || !eu.modificado || eu.modificado > desde) {
+            if (!s.ultimoSync || masNuevo(eu.modificado, desde)) {
               subirEU.push(euLocalASupa(p, idR, eu));
             }
           }
@@ -20493,7 +20513,7 @@ function boot(vistaInicial) {
 
       // Se sube siempre que lo local aporte algo que el remoto no tenga: o
       // bien somos mas nuevos, o bien la fusion ha juntado las dos partes.
-      if (!remoto || cambioLocal || tsFinal > remotoTs) {
+      if (!remoto || cambioLocal || masNuevo(tsFinal, remotoTs)) {
         await supaFetch("/rest/v1/pablo_estado?on_conflict=hogar_id", {
           method: "POST",
           headers: { "Prefer": "resolution=merge-duplicates" },
