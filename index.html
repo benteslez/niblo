@@ -5557,13 +5557,30 @@
        unidad pequena al lado y la etiqueta en minusculas debajo. Las
        mayusculas y el centrado de antes hacian que tres datos gritaran. */
     .pb-app .linea-resumen {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-2);
+      /* No son tres columnas iguales: "Tomas" es un digito y el sueño puede
+         llegar a "13h 20min" con el punto del cronometro al lado, que en un
+         tercio de pantalla se salia por la derecha. Reparto fijo, no auto,
+         para que las columnas no bailen al cambiar las cifras. */
+      display: grid; grid-template-columns: 1fr 0.6fr 1.4fr; gap: var(--gap-2);
       margin: 0 0 var(--gap-3); padding-bottom: var(--gap-3);
       border-bottom: 1px solid var(--line-soft);
     }
     .pb-app .linea-resumen b {
       display: block; font-family: var(--serif); font-size: 1.5rem; font-weight: 700;
       letter-spacing: -0.03em; white-space: nowrap; line-height: 1.15;
+    }
+    /* Mismo punto rojo que el aviso de sueño en curso, pegado a la cifra:
+       dice que ese numero se esta moviendo ahora mismo. El selector lleva
+       .linea-resumen a proposito: la regla de ahi abajo pone en bloque
+       cualquier span del resumen y, con menos especificidad, el punto se caia
+       a un renglon propio debajo de la cifra. */
+    .pb-app .linea-resumen .linea-vivo {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--red); margin-left: 6px; vertical-align: middle;
+      animation: pb-latido 1.4s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pb-app .linea-resumen .linea-vivo { animation: none; }
     }
     .pb-app .linea-resumen i {
       font-style: normal; font-size: 0.6em; font-weight: 600;
@@ -8443,6 +8460,7 @@ function renderHoy(el) {
   html += htmlLoQueSueleVenir();
 
   el.innerHTML = html;
+  sincronizarTicSueno();
 }
 
 /* ---- Alimentacion complementaria del dia -------------------------------
@@ -8818,16 +8836,15 @@ function mlHasta(fecha, corte) {
     .reduce((s, t) => s + (Number(t.ml) || 0), 0);
 }
 /** Sueño acumulado de un dia hasta cierto minuto del reloj, recortando el
-    trozo que se pase de la hora. Los sueños en curso no cuentan, igual que en
-    la cifra que hay encima: si contaran, el numero y la pastilla dirian cosas
-    distintas. */
+    trozo que se pase de la hora. Lo que esta en curso cuenta hasta ahora
+    mismo, igual que la cifra que hay encima: si no contara, el numero y la
+    pastilla dirian cosas distintas. */
 function minutosSuenoHasta(fecha, corte) {
   const ini0 = new Date(fecha + "T00:00:00");
   const tope = new Date(ini0.getTime() + corte * 60000);
   let total = 0;
   for (const s of STATE.sleep) {
-    if (!s.end) continue;
-    const a = new Date(s.start), b = new Date(s.end);
+    const a = new Date(s.start), b = s.end ? new Date(s.end) : new Date();
     const desde = a < ini0 ? ini0 : a;
     const hasta = b > tope ? tope : b;
     if (hasta > desde) total += Math.round((hasta - desde) / 60000);
@@ -8840,6 +8857,57 @@ function isoAyer(iso) {
   d.setDate(d.getDate() - 1);
   return isoLocal(d);
 }
+
+/* La cifra de sueño y su comparativa, aparte: el cronometro las reescribe
+   cada pocos segundos sin tocar el resto de la pantalla. Repintar la vista
+   entera perderia el scroll y cerraria lo que hubiera abierto. */
+function htmlCeldaSueno(fecha, esHoy) {
+  const suenios = sueniosDelDia(fecha);
+  const min = suenios.reduce((s, x) => s + x.minutos, 0);
+  const vivo = esHoy && suenios.some(x => x.enCurso);
+  const ayer = isoAyer(fecha);
+  const suenioAyer = sueniosDelDia(ayer);
+  const minAyer = suenioAyer.reduce((s, x) => s + x.minutos, 0);
+  const ahoraMin = esHoy ? (new Date().getHours() * 60 + new Date().getMinutes()) : 1440;
+  const cmp = htmlComparativa(
+    minutosSuenoHasta(fecha, ahoraMin), minutosSuenoHasta(ayer, ahoraMin),
+    min, minAyer, "min", suenioAyer.length > 0, esHoy);
+  return `<b>${min ? duracionHtml(min) : "—"}${vivo
+    ? `<span class="linea-vivo" role="img" aria-label="cronómetro en marcha"></span>` : ""}</b>
+    <span>Sueño${cmp}</span>`;
+}
+
+/* El cronometro no repinta nada mas que esa celda, y se para solo en cuanto
+   no queda ninguna viva: asi no se queda un intervalo dando vueltas cuando ya
+   no hay nada que contar. */
+let SUENO_TIC = null;
+function refrescarCeldasSueno() {
+  const celdas = document.querySelectorAll(".celda-sueno[data-vivo]");
+  if (!celdas.length) { pararTicSueno(); return; }
+  celdas.forEach(cel => {
+    const previa = cel.querySelector("button.cmp");
+    const modo = previa ? previa.dataset.modo : null;
+    cel.innerHTML = htmlCeldaSueno(cel.dataset.fecha, cel.dataset.hoy === "1");
+    /* Si el usuario habia cambiado la pastilla al total del dia, se respeta:
+       el repintado no puede deshacerle la eleccion cada quince segundos. */
+    const nueva = cel.querySelector("button.cmp");
+    if (nueva && modo === "dia") alternarCmp(nueva);
+  });
+}
+function pararTicSueno() {
+  if (SUENO_TIC) { clearInterval(SUENO_TIC); SUENO_TIC = null; }
+}
+function sincronizarTicSueno() {
+  const hayVivas = document.querySelector(".celda-sueno[data-vivo]");
+  if (!hayVivas) return pararTicSueno();
+  if (SUENO_TIC) return;
+  SUENO_TIC = setInterval(refrescarCeldasSueno, 15000);
+}
+/* Al volver a la app el intervalo puede llevar minutos congelado (el
+   navegador los frena en segundo plano): se pone al dia al momento. */
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) refrescarCeldasSueno();
+});
 
 function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   const tomas = tomasDelDia(dia.fecha);
@@ -8894,20 +8962,20 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   ].sort((a, b) => a.hora.localeCompare(b.hora));
 
   const total = totalMlDia(dia.fecha);
-  const minSueno = suenios.reduce((s, x) => s + (x.enCurso ? 0 : x.minutos), 0);
   /* "Tomas" no lleva comparativa a proposito: seis tomas grandes y ocho
      pequeñas dicen cosas distintas, y el numero solo confundiria. Los ml y los
      minutos si son comparables. */
   const ayer = isoAyer(dia.fecha);
-  const suenioAyer = sueniosDelDia(ayer);
   const mlAyer = totalMlDia(ayer);
-  const minAyer = suenioAyer.reduce((s, x) => s + (x.enCurso ? 0 : x.minutos), 0);
   const hayTomasAyer = tomasDelDia(ayer).length > 0;
-  const haySuenoAyer = suenioAyer.some(x => !x.enCurso);
   /* Solo el dia de hoy tiene "a esta hora"; el panel del calendario abre dias
      cerrados, donde lo unico que cabe comparar son los totales. */
   const esHoy = dia.fecha === HOY_ISO;
   const ahoraMin = esHoy ? (new Date().getHours() * 60 + new Date().getMinutes()) : 1440;
+  /* El punto rojo solo tiene sentido donde la cifra esta creciendo: un dia ya
+     cerrado puede contener un sueño que sigue en marcha, pero su parte de ese
+     dia se acabo a medianoche y no se mueve. */
+  const vivo = esHoy && suenios.some(x => x.enCurso);
 
   return `<div class="card">
     <div class="linea-cab">
@@ -8919,8 +8987,8 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
       <div><b>${total}<i>ml</i></b><span>Leche${htmlComparativa(
         mlHasta(dia.fecha, ahoraMin), mlHasta(ayer, ahoraMin), total, mlAyer, "ml", hayTomasAyer, esHoy)}</span></div>
       <div><b>${tomas.length}</b><span>${tomas.length === 1 ? "Toma" : "Tomas"}</span></div>
-      <div><b>${minSueno ? duracionHtml(minSueno) : "—"}</b><span>Sueño${htmlComparativa(
-        minutosSuenoHasta(dia.fecha, ahoraMin), minutosSuenoHasta(ayer, ahoraMin), minSueno, minAyer, "min", haySuenoAyer, esHoy)}</span></div>
+      <div class="celda-sueno"${vivo ? " data-vivo=\"1\"" : ""} data-fecha="${dia.fecha}"
+        data-hoy="${esHoy ? 1 : 0}">${htmlCeldaSueno(dia.fecha, esHoy)}</div>
     </div>
     ${filas.length
       ? `<div class="linea">${filas.map(f => f.html).join("")}</div>`
@@ -9318,6 +9386,7 @@ function abrirDiaCalendario(iso) {
   html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoDrawer");
   html += htmlLineaDelDia(dia, "PB.TOMAS_DRAWER", true);
   abrirDrawer(html);
+  sincronizarTicSueno();
 }
 
 /* Receta paso a paso de la ficha. Las cantidades se resuelven a la edad de
