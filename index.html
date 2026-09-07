@@ -5383,6 +5383,17 @@
     .pb-app select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-soft); color: var(--text); font-size: 0.875rem; font-family: var(--sans); }
     .pb-app .lista-alimento { display: flex; align-items: center; gap: 10px; padding: 10px 4px; cursor: pointer; border-bottom: 1px solid var(--border); }
     .pb-app .lista-alimento:last-child { border-bottom: none; }
+    /* El fondo dice el estado de un vistazo, sin tener que leer el punto. Los
+       tintes son los mismos de las pastillas, para que un color signifique lo
+       mismo en toda la app. */
+    .pb-app .lista-alimento.est-tolerado { background: var(--green-soft); }
+    .pb-app .lista-alimento.est-rechazo  { background: var(--amber-soft); }
+    .pb-app .lista-alimento.est-reaccion { background: var(--red-soft); }
+    .pb-app .lista-alimento.est-probando { background: var(--amber-soft); }
+    .pb-app .lista-alimento[class*="est-"]:not(.est-no_probado) {
+      border-radius: 8px; padding-left: 10px; padding-right: 10px;
+      border-bottom-color: transparent; margin-bottom: 2px;
+    }
     .pb-app .lista-alimento .nombre { font-weight: 700; font-size: 0.875rem; }
     .pb-app .lista-alimento .grupo { font-size: 0.71875rem; color: var(--text-faint); }
     .pb-app .lista-alimento .estado-dot { margin-left: auto; }
@@ -9533,12 +9544,124 @@ function htmlRegistroLeche() {
       <span class="pill info">Semana: ${totalSemana} ml${diasConDatoSemana ? ` · ${Math.round(totalSemana/diasConDatoSemana)} ml/día prom.` : ''}</span>
       <span class="pill info">Mes: ${totalMes} ml${diasConDatoMes ? ` · ${Math.round(totalMes/diasConDatoMes)} ml/día prom.` : ''}</span>
     </div>`;
-    ultimos.forEach(([f, ml]) => {
-      html += `<div class="bloque-rutina"><div class="hora mono">${fmtFechaCorta(f)}</div><div><div class="et">${ml} ml</div></div></div>`;
-    });
+    /* La grafica sustituye a la lista de los ultimos 7 dias: los mismos datos
+       y ademas se ve la tendencia. Mismo control de periodos que en sueño. */
+    html += `<div class="sueno-modo" id="leche-periodos">
+      ${Object.entries(SUENO_PERIODOS).map(([k, v]) =>
+        `<button type="button" class="${k === LECHE_PERIODO ? "on" : ""}" onclick="PB.lechePeriodo('${k}')">${v}</button>`).join("")}
+    </div>
+    <div id="leche-resumen" class="sueno-resumen"></div>
+    <div class="chart-wrap" style="height:200px"><canvas id="chart-leche"></canvas></div>
+    <div class="faint" style="margin-top:8px">${LECHE_PERIODO === "dia"
+      ? "Cada barra es el total de ml de ese día."
+      : "Cada barra es la media de ml por día del periodo."}</div>`;
   }
   html += `</div>`;
   return html;
+}
+
+/* ---- Exportar el listado de alimentos -----------------------------------
+   Los tres grupos que hacen falta para llevarselo o dejarselo a alguien:
+   lo que tolera, lo que rechaza y lo que le dio reaccion, con la fecha del
+   ultimo apunte de cada uno. Se imprime con el mismo motor que los informes,
+   asi que el "Guardar como PDF" del navegador tambien vale. */
+function exportarAlimentos() {
+  const dmy = iso => { const [y, m, d] = iso.split("-"); return `${d}/${m}/${y}`; };
+  const grupos = { tolerado: [], rechazo: [], reaccion: [] };
+  for (const [id, dat] of Object.entries(STATE.alimentos || {})) {
+    const hist = (dat.historial || []);
+    if (!hist.length) continue;
+    const ultimo = hist[hist.length - 1];
+    if (!grupos[ultimo.resultado]) continue;
+    const a = alimentoPorId(id);
+    /* La fecha que interesa de cada grupo es la del ultimo apunte de ESE
+       estado, no la del ultimo apunte a secas. */
+    const delEstado = hist.filter(h => h.resultado === ultimo.resultado);
+    grupos[ultimo.resultado].push({
+      nombre: (a ? nombreLocal(a) : "") || id,
+      grupo: GRUPOS_LABEL[a && a.grupo] || "—",
+      fecha: delEstado[delEstado.length - 1].fecha,
+      desde: hist[0].fecha,
+      alergenico: !!(a && a.flags && a.flags.alergenico),
+    });
+  }
+  for (const k of Object.keys(grupos)) grupos[k].sort((x, y) => x.nombre.localeCompare(y.nombre, "es"));
+
+  const nombre = CONFIG.nombre || "Pablo";
+  const tabla = (lista, etFecha) => lista.length
+    ? `<div class="inf-tabla-wrap"><table class="inf-tabla">
+        <thead><tr><th>Alimento</th><th>Grupo</th><th>Desde</th><th>${etFecha}</th></tr></thead>
+        <tbody>${lista.map(x => `<tr>
+          <td>${esc(x.nombre)}${x.alergenico ? " <b>· alérgeno</b>" : ""}</td>
+          <td>${esc(x.grupo)}</td><td>${dmy(x.desde)}</td><td>${dmy(x.fecha)}</td></tr>`).join("")}</tbody></table></div>`
+    : `<p class="inf-vacio">Ninguno.</p>`;
+
+  imprimirDocumento(`<div class="inf-cab">
+      <div><div class="inf-app">Niblo</div><div class="inf-tit">Alimentos de ${esc(nombre)}</div></div>
+      <div class="inf-meta">${edadEnMeses(CONFIG.fechaNacimiento, HOY_REAL).texto}<br>
+        Estado a ${fmtFechaCorta(HOY_ISO)}</div>
+    </div>
+    <div class="inf-kpis">
+      <div><b>${grupos.tolerado.length}</b><span>Tolerados</span></div>
+      <div><b>${grupos.rechazo.length}</b><span>Rechazados</span></div>
+      <div><b>${grupos.reaccion.length}</b><span>Con reacción</span></div>
+    </div>
+    <h3>Tolerados</h3>
+    <p class="inf-nota">Ya los ha probado sin problema. Se le pueden dar.</p>
+    ${tabla(grupos.tolerado, "Última vez")}
+    <h3>Rechazados</h3>
+    <p class="inf-nota">Los rechazó la última vez que se le ofrecieron. Se pueden volver a ofrecer sin
+      insistir: rechazar un alimento las primeras veces es lo normal.</p>
+    ${tabla(grupos.rechazo, "Último rechazo")}
+    <h3>Con reacción</h3>
+    <p class="inf-nota"><b>No dárselos</b> sin hablarlo antes con el pediatra.</p>
+    ${tabla(grupos.reaccion, "Última reacción")}`);
+}
+
+let LECHE_PERIODO = "dia";
+function lechePeriodo(p) { LECHE_PERIODO = p; renderProgreso(document.getElementById("view-progreso")); }
+
+function renderLecheChart() {
+  if (typeof Chart === "undefined") return;
+  const ctx = document.getElementById("chart-leche");
+  if (!ctx) return;
+  const mapa = new Map(Object.entries(mlPorDia()));
+  const cubos = cubosPorPeriodo(LECHE_PERIODO, mapa, 1);
+
+  const resumen = document.getElementById("leche-resumen");
+  if (resumen) {
+    const total = cubos.reduce((s, c) => s + c.valor * c.dias, 0);
+    const dias = cubos.reduce((s, c) => s + (c.conDatos || 0), 0);
+    const media = dias ? Math.round(total / dias) : 0;
+    resumen.innerHTML = dias
+      ? `<div><span class="su-total">${Math.round(total)} ml</span>
+           <span class="faint">en ${dias} ${dias === 1 ? "día registrado" : "días registrados"}</span></div>
+         <div class="su-badge">Media ${media} ml/día</div>`
+      : `<div class="faint">Aún no hay tomas registradas en este periodo.</div>`;
+  }
+
+  if (CHARTS.leche) CHARTS.leche.destroy();
+  const cont = document.querySelector(".pb-app") || document.documentElement;
+  const cs = getComputedStyle(cont);
+  const rejilla = cs.getPropertyValue("--border").trim() || "rgba(148,163,184,.3)";
+  const tinta = cs.getPropertyValue("--text-muted").trim() || "#94a3b8";
+  const azul = cs.getPropertyValue("--blue").trim() || "#2563eb";
+  CHARTS.leche = new Chart(ctx, {
+    type: "bar",
+    data: { labels: cubos.map(c => c.etiqueta),
+            datasets: [{ data: cubos.map(c => c.valor), backgroundColor: azul, borderRadius: 6, maxBarThickness: 46 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true, grid: { color: rejilla }, ticks: { color: tinta, callback: v => v + " ml" } },
+        x: { grid: { display: false }, ticks: { color: tinta } },
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `${Math.round(c.parsed.y)} ml` } },
+      },
+    },
+  });
 }
 
 /* ---- Patron de los ultimos dias -----------------------------------------
@@ -9610,17 +9733,25 @@ function renderProgreso(el) {
     items.sort((a,b)=>nombreLocal(a).localeCompare(nombreLocal(b))).forEach(a => {
       const est = estadoActual(a.id) || "no_probado";
       if (est === "tolerado") totalTolerado++;
-      const color = est === "tolerado" ? "var(--green)" : est === "reaccion" ? "var(--red)" : est === "probando" ? "var(--amber)" : "var(--text-faint)";
+      const color = est === "tolerado" ? "var(--green)" : est === "reaccion" ? "var(--red)"
+        : est === "rechazo" ? "var(--amber)" : est === "probando" ? "var(--amber)" : "var(--text-faint)";
       const local = nombreLocal(a);
       const original = capitalizar(a.nombre.es_MX);
-      html += `<div class="lista-alimento" onclick="PB.irA('alimento','${a.id}')">
+      html += `<div class="lista-alimento est-${est}" onclick="PB.irA('alimento','${a.id}')">
         <span class="dot" style="background:${color}"></span>
         <div><div class="nombre">${local}</div>${local !== original ? `<div class="grupo">libro: ${original}</div>` : ""}</div>
       </div>`;
     });
     html += `</div>`;
   });
-  el.innerHTML = `<div class="card"><h2>Resumen</h2>${totalTolerado} de ${LIBRO.alimentos.length} alimentos tolerados</div>` + html;
+  el.innerHTML = `<div class="card"><h2>Resumen</h2>
+      ${totalTolerado} de ${LIBRO.alimentos.length} alimentos tolerados
+      <div class="doc-barra" style="margin-top:12px">
+        <button type="button" class="btn-plano" onclick="PB.exportarAlimentos()">Exportar listado</button>
+      </div>
+    </div>` + html;
+  /* El canvas tiene que existir ya en el DOM para que Chart.js lo mida. */
+  renderLecheChart();
 }
 
 /* ======================== render: ALERGENOS ======================== */
@@ -10834,7 +10965,10 @@ const SUENO_PERIODOS = { dia: "Día", semana: "Semana", mes: "Mes", ano: "Año" 
 let SUENO_PERIODO = "dia";
 let SUENO_CAL_MES = null;   // Date del primer dia del mes mostrado
 
-function cubosSueno(periodo, mapa) {
+/* Trocea un mapa de "iso -> cantidad del dia" en barras por periodo. Lo usan
+   la grafica de sueño (minutos, divisor 60 para pasar a horas) y la de leche
+   (ml, divisor 1). "valor" es la cantidad por dia del cubo, no el total. */
+function cubosPorPeriodo(periodo, mapa, divisor = 60) {
   const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
   const manana = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 1);
   const cubos = [];
@@ -10854,7 +10988,7 @@ function cubosSueno(periodo, mapa) {
       const d = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() - i);
       const min = mapa.get(isoDeFecha(d)) || 0;
       cubos.push({ etiqueta: `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`,
-                   horas: +(min / 60).toFixed(2), dias: 1, conDatos: min > 0 ? 1 : 0, desde: new Date(d) });
+                   valor: +(min / divisor).toFixed(2), dias: 1, conDatos: min > 0 ? 1 : 0, desde: new Date(d) });
     }
   } else if (periodo === "semana") {
     const lunes = new Date(hoy); lunes.setDate(hoy.getDate() - ((hoy.getDay() + 6) % 7));
@@ -10863,21 +10997,21 @@ function cubosSueno(periodo, mapa) {
       const b = new Date(a.getFullYear(), a.getMonth(), a.getDate() + 7);
       const { min, dias, conDatos } = sumaEntre(a, b);
       cubos.push({ etiqueta: `${String(a.getDate()).padStart(2, "0")}/${String(a.getMonth() + 1).padStart(2, "0")}`,
-                   horas: +((min / 60) / dias).toFixed(2), dias, conDatos, desde: a });
+                   valor: +((min / divisor) / dias).toFixed(2), dias, conDatos, desde: a });
     }
   } else if (periodo === "mes") {
     for (let i = 11; i >= 0; i--) {
       const a = new Date(hoy.getFullYear(), hoy.getMonth() - i, 1);
       const b = new Date(a.getFullYear(), a.getMonth() + 1, 1);
       const { min, dias, conDatos } = sumaEntre(a, b);
-      cubos.push({ etiqueta: a.toLocaleDateString("es-ES", { month: "short" }), horas: +((min / 60) / dias).toFixed(2), dias, conDatos, desde: a });
+      cubos.push({ etiqueta: a.toLocaleDateString("es-ES", { month: "short" }), valor: +((min / divisor) / dias).toFixed(2), dias, conDatos, desde: a });
     }
   } else {
     for (let i = 4; i >= 0; i--) {
       const a = new Date(hoy.getFullYear() - i, 0, 1);
       const b = new Date(a.getFullYear() + 1, 0, 1);
       const { min, dias, conDatos } = sumaEntre(a, b);
-      cubos.push({ etiqueta: String(a.getFullYear()), horas: +((min / 60) / dias).toFixed(2), dias, conDatos, desde: a });
+      cubos.push({ etiqueta: String(a.getFullYear()), valor: +((min / divisor) / dias).toFixed(2), dias, conDatos, desde: a });
     }
   }
   return cubos;
@@ -11013,13 +11147,13 @@ function renderSuenoChart() {
   const ctx = document.getElementById("chart-sueno");
   if (!ctx) return;
   const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
-  const cubos = cubosSueno(SUENO_PERIODO, minutosPorDia());
+  const cubos = cubosPorPeriodo(SUENO_PERIODO, minutosPorDia());
   const est = estandarSueno(meses);
-  const colores = cubos.map(c => { const e = estadoSueno(c.horas, meses); return e ? colorSueno(e) : "rgba(148,163,184,0.35)"; });
+  const colores = cubos.map(c => { const e = estadoSueno(c.valor, meses); return e ? colorSueno(e) : "rgba(148,163,184,0.35)"; });
 
   const resumen = document.getElementById("sueno-resumen");
   if (resumen) {
-    const totalH = cubos.reduce((s, c) => s + c.horas * c.dias, 0);
+    const totalH = cubos.reduce((s, c) => s + c.valor * c.dias, 0);
     const totalD = cubos.reduce((s, c) => s + (c.conDatos || 0), 0);
     // La media se pondera por dias, no por cubos: un mes con 30 dias no puede
     // pesar lo mismo que el mes en curso con 4.
@@ -11037,11 +11171,11 @@ function renderSuenoChart() {
   const tinta = cs.getPropertyValue("--text-muted").trim() || "#94a3b8";
   CHARTS.sueno = new Chart(ctx, {
     type: "bar",
-    data: { labels: cubos.map(c => c.etiqueta), datasets: [{ data: cubos.map(c => c.horas), backgroundColor: colores, borderRadius: 6, maxBarThickness: 46 }] },
+    data: { labels: cubos.map(c => c.etiqueta), datasets: [{ data: cubos.map(c => c.valor), backgroundColor: colores, borderRadius: 6, maxBarThickness: 46 }] },
     options: {
       responsive: true, maintainAspectRatio: false,
       scales: {
-        y: { beginAtZero: true, suggestedMax: Math.max(est.rec[1] + 2, ...cubos.map(c => c.horas)),
+        y: { beginAtZero: true, suggestedMax: Math.max(est.rec[1] + 2, ...cubos.map(c => c.valor)),
              grid: { color: rejilla }, ticks: { color: tinta, callback: v => v + " h" } },
         x: { grid: { display: false }, ticks: { color: tinta } },
       },
@@ -11730,7 +11864,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
