@@ -7018,7 +7018,6 @@
         <section id="view-calendario" class="view"></section>
         <section id="view-buscar" class="view"></section>
         <section id="view-alimento" class="view"></section>
-        <section id="view-progreso" class="view"></section>
         <section id="view-alergenos" class="view"></section>
         <section id="view-seguridad" class="view"></section>
         <section id="view-ajustes" class="view"></section>
@@ -8253,7 +8252,7 @@ const VISTAS_EN_MAS = new Set(["mas", "desarrollo", "crecimiento", "pediatra", "
 // exactamente a donde estaba en vez de reiniciar esa vista desde arriba.
 let VISTA_ACTUAL = "hoy";
 let ORIGEN_ALIMENTO = null;
-const ORIGEN_LABEL = { buscar: "Buscar", progreso: "Progreso", alergenos: "Alérgenos", calendario: "Calendario", hoy: "Hoy" };
+const ORIGEN_LABEL = { buscar: "Alimentos", alergenos: "Alérgenos", calendario: "Calendario", hoy: "Hoy" };
 
 /* La cabecera con nombre, edad y metodo se repetia en las 17 vistas y ya sale
    arriba en la barra de la app: fuera de todas. La edad sigue estando en el
@@ -8458,6 +8457,10 @@ function renderHoy(el) {
   html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoHoy");
   html += htmlLineaDelDia(dia, "PB.TOMAS_HOY", false);
   html += htmlLoQueSueleVenir();
+  /* El patron de la semana estaba en Progreso, entre listados de alimentos,
+     donde no lo veia nadie. Es la foto del dia a dia, asi que su sitio es el
+     final de Hoy: debajo de lo que ha pasado hoy y de lo que suele venir. */
+  html += htmlPatron();
 
   el.innerHTML = html;
   sincronizarTicSueno();
@@ -9184,7 +9187,7 @@ function diasQueCasan(q) {
   return CAL.dias.filter(d => d.fase !== "pre" && diaCasaBusqueda(d, q));
 }
 
-function renderCalendario(el) {
+function renderCalendario(el, soloPlan) {
   calAsegurarMes();
   const { y, m } = CAL_MES;
   const q = calNormaliza(CAL_BUSQUEDA);
@@ -9270,7 +9273,10 @@ function renderCalendario(el) {
   const hayAntes = new Date(y, m, 1) > new Date(FECHA_INICIO + "T00:00:00");
   const hayDespues = new Date(y, m + 1, 0) < new Date(FECHA_FIN + "T00:00:00");
 
-  el.innerHTML = `
+  /* Dos zonas separadas a proposito: escribir en el buscador repinta el plan
+     entero y, con la grafica de leche dentro, cada tecla destruiria y volveria
+     a crear el Chart. Al buscar solo se rehace #pb-cal-plan. */
+  const htmlPlan = `
     <div class="pb-cal-buscador">
       <input type="search" id="pb-cal-q" list="pb-cal-lista" autocomplete="off"
              placeholder="Buscar alimento — p. ej. aguacate" value="${CAL_BUSQUEDA.replace(/"/g,'&quot;')}">
@@ -9301,6 +9307,18 @@ function renderCalendario(el) {
         Los días sin punto son de variedad: repiten alimentos ya probados.</span>
     </div>`;
 
+  if (soloPlan) {
+    const zona = document.getElementById("pb-cal-plan");
+    if (zona) zona.innerHTML = htmlPlan;
+  } else {
+    /* La leche va aqui, en la primera pagina de Alimentacion: es el otro
+       registro diario del bebe y estaba escondido en Progreso, detras de los
+       listados de alimentos. */
+    el.innerHTML = `<div id="pb-cal-plan">${htmlPlan}</div>
+      <div id="pb-cal-leche">${htmlRegistroLeche()}</div>`;
+    renderLecheChart();
+  }
+
   // El input se recrea en cada render: hay que devolverle el foco y el cursor.
   const input = document.getElementById("pb-cal-q");
   if (input && CAL_FOCO) {
@@ -9320,7 +9338,7 @@ function calWiring() {
     if (ev.target.id !== "pb-cal-q") return;
     CAL_BUSQUEDA = ev.target.value;
     CAL_FOCO = true;
-    renderCalendario(cont);
+    renderCalendario(cont, true);
   });
   cont.addEventListener("click", (ev) => {
     const b = ev.target.closest("[data-pbcal]");
@@ -9422,10 +9440,36 @@ function htmlReceta(a, meses) {
 // volver de la ficha de un alimento (ver irA/volverDesdeAlimento).
 let BUSCAR_GRUPO_ACTIVO = null;
 
+/* Los alimentos salian en dos pestañas: "Alimentos" con buscador y filtro por
+   grupo, y "Progreso" con la misma lista agrupada y un resumen. Eran los
+   mismos datos vistos dos veces, asi que Progreso se pliega aqui: el resumen
+   y la exportacion arriba, y un filtro por estado que hace lo que hacia el
+   agrupado, sin salir de la pantalla que ya tiene el buscador. */
+const BUSCAR_ESTADOS = {
+  tolerado:  { et: "Tolerados",  color: "var(--green)" },
+  rechazo:   { et: "Rechazados", color: "var(--amber)" },
+  reaccion:  { et: "Reacción",   color: "var(--red)" },
+  no_probado:{ et: "Sin probar", color: "var(--text-faint)" },
+};
+let BUSCAR_ESTADO_ACTIVO = null;
+function colorEstado(est) {
+  return est === "tolerado" ? "var(--green)" : est === "reaccion" ? "var(--red)"
+    : (est === "rechazo" || est === "probando") ? "var(--amber)" : "var(--text-faint)";
+}
+
 function renderBuscar(el, filtroInicial) {
+  const total = LIBRO.alimentos.length;
+  const tolerados = LIBRO.alimentos.filter(a => estadoActual(a.id) === "tolerado").length;
   el.innerHTML = `
+    <div class="card">
+      <h2>Resumen</h2>
+      <b class="num">${tolerados}</b> de <b class="num">${total}</b> alimentos tolerados
+      <div class="faint" style="margin:8px 0 12px">Lo que tolera, lo que rechaza y lo que le dio reacción, con la fecha de cada uno. Se abre el diálogo de impresión: elige <b>Guardar como PDF</b>.</div>
+      <button type="button" class="btn-primario" onclick="PB.exportarAlimentos()">Exportar listado</button>
+    </div>
     <input type="search" id="buscar-input" placeholder="Buscar alimento…" value="${filtroInicial || ''}">
     <div class="leyenda" id="buscar-filtros" style="margin-top:10px"></div>
+    <div class="leyenda" id="buscar-estados" style="margin-top:8px"></div>
     <div class="card" style="margin-top:12px" id="buscar-resultados"></div>
   `;
   const grupos = Object.keys(GRUPOS_LABEL);
@@ -9445,12 +9489,34 @@ function renderBuscar(el, filtroInicial) {
     filtrosEl.appendChild(b);
   });
   if (BUSCAR_GRUPO_ACTIVO) pills[BUSCAR_GRUPO_ACTIVO].style.outline = "2px solid var(--blue)";
+
+  const estadosEl = document.getElementById("buscar-estados");
+  const pillsEst = {};
+  Object.entries(BUSCAR_ESTADOS).forEach(([k, v]) => {
+    const b = document.createElement("span");
+    b.className = "pill neutro"; b.style.cursor = "pointer";
+    b.innerHTML = `<span class="dot" style="background:${v.color}"></span>${v.et}`;
+    b.onclick = () => {
+      BUSCAR_ESTADO_ACTIVO = BUSCAR_ESTADO_ACTIVO === k ? null : k;
+      Object.keys(BUSCAR_ESTADOS).forEach(kk => {
+        pillsEst[kk].style.outline = kk === BUSCAR_ESTADO_ACTIVO ? "2px solid var(--blue)" : "";
+      });
+      pintar();
+    };
+    pillsEst[k] = b;
+    estadosEl.appendChild(b);
+  });
+  if (BUSCAR_ESTADO_ACTIVO && pillsEst[BUSCAR_ESTADO_ACTIVO]) {
+    pillsEst[BUSCAR_ESTADO_ACTIVO].style.outline = "2px solid var(--blue)";
+  }
+
   const input = document.getElementById("buscar-input");
   input.addEventListener("input", pintar);
   function pintar() {
     const q = input.value.trim().toLowerCase();
     const res = LIBRO.alimentos.filter(a => {
       if (BUSCAR_GRUPO_ACTIVO && a.grupo !== BUSCAR_GRUPO_ACTIVO) return false;
+      if (BUSCAR_ESTADO_ACTIVO && (estadoActual(a.id) || "no_probado") !== BUSCAR_ESTADO_ACTIVO) return false;
       if (!q) return true;
       const nombres = [a.nombre.es_MX, a.nombre.es_ES, a.nombre.es_CO, nombreLocal(a)].filter(Boolean).join(" ").toLowerCase();
       return nombres.includes(q);
@@ -9458,15 +9524,14 @@ function renderBuscar(el, filtroInicial) {
     const cont = document.getElementById("buscar-resultados");
     if (!res.length) { cont.innerHTML = `<div class="empty-state">Sin resultados.</div>`; return; }
     cont.innerHTML = res.map(a => {
-      const est = estadoActual(a.id);
-      const estColor = est === "tolerado" ? "var(--green)" : est === "reaccion" ? "var(--red)" : est === "probando" ? "var(--amber)" : "var(--text-faint)";
+      const est = estadoActual(a.id) || "no_probado";
       const local = nombreLocal(a);
       const original = capitalizar(a.nombre.es_MX);
       const sub = local === original ? GRUPOS_LABEL[a.grupo] : `${GRUPOS_LABEL[a.grupo]} · libro: ${original}`;
-      return `<div class="lista-alimento" onclick="PB.irA('alimento','${a.id}')">
+      return `<div class="lista-alimento est-${est}" onclick="PB.irA('alimento','${a.id}')">
         <span class="dot" style="background:${GRUPOS_COLOR[a.grupo]}"></span>
         <div><div class="nombre">${local}</div><div class="grupo">${sub}</div></div>
-        <span class="dot estado-dot" style="background:${estColor}"></span>
+        <span class="dot estado-dot" style="background:${colorEstado(est)}"></span>
       </div>`;
     }).join("");
   }
@@ -9763,7 +9828,13 @@ function exportarAlimentos() {
 }
 
 let LECHE_PERIODO = "dia";
-function lechePeriodo(p) { LECHE_PERIODO = p; renderProgreso(document.getElementById("view-progreso")); }
+function lechePeriodo(p) {
+  LECHE_PERIODO = p;
+  const zona = document.getElementById("pb-cal-leche");
+  if (!zona) return;
+  zona.innerHTML = htmlRegistroLeche();
+  renderLecheChart();
+}
 
 function renderLecheChart() {
   if (typeof Chart === "undefined") return;
@@ -9864,38 +9935,6 @@ function htmlPatron() {
       <span><i class="punto" style="background:var(--slate)"></i>pañal</span>
     </div>
   </div>`;
-}
-
-function renderProgreso(el) {
-  const grupos = Object.keys(GRUPOS_LABEL);
-  let totalTolerado = 0;
-  let html = htmlPatron() + htmlRegistroLeche();
-  grupos.forEach(g => {
-    const items = LIBRO.alimentos.filter(a => a.grupo === g);
-    if (!items.length) return;
-    html += `<div class="card"><h2><span class="dot" style="background:${GRUPOS_COLOR[g]}"></span> ${GRUPOS_LABEL[g]} <span class="n">${items.length}</span></h2>`;
-    items.sort((a,b)=>nombreLocal(a).localeCompare(nombreLocal(b))).forEach(a => {
-      const est = estadoActual(a.id) || "no_probado";
-      if (est === "tolerado") totalTolerado++;
-      const color = est === "tolerado" ? "var(--green)" : est === "reaccion" ? "var(--red)"
-        : est === "rechazo" ? "var(--amber)" : est === "probando" ? "var(--amber)" : "var(--text-faint)";
-      const local = nombreLocal(a);
-      const original = capitalizar(a.nombre.es_MX);
-      html += `<div class="lista-alimento est-${est}" onclick="PB.irA('alimento','${a.id}')">
-        <span class="dot" style="background:${color}"></span>
-        <div><div class="nombre">${local}</div>${local !== original ? `<div class="grupo">libro: ${original}</div>` : ""}</div>
-      </div>`;
-    });
-    html += `</div>`;
-  });
-  el.innerHTML = `<div class="card"><h2>Resumen</h2>
-      ${totalTolerado} de ${LIBRO.alimentos.length} alimentos tolerados
-      <div class="doc-barra" style="margin-top:12px">
-        <button type="button" class="btn-plano" onclick="PB.exportarAlimentos()">Exportar listado</button>
-      </div>
-    </div>` + html;
-  /* El canvas tiene que existir ya en el DOM para que Chart.js lo mida. */
-  renderLecheChart();
 }
 
 /* ======================== render: ALERGENOS ======================== */
@@ -11985,7 +12024,7 @@ function deleteNote(id) {
 
 const RENDER = {
   hoy: renderHoy, calendario: renderCalendario, buscar: renderBuscar, alimento: renderAlimento,
-  progreso: renderProgreso, alergenos: renderAlergenos, seguridad: renderSeguridad, ajustes: renderAjustes,
+  alergenos: renderAlergenos, seguridad: renderSeguridad, ajustes: renderAjustes,
   mas: renderMas, desarrollo: renderDesarrollo, crecimiento: renderCrecimiento, pediatra: renderPediatra,
   guia: renderGuia,
   sueno: renderSueno, panales: renderPanales, vacunas: renderVacunas, notas: renderNotas,
@@ -17960,7 +17999,6 @@ function boot(vistaInicial) {
       { id: "pb_alimentacion", label: "Alimentaci\u00f3n", area: "pablo", seccion: "pablo" },
       { id: "pb_calendario", label: "Calendario",  area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
       { id: "pb_buscar",     label: "Alimentos",   area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
-      { id: "pb_progreso",   label: "Progreso",    area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
       { id: "pb_alergenos",  label: "Al\u00e9rgenos",   area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
       { id: "pb_guia",       label: "Gu\u00eda",       area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
       { id: "pb_sueno",      label: "Sue\u00f1o",       area: "pablo", seccion: "pablo" },
@@ -17975,7 +18013,7 @@ function boot(vistaInicial) {
     const PB_CHIP_A_VISTA = {
       pb_alimentacion: "calendario",
       pb_hoy: "hoy", pb_calendario: "calendario", pb_buscar: "buscar",
-      pb_progreso: "progreso", pb_alergenos: "alergenos", pb_guia: "guia",
+      pb_alergenos: "alergenos", pb_guia: "guia",
       pb_sueno: "sueno", pb_crecimiento: "crecimiento",
       pb_desarrollo: "desarrollo", pb_pediatra: "pediatra",
       pb_mas: "mas"
@@ -17984,7 +18022,7 @@ function boot(vistaInicial) {
        cambia de chip porque se abre desde varias secciones. */
     const PB_VISTA_A_CHIP = {
       hoy: "pb_hoy", calendario: "pb_calendario", buscar: "pb_buscar",
-      progreso: "pb_progreso", alergenos: "pb_alergenos", guia: "pb_guia",
+      alergenos: "pb_alergenos", guia: "pb_guia",
       sueno: "pb_sueno", crecimiento: "pb_crecimiento",
       desarrollo: "pb_desarrollo", pediatra: "pb_pediatra",
       mas: "pb_mas", panales: "pb_mas", vacunas: "pb_mas",
