@@ -5864,7 +5864,12 @@
     /* El titulo, el primero: con el punto delante empezaba 26 px mas a la
        derecha que el de las demas tarjetas y la columna se veia torcida. La
        luz se va al otro lado, junto al chevron. */
-    .pb-app .sem-cab h2 { margin: 0; font-size: 1rem; flex: 1; min-width: 0; }
+    /* Con .pb-app .sem-cab h2 empataba en especificidad con .pb-app .card h2,
+       que se redefine mas abajo con margen inferior: el titulo se quedaba con
+       12 px de aire debajo y ninguno encima, y como el centrado del flex mira
+       la caja CON margen, el texto subia y dejaba de cuadrar con el punto. Con
+       .sem-card delante gana siempre. */
+    .pb-app .sem-card > .sem-cab h2 { margin: 0; font-size: 1rem; flex: 1; min-width: 0; }
     .pb-app .sem-chevron {
       flex: none; font-size: 1.25rem; line-height: 1; color: var(--text);
       opacity: .5; transition: transform .18s ease;
