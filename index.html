@@ -5816,6 +5816,36 @@
       font-style: normal; font-size: 0.8em; font-weight: 500;
       color: var(--text-faint); margin-left: 2px;
     }
+    /* Proximos: una fila por cita, con la fecha a la izquierda como en la
+       linea del dia y lo que falta a la derecha. */
+    .pb-app .prox-icono { font-size: 0.9375rem; margin-right: 2px; }
+    .pb-app .prox-lista { display: flex; flex-direction: column; }
+    .pb-app .prox-fila {
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      padding: 10px 0; border: 0; border-top: 1px solid var(--line-soft);
+      background: none; font: inherit; color: inherit; text-align: left;
+      cursor: pointer;
+    }
+    .pb-app .prox-fila:first-child { border-top: 0; }
+    .pb-app .prox-fecha {
+      flex: none; width: 84px; font-family: var(--serif); font-size: 0.8125rem;
+      font-weight: 600; color: var(--text);
+    }
+    .pb-app .prox-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
+    .pb-app .prox-txt b {
+      display: block; font-weight: 600;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pb-app .prox-txt span {
+      display: block; font-size: 0.75rem; color: var(--text-muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pb-app .prox-cuando {
+      flex: none; font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+      color: var(--blue); background: var(--blue-soft);
+      padding: 3px 9px; border-radius: var(--r-pill);
+    }
+
     /* Semaforo: el fondo tiñe la tarjeta entera, que es lo que se lee de un
        vistazo desde la puerta de la cocina. Tono suave, no plano de color:
        encima va texto y tiene que seguir leyendose. */
@@ -8652,6 +8682,7 @@ function renderHoy(el) {
       onclick="PB.modalPanal()">${iconoLinea("panal")}<span>Pañal</span></button>
   </div>`;
   html += htmlSemaforo(dia);
+  html += htmlProximos();
   html += banner;
   if (dia.fase === "pre") {
     html += `<p class="hoy-nota">Todavía no ha empezado la alimentación complementaria (empieza el ${fmtFechaLarga(FECHA_INICIO)}). Hoy solo se registran tomas de leche.</p>`;
@@ -8755,6 +8786,47 @@ function textoAlimentoNuevo(dia) {
    botones al lado del nombre: con tres botones el texto se quedaba en una
    columna de dos palabras. Aqui cada cosa ocupa su linea y no hay ancho que
    repartir. */
+/* ---- Proximos: citas ya puestas en el calendario ------------------------
+   Una visita con fecha futura no es un registro de algo que paso: es una cita
+   programada. Se saca aqui para no tener que ir a buscarla a Pediatra, y solo
+   cuando la hay: una tarjeta vacia de "no tienes nada" es ruido. */
+function proxCuando(iso) {
+  const dias = Math.round((new Date(iso + "T00:00:00") - new Date(HOY_ISO + "T00:00:00")) / 86400000);
+  if (dias === 1) return "mañana";
+  if (dias < 14) return `en ${dias} días`;
+  const sem = Math.round(dias / 7);
+  if (sem <= 8) return `en ${sem} semanas`;
+  return "";
+}
+function proxFecha(iso) {
+  /* toLocaleDateString entero da "mar, 8 sept" y la coma sobra en una columna
+     estrecha; el dia de la semana se arma aparte para poder capitalizar solo
+     esa palabra y dejar el mes en minuscula. */
+  const d = new Date(iso + "T00:00:00");
+  const dow = capitalizar(d.toLocaleDateString("es-ES", { weekday: "short" }).replace(".", ""));
+  const mes = d.toLocaleDateString("es-ES", { month: "short" }).replace(".", "");
+  return `${dow} ${d.getDate()} ${mes}`;
+}
+function htmlProximos() {
+  const futuras = (STATE.pediatricVisits || [])
+    .filter(v => v.date > HOY_ISO)
+    .sort((a, b) => a.date.localeCompare(b.date));
+  if (!futuras.length) return "";
+  return `<div class="card">
+    <h2><span class="prox-icono" aria-hidden="true">📅</span> Próximos
+      <span class="n">${futuras.length} ${futuras.length === 1 ? "cita" : "citas"}</span></h2>
+    <div class="prox-lista">${futuras.map(v => {
+      const cuando = proxCuando(v.date);
+      return `<button type="button" class="prox-fila" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">
+        <span class="prox-fecha">${proxFecha(v.date)}</span>
+        <span class="prox-txt"><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
+          v.prueba ? `<span>${esc(v.prueba)}</span>` : ""}</span>
+        ${cuando ? `<span class="prox-cuando">${cuando}</span>` : ""}
+      </button>`;
+    }).join("")}</div>
+  </div>`;
+}
+
 /* ---- Semaforo: como va todo ---------------------------------------------
    Una lectura de conjunto de lo que se apunta, contra las guias que la app ya
    usa en cada pestaña. Tres reglas que lo gobiernan todo:
@@ -8875,7 +8947,10 @@ function semAlimentacion() {
   const reaccion = marcas.filter(m => m.resultado === "reaccion" && desde(m.fecha) <= 60)
     .sort((a, b) => b.fecha.localeCompare(a.fecha))[0];
   if (reaccion) {
-    const visitaDespues = (STATE.pediatricVisits || []).some(v => v.date >= reaccion.fecha);
+    /* Una cita programada para dentro de dos semanas no es una consulta ya
+       hecha: si contara, poner la cita apagaria el aviso rojo. */
+    const visitaDespues = (STATE.pediatricVisits || [])
+      .some(v => v.date >= reaccion.fecha && v.date <= HOY_ISO);
     const a = alimentoPorId(reaccion.id);
     const nom = capitalizar(a ? nombreLocal(a) : reaccion.id);
     if (!visitaDespues) {
@@ -11708,6 +11783,7 @@ function renderPediatra(el) {
       <div class="campo"><label>P. cefálico (cm)</label><input type="number" id="pv-head" step="0.1" min="0"></div>
     </div>
     <div class="campo"><label>Notas de la consulta</label><textarea id="pv-notes" placeholder="Qué dijo el pediatra, indicaciones..."></textarea></div>
+    <div class="faint" style="margin-bottom:10px">Con una fecha futura queda como cita programada y sale en <b>Próximos</b>, en Hoy.</div>
     <button class="btn-primario" onclick="PB.savePediatricVisit()">Guardar visita</button>
   `);
   /* El selector del informe ocupaba media pantalla nada mas entrar. Va detras
@@ -11731,7 +11807,8 @@ function renderPediatra(el) {
         <span class="visit-fecha">${fmtFechaCorta(v.date)}</span>
         <span class="visit-txt"><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
           v.prueba ? `<span>${esc(v.prueba)}</span>` : ""}</span>
-        ${res ? `<span class="pill ${res.pill}">${res.et}</span>` : ""}
+        ${v.date > HOY_ISO ? `<span class="pill info">Programada</span>`
+          : (res ? `<span class="pill ${res.pill}">${res.et}</span>` : "")}
         <span class="visit-chevron" aria-hidden="true">&#8250;</span>
       </summary>
       <div class="visit-cuerpo">
