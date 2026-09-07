@@ -5600,6 +5600,50 @@
     .pb-app .pt-caja {
       position: relative; height: 260px; border-radius: 6px;
       background: var(--bg-soft); overflow: hidden;
+      /* Es un <button>: sin esto llegaria con el borde, el relleno y la fuente
+         del navegador y la tira se descuadraria. */
+      display: block; width: 100%; padding: 0; border: 0;
+      font: inherit; color: inherit; cursor: pointer;
+      -webkit-appearance: none; appearance: none;
+    }
+    .pb-app .pt-caja:hover { background: var(--line-soft); }
+    .pb-app .pt-caja:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+    /* Resumen de un dia, dentro del modal del patron. */
+    .pb-app .pt-res-kpis {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-2);
+      padding-bottom: var(--gap-3); margin-bottom: var(--gap-2);
+      border-bottom: 1px solid var(--line-soft); text-align: left;
+    }
+    .pb-app .pt-res-kpis b {
+      display: block; font-family: var(--serif); font-size: 1.25rem;
+      font-weight: 700; letter-spacing: -0.03em; white-space: nowrap;
+    }
+    .pb-app .pt-res-kpis i {
+      font-style: normal; font-size: 0.6em; font-weight: 600; color: var(--text-faint);
+    }
+    .pb-app .pt-res-kpis span { font-size: 0.75rem; color: var(--text-muted); }
+    .pb-app .pt-res-fila {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid var(--line-soft);
+    }
+    .pb-app .pt-res-fila:last-child { border-bottom: 0; }
+    .pb-app .pt-res-punto {
+      flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--text-faint);
+    }
+    .pb-app .pt-res-punto.sueno  { background: var(--purple); }
+    .pb-app .pt-res-punto.toma   { background: var(--blue); }
+    .pb-app .pt-res-punto.comida { background: var(--green); }
+    .pb-app .pt-res-punto.panal  { background: var(--slate); }
+    .pb-app .pt-res-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
+    .pb-app .pt-res-txt b { font-weight: 600; }
+    .pb-app .pt-res-txt span {
+      margin-left: 6px; font-size: 0.8125rem; color: var(--text-muted);
+      font-family: var(--serif);
+    }
+    .pb-app .pt-res-val {
+      flex: none; font-family: var(--serif); font-size: 0.8125rem;
+      font-weight: 600; color: var(--text-muted); white-space: nowrap;
     }
     .pb-app .pt-sueno {
       position: absolute; left: 0; right: 0; background: var(--purple);
@@ -8637,6 +8681,11 @@ function sueniosDelDia(fecha) {
       hora: `${String(desde.getHours()).padStart(2, "0")}:${String(desde.getMinutes()).padStart(2, "0")}`,
       fin: `${String(hasta.getHours()).padStart(2, "0")}:${String(hasta.getMinutes()).padStart(2, "0")}`,
       minutos: Math.round((hasta - desde) / 60000),
+      /* Un nocturno que cruza la medianoche se parte en dos trozos y el de
+         abajo acaba "a las 00:00", que leido en una lista parece que durmio
+         diez minutos. Con esto se puede decir de donde viene y a donde va. */
+      vieneDeAntes: a < ini0,
+      sigueDespues: b > fin0,
     });
   }
   return out;
@@ -9915,7 +9964,13 @@ function htmlPatron() {
         .filter(h => h.fecha === f && h.hora).map(h => ({ m: minutos(f, h.hora), cls: "pt-comida" }))),
     ].map(r => `<span class="${r.cls}" style="top:${r.m / 14.4}%"></span>`).join("");
     const dow = d.toLocaleDateString("es-ES", { weekday: "short" }).replace(".", "");
-    return `<div class="pt-col"><div class="pt-caja">${bloques}${rayas}</div>
+    /* La columna entera es el boton, no cada franja: en una tira de 34 px de
+       ancho una raya de toma mide dos pixeles y no hay dedo que la acierte.
+       Pulsando en cualquier punto del dia (franja de sueño incluida) sale el
+       resumen de ese dia con las horas. */
+    return `<div class="pt-col">
+      <button type="button" class="pt-caja" onclick="PB.resumenDia('${f}')"
+        aria-label="Ver el resumen del ${fmtFechaLarga(f)}">${bloques}${rayas}</button>
       <div class="pt-dia">${dow}<span>${d.getDate()}</span></div></div>`;
   }).join("");
 
@@ -9933,8 +9988,63 @@ function htmlPatron() {
       <span><i class="punto" style="background:var(--blue)"></i>toma</span>
       <span><i class="punto" style="background:var(--green)"></i>alimento</span>
       <span><i class="punto" style="background:var(--slate)"></i>pañal</span>
+      <span class="nota">Toca un día para ver a qué hora fue cada cosa.</span>
     </div>
   </div>`;
+}
+
+/* Resumen de un dia del patron: lo que se ve en la tira son manchas de color,
+   asi que hace falta poder preguntarle las horas. Mismo orden que la linea
+   del dia: todo junto y por hora. */
+const PT_MARCA = { tolerado: "tolerado", rechazo: "no lo quiso", reaccion: "con reacción", probando: "probando" };
+const PT_PANAL = { pis: "pis", caca: "caca", mixto: "pis y caca", seco: "seco" };
+function resumenDia(iso) {
+  const suenios = sueniosDelDia(iso);
+  const tomas = tomasDelDia(iso);
+  const panales = STATE.diapers.filter(p => (p.datetime || "").slice(0, 10) === iso);
+  const comidas = [];
+  for (const id in (STATE.alimentos || {})) {
+    for (const h of (STATE.alimentos[id].historial || [])) {
+      if (h.fecha === iso) comidas.push({ id, hora: h.hora || "", resultado: h.resultado });
+    }
+  }
+  const minSueno = suenios.reduce((t, x) => t + x.minutos, 0);
+  const ml = tomas.reduce((t, x) => t + (Number(x.ml) || 0), 0);
+
+  const filas = [
+    ...suenios.map(x => ({ hora: x.hora, cls: "sueno", et: x.tipo === "siesta" ? "Siesta" : "Nocturno",
+      det: `${x.vieneDeAntes ? "desde ayer" : x.hora} → ${x.enCurso ? "en curso"
+             : x.sigueDespues ? "sigue" : x.fin}`,
+      val: duracionCorta(x.minutos) })),
+    ...tomas.map(x => ({ hora: x.hora, cls: "toma", et: "Toma", det: x.hora, val: x.ml + " ml" })),
+    ...comidas.map(x => {
+      const a = alimentoPorId(x.id);
+      return { hora: x.hora || "24:00", cls: "comida", et: a ? capitalizar(nombreLocal(a)) : x.id,
+               det: x.hora || "sin hora", val: PT_MARCA[x.resultado] || x.resultado };
+    }),
+    ...panales.map(x => ({ hora: (x.datetime || "").slice(11, 16), cls: "panal", et: "Pañal",
+      det: (x.datetime || "").slice(11, 16), val: PT_PANAL[x.type] || x.type })),
+  ].sort((a, b) => a.hora.localeCompare(b.hora));
+
+  const cuerpo = `
+    <div class="pt-res-kpis">
+      <div><b>${minSueno ? duracionCorta(minSueno) : "—"}</b><span>Sueño</span></div>
+      <div><b>${ml || "—"}${ml ? "<i> ml</i>" : ""}</b><span>Leche</span></div>
+      <div><b>${tomas.length || "—"}</b><span>${tomas.length === 1 ? "Toma" : "Tomas"}</span></div>
+    </div>
+    ${filas.length
+      ? `<div class="pt-res-lista">${filas.map(f => `<div class="pt-res-fila">
+          <span class="pt-res-punto ${f.cls}"></span>
+          <span class="pt-res-txt"><b>${esc(f.et)}</b><span>${esc(f.det)}</span></span>
+          <span class="pt-res-val">${esc(f.val)}</span>
+        </div>`).join("")}</div>`
+      : `<p class="modal-p faint">No hay nada apuntado ese día.</p>`}`;
+
+  const hayPlan = !!diaDeCalendario(iso);
+  abrirModal(capitalizar(fmtFechaLarga(iso)), cuerpo, [
+    ...(hayPlan ? [{ et: "Abrir el día", accion: `PB.cerrarModal();PB.abrirDiaCalendario('${iso}')` }] : []),
+    { et: "Cerrar", primario: true, accion: "PB.cerrarModal()" },
+  ]);
 }
 
 /* ======================== render: ALERGENOS ======================== */
@@ -12047,7 +12157,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
