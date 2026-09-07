@@ -5772,6 +5772,54 @@
       font-style: normal; font-size: 0.8em; font-weight: 500;
       color: var(--text-faint); margin-left: 2px;
     }
+    /* Semaforo: el fondo tiñe la tarjeta entera, que es lo que se lee de un
+       vistazo desde la puerta de la cocina. Tono suave, no plano de color:
+       encima va texto y tiene que seguir leyendose. */
+    .pb-app .sem-card.verde { background: var(--green-soft); border-color: var(--green); }
+    .pb-app .sem-card.ambar { background: var(--amber-soft); border-color: var(--amber); }
+    .pb-app .sem-card.rojo  { background: var(--red-soft);   border-color: var(--red); }
+    .pb-app .sem-cab { display: flex; align-items: flex-start; gap: 12px; }
+    .pb-app .sem-cab h2 { margin: 0 0 2px; font-size: 1rem; }
+    /* Sobre el fondo tintado, --text-muted se queda en un contraste de 3,8 y
+       aqui hay texto de 11 px: el gris de siempre no vale, se usa el color de
+       texto normal y la jerarquia la hacen el tamaño y el peso. */
+    .pb-app .sem-cab p { margin: 0; font-size: 0.8125rem; line-height: 1.5; color: var(--text); }
+    .pb-app .sem-luz {
+      flex: none; width: 14px; height: 14px; border-radius: 50%; margin-top: 3px;
+    }
+    .pb-app .sem-luz.verde { background: var(--green); box-shadow: 0 0 0 4px color-mix(in srgb, var(--green) 22%, transparent); }
+    .pb-app .sem-luz.ambar { background: var(--amber); box-shadow: 0 0 0 4px color-mix(in srgb, var(--amber) 22%, transparent); }
+    .pb-app .sem-luz.rojo  { background: var(--red);   box-shadow: 0 0 0 4px color-mix(in srgb, var(--red) 22%, transparent); }
+    .pb-app .sem-lista { display: flex; flex-direction: column; margin-top: var(--gap-3); }
+    .pb-app .sem-fila {
+      display: flex; align-items: baseline; gap: 10px; padding: 8px 0;
+      border-top: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+    }
+    .pb-app .sem-punto { flex: none; width: 8px; height: 8px; border-radius: 50%; transform: translateY(1px); }
+    .pb-app .sem-punto.verde    { background: var(--green); }
+    .pb-app .sem-punto.ambar    { background: var(--amber); }
+    .pb-app .sem-punto.rojo     { background: var(--red); }
+    .pb-app .sem-punto.sindatos { background: var(--text-faint); opacity: .5; }
+    .pb-app .sem-txt { flex: 1; min-width: 0; font-size: 0.8125rem; line-height: 1.5; color: var(--text); }
+    .pb-app .sem-txt b { font-weight: 700; margin-right: 4px; }
+    .pb-app .sem-fuente {
+      display: block; margin-top: 2px; font-size: 0.6875rem; font-family: var(--serif);
+      color: color-mix(in srgb, var(--text) 82%, var(--bg-card));
+    }
+    .pb-app .sem-detalle { margin-top: var(--gap-3); }
+    .pb-app .sem-detalle summary {
+      cursor: pointer; font-size: 0.75rem; font-weight: 700; color: var(--blue);
+      list-style: none;
+    }
+    .pb-app .sem-detalle summary::-webkit-details-marker { display: none; }
+    .pb-app .sem-detalle summary::before { content: "\203A "; }
+    .pb-app .sem-detalle[open] summary::before { content: "\2039 "; }
+    .pb-app .sem-nota {
+      margin: var(--gap-3) 0 0; font-size: 0.6875rem; line-height: 1.55;
+      color: color-mix(in srgb, var(--text) 82%, var(--bg-card));
+    }
+    .pb-app .sem-nota b { color: var(--text); }
+
     /* Receta del dia: un paso por momento de comida, con la hora a la
        izquierda como en la linea del dia. */
     .pb-app .rd-pasos { display: flex; flex-direction: column; }
@@ -8540,6 +8588,7 @@ function renderHoy(el) {
     <button type="button" class="acc-btn" aria-label="Registrar pañal"
       onclick="PB.modalPanal()">${iconoLinea("panal")}<span>Pañal</span></button>
   </div>`;
+  html += htmlSemaforo(dia);
   html += banner;
   if (dia.fase === "pre") {
     html += `<p class="hoy-nota">Todavía no ha empezado la alimentación complementaria (empieza el ${fmtFechaLarga(FECHA_INICIO)}). Hoy solo se registran tomas de leche.</p>`;
@@ -8643,6 +8692,254 @@ function textoAlimentoNuevo(dia) {
    botones al lado del nombre: con tres botones el texto se quedaba en una
    columna de dos palabras. Aqui cada cosa ocupa su linea y no hay ancho que
    repartir. */
+/* ---- Semaforo: como va todo ---------------------------------------------
+   Una lectura de conjunto de lo que se apunta, contra las guias que la app ya
+   usa en cada pestaña. Tres reglas que lo gobiernan todo:
+
+   1) "No hay datos" NO es "va mal". Un dia sin apuntar parece un dia sin
+      dormir; si no hay registro suficiente, la dimension sale en gris y no
+      cuenta para el color. Sin esto el semaforo mentiria mas de lo que ayuda.
+   2) El rojo dice "esto conviene consultarlo", nunca "algo va mal". Aqui no
+      se diagnostica nada.
+   3) Verde no significa "esta sano": lo que de verdad urge en un bebe
+      (fiebre, dificultad para respirar, deshidratacion) no esta en la app y
+      no puede estarlo. Lo dice la propia tarjeta.
+
+   Los pañales solo se miran si hay apuntes recientes, porque no se apuntan
+   siempre; sin ellos, la dimension ni aparece. */
+const SEM_ORDEN = { sindatos: -1, verde: 0, ambar: 1, rojo: 2 };
+const SEM_DIAS = 7;          // ventana de observacion
+const SEM_MINIMO_DIAS = 4;   // dias con registro para fiarse de una media
+
+/** Los N dias anteriores a hoy. Hoy no cuenta: va a medias y tiraria la media abajo. */
+function semDiasPrevios(n) {
+  const out = [];
+  for (let i = 1; i <= n; i++) {
+    const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i);
+    out.push(isoLocal(d));
+  }
+  return out;
+}
+/** "P42.3" | "< P1" | "> P99" -> numero. */
+function semPercentil(etiqueta) {
+  if (!etiqueta) return null;
+  if (etiqueta.indexOf("<") >= 0) return 0.5;
+  if (etiqueta.indexOf(">") >= 0) return 99.5;
+  const n = parseFloat(String(etiqueta).replace("P", ""));
+  return isNaN(n) ? null : n;
+}
+/* Leche al dia por edad, en numeros: son las mismas cifras que ya usa la
+   rutina (bandaFormula), que son orientacion practica. Lo unico oficial es el
+   minimo de ~500 ml/dia de lacteos entre los 6 y los 12 meses (AEP 2018), y
+   es lo que marca el rojo. */
+function semBandaLeche(meses) {
+  if (meses < 7)  return [700, 800];
+  if (meses < 8)  return [600, 700];
+  if (meses < 9)  return [550, 650];
+  if (meses < 11) return [500, 600];
+  if (meses < 12) return [450, 550];
+  return [400, 500];
+}
+
+function semSueno(meses) {
+  const dias = semDiasPrevios(SEM_DIAS)
+    .map(f => ({ f, h: sueniosDelDia(f).reduce((t, x) => t + x.minutos, 0) / 60 }))
+    .filter(d => d.h > 0);
+  if (dias.length < SEM_MINIMO_DIAS) {
+    return { nivel: "sindatos", txt: `Solo hay ${dias.length} de los últimos ${SEM_DIAS} días apuntados.` };
+  }
+  const e = estandarSueno(meses);
+  const media = dias.reduce((t, d) => t + d.h, 0) / dias.length;
+  const fuera = dias.filter(d => d.h < e.ok[0] || d.h > e.ok[1]).length;
+  const m = media.toFixed(1).replace(".", ",");
+  if (fuera >= 3) {
+    return { nivel: "rojo", txt: `${fuera} de ${dias.length} días fuera de ${e.ok[0]}-${e.ok[1]} h (media ${m} h/día).` };
+  }
+  if (media < e.rec[0] || media > e.rec[1]) {
+    return { nivel: "ambar", txt: `Media de ${m} h/día, fuera de las ${e.rec[0]}-${e.rec[1]} h recomendadas.` };
+  }
+  return { nivel: "verde", txt: `Media de ${m} h/día, dentro de las ${e.rec[0]}-${e.rec[1]} h recomendadas.` };
+}
+
+function semLeche(meses) {
+  const dias = semDiasPrevios(SEM_DIAS).map(f => totalMlDia(f)).filter(ml => ml > 0);
+  if (dias.length < SEM_MINIMO_DIAS) {
+    return { nivel: "sindatos", txt: `Solo hay ${dias.length} de los últimos ${SEM_DIAS} días apuntados.` };
+  }
+  const media = Math.round(dias.reduce((t, ml) => t + ml, 0) / dias.length);
+  const [min, max] = semBandaLeche(meses);
+  const suelo = meses < 12 ? 400 : 350;
+  if (media < suelo) return { nivel: "rojo", txt: `Media de ${media} ml/día, por debajo del mínimo de lácteos de esta edad.` };
+  if (media < min || media > max) return { nivel: "ambar", txt: `Media de ${media} ml/día, fuera de los ${min}-${max} ml orientativos.` };
+  return { nivel: "verde", txt: `Media de ${media} ml/día, dentro de los ${min}-${max} ml de su edad.` };
+}
+
+function semCrecimiento() {
+  const conPeso = (STATE.growth || []).filter(g => g.weight).sort((a, b) => a.date.localeCompare(b.date));
+  if (!conPeso.length) return { nivel: "sindatos", txt: "Todavía no hay ningún peso apuntado." };
+  const ult = conPeso[conPeso.length - 1];
+  const dias = Math.round((new Date(HOY_ISO + "T00:00:00") - new Date(ult.date + "T00:00:00")) / 86400000);
+  if (dias > 90) return { nivel: "sindatos", txt: `El último peso es del ${fmtFechaCorta(ult.date)}, hace ${dias} días.` };
+  const pctDe = g => semPercentil(percentileForMeasure("weight",
+    ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(g.date + "T00:00:00")), Number(g.weight)));
+  const p = pctDe(ult);
+  if (p == null) return { nivel: "sindatos", txt: "No se ha podido calcular el percentil." };
+  const pTxt = `P${p.toFixed(0)}`;
+  if (p < 3 || p > 97) return { nivel: "rojo", txt: `Peso en ${pTxt} (fuera de P3-P97) el ${fmtFechaCorta(ult.date)}.` };
+  /* Caida de canal: solo entre medidas separadas por un mes o mas, que si no
+     el ruido de la bascula parece una caida. */
+  const previo = conPeso.slice(0, -1).reverse().find(g =>
+    (new Date(ult.date) - new Date(g.date)) / 86400000 >= 30);
+  const pPrev = previo ? pctDe(previo) : null;
+  if (pPrev != null && pPrev - p >= 40) {
+    return { nivel: "rojo", txt: `Ha pasado de ${`P${pPrev.toFixed(0)}`} a ${pTxt} desde el ${fmtFechaCorta(previo.date)}.` };
+  }
+  if (p < 15) return { nivel: "ambar", txt: `Peso en ${pTxt}, en la parte baja de la normalidad.` };
+  if (pPrev != null && pPrev - p >= 25) {
+    return { nivel: "ambar", txt: `Ha bajado de ${`P${pPrev.toFixed(0)}`} a ${pTxt} desde el ${fmtFechaCorta(previo.date)}.` };
+  }
+  return { nivel: "verde", txt: `Peso en ${pTxt} el ${fmtFechaCorta(ult.date)}, dentro de lo normal.` };
+}
+
+function semAlimentacion() {
+  const hoyD = new Date(HOY_ISO + "T00:00:00");
+  const desde = f => Math.round((hoyD - new Date(f + "T00:00:00")) / 86400000);
+  const marcas = [];
+  for (const id in (STATE.alimentos || {})) {
+    for (const h of (STATE.alimentos[id].historial || [])) marcas.push({ id, ...h });
+  }
+  if (!marcas.length) return { nivel: "sindatos", txt: "Todavía no hay ningún alimento marcado." };
+  const reaccion = marcas.filter(m => m.resultado === "reaccion" && desde(m.fecha) <= 60)
+    .sort((a, b) => b.fecha.localeCompare(a.fecha))[0];
+  if (reaccion) {
+    const visitaDespues = (STATE.pediatricVisits || []).some(v => v.date >= reaccion.fecha);
+    const a = alimentoPorId(reaccion.id);
+    const nom = capitalizar(a ? nombreLocal(a) : reaccion.id);
+    if (!visitaDespues) {
+      return { nivel: "rojo", txt: `Reacción con ${nom} el ${fmtFechaCorta(reaccion.fecha)} y ninguna visita al pediatra después.` };
+    }
+  }
+  const rechazos = marcas.filter(m => m.resultado === "rechazo" && desde(m.fecha) <= 14).length;
+  if (rechazos >= 4) return { nivel: "ambar", txt: `${rechazos} rechazos en los últimos 14 días.` };
+  const recientes = marcas.filter(m => desde(m.fecha) <= SEM_DIAS).length;
+  if (!recientes) return { nivel: "sindatos", txt: `Nada marcado en los últimos ${SEM_DIAS} días.` };
+  return { nivel: "verde", txt: `${recientes} apuntes esta semana, sin reacciones pendientes de consulta.` };
+}
+
+function semVitaminaD(meses) {
+  if (meses == null || meses >= 12) return null;
+  const vistos = avisosVistos();
+  /* Si no se marca nunca, no es que se le olvide la dosis: es que no se usa
+     esa casilla. Lo mismo que con los pañales — sin apuntes no se opina. */
+  const nunca = !semDiasPrevios(30).some(f => vistos["vitd:" + f] === f);
+  if (nunca) return { nivel: "sindatos", txt: "No se marca la dosis diaria, así que no hay nada que mirar." };
+  const dias = semDiasPrevios(SEM_DIAS);
+  const sin = dias.filter(f => vistos["vitd:" + f] !== f).length;
+  if (sin >= 3) return { nivel: "ambar", txt: `${sin} de los últimos ${SEM_DIAS} días sin marcar la dosis.` };
+  return { nivel: "verde", txt: `Marcada ${SEM_DIAS - sin} de los últimos ${SEM_DIAS} días.` };
+}
+
+function semVacunas(meses) {
+  /* El carnet viene sembrado con todas las vacunas sin marcar, asi que sin
+     esto la tarjeta saldria en rojo desde el primer dia por no haber
+     rellenado una lista que mucha gente lleva en papel. */
+  if (!Object.keys(STATE.vaccinesDone || {}).length) {
+    return { nivel: "sindatos", txt: "No hay ninguna vacuna marcada en el carnet de la app." };
+  }
+  const pend = vacunasPendientes();
+  if (!pend.length) return { nivel: "verde", txt: "Ninguna vacuna fuera de plazo." };
+  const masVieja = Math.max(...pend.map(v => meses - parseVaccineAgeMonths(v.age)));
+  const n = pend.length === 1 ? "Una vacuna" : `${pend.length} vacunas`;
+  if (masVieja >= 2) return { nivel: "rojo", txt: `${n} fuera de plazo, la más antigua desde hace ${Math.floor(masVieja)} meses.` };
+  return { nivel: "ambar", txt: `${n} fuera de plazo.` };
+}
+
+function semDesarrollo(meses) {
+  if (meses == null) return null;
+  /* Igual que con las vacunas: una lista que no se rellena no es un retraso. */
+  if (!Object.keys(STATE.milestonesAchieved || {}).length) {
+    return { nivel: "sindatos", txt: "No hay ningún hito marcado todavía." };
+  }
+  const fuera = OMS_MILESTONES.filter(m => !STATE.milestonesAchieved[m.id] && meses > m.max);
+  if (!fuera.length) return { nivel: "verde", txt: "Ningún hito motor fuera de su ventana de edad." };
+  /* Nunca rojo: un hito sin marcar puede ser simplemente un hito sin marcar, y
+     el desarrollo no lo valora una app. */
+  return { nivel: "ambar", txt: `${fuera.length === 1 ? "Un hito motor" : fuera.length + " hitos motores"} fuera de ventana: ${fuera.map(m => m.text.toLowerCase()).join(", ")}.` };
+}
+
+function semPanales() {
+  const dias = semDiasPrevios(3).map(f => (STATE.diapers || []).filter(d => (d.datetime || "").slice(0, 10) === f));
+  const conDatos = dias.filter(l => l.length);
+  /* Si no se apuntan, no se opina: fuera de la tarjeta. */
+  if (!conDatos.length) return null;
+  const mojados = conDatos.map(l => l.filter(d => d.type === "pis" || d.type === "mixto").length);
+  const media = mojados.reduce((a, b) => a + b, 0) / mojados.length;
+  const m = media.toFixed(1).replace(".", ",");
+  if (media < 4) return { nivel: "ambar", txt: `${m} pañales mojados al día de media, contando solo lo apuntado.` };
+  return { nivel: "verde", txt: `${m} pañales mojados al día, señal de buena hidratación.` };
+}
+
+const SEM_FUENTES = {
+  sueno: "National Sleep Foundation 2015 · AASM 2016",
+  leche: "AEP 2018 · AEPap",
+  crecimiento: "OMS Child Growth Standards",
+  alimentacion: "Plan de este calendario",
+  vitd: "Previnfad / AEPap",
+  vacunas: "Calendario del SNS",
+  desarrollo: "WHO Motor Development Study 2006",
+  panales: "Signo de hidratación (AEP)",
+};
+const SEM_CABECERA = {
+  verde: { et: "Todo en orden", txt: "Nada fuera de lo esperado con lo que hay apuntado." },
+  ambar: { et: "Algo que mirar", txt: "Nada alarmante, pero hay algo que conviene vigilar." },
+  rojo:  { et: "Algo a revisar", txt: "Hay algo que merece comentarlo con el pediatra." },
+};
+
+function htmlSemaforo(dia) {
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+  if (meses == null) return "";
+  const dims = [
+    ["sueno", "Sueño", semSueno(meses)],
+    ["leche", "Leche", semLeche(meses)],
+    ["crecimiento", "Crecimiento", semCrecimiento()],
+    ["alimentacion", "Alimentación", semAlimentacion()],
+    ["vitd", "Vitamina D", semVitaminaD(meses)],
+    ["vacunas", "Vacunas", semVacunas(meses)],
+    ["desarrollo", "Desarrollo", semDesarrollo(meses)],
+    ["panales", "Pañales", semPanales()],
+  ].filter(d => d[2]).map(([k, et, r]) => ({ k, et, ...r }));
+
+  const evaluadas = dims.filter(d => d.nivel !== "sindatos");
+  if (!evaluadas.length) return "";
+  const peor = evaluadas.reduce((a, d) => SEM_ORDEN[d.nivel] > SEM_ORDEN[a] ? d.nivel : a, "verde");
+  const avisos = evaluadas.filter(d => d.nivel !== "verde")
+    .sort((a, b) => SEM_ORDEN[b.nivel] - SEM_ORDEN[a.nivel]);
+  const sinDatos = dims.filter(d => d.nivel === "sindatos");
+  const cab = SEM_CABECERA[peor];
+
+  const fila = d => `<div class="sem-fila">
+    <span class="sem-punto ${d.nivel}"></span>
+    <span class="sem-txt"><b>${d.et}</b> ${d.txt}<span class="sem-fuente">${SEM_FUENTES[d.k] || ""}</span></span>
+  </div>`;
+
+  return `<div class="card sem-card ${peor}">
+    <div class="sem-cab">
+      <span class="sem-luz ${peor}" aria-hidden="true"></span>
+      <div><h2>${cab.et}</h2><p>${cab.txt}</p></div>
+    </div>
+    ${avisos.length ? `<div class="sem-lista">${avisos.map(fila).join("")}</div>` : ""}
+    <details class="sem-detalle">
+      <summary>Ver las ${dims.length} cosas que mira</summary>
+      <div class="sem-lista">${dims.map(fila).join("")}</div>
+      ${sinDatos.length ? `<p class="sem-nota">En gris, lo que no se puede valorar por falta de apuntes.
+        Un día sin registrar parece un día sin dormir, así que no cuenta para el color.</p>` : ""}
+    </details>
+    <p class="sem-nota"><b>Esto no es un diagnóstico.</b> Compara lo apuntado con guías publicadas y no
+      sustituye al pediatra. Y que salga verde no quiere decir que esté sano: lo que de verdad urge
+      —fiebre, dificultad para respirar, decaimiento, señales de deshidratación— no está aquí.</p>
+  </div>`;
+}
+
 /* ---- Receta del dia -----------------------------------------------------
    La tarjeta de abajo dice QUE le toca; esta dice COMO se hace, que es lo que
    hay que resolver delante de los fogones cuando el dia junta cuatro
