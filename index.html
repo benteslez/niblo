@@ -5684,7 +5684,7 @@
     }
     .pb-app .hoy-cab span { margin: 0 5px; opacity: .55; }
     .pb-app .hoy-nota {
-      margin: 0 0 var(--gap-3); max-width: 640px;
+      margin: 0 0 var(--gap-3);
       font-size: 0.8125rem; line-height: 1.5; color: var(--text-muted);
     }
 
@@ -5770,7 +5770,7 @@
     .pb-app .rd-pasos { display: flex; flex-direction: column; }
     .pb-app .rd-paso {
       display: flex; gap: 12px; padding: 10px 0;
-      border-bottom: 1px solid var(--line-soft); max-width: 640px;
+      border-bottom: 1px solid var(--line-soft);
     }
     .pb-app .rd-paso:last-child { border-bottom: 0; padding-bottom: 0; }
     .pb-app .rd-paso:first-child { padding-top: 0; }
@@ -5790,7 +5790,7 @@
       font-family: var(--serif); line-height: 1.5;
     }
     .pb-app .rd-nota {
-      margin: var(--gap-3) 0 0; max-width: 640px;
+      margin: var(--gap-3) 0 0;
       font-size: 0.75rem; line-height: 1.5; color: var(--text-faint);
     }
 
@@ -5859,10 +5859,14 @@
        que parta en dos lineas y crezca el boton, antes que recortarla. */
     .pb-app .acc-btn span { min-width: 0; }
 
-    /* En escritorio la tarjeta pasa de 1000 px de ancho y el valor se iba solo
-       al borde derecho, a 800 px del titulo. Se limita el ancho de lectura de
-       las listas, no el de la tarjeta. */
-    .pb-app .linea, .pb-app .linea-resumen, .pb-app .avisos .aviso-card { max-width: 640px; }
+    /* En escritorio la app llega a 1100 px. Antes se limitaba el ancho de
+       LECTURA de las listas y se dejaba la tarjeta entera: el valor ya no se
+       iba a 800 px del titulo, pero la caja seguia hasta el borde y quedaba
+       medio palmo de tarjeta vacia a la derecha. Ahora el tope es de la
+       columna: las tarjetas miden lo que mide su contenido y todo — aviso de
+       sueño, accesos rapidos, resumen y filas — empieza y acaba en la misma
+       linea. */
+    #pb-app { max-width: 760px; }
 
     /* ---- Vacunas --------------------------------------------------------- */
     .pb-app .vac-lista { display: flex; flex-direction: column; }
