@@ -26977,16 +26977,23 @@ function boot(vistaInicial) {
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("sw.js").then((reg) => {
-          // Detectar nueva versión instalada en background
-          reg.addEventListener("updatefound", () => {
-            const sw = reg.installing;
+          const vigilar = (sw) => {
             if (!sw) return;
             sw.addEventListener("statechange", () => {
               if (sw.state === "installed" && navigator.serviceWorker.controller) {
                 mostrarBannerActualizacion();
               }
             });
-          });
+          };
+          /* Hay tres formas de llegar tarde a la version nueva y antes solo se
+             cubria una. Con updatefound a secas, si la instalacion habia
+             empezado antes de este listener —o si la version nueva llevaba
+             esperando desde una visita anterior— el aviso no salia nunca. Y
+             como el HTML se sirve desde el cache, quedarse sin aviso es
+             quedarse en la version vieja sin enterarse. */
+          if (reg.waiting && navigator.serviceWorker.controller) mostrarBannerActualizacion();
+          vigilar(reg.installing);
+          reg.addEventListener("updatefound", () => vigilar(reg.installing));
         }).catch(() => {/* silencio */});
 
         // Cuando el SW nuevo toma control, recargar para usarlo.
