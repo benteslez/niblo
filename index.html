@@ -5851,6 +5851,9 @@
       display: block; font-size: 0.75rem; color: var(--text-muted);
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
+    .pb-app .prox-mas {
+      margin: var(--gap-3) 0 0; font-size: 0.75rem; color: var(--text-faint);
+    }
     .pb-app .prox-cuando {
       flex: none; font-size: 0.75rem; font-weight: 600; white-space: nowrap;
       color: var(--blue); background: var(--blue-soft);
@@ -8827,6 +8830,7 @@ function textoAlimentoNuevo(dia) {
    Una visita con fecha futura no es un registro de algo que paso: es una cita
    programada. Se saca aqui para no tener que ir a buscarla a Pediatra, y solo
    cuando la hay: una tarjeta vacia de "no tienes nada" es ruido. */
+const PROX_DIAS = 10;
 function proxCuando(iso) {
   const dias = Math.round((new Date(iso + "T00:00:00") - new Date(HOY_ISO + "T00:00:00")) / 86400000);
   if (dias === 1) return "mañana";
@@ -8863,11 +8867,19 @@ function htmlProximos() {
       accion: `PB.irA('vacunas')`,
     })),
   ].sort((a, b) => a.fecha.localeCompare(b.fecha));
-  if (!eventos.length) return "";
+  /* Solo la proxima semana y media: en Hoy interesa lo que hay que preparar
+     ya, no la revision de dentro de tres meses. Lo que queda fuera se dice en
+     una linea para que no parezca que se ha perdido. */
+  const tope = new Date(HOY_ISO + "T00:00:00");
+  tope.setDate(tope.getDate() + PROX_DIAS);
+  const topeIso = isoLocal(tope);
+  const cerca = eventos.filter(e => e.fecha <= topeIso);
+  const lejos = eventos.length - cerca.length;
+  if (!cerca.length) return "";
   return `<div class="card">
     <h2><span class="prox-icono" aria-hidden="true">📅</span> Próximos
-      <span class="n">${eventos.length} ${eventos.length === 1 ? "cita" : "citas"}</span></h2>
-    <div class="prox-lista">${eventos.map(e => {
+      <span class="n">${PROX_DIAS} días</span></h2>
+    <div class="prox-lista">${cerca.map(e => {
       const cuando = proxCuando(e.fecha);
       return `<button type="button" class="prox-fila" onclick="${e.accion}">
         <span class="prox-fecha">${proxFecha(e.fecha)}</span>
@@ -8875,6 +8887,8 @@ function htmlProximos() {
         ${cuando ? `<span class="prox-cuando">${cuando}</span>` : ""}
       </button>`;
     }).join("")}</div>
+    ${lejos ? `<p class="prox-mas">${lejos === 1 ? "Hay una cita más" : `Hay ${lejos} citas más`}
+      después de esos ${PROX_DIAS} días.</p>` : ""}
   </div>`;
 }
 
