@@ -9108,11 +9108,19 @@ function semDesarrollo(meses) {
   return { nivel: "ambar", txt: `${fuera.length === 1 ? "Un hito motor" : fuera.length + " hitos motores"} fuera de ventana: ${fuera.map(m => m.text.toLowerCase()).join(", ")}.` };
 }
 
+const PANAL_DIAS_MINIMOS = 8;   // mas de una semana apuntando
 function semPanales() {
-  const dias = semDiasPrevios(3).map(f => (STATE.diapers || []).filter(d => (d.datetime || "").slice(0, 10) === f));
+  const dias = semDiasPrevios(14).map(f => (STATE.diapers || []).filter(d => (d.datetime || "").slice(0, 10) === f));
   const conDatos = dias.filter(l => l.length);
   /* Si no se apuntan, no se opina: fuera de la tarjeta. */
   if (!conDatos.length) return null;
+  /* Y con cuatro apuntes sueltos tampoco. Estos no se apuntan siempre, asi que
+     una media de dos o tres dias dice mas del dia que se olvido apuntar que
+     del bebe: hace falta mas de una semana. Se enseña en gris y no cuenta
+     para el color. */
+  if (conDatos.length < PANAL_DIAS_MINIMOS) {
+    return { nivel: "sindatos", txt: `Solo ${conDatos.length} ${conDatos.length === 1 ? "día apuntado" : "días apuntados"} de los últimos 14; para valorarlo hace falta más de una semana.` };
+  }
   const mojados = conDatos.map(l => l.filter(d => d.type === "pis" || d.type === "mixto").length);
   const media = mojados.reduce((a, b) => a + b, 0) / mojados.length;
   const m = media.toFixed(1).replace(".", ",");
