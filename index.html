@@ -5950,6 +5950,40 @@
       margin-top: 6px; font-size: 0.75rem; color: var(--text-muted);
       font-family: var(--serif); line-height: 1.5;
     }
+    /* Cocinar de una vez: bloque aparte dentro de la receta, con su propio
+       fondo, porque no es lo que hay que hacer hoy sino lo que se adelanta. */
+    .pb-app .rd-lote {
+      margin-top: var(--gap-3); padding: var(--gap-3) var(--gap-4);
+      background: var(--bg-soft); border-radius: var(--r-lg);
+    }
+    .pb-app .rd-lote-tit {
+      font-size: 0.8125rem; font-weight: 800; letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .pb-app .rd-lote-tit + .rd-lote-tit,
+    .pb-app .rd-lote-lista + .rd-lote-tit { margin-top: var(--gap-3); }
+    .pb-app .rd-lote-p {
+      margin: 0 0 var(--gap-2); font-size: 0.8125rem; line-height: 1.55;
+      color: var(--text-muted);
+    }
+    .pb-app .rd-lote-p b { color: var(--text); }
+    .pb-app .rd-lote-lista { display: flex; flex-direction: column; margin-bottom: var(--gap-2); }
+    .pb-app .rd-lote-fila {
+      display: flex; align-items: baseline; gap: 10px; padding: 5px 0;
+    }
+    .pb-app .rd-lote-n {
+      flex: none; min-width: 26px; font-family: var(--serif); font-size: 0.8125rem;
+      font-weight: 700; color: var(--blue);
+    }
+    .pb-app .rd-lote-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
+    .pb-app .rd-lote-txt span {
+      display: block; font-size: 0.75rem; color: var(--text-muted);
+      font-family: var(--serif); margin-top: 1px;
+    }
+    .pb-app .rd-lote-fuente {
+      margin: 0; font-size: 0.6875rem; line-height: 1.5; color: var(--text-faint);
+    }
+
     .pb-app .rd-nota {
       margin: var(--gap-3) 0 0;
       font-size: 0.75rem; line-height: 1.5; color: var(--text-faint);
@@ -9149,7 +9183,11 @@ function htmlSemaforo(dia) {
    alimentos. Un paso por momento de comida, porque es ahi donde esta la
    respuesta a "esto se tritura junto o aparte": lo que va en el mismo plato
    es lo que coincide en la misma hora. */
-const RD_ENCIMA = new Set(["aceite_de_oliva"]);
+/* Va por encima al final, no al fuego. El cacahuete no esta en
+   GRASAS_ADEREZO —ahi solo hay semillas y frutos secos— pero se comporta
+   igual: media cucharadita de crema diluida en el plato ya hecho. Sin esto la
+   receta decia "cuece Crema de maní" y el lote proponia multiplicarla. */
+const RD_ENCIMA = new Set(["aceite_de_oliva", "cacahuete"]);
 function rdReparto(alimentos) {
   const cocer = [], crudo = [], encima = [], lacteo = [];
   for (const a of alimentos) {
@@ -9202,6 +9240,100 @@ function rdPasos(bloque, meses) {
   if (lacteo.length) frases.push(`${rdNombres(lacteo)}, aparte y sin azúcar, a cuchara.`);
   return frases;
 }
+/* ---- Cocinar de una vez para varios dias --------------------------------
+   El plan repite el mismo alimento varios dias seguidos (el pollo, sobre
+   todo), y cocerlo cada tarde por separado no tiene sentido. Aqui se mira,
+   para cada alimento que hay que cocer hoy, cuantos dias seguidos vuelve a
+   tocar, y se propone hacerlo de una sola vez.
+
+   El tope son tres dias y no mas por como se conserva un pure casero: una
+   racion aguanta en la nevera hasta 24 h y el resto tiene que ir al
+   congelador. Mas dias no seria adelantar trabajo, seria un riesgo. */
+const LOTE_TOPE = 3;
+function isoMas(iso, n) {
+  const d = new Date(iso + "T00:00:00");
+  d.setDate(d.getDate() + n);
+  return isoLocal(d);
+}
+/** Los alimentos de un dia que se cuecen, por clave. */
+function cociblesDelDia(iso) {
+  const dia = diaDeCalendario(iso);
+  const m = new Map();
+  if (!dia) return m;
+  for (const b of (dia.comidas || [])) {
+    for (const a of rdReparto(b.alimentos).cocer) m.set(a.id || a.nombre, a);
+  }
+  return m;
+}
+/** Donde cae este dia dentro de la tanda de ese alimento. */
+function loteDe(clave, iso) {
+  let atras = 0;
+  while (atras < 40 && cociblesDelDia(isoMas(iso, -(atras + 1))).has(clave)) atras++;
+  const pos = atras % LOTE_TOPE;          // 0 = hoy toca cocinar
+  const inicio = isoMas(iso, -pos);
+  let largo = 0;
+  while (largo < LOTE_TOPE && cociblesDelDia(isoMas(inicio, largo)).has(clave)) largo++;
+  return { pos, inicio, largo };
+}
+/* "2-4 cucharadas soperas" x3 -> "6-12 cucharadas soperas". Se multiplican los
+   numeros y se respeta el texto: es lo unico que se puede hacer bien con
+   cantidades escritas a mano. */
+const RD_FRACCIONES = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3 };
+function multiplicarCantidad(txt, n) {
+  return String(txt || "").replace(/(\d+(?:[.,]\d+)?|[½¼¾⅓⅔])/g, (m) => {
+    const v = RD_FRACCIONES[m] != null ? RD_FRACCIONES[m] : Number(m.replace(",", "."));
+    if (!isFinite(v)) return m;
+    const r = v * n;
+    return Math.abs(r - Math.round(r)) < 0.05 ? String(Math.round(r)) : r.toFixed(1).replace(".", ",");
+  });
+}
+function rdDiaCorto(iso) {
+  const d = new Date(iso + "T00:00:00");
+  if (iso === HOY_ISO) return "hoy";
+  if (iso === isoMas(HOY_ISO, -1)) return "ayer";
+  return "el " + d.toLocaleDateString("es-ES", { weekday: "long" });
+}
+function htmlCocinarDeUnaVez(dia) {
+  /* En un dia ya pasado no hay nada que adelantar. */
+  if (dia.fecha < HOY_ISO) return "";
+  const hoyCocibles = cociblesDelDia(dia.fecha);
+  if (!hoyCocibles.size) return "";
+  const paraHacer = [], yaHechos = [];
+  hoyCocibles.forEach((a, clave) => {
+    const l = loteDe(clave, dia.fecha);
+    if (l.largo < 2) return;                       // no se repite: nada que adelantar
+    if (l.pos === 0) paraHacer.push({ a, raciones: l.largo });
+    else yaHechos.push({ a, inicio: l.inicio });
+  });
+  if (!paraHacer.length && !yaHechos.length) return "";
+
+  const dias = paraHacer.reduce((m, x) => Math.max(m, x.raciones), 0);
+  return `<div class="rd-lote">
+    ${paraHacer.length ? `<div class="rd-lote-tit">Cocina de una vez para ${dias} días</div>
+      <p class="rd-lote-p">Estos alimentos vuelven a tocar los próximos días. Cuécelos como está arriba
+        pero en esta cantidad, y reparte en raciones antes de guardarlos.</p>
+      <div class="rd-lote-lista">${paraHacer.map(({ a, raciones }) => {
+        const c = a.cantidad || (a.porcion && a.porcion.gramos) || "";
+        return `<div class="rd-lote-fila">
+          <span class="rd-lote-n">×${raciones}</span>
+          <span class="rd-lote-txt"><b>${capitalizar(a.nombre)}</b>${
+            c ? `<span>${esc(multiplicarCantidad(c, raciones))}</span>` : ""}</span>
+        </div>`;
+      }).join("")}</div>
+      <p class="rd-lote-p"><b>Cómo guardarlo.</b> Enfríalo rápido, sin dejarlo fuera más de dos horas.
+        La ración de mañana, a la nevera (máximo 24 h). El resto, al congelador en tarritos
+        de una ración, hasta 2-3 meses. Descongela en la nevera la noche antes, calienta bien
+        y una sola vez: lo que sobre del plato se tira, y lo descongelado no se vuelve a congelar.</p>
+      <p class="rd-lote-fuente">Pauta de seguridad alimentaria (AESAN). Los purés con pescado o carne,
+        mejor al congelador directamente si no son para mañana.</p>` : ""}
+    ${yaHechos.length ? `<div class="rd-lote-tit">Esto ya lo tienes hecho</div>
+      <div class="rd-lote-lista">${yaHechos.map(({ a, inicio }) => `<div class="rd-lote-fila">
+        <span class="rd-lote-n">✓</span>
+        <span class="rd-lote-txt"><b>${capitalizar(a.nombre)}</b><span>lo cocinaste ${rdDiaCorto(inicio)} · saca una ración y caliéntala</span></span>
+      </div>`).join("")}</div>` : ""}
+  </div>`;
+}
+
 function htmlRecetaDelDia(dia) {
   const bloques = (dia.comidas || []).filter(b => b.alimentos && b.alimentos.length);
   if (!bloques.length) return "";
@@ -9226,6 +9358,7 @@ function htmlRecetaDelDia(dia) {
     }).join("")}</div>
     ${bloques.length > 1 ? `<p class="rd-nota">Cada momento es un plato distinto: lo que coincide
       a la misma hora va junto, lo de otra hora no se mezcla.</p>` : ""}
+    ${htmlCocinarDeUnaVez(dia)}
   </div>`;
 }
 
