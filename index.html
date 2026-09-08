@@ -5949,6 +5949,31 @@
       color: var(--text-muted);
     }
     .pb-app .rd-cuerpo { flex: 1; min-width: 0; padding: 0 0 10px; }
+    /* Una ficha por alimento, con sus pasos numerados: los tiempos y los
+       cortes son de cada uno, no del plato. */
+    .pb-app .rd-agua {
+      margin: 0 0 var(--gap-3); padding: 8px 12px; border-radius: var(--r-md, 10px);
+      background: var(--blue-soft); color: var(--text);
+      font-size: 0.8125rem; line-height: 1.5;
+    }
+    .pb-app .rd-ficha { margin-bottom: var(--gap-3); }
+    .pb-app .rd-ficha-cab {
+      display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;
+    }
+    .pb-app .rd-ficha-cab b { font-size: 0.9375rem; font-weight: 700; }
+    .pb-app .rd-ficha-cab span {
+      font-family: var(--serif); font-size: 0.8125rem; color: var(--text-muted);
+    }
+    .pb-app .rd-ficha ol {
+      margin: 0; padding-left: 20px; font-size: 0.875rem; line-height: 1.6;
+      color: var(--text-muted);
+    }
+    .pb-app .rd-ficha li { margin-bottom: 3px; }
+    .pb-app .rd-ficha li b { color: var(--text); }
+    .pb-app .rd-final {
+      margin: 0 0 6px; font-size: 0.875rem; line-height: 1.6;
+      padding-top: var(--gap-2); border-top: 1px solid var(--line-soft);
+    }
     .pb-app .rd-cuerpo p { margin: 0; font-size: 0.875rem; line-height: 1.55; }
     .pb-app .rd-cuerpo b { font-weight: 700; }
     .pb-app .rd-que {
@@ -9227,19 +9252,51 @@ function texturaDelDia(meses) {
   if (trozos) return meses < 9 ? "chafado con el tenedor, con grumos" : "picado fino o en trocitos blandos";
   return meses < 8 ? "papilla fina, sin grumos" : "papilla espesa, con algún grumo";
 }
-function rdPasos(bloque, meses) {
+/* Los pasos de cada alimento salen de su ficha del libro, que ya trae los
+   tiempos, los cortes y los avisos que hacen falta ("15-20 minutos", "escurre
+   reservando el caldo", "el pollo solo no liga y queda arenoso"). Esta receta
+   los repetia en una frase generica de "cuece hasta que este blando", que no
+   dice nada de lo que hay que saber delante del fuego.
+
+   Se quita de cada ficha el ultimo paso cuando es el de "va en el mismo plato
+   que la verdura y la proteina del dia": eso lo dice el cierre, una sola vez,
+   en vez de tres. */
+const RD_PASO_SOBRA = /mismo plato|platos aparte|Comb[ií]nal[ao] con|del d[ií]a para completar/i;
+function rdFicha(a, meses) {
+  const f = a.id ? alimentoPorId(a.id) : null;
+  const pasos = (f && f.receta && f.receta.pasos) || [];
+  if (!pasos.length) return null;
+  const c = cantidadEtapa(meses);
+  const resolver = t => String(t)
+    .replace(/\{cantidad\}/g, textoCantidad(f, meses))
+    .replace(/\{plato\}/g, c.plato)
+    .replace(/\{proteina\}/g, c.animal);
+  const utiles = pasos.filter((t, i) => !(i === pasos.length - 1 && RD_PASO_SOBRA.test(t)));
+  if (!utiles.length) return null;
+  const cuanto = a.cantidad || (a.porcion && a.porcion.gramos) || "";
+  return `<div class="rd-ficha">
+    <div class="rd-ficha-cab"><b>${capitalizar(a.nombre)}</b>${
+      cuanto ? `<span>${esc(cuanto)}</span>` : ""}</div>
+    <ol>${utiles.map(t => `<li>${resolver(t)}</li>`).join("")}</ol>
+  </div>`;
+}
+/* El cierre: como se juntan. Los tiempos y los cortes ya los ha dicho cada
+   ficha, asi que aqui solo queda el plato. */
+function rdCierre(bloque, meses) {
   const { cocer, crudo, encima, lacteo } = rdReparto(bloque.alimentos);
   const tex = texturaDelDia(meses);
+  const conCaldo = cocer.length ? ", aflojando con el caldo que has reservado" : "";
   const frases = [];
-  if (cocer.length === 1) {
-    frases.push(`Cuece ${rdNombres(cocer)} hasta que esté blando y tritúralo: ${tex}.`);
-  } else if (cocer.length > 1) {
-    frases.push(`Cuece ${rdNombres(cocer)} hasta que estén blandos y tritúralo
-      <b>todo junto en el mismo plato</b>: ${tex}.`);
+  /* Lo cocido se tritura junto; lo crudo (fruta, aguacate) se incorpora
+     despues y chafado, que ni se cuece ni se bate con lo caliente. */
+  if (cocer.length > 1) {
+    frases.push(`Junta ${rdNombres(cocer)} <b>en el mismo plato</b> y tritura hasta ${tex}${conCaldo}.`);
+  } else if (cocer.length === 1) {
+    frases.push(`Tritúralo hasta ${tex}${conCaldo}.`);
   }
   if (crudo.length) {
     frases.push(cocer.length
-      ? `Añade ${rdNombres(crudo)} en crudo, chafado con el tenedor, y mezcla.`
+      ? `Añade ${rdNombres(crudo)} en crudo, chafado con el tenedor, y mezcla en el mismo plato.`
       : `Chafa ${rdNombres(crudo)} con el tenedor, sin cocer: ${tex}.`);
   }
   /* "Fuera del fuego" solo si ha habido fuego: en una merienda de fruta
@@ -9381,7 +9438,11 @@ function htmlRecetasDelDia(dia) {
         <summary><span class="rd-det-tit">Ver la receta</span>
           <span class="rd-det-hora">${b.hora} · ${esc(b.etiqueta)}</span></summary>
         <div class="rd-cuerpo">
-          <p>${rdPasos(b, meses).join(" ")}</p>
+          <p class="rd-agua">El agua, la justa para cubrir y <b>sin sal</b>. Al escurrir,
+            guarda ese caldo: es lo que se usa para aflojar el puré, y es lo que evita que
+            la carne o el pescado queden arenosos.</p>
+          ${b.alimentos.map(a => rdFicha(a, meses)).filter(Boolean).join("")}
+          <p class="rd-final">${rdCierre(b, meses).join(" ")}</p>
           <div class="rd-que">${cuantos}</div>
         </div>
       </details>`;
