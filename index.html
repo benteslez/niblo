@@ -5951,35 +5951,35 @@
     .pb-app .rd-cuerpo { flex: 1; min-width: 0; padding: 0 0 10px; }
     /* Una ficha por alimento, con sus pasos numerados: los tiempos y los
        cortes son de cada uno, no del plato. */
+    /* La regla del agua, con aire por los dos lados: pegada al paso anterior
+       parecia parte de el. */
     .pb-app .rd-agua {
-      margin: 0 0 var(--gap-3); padding: 8px 12px; border-radius: var(--r-md, 10px);
-      background: var(--blue-soft); color: var(--text);
-      font-size: 0.8125rem; line-height: 1.5;
+      margin: var(--gap-3) 0 var(--gap-4); padding: 12px 14px;
+      border-radius: var(--r-lg); background: var(--blue-soft); color: var(--text);
+      font-size: 0.875rem; line-height: 1.6;
     }
-    .pb-app .rd-ficha { margin-bottom: var(--gap-3); }
+    .pb-app .rd-ficha { margin-bottom: var(--gap-4); }
     .pb-app .rd-ficha-cab {
-      display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;
+      display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;
     }
     .pb-app .rd-ficha-cab b { font-size: 0.9375rem; font-weight: 700; }
     .pb-app .rd-ficha-cab span {
       font-family: var(--serif); font-size: 0.8125rem; color: var(--text-muted);
     }
+    /* Los pasos son el contenido, no una nota al pie: en --text-muted y a
+       14 px se leian mal, que es justo la parte que se mira cocinando. */
     .pb-app .rd-ficha ol {
-      margin: 0; padding-left: 20px; font-size: 0.875rem; line-height: 1.6;
-      color: var(--text-muted);
+      margin: 0; padding-left: 22px; font-size: 0.9375rem; line-height: 1.65;
+      color: var(--text);
     }
-    .pb-app .rd-ficha li { margin-bottom: 3px; }
-    .pb-app .rd-ficha li b { color: var(--text); }
+    .pb-app .rd-ficha li { margin-bottom: 7px; }
+    .pb-app .rd-ficha li::marker { color: var(--text-faint); font-weight: 600; }
     .pb-app .rd-final {
-      margin: 0 0 6px; font-size: 0.875rem; line-height: 1.6;
-      padding-top: var(--gap-2); border-top: 1px solid var(--line-soft);
+      margin: 0; font-size: 0.9375rem; line-height: 1.65;
+      padding-top: var(--gap-3); border-top: 1px solid var(--line-soft);
     }
     .pb-app .rd-cuerpo p { margin: 0; font-size: 0.875rem; line-height: 1.55; }
     .pb-app .rd-cuerpo b { font-weight: 700; }
-    .pb-app .rd-que {
-      margin-top: 6px; font-size: 0.8125rem; color: var(--text-muted);
-      font-family: var(--serif); line-height: 1.5;
-    }
     /* Cocinar de una vez: bloque aparte dentro de la receta, con su propio
        fondo, porque no es lo que hay que hacer hoy sino lo que se adelanta. */
     .pb-app .rd-lote {
@@ -9427,13 +9427,6 @@ function htmlRecetasDelDia(dia) {
   const meses = dia.edadMeses;
   return `<div class="comida-recetas">
     ${bloques.map(b => {
-      const cuantos = b.alimentos.map(a => {
-        const c = a.cantidad || (a.porcion && a.porcion.gramos) || "";
-        /* Hay alimentos que ya llevan la medida en el nombre del plan
-           ("Almendra molida (½ cdita)"): repetirla detras sobra. */
-        const yaLoDice = /cdita|cucharadit|cucharad|taza/i.test(a.nombre || "");
-        return `${capitalizar(a.nombre)}${c && !yaLoDice ? " " + c : ""}`;
-      }).join(" · ");
       return `<details class="rd-det">
         <summary><span class="rd-det-tit">Ver la receta</span>
           <span class="rd-det-hora">${b.hora} · ${esc(b.etiqueta)}</span></summary>
@@ -9443,7 +9436,6 @@ function htmlRecetasDelDia(dia) {
             la carne o el pescado queden arenosos.</p>
           ${b.alimentos.map(a => rdFicha(a, meses)).filter(Boolean).join("")}
           <p class="rd-final">${rdCierre(b, meses).join(" ")}</p>
-          <div class="rd-que">${cuantos}</div>
         </div>
       </details>`;
     }).join("")}
