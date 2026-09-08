@@ -5,7 +5,7 @@
    - Iconos/manifest: cache-first (no cambian).
    Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
 */
-const CACHE_NAME = "niblo-v116";  // con cita puesta no se avisa de vacunas
+const CACHE_NAME = "niblo-v117";  // la receta, dentro de Que le toca hoy
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",

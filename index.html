@@ -5926,24 +5926,29 @@
     }
     .pb-app .sem-nota b { color: var(--text); }
 
-    /* Receta del dia: un paso por momento de comida, con la hora a la
-       izquierda como en la linea del dia. */
-    .pb-app .rd-pasos { display: flex; flex-direction: column; }
-    .pb-app .rd-paso {
-      display: flex; gap: 12px; padding: 10px 0;
-      border-bottom: 1px solid var(--line-soft);
+    /* La receta, dentro de "Que le toca hoy" y plegada: una por momento de
+       comida, no por alimento. */
+    .pb-app .comida-recetas {
+      margin-top: var(--gap-3); padding-top: var(--gap-3);
+      border-top: 1px solid var(--line-soft);
     }
-    .pb-app .rd-paso:last-child { border-bottom: 0; padding-bottom: 0; }
-    .pb-app .rd-paso:first-child { padding-top: 0; }
-    .pb-app .rd-hora {
-      flex: none; width: 58px; font-family: var(--serif); font-size: 0.8125rem;
-      font-weight: 700; color: var(--text); line-height: 1.4;
+    .pb-app .rd-det { border-bottom: 1px solid var(--line-soft); }
+    .pb-app .rd-det:last-of-type { border-bottom: 0; }
+    .pb-app .rd-det > summary {
+      display: flex; align-items: baseline; gap: 8px; padding: 9px 0;
+      cursor: pointer; list-style: none;
     }
-    .pb-app .rd-hora span {
-      display: block; font-family: var(--font-ui); font-size: 0.6875rem;
-      font-weight: 600; color: var(--text-faint);
+    .pb-app .rd-det > summary::-webkit-details-marker { display: none; }
+    .pb-app .rd-det-tit {
+      font-size: 0.875rem; font-weight: 700; color: var(--blue);
     }
-    .pb-app .rd-cuerpo { flex: 1; min-width: 0; }
+    .pb-app .rd-det-tit::before { content: "\203A "; }
+    .pb-app .rd-det[open] .rd-det-tit::before { content: "\2039 "; }
+    .pb-app .rd-det-hora {
+      flex: 1; min-width: 0; font-family: var(--serif); font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+    .pb-app .rd-cuerpo { flex: 1; min-width: 0; padding: 0 0 10px; }
     .pb-app .rd-cuerpo p { margin: 0; font-size: 0.875rem; line-height: 1.55; }
     .pb-app .rd-cuerpo b { font-weight: 700; }
     .pb-app .rd-que {
@@ -5985,10 +5990,6 @@
       margin: 0; font-size: 0.75rem; line-height: 1.5; color: var(--text-faint);
     }
 
-    .pb-app .rd-nota {
-      margin: var(--gap-3) 0 0;
-      font-size: 0.75rem; line-height: 1.5; color: var(--text-faint);
-    }
 
     /* Aviso de sueño en curso. Rojo porque significa "esto esta pasando ahora
        mismo", como el punto de una grabacion; el resto del sueño es violeta. */
@@ -9346,13 +9347,21 @@ function htmlCocinarDeUnaVez(dia) {
   </div>`;
 }
 
-function htmlRecetaDelDia(dia) {
+/* La receta vivia en su propia tarjeta, encima de la lista de alimentos, y
+   eran dos sitios para lo mismo: que come hoy y como se le prepara. Va dentro
+   de "Que le toca hoy", plegada.
+
+   Una receta por MOMENTO y no por alimento, aunque la lista de arriba vaya
+   alimento a alimento: el pollo, la papa y el calabacin de las 12:30 no son
+   tres recetas, son un plato. Ponerla en cada fila seria repetir tres veces
+   lo mismo y hacer creer que van por separado. */
+function htmlRecetasDelDia(dia) {
   const bloques = (dia.comidas || []).filter(b => b.alimentos && b.alimentos.length);
+  const lote = htmlCocinarDeUnaVez(dia);
   if (!bloques.length) return "";
   const meses = dia.edadMeses;
-  return `<div class="card">
-    <h2>Receta del día <span class="n">${bloques.length} ${bloques.length === 1 ? "momento" : "momentos"}</span></h2>
-    <div class="rd-pasos">${bloques.map(b => {
+  return `<div class="comida-recetas">
+    ${bloques.map(b => {
       const cuantos = b.alimentos.map(a => {
         const c = a.cantidad || (a.porcion && a.porcion.gramos) || "";
         /* Hay alimentos que ya llevan la medida en el nombre del plan
@@ -9360,17 +9369,16 @@ function htmlRecetaDelDia(dia) {
         const yaLoDice = /cdita|cucharadit|cucharad|taza/i.test(a.nombre || "");
         return `${capitalizar(a.nombre)}${c && !yaLoDice ? " " + c : ""}`;
       }).join(" · ");
-      return `<div class="rd-paso">
-        <div class="rd-hora">${b.hora}<span>${b.etiqueta}</span></div>
+      return `<details class="rd-det">
+        <summary><span class="rd-det-tit">Ver la receta</span>
+          <span class="rd-det-hora">${b.hora} · ${esc(b.etiqueta)}</span></summary>
         <div class="rd-cuerpo">
           <p>${rdPasos(b, meses).join(" ")}</p>
           <div class="rd-que">${cuantos}</div>
         </div>
-      </div>`;
-    }).join("")}</div>
-    ${bloques.length > 1 ? `<p class="rd-nota">Cada momento es un plato distinto: lo que coincide
-      a la misma hora va junto, lo de otra hora no se mezcla.</p>` : ""}
-    ${htmlCocinarDeUnaVez(dia)}
+      </details>`;
+    }).join("")}
+    ${lote}
   </div>`;
 }
 
@@ -9378,10 +9386,10 @@ function htmlComidaDelDia(dia, marcarFn) {
   const lista = alimentosParaMarcar(dia);
   if (!lista.length) return "";
   const nuevo = dia.alimentoNuevo;
-  return htmlRecetaDelDia(dia) + `<div class="card">
+  return `<div class="card">
     <h2>Qué le toca hoy <span class="n">${lista.length} ${lista.length === 1 ? "alimento" : "alimentos"}</span></h2>
     ${lista.length > 1 ? `<p class="comida-plato">Lo que entra de uno en uno es el alimento nuevo,
-      no las comidas: la receta de arriba dice qué va junto y qué no.</p>` : ""}
+      no las comidas: la receta de abajo dice qué va junto y qué no.</p>` : ""}
     <div class="comida-lista">${lista.map(({ a, horas }) => {
       /* Los botones dicen lo que se marco ESE dia; la pastilla, en cambio,
          dice como esta el alimento hoy por hoy (su ultimo apunte). */
@@ -9429,6 +9437,7 @@ function htmlComidaDelDia(dia, marcarFn) {
         </details>` : ""}
       </div>`;
     }).join("")}</div>
+    ${htmlRecetasDelDia(dia)}
   </div>`;
 }
 
