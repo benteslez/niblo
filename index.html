@@ -9321,11 +9321,15 @@ function htmlCocinarDeUnaVez(dia) {
         </div>`;
       }).join("")}</div>
       <p class="rd-lote-p"><b>Cómo guardarlo.</b> Enfríalo rápido, sin dejarlo fuera más de dos horas.
-        La ración de mañana, a la nevera (máximo 24 h). El resto, al congelador en tarritos
-        de una ración, hasta 2-3 meses. Descongela en la nevera la noche antes, calienta bien
-        y una sola vez: lo que sobre del plato se tira, y lo descongelado no se vuelve a congelar.</p>
-      <p class="rd-lote-fuente">Pauta de seguridad alimentaria (AESAN). Los purés con pescado o carne,
-        mejor al congelador directamente si no son para mañana.</p>` : ""}
+        Una ración es la de hoy${dias >= 3
+          ? `, <b>deja la de mañana en la nevera</b> (ahí aguanta 24 h) <b>y congela la otra</b>
+             en un tarrito de una ración, hasta 2-3 meses. Descongélala en la nevera la noche antes.`
+          : ` y <b>la de mañana se queda en la nevera</b>, que en 24 h se la come: no hace falta
+             congelar nada.`}
+        Calienta bien y una sola vez: lo que sobre del plato se tira${dias >= 3
+          ? ", y lo descongelado no se vuelve a congelar" : ""}.</p>
+      ${dias >= 3 ? `<p class="rd-lote-fuente">Pauta de seguridad alimentaria (AESAN). Si la ración
+        que sobra lleva pescado o carne, al congelador directamente en vez de a la nevera.</p>` : ""}` : ""}
     ${yaHechos.length ? `<div class="rd-lote-tit">Esto ya lo tienes hecho</div>
       <div class="rd-lote-lista">${yaHechos.map(({ a, inicio }) => `<div class="rd-lote-fila">
         <span class="rd-lote-n">✓</span>
