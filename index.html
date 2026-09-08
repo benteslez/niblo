@@ -5954,29 +5954,29 @@
     /* La regla del agua, con aire por los dos lados: pegada al paso anterior
        parecia parte de el. */
     .pb-app .rd-agua {
-      margin: var(--gap-3) 0 var(--gap-4); padding: 12px 14px;
+      margin: 20px 0 22px; padding: 14px 16px;
       border-radius: var(--r-lg); background: var(--blue-soft); color: var(--text);
-      font-size: 0.875rem; line-height: 1.6;
+      font-size: 0.9375rem; line-height: 1.6;
     }
-    .pb-app .rd-ficha { margin-bottom: var(--gap-4); }
+    .pb-app .rd-ficha { margin-bottom: 22px; }
     .pb-app .rd-ficha-cab {
-      display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;
+      display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px;
     }
-    .pb-app .rd-ficha-cab b { font-size: 0.9375rem; font-weight: 700; }
+    .pb-app .rd-ficha-cab b { font-size: 1rem; font-weight: 700; }
     .pb-app .rd-ficha-cab span {
-      font-family: var(--serif); font-size: 0.8125rem; color: var(--text-muted);
+      font-family: var(--serif); font-size: 0.875rem; color: var(--text-muted);
     }
-    /* Los pasos son el contenido, no una nota al pie: en --text-muted y a
-       14 px se leian mal, que es justo la parte que se mira cocinando. */
+    /* Los pasos son el contenido, no una nota al pie: es lo que se mira
+       cocinando, con las manos ocupadas y el movil en la encimera. */
     .pb-app .rd-ficha ol {
-      margin: 0; padding-left: 22px; font-size: 0.9375rem; line-height: 1.65;
+      margin: 0; padding-left: 24px; font-size: 1rem; line-height: 1.7;
       color: var(--text);
     }
-    .pb-app .rd-ficha li { margin-bottom: 7px; }
+    .pb-app .rd-ficha li { margin-bottom: 9px; }
     .pb-app .rd-ficha li::marker { color: var(--text-faint); font-weight: 600; }
     .pb-app .rd-final {
-      margin: 0; font-size: 0.9375rem; line-height: 1.65;
-      padding-top: var(--gap-3); border-top: 1px solid var(--line-soft);
+      margin: 0; font-size: 1rem; line-height: 1.7;
+      padding-top: var(--gap-4); border-top: 1px solid var(--line-soft);
     }
     /* Sin regla generica para los <p> de dentro: ganaba por especificidad a
        .rd-agua y a .rd-final y les anulaba el margen y el tamaño. Cada uno
