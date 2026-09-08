@@ -9086,8 +9086,10 @@ function semVacunas(meses) {
   }
   const pend = vacunasPendientes();
   if (!pend.length) return { nivel: "verde", txt: "Ninguna vacuna fuera de plazo." };
-  const masVieja = Math.max(...pend.map(v => meses - parseVaccineAgeMonths(v.age)));
   const n = pend.length === 1 ? "Una vacuna" : `${pend.length} vacunas`;
+  const cita = citaDeVacunacion();
+  if (cita) return { nivel: "verde", txt: `${n} por poner, con cita el ${fmtFechaCorta(cita.date)}.` };
+  const masVieja = Math.max(...pend.map(v => meses - parseVaccineAgeMonths(v.age)));
   if (masVieja >= 2) return { nivel: "rojo", txt: `${n} fuera de plazo, la más antigua desde hace ${Math.floor(masVieja)} meses.` };
   return { nivel: "ambar", txt: `${n} fuera de plazo.` };
 }
@@ -11331,6 +11333,16 @@ function marcarAvisoVisto(id) {
 }
 
 /** Vacunas cuya edad prevista ya ha pasado y siguen sin marcar. */
+/* Una vacuna atrasada con la cita ya puesta no es un descuido: esta resuelta,
+   y avisar de ella es dar la lata por algo que ya se ha hecho. Cuenta como
+   programada de dos maneras: con fecha en la propia vacuna, o con una visita
+   de "Vacunación" con fecha futura en Pediatra. */
+function citaDeVacunacion() {
+  return (STATE.pediatricVisits || [])
+    .filter(v => v.reason === "vacunacion" && v.date > HOY_ISO)
+    .sort((a, b) => a.date.localeCompare(b.date))[0] || null;
+}
+
 function vacunasPendientes() {
   const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
   if (meses == null) return [];
@@ -11355,8 +11367,9 @@ function calcularAvisos() {
       accion: { et: "Hecho", fn: `PB.marcarAvisoVisto('vitd:${HOY_ISO}')` } });
   }
 
-  // Vacunas ya vencidas y sin marcar.
-  const vac = vacunasPendientes();
+  /* Vacunas ya vencidas y sin marcar. Con la cita puesta no se avisa: ya sale
+     en "Próximos" y repetirlo aqui como pendiente seria contradecirse. */
+  const vac = citaDeVacunacion() ? [] : vacunasPendientes();
   if (vac.length && vistos["vac:" + vac.length] !== HOY_ISO) {
     out.push({ id: "vac:" + vac.length, tipo: "vacuna", icono: "💉",
       titulo: vac.length === 1 ? "Una vacuna pendiente" : `${vac.length} vacunas pendientes`,
