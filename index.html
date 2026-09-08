@@ -5947,7 +5947,7 @@
     .pb-app .rd-cuerpo p { margin: 0; font-size: 0.875rem; line-height: 1.55; }
     .pb-app .rd-cuerpo b { font-weight: 700; }
     .pb-app .rd-que {
-      margin-top: 6px; font-size: 0.75rem; color: var(--text-muted);
+      margin-top: 6px; font-size: 0.8125rem; color: var(--text-muted);
       font-family: var(--serif); line-height: 1.5;
     }
     /* Cocinar de una vez: bloque aparte dentro de la receta, con su propio
@@ -5957,13 +5957,13 @@
       background: var(--bg-soft); border-radius: var(--r-lg);
     }
     .pb-app .rd-lote-tit {
-      font-size: 0.8125rem; font-weight: 800; letter-spacing: -0.01em;
+      font-size: 0.9375rem; font-weight: 800; letter-spacing: -0.01em;
       margin-bottom: 6px;
     }
     .pb-app .rd-lote-tit + .rd-lote-tit,
     .pb-app .rd-lote-lista + .rd-lote-tit { margin-top: var(--gap-3); }
     .pb-app .rd-lote-p {
-      margin: 0 0 var(--gap-2); font-size: 0.8125rem; line-height: 1.55;
+      margin: 0 0 var(--gap-2); font-size: 0.875rem; line-height: 1.6;
       color: var(--text-muted);
     }
     .pb-app .rd-lote-p b { color: var(--text); }
@@ -5972,16 +5972,17 @@
       display: flex; align-items: baseline; gap: 10px; padding: 5px 0;
     }
     .pb-app .rd-lote-n {
-      flex: none; min-width: 26px; font-family: var(--serif); font-size: 0.8125rem;
+      flex: none; min-width: 28px; font-family: var(--serif); font-size: 0.875rem;
       font-weight: 700; color: var(--blue);
     }
-    .pb-app .rd-lote-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
+    .pb-app .rd-lote-txt { flex: 1; min-width: 0; font-size: 0.9375rem; }
     .pb-app .rd-lote-txt span {
-      display: block; font-size: 0.75rem; color: var(--text-muted);
-      font-family: var(--serif); margin-top: 1px;
+      display: block; font-size: 0.8125rem; color: var(--text-muted);
+      font-family: var(--serif); margin-top: 2px; line-height: 1.5;
     }
+    .pb-app .rd-lote-txt span b { color: var(--text); font-weight: 700; }
     .pb-app .rd-lote-fuente {
-      margin: 0; font-size: 0.6875rem; line-height: 1.5; color: var(--text-faint);
+      margin: 0; font-size: 0.75rem; line-height: 1.5; color: var(--text-faint);
     }
 
     .pb-app .rd-nota {
@@ -9314,10 +9315,15 @@ function htmlCocinarDeUnaVez(dia) {
         pero en esta cantidad, y reparte en raciones antes de guardarlos.</p>
       <div class="rd-lote-lista">${paraHacer.map(({ a, raciones }) => {
         const c = a.cantidad || (a.porcion && a.porcion.gramos) || "";
+        /* "×3" al lado de una cantidad no dice si hay que multiplicarla o si ya
+           esta multiplicada. Se pone el total con todas las letras y, detras,
+           de cuanto es cada racion. */
         return `<div class="rd-lote-fila">
           <span class="rd-lote-n">×${raciones}</span>
-          <span class="rd-lote-txt"><b>${capitalizar(a.nombre)}</b>${
-            c ? `<span>${esc(multiplicarCantidad(c, raciones))}</span>` : ""}</span>
+          <span class="rd-lote-txt"><b>${capitalizar(a.nombre)}</b>${c
+            ? `<span><b>${esc(multiplicarCantidad(c, raciones))}</b> en total ·
+                 ${raciones} raciones de ${esc(c)}</span>`
+            : `<span>${raciones} raciones</span>`}</span>
         </div>`;
       }).join("")}</div>
       <p class="rd-lote-p"><b>Cómo guardarlo.</b> Enfríalo rápido, sin dejarlo fuera más de dos horas.
