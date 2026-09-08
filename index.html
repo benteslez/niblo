@@ -5978,7 +5978,9 @@
       margin: 0; font-size: 0.9375rem; line-height: 1.65;
       padding-top: var(--gap-3); border-top: 1px solid var(--line-soft);
     }
-    .pb-app .rd-cuerpo p { margin: 0; font-size: 0.875rem; line-height: 1.55; }
+    /* Sin regla generica para los <p> de dentro: ganaba por especificidad a
+       .rd-agua y a .rd-final y les anulaba el margen y el tamaño. Cada uno
+       lleva ya su clase. */
     .pb-app .rd-cuerpo b { font-weight: 700; }
     /* Cocinar de una vez: bloque aparte dentro de la receta, con su propio
        fondo, porque no es lo que hay que hacer hoy sino lo que se adelanta. */
