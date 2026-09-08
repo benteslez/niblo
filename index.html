@@ -6067,6 +6067,21 @@
     }
     .pb-app .vac-fila:hover input.vac-fecha::-webkit-calendar-picker-indicator { opacity: .45; }
     .pb-app .vac-pendiente { flex: none; font-size: 0.75rem; color: var(--text-faint); }
+    /* Programada: el cuadrito sin marcar (no esta puesta) pero el borde y la
+       fecha en azul, para que se distinga de una pendiente de un vistazo. */
+    /* En las pendientes la casilla de fecha esta vacia y el navegador escribe
+       "dd/mm/aaaa": con treinta filas eso es mucho ruido para lo que es una
+       invitacion. Se apaga y se enciende al tocarla. */
+    .pb-app .vac-fila.vac-pendiente input.vac-fecha { opacity: .4; }
+    .pb-app .vac-fila.vac-pendiente input.vac-fecha:hover,
+    .pb-app .vac-fila.vac-pendiente input.vac-fecha:focus-visible { opacity: 1; }
+    .pb-app .vac-fila.vac-programada .vac-check { border-color: var(--blue); }
+    .pb-app .vac-fila.vac-programada input.vac-fecha { color: var(--blue); }
+    .pb-app .vac-tag {
+      font-weight: 700; color: var(--blue); text-transform: lowercase;
+    }
+    .pb-app .vac-barra { display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--gap-3); }
+    .pb-app .vac-barra .btn-anadir.on { background: var(--blue); color: #fff; border-color: var(--blue); }
     .pb-app .sync-punto {
       width: 9px; height: 9px; border-radius: 50%; flex: none;
       background: var(--text-faint);
@@ -7925,6 +7940,7 @@ function defaultState() {
       pais: "es_ES",
       lastExportAt: "",
       carnetSembrado: false,      // el carnet de Pablo solo se siembra una vez
+      vacunasEditadas: false,     // la familia ha añadido o quitado vacunas
     },
     alimentos: {},          // id -> { historial: [{fecha, resultado}] }
     tomas: [],              // { id, fecha, hora, ml }
@@ -8002,8 +8018,13 @@ function sembrarCarnet(st) {
   return st;
 }
 
-function normalizarVacunas(guardadas, hechas) {
+function normalizarVacunas(guardadas, hechas, editadas) {
   const ids = new Set(VACCINES.map(v => v.id));
+  /* Si en esta casa han quitado alguna vacuna o han añadido una suya, manda su
+     lista: reponer el catalogo entero les resucitaria lo borrado en cada
+     arranque. La bandera vive en config y viaja con el documento, asi que los
+     dos moviles acaban con la misma lista. */
+  if (editadas && Array.isArray(guardadas) && guardadas.length) return guardadas;
   const alDia = Array.isArray(guardadas) && guardadas.length
     && guardadas.every(v => v && ids.has(v.id)) && guardadas.length === VACCINES.length;
   if (!alDia && hechas && typeof hechas === "object") {
@@ -8021,7 +8042,7 @@ function cargarEstadoGlobal() {
      preguntaba por la sedestacion CON APOYO, asi que ese es su heredero;
      el tronco estable arranca sin marcar, que es lo prudente. */
   st.config = Object.assign(defaultState().config, st.config || {});
-  st.vaccines = normalizarVacunas(st.vaccines, st.vaccinesDone);
+  st.vaccines = normalizarVacunas(st.vaccines, st.vaccinesDone, st.config.vacunasEditadas);
   sembrarCarnet(st);
   /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
      sucia y en cada arranque volveria a limpiarse y a marcar el estado como
@@ -8273,7 +8294,7 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
 
   // Config y catalogo de vacunas: no son registros, gana el documento nuevo.
   out.config = Object.assign({}, defaultState().config, (remotoGana ? remoto : local).config || {});
-  out.vaccines = normalizarVacunas((remotoGana ? remoto : local).vaccines, null);
+  out.vaccines = normalizarVacunas((remotoGana ? remoto : local).vaccines, null, out.config.vacunasEditadas);
 
   // Lapidas: la union de las dos partes.
   const borrados = Object.assign({}, local.borrados || {}, remoto.borrados || {});
@@ -8368,7 +8389,7 @@ function importarEstadoSync(remoto) {
   if (!remoto || typeof remoto !== "object") return false;
   STATE = Object.assign(defaultState(), remoto);
   STATE.config = Object.assign(defaultState().config, remoto.config || {});
-  STATE.vaccines = normalizarVacunas(STATE.vaccines, STATE.vaccinesDone);
+  STATE.vaccines = normalizarVacunas(STATE.vaccines, STATE.vaccinesDone, STATE.config.vacunasEditadas);
   sembrarCarnet(STATE);
   CONFIG = STATE.config;
   ESTADO = STATE.alimentos || {};
@@ -8824,19 +8845,33 @@ function proxFecha(iso) {
   return `${dow} ${d.getDate()} ${mes}`;
 }
 function htmlProximos() {
-  const futuras = (STATE.pediatricVisits || [])
-    .filter(v => v.date > HOY_ISO)
-    .sort((a, b) => a.date.localeCompare(b.date));
-  if (!futuras.length) return "";
+  /* Dos origenes en la misma lista: las visitas con fecha futura y las vacunas
+     que se han dejado programadas. Para quien mira Hoy es lo mismo — cosas que
+     hay que ir a hacer — y tenerlas en dos pantallas distintas era justo lo
+     que hacia que se olvidaran. */
+  const eventos = [
+    ...(STATE.pediatricVisits || []).filter(v => v.date > HOY_ISO).map(v => ({
+      fecha: v.date,
+      titulo: PV_MOTIVOS[v.reason] || v.reason,
+      sub: v.prueba || "",
+      accion: `PB.editarRegistro('pediatricVisits','${v.id}')`,
+    })),
+    ...(STATE.vaccines || []).filter(v => (STATE.vaccinesDone[v.id] || "") > HOY_ISO).map(v => ({
+      fecha: STATE.vaccinesDone[v.id],
+      titulo: v.vaccine,
+      sub: v.dose ? "Vacuna · " + v.dose : "Vacuna",
+      accion: `PB.irA('vacunas')`,
+    })),
+  ].sort((a, b) => a.fecha.localeCompare(b.fecha));
+  if (!eventos.length) return "";
   return `<div class="card">
     <h2><span class="prox-icono" aria-hidden="true">📅</span> Próximos
-      <span class="n">${futuras.length} ${futuras.length === 1 ? "cita" : "citas"}</span></h2>
-    <div class="prox-lista">${futuras.map(v => {
-      const cuando = proxCuando(v.date);
-      return `<button type="button" class="prox-fila" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">
-        <span class="prox-fecha">${proxFecha(v.date)}</span>
-        <span class="prox-txt"><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
-          v.prueba ? `<span>${esc(v.prueba)}</span>` : ""}</span>
+      <span class="n">${eventos.length} ${eventos.length === 1 ? "cita" : "citas"}</span></h2>
+    <div class="prox-lista">${eventos.map(e => {
+      const cuando = proxCuando(e.fecha);
+      return `<button type="button" class="prox-fila" onclick="${e.accion}">
+        <span class="prox-fecha">${proxFecha(e.fecha)}</span>
+        <span class="prox-txt"><b>${esc(e.titulo)}</b>${e.sub ? `<span>${esc(e.sub)}</span>` : ""}</span>
         ${cuando ? `<span class="prox-cuando">${cuando}</span>` : ""}
       </button>`;
     }).join("")}</div>
@@ -11168,6 +11203,8 @@ function calcularAvisos() {
   if (vac.length && vistos["vac:" + vac.length] !== HOY_ISO) {
     out.push({ id: "vac:" + vac.length, tipo: "vacuna", icono: "💉",
       titulo: vac.length === 1 ? "Una vacuna pendiente" : `${vac.length} vacunas pendientes`,
+      /* Sin fecha ninguna: en cuanto se le pone una, aunque sea futura, deja
+         de estar pendiente y pasa a "Próximos". */
       texto: vac.slice(0, 3).map(v => `${v.vaccine} (${v.age})`).join(" · ") + (vac.length > 3 ? "…" : ""),
       accion: { et: "Ver vacunas", fn: `PB.irA('vacunas')` } });
   }
@@ -12690,60 +12727,119 @@ function renderGuia(el) {
 }
 
 /* ======================== render: VACUNAS ======================== */
+/* Una vacuna tiene tres estados y los tres salen de la misma fecha: sin fecha
+   esta pendiente, con fecha pasada esta puesta y con fecha futura esta
+   programada. Asi no hay dos sitios donde marcar lo mismo. */
+function estadoVacuna(id) {
+  const f = STATE.vaccinesDone[id];
+  if (!f) return "pendiente";
+  return f > HOY_ISO ? "programada" : "puesta";
+}
+/* En que mes del listado cae una vacuna puesta o programada en cierta fecha.
+   Es lo que deja colocar una vacuna añadida a mano donde le toca en vez de al
+   final de todo. */
+function grupoPorFecha(fecha) {
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(fecha + "T00:00:00"));
+  if (meses == null) return "Sin fecha";
+  const m = Math.round(meses);
+  if (m <= 0) return "Recién nacido";
+  if (m === 1) return "1 mes";
+  if (m < 24) return `${m} meses`;
+  const anios = Math.round(m / 12);
+  return anios === 1 ? "1 año" : `${anios} años`;
+}
+let VAC_EDITANDO = false;
+function vacunasEditar() {
+  VAC_EDITANDO = !VAC_EDITANDO;
+  renderVacunas(document.getElementById("view-vacunas"));
+}
+
 function renderVacunas(el) {
   let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span>`;
 
-  const puestas = STATE.vaccines.filter(v => STATE.vaccinesDone[v.id])
+  const por = e => STATE.vaccines.filter(v => estadoVacuna(v.id) === e);
+  const puestas = por("puesta")
     .sort((a, b) => STATE.vaccinesDone[a.id].localeCompare(STATE.vaccinesDone[b.id]));
-  const pendientes = STATE.vaccines.filter(v => !STATE.vaccinesDone[v.id]);
+  const programadas = por("programada")
+    .sort((a, b) => STATE.vaccinesDone[a.id].localeCompare(STATE.vaccinesDone[b.id]));
+  const pendientes = por("pendiente");
 
-  html += `<div class="card"><div class="stat-grid cols2">
+  html += `<div class="card">
+    <div class="stat-grid">
       <div class="stat-tile"><div class="num">${puestas.length}</div><div class="lab">Puestas</div></div>
+      <div class="stat-tile"><div class="num">${programadas.length}</div><div class="lab">Programadas</div></div>
       <div class="stat-tile"><div class="num">${pendientes.length}</div><div class="lab">Pendientes</div></div>
-    </div></div>`;
+    </div>
+    <div class="vac-barra">
+      <button type="button" class="btn-anadir" onclick="PB.nuevaVacuna()">+ Nueva vacuna</button>
+      <button type="button" class="btn-anadir${VAC_EDITANDO ? " on" : ""}" onclick="PB.vacunasEditar()"
+        aria-pressed="${VAC_EDITANDO}">${VAC_EDITANDO ? "Listo" : "Editar lista"}</button>
+    </div>
+    ${VAC_EDITANDO ? `<div class="faint" style="margin-top:8px">Quita las que no correspondan a Pablo.
+      Puedes volver a añadirlas a mano si te equivocas.</div>` : ""}
+  </div>`;
+
+  /* Las programadas primero: son las unicas sobre las que hay que hacer algo. */
+  if (programadas.length) {
+    html += `<div class="card"><h2>Programadas <span class="n">${programadas.length}</span></h2>
+      <div class="vac-lista">${programadas.map(v => htmlFilaVacuna(v)).join("")}</div></div>`;
+  }
 
   /* Las puestas van juntas y por fecha, sin separar las del PAI de las demas:
      lo que interesa es el orden real en que se las han puesto. */
   if (puestas.length) {
-    html += `<div class="card"><h2>Puestas</h2><div class="vac-lista">`;
-    puestas.forEach(v => { html += htmlFilaVacuna(v, STATE.vaccinesDone[v.id]); });
-    html += `</div></div>`;
+    html += `<div class="card"><h2>Puestas <span class="n">${puestas.length}</span></h2>
+      <div class="vac-lista">${puestas.map(v => htmlFilaVacuna(v)).join("")}</div></div>`;
   }
 
   // Las pendientes si se agrupan por edad: ahi lo util es cuando toca cada una.
   if (pendientes.length) {
     const grupos = [];
     pendientes.forEach(v => {
-      const g = grupos.find(x => x.nombre === (v.grupo || v.age));
-      if (g) g.filas.push(v); else grupos.push({ nombre: v.grupo || v.age, filas: [v] });
+      const nombre = v.grupo || v.age || "Sin fecha";
+      const g = grupos.find(x => x.nombre === nombre);
+      if (g) g.filas.push(v); else grupos.push({ nombre, filas: [v] });
     });
+    /* Por edad y no por orden de llegada: una vacuna añadida a mano se coloca
+       en su mes, no al final de la lista. Los grupos que no son una edad
+       ("Otras", "Sin fecha") van al final: parseVaccineAgeMonths les devuelve
+       0 y sin esto se colaban entre las del recién nacido. */
+    const ordenGrupo = n => /\d|nacid/i.test(n) ? parseVaccineAgeMonths(n) : 1e6;
+    grupos.sort((a, b) => ordenGrupo(a.nombre) - ordenGrupo(b.nombre));
     html += `<div class="card"><h2>Pendientes</h2>
-      <div class="faint" style="margin-top:-6px">Esquema del PAI de Colombia, el del carnet de Pablo.</div></div>`;
+      <div class="faint" style="margin-top:-6px">Esquema del PAI de Colombia, el del carnet de Pablo.
+        Pon la fecha para marcarla como puesta, o una futura para dejarla programada.</div></div>`;
     grupos.forEach(g => {
-      html += `<div class="card"><h2>${esc(g.nombre)}</h2><div class="vac-lista">`;
-      g.filas.forEach(v => { html += htmlFilaVacuna(v, null); });
-      html += `</div></div>`;
+      html += `<div class="card"><h2>${esc(g.nombre)}</h2>
+        <div class="vac-lista">${g.filas.map(v => htmlFilaVacuna(v)).join("")}</div></div>`;
     });
   }
   el.innerHTML = html;
 }
 
-function htmlFilaVacuna(v, fecha) {
-  return `<div class="vac-fila${fecha ? " puesta" : ""}">
-      <button type="button" class="vac-check" role="checkbox" aria-checked="${!!fecha}"
+function htmlFilaVacuna(v) {
+  const estado = estadoVacuna(v.id);
+  const fecha = STATE.vaccinesDone[v.id] || "";
+  /* El cuadrito solo dice "puesta": una programada no esta puesta, asi que va
+     sin marcar y con su fecha delante. Tocarlo la pone hoy o la desmarca. */
+  return `<div class="vac-fila ${estado === "puesta" ? "puesta" : "vac-" + estado}">
+      <button type="button" class="vac-check" role="checkbox" aria-checked="${estado === "puesta"}"
         aria-label="${esc(v.vaccine)} ${esc(v.dose)}"
-        onclick="PB.toggleVaccine('${v.id}', ${fecha ? "false" : "true"})">${fecha ? "✓" : ""}</button>
+        onclick="PB.toggleVaccine('${v.id}', ${fecha ? "false" : "true"})">${estado === "puesta" ? "✓" : ""}</button>
       <div class="vac-cuerpo">
         <div class="vac-nombre">${esc(v.vaccine)}</div>
-        <div class="vac-dosis">${esc(v.dose)}${fecha ? "" : " · " + esc(v.age)}</div>
+        <div class="vac-dosis">${esc(v.dose)}${estado === "pendiente" ? " · " + esc(v.age || "") : ""}${
+          estado === "programada" ? ` · <b class="vac-tag">programada</b>` : ""}</div>
       </div>
-      ${fecha
-        ? `<input type="date" class="vac-fecha" value="${fecha}" max="${HOY_ISO}"
-             aria-label="Fecha en que se puso" onchange="PB.fecharVacuna('${v.id}', this.value)">
-           <button type="button" class="vac-info" title="Lote, laboratorio y país"
+      <input type="date" class="vac-fecha" value="${fecha}"
+        aria-label="Fecha de ${esc(v.vaccine)}" onchange="PB.fecharVacuna('${v.id}', this.value)">
+      ${estado === "puesta"
+        ? `<button type="button" class="vac-info" title="Lote, laboratorio y país"
              aria-label="Detalles de ${esc(v.vaccine)}" aria-expanded="${VAC_ABIERTA === v.id}"
-             onclick="PB.detallesVacuna('${v.id}')">${banderaVacuna(v.id)}</button>`
-        : `<span class="vac-pendiente">pendiente</span>`}
+             onclick="PB.detallesVacuna('${v.id}')">${banderaVacuna(v.id)}</button>` : ""}
+      ${VAC_EDITANDO
+        ? `<button type="button" class="del-row" aria-label="Quitar ${esc(v.vaccine)}"
+             onclick="PB.borrarVacuna('${v.id}')">✕</button>` : ""}
     </div>
     ${VAC_ABIERTA === v.id ? htmlDetallesVacuna(v) : ""}`;
 }
@@ -12807,9 +12903,71 @@ function toggleVaccine(id, marcar) {
   renderVacunas(document.getElementById("view-vacunas"));
 }
 function fecharVacuna(id, fecha) {
-  if (!fecha) return;
-  STATE.vaccinesDone[id] = fecha;
+  if (!fecha) {
+    /* Vaciar la casilla es desmarcarla: vuelve a pendiente. */
+    delete STATE.vaccinesDone[id];
+    anotarBorradoClave("vaccinesDone", id);
+  } else {
+    olvidarBorradoClave("vaccinesDone", id);
+    STATE.vaccinesDone[id] = fecha;
+    /* Las del calendario oficial se quedan en su mes pase lo que pase; las
+       añadidas a mano se recolocan segun la fecha que se les ponga. */
+    const v = STATE.vaccines.find(x => x.id === id);
+    if (v && String(id).indexOf("vx_") === 0) { v.grupo = grupoPorFecha(fecha); v.age = v.grupo; }
+  }
   guardarEstado();
+  renderVacunas(document.getElementById("view-vacunas"));
+}
+
+/* ---- Añadir y quitar vacunas ------------------------------------------- */
+function nuevaVacuna() {
+  abrirModal("Nueva vacuna", `
+    <div class="campo"><label for="nv-nombre">Vacuna</label>
+      <input type="text" id="nv-nombre" placeholder="Meningococo B" autocomplete="off"></div>
+    <div class="grid-campos2">
+      <div class="campo"><label for="nv-dosis">Dosis</label>
+        <input type="text" id="nv-dosis" placeholder="1ª" autocomplete="off"></div>
+      <div class="campo"><label for="nv-fecha">Fecha</label>
+        <input type="date" id="nv-fecha"></div>
+    </div>
+    <div class="faint" style="margin-top:8px">Con la fecha se coloca sola en el mes que le toca,
+      contando desde el nacimiento. Si es una fecha futura, queda programada. Sin fecha, se queda
+      pendiente y sin mes hasta que se la pongas.</div>
+    <div class="modal-aviso" id="nv-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Añadir", primario: true, accion: "PB.guardarVacunaNueva()" }]);
+}
+function guardarVacunaNueva() {
+  const nombre = (document.getElementById("nv-nombre").value || "").trim();
+  const av = document.getElementById("nv-aviso");
+  if (!nombre) { if (av) { av.textContent = "Ponle nombre a la vacuna."; av.hidden = false; } return; }
+  const dosis = (document.getElementById("nv-dosis").value || "").trim() || "Única";
+  const fecha = document.getElementById("nv-fecha").value || "";
+  const id = "vx_" + Date.now().toString(36);
+  const grupo = fecha ? grupoPorFecha(fecha) : "Sin fecha";
+  STATE.vaccines.push({ id, grupo, age: grupo, vaccine: nombre, dose: dosis });
+  if (fecha) STATE.vaccinesDone[id] = fecha;
+  CONFIG.vacunasEditadas = true;
+  guardarEstado();
+  cerrarModal();
+  renderVacunas(document.getElementById("view-vacunas"));
+}
+function borrarVacuna(id) {
+  const v = STATE.vaccines.find(x => x.id === id);
+  abrirModal("¿Quitar esta vacuna?",
+    `<p class="modal-p">${esc(v ? v.vaccine + " · " + v.dose : id)}</p>
+     <p class="modal-p faint">Desaparece de la lista y de los avisos. Puedes volver a añadirla a mano.</p>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Quitar", peligro: true, accion: `PB.confirmarBorrarVacuna('${id}')` }]);
+}
+function confirmarBorrarVacuna(id) {
+  STATE.vaccines = STATE.vaccines.filter(x => x.id !== id);
+  delete STATE.vaccinesDone[id];
+  anotarBorradoClave("vaccinesDone", id);
+  if (STATE.vaccinesInfo) { delete STATE.vaccinesInfo[id]; anotarBorradoClave("vaccinesInfo", id); }
+  CONFIG.vacunasEditadas = true;
+  guardarEstado();
+  cerrarModal();
   renderVacunas(document.getElementById("view-vacunas"));
 }
 
@@ -12867,7 +13025,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
