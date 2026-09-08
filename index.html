@@ -5633,16 +5633,27 @@
     /* Patron: rejilla de 7 columnas por 24 horas. La altura fija hace que una
        hora sean siempre los mismos pixeles, que es lo que deja comparar
        columnas de un vistazo. */
-    .pb-app .pt-grid { display: flex; gap: 6px; margin-top: var(--gap-2); }
+    /* La altura de la caja del dia sale de aqui para que la linea de la hora
+       actual pueda colocarse con la misma medida y no haya dos 260 sueltos. */
+    .pb-app .pt-grid { display: flex; gap: 6px; margin-top: var(--gap-2); --pt-alto: 260px; }
     .pb-app .pt-horas {
-      position: relative; width: 34px; flex: none; height: 260px;
+      position: relative; width: 34px; flex: none; height: var(--pt-alto);
       font-size: 0.625rem; color: var(--text-faint); font-family: var(--serif);
     }
     .pb-app .pt-horas span { position: absolute; right: 0; transform: translateY(-50%); }
-    .pb-app .pt-cols { display: flex; gap: 4px; flex: 1; min-width: 0; }
+    .pb-app .pt-cols { display: flex; gap: 4px; flex: 1; min-width: 0; position: relative; }
+    /* Discreta a proposito: marca donde estamos, no compite con el sueño. */
+    .pb-app .pt-ahora {
+      position: absolute; left: 0; right: 0; height: 1px;
+      background: var(--red); opacity: .5; pointer-events: none;
+    }
+    .pb-app .pt-ahora::after {
+      content: ""; position: absolute; right: 0; top: -2px;
+      width: 5px; height: 5px; border-radius: 50%; background: var(--red);
+    }
     .pb-app .pt-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
     .pb-app .pt-caja {
-      position: relative; height: 260px; border-radius: 6px;
+      position: relative; height: var(--pt-alto); border-radius: 6px;
       background: var(--bg-soft); overflow: hidden;
       /* Es un <button>: sin esto llegaria con el borde, el relleno y la fuente
          del navegador y la tira se descuadraria. */
@@ -10588,19 +10599,26 @@ function htmlPatron() {
 
   const horas = [0, 6, 12, 18].map(h =>
     `<span style="top:${h * 60 / 14.4}%">${String(h).padStart(2, "0")}:00</span>`).join("");
+  /* Linea de la hora actual, cruzando las siete columnas: es lo que deja
+     comparar de un vistazo como iba ayer a esta misma hora, igual que hace la
+     pastilla del resumen. Se pinta al entrar en Hoy; no hace falta que corra
+     sola, baja un pixel cada cinco minutos y medio. */
+  const ahoraMin = new Date().getHours() * 60 + new Date().getMinutes();
+  const lineaAhora = `<span class="pt-ahora" aria-hidden="true"
+    style="top:calc(var(--pt-alto) * ${ahoraMin} / 1440)"></span>`;
 
   return `<div class="card">
     <h2>Patrón <span class="n">últimos ${PATRON_DIAS} días</span></h2>
     <div class="pt-grid">
       <div class="pt-horas">${horas}</div>
-      <div class="pt-cols">${columnas}</div>
+      <div class="pt-cols">${columnas}${lineaAhora}</div>
     </div>
     <div class="pb-cal-leyenda">
       <span><i class="punto" style="background:var(--purple)"></i>sueño</span>
       <span><i class="punto" style="background:var(--blue)"></i>toma</span>
       <span><i class="punto" style="background:var(--green)"></i>alimento</span>
       <span><i class="punto" style="background:var(--slate)"></i>pañal</span>
-      <span class="nota">Toca un día para ver a qué hora fue cada cosa.</span>
+      <span class="nota">La línea roja es la hora que es ahora. Toca un día para ver a qué hora fue cada cosa.</span>
     </div>
   </div>`;
 }
