@@ -5820,6 +5820,15 @@
     .pb-app .linea-icono.i-probando { background: var(--amber-soft); color: var(--amber); }
     .pb-app .linea-icono.i-rechazo { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .linea-icono.i-panal { background: var(--bg-soft); color: var(--slate); }
+    .pb-app .linea-icono.i-bano  { background: var(--blue-soft); color: var(--blue); }
+    /* El "+" de la linea del dia: redondo y solo, sin texto al lado. */
+    .pb-app .btn-mas {
+      width: 32px; height: 32px; padding: 0; font-size: 1.25rem; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    /* Que añadir: los mismos botones de los accesos rapidos, en columna. */
+    .pb-app .anadir-lista { display: flex; flex-direction: column; gap: 8px; }
+    .pb-app .anadir-lista .acc-btn { justify-content: flex-start; padding: 12px 14px; gap: 12px; }
     /* El que cede al estrecharse es el dato secundario, no el titulo: antes se
        leia "Sueno nocturno hast..." y lo que sobraba era justo lo que importa. */
     .pb-app .linea-texto {
@@ -8092,6 +8101,7 @@ function defaultState() {
        vomitos sin fiebre. Por eso una temperatura opcional y una lista de
        sintomas, no un tipo de registro por sintoma. */
     sintomas: [],
+    banos: [],
     /* Dia -> true. Estaba en localStorage con los avisos descartados, asi que
        no viajaba: si la dosis la daba y la marcaba el otro movil, aqui seguia
        contando como olvidada. */
@@ -8286,6 +8296,10 @@ const CAMPOS_REGISTRO = {
     { k: "height", et: "Longitud (cm)", tipo: "number", paso: "0.1" },
     { k: "head",   et: "P. cefálico (cm)", tipo: "number", paso: "0.1" },
   ]},
+  banos: { titulo: "baño", col: "banos", campos: [
+    { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
+    { k: "notas", et: "Notas", tipo: "textarea" },
+  ]},
   sintomas: { titulo: "registro", col: "sintomas", campos: [
     { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
     { k: "temp",  et: "Temperatura (°C)", tipo: "number", paso: "0.1" },
@@ -8381,7 +8395,7 @@ function pedirBorrado(col, id, descripcion) {
 function confirmarBorrado(col, id) {
   const fn = { sleep: deleteSleep, diapers: deleteDiaper, growth: deleteGrowth,
                notes: deleteNote, pediatricVisits: deletePediatricVisit,
-               sintomas: deleteSintoma }[col];
+               sintomas: deleteSintoma, banos: deleteBano }[col];
   cerrarModal();
   if (fn) fn(id);
   /* Cada delete* repinta su propia pestana. Como ahora se puede borrar desde
@@ -8428,7 +8442,7 @@ function cerrarModal() {
    Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
-const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas"];
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos"];
 const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD"];
 
 function sello() { return new Date().toISOString(); }
@@ -9692,6 +9706,7 @@ LINEA_GLIFOS.probando = LINEA_GLIFOS.comida;   // mismo cuenco, circulo ambar
 LINEA_GLIFOS.rechazo = '<path d="M12 2.6A9.4 9.4 0 1 0 21.4 12 9.4 9.4 0 0 0 12 2.6zm4 10.3H8v-1.8h8z"/>';
 LINEA_GLIFOS.info = '<path d="M12 2.6A9.4 9.4 0 1 0 21.4 12 9.4 9.4 0 0 0 12 2.6zm-.9 4.1h1.8v1.8h-1.8zm0 3.4h1.8v7h-1.8z"/>';
 LINEA_GLIFOS.panal = '<path d="M3 5.4h18v5.2c0 5.2-4 8.8-9 8.8s-9-3.6-9-8.8z"/>';
+LINEA_GLIFOS.bano  = '<path d="M4 11h16v2.5A5.5 5.5 0 0 1 14.5 19h-5A5.5 5.5 0 0 1 4 13.5zM6 11V6.5A2.5 2.5 0 0 1 11 6.5h-1.8a.7.7 0 0 0-1.4 0V11z"/>';
 function iconoLinea(tipo) {
   return `<span class="linea-icono i-${tipo}" aria-hidden="true"><svg viewBox="0 0 24 24"
     width="14" height="14" fill="currentColor">${LINEA_GLIFOS[tipo]}</svg></span>`;
@@ -9991,6 +10006,13 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
           etiquetas.length ? `<span class="linea-sub">${esc(etiquetas.join(" · "))}</span>` : ""}</span>
       </button>` };
     }),
+    ...(STATE.banos || []).filter(b => (b.datetime || "").slice(0, 10) === dia.fecha).map(b => ({
+      hora: (b.datetime || "").slice(11, 16), html: `
+      <button type="button" class="linea-fila" onclick="PB.editarRegistro('banos','${b.id}')">
+        <span class="linea-hora">${(b.datetime || "").slice(11, 16)}</span>
+        ${iconoLinea("bano")}
+        <span class="linea-texto"><b>Baño</b>${b.notas ? `<span class="linea-sub">${esc(b.notas)}</span>` : ""}</span>
+      </button>` })),
     /* Los pañales tambien: si se pueden apuntar desde aqui, tienen que verse
        aqui. Antes solo salian en su propia pestaña. */
     ...STATE.diapers.filter(p => (p.datetime || "").slice(0, 10) === dia.fecha).map(p => ({
@@ -10030,8 +10052,8 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   return `<div class="card">
     <div class="linea-cab">
       <h2>Registrado hoy</h2>
-      ${conBoton ? `<button type="button" class="btn-anadir"
-        onclick="${refrescarFn}.nuevaToma('${dia.fecha}')">+ Toma</button>` : ""}
+      <button type="button" class="btn-anadir btn-mas" aria-label="Añadir un registro"
+        onclick="PB.modalAnadir('${dia.fecha}','${refrescarFn}')">+</button>
     </div>
     <div class="linea-resumen">
       <div><b>${total}<i>ml</i></b><span>Leche${htmlComparativa(
@@ -10086,6 +10108,89 @@ function guardarPanalRapido() {
     return;
   }
   STATE.diapers.push(sellar({ id: "dp_" + Date.now().toString(36), type: document.getElementById("pn-tipo").value, datetime: dt }));
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasToma();
+}
+
+/* ---- El "+" de la linea del dia --------------------------------------
+   Toma, sueño y pañal ya tienen su boton arriba; baño y sintomas solo estan
+   aqui, a proposito: no son de cada dia y arriba solo cabe lo que se apunta
+   varias veces al dia. Las dos cosas nuevas salen luego en la misma linea,
+   y los sintomas son los mismos que se ven en Pediatra. */
+function modalAnadir(fecha, refrescarFn) {
+  const opciones = [
+    ["toma",     "Toma",     `${refrescarFn}.nuevaToma('${fecha}')`],
+    ["sueno",    "Sueño",    "PB.modalSueno()"],
+    ["panal",    "Pañal",    "PB.modalPanal()"],
+    ["bano",     "Baño",     `PB.modalBano('${fecha}')`],
+    ["alerta",   "Síntomas", `PB.modalSintomas('${fecha}')`],
+  ];
+  abrirModal("Añadir", `<div class="anadir-lista">${opciones.map(([ico, et, fn]) =>
+    `<button type="button" class="acc-btn" onclick="PB.cerrarModal();${fn}">${iconoLinea(ico)}<span>${et}</span></button>`
+  ).join("")}</div>`,
+  [{ et: "Cancelar", accion: "PB.cerrarModal()" }]);
+}
+function horaAhoraEn(fecha) {
+  /* Si el dia es hoy, la hora de ahora; si es otro dia, las 12:00 de ese dia. */
+  if (fecha === HOY_ISO) return nowDatetimeLocal();
+  return fecha + "T12:00";
+}
+function modalBano(fecha) {
+  abrirModal("Baño", `
+    <div class="campo"><label for="bn-dt">Fecha y hora</label>
+      <input type="datetime-local" id="bn-dt" value="${horaAhoraEn(fecha)}"></div>
+    <div class="campo"><label for="bn-notas">Notas</label>
+      <input type="text" id="bn-notas" placeholder="Opcional" autocomplete="off"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarBanoRapido()" }]);
+}
+function guardarBanoRapido() {
+  const dt = document.getElementById("bn-dt").value || nowDatetimeLocal();
+  const notas = (document.getElementById("bn-notas").value || "").trim();
+  STATE.banos.push(sellar({ id: "bn_" + Date.now().toString(36), datetime: dt, notas }));
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasToma();
+}
+function deleteBano(id) {
+  anotarBorrado(id);
+  STATE.banos = STATE.banos.filter(x => x.id !== id);
+  guardarEstado();
+}
+/* Mismo registro que el de Pediatra, en modal. Ids propios (ms-*) porque el
+   formulario de Pediatra puede estar en el DOM a la vez. */
+function modalSintomas(fecha) {
+  abrirModal("Síntomas", `
+    <div class="grid-campos2">
+      <div class="campo"><label for="ms-dt">Fecha y hora</label>
+        <input type="datetime-local" id="ms-dt" value="${horaAhoraEn(fecha)}"></div>
+      <div class="campo"><label for="ms-temp">Temperatura (°C)</label>
+        <input type="number" id="ms-temp" step="0.1" min="30" max="43" inputmode="decimal" placeholder="38,2"></div>
+    </div>
+    <div class="campo"><label>Qué le pasa</label>
+      <div class="reacc-lista">${Object.entries(SINTOMAS).map(([k, v]) =>
+        `<label class="reacc-op"><input type="checkbox" id="ms-${k}">${v.et}</label>`).join("")}
+      </div></div>
+    <div class="campo"><label for="ms-notas">Notas</label>
+      <textarea id="ms-notas" placeholder="Desde cuándo, qué le habéis dado…"></textarea></div>
+    <div class="modal-aviso" id="ms-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarSintomaRapido()" }]);
+}
+function guardarSintomaRapido() {
+  const dt = document.getElementById("ms-dt").value || nowDatetimeLocal();
+  const temp = document.getElementById("ms-temp").value;
+  const marcados = Object.keys(SINTOMAS).filter(k => (document.getElementById("ms-" + k) || {}).checked);
+  const notas = (document.getElementById("ms-notas").value || "").trim();
+  const av = document.getElementById("ms-aviso");
+  if (!temp && !marcados.length && !notas) {
+    if (av) { av.textContent = "Pon la temperatura o marca algo."; av.hidden = false; }
+    return;
+  }
+  STATE.sintomas.push(sellar({
+    id: "sn_" + Date.now().toString(36), datetime: dt, temp: temp || null, lista: marcados, notas,
+  }));
   guardarEstado();
   cerrarModal();
   refrescarTrasToma();
@@ -13676,7 +13781,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
