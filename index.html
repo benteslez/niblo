@@ -9097,12 +9097,26 @@ function semVitaminaD(meses) {
   const vistos = avisosVistos();
   /* Si no se marca nunca, no es que se le olvide la dosis: es que no se usa
      esa casilla. Lo mismo que con los pañales — sin apuntes no se opina. */
-  const nunca = !semDiasPrevios(30).some(f => vistos["vitd:" + f] === f);
-  if (nunca) return { nivel: "sindatos", txt: "No se marca la dosis diaria, así que no hay nada que mirar." };
-  const dias = semDiasPrevios(SEM_DIAS);
-  const sin = dias.filter(f => vistos["vitd:" + f] !== f).length;
-  if (sin >= 3) return { nivel: "ambar", txt: `${sin} de los últimos ${SEM_DIAS} días sin marcar la dosis.` };
-  return { nivel: "verde", txt: `Marcada ${SEM_DIAS - sin} de los últimos ${SEM_DIAS} días.` };
+  const marcados = Object.keys(vistos)
+    .filter(k => k.indexOf("vitd:") === 0 && vistos[k] === k.slice(5))
+    .map(k => k.slice(5)).sort();
+  if (!marcados.length) return { nivel: "sindatos", txt: "No se marca la dosis diaria, así que no hay nada que mirar." };
+  /* La cuenta empieza el primer dia que se marco, no siete dias atras: antes
+     de empezar a darsela no habia nada que marcar, y contar esos dias como
+     olvidos es inventarse un problema. */
+  const desde = marcados[0];
+  const completos = semDiasPrevios(SEM_DIAS).filter(f => f >= desde);
+  /* Hoy no cuenta como olvido: puede que la dosis sea de despues de comer. */
+  if (!completos.length) {
+    const hoyMarcada = vistos["vitd:" + HOY_ISO] === HOY_ISO;
+    return { nivel: "verde", txt: hoyMarcada
+      ? "Empezada hoy y ya marcada."
+      : `Empezada el ${fmtFechaCorta(desde)}; mañana ya se puede valorar.` };
+  }
+  const sin = completos.filter(f => vistos["vitd:" + f] !== f).length;
+  const n = completos.length;
+  if (sin >= 3) return { nivel: "ambar", txt: `${sin} de los últimos ${n} días sin marcar la dosis.` };
+  return { nivel: "verde", txt: `Marcada ${n - sin} de los últimos ${n} ${n === 1 ? "día" : "días"}.` };
 }
 
 function semVacunas(meses) {
