@@ -19,10 +19,23 @@
   <meta name="mobile-web-app-capable" content="yes">
 
   <!-- Google Fonts: Manrope (UI, titulos y numeros). El codigo usa la mono del sistema. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap">
+  <!-- La fuente, en casa. Antes venia de fonts.googleapis.com con un <link
+       rel=stylesheet, que BLOQUEA el pintado: casi un segundo de pantalla en
+       blanco en cada arranque aunque la app entera estuviera en cache, y sin
+       conexion habia que esperar a que la peticion se rindiera. Manrope es
+       variable, asi que los seis pesos caben en un archivo de 24 kB que el
+       service worker guarda como los iconos. -->
+  <link rel="preload" href="manrope.woff2" as="font" type="font/woff2" crossorigin>
+
+  <style>
+    @font-face {
+      font-family: "Manrope";
+      font-style: normal;
+      font-weight: 300 800;
+      font-display: swap;
+      src: url("manrope.woff2") format("woff2");
+    }
+  </style>
 
   <style>
     /* ========================================================================

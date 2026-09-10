@@ -9,9 +9,10 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v128";  // pestaña Resumen
+const CACHE_NAME = "niblo-v129";  // fuente en casa, sin bloquear el pintado
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
+  "./manrope.woff2",
   "./manifest.json",
   "./icon.svg",
   "./icon-192.png",
@@ -29,7 +30,10 @@ const DOC_KEY = new URL("./", self.location).href;
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => {
     const estaticos = await caches.open(CACHE_NAME);
-    await estaticos.addAll(ASSETS_ESTATICOS);
+    /* Uno a uno y tolerando fallos: con addAll, si UNO de los archivos no esta
+       (un icono renombrado, la fuente sin subir) revienta la instalacion
+       entera y el usuario se queda sin service worker y sin offline. */
+    await Promise.all(ASSETS_ESTATICOS.map(u => estaticos.add(u).catch(() => {})));
     /* El documento se guarda ya en la instalacion: asi la app abre sin
        conexion desde la primera visita. Si falla, no se tumba la instalacion. */
     try {
