@@ -6187,6 +6187,17 @@
     .pb-app .sn-item[open] > summary .visit-chevron { transform: rotate(90deg); }
     .pb-app .vac-reacc { grid-column: 1 / -1; }
 
+    /* Calendario de registros: los puntos dicen que se apunto ese dia. */
+    .pb-app .res-dia {
+      border: 1px solid var(--border); background: var(--bg-card);
+      font: inherit; color: inherit; cursor: pointer; text-align: center;
+    }
+    .pb-app .res-dia:hover { border-color: var(--blue); }
+    .pb-app .res-puntos {
+      display: flex; justify-content: center; gap: 3px; margin-top: 3px;
+    }
+    .pb-app .res-puntos i { width: 4px; height: 4px; border-radius: 50%; display: block; }
+
     .pb-app .vac-barra { display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--gap-3); }
     .pb-app .vac-barra .btn-anadir.on { background: var(--blue); color: #fff; border-color: var(--blue); }
     .pb-app .sync-punto {
@@ -7383,6 +7394,7 @@
         <section id="view-calendario" class="view"></section>
         <section id="view-buscar" class="view"></section>
         <section id="view-alimento" class="view"></section>
+        <section id="view-resumen" class="view"></section>
         <section id="view-alergenos" class="view"></section>
         <section id="view-seguridad" class="view"></section>
         <section id="view-ajustes" class="view"></section>
@@ -10365,9 +10377,7 @@ function renderCalendario(el, soloPlan) {
     /* La leche va aqui, en la primera pagina de Alimentacion: es el otro
        registro diario del bebe y estaba escondido en Progreso, detras de los
        listados de alimentos. */
-    el.innerHTML = `<div id="pb-cal-plan">${htmlPlan}</div>
-      <div id="pb-cal-leche">${htmlRegistroLeche()}</div>`;
-    renderLecheChart();
+    el.innerHTML = `<div id="pb-cal-plan">${htmlPlan}</div>`;
   }
 
   // El input se recrea en cada render: hay que devolverle el foco y el cursor.
@@ -10879,13 +10889,7 @@ function exportarAlimentos() {
 }
 
 let LECHE_PERIODO = "dia";
-function lechePeriodo(p) {
-  LECHE_PERIODO = p;
-  const zona = document.getElementById("pb-cal-leche");
-  if (!zona) return;
-  zona.innerHTML = htmlRegistroLeche();
-  renderLecheChart();
-}
+function lechePeriodo(p) { LECHE_PERIODO = p; renderResumen(document.getElementById("view-resumen")); }
 
 function renderLecheChart() {
   if (typeof Chart === "undefined") return;
@@ -11054,6 +11058,126 @@ function resumenDia(iso) {
     ...(hayPlan ? [{ et: "Abrir el día", accion: `PB.cerrarModal();PB.abrirDiaCalendario('${iso}')` }] : []),
     { et: "Cerrar", primario: true, accion: "PB.cerrarModal()" },
   ]);
+}
+
+/* ======================== render: RESUMEN ========================
+   Las tres graficas del dia a dia juntas —leche, sueño y pañales— y debajo un
+   calendario para ir a lo apuntado en un dia concreto. Cada una vivia en su
+   pestaña y para comparar habia que ir saltando.
+
+   Los canvas llevan ids propios (chart-r-*) porque todas las vistas de Pablo
+   estan en el DOM a la vez: repetir el id de la grafica de Sueño haria que
+   solo funcionara una de las dos. */
+let RES_MES = null;
+function resMesActual() {
+  if (!RES_MES) { const d = new Date(); RES_MES = new Date(d.getFullYear(), d.getMonth(), 1); }
+  return RES_MES;
+}
+function resMes(delta) {
+  const m = resMesActual();
+  RES_MES = new Date(m.getFullYear(), m.getMonth() + delta, 1);
+  renderResumen(document.getElementById("view-resumen"));
+}
+function resHoy() { RES_MES = null; renderResumen(document.getElementById("view-resumen")); }
+
+/** Que se apunto ese dia, para pintar los puntos del calendario. */
+function resApuntes(iso) {
+  return {
+    tomas: tomasDelDia(iso).length,
+    sueno: sueniosDelDia(iso).length,
+    panales: (STATE.diapers || []).filter(d => (d.datetime || "").slice(0, 10) === iso).length,
+    comida: Object.values(STATE.alimentos || {})
+      .reduce((n, dat) => n + (dat.historial || []).filter(h => h.fecha === iso).length, 0),
+  };
+}
+
+function htmlResumenCalendario() {
+  const m = resMesActual();
+  const y = m.getFullYear(), mes = m.getMonth();
+  const primero = new Date(y, mes, 1);
+  const ultimo = new Date(y, mes + 1, 0);
+  const offset = (primero.getDay() + 6) % 7;     // lunes = 0
+  let celdas = ["L","M","X","J","V","S","D"].map(d => `<div class="plan-cab">${d}</div>`).join("");
+  for (let i = 0; i < offset; i++) celdas += `<div class="plan-celda fuera"></div>`;
+  let conApuntes = 0;
+  for (let d = 1; d <= ultimo.getDate(); d++) {
+    const iso = `${y}-${String(mes + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+    const a = resApuntes(iso);
+    const hay = a.tomas || a.sueno || a.panales || a.comida;
+    if (hay) conApuntes++;
+    const puntos = [
+      a.tomas && `<i style="background:var(--blue)"></i>`,
+      a.sueno && `<i style="background:var(--purple)"></i>`,
+      a.comida && `<i style="background:var(--green)"></i>`,
+      a.panales && `<i style="background:var(--slate)"></i>`,
+    ].filter(Boolean).join("");
+    /* Los dias sin nada no se pueden pulsar: abrir un dia vacio no lleva a
+       ningun sitio. */
+    celdas += hay
+      ? `<button type="button" class="plan-celda pb-celda res-dia${iso === HOY_ISO ? " hoy" : ""}"
+           onclick="PB.abrirDiaCalendario('${iso}')" aria-label="Ver el ${fmtFechaLarga(iso)}">
+           <div class="plan-dia-num">${d}</div><div class="res-puntos">${puntos}</div></button>`
+      : `<div class="plan-celda pb-celda pb-sin-plan${iso === HOY_ISO ? " hoy" : ""}">
+           <div class="plan-dia-num">${d}</div></div>`;
+  }
+  const trailing = (7 - ((offset + ultimo.getDate()) % 7)) % 7;
+  for (let i = 0; i < trailing; i++) celdas += `<div class="plan-celda fuera"></div>`;
+
+  return `<div class="card"><h2>Calendario de registros
+      <span class="n">${conApuntes} ${conApuntes === 1 ? "día" : "días"}</span></h2>
+    <div class="plan-bar">
+      <div class="plan-nav-grupo">
+        <button type="button" class="plan-nav" onclick="PB.resMes(-1)" aria-label="Mes anterior">&#8249;</button>
+        <h3 class="plan-mes-titulo">${MESES_ES[mes]} ${y}</h3>
+        <button type="button" class="plan-nav" onclick="PB.resMes(1)" aria-label="Mes siguiente">&#8250;</button>
+        <button type="button" class="plan-hoy" onclick="PB.resHoy()">Hoy</button>
+      </div>
+    </div>
+    <div class="plan-calendario pb-calendario">${celdas}</div>
+    <div class="pb-cal-leyenda">
+      <span><i class="punto" style="background:var(--blue)"></i>tomas</span>
+      <span><i class="punto" style="background:var(--purple)"></i>sueño</span>
+      <span><i class="punto" style="background:var(--green)"></i>alimentos</span>
+      <span><i class="punto" style="background:var(--slate)"></i>pañales</span>
+      <span class="nota">Toca un día para ver todo lo que se apuntó.</span>
+    </div>
+  </div>`;
+}
+
+function renderResumen(el) {
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
+  const est = estandarSueno(meses);
+  const periodos = fn => Object.entries(SUENO_PERIODOS).map(([k, v]) =>
+    `<button type="button" class="${k === (fn === "leche" ? LECHE_PERIODO : SUENO_PERIODO) ? "on" : ""}"
+       onclick="PB.${fn === "leche" ? "lechePeriodo" : "suenoPeriodo"}('${k}')">${v}</button>`).join("");
+
+  let html = htmlRegistroLeche();
+
+  html += `<div class="card"><h2>Cuánto duerme</h2>
+    <div class="sueno-modo">${periodos("sueno")}</div>
+    <div id="res-sueno-resumen" class="sueno-resumen"></div>
+    <div class="chart-wrap" style="height:200px"><canvas id="chart-r-sueno"></canvas></div>
+    <div class="pb-cal-leyenda">
+      <span><i class="punto" style="background:var(--green)"></i>${est.rec[0]}-${est.rec[1]} h · recomendado</span>
+      <span><i class="punto" style="background:var(--amber)"></i>${margenAceptable(est)} · aceptable</span>
+      <span><i class="punto" style="background:var(--red)"></i>menos de ${est.ok[0]} h · duerme poco</span>
+      <span><i class="punto" style="background:var(--purple)"></i>más de ${est.ok[1]} h · duerme de más</span>
+    </div>
+  </div>`;
+
+  const hayPanales = (STATE.diapers || []).length;
+  html += `<div class="card"><h2>Pañales <span class="n">últimos 14 días</span></h2>
+    ${hayPanales
+      ? `<div class="chart-wrap" style="height:180px"><canvas id="chart-r-panales"></canvas></div>`
+      : `<div class="faint">Sin pañales apuntados todavía.</div>`}
+  </div>`;
+
+  html += htmlResumenCalendario();
+  el.innerHTML = html;
+  /* Los canvas tienen que estar ya en el DOM para que Chart.js los mida. */
+  renderLecheChart();
+  renderSuenoChart("chart-r-sueno", "res-sueno-resumen");
+  if (hayPanales) renderDiaperChart14("chart-r-panales");
 }
 
 /* ======================== render: ALERGENOS ======================== */
@@ -12671,16 +12795,19 @@ function htmlCalendarioSueno(mapa, meses) {
   return h;
 }
 
-function renderSuenoChart() {
+/* El canvas se pasa por parametro: la misma grafica se pinta en Sueño y en
+   Resumen, y dos canvas con el mismo id harian que solo funcionara uno —todas
+   las vistas de Pablo viven a la vez en el DOM. */
+function renderSuenoChart(idCanvas, idResumen) {
   if (typeof Chart === "undefined") return;
-  const ctx = document.getElementById("chart-sueno");
+  const ctx = document.getElementById(idCanvas || "chart-sueno");
   if (!ctx) return;
   const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
   const cubos = cubosPorPeriodo(SUENO_PERIODO, minutosPorDia());
   const est = estandarSueno(meses);
   const colores = cubos.map(c => { const e = estadoSueno(c.valor, meses); return e ? colorSueno(e) : "rgba(148,163,184,0.35)"; });
 
-  const resumen = document.getElementById("sueno-resumen");
+  const resumen = document.getElementById(idResumen || "sueno-resumen");
   if (resumen) {
     const totalH = cubos.reduce((s, c) => s + c.valor * c.dias, 0);
     const totalD = cubos.reduce((s, c) => s + (c.conDatos || 0), 0);
@@ -12693,12 +12820,15 @@ function renderSuenoChart() {
       ${media ? `<div class="su-badge su-${e}">Media ${media.toFixed(1)} h/día · ${SUENO_TEXTO[e]}</div>` : `<div class="faint">Aún no hay sueño registrado en este periodo.</div>`}`;
   }
 
-  if (CHARTS.sueno) CHARTS.sueno.destroy();
+  /* Una instancia por canvas: con una sola clave, pintar Resumen destruia la
+     de Sueño y Chart.js protesta al reusar un canvas ocupado. */
+  const clave = idCanvas || "chart-sueno";
+  if (CHARTS[clave]) CHARTS[clave].destroy();
   const cont = document.querySelector(".pb-app") || document.documentElement;
   const cs = getComputedStyle(cont);
   const rejilla = cs.getPropertyValue("--border").trim() || "rgba(148,163,184,.3)";
   const tinta = cs.getPropertyValue("--text-muted").trim() || "#94a3b8";
-  CHARTS.sueno = new Chart(ctx, {
+  CHARTS[clave] = new Chart(ctx, {
     type: "bar",
     data: { labels: cubos.map(c => c.etiqueta), datasets: [{ data: cubos.map(c => c.valor), backgroundColor: colores, borderRadius: 6, maxBarThickness: 46 }] },
     options: {
@@ -12727,7 +12857,13 @@ function suenoModo(modo) {
   man.hidden = modo !== "manual";
   document.querySelectorAll('.sueno-modo [data-modo]').forEach(b => b.classList.toggle("on", b.dataset.modo === modo));
 }
-function suenoPeriodo(p) { SUENO_PERIODO = p; renderSueno(document.getElementById("view-sueno")); }
+/* El periodo lo comparten Sueño y Resumen: se repinta la vista en la que
+   este el usuario, no una fija. */
+function suenoPeriodo(p) {
+  SUENO_PERIODO = p;
+  if (VISTA_ACTUAL === "resumen") renderResumen(document.getElementById("view-resumen"));
+  else renderSueno(document.getElementById("view-sueno"));
+}
 function suenoMes(delta) {
   SUENO_CAL_MES = new Date(SUENO_CAL_MES.getFullYear(), SUENO_CAL_MES.getMonth() + delta, 1);
   renderSueno(document.getElementById("view-sueno"));
@@ -13155,16 +13291,17 @@ function deleteDiaper(id) {
   guardarEstado();
   renderPanales(document.getElementById("view-panales"));
 }
-function renderDiaperChart14() {
+function renderDiaperChart14(idCanvas) {
   if (typeof Chart === "undefined") return;
-  const ctx = document.getElementById("chart-diapers14");
+  const ctx = document.getElementById(idCanvas || "chart-diapers14");
   if (!ctx) return;
   const dias = last14Dias();
   const labels = dias.map(d => `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`);
   const pisPorDia = dias.map(d => STATE.diapers.filter(x=>mismoDia(x.datetime,d)&&(x.type==='pis'||x.type==='mixto')).length);
   const cacaPorDia = dias.map(d => STATE.diapers.filter(x=>mismoDia(x.datetime,d)&&(x.type==='caca'||x.type==='mixto')).length);
-  if (CHARTS.diapers14) CHARTS.diapers14.destroy();
-  CHARTS.diapers14 = new Chart(ctx, { type:"bar", data:{ labels, datasets:[
+  const clave = idCanvas || "chart-diapers14";
+  if (CHARTS[clave]) CHARTS[clave].destroy();
+  CHARTS[clave] = new Chart(ctx, { type:"bar", data:{ labels, datasets:[
     { label:"Pis", data:pisPorDia, backgroundColor:"#5b8a9a", stack:"d" },
     { label:"Caca", data:cacaPorDia, backgroundColor:"#c98a3a", stack:"d" },
   ]}, options:{ responsive:true, maintainAspectRatio:false, scales:{ x:{stacked:true}, y:{stacked:true, beginAtZero:true, ticks:{stepSize:1}} }, plugins:{legend:{position:"bottom", labels:{boxWidth:10,font:{size:9}}}} } });
@@ -13503,6 +13640,7 @@ function deleteNote(id) {
 
 const RENDER = {
   hoy: renderHoy, calendario: renderCalendario, buscar: renderBuscar, alimento: renderAlimento,
+  resumen: renderResumen,
   alergenos: renderAlergenos, seguridad: renderSeguridad, ajustes: renderAjustes,
   mas: renderMas, desarrollo: renderDesarrollo, crecimiento: renderCrecimiento, pediatra: renderPediatra,
   guia: renderGuia,
@@ -13526,7 +13664,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
@@ -19475,6 +19613,7 @@ function boot(vistaInicial) {
       // "Hoy" va en el primer nivel: resume el dia entero (tomas, sueno y
       // alimento), no solo la alimentacion, asi que colgarlo de ahi confundia.
       { id: "pb_hoy",        label: "Hoy",         area: "pablo", seccion: "pablo" },
+      { id: "pb_resumen",    label: "Resumen",     area: "pablo", seccion: "pablo" },
       { id: "pb_alimentacion", label: "Alimentaci\u00f3n", area: "pablo", seccion: "pablo" },
       { id: "pb_calendario", label: "Calendario",  area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
       { id: "pb_buscar",     label: "Alimentos",   area: "pablo", seccion: "pablo", sub: "pb_alimentacion" },
@@ -19492,7 +19631,7 @@ function boot(vistaInicial) {
     /* Puente entre los chips de Recetas y el router interno de Pablo. */
     const PB_CHIP_A_VISTA = {
       pb_alimentacion: "calendario",
-      pb_hoy: "hoy", pb_calendario: "calendario", pb_buscar: "buscar",
+      pb_hoy: "hoy", pb_resumen: "resumen", pb_calendario: "calendario", pb_buscar: "buscar",
       pb_alergenos: "alergenos", pb_guia: "guia",
       pb_sueno: "sueno", pb_crecimiento: "crecimiento",
       pb_desarrollo: "desarrollo", pb_pediatra: "pediatra",
@@ -19501,7 +19640,7 @@ function boot(vistaInicial) {
     /* Vista interna -> chip. Las secundarias cuelgan de "M\u00e1s"; "alimento" no
        cambia de chip porque se abre desde varias secciones. */
     const PB_VISTA_A_CHIP = {
-      hoy: "pb_hoy", calendario: "pb_calendario", buscar: "pb_buscar",
+      hoy: "pb_hoy", resumen: "pb_resumen", calendario: "pb_calendario", buscar: "pb_buscar",
       alergenos: "pb_alergenos", guia: "pb_guia",
       sueno: "pb_sueno", crecimiento: "pb_crecimiento",
       desarrollo: "pb_desarrollo", pediatra: "pb_pediatra",
