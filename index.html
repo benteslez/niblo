@@ -5414,8 +5414,7 @@
     .pb-app .seg-btns button.on.tratamiento { background: var(--blue-soft);  color: var(--blue);  border-color: transparent; }
     .pb-app .seg-btns button.on.tolerado { background: var(--green-soft); color: var(--green); border-color: transparent; }
     .pb-app .seg-btns button.on.reaccion { background: var(--red-soft); color: var(--red); border-color: transparent; }
-    /* Rechazo no es un problema de salud, es una preferencia: gris, no color. */
-    .pb-app .seg-btns button.on.rechazo { background: var(--bg-soft); color: var(--text); border-color: var(--border); }
+    .pb-app .seg-btns button.on.rechazo { background: var(--amber-soft); color: var(--amber); border-color: transparent; }
     /* Historial de visitas: una fila por cita, plegada. Antes cada visita era
        una tarjeta abierta con sus botones y la lista era un muro. */
     .pb-app .visit-card { border-bottom: 1px solid var(--line-soft); }
@@ -6291,6 +6290,12 @@
       cursor: pointer; border-radius: 999px; white-space: nowrap;
     }
     .pb-app .btn-aviso:hover { background: var(--blue); color: #fff; }
+    /* Marcado: verde y con el tic, para que se vea que ESTA dada y no solo
+       que el aviso se ha callado. Se puede volver a tocar para desmarcarla. */
+    .pb-app .btn-aviso.hecho {
+      background: var(--green); color: #fff; border-color: transparent; font-weight: 700;
+    }
+    .pb-app .btn-aviso.hecho:hover { background: var(--green); opacity: .85; color: #fff; }
     .pb-app .aviso-card .cerrar {
       border: none; background: transparent; color: var(--text-faint);
       cursor: pointer; font-size: 0.8125rem; padding: 4px 6px; border-radius: 8px;
@@ -8015,6 +8020,10 @@ function defaultState() {
     vaccinesDone: {},      // id -> "YYYY-MM-DD" en que se puso
     vaccinesInfo: {},      // id -> { pais, lote, lab, notas }
     growth: [], pediatricVisits: [], sleep: [], diapers: [], notes: [],
+    /* Dia -> true. Estaba en localStorage con los avisos descartados, asi que
+       no viajaba: si la dosis la daba y la marcaba el otro movil, aqui seguia
+       contando como olvidada. */
+    vitaminaD: {},
   };
 }
 /* El catalogo de vacunas paso del calendario español al PAI de Colombia y los
@@ -8099,6 +8108,25 @@ function normalizarVacunas(guardadas, hechas, editadas) {
   return alDia ? guardadas : JSON.parse(JSON.stringify(VACCINES));
 }
 
+/* Las dosis marcadas vivian en la lista de avisos descartados, en
+   localStorage y sin sincronizar. Se traen una sola vez; los avisos siguen
+   guardando ahi lo suyo, que eso si es de este movil. */
+function migrarVitaminaD(st) {
+  if (!st.vitaminaD || typeof st.vitaminaD !== "object") st.vitaminaD = {};
+  if (Object.keys(st.vitaminaD).length) return;
+  try {
+    /* La clave a pelo y no AVISO_KEY_VISTO: esa constante se declara mil
+       lineas mas abajo y esto corre al cargar el estado, antes de que exista.
+       Con el try de fuera el fallo habria sido mudo. */
+    const vistos = JSON.parse(localStorage.getItem("niblo.avisos.vistos") || "{}");
+    for (const k of Object.keys(vistos)) {
+      if (k.indexOf("vitd:") !== 0) continue;
+      const dia = k.slice(5);
+      if (vistos[k] === dia) st.vitaminaD[dia] = true;
+    }
+  } catch (_) {}
+}
+
 function cargarEstadoGlobal() {
   let st;
   try { st = Object.assign(defaultState(), JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || {}); }
@@ -8109,6 +8137,7 @@ function cargarEstadoGlobal() {
      el tronco estable arranca sin marcar, que es lo prudente. */
   st.config = Object.assign(defaultState().config, st.config || {});
   st.vaccines = normalizarVacunas(st.vaccines, st.vaccinesDone, st.config.vacunasEditadas);
+  migrarVitaminaD(st);
   sembrarCarnet(st);
   /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
      sucia y en cada arranque volveria a limpiarse y a marcar el estado como
@@ -8322,7 +8351,7 @@ function cerrarModal() {
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
 const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes"];
-const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo"];
+const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD"];
 
 function sello() { return new Date().toISOString(); }
 
@@ -9094,12 +9123,10 @@ function semAlimentacion() {
 
 function semVitaminaD(meses) {
   if (meses == null || meses >= 12) return null;
-  const vistos = avisosVistos();
+  const dado = f => !!(STATE.vitaminaD || {})[f];
   /* Si no se marca nunca, no es que se le olvide la dosis: es que no se usa
      esa casilla. Lo mismo que con los pañales — sin apuntes no se opina. */
-  const marcados = Object.keys(vistos)
-    .filter(k => k.indexOf("vitd:") === 0 && vistos[k] === k.slice(5))
-    .map(k => k.slice(5)).sort();
+  const marcados = Object.keys(STATE.vitaminaD || {}).sort();
   if (!marcados.length) return { nivel: "sindatos", txt: "No se marca la dosis diaria, así que no hay nada que mirar." };
   /* La cuenta empieza el primer dia que se marco, no siete dias atras: antes
      de empezar a darsela no habia nada que marcar, y contar esos dias como
@@ -9108,12 +9135,12 @@ function semVitaminaD(meses) {
   const completos = semDiasPrevios(SEM_DIAS).filter(f => f >= desde);
   /* Hoy no cuenta como olvido: puede que la dosis sea de despues de comer. */
   if (!completos.length) {
-    const hoyMarcada = vistos["vitd:" + HOY_ISO] === HOY_ISO;
+    const hoyMarcada = dado(HOY_ISO);
     return { nivel: "verde", txt: hoyMarcada
       ? "Empezada hoy y ya marcada."
       : `Empezada el ${fmtFechaCorta(desde)}; mañana ya se puede valorar.` };
   }
-  const sin = completos.filter(f => vistos["vitd:" + f] !== f).length;
+  const sin = completos.filter(f => !dado(f)).length;
   const n = completos.length;
   if (sin >= 3) return { nivel: "ambar", txt: `${sin} de los últimos ${n} días sin marcar la dosis.` };
   return { nivel: "verde", txt: `Marcada ${n - sin} de los últimos ${n} ${n === 1 ? "día" : "días"}.` };
@@ -11412,6 +11439,22 @@ const AVISO_KEY_VISTO = "niblo.avisos.vistos";   // id de aviso -> fecha en que 
 function avisosVistos() {
   try { return JSON.parse(localStorage.getItem(AVISO_KEY_VISTO) || "{}"); } catch { return {}; }
 }
+/* La dosis del dia. Se puede desmarcar: si se toca por error, antes habia
+   que esperar a mañana. */
+function marcarVitaminaD(dia) {
+  const f = dia || HOY_ISO;
+  if (STATE.vitaminaD[f]) {
+    delete STATE.vitaminaD[f];
+    anotarBorradoClave("vitaminaD", f);
+  } else {
+    STATE.vitaminaD[f] = true;
+    olvidarBorradoClave("vitaminaD", f);
+  }
+  guardarEstado();
+  renderAvisos();
+  if (VISTA_ACTUAL === "hoy") renderHoy(document.getElementById("view-hoy"));
+}
+
 function marcarAvisoVisto(id) {
   const v = avisosVistos(); v[id] = HOY_ISO;
   try { localStorage.setItem(AVISO_KEY_VISTO, JSON.stringify(v)); } catch (_) {}
@@ -11446,11 +11489,17 @@ function calcularAvisos() {
 
   /* Vitamina D: 400 UI al dia durante el primer año. Es la pauta que mas se
      olvida y ya estaba en la guia, pero nadie la recordaba. */
-  if (meses != null && meses < 12 && vistos["vitd:" + HOY_ISO] !== HOY_ISO) {
-    out.push({ id: "vitd:" + HOY_ISO, tipo: "diario", icono: "💊",
+  /* El aviso ya no desaparece al marcarlo: se queda con el boton en verde.
+     Asi se ve que ESTA dada, y no solo que ya no lo recuerda — y se puede
+     desmarcar si se toco por error. */
+  if (meses != null && meses < 12) {
+    const dada = !!STATE.vitaminaD[HOY_ISO];
+    out.push({ id: "vitd:" + HOY_ISO, tipo: "diario", icono: "💊", hecho: dada,
       titulo: "Vitamina D de hoy",
-      texto: "400 UI al día durante el primer año (Previnfad/AEPap). Márcalo cuando se la hayas dado.",
-      accion: { et: "Hecho", fn: `PB.marcarAvisoVisto('vitd:${HOY_ISO}')` } });
+      texto: dada
+        ? "Dada hoy. 400 UI al día durante el primer año (Previnfad/AEPap)."
+        : "400 UI al día durante el primer año (Previnfad/AEPap). Márcalo cuando se la hayas dado.",
+      accion: { et: dada ? "✓ Dada" : "Hecho", fn: `PB.marcarVitaminaD()` } });
   }
 
   /* Vacunas ya vencidas y sin marcar. Con la cita puesta no se avisa: ya sale
@@ -11490,19 +11539,20 @@ function htmlAvisos() {
   const avisos = calcularAvisos();
   if (!avisos.length) return "";
   return `<div class="card avisos">
-    <h2>Pendientes <span class="n">${avisos.length}</span></h2>
+    <h2>Pendientes <span class="n">${avisos.filter(a => !a.hecho).length}</span></h2>
     ${avisos.map(a => {
       /* En la vitamina D el boton "Hecho" y la ✕ hacian exactamente lo mismo
          (marcar el aviso como visto): sobraba uno. En los demas la accion es
          ir a otra pestana, asi que el cuerpo de la fila lleva alli y la ✕ se
          queda solo para ocultar el aviso por hoy. */
-      const accionEsCerrar = a.accion.fn.indexOf(`marcarAvisoVisto('${a.id}')`) >= 0;
+      const accionEsCerrar = a.tipo === "diario";
       const cuerpo = `<div class="tit">${esc(a.titulo)}</div><div class="txt">${esc(a.texto)}</div>`;
       return `<div class="aviso-card">
       <span class="ico" aria-hidden="true">${a.icono}</span>
       ${accionEsCerrar
         ? `<div class="cuerpo">${cuerpo}</div>
-           <button type="button" class="btn-aviso" onclick="${a.accion.fn}">${a.accion.et}</button>`
+           <button type="button" class="btn-aviso${a.hecho ? " hecho" : ""}"
+             aria-pressed="${!!a.hecho}" onclick="${a.accion.fn}">${a.accion.et}</button>`
         : `<button type="button" class="cuerpo" onclick="${a.accion.fn}">${cuerpo}</button>
            <span class="aviso-chevron" aria-hidden="true">›</span>
            <button type="button" class="cerrar" title="Ocultar hoy"
@@ -13280,7 +13330,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, marcarAvisoVisto, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
