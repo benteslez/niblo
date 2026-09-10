@@ -9003,7 +9003,13 @@ const SEM_ORDEN = { sindatos: -1, verde: 0, ambar: 1, rojo: 2 };
 const SEM_DIAS = 7;          // ventana de observacion
 const SEM_MINIMO_DIAS = 4;   // dias con registro para fiarse de una media
 
-/** Los N dias anteriores a hoy. Hoy no cuenta: va a medias y tiraria la media abajo. */
+/** Los N dias anteriores a hoy.
+
+   Hoy NO cuenta, y es a proposito. Un dia a medias tira la media abajo y a
+   media mañana saldria "poco" cada dia. Se probo comparando hoy contra la
+   misma hora de los dias anteriores, que evitaba ese falso aviso, pero hacia
+   que la tarjeta cambiara de color a lo largo del dia; se prefiere una
+   lectura estable sobre dias cerrados. No volver a meter hoy en estas medias. */
 function semDiasPrevios(n) {
   const out = [];
   for (let i = 1; i <= n; i++) {
@@ -9033,27 +9039,6 @@ function semBandaLeche(meses) {
   return [400, 500];
 }
 
-/* Las medias de sueño y leche son de dias ENTEROS, hoy no entra: a las nueve
-   de la mañana el dia lleva un vaso de leche y meterlo en la media diria
-   "poco" todas las mañanas. Pero entonces lo que se apunta hoy no movia la
-   tarjeta hasta mañana.
-
-   Esto lo arregla sin mentir: compara lo que lleva hoy A ESTA HORA con lo que
-   solia llevar a esta misma hora los dias anteriores. Asi un dia flojo se ve
-   cuando esta pasando, y apuntar una toma ahora mismo cambia el resultado.
-   Solo a partir del mediodia y solo hasta ambar: media jornada no da para
-   decir que algo va mal. */
-function semHoyFlojo(fnHasta) {
-  const ahora = new Date();
-  const min = ahora.getHours() * 60 + ahora.getMinutes();
-  if (min < 12 * 60) return null;
-  const previos = semDiasPrevios(SEM_DIAS).map(f => fnHasta(f, min)).filter(v => v > 0);
-  if (previos.length < 3) return null;
-  const normal = previos.reduce((a, b) => a + b, 0) / previos.length;
-  const hoy = fnHasta(HOY_ISO, min);
-  return hoy < normal * 0.5 ? { hoy, normal } : null;
-}
-
 function semSueno(meses) {
   const dias = semDiasPrevios(SEM_DIAS)
     .map(f => ({ f, h: sueniosDelDia(f).reduce((t, x) => t + x.minutos, 0) / 60 }))
@@ -9071,10 +9056,6 @@ function semSueno(meses) {
   if (media < e.rec[0] || media > e.rec[1]) {
     return { nivel: "ambar", txt: `Media de ${m} h/día, fuera de las ${e.rec[0]}-${e.rec[1]} h recomendadas.` };
   }
-  const flojo = semHoyFlojo(minutosSuenoHasta);
-  if (flojo) {
-    return { nivel: "ambar", txt: `Hoy lleva ${duracionCorta(Math.round(flojo.hoy))} a esta hora; estos días, ${duracionCorta(Math.round(flojo.normal))}.` };
-  }
   return { nivel: "verde", txt: `Media de ${m} h/día, dentro de las ${e.rec[0]}-${e.rec[1]} h recomendadas.` };
 }
 
@@ -9088,10 +9069,6 @@ function semLeche(meses) {
   const suelo = meses < 12 ? 400 : 350;
   if (media < suelo) return { nivel: "rojo", txt: `Media de ${media} ml/día, por debajo del mínimo de lácteos de esta edad.` };
   if (media < min || media > max) return { nivel: "ambar", txt: `Media de ${media} ml/día, fuera de los ${min}-${max} ml orientativos.` };
-  const flojo = semHoyFlojo(mlHasta);
-  if (flojo) {
-    return { nivel: "ambar", txt: `Hoy lleva ${Math.round(flojo.hoy)} ml a esta hora; estos días, ${Math.round(flojo.normal)} ml.` };
-  }
   return { nivel: "verde", txt: `Media de ${media} ml/día, dentro de los ${min}-${max} ml de su edad.` };
 }
 
