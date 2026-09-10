@@ -1,11 +1,16 @@
 /* Service Worker — Niblo
-   - HTML: stale-while-revalidate (abre al instante con la copia guardada y
-     descarga la versión nueva por detrás; el aviso de "versión nueva" que ya
-     tiene la app avisa cuando esté lista).
-   - Iconos/manifest: cache-first (no cambian).
-   Cambia CACHE_NAME tras un cambio importante para invalidar el cache.
+   - HTML: stale-while-revalidate contra un cache PROPIO y estable.
+   - Iconos/manifest: cache-first, en un cache con version.
+
+   Por que dos caches: CACHE_NAME cambia en cada publicacion para que el
+   navegador detecte el service worker nuevo y salga el aviso de "hay una
+   version nueva". Si el documento viviera ahi, cada publicacion lo borraria
+   y la siguiente entrada seria una descarga completa — y sin conexion, un
+   error. Con once versiones en dos dias eso es justo lo que pasaba. El
+   documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v121";  // receta: mas aire y mas letra
+const CACHE_NAME = "niblo-v122";  // estaticos; cambiar en cada publicacion
+const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manifest.json",
   "./icon.svg",
@@ -15,16 +20,23 @@ const ASSETS_ESTATICOS = [
   "./favicon.png"
 ];
 
+/* Una sola clave para el documento, sea cual sea la URL con la que se entre:
+   "/niblo/", "/niblo/index.html" o "/niblo/?loquesea" son la misma pagina.
+   Guardando por la request tal cual, entrar con una URL distinta de la
+   guardada fallaba el match y se iba a la red. */
+const DOC_KEY = new URL("./", self.location).href;
+
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) =>
-      cache.addAll(ASSETS_ESTATICOS)
-        /* El documento se guarda ya en la instalacion: asi la app abre sin
-           conexion desde la primera visita y no hace falta haber entrado dos
-           veces. Aparte, para que un fallo aqui no tumbe la instalacion. */
-        .then(() => cache.add("./").catch(() => {}))
-    )
-  );
+  event.waitUntil((async () => {
+    const estaticos = await caches.open(CACHE_NAME);
+    await estaticos.addAll(ASSETS_ESTATICOS);
+    /* El documento se guarda ya en la instalacion: asi la app abre sin
+       conexion desde la primera visita. Si falla, no se tumba la instalacion. */
+    try {
+      const resp = await fetch(DOC_KEY, { cache: "reload" });
+      if (resp && resp.ok) (await caches.open(CACHE_DOC)).put(DOC_KEY, resp);
+    } catch (_) {}
+  })());
 });
 
 self.addEventListener("message", (event) => {
@@ -34,11 +46,24 @@ self.addEventListener("message", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys()
-      .then((names) => Promise.all(names.filter(n => n !== CACHE_NAME).map(n => caches.delete(n))))
-      .then(() => self.clients.claim())
-  );
+  event.waitUntil((async () => {
+    const doc = await caches.open(CACHE_DOC);
+    /* Rescatar el documento del cache de la version anterior antes de tirarlo:
+       si no, al estrenar esto habria una carga fria mas. */
+    if (!(await doc.match(DOC_KEY))) {
+      for (const n of await caches.keys()) {
+        if (n === CACHE_DOC) continue;
+        const viejo = await caches.open(n);
+        const r = (await viejo.match(DOC_KEY)) || (await viejo.match("./"));
+        if (r) { await doc.put(DOC_KEY, r.clone()); break; }
+      }
+    }
+    const names = await caches.keys();
+    await Promise.all(names
+      .filter(n => n !== CACHE_NAME && n !== CACHE_DOC)
+      .map(n => caches.delete(n)));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener("fetch", (event) => {
@@ -55,25 +80,20 @@ self.addEventListener("fetch", (event) => {
     || url.pathname === new URL("./", self.location).pathname;
 
   if (esHTML) {
-    /* STALE-WHILE-REVALIDATE para HTML. Antes se esperaba a la red en cada
-       arranque y el documento pasa de 2 MB, asi que con cobertura mala se
-       veia la pantalla de carga varios segundos. Ahora se sirve la copia
-       guardada al momento y la version nueva se descarga por detras: cuando
-       llega, el service worker nuevo dispara el aviso de "version nueva" que
-       ya existe en la app. */
-    event.respondWith(
-      caches.open(CACHE_NAME).then((cache) =>
-        cache.match(event.request).then((guardado) => {
-          const red = fetch(event.request)
-            .then((resp) => {
-              if (resp && resp.ok) cache.put(event.request, resp.clone());
-              return resp;
-            })
-            .catch(() => guardado || caches.match("./"));
-          return guardado || red;
+    /* STALE-WHILE-REVALIDATE: se sirve la copia guardada al momento y la
+       version nueva se descarga por detras. Cuando llega, el service worker
+       nuevo dispara el aviso de "version nueva" que ya existe en la app. */
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_DOC);
+      const guardado = await cache.match(DOC_KEY);
+      const red = fetch(event.request)
+        .then((resp) => {
+          if (resp && resp.ok) cache.put(DOC_KEY, resp.clone());
+          return resp;
         })
-      )
-    );
+        .catch(() => guardado);
+      return guardado || red;
+    })());
     return;
   }
 
