@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v126";  // el semaforo, solo sobre dias cerrados
+const CACHE_NAME = "niblo-v127";  // sintomas, reacciones a vacunas y Vacunas arriba
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manifest.json",

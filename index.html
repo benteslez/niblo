@@ -6145,6 +6145,48 @@
     .pb-app .vac-tag {
       font-weight: 700; color: var(--blue); text-transform: lowercase;
     }
+    /* Como le sento la vacuna: cuatro casillas, que es lo que preguntan en la
+       siguiente consulta y nadie se acuerda. */
+    .pb-app .reacc-lista { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pb-app .reacc-op {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 11px; border: 1px solid var(--border); border-radius: var(--r-pill);
+      font-size: 0.8125rem; cursor: pointer; background: var(--bg-card);
+    }
+    .pb-app .reacc-op input { margin: 0; width: 14px; height: 14px; }
+    /* :has para que la casilla se tiña al marcarla sin repintar: en la ficha
+       de la vacuna el .on lo pone el estado, pero en el alta de sintomas se
+       marca y se desmarca sobre la marcha.
+       Ojo con el nombre: .vac-check ya era el circulo de cada fila de vacuna,
+       y llamar igual a esto le cambiaba la forma a los 33 circulos. */
+    .pb-app .reacc-op.on,
+    .pb-app .reacc-op:has(input:checked) {
+      background: var(--amber-soft); color: var(--amber); border-color: transparent; font-weight: 600;
+    }
+
+    /* Historial de sintomas: una fila por registro, plegada, como las visitas. */
+    .pb-app .sn-lista { display: flex; flex-direction: column; }
+    .pb-app .sn-item { border-bottom: 1px solid var(--line-soft); }
+    .pb-app .sn-item:last-child { border-bottom: 0; }
+    .pb-app .sn-item > summary {
+      display: flex; align-items: center; gap: 10px; padding: 11px 0;
+      cursor: pointer; list-style: none;
+    }
+    .pb-app .sn-item > summary::-webkit-details-marker { display: none; }
+    .pb-app .sn-fecha {
+      flex: none; width: 62px; font-family: var(--serif); font-size: 0.75rem;
+      color: var(--text-muted); line-height: 1.3;
+    }
+    .pb-app .sn-fecha span { display: block; color: var(--text-faint); }
+    .pb-app .sn-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
+    .pb-app .sn-txt b { display: block; font-weight: 600; }
+    .pb-app .sn-txt span {
+      display: block; font-size: 0.75rem; color: var(--text-muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .pb-app .sn-item[open] > summary .visit-chevron { transform: rotate(90deg); }
+    .pb-app .vac-reacc { grid-column: 1 / -1; }
+
     .pb-app .vac-barra { display: flex; gap: 8px; flex-wrap: wrap; margin-top: var(--gap-3); }
     .pb-app .vac-barra .btn-anadir.on { background: var(--blue); color: #fff; border-color: var(--blue); }
     .pb-app .sync-punto {
@@ -8020,6 +8062,11 @@ function defaultState() {
     vaccinesDone: {},      // id -> "YYYY-MM-DD" en que se puso
     vaccinesInfo: {},      // id -> { pais, lote, lab, notas }
     growth: [], pediatricVisits: [], sleep: [], diapers: [], notes: [],
+    /* Fiebre y compañia. Van juntos a proposito: un dia malo suele ser fiebre
+       CON vomitos, no una cosa o la otra, y hay que poder apuntar tambien
+       vomitos sin fiebre. Por eso una temperatura opcional y una lista de
+       sintomas, no un tipo de registro por sintoma. */
+    sintomas: [],
     /* Dia -> true. Estaba en localStorage con los avisos descartados, asi que
        no viajaba: si la dosis la daba y la marcaba el otro movil, aqui seguia
        contando como olvidada. */
@@ -8214,6 +8261,11 @@ const CAMPOS_REGISTRO = {
     { k: "height", et: "Longitud (cm)", tipo: "number", paso: "0.1" },
     { k: "head",   et: "P. cefálico (cm)", tipo: "number", paso: "0.1" },
   ]},
+  sintomas: { titulo: "registro", col: "sintomas", campos: [
+    { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
+    { k: "temp",  et: "Temperatura (°C)", tipo: "number", paso: "0.1" },
+    { k: "notas", et: "Notas", tipo: "textarea" },
+  ]},
   pediatricVisits: { titulo: "visita", col: "pediatricVisits", campos: [
     { k: "date",   et: "Fecha", tipo: "date" },
     { k: "reason", et: "Motivo", tipo: "select",
@@ -8303,7 +8355,8 @@ function pedirBorrado(col, id, descripcion) {
 }
 function confirmarBorrado(col, id) {
   const fn = { sleep: deleteSleep, diapers: deleteDiaper, growth: deleteGrowth,
-               notes: deleteNote, pediatricVisits: deletePediatricVisit }[col];
+               notes: deleteNote, pediatricVisits: deletePediatricVisit,
+               sintomas: deleteSintoma }[col];
   cerrarModal();
   if (fn) fn(id);
   /* Cada delete* repinta su propia pestana. Como ahora se puede borrar desde
@@ -8350,7 +8403,7 @@ function cerrarModal() {
    Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
-const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes"];
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas"];
 const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD"];
 
 function sello() { return new Date().toISOString(); }
@@ -8605,7 +8658,7 @@ function fmtFechaCorta(iso) {
 }
 
 /* ======================== router ======================== */
-const VISTAS_EN_MAS = new Set(["mas", "desarrollo", "crecimiento", "pediatra", "sueno", "panales", "vacunas", "alergenos", "seguridad", "notas", "ajustes"]);
+const VISTAS_EN_MAS = new Set(["mas", "desarrollo", "crecimiento", "pediatra", "sueno", "panales", "alergenos", "seguridad", "notas", "ajustes"]);
 // Recuerda desde donde se abrio la ficha de un alimento (vista, scroll y,
 // si vino de Buscar, la busqueda y el filtro de grupo) para poder volver
 // exactamente a donde estaba en vez de reiniciar esa vista desde arriba.
@@ -9257,8 +9310,8 @@ function htmlSemaforo(dia) {
           Un día sin registrar parece un día sin dormir, así que no cuenta para el color.</p>` : ""}
       </details>
       <p class="sem-nota"><b>Esto no es un diagnóstico.</b> Compara lo apuntado con guías publicadas y no
-        sustituye al pediatra. Y que salga verde no quiere decir que esté sano: lo que de verdad urge
-        —fiebre, dificultad para respirar, decaimiento, señales de deshidratación— no está aquí.</p>
+        sustituye al pediatra. Y que salga verde no quiere decir que esté sano: si tiene fiebre, le
+        cuesta respirar, está decaído o no moja pañales, eso no lo decide esta tarjeta.</p>
     </div>
   </details>`;
 }
@@ -9900,6 +9953,19 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
           ? `<span class="linea-parar">Parar</span>`
           : `<span class="linea-valor">${duracionHtml(s.minutos)}</span>`}
       </button>` })),
+    /* Un dia con fiebre es lo primero que se cuenta en la consulta: tiene que
+       verse en la linea del dia como todo lo demas. */
+    ...(STATE.sintomas || []).filter(x => (x.datetime || "").slice(0, 10) === dia.fecha).map(x => {
+      const etiquetas = (x.lista || []).map(k => (SINTOMAS[k] || {}).et).filter(Boolean);
+      const titulo = x.temp ? `${String(x.temp).replace(".", ",")} °C` : (etiquetas.shift() || "Síntomas");
+      return { hora: (x.datetime || "").slice(11, 16), html: `
+      <button type="button" class="linea-fila" onclick="PB.editarRegistro('sintomas','${x.id}')">
+        <span class="linea-hora">${(x.datetime || "").slice(11, 16)}</span>
+        ${iconoLinea("alerta")}
+        <span class="linea-texto"><b>${esc(titulo)}</b>${
+          etiquetas.length ? `<span class="linea-sub">${esc(etiquetas.join(" · "))}</span>` : ""}</span>
+      </button>` };
+    }),
     /* Los pañales tambien: si se pueden apuntar desde aqui, tienen que verse
        aqui. Antes solo salian en su propia pestaña. */
     ...STATE.diapers.filter(p => (p.datetime || "").slice(0, 10) === dia.fecha).map(p => ({
@@ -11192,11 +11258,11 @@ function borrarTodo() {
 /* ======================== boot ======================== */
 /* ======================== render: MAS (hub) ======================== */
 function renderMas(el) {
-  // Sueno, Crecimiento, Desarrollo y Pediatra viven ya en el menu principal, y
-  // Alergenos en el submenu de Alimentacion: aqui solo queda lo secundario.
+  // Sueno, Crecimiento, Desarrollo, Pediatra y Vacunas viven ya en el menu
+  // principal, y Alergenos en el submenu de Alimentacion: aqui solo queda lo
+  // secundario.
   const items = [
     { v: "panales", ico: "🧷", t: "Pañales", s: "Registro diario" },
-    { v: "vacunas", ico: "💉", t: "Vacunas", s: "Calendario vacunal" },
     { v: "seguridad", ico: "🛟", t: "Seguridad", s: "Qué evitar y por qué" },
     { v: "notas", ico: "📝", t: "Notas", s: "Apuntes libres" },
     { v: "ajustes", ico: "⚙️", t: "Ajustes", s: "Perfil y copia de seguridad" },
@@ -11708,6 +11774,7 @@ const INFORME_SECCIONES = [
   { k: "panales",      et: "Pañales",                   nota: "Recuento diario" },
   { k: "desarrollo",   et: "Desarrollo y dientes",      nota: "Hitos OMS conseguidos" },
   { k: "vacunas",      et: "Vacunas",                   nota: "Puestas y pendientes" },
+  { k: "sintomas",     et: "Síntomas",                  nota: "Fiebre, vómitos, diarrea y demás" },
   { k: "visitas",      et: "Visitas al pediatra",       nota: "Motivo y notas de cada una" },
   { k: "notas",        et: "Notas",                     nota: "Apuntes libres del periodo" },
 ];
@@ -11996,6 +12063,20 @@ function generarInformeCompleto() {
     if (pendientes.length) doc += `<h4>Pendientes</h4>` + tabla(["Vacuna", "Dosis", "Edad prevista"], pendientes);
   }
 
+  /* ---- sintomas ---- */
+  if (S("sintomas")) {
+    const ss = (STATE.sintomas || []).filter(x => enRango((x.datetime || "").slice(0, 10)))
+      .sort((a, b) => (a.datetime || "").localeCompare(b.datetime || ""));
+    doc += `<h3>Síntomas</h3>` + tabla(["Fecha", "Hora", "Temperatura", "Síntomas", "Notas"],
+      ss.map(x => [
+        fmtFechaCorta((x.datetime || "").slice(0, 10)),
+        (x.datetime || "").slice(11, 16),
+        x.temp ? `${String(x.temp).replace(".", ",")} °C` : "—",
+        (x.lista || []).map(k => (SINTOMAS[k] || {}).et).filter(Boolean).join(" · ") || "—",
+        esc(x.notas || "—"),
+      ]));
+  }
+
   /* ---- visitas ---- */
   if (S("visitas")) {
     const vs = STATE.pediatricVisits.filter(v => enRango(v.date)).sort((a, b) => a.date.localeCompare(b.date));
@@ -12158,6 +12239,27 @@ function renderPediatra(el) {
     <div class="faint" style="margin-bottom:10px">Con una fecha futura queda como cita programada y sale en <b>Próximos</b>, en Hoy.</div>
     <button class="btn-primario" onclick="PB.savePediatricVisit()">Guardar visita</button>
   `);
+  html += htmlRegistro('pediatra-sintomas', 'Registrar síntomas', `
+    <div class="grid-campos2">
+      <div class="campo"><label for="sn-dt">Fecha y hora</label>
+        <input type="datetime-local" id="sn-dt" value="${nowDatetimeLocal()}"></div>
+      <div class="campo"><label for="sn-temp">Temperatura (°C)</label>
+        <input type="number" id="sn-temp" step="0.1" min="30" max="43" inputmode="decimal" placeholder="38,2"></div>
+    </div>
+    <div class="campo"><label>Qué le pasa</label>
+      <div class="reacc-lista" id="sn-lista">${Object.entries(SINTOMAS).map(([k, v]) =>
+        `<label class="reacc-op"><input type="checkbox" id="sn-${k}">${v.et}</label>`).join("")}
+      </div>
+      <div class="faint" style="margin-top:8px">La temperatura y los síntomas son independientes:
+        puedes apuntar solo fiebre, solo vómitos, o las dos cosas a la vez.</div></div>
+    <div class="campo"><label for="sn-notas">Notas</label>
+      <textarea id="sn-notas" placeholder="Desde cuándo, qué le habéis dado…"></textarea></div>
+    <div class="modal-aviso" id="sn-aviso"></div>
+    <button class="btn-primario" onclick="PB.guardarSintoma()">Guardar</button>
+  `);
+
+  html += htmlSintomas();
+
   /* El selector del informe ocupaba media pantalla nada mas entrar. Va detras
      de su propio boton, como los formularios de registro. */
   html += htmlRegistro("pediatra-informe", "Generar informe para la consulta",
@@ -12199,6 +12301,81 @@ function renderPediatra(el) {
   html += `</div>`;
   el.innerHTML = html;
 }
+/* ---- Sintomas ----------------------------------------------------------
+   Un registro puede llevar temperatura, sintomas, las dos cosas o solo notas.
+   La fiebre no es un sintoma de la lista: es un numero, y ese numero es lo
+   que pregunta el pediatra. */
+const SINTOMAS = {
+  vomitos:    { et: "Vómitos",    ico: "🤮" },
+  diarrea:    { et: "Diarrea",    ico: "💩" },
+  malestar:   { et: "Malestar",   ico: "😖" },
+  decaimiento:{ et: "Decaimiento",ico: "😴" },
+  tos:        { et: "Tos",        ico: "😷" },
+  mocos:      { et: "Mocos",      ico: "🤧" },
+  erupcion:   { et: "Erupción",   ico: "🔴" },
+};
+/* 38 °C rectal/timpanica es el corte que usan las guias pediatricas para
+   hablar de fiebre; por debajo, febricula. No se interpreta nada mas: la
+   app apunta, no decide. */
+function nivelFiebre(t) {
+  const n = Number(t);
+  if (!isFinite(n) || !n) return null;
+  if (n >= 38) return { et: "fiebre", cls: "rojo" };
+  if (n >= 37.5) return { et: "febrícula", cls: "ambar" };
+  return { et: "sin fiebre", cls: "verde" };
+}
+function guardarSintoma() {
+  const dt = document.getElementById("sn-dt").value || nowDatetimeLocal();
+  const temp = document.getElementById("sn-temp").value;
+  const marcados = Object.keys(SINTOMAS).filter(k => (document.getElementById("sn-" + k) || {}).checked);
+  const notas = (document.getElementById("sn-notas").value || "").trim();
+  const av = document.getElementById("sn-aviso");
+  if (!temp && !marcados.length && !notas) {
+    if (av) { av.textContent = "Pon la temperatura o marca algo."; av.hidden = false; }
+    return;
+  }
+  STATE.sintomas.push(sellar({
+    id: "sn_" + Date.now().toString(36), datetime: dt,
+    temp: temp || null, lista: marcados, notas,
+  }));
+  guardarEstado();
+  cerrarRegistro("pediatra-sintomas");
+  renderPediatra(document.getElementById("view-pediatra"));
+}
+function deleteSintoma(id) {
+  anotarBorrado(id);
+  STATE.sintomas = STATE.sintomas.filter(x => x.id !== id);
+  guardarEstado();
+  renderPediatra(document.getElementById("view-pediatra"));
+}
+function htmlSintomas() {
+  const lista = [...(STATE.sintomas || [])].sort((a, b) => (b.datetime || "").localeCompare(a.datetime || ""));
+  if (!lista.length) return "";
+  return `<div class="card"><h2>Síntomas <span class="n">${lista.length}</span></h2>
+    <div class="sn-lista">${lista.slice(0, 40).map(x => {
+      const f = nivelFiebre(x.temp);
+      const etiquetas = (x.lista || []).map(k => (SINTOMAS[k] || {}).et).filter(Boolean);
+      return `<details class="sn-item">
+        <summary>
+          <span class="sn-fecha">${fmtFechaCorta((x.datetime || "").slice(0, 10))}
+            <span>${(x.datetime || "").slice(11, 16)}</span></span>
+          <span class="sn-txt"><b>${x.temp ? `${String(x.temp).replace(".", ",")} °C` : (etiquetas[0] || "Registro")}</b>${
+            etiquetas.length ? `<span>${esc(etiquetas.join(" · "))}</span>` : ""}</span>
+          ${f ? `<span class="pill ${f.cls === "rojo" ? "evitar" : f.cls === "ambar" ? "limite" : "ok"}">${f.et}</span>` : ""}
+          <span class="visit-chevron" aria-hidden="true">&#8250;</span>
+        </summary>
+        <div class="visit-cuerpo">
+          ${x.notas ? `<div class="visit-notas">${esc(x.notas)}</div>` : `<div class="visit-dato faint">Sin notas.</div>`}
+          <div class="visit-acciones">
+            <button class="ed-row" onclick="PB.editarRegistro('sintomas','${x.id}')">Editar</button>
+            <button class="del-row" onclick="PB.pedirBorrado('sintomas','${x.id}','Registro del ${fmtFechaCorta((x.datetime || "").slice(0, 10))}')">Eliminar</button>
+          </div>
+        </div>
+      </details>`;
+    }).join("")}</div>
+  </div>`;
+}
+
 function savePediatricVisit() {
   const date = document.getElementById("pv-date").value || HOY_ISO;
   const reason = document.getElementById("pv-reason").value;
@@ -13067,7 +13244,7 @@ function vacunasEditar() {
 }
 
 function renderVacunas(el) {
-  let html = `<span class="back-link" onclick="PB.volverAMas()">← Más</span>`;
+  let html = "";
 
   const por = e => STATE.vaccines.filter(v => estadoVacuna(v.id) === e);
   const puestas = por("puesta")
@@ -13170,6 +13347,9 @@ function detallesVacuna(id) {
   VAC_ABIERTA = VAC_ABIERTA === id ? null : id;
   renderVacunas(document.getElementById("view-vacunas"));
 }
+/* Lo que se pregunta en la siguiente consulta: como le sento la anterior. */
+const VAC_REACCIONES = { fiebre: "Fiebre", malestar: "Malestar", vomitos: "Vómitos", diarrea: "Diarrea" };
+
 function htmlDetallesVacuna(v) {
   const i = infoVacuna(v.id);
   return `<div class="vac-detalle">
@@ -13188,13 +13368,22 @@ function htmlDetallesVacuna(v) {
     <div class="campo"><label for="vd-notas-${v.id}">Notas</label>
       <input type="text" id="vd-notas-${v.id}" value="${esc(i.notas || "")}" placeholder="Centro, reacción…"
         autocomplete="off" onchange="PB.guardarInfoVacuna('${v.id}')"></div>
+    <div class="campo vac-reacc"><label>Cómo le sentó</label>
+      <div class="reacc-lista">${Object.entries(VAC_REACCIONES).map(([k, et]) => `
+        <label class="reacc-op${(i.reacc || []).indexOf(k) >= 0 ? " on" : ""}">
+          <input type="checkbox" ${(i.reacc || []).indexOf(k) >= 0 ? "checked" : ""}
+            id="vd-r-${k}-${v.id}" onchange="PB.guardarInfoVacuna('${v.id}')">${et}</label>`).join("")}
+      </div></div>
   </div>`;
 }
 function guardarInfoVacuna(id) {
   if (!STATE.vaccinesInfo) STATE.vaccinesInfo = {};
   const val = k => (document.getElementById(`vd-${k}-${id}`) || {}).value || "";
+  const reacc = Object.keys(VAC_REACCIONES)
+    .filter(k => (document.getElementById(`vd-r-${k}-${id}`) || {}).checked);
   const info = { pais: val("pais"), lote: val("lote").trim(), lab: val("lab").trim(), notas: val("notas").trim() };
-  if (!info.pais && !info.lote && !info.lab && !info.notas) { delete STATE.vaccinesInfo[id]; anotarBorradoClave("vaccinesInfo", id); }
+  if (reacc.length) info.reacc = reacc;
+  if (!info.pais && !info.lote && !info.lab && !info.notas && !reacc.length) { delete STATE.vaccinesInfo[id]; anotarBorradoClave("vaccinesInfo", id); }
   else STATE.vaccinesInfo[id] = info;
   guardarEstado();
   renderVacunas(document.getElementById("view-vacunas"));
@@ -13337,7 +13526,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
@@ -19295,6 +19484,7 @@ function boot(vistaInicial) {
       { id: "pb_crecimiento",label: "Crecimiento", area: "pablo", seccion: "pablo" },
       { id: "pb_desarrollo", label: "Desarrollo",  area: "pablo", seccion: "pablo" },
       { id: "pb_pediatra",   label: "Pediatra",    area: "pablo", seccion: "pablo" },
+      { id: "pb_vacunas",    label: "Vacunas",     area: "pablo", seccion: "pablo" },
       { id: "pb_mas",        label: "M\u00e1s",        area: "pablo", seccion: "pablo" },
       { id: "documentos",    label: "Documentos",  area: "documentos" }
     ];
@@ -19306,7 +19496,7 @@ function boot(vistaInicial) {
       pb_alergenos: "alergenos", pb_guia: "guia",
       pb_sueno: "sueno", pb_crecimiento: "crecimiento",
       pb_desarrollo: "desarrollo", pb_pediatra: "pediatra",
-      pb_mas: "mas"
+      pb_vacunas: "vacunas", pb_mas: "mas"
     };
     /* Vista interna -> chip. Las secundarias cuelgan de "M\u00e1s"; "alimento" no
        cambia de chip porque se abre desde varias secciones. */
@@ -19315,7 +19505,8 @@ function boot(vistaInicial) {
       alergenos: "pb_alergenos", guia: "pb_guia",
       sueno: "pb_sueno", crecimiento: "pb_crecimiento",
       desarrollo: "pb_desarrollo", pediatra: "pb_pediatra",
-      mas: "pb_mas", panales: "pb_mas", vacunas: "pb_mas",
+      vacunas: "pb_vacunas",
+      mas: "pb_mas", panales: "pb_mas",
       seguridad: "pb_mas", notas: "pb_mas", ajustes: "pb_mas"
     };
 
