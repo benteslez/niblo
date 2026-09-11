@@ -9949,9 +9949,29 @@ function intervalosDe(instantes) {
   const out = [];
   for (let i = 1; i < o.length; i++) {
     const d = (o[i] - o[i - 1]) / 60000;
-    if (d > 0 && d <= WN_TOPE_HORAS * 60) out.push(d);
+    if (d > 0 && d <= WN_TOPE_HORAS * 60) out.push({ hora: minutoDeFecha(o[i - 1]), valor: d });
   }
   return out;
+}
+/* Un bebe no hace lo mismo a las 9 que a las 19: la siesta de la mañana no
+   dura lo que la de la tarde, y aguanta despierto mas antes de la noche. Por
+   eso, antes de tirar de la mediana de todo, se busca lo que hizo A ESTA
+   HORA (±75 min) en los ultimos dias; si hay al menos tres veces, manda eso.
+   Si no, se cae a la mediana general y la nota no dice "a esta hora". */
+const WN_FRANJA_MIN = 75;
+const WN_SIMILARES_MINIMOS = 3;
+function minutoDeFecha(d) { return d.getHours() * 60 + d.getMinutes(); }
+function distanciaHora(a, b) { const d = Math.abs(a - b) % 1440; return Math.min(d, 1440 - d); }
+/** muestras: [{ hora, valor }] -> { valor, n, aEstaHora } o null si no hay bastantes. */
+function medianaPorHora(muestras, refHora) {
+  const cerca = muestras.filter(m => distanciaHora(m.hora, refHora) <= WN_FRANJA_MIN);
+  if (cerca.length >= WN_SIMILARES_MINIMOS) {
+    return { valor: mediana(cerca.map(m => m.valor)), n: cerca.length, aEstaHora: true };
+  }
+  if (muestras.length >= WN_INTERVALOS_MINIMOS) {
+    return { valor: mediana(muestras.map(m => m.valor)), n: muestras.length, aEstaHora: false };
+  }
+  return null;
 }
 function wnDesde() {
   const d = new Date(); d.setDate(d.getDate() - WN_VENTANA); d.setHours(0, 0, 0, 0);
@@ -9970,14 +9990,13 @@ function wnDiasConDatos() {
     futura —una toma que se deja preparada— tomarlo como referencia mandaria la
     estimacion a la madrugada. */
 function wnPrediccion(instantes, ahora) {
-  const ivs = intervalosDe(instantes);
-  if (ivs.length < WN_INTERVALOS_MINIMOS) return null;
   const pasados = instantes.filter(d => d <= ahora).sort((a, b) => a - b);
   const ultimo = pasados[pasados.length - 1];
   if (!ultimo) return null;
-  const cada = mediana(ivs);
-  const cuando = new Date(ultimo.getTime() + cada * 60000);
-  return { cuando, cada: Math.round(cada), pasado: cuando <= ahora };
+  const m = medianaPorHora(intervalosDe(instantes), minutoDeFecha(ultimo));
+  if (!m) return null;
+  const cuando = new Date(ultimo.getTime() + m.valor * 60000);
+  return { cuando, cada: Math.round(m.valor), pasado: cuando <= ahora, n: m.n, aEstaHora: m.aEstaHora };
 }
 function htmlLoQueSueleVenir() {
   if (wnDiasConDatos() < WN_DIAS_MINIMOS) return "";
@@ -9995,23 +10014,26 @@ function htmlLoQueSueleVenir() {
   const despiertos = [];
   for (let i = 1; i < suenios.length; i++) {
     const d = (suenios[i].start - suenios[i - 1].end) / 60000;
-    if (d > 0 && d <= WN_TOPE_HORAS * 60) despiertos.push(d);
+    if (d > 0 && d <= WN_TOPE_HORAS * 60) despiertos.push({ hora: minutoDeFecha(suenios[i - 1].end), valor: d });
   }
   const fines = suenios.map(x => x.end).filter(d => d <= new Date()).sort((a, b) => a - b);
   const ultimoFin = fines.length ? fines[fines.length - 1] : null;
-  const cadaDespierto = mediana(despiertos);
 
   const ahora = new Date();
   const filas = [];
-  /* Si la hora estimada ya ha pasado se dice asi, en vez de enseñar una hora
-     vieja que no sirve para nada. */
-  const linea = (p, icono, futuro, vencido, nota) => {
+  /* Si la hora estimada ya ha pasado se dice asi, y debajo la hora a la que
+     tocaba, que sirve para ver cuanto se ha pasado. */
+  const linea = (p, icono, futuro, vencido, vencidoNota, nota) => {
     if (!p) return;
-    filas.push({ icono, nota, txt: p.pasado ? vencido : `${futuro} <b>${hhmm(p.cuando)}</b>` });
+    filas.push({ icono,
+      txt: p.pasado ? vencido : `${futuro} <b>${hhmm(p.cuando)}</b>`,
+      nota: p.pasado ? `${vencidoNota} <b>${hhmm(p.cuando)}</b> · ${nota}` : nota });
   };
-  linea(wnPrediccion(tomas, ahora), "toma",
-    "Siguiente toma sobre las", "La siguiente toma ya va tocando",
-    `suele comer cada ${(t => t ? duracionCorta(t.cada) : "")(wnPrediccion(tomas, ahora))}`);
+  const aEstaHora = p => p && p.aEstaHora ? "a esta hora " : "";
+  const pt = wnPrediccion(tomas, ahora);
+  linea(pt, "toma",
+    "Siguiente toma sobre las", "La siguiente toma ya va tocando", "Le tocaba sobre las",
+    pt ? `${aEstaHora(pt)}suele comer cada ${duracionCorta(pt.cada)}` : "");
   /* Si esta durmiendo ahora, lo que interesa no es cuando le entrara el
      sueño sino cuando se despertara: la mediana de lo que le duran los
      sueños de ese tipo (siesta o noche), contada desde que se durmio. Antes
@@ -10021,30 +10043,42 @@ function htmlLoQueSueleVenir() {
   if (enCurso) {
     const tipo = enCurso.type;
     const duraciones = suenios.filter(x => x.type === tipo)
-      .map(x => (x.end - x.start) / 60000)
-      .filter(d => d > 0 && d <= 16 * 60);
-    const dura = mediana(duraciones);
-    if (dura !== null && duraciones.length >= WN_INTERVALOS_MINIMOS) {
+      .map(x => ({ hora: minutoDeFecha(x.start), valor: (x.end - x.start) / 60000 }))
+      .filter(m => m.valor > 0 && m.valor <= 16 * 60);
+    /* Siestas que empezaron a una hora parecida a esta: la de media mañana
+       y la de la tarde no duran lo mismo. */
+    const m = medianaPorHora(duraciones, minutoDeFecha(enCurso.start));
+    if (m) {
       /* Se cuenta desde el principio del episodio, no del ultimo trozo: si se
          desperto un rato y volvio a dormirse, ya lleva gastada parte de la
          siesta. Si a ese trozo le costo volver, se dice. */
+      const dura = Math.round(m.valor);
       const c = new Date(enCurso.start.getTime() + dura * 60000);
       const retomado = enCurso.trozos.length > 1;
-      const cuanto = tipo === "nocturno" ? `por la noche suele dormir ${duracionCorta(Math.round(dura))}`
-                                         : `sus siestas suelen durar ${duracionCorta(Math.round(dura))}`;
-      linea({ cuando: c, cada: Math.round(dura), pasado: c <= ahora }, "sueno",
+      const cuanto = tipo === "nocturno" ? `por la noche suele dormir ${duracionCorta(dura)}`
+        : `${m.aEstaHora ? "a esta hora " : ""}sus siestas suelen durar ${duracionCorta(dura)}`;
+      const previo = retomado ? enCurso.trozos[enCurso.trozos.length - 2] : null;
+      linea({ cuando: c, cada: dura, pasado: c <= ahora }, "sueno",
         "Probablemente se despierte sobre las", "Ya lleva durmiendo más de lo habitual",
-        retomado ? `${cuanto}; el rato despierto de las ${hhmm(enCurso.trozos[enCurso.trozos.length - 2].end ? new Date(enCurso.trozos[enCurso.trozos.length - 2].end) : enCurso.start)} cuenta como el mismo sueño` : cuanto);
+        "Se tendría que haber despertado sobre las",
+        retomado ? `${cuanto}; el rato despierto de las ${hhmm(previo.end ? new Date(previo.end) : enCurso.start)} cuenta como el mismo sueño` : cuanto);
     }
-  } else if (cadaDespierto !== null && despiertos.length >= WN_INTERVALOS_MINIMOS && ultimoFin) {
-    const c = new Date(ultimoFin.getTime() + cadaDespierto * 60000);
-    linea({ cuando: c, cada: Math.round(cadaDespierto), pasado: c <= ahora }, "sueno",
-      "Suele entrarle el sueño sobre las", "Ya lleva despierto más de lo habitual",
-      `aguanta despierto unas ${duracionCorta(Math.round(cadaDespierto))}`);
+  } else if (ultimoFin) {
+    /* Cuanto aguanta despierto cuando se desperto a una hora como esta. */
+    const m = medianaPorHora(despiertos, minutoDeFecha(ultimoFin));
+    if (m) {
+      const cada = Math.round(m.valor);
+      const c = new Date(ultimoFin.getTime() + cada * 60000);
+      linea({ cuando: c, cada, pasado: c <= ahora }, "sueno",
+        "Suele entrarle el sueño sobre las", "Ya lleva despierto más de lo habitual",
+        "Le tendría que haber entrado el sueño sobre las",
+        `${m.aEstaHora ? "a esta hora " : ""}aguanta despierto unas ${duracionCorta(cada)}`);
+    }
   }
-  linea(wnPrediccion(panales, ahora), "panal",
-    "Toca mirar el pañal sobre las", "Toca mirar el pañal",
-    `suele tocar cada ${(t => t ? duracionCorta(t.cada) : "")(wnPrediccion(panales, ahora))}`);
+  const pp = wnPrediccion(panales, ahora);
+  linea(pp, "panal",
+    "Toca mirar el pañal sobre las", "Toca mirar el pañal", "Tocaba sobre las",
+    pp ? `${aEstaHora(pp)}suele tocar cada ${duracionCorta(pp.cada)}` : "");
 
   if (!filas.length) return "";
   return `<div class="card wn">
@@ -10053,8 +10087,9 @@ function htmlLoQueSueleVenir() {
       ${iconoLinea(f.icono)}
       <span class="wn-txt">${f.txt}<span class="wn-nota">${f.nota}</span></span>
     </div>`).join("")}</div>
-    <p class="wn-pie">Estimación a partir de los últimos ${WN_VENTANA} días. Es un promedio de lo que
-      viene haciendo, no una previsión: un día suelto se sale y no pasa nada.</p>
+    <p class="wn-pie">Estimación a partir de los últimos ${WN_VENTANA} días: si hay bastantes, se
+      mira lo que hizo a una hora parecida; si no, el promedio de todo. Es lo que viene haciendo,
+      no una previsión: un día suelto se sale y no pasa nada.</p>
   </div>`;
 }
 
