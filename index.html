@@ -132,6 +132,10 @@
       --tipo-carnes-bg:               #ebd5d5; --tipo-carnes-fg:               #762828;  /* vino tinto */
       --tipo-pescados_mariscos-bg:    #dbe3ed; --tipo-pescados_mariscos-fg:    #3a587a;  /* azul tinta */
       --tipo-huevos-bg:               #ece6d2; --tipo-huevos-fg:               #86621c;  /* mostaza dorada */
+      /* Pablo: amarillo franco para el pañal (el ámbar mostaza ya lo usan las
+         alertas) y un azul profundo para el baño, que no se confunda con la toma. */
+      --pb-yellow-bg: #fbf0b3; --pb-yellow: #a06a00;
+      --pb-deep-bg:   #d5dcf0; --pb-deep:   #253a8a;
       --tipo-verduras_ensaladas-bg:   #dde6df; --tipo-verduras_ensaladas-fg:   #3a6b3f;  /* verde sage */
       --tipo-salsas_fondos-bg:        #ebd5dc; --tipo-salsas_fondos-fg:        #823049;  /* borgoña */
       --tipo-desayunos-bg:            #e0dde9; --tipo-desayunos-fg:            #564f8c;  /* lila profundo */
@@ -153,6 +157,8 @@
       --tipo-carnes-bg:               #450a0a; --tipo-carnes-fg:               #fca5a5;
       --tipo-pescados_mariscos-bg:    #172554; --tipo-pescados_mariscos-fg:    #93c5fd;
       --tipo-huevos-bg:               #422006; --tipo-huevos-fg:               #fde68a;
+      --pb-yellow-bg: #3d3105; --pb-yellow: #facc15;
+      --pb-deep-bg:   #172554; --pb-deep:   #a5b4fc;
       --tipo-verduras_ensaladas-bg:   #052e16; --tipo-verduras_ensaladas-fg:   #86efac;
       --tipo-salsas_fondos-bg:        #4c0519; --tipo-salsas_fondos-fg:        #fda4af;
       --tipo-desayunos-bg:            #2e1065; --tipo-desayunos-fg:            #c4b5fd;
@@ -5284,6 +5290,10 @@
       /* Exceso de sueño: violeta de la paleta de tipos, ya adaptado a los dos temas. */
       --purple:      var(--tipo-desayunos-fg);
       --purple-soft: var(--tipo-desayunos-bg);
+      --yellow:      var(--pb-yellow);
+      --yellow-soft: var(--pb-yellow-bg);
+      --deep:        var(--pb-deep);
+      --deep-soft:   var(--pb-deep-bg);
 
       --radius:     var(--r-lg);
       /* Los numeros de Pablo van en Manrope con cifras tabulares, no en una
@@ -5701,7 +5711,7 @@
     .pb-app .pt-res-punto.sueno  { background: var(--purple); }
     .pb-app .pt-res-punto.toma   { background: var(--blue); }
     .pb-app .pt-res-punto.comida { background: var(--green); }
-    .pb-app .pt-res-punto.panal  { background: var(--slate); }
+    .pb-app .pt-res-punto.panal  { background: var(--yellow); }
     .pb-app .pt-res-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
     .pb-app .pt-res-txt b { font-weight: 600; }
     .pb-app .pt-res-txt span {
@@ -5721,7 +5731,7 @@
     }
     .pb-app .pt-toma   { background: var(--blue); }
     .pb-app .pt-comida { background: var(--green); }
-    .pb-app .pt-panal  { background: var(--slate); opacity: .8; }
+    .pb-app .pt-panal  { background: var(--yellow); opacity: .9; }
     .pb-app .pt-dia {
       text-align: center; font-size: 0.625rem; color: var(--text-faint);
       text-transform: capitalize; line-height: 1.3;
@@ -5819,8 +5829,9 @@
     .pb-app .linea-icono.i-alerta { background: var(--amber-soft);  color: var(--amber); }
     .pb-app .linea-icono.i-probando { background: var(--amber-soft); color: var(--amber); }
     .pb-app .linea-icono.i-rechazo { background: var(--bg-soft); color: var(--text-muted); }
-    .pb-app .linea-icono.i-panal { background: var(--bg-soft); color: var(--slate); }
-    .pb-app .linea-icono.i-bano  { background: var(--blue-soft); color: var(--blue); }
+    .pb-app .linea-icono.i-panal { background: var(--yellow-soft); color: var(--yellow); }
+    .pb-app .linea-icono.i-compra { background: var(--bg-soft); color: var(--text-muted); }
+    .pb-app .linea-icono.i-bano  { background: var(--deep-soft); color: var(--deep); }
     /* El "+" de la linea del dia: redondo y solo, sin texto al lado. */
     .pb-app .btn-mas {
       width: 32px; height: 32px; padding: 0; font-size: 1.25rem; line-height: 1;
@@ -8152,6 +8163,10 @@ function defaultState() {
        sintomas, no un tipo de registro por sintoma. */
     sintomas: [],
     banos: [],
+    /* Compras de leche de formula: cuando, que marca, cuanto costo y cuantos
+       gramos. Con dos o mas se sabe cuanto dura un bote y el semaforo avisa
+       antes de que se acabe. */
+    comprasLeche: [],
     /* Dia -> true. Estaba en localStorage con los avisos descartados, asi que
        no viajaba: si la dosis la daba y la marcaba el otro movil, aqui seguia
        contando como olvidada. */
@@ -8350,6 +8365,12 @@ const CAMPOS_REGISTRO = {
     { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
     { k: "notas", et: "Notas", tipo: "textarea" },
   ]},
+  comprasLeche: { titulo: "compra de leche", col: "comprasLeche", campos: [
+    { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
+    { k: "marca",  et: "Marca", tipo: "text" },
+    { k: "precio", et: "Precio (€)", tipo: "number", paso: "0.01" },
+    { k: "gramos", et: "Gramos", tipo: "number", paso: "1" },
+  ]},
   sintomas: { titulo: "registro", col: "sintomas", campos: [
     { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
     { k: "temp",  et: "Temperatura (°C)", tipo: "number", paso: "0.1" },
@@ -8445,7 +8466,8 @@ function pedirBorrado(col, id, descripcion) {
 function confirmarBorrado(col, id) {
   const fn = { sleep: deleteSleep, diapers: deleteDiaper, growth: deleteGrowth,
                notes: deleteNote, pediatricVisits: deletePediatricVisit,
-               sintomas: deleteSintoma, banos: deleteBano }[col];
+               sintomas: deleteSintoma, banos: deleteBano,
+               comprasLeche: deleteCompraLeche }[col];
   cerrarModal();
   if (fn) fn(id);
   /* Cada delete* repinta su propia pestana. Como ahora se puede borrar desde
@@ -8492,7 +8514,7 @@ function cerrarModal() {
    Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
-const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos"];
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche"];
 const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD"];
 
 function sello() { return new Date().toISOString(); }
@@ -8964,11 +8986,12 @@ function renderHoy(el) {
 
   html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoHoy");
   html += htmlLineaDelDia(dia, "PB.TOMAS_HOY", false);
-  html += htmlLoQueSueleVenir();
   /* El patron de la semana estaba en Progreso, entre listados de alimentos,
      donde no lo veia nadie. Es la foto del dia a dia, asi que su sitio es el
-     final de Hoy: debajo de lo que ha pasado hoy y de lo que suele venir. */
+     final de Hoy, y "lo que suele venir" debajo: primero lo que ha pasado,
+     luego lo que viene. */
   html += htmlPatron();
+  html += htmlLoQueSueleVenir();
 
   el.innerHTML = html;
   sincronizarTicSueno();
@@ -9344,6 +9367,38 @@ function semPanales() {
   return { nivel: "verde", txt: `${m} pañales mojados al día, señal de buena hidratación.` };
 }
 
+/* Cuanto queda del bote. Con una sola compra no hay ritmo: hace falta un ciclo
+   entero (de una compra a la siguiente) para saber cuantos gramos se van al
+   dia. Con dos o mas, el ritmo sale de todo lo comprado salvo el ultimo bote,
+   repartido entre la primera compra y la ultima; y el ultimo bote se descuenta
+   a ese ritmo desde el dia que se compro. */
+function semLecheCompra() {
+  const compras = (STATE.comprasLeche || []).filter(c => c.datetime && c.gramos > 0)
+    .slice().sort((a, b) => a.datetime.localeCompare(b.datetime));
+  if (!compras.length) return null;
+  if (compras.length < 2) {
+    return { nivel: "sindatos", txt: "Una compra apuntada; con la siguiente se sabrá cuánto dura un bote." };
+  }
+  const primera = compras[0], ultima = compras[compras.length - 1];
+  const dias = (new Date(ultima.datetime) - new Date(primera.datetime)) / 86400000;
+  const gastados = compras.slice(0, -1).reduce((a, c) => a + Number(c.gramos), 0);
+  if (dias < 1 || !(gastados > 0)) {
+    return { nivel: "sindatos", txt: "Las compras están demasiado juntas para calcular el ritmo." };
+  }
+  const ritmo = gastados / dias;                       // g/dia
+  const desde = (HOY_REAL - new Date(ultima.datetime)) / 86400000;
+  const quedan = Number(ultima.gramos) / ritmo - desde; // dias de bote que quedan
+  const r = Math.round(ritmo);
+  const marca = ultima.marca ? ` de ${ultima.marca}` : "";
+  if (quedan <= 1) {
+    return { nivel: "rojo", txt: `El bote${marca} se acaba ${quedan <= 0 ? "ya" : "mañana"} al ritmo de ${r} g al día. Toca comprar.` };
+  }
+  if (quedan <= 3) {
+    return { nivel: "ambar", txt: `Quedan unos ${Math.round(quedan)} días de bote${marca} a ${r} g al día. Conviene comprar.` };
+  }
+  return { nivel: "verde", txt: `Quedan unos ${Math.round(quedan)} días de bote${marca}; gasta ${r} g al día.` };
+}
+
 const SEM_FUENTES = {
   sueno: "National Sleep Foundation 2015 · AASM 2016",
   leche: "AEP 2018 · AEPap",
@@ -9353,6 +9408,7 @@ const SEM_FUENTES = {
   vacunas: "Calendario del SNS",
   desarrollo: "WHO Motor Development Study 2006",
   panales: "Signo de hidratación (AEP)",
+  compra: "Ritmo de las compras apuntadas",
 };
 const SEM_CABECERA = { verde: "Todo en orden", ambar: "Algo que mirar", rojo: "Algo a revisar" };
 
@@ -9368,6 +9424,7 @@ function htmlSemaforo(dia) {
     ["vacunas", "Vacunas", semVacunas(meses)],
     ["desarrollo", "Desarrollo", semDesarrollo(meses)],
     ["panales", "Pañales", semPanales()],
+    ["compra", "Leche en casa", semLecheCompra()],
   ].filter(d => d[2]).map(([k, et, r]) => ({ k, et, ...r }));
 
   const evaluadas = dims.filter(d => d.nivel !== "sindatos");
@@ -9553,10 +9610,13 @@ function rdDiaCorto(iso) {
   if (iso === isoMas(HOY_ISO, -1)) return "ayer";
   return "el " + d.toLocaleDateString("es-ES", { weekday: "long" });
 }
-function htmlCocinarDeUnaVez(dia) {
+function htmlCocinarDeUnaVez(dia, bloque) {
   /* En un dia ya pasado no hay nada que adelantar. */
   if (dia.fecha < HOY_ISO) return "";
-  const hoyCocibles = cociblesDelDia(dia.fecha);
+  /* Solo lo de ESTE momento de comida: el lote va dentro de la receta de su
+     bloque, no suelto en la tarjeta. */
+  const hoyCocibles = new Map();
+  rdReparto(bloque.alimentos).cocer.forEach(a => hoyCocibles.set(a.id || a.nombre, a));
   if (!hoyCocibles.size) return "";
   const paraHacer = [], yaHechos = [];
   hoyCocibles.forEach((a, clave) => {
@@ -9613,7 +9673,6 @@ function htmlCocinarDeUnaVez(dia) {
    lo mismo y hacer creer que van por separado. */
 function htmlRecetasDelDia(dia) {
   const bloques = (dia.comidas || []).filter(b => b.alimentos && b.alimentos.length);
-  const lote = htmlCocinarDeUnaVez(dia);
   if (!bloques.length) return "";
   const meses = dia.edadMeses;
   return `<div class="comida-recetas">
@@ -9627,10 +9686,10 @@ function htmlRecetasDelDia(dia) {
             la carne o el pescado queden arenosos.</p>
           ${b.alimentos.map(a => rdFicha(a, meses)).filter(Boolean).join("")}
           <p class="rd-final">${rdCierre(b, meses).join(" ")}</p>
+          ${htmlCocinarDeUnaVez(dia, b)}
         </div>
       </details>`;
     }).join("")}
-    ${lote}
   </div>`;
 }
 
@@ -9756,6 +9815,7 @@ LINEA_GLIFOS.probando = LINEA_GLIFOS.comida;   // mismo cuenco, circulo ambar
 LINEA_GLIFOS.rechazo = '<path d="M12 2.6A9.4 9.4 0 1 0 21.4 12 9.4 9.4 0 0 0 12 2.6zm4 10.3H8v-1.8h8z"/>';
 LINEA_GLIFOS.info = '<path d="M12 2.6A9.4 9.4 0 1 0 21.4 12 9.4 9.4 0 0 0 12 2.6zm-.9 4.1h1.8v1.8h-1.8zm0 3.4h1.8v7h-1.8z"/>';
 LINEA_GLIFOS.panal = '<path d="M3 5.4h18v5.2c0 5.2-4 8.8-9 8.8s-9-3.6-9-8.8z"/>';
+LINEA_GLIFOS.compra = '<path d="M5 6.2h14V8H5zM6 9h12v9.4A2.6 2.6 0 0 1 15.4 21H8.6A2.6 2.6 0 0 1 6 18.4zm2.4 2.4v6.2h1.8v-6.2z"/>';
 LINEA_GLIFOS.bano  = '<path d="M4 11h16v2.5A5.5 5.5 0 0 1 14.5 19h-5A5.5 5.5 0 0 1 4 13.5zM6 11V6.5A2.5 2.5 0 0 1 11 6.5h-1.8a.7.7 0 0 0-1.4 0V11z"/>';
 function iconoLinea(tipo) {
   return `<span class="linea-icono i-${tipo}" aria-hidden="true"><svg viewBox="0 0 24 24"
@@ -10056,6 +10116,16 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
           etiquetas.length ? `<span class="linea-sub">${esc(etiquetas.join(" · "))}</span>` : ""}</span>
       </button>` };
     }),
+    ...(STATE.comprasLeche || []).filter(c => (c.datetime || "").slice(0, 10) === dia.fecha).map(c => {
+      const sub = [c.marca, c.gramos ? `${c.gramos} g` : "", c.precio ? `${String(c.precio).replace(".", ",")} €` : ""]
+        .filter(Boolean).join(" · ");
+      return { hora: (c.datetime || "").slice(11, 16), html: `
+      <button type="button" class="linea-fila" onclick="PB.editarRegistro('comprasLeche','${c.id}')">
+        <span class="linea-hora">${(c.datetime || "").slice(11, 16)}</span>
+        ${iconoLinea("compra")}
+        <span class="linea-texto"><b>Compra de leche</b>${sub ? `<span class="linea-sub">${esc(sub)}</span>` : ""}</span>
+      </button>` };
+    }),
     ...(STATE.banos || []).filter(b => (b.datetime || "").slice(0, 10) === dia.fecha).map(b => ({
       hora: (b.datetime || "").slice(11, 16), html: `
       <button type="button" class="linea-fila" onclick="PB.editarRegistro('banos','${b.id}')">
@@ -10175,6 +10245,7 @@ function modalAnadir(fecha, refrescarFn) {
     ["panal",    "Pañal",    "PB.modalPanal()"],
     ["bano",     "Baño",     `PB.modalBano('${fecha}')`],
     ["alerta",   "Síntomas", `PB.modalSintomas('${fecha}')`],
+    ["compra",   "Compra de leche", `PB.modalCompraLeche('${fecha}')`],
   ];
   abrirModal("Añadir", `<div class="anadir-lista">${opciones.map(([ico, et, fn]) =>
     `<button type="button" class="acc-btn" onclick="PB.cerrarModal();${fn}">${iconoLinea(ico)}<span>${et}</span></button>`
@@ -10206,6 +10277,50 @@ function guardarBanoRapido() {
 function deleteBano(id) {
   anotarBorrado(id);
   STATE.banos = STATE.banos.filter(x => x.id !== id);
+  guardarEstado();
+}
+/* Compra de leche. La marca y los gramos vienen rellenos con los de la ultima
+   compra: casi siempre es el mismo bote, y asi solo hay que tocar el precio. */
+function ultimaCompraLeche() {
+  return (STATE.comprasLeche || []).slice().sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop();
+}
+function modalCompraLeche(fecha) {
+  const ult = ultimaCompraLeche() || {};
+  abrirModal("Compra de leche", `
+    <div class="campo"><label for="cl-dt">Fecha y hora</label>
+      <input type="datetime-local" id="cl-dt" value="${horaAhoraEn(fecha)}"></div>
+    <div class="campo"><label for="cl-marca">Marca</label>
+      <input type="text" id="cl-marca" value="${esc(ult.marca || "")}" placeholder="Ej. Nutribén 2" autocomplete="off"></div>
+    <div class="grid-campos2">
+      <div class="campo"><label for="cl-precio">Precio (€)</label>
+        <input type="number" id="cl-precio" step="0.01" min="0" inputmode="decimal" value="${ult.precio != null ? esc(String(ult.precio)) : ""}" placeholder="0,00"></div>
+      <div class="campo"><label for="cl-gramos">Gramos</label>
+        <input type="number" id="cl-gramos" step="1" min="0" inputmode="numeric" value="${ult.gramos != null ? esc(String(ult.gramos)) : ""}" placeholder="800"></div>
+    </div>
+    <div class="modal-aviso" id="cl-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarCompraLeche()" }]);
+}
+function guardarCompraLeche() {
+  const dt = document.getElementById("cl-dt").value || nowDatetimeLocal();
+  const marca = (document.getElementById("cl-marca").value || "").trim();
+  const precio = parseFloat(String(document.getElementById("cl-precio").value).replace(",", "."));
+  const gramos = parseInt(document.getElementById("cl-gramos").value, 10);
+  if (!(gramos > 0)) {
+    const a = document.getElementById("cl-aviso");
+    if (a) { a.textContent = "Hacen falta los gramos del bote para saber cuánto dura."; a.hidden = false; }
+    return;
+  }
+  if (!STATE.comprasLeche) STATE.comprasLeche = [];
+  STATE.comprasLeche.push(sellar({ id: "cl_" + Date.now().toString(36), datetime: dt, marca,
+    precio: Number.isFinite(precio) ? precio : null, gramos }));
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasToma();
+}
+function deleteCompraLeche(id) {
+  anotarBorrado(id);
+  STATE.comprasLeche = (STATE.comprasLeche || []).filter(x => x.id !== id);
   guardarEstado();
 }
 /* Mismo registro que el de Pediatra, en modal. Ids propios (ms-*) porque el
@@ -11168,7 +11283,7 @@ function htmlPatron() {
       <span><i class="punto" style="background:var(--purple)"></i>sueño</span>
       <span><i class="punto" style="background:var(--blue)"></i>toma</span>
       <span><i class="punto" style="background:var(--green)"></i>alimento</span>
-      <span><i class="punto" style="background:var(--slate)"></i>pañal</span>
+      <span><i class="punto" style="background:var(--yellow)"></i>pañal</span>
       <span class="nota">La línea roja es la hora que es ahora. Toca un día para ver a qué hora fue cada cosa.</span>
     </div>
   </div>`;
@@ -11277,7 +11392,7 @@ function htmlResumenCalendario() {
       a.tomas && `<i style="background:var(--blue)"></i>`,
       a.sueno && `<i style="background:var(--purple)"></i>`,
       a.comida && `<i style="background:var(--green)"></i>`,
-      a.panales && `<i style="background:var(--slate)"></i>`,
+      a.panales && `<i style="background:var(--yellow)"></i>`,
     ].filter(Boolean).join("");
     /* Los dias sin nada no se pueden pulsar: abrir un dia vacio no lleva a
        ningun sitio. */
@@ -11306,7 +11421,7 @@ function htmlResumenCalendario() {
       <span><i class="punto" style="background:var(--blue)"></i>tomas</span>
       <span><i class="punto" style="background:var(--purple)"></i>sueño</span>
       <span><i class="punto" style="background:var(--green)"></i>alimentos</span>
-      <span><i class="punto" style="background:var(--slate)"></i>pañales</span>
+      <span><i class="punto" style="background:var(--yellow)"></i>pañales</span>
       <span class="nota">Toca un día para ver todo lo que se apuntó.</span>
     </div>
   </div>`;
@@ -11863,7 +11978,9 @@ function calcularAvisos() {
       texto: dada
         ? "Dada hoy. 400 UI al día durante el primer año (Previnfad/AEPap)."
         : "400 UI al día durante el primer año (Previnfad/AEPap). Márcalo cuando se la hayas dado.",
-      accion: { et: dada ? "✓ Dada" : "Hecho", fn: `PB.marcarVitaminaD()` } });
+      /* "Hecho" no decia si era un estado o un boton. "Marcar" es un verbo y
+         "✓ Dada" un estado: no hay forma de leerlos al reves. */
+      accion: { et: dada ? "✓ Dada" : "Marcar", fn: `PB.marcarVitaminaD()` } });
   }
 
   /* Vacunas ya vencidas y sin marcar. Con la cita puesta no se avisa: ya sale
@@ -13831,7 +13948,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompraLeche, guardarCompraLeche, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
@@ -21627,11 +21744,27 @@ function boot(vistaInicial) {
        Sin SDK ni CDN: solo fetch contra la REST API y /auth/v1/* de GoTrue.
        ======================================================================== */
 
-    /** Llamada genérica a Supabase. Renueva token si recibe 401. */
+    /* El token de acceso caduca a la hora. Al arrancar salen seis o siete
+       peticiones a la vez; si el token esta caducado, TODAS reciben un 401 y
+       cada una renovaba por su cuenta con el MISMO refresh token. Supabase
+       rota los refresh tokens: el primero en llegar gana, los demas reciben
+       "ya usado" y, con la deteccion de reuso, puede invalidar la sesion
+       entera. De ahi los "problemas de acceso repetidos" y buena parte de lo
+       que tardaba en entrar. Dos cosas: se mira la caducidad ANTES de pedir,
+       para no comerse el 401, y la renovacion es de una en una. */
+    function tokenCaducaPronto(token) {
+      try {
+        const cuerpo = JSON.parse(atob(String(token).split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+        return typeof cuerpo.exp === "number" && cuerpo.exp * 1000 < Date.now() + 60000;
+      } catch (_) { return false; }
+    }
+
+    /** Llamada genérica a Supabase. Renueva token si caduca o si recibe 401. */
     async function supaFetch(path, options, retry) {
       if (retry === undefined) retry = true;
       const s = sesion.supabase;
       if (!s.url || !s.anonKey) throw new Error("Supabase no configurado");
+      if (retry && s.token && s.refreshToken && tokenCaducaPronto(s.token)) await refrescarToken();
       const headers = Object.assign({
         "apikey": s.anonKey,
         "Content-Type": "application/json"
@@ -21652,22 +21785,30 @@ function boot(vistaInicial) {
       return res.text();
     }
 
-    async function refrescarToken() {
-      const s = sesion.supabase;
-      if (!s.refreshToken) return false;
-      try {
-        const res = await fetch(s.url + "/auth/v1/token?grant_type=refresh_token", {
-          method: "POST",
-          headers: { "apikey": s.anonKey, "Content-Type": "application/json" },
-          body: JSON.stringify({ refresh_token: s.refreshToken })
-        });
-        if (!res.ok) return false;
-        const data = await res.json();
-        s.token = data.access_token;
-        s.refreshToken = data.refresh_token || s.refreshToken;
-        guardarSupabase();
-        return true;
-      } catch (_) { return false; }
+    let _refrescando = null;
+    function refrescarToken() {
+      /* De una en una: quien llegue mientras hay una en vuelo espera a esa
+         misma promesa en vez de gastar el refresh token por su cuenta. */
+      if (_refrescando) return _refrescando;
+      _refrescando = (async () => {
+        const s = sesion.supabase;
+        if (!s.refreshToken) return false;
+        try {
+          const res = await fetch(s.url + "/auth/v1/token?grant_type=refresh_token", {
+            method: "POST",
+            headers: { "apikey": s.anonKey, "Content-Type": "application/json" },
+            body: JSON.stringify({ refresh_token: s.refreshToken })
+          });
+          if (!res.ok) return false;
+          const data = await res.json();
+          s.token = data.access_token;
+          s.refreshToken = data.refresh_token || s.refreshToken;
+          guardarSupabase();
+          return true;
+        } catch (_) { return false; }
+      })();
+      _refrescando.finally(() => { _refrescando = null; });
+      return _refrescando;
     }
 
     /* Quien eres sale de hogar_miembros, no de una lista de correos en el
