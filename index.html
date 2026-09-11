@@ -8148,6 +8148,7 @@ function defaultState() {
       pais: "es_ES",
       lastExportAt: "",
       carnetSembrado: false,      // el carnet de Pablo solo se siembra una vez
+      carnetSembrado2: false,     // idem, la visita de los 6 meses
       vacunasEditadas: false,     // la familia ha añadido o quitado vacunas
     },
     alimentos: {},          // id -> { historial: [{fecha, resultado}] }
@@ -8198,6 +8199,25 @@ const CARNET_PABLO = {
     x_menc:   { fecha: "2026-08-07", pais: "es", lote: "LT6286",    lab: "NeisVac-C · Pfizer",         notas: "" },
     x_menb:   { fecha: "2026-08-07", pais: "es", lote: "ABXG42AA",  lab: "Bexsero",                    notas: "Cad. 06-2029" },
   },
+  /* Segunda tanda: la visita de los 6 meses (11-09-2026, Colsanitas Salitre).
+     Va aparte porque el carnet de arriba ya se sembro en los moviles y no se
+     vuelve a pasar. Las tres del calendario se fechan; las dos que el carnet
+     colombiano no trae a los 6 meses (3ª de rotavirus y 3ª de neumococo 15)
+     se añaden como vacunas propias con id fijo, para que los dos moviles
+     creen la misma y no una cada uno. */
+  tanda2: {
+    puestas: {
+      m6_polio: { fecha: "2026-09-11", pais: "co", lote: "Y3G14D1", lab: "Hexaxim · Sanofi",          notas: "Colsanitas Salitre · Cad. 06-2028" },
+      m6_penta: { fecha: "2026-09-11", pais: "co", lote: "Y3G14D1", lab: "Hexaxim · Sanofi",          notas: "Colsanitas Salitre · Cad. 06-2028" },
+      m6_flu:   { fecha: "2026-09-11", pais: "co", lote: "NDB",     lab: "Influvac · Abbott",         notas: "Colsanitas Salitre · Cad. 01-2027" },
+    },
+    nuevas: [
+      { id: "vx_m6_rota",  vaccine: "Rotavirus",           dose: "3ª", fecha: "2026-09-11", pais: "co", lote: "A002760", lab: "RotaTeq · MSD",              notas: "Colsanitas Salitre · Cad. 10-2027" },
+      { id: "vx_m6_neumo", vaccine: "Neumococo conjugada", dose: "3ª", fecha: "2026-09-11", pais: "co", lote: "A005256", lab: "Vaxneuvance (PCV15) · MSD", notas: "Colsanitas Salitre · Cad. 01-2028" },
+    ],
+    /* La 2ª de gripe la dejaron citada en el carnet para el 10-10-2026. */
+    programadas: { m7_flu: "2026-10-10" },
+  },
 };
 /* "Probando" dejo de ser un estado que se pueda poner, asi que se borran los
    apuntes que lo usaban: un alimento no puede quedarse con una pastilla de
@@ -8223,6 +8243,12 @@ function limpiarProbando(st) {
 }
 
 function sembrarCarnet(st) {
+  /* La tanda 2 va despues de la primera: si fuera antes, la primera veria
+     vacunas marcadas y se creeria que el carnet ya estaba sembrado. */
+  sembrarCarnetTanda1(st);
+  return sembrarCarnetTanda2(st);
+}
+function sembrarCarnetTanda1(st) {
   if (st.config && st.config.carnetSembrado) return st;
   if (!st.config || st.config.fechaNacimiento !== CARNET_PABLO.nacimiento) return st;
   const yaHay = st.vaccinesDone && Object.keys(st.vaccinesDone).length;
@@ -8236,6 +8262,41 @@ function sembrarCarnet(st) {
   st.config.carnetSembrado = true;
   /* Sin marca de tiempo el sync cree que no hay nada nuevo y el carnet no
      llega nunca al otro dispositivo. */
+  st.modificado = new Date().toISOString();
+  return st;
+}
+
+/* Solo rellena lo que falte: una fecha ya puesta (no programada) no se toca,
+   y de la ficha solo se completan los campos vacios. Asi no pisa nada que se
+   haya apuntado a mano en la consulta. */
+function sembrarCarnetTanda2(st) {
+  if (!st.config || st.config.carnetSembrado2) return st;
+  if (st.config.fechaNacimiento !== CARNET_PABLO.nacimiento) return st;
+  const t = CARNET_PABLO.tanda2;
+  const hoy = new Date().toISOString().slice(0, 10);
+  st.vaccinesDone = st.vaccinesDone || {};
+  st.vaccinesInfo = st.vaccinesInfo || {};
+  if (!Array.isArray(st.vaccines) || !st.vaccines.length) st.vaccines = JSON.parse(JSON.stringify(VACCINES));
+  const completar = (id, d) => {
+    const actual = st.vaccinesDone[id];
+    if (!actual || actual > hoy) st.vaccinesDone[id] = d.fecha;   // sin fecha o solo programada
+    const info = st.vaccinesInfo[id] || {};
+    for (const k of ["pais", "lote", "lab", "notas"]) if (!info[k]) info[k] = d[k];
+    st.vaccinesInfo[id] = info;
+    if (st.borrados) { delete st.borrados["vaccinesDone:" + id]; delete st.borrados["vaccinesInfo:" + id]; }
+  };
+  for (const [id, d] of Object.entries(t.puestas)) completar(id, d);
+  for (const n of t.nuevas) {
+    const repetida = st.vaccines.some(v => v.id === n.id
+      || (v.vaccine === n.vaccine && v.dose === n.dose && String(v.id).indexOf("vx_") === 0));
+    if (!repetida) {
+      st.vaccines.push({ id: n.id, grupo: "6 meses", age: "6 meses", vaccine: n.vaccine, dose: n.dose });
+      st.config.vacunasEditadas = true;
+    }
+    if (st.vaccines.some(v => v.id === n.id)) completar(n.id, n);
+  }
+  for (const [id, f] of Object.entries(t.programadas)) if (!st.vaccinesDone[id]) st.vaccinesDone[id] = f;
+  st.config.carnetSembrado2 = true;
   st.modificado = new Date().toISOString();
   return st;
 }
