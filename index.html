@@ -9985,7 +9985,27 @@ function htmlLoQueSueleVenir() {
   linea(wnPrediccion(tomas, ahora), "toma",
     "Siguiente toma sobre las", "La siguiente toma ya va tocando",
     `suele comer cada ${(t => t ? duracionCorta(t.cada) : "")(wnPrediccion(tomas, ahora))}`);
-  if (cadaDespierto !== null && despiertos.length >= WN_INTERVALOS_MINIMOS && ultimoFin) {
+  /* Si esta durmiendo ahora, lo que interesa no es cuando le entrara el
+     sueño sino cuando se despertara: la mediana de lo que le duran los
+     sueños de ese tipo (siesta o noche), contada desde que se durmio. Antes
+     seguia diciendo "lleva despierto mas de lo habitual" con la siesta en
+     marcha, porque miraba el fin del sueño anterior. */
+  const enCurso = STATE.sleep.filter(x => !x.end && new Date(x.start) <= ahora)
+    .sort((a, b) => new Date(b.start) - new Date(a.start))[0];
+  if (enCurso) {
+    const tipo = enCurso.type === "nocturno" ? "nocturno" : "siesta";
+    const duraciones = suenios.filter(x => (x.type === "nocturno" ? "nocturno" : "siesta") === tipo)
+      .map(x => (new Date(x.end) - new Date(x.start)) / 60000)
+      .filter(d => d > 0 && d <= 16 * 60);
+    const dura = mediana(duraciones);
+    if (dura !== null && duraciones.length >= WN_INTERVALOS_MINIMOS) {
+      const c = new Date(new Date(enCurso.start).getTime() + dura * 60000);
+      linea({ cuando: c, cada: Math.round(dura), pasado: c <= ahora }, "sueno",
+        "Probablemente se despierte sobre las", "Ya lleva durmiendo más de lo habitual",
+        tipo === "nocturno" ? `por la noche suele dormir ${duracionCorta(Math.round(dura))}`
+                            : `sus siestas suelen durar ${duracionCorta(Math.round(dura))}`);
+    }
+  } else if (cadaDespierto !== null && despiertos.length >= WN_INTERVALOS_MINIMOS && ultimoFin) {
     const c = new Date(ultimoFin.getTime() + cadaDespierto * 60000);
     linea({ cuando: c, cada: Math.round(cadaDespierto), pasado: c <= ahora }, "sueno",
       "Suele entrarle el sueño sobre las", "Ya lleva despierto más de lo habitual",
