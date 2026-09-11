@@ -6646,6 +6646,56 @@
       font-weight: 600;
       margin-bottom: 4px;
     }
+    /* ---- Campos de formulario, la regla que manda ------------------------
+       Arriba hay tres capas de reglas para los inputs y NINGUNA cubria
+       datetime-local ni url: esos dos salian con el estilo del navegador, sin
+       ancho, sin relleno, con su anchura nativa, y el de fecha y hora se salia
+       de la tarjeta. Esta va la ultima y cubre todos los tipos de texto, pero
+       SOLO dentro de .campo: los buscadores y los mini campos de ml y hora
+       tienen su propio ancho y no hay que tocarlos.
+       Todos con width:100% y min-width:0 —el control nativo de fecha trae un
+       ancho minimo propio que se monta encima de lo de al lado— y sin la
+       apariencia nativa, que en iOS es lo que ignora el ancho que se le da. */
+    .pb-app .campo input[type="text"], .pb-app .campo input[type="search"],
+    .pb-app .campo input[type="url"], .pb-app .campo input[type="email"],
+    .pb-app .campo input[type="tel"], .pb-app .campo input[type="number"],
+    .pb-app .campo input[type="date"], .pb-app .campo input[type="time"],
+    .pb-app .campo input[type="datetime-local"],
+    .pb-app .campo select, .pb-app .campo textarea {
+      display: block; width: 100%; min-width: 0; max-width: 100%;
+      background: var(--bg-input, var(--bg-soft)); border: 1px solid var(--line);
+      border-radius: var(--r-md); padding: 10px 12px;
+      font-size: 0.875rem; font-family: var(--font-ui); color: var(--text);
+      -webkit-appearance: none; appearance: none;
+      /* iOS pinta los de fecha mas bajos que los de texto: misma altura para
+         que en una fila de dos no baile la linea base. */
+      min-height: 42px; line-height: 1.3;
+    }
+    .pb-app .campo select {
+      /* Al quitar la apariencia nativa se pierde la flecha: se pone una. */
+      padding-right: 34px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2364748b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+    }
+    /* La rejilla de dos columnas tiene ademas que dejar que cada celda
+       encoja: sin min-width:0 el grid da a la columna el ancho intrinseco del
+       control, que para fecha y hora es mas de media pantalla. */
+    .pb-app .grid-campos2 > *, .pb-app .grid-campos3 > *,
+    .pb-modal .grid-campos2 > * { min-width: 0; }
+    /* En pantalla tactil, 16 px o iOS hace zoom al tocar el campo. Es la
+       unica forma de evitarlo sin bloquear el zoom de toda la pagina, que es
+       una barbaridad para quien lo necesita. Esto si va para TODOS los campos,
+       buscadores incluidos. */
+    @media (pointer: coarse) {
+      /* Los de .campo repetidos aqui a proposito: la regla base de arriba es
+         .pb-app .campo select (0,2,1) y una media query no suma
+         especificidad, asi que .pb-app select (0,1,1) perdia y los
+         desplegables y las areas de texto se quedaban en 14 px. */
+      .pb-app input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+      .pb-app .campo select, .pb-app .campo textarea,
+      .pb-app select, .pb-app textarea { font-size: 1rem; }
+    }
+
     .pb-app input.ml-input, .pb-app input.hora-input {
       background: var(--bg-soft);
       border: 1px solid var(--line);
