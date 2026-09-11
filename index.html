@@ -9909,6 +9909,33 @@ const WN_DIAS_MINIMOS = 7;
 const WN_VENTANA = 14;          // dias que se miran hacia atras
 const WN_INTERVALOS_MINIMOS = 3;
 const WN_TOPE_HORAS = 8;        // un hueco mayor no es un intervalo, es un olvido
+/* Un despertar corto no parte el sueño: si se despierta a las 14:00 y a las
+   14:05 vuelve a dormirse, para el patron es la misma siesta, no dos de las
+   que la segunda "dura" lo que quede. Los apuntes se quedan como estan; solo
+   se juntan para calcular. */
+const WN_HUECO_MISMO_SUENO = 20;  // minutos
+
+/** Junta los apuntes de sueño en episodios: trozos separados por menos de
+    WN_HUECO_MISMO_SUENO minutos cuentan como uno. Devuelve
+    { start, end (null si sigue en curso), type, trozos } ordenados por start.
+    El tipo es nocturno si algun trozo lo es. */
+function episodiosSueno(lista) {
+  const orden = (lista || []).filter(x => x && x.start)
+    .slice().sort((a, b) => new Date(a.start) - new Date(b.start));
+  const out = [];
+  for (const x of orden) {
+    const ini = new Date(x.start), fin = x.end ? new Date(x.end) : null;
+    const ult = out[out.length - 1];
+    if (ult && ult.end && (ini - ult.end) / 60000 <= WN_HUECO_MISMO_SUENO && ini >= ult.start) {
+      ult.end = fin === null ? null : (fin > ult.end ? fin : ult.end);
+      if (x.type === "nocturno") ult.type = "nocturno";
+      ult.trozos.push(x);
+    } else {
+      out.push({ start: ini, end: fin, type: x.type === "nocturno" ? "nocturno" : "siesta", trozos: [x] });
+    }
+  }
+  return out;
+}
 
 function mediana(xs) {
   if (!xs.length) return null;
@@ -9963,14 +9990,14 @@ function htmlLoQueSueleVenir() {
     .map(p => new Date(p.datetime)).filter(d => !isNaN(d));
   /* Para el sueño no interesa cada cuanto duerme, sino cuanto aguanta
      despierto: del fin de un sueño al principio del siguiente. */
-  const suenios = STATE.sleep.filter(x => x.end && new Date(x.start) >= desde)
-    .sort((a, b) => new Date(a.start) - new Date(b.start));
+  const episodios = episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desde));
+  const suenios = episodios.filter(e => e.end);
   const despiertos = [];
   for (let i = 1; i < suenios.length; i++) {
-    const d = (new Date(suenios[i].start) - new Date(suenios[i - 1].end)) / 60000;
+    const d = (suenios[i].start - suenios[i - 1].end) / 60000;
     if (d > 0 && d <= WN_TOPE_HORAS * 60) despiertos.push(d);
   }
-  const fines = suenios.map(x => new Date(x.end)).filter(d => d <= new Date()).sort((a, b) => a - b);
+  const fines = suenios.map(x => x.end).filter(d => d <= new Date()).sort((a, b) => a - b);
   const ultimoFin = fines.length ? fines[fines.length - 1] : null;
   const cadaDespierto = mediana(despiertos);
 
@@ -9990,20 +10017,24 @@ function htmlLoQueSueleVenir() {
      sueños de ese tipo (siesta o noche), contada desde que se durmio. Antes
      seguia diciendo "lleva despierto mas de lo habitual" con la siesta en
      marcha, porque miraba el fin del sueño anterior. */
-  const enCurso = STATE.sleep.filter(x => !x.end && new Date(x.start) <= ahora)
-    .sort((a, b) => new Date(b.start) - new Date(a.start))[0];
+  const enCurso = episodios.filter(e => !e.end && e.start <= ahora).pop();
   if (enCurso) {
-    const tipo = enCurso.type === "nocturno" ? "nocturno" : "siesta";
-    const duraciones = suenios.filter(x => (x.type === "nocturno" ? "nocturno" : "siesta") === tipo)
-      .map(x => (new Date(x.end) - new Date(x.start)) / 60000)
+    const tipo = enCurso.type;
+    const duraciones = suenios.filter(x => x.type === tipo)
+      .map(x => (x.end - x.start) / 60000)
       .filter(d => d > 0 && d <= 16 * 60);
     const dura = mediana(duraciones);
     if (dura !== null && duraciones.length >= WN_INTERVALOS_MINIMOS) {
-      const c = new Date(new Date(enCurso.start).getTime() + dura * 60000);
+      /* Se cuenta desde el principio del episodio, no del ultimo trozo: si se
+         desperto un rato y volvio a dormirse, ya lleva gastada parte de la
+         siesta. Si a ese trozo le costo volver, se dice. */
+      const c = new Date(enCurso.start.getTime() + dura * 60000);
+      const retomado = enCurso.trozos.length > 1;
+      const cuanto = tipo === "nocturno" ? `por la noche suele dormir ${duracionCorta(Math.round(dura))}`
+                                         : `sus siestas suelen durar ${duracionCorta(Math.round(dura))}`;
       linea({ cuando: c, cada: Math.round(dura), pasado: c <= ahora }, "sueno",
         "Probablemente se despierte sobre las", "Ya lleva durmiendo más de lo habitual",
-        tipo === "nocturno" ? `por la noche suele dormir ${duracionCorta(Math.round(dura))}`
-                            : `sus siestas suelen durar ${duracionCorta(Math.round(dura))}`);
+        retomado ? `${cuanto}; el rato despierto de las ${hhmm(enCurso.trozos[enCurso.trozos.length - 2].end ? new Date(enCurso.trozos[enCurso.trozos.length - 2].end) : enCurso.start)} cuenta como el mismo sueño` : cuanto);
     }
   } else if (cadaDespierto !== null && despiertos.length >= WN_INTERVALOS_MINIMOS && ultimoFin) {
     const c = new Date(ultimoFin.getTime() + cadaDespierto * 60000);
@@ -13057,7 +13088,9 @@ function renderSueno(el) {
   const activos = STATE.sleep.filter(s => !s.end).sort((a, b) => new Date(b.start) - new Date(a.start));
   const hHoy = horasDelDia(HOY_ISO, mapa);
   const estHoy = estadoSueno(hHoy, meses);
-  const siestasHoy = STATE.sleep.filter(s => s.type === "siesta" && s.start.slice(0, 10) === HOY_ISO).length;
+  /* Por episodios: un despertar de cinco minutos no convierte una siesta en dos. */
+  const siestasHoy = episodiosSueno(STATE.sleep.filter(s => s.start.slice(0, 10) === HOY_ISO))
+    .filter(e => e.type === "siesta").length;
   if (!SUENO_CAL_MES) { const h = new Date(); SUENO_CAL_MES = new Date(h.getFullYear(), h.getMonth(), 1); }
 
   let html = "";
