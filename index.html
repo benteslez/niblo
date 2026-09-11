@@ -8149,6 +8149,7 @@ function defaultState() {
       lastExportAt: "",
       carnetSembrado: false,      // el carnet de Pablo solo se siembra una vez
       carnetSembrado2: false,     // idem, la visita de los 6 meses
+      carnetSembrado3: false,     // idem, la gripe anual al año de la 1ª dosis
       vacunasEditadas: false,     // la familia ha añadido o quitado vacunas
     },
     alimentos: {},          // id -> { historial: [{fecha, resultado}] }
@@ -8215,8 +8216,10 @@ const CARNET_PABLO = {
       { id: "vx_m6_rota",  vaccine: "Rotavirus",           dose: "3ª", fecha: "2026-09-11", pais: "co", lote: "A002760", lab: "RotaTeq · MSD",              notas: "Colsanitas Salitre · Cad. 10-2027" },
       { id: "vx_m6_neumo", vaccine: "Neumococo conjugada", dose: "3ª", fecha: "2026-09-11", pais: "co", lote: "A005256", lab: "Vaxneuvance (PCV15) · MSD", notas: "Colsanitas Salitre · Cad. 01-2028" },
     ],
-    /* La 2ª de gripe la dejaron citada en el carnet para el 10-10-2026. */
-    programadas: { m7_flu: "2026-10-10" },
+    /* La 2ª de gripe la dejaron citada en el carnet para el 10-10-2026. La
+       anual de los "12 meses" es en realidad al año de la primera dosis,
+       segun la pediatra: 11-09-2027. */
+    programadas: { m7_flu: "2026-10-10", m12_flu: "2027-09-11" },
   },
 };
 /* "Probando" dejo de ser un estado que se pueda poner, asi que se borran los
@@ -8270,7 +8273,16 @@ function sembrarCarnetTanda1(st) {
    y de la ficha solo se completan los campos vacios. Asi no pisa nada que se
    haya apuntado a mano en la consulta. */
 function sembrarCarnetTanda2(st) {
-  if (!st.config || st.config.carnetSembrado2) return st;
+  if (!st.config) return st;
+  /* La tanda 2 ya pudo pasar sin la gripe anual: esa se añade aparte. */
+  if (st.config.carnetSembrado2 && !st.config.carnetSembrado3
+      && st.config.fechaNacimiento === CARNET_PABLO.nacimiento) {
+    st.vaccinesDone = st.vaccinesDone || {};
+    if (!st.vaccinesDone.m12_flu) st.vaccinesDone.m12_flu = CARNET_PABLO.tanda2.programadas.m12_flu;
+    st.config.carnetSembrado3 = true;
+    st.modificado = new Date().toISOString();
+  }
+  if (st.config.carnetSembrado2) return st;
   if (st.config.fechaNacimiento !== CARNET_PABLO.nacimiento) return st;
   const t = CARNET_PABLO.tanda2;
   const hoy = new Date().toISOString().slice(0, 10);
@@ -8297,6 +8309,7 @@ function sembrarCarnetTanda2(st) {
   }
   for (const [id, f] of Object.entries(t.programadas)) if (!st.vaccinesDone[id]) st.vaccinesDone[id] = f;
   st.config.carnetSembrado2 = true;
+  st.config.carnetSembrado3 = true;
   st.modificado = new Date().toISOString();
   return st;
 }
