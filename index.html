@@ -136,6 +136,7 @@
          alertas) y un azul profundo para el baño, que no se confunda con la toma. */
       --pb-yellow-bg: #f6f0d6; --pb-yellow: #a08a4a;
       --pb-deep-bg:   #d5dcf0; --pb-deep:   #253a8a;
+      --pb-teal-bg:   #d3ece8; --pb-teal:   #0f766e;
       --tipo-verduras_ensaladas-bg:   #dde6df; --tipo-verduras_ensaladas-fg:   #3a6b3f;  /* verde sage */
       --tipo-salsas_fondos-bg:        #ebd5dc; --tipo-salsas_fondos-fg:        #823049;  /* borgoña */
       --tipo-desayunos-bg:            #e0dde9; --tipo-desayunos-fg:            #564f8c;  /* lila profundo */
@@ -159,6 +160,7 @@
       --tipo-huevos-bg:               #422006; --tipo-huevos-fg:               #fde68a;
       --pb-yellow-bg: #2e2a17; --pb-yellow: #d6c26a;
       --pb-deep-bg:   #172554; --pb-deep:   #a5b4fc;
+      --pb-teal-bg:   #134e4a; --pb-teal:   #5eead4;
       --tipo-verduras_ensaladas-bg:   #052e16; --tipo-verduras_ensaladas-fg:   #86efac;
       --tipo-salsas_fondos-bg:        #4c0519; --tipo-salsas_fondos-fg:        #fda4af;
       --tipo-desayunos-bg:            #2e1065; --tipo-desayunos-fg:            #c4b5fd;
@@ -5294,6 +5296,8 @@
       --yellow-soft: var(--pb-yellow-bg);
       --deep:        var(--pb-deep);
       --deep-soft:   var(--pb-deep-bg);
+      --teal:        var(--pb-teal);
+      --teal-soft:   var(--pb-teal-bg);
 
       --radius:     var(--r-lg);
       /* Los numeros de Pablo van en Manrope con cifras tabulares, no en una
@@ -5685,6 +5689,9 @@
     }
     .pb-app .pt-caja:hover { background: var(--line-soft); }
     .pb-app .pt-caja:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    /* El dia que se esta mirando, cuando el patron sale en el panel de un dia. */
+    .pb-app .pt-col.sel .pt-caja { box-shadow: inset 0 0 0 1.5px var(--blue); }
+    .pb-app .pt-col.sel .pt-dia, .pb-app .pt-col.sel .pt-dia span { color: var(--blue); font-weight: 700; }
 
     /* Resumen de un dia, dentro del modal del patron. */
     .pb-app .pt-res-kpis {
@@ -5831,6 +5838,8 @@
     .pb-app .linea-icono.i-rechazo { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .linea-icono.i-panal { background: var(--yellow-soft); color: var(--yellow); }
     .pb-app .linea-icono.i-compra { background: var(--bg-soft); color: var(--text-muted); }
+    .pb-app .linea-icono.i-medicamento { background: var(--red-soft); color: var(--red); }
+    .pb-app .linea-icono.i-vacuna { background: var(--teal-soft); color: var(--teal); }
     .pb-app .linea-icono.i-bano  { background: var(--deep-soft); color: var(--deep); }
     /* El "+" de la linea del dia: redondo y solo, sin texto al lado. */
     .pb-app .btn-mas {
@@ -8169,6 +8178,9 @@ function defaultState() {
        gramos. Con dos o mas se sabe cuanto dura un bote y el semaforo avisa
        antes de que se acabe. */
     comprasLeche: [],
+    /* Medicamentos dados: que, cuando y cuantos ml. En la linea del dia sale
+       con el nombre (Dolex, Apiretal…), no con "Medicamento". */
+    medicamentos: [],
     /* Dia -> true. Estaba en localStorage con los avisos descartados, asi que
        no viajaba: si la dosis la daba y la marcaba el otro movil, aqui seguia
        contando como olvidada. */
@@ -8439,6 +8451,12 @@ const CAMPOS_REGISTRO = {
     { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
     { k: "notas", et: "Notas", tipo: "textarea" },
   ]},
+  medicamentos: { titulo: "medicamento", col: "medicamentos", campos: [
+    { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
+    { k: "nombre", et: "Medicamento", tipo: "text" },
+    { k: "ml",     et: "Cantidad (ml)", tipo: "number", paso: "0.1" },
+    { k: "notas",  et: "Notas", tipo: "textarea" },
+  ]},
   comprasLeche: { titulo: "compra de leche", col: "comprasLeche", campos: [
     { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
     { k: "marca",  et: "Marca", tipo: "text" },
@@ -8541,7 +8559,7 @@ function confirmarBorrado(col, id) {
   const fn = { sleep: deleteSleep, diapers: deleteDiaper, growth: deleteGrowth,
                notes: deleteNote, pediatricVisits: deletePediatricVisit,
                sintomas: deleteSintoma, banos: deleteBano,
-               comprasLeche: deleteCompraLeche }[col];
+               comprasLeche: deleteCompraLeche, medicamentos: deleteMedicamento }[col];
   cerrarModal();
   if (fn) fn(id);
   /* Cada delete* repinta su propia pestana. Como ahora se puede borrar desde
@@ -8588,7 +8606,7 @@ function cerrarModal() {
    Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
-const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche"];
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "medicamentos"];
 const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD"];
 
 function sello() { return new Date().toISOString(); }
@@ -9890,6 +9908,10 @@ LINEA_GLIFOS.rechazo = '<path d="M12 2.6A9.4 9.4 0 1 0 21.4 12 9.4 9.4 0 0 0 12 
 LINEA_GLIFOS.info = '<path d="M12 2.6A9.4 9.4 0 1 0 21.4 12 9.4 9.4 0 0 0 12 2.6zm-.9 4.1h1.8v1.8h-1.8zm0 3.4h1.8v7h-1.8z"/>';
 LINEA_GLIFOS.panal = '<path d="M3 5.4h18v5.2c0 5.2-4 8.8-9 8.8s-9-3.6-9-8.8z"/>';
 LINEA_GLIFOS.compra = '<path d="M5 6.2h14V8H5zM6 9h12v9.4A2.6 2.6 0 0 1 15.4 21H8.6A2.6 2.6 0 0 1 6 18.4zm2.4 2.4v6.2h1.8v-6.2z"/>';
+/* Gota con la pastilla dentro: lo que se da a cucharadas o con jeringa. */
+LINEA_GLIFOS.medicamento = '<path d="M12 2.8c3.4 4 5.6 6.9 5.6 9.6a5.6 5.6 0 1 1-11.2 0c0-2.7 2.2-5.6 5.6-9.6zm-2.6 8.6v1.8h5.2v-1.8z"/>';
+/* Jeringa en diagonal. */
+LINEA_GLIFOS.vacuna = '<path d="M19.6 3l1.4 1.4-1.6 1.6 1.2 1.2-1.4 1.4-1.2-1.2-1 1 1.8 1.8-7.4 7.4-3.4-.4-1.8 1.8L4.8 22 2 19.2l2.2-2.2-1.4-1.4 1.8-1.8-.4-3.4 7.4-7.4 1.8 1.8 1-1-1.2-1.2 1.4-1.4 1.2 1.2zM12.2 8.8l-5.6 5.6.2 2.2 2.2.2 5.6-5.6z"/>';
 LINEA_GLIFOS.bano  = '<path d="M4 11h16v2.5A5.5 5.5 0 0 1 14.5 19h-5A5.5 5.5 0 0 1 4 13.5zM6 11V6.5A2.5 2.5 0 0 1 11 6.5h-1.8a.7.7 0 0 0-1.4 0V11z"/>';
 function iconoLinea(tipo) {
   return `<span class="linea-icono i-${tipo}" aria-hidden="true"><svg viewBox="0 0 24 24"
@@ -10276,6 +10298,23 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
           etiquetas.length ? `<span class="linea-sub">${esc(etiquetas.join(" · "))}</span>` : ""}</span>
       </button>` };
     }),
+    ...(STATE.medicamentos || []).filter(m => (m.datetime || "").slice(0, 10) === dia.fecha).map(m => ({
+      hora: (m.datetime || "").slice(11, 16), html: `
+      <button type="button" class="linea-fila" onclick="PB.editarRegistro('medicamentos','${m.id}')">
+        <span class="linea-hora">${(m.datetime || "").slice(11, 16)}</span>
+        ${iconoLinea("medicamento")}
+        <span class="linea-texto"><b>${esc(m.nombre || "Medicamento")}</b>${
+          m.ml ? `<span class="linea-sub">${esc(String(m.ml).replace(".", ","))} ml</span>` : ""}</span>
+      </button>` })),
+    /* Las vacunas puestas ese dia, todas en una linea: se ponen en la misma
+       visita. A las 09:00 salvo que se cambie la hora (queda en la ficha). */
+    ...(vac => vac.length ? [{ hora: vac.hora, html: `
+      <button type="button" class="linea-fila" onclick="PB.modalHoraVacunas('${dia.fecha}')">
+        <span class="linea-hora">${vac.hora}</span>
+        ${iconoLinea("vacuna")}
+        <span class="linea-texto"><b>${vac.length === 1 ? "Vacuna" : "Vacunas"}</b><span
+          class="linea-sub">${esc(vac.map(v => `${v.vaccine} ${v.dose}`).join(" · "))}</span></span>
+      </button>` }] : [])(vacunasDelDia(dia.fecha)),
     ...(STATE.comprasLeche || []).filter(c => (c.datetime || "").slice(0, 10) === dia.fecha).map(c => {
       const sub = [c.marca, c.gramos ? `${c.gramos} g` : "", c.precio ? `${String(c.precio).replace(".", ",")} €` : ""]
         .filter(Boolean).join(" · ");
@@ -10405,6 +10444,7 @@ function modalAnadir(fecha, refrescarFn) {
     ["panal",    "Pañal",    "PB.modalPanal()"],
     ["bano",     "Baño",     `PB.modalBano('${fecha}')`],
     ["alerta",   "Síntomas", `PB.modalSintomas('${fecha}')`],
+    ["medicamento", "Medicamento", `PB.modalMedicamento('${fecha}')`],
     ["compra",   "Compra de leche", `PB.modalCompraLeche('${fecha}')`],
   ];
   abrirModal("Añadir", `<div class="anadir-lista">${opciones.map(([ico, et, fn]) =>
@@ -10474,6 +10514,85 @@ function guardarCompraLeche() {
   if (!STATE.comprasLeche) STATE.comprasLeche = [];
   STATE.comprasLeche.push(sellar({ id: "cl_" + Date.now().toString(36), datetime: dt, marca,
     precio: Number.isFinite(precio) ? precio : null, gramos }));
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasToma();
+}
+/* Medicamento. Los nombres ya usados salen como sugerencia, junto a los de
+   siempre, para no teclear "Apiretal" cada vez. */
+const MEDICAMENTOS_HABITUALES = ["Dolex", "Apiretal", "Dalsy", "Vitamina D"];
+function modalMedicamento(fecha) {
+  const usados = (STATE.medicamentos || []).map(m => m.nombre).filter(Boolean);
+  const nombres = [...new Set([...usados.reverse(), ...MEDICAMENTOS_HABITUALES])];
+  const ult = (STATE.medicamentos || []).slice().sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop() || {};
+  abrirModal("Medicamento", `
+    <div class="campo"><label for="md-dt">Fecha y hora</label>
+      <input type="datetime-local" id="md-dt" value="${horaAhoraEn(fecha)}"></div>
+    <div class="grid-campos2">
+      <div class="campo"><label for="md-nombre">Medicamento</label>
+        <input type="text" id="md-nombre" list="md-lista" value="${esc(ult.nombre || "")}" placeholder="Dolex" autocomplete="off">
+        <datalist id="md-lista">${nombres.map(n => `<option value="${esc(n)}">`).join("")}</datalist></div>
+      <div class="campo"><label for="md-ml">Cantidad (ml)</label>
+        <input type="number" id="md-ml" step="0.1" min="0" inputmode="decimal" value="${ult.ml != null ? esc(String(ult.ml)) : ""}" placeholder="2,5"></div>
+    </div>
+    <div class="campo"><label for="md-notas">Notas</label>
+      <input type="text" id="md-notas" placeholder="Opcional" autocomplete="off"></div>
+    <div class="modal-aviso" id="md-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarMedicamento()" }]);
+}
+function guardarMedicamento() {
+  const dt = document.getElementById("md-dt").value || nowDatetimeLocal();
+  const nombre = (document.getElementById("md-nombre").value || "").trim();
+  const ml = parseFloat(String(document.getElementById("md-ml").value).replace(",", "."));
+  const notas = (document.getElementById("md-notas").value || "").trim();
+  if (!nombre) {
+    const a = document.getElementById("md-aviso");
+    if (a) { a.textContent = "Pon el nombre del medicamento."; a.hidden = false; }
+    return;
+  }
+  if (!STATE.medicamentos) STATE.medicamentos = [];
+  STATE.medicamentos.push(sellar({ id: "md_" + Date.now().toString(36), datetime: dt, nombre,
+    ml: Number.isFinite(ml) ? ml : null, notas }));
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasToma();
+}
+function deleteMedicamento(id) {
+  anotarBorrado(id);
+  STATE.medicamentos = (STATE.medicamentos || []).filter(x => x.id !== id);
+  guardarEstado();
+}
+/* Vacunas puestas un dia, con la hora a la que salen en la linea del dia:
+   la primera que tenga hora en su ficha, y si ninguna la tiene, las 09:00. */
+const VACUNA_HORA_DEFECTO = "09:00";
+function vacunasDelDia(fecha) {
+  const lista = (STATE.vaccines || []).filter(v => STATE.vaccinesDone[v.id] === fecha);
+  const conHora = lista.map(v => infoVacuna(v.id).hora).find(Boolean);
+  lista.hora = conHora || VACUNA_HORA_DEFECTO;
+  return lista;
+}
+function modalHoraVacunas(fecha) {
+  const vac = vacunasDelDia(fecha);
+  if (!vac.length) return;
+  abrirModal(vac.length === 1 ? "Vacuna" : "Vacunas", `
+    <p class="modal-p">${esc(vac.map(v => `${v.vaccine} ${v.dose}`).join(" · "))}</p>
+    <div class="campo"><label for="vh-hora">Hora a la que se puso</label>
+      <input type="time" id="vh-hora" value="${vac.hora}"></div>
+    <p class="modal-p faint">El lote, el laboratorio y cómo le sentó se apuntan en la pestaña Vacunas.</p>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Ver vacunas", accion: "PB.cerrarModal();PB.irA('vacunas')" },
+     { et: "Guardar", primario: true, accion: `PB.guardarHoraVacunas('${fecha}')` }]);
+}
+function guardarHoraVacunas(fecha) {
+  const hora = (document.getElementById("vh-hora") || {}).value || VACUNA_HORA_DEFECTO;
+  if (!STATE.vaccinesInfo) STATE.vaccinesInfo = {};
+  for (const v of vacunasDelDia(fecha)) {
+    const info = Object.assign({}, infoVacuna(v.id));
+    if (hora === VACUNA_HORA_DEFECTO) delete info.hora; else info.hora = hora;
+    if (Object.keys(info).length) { STATE.vaccinesInfo[v.id] = info; olvidarBorradoClave("vaccinesInfo", v.id); }
+    else { delete STATE.vaccinesInfo[v.id]; anotarBorradoClave("vaccinesInfo", v.id); }
+  }
   guardarEstado();
   cerrarModal();
   refrescarTrasToma();
@@ -10907,6 +11026,9 @@ function abrirDiaCalendario(iso) {
      dato se veian distintas. */
   html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoDrawer");
   html += htmlLineaDelDia(dia, "PB.TOMAS_DRAWER", true);
+  /* El patron con ese dia en el centro: lo que hizo se entiende mejor junto
+     a los dias de al lado que solo. */
+  if (dia.fecha <= HOY_ISO) html += htmlPatron(dia.fecha);
   abrirDrawer(html);
   sincronizarTicSueno();
 }
@@ -11383,12 +11505,24 @@ function renderLecheChart() {
    y van como rayas. Se dibuja con posiciones en porcentaje, sin libreria: es
    una rejilla, no una grafica de puntos. */
 const PATRON_DIAS = 7;
-function htmlPatron() {
+/* Sin argumento, los ultimos 7 dias acabando hoy. Con un dia, ese dia en el
+   centro con tres a cada lado, salvo que eso se meta en el futuro: entonces
+   la ventana se corre para acabar hoy, que un dia sin llegar no tiene nada
+   que enseñar. */
+function htmlPatron(centro) {
   const dias = [];
+  const hoy0 = new Date(); hoy0.setHours(0, 0, 0, 0);
+  let fin = hoy0;
+  if (centro) {
+    const c = new Date(centro + "T00:00:00");
+    c.setDate(c.getDate() + Math.floor(PATRON_DIAS / 2));
+    if (c < hoy0) fin = c;
+  }
   for (let i = PATRON_DIAS - 1; i >= 0; i--) {
-    const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i);
+    const d = new Date(fin); d.setDate(d.getDate() - i);
     dias.push(isoLocal(d));
   }
+  const conHoy = dias.indexOf(HOY_ISO) >= 0;
   const minutos = (iso, hhmm) => {
     const [h, m] = (hhmm || "0:0").split(":").map(Number);
     return h * 60 + m;
@@ -11417,7 +11551,7 @@ function htmlPatron() {
        ancho una raya de toma mide dos pixeles y no hay dedo que la acierte.
        Pulsando en cualquier punto del dia (franja de sueño incluida) sale el
        resumen de ese dia con las horas. */
-    return `<div class="pt-col">
+    return `<div class="pt-col${f === centro ? " sel" : ""}">
       <button type="button" class="pt-caja" onclick="PB.resumenDia('${f}')"
         aria-label="Ver el resumen del ${fmtFechaLarga(f)}">${bloques}${rayas}</button>
       <div class="pt-dia">${dow}<span>${d.getDate()}</span></div></div>`;
@@ -11430,11 +11564,14 @@ function htmlPatron() {
      pastilla del resumen. Se pinta al entrar en Hoy; no hace falta que corra
      sola, baja un pixel cada cinco minutos y medio. */
   const ahoraMin = new Date().getHours() * 60 + new Date().getMinutes();
-  const lineaAhora = `<span class="pt-ahora" aria-hidden="true"
-    style="top:calc(var(--pt-alto) * ${ahoraMin} / 1440)"></span>`;
+  const lineaAhora = conHoy ? `<span class="pt-ahora" aria-hidden="true"
+    style="top:calc(var(--pt-alto) * ${ahoraMin} / 1440)"></span>` : "";
+  const titulo = centro && centro !== HOY_ISO
+    ? `${fmtFechaCorta(dias[0])} – ${fmtFechaCorta(dias[dias.length - 1])}`
+    : `últimos ${PATRON_DIAS} días`;
 
   return `<div class="card">
-    <h2>Patrón <span class="n">últimos ${PATRON_DIAS} días</span></h2>
+    <h2>Patrón <span class="n">${titulo}</span></h2>
     <div class="pt-grid">
       <div class="pt-horas">${horas}</div>
       <div class="pt-cols">${columnas}${lineaAhora}</div>
@@ -11444,7 +11581,7 @@ function htmlPatron() {
       <span><i class="punto" style="background:var(--blue)"></i>toma</span>
       <span><i class="punto" style="background:var(--green)"></i>alimento</span>
       <span><i class="punto" style="background:var(--yellow)"></i>pañal</span>
-      <span class="nota">La línea roja es la hora que es ahora. Toca un día para ver a qué hora fue cada cosa.</span>
+      <span class="nota">${conHoy ? "La línea roja es la hora que es ahora. " : ""}Toca un día para ver a qué hora fue cada cosa.</span>
     </div>
   </div>`;
 }
@@ -13967,7 +14104,10 @@ function guardarInfoVacuna(id) {
     .filter(k => (document.getElementById(`vd-r-${k}-${id}`) || {}).checked);
   const info = { pais: val("pais"), lote: val("lote").trim(), lab: val("lab").trim(), notas: val("notas").trim() };
   if (reacc.length) info.reacc = reacc;
-  if (!info.pais && !info.lote && !info.lab && !info.notas && !reacc.length) { delete STATE.vaccinesInfo[id]; anotarBorradoClave("vaccinesInfo", id); }
+  /* La hora se edita desde la linea del dia, no aqui: se conserva tal cual. */
+  const hora = infoVacuna(id).hora;
+  if (hora) info.hora = hora;
+  if (!info.pais && !info.lote && !info.lab && !info.notas && !reacc.length && !hora) { delete STATE.vaccinesInfo[id]; anotarBorradoClave("vaccinesInfo", id); }
   else STATE.vaccinesInfo[id] = info;
   guardarEstado();
   renderVacunas(document.getElementById("view-vacunas"));
@@ -14110,7 +14250,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompraLeche, guardarCompraLeche, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompraLeche, guardarCompraLeche, modalMedicamento, guardarMedicamento, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
