@@ -5924,7 +5924,9 @@
        12 px de aire debajo y ninguno encima, y como el centrado del flex mira
        la caja CON margen, el texto subia y dejaba de cuadrar con el punto. Con
        .sem-card delante gana siempre. */
-    .pb-app .sem-card > .sem-cab h2 { margin: 0; font-size: 1rem; flex: 1; min-width: 0; }
+    .pb-app .sem-card > .sem-cab h2, .pb-app .qlt-card > .sem-cab h2 { margin: 0; font-size: 1rem; flex: 1; min-width: 0; }
+    .pb-app .qlt-card[open] .sem-chevron { transform: rotate(90deg); }
+    .pb-app .qlt-card > .sem-cab h2 .n { display: block; font-size: 0.8125rem; font-weight: 500; margin-top: 2px; }
     .pb-app .sem-chevron {
       flex: none; font-size: 1.25rem; line-height: 1; color: var(--text);
       opacity: .5; transition: transform .18s ease;
@@ -9792,12 +9794,26 @@ function htmlRecetasDelDia(dia) {
   </div>`;
 }
 
-function htmlComidaDelDia(dia, marcarFn) {
+/* En Hoy la tarjeta va plegada: cerrada deja el titulo y el alimento nuevo,
+   que es lo que hace falta ver de un vistazo; el resto (botones, receta,
+   lote) se abre al tocar. Se recuerda si se abrio para que marcar un alimento
+   —que repinta Hoy— no la vuelva a cerrar. En el panel de un dia del
+   calendario va abierta. */
+let QLT_ABIERTA = false;
+function qltToggle(el) { QLT_ABIERTA = !!el.open; }
+function htmlComidaDelDia(dia, marcarFn, abierta) {
   const lista = alimentosParaMarcar(dia);
   if (!lista.length) return "";
   const nuevo = dia.alimentoNuevo;
-  return `<div class="card">
-    <h2>Qué le toca hoy <span class="n">${lista.length} ${lista.length === 1 ? "alimento" : "alimentos"}</span></h2>
+  const cab = `${lista.length} ${lista.length === 1 ? "alimento" : "alimentos"}${
+    nuevo && nuevo.nombre ? ` · nuevo: ${esc(nuevo.nombre)}${nuevo.dia && nuevo.total ? ` (día ${nuevo.dia} de ${nuevo.total})` : ""}` : ""}`;
+  const abre = abierta === undefined ? QLT_ABIERTA : abierta;
+  return `<details class="card qlt-card"${abre ? " open" : ""} ontoggle="PB.qltToggle(this)">
+    <summary class="sem-cab">
+      <h2>Qué le toca hoy <span class="n">${cab}</span></h2>
+      <span class="sem-chevron" aria-hidden="true">&#8250;</span>
+    </summary>
+    <div class="sem-cuerpo">
     ${lista.length > 1 ? `<p class="comida-plato">Lo que entra de uno en uno es el alimento nuevo,
       no las comidas: la receta de abajo dice qué va junto y qué no.</p>` : ""}
     <div class="comida-lista">${lista.map(({ a, horas }) => {
@@ -9848,7 +9864,8 @@ function htmlComidaDelDia(dia, marcarFn) {
       </div>`;
     }).join("")}</div>
     ${htmlRecetasDelDia(dia)}
-  </div>`;
+    </div>
+  </details>`;
 }
 
 /* Lo que se marco de ese alimento ESE dia, si se marco. Antes miraba siempre
@@ -10095,10 +10112,30 @@ function wnAcumuladoTipico(minuto, desde) {
 }
 /** Muestras de tomas en la ventana: cada toma con lo que tardo en llegar la
     siguiente, cuanto fue, a que hora, y cuanto "deficit" llevaba. */
+/* Instantes en que comio solido (alimentacion complementaria con hora
+   apuntada), en el dia en que se lo comio de verdad. */
+function wnSolidos(desde) {
+  const out = [];
+  for (const dat of Object.values(STATE.alimentos || {})) {
+    for (const h of (dat.historial || [])) {
+      if (!h.hora || h.resultado === "rechazo") continue;
+      const d = new Date(diaComido(h) + "T" + h.hora + ":00");
+      if (!isNaN(d) && d >= desde) out.push(d);
+    }
+  }
+  return out.sort((a, b) => a - b);
+}
+const WN_SOLIDO_ANTES = 60;   // un solido hasta una hora antes de la toma cuenta con ella
+/** Hubo solido entre una hora antes de la toma y la siguiente toma (o ahora). */
+function wnConSolido(solidos, desdeT, hastaT) {
+  const a = desdeT.getTime() - WN_SOLIDO_ANTES * 60000, b = hastaT.getTime();
+  return solidos.some(c => c.getTime() >= a && c.getTime() <= b);
+}
 function wnMuestrasTomas(desde) {
   const tomas = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desde)
     .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0, fecha: t.fecha, hora: t.hora }))
     .filter(x => !isNaN(x.t)).sort((a, b) => a.t - b.t);
+  const solidos = wnSolidos(desde);
   const out = [];
   for (let i = 1; i < tomas.length; i++) {
     const d = (tomas[i].t - tomas[i - 1].t) / 60000;
@@ -10107,9 +10144,25 @@ function wnMuestrasTomas(desde) {
     const minuto = minutoDeFecha(x.t);
     const antes = tomas.filter(y => y.fecha === x.fecha && y.t < x.t).reduce((s, y) => s + y.ml, 0);
     const tipico = wnAcumuladoTipico(minuto, desde);
-    out.push({ hora: minuto, ml: x.ml, valor: d, deficit: tipico ? tipico.ml - antes : null });
+    out.push({ hora: minuto, ml: x.ml, valor: d, deficit: tipico ? tipico.ml - antes : null,
+      solido: wnConSolido(solidos, x.t, tomas[i].t), mlSiguiente: tomas[i].ml });
   }
   return out;
+}
+/* Que hace el solido con la toma de despues: cuanto la espacia y cuanto la
+   acorta. Se compara lo que paso con solido contra lo que paso sin, y solo
+   con al menos 4 casos de cada; el efecto en tiempo se aplica como
+   desplazamiento sobre el modelo de la toma, el de cantidad solo se dice. */
+const WN_SOLIDO_MINIMO = 4;
+function wnEfectoSolido(muestras) {
+  const con = muestras.filter(m => m.solido), sin = muestras.filter(m => !m.solido);
+  if (con.length < WN_SOLIDO_MINIMO || sin.length < WN_SOLIDO_MINIMO) return null;
+  const espacia = Math.round(mediana(con.map(m => m.valor)) - mediana(sin.map(m => m.valor)));
+  const mlCon = con.filter(m => m.mlSiguiente > 0).map(m => m.mlSiguiente);
+  const mlSin = sin.filter(m => m.mlSiguiente > 0).map(m => m.mlSiguiente);
+  const menos = mlCon.length >= WN_SOLIDO_MINIMO && mlSin.length >= WN_SOLIDO_MINIMO
+    ? { con: Math.round(mediana(mlCon)), sin: Math.round(mediana(mlSin)) } : null;
+  return { espacia, menos, n: con.length };
 }
 /** { cada, base, n, rango, usaHambre } o null. */
 function wnModeloToma(muestras, refHora, ml, deficitAhora) {
@@ -10265,13 +10318,35 @@ function htmlLoQueSueleVenir() {
     const tipico = wnAcumuladoTipico(minutoDeFecha(ahora), desde);
     const hoyMl = totalMlDia(HOY_ISO);
     const deficit = tipico ? Math.round(tipico.ml - hoyMl) : null;
-    const modelo = wnModeloToma(wnMuestrasTomas(desde), minutoDeFecha(ultToma.t), ultToma.ml, deficit);
+    const muestras = wnMuestrasTomas(desde);
+    /* Con solido de por medio, primero se intenta el modelo solo con las
+       tomas que tambien lo tuvieron; si no hay bastantes, el modelo normal
+       mas el desplazamiento aprendido. */
+    const solidoAhora = wnConSolido(wnSolidos(desde), ultToma.t, ahora);
+    const efecto = solidoAhora ? wnEfectoSolido(muestras) : null;
+    const conSolido = solidoAhora ? muestras.filter(m => m.solido) : [];
+    let modelo = conSolido.length >= WN_RECTA_MINIMO
+      ? wnModeloToma(conSolido, minutoDeFecha(ultToma.t), ultToma.ml, deficit) : null;
+    let solidoAparte = false;
+    if (!modelo) {
+      modelo = wnModeloToma(muestras, minutoDeFecha(ultToma.t), ultToma.ml, deficit);
+      if (modelo && efecto && Math.abs(efecto.espacia) >= 10) { modelo.cada = Math.max(30, modelo.cada + efecto.espacia); solidoAparte = true; }
+    }
     if (modelo) {
       let cuando = new Date(ultToma.t.getTime() + modelo.cada * 60000);
       const partes = [];
       if (modelo.base === "cantidad") partes.push(`con lo que ha comido (${ultToma.ml} ml)${modelo.enFranja ? " a esta hora" : ""} suele aguantar ${duracionCorta(modelo.cada)}${mas(modelo.rango)}`);
       else if (modelo.base === "parecidas") partes.push(`tras tomas de unos ${ultToma.ml} ml${modelo.enFranja ? " a esta hora" : ""} tarda unas ${duracionCorta(modelo.cada)} en volver a pedir${mas(modelo.rango)}`);
       else partes.push(`${modelo.enFranja ? "a esta hora " : ""}suele comer cada ${duracionCorta(modelo.cada)}${mas(modelo.rango)}`);
+      if (solidoAhora) {
+        if (conSolido.length >= WN_RECTA_MINIMO) partes.push(`contando solo las veces que comió sólido (${conSolido.length})`);
+        else if (solidoAparte) partes.push(`el sólido ${efecto.espacia > 0 ? "espacia" : "adelanta"} la toma unos ${Math.abs(efecto.espacia)} min (${efecto.n} veces)`);
+        else if (efecto) partes.push(`el sólido no cambia el ritmo de la toma (${efecto.n} veces)`);
+        else partes.push("ha comido sólido; aún no hay casos para saber cómo le afecta");
+        if (efecto && efecto.menos && efecto.menos.sin - efecto.menos.con >= 20) {
+          partes.push(`tras sólido suele tomar menos: unos ${efecto.menos.con} ml en vez de ${efecto.menos.sin}`);
+        }
+      }
       if (deficit !== null && Math.abs(deficit) >= 60) {
         partes.push(deficit > 0
           ? `lleva ${deficit} ml menos que otros días a esta hora${modelo.usaHambre ? ", y eso adelanta la toma" : ": puede pedir antes"}`
@@ -11219,7 +11294,7 @@ function abrirDiaCalendario(iso) {
   /* El panel del dia usa la misma linea temporal que "Hoy": antes se quedaba
      con la version antigua de campos abiertos y las dos pantallas del mismo
      dato se veian distintas. */
-  html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoDrawer");
+  html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoDrawer", true);
   html += htmlLineaDelDia(dia, "PB.TOMAS_DRAWER", true);
   /* El patron con ese dia en el centro: lo que hizo se entiende mejor junto
      a los dias de al lado que solo. */
@@ -14444,7 +14519,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompraLeche, guardarCompraLeche, modalMedicamento, guardarMedicamento, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompraLeche, guardarCompraLeche, modalMedicamento, guardarMedicamento, qltToggle, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
