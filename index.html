@@ -8191,6 +8191,10 @@ function defaultState() {
        gramos. Con dos o mas se sabe cuanto dura un bote y el semaforo avisa
        antes de que se acabe. */
     comprasLeche: [],
+    /* Otras compras (pañales, toallitas…): { tipo, marca, talla, precio,
+       cantidad } con la cantidad en la unidad de cada producto. La leche se
+       queda en su coleccion de siempre. */
+    compras: [],
     /* Medicamentos dados: que, cuando y cuantos ml. En la linea del dia sale
        con el nombre (Dolex, Apiretal…), no con "Medicamento". */
     medicamentos: [],
@@ -8470,6 +8474,14 @@ const CAMPOS_REGISTRO = {
     { k: "ml",     et: "Cantidad (ml)", tipo: "number", paso: "0.1" },
     { k: "notas",  et: "Notas", tipo: "textarea" },
   ]},
+  compras: { titulo: "compra", col: "compras", campos: [
+    { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
+    { k: "tipo",   et: "Producto", tipo: "select", ops: [["panales", "Pañales"], ["toallitas", "Toallitas"]] },
+    { k: "marca",  et: "Marca", tipo: "text" },
+    { k: "talla",  et: "Talla", tipo: "text" },
+    { k: "precio", et: "Precio (€)", tipo: "number", paso: "0.01" },
+    { k: "cantidad", et: "Unidades", tipo: "number", paso: "1" },
+  ]},
   comprasLeche: { titulo: "compra de leche", col: "comprasLeche", campos: [
     { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
     { k: "marca",  et: "Marca", tipo: "text" },
@@ -8572,7 +8584,7 @@ function confirmarBorrado(col, id) {
   const fn = { sleep: deleteSleep, diapers: deleteDiaper, growth: deleteGrowth,
                notes: deleteNote, pediatricVisits: deletePediatricVisit,
                sintomas: deleteSintoma, banos: deleteBano,
-               comprasLeche: deleteCompraLeche, medicamentos: deleteMedicamento }[col];
+               comprasLeche: deleteCompraLeche, compras: deleteCompra, medicamentos: deleteMedicamento }[col];
   cerrarModal();
   if (fn) fn(id);
   /* Cada delete* repinta su propia pestana. Como ahora se puede borrar desde
@@ -8619,7 +8631,7 @@ function cerrarModal() {
    Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
-const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "medicamentos"];
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos"];
 const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD"];
 
 function sello() { return new Date().toISOString(); }
@@ -9484,31 +9496,41 @@ function semPanales() {
    dia. Con dos o mas, el ritmo sale de todo lo comprado salvo el ultimo bote,
    repartido entre la primera compra y la ultima; y el ultimo bote se descuenta
    a ese ritmo desde el dia que se compro. */
-function semLecheCompra() {
-  const compras = (STATE.comprasLeche || []).filter(c => c.datetime && c.gramos > 0)
-    .slice().sort((a, b) => a.datetime.localeCompare(b.datetime));
+/* Lo mismo vale para pañales y toallitas: cambia la unidad y el nombre. */
+function semConsumo(compras, u) {
+  compras = compras.filter(c => c.datetime && c.cantidad > 0).slice().sort((a, b) => a.datetime.localeCompare(b.datetime));
   if (!compras.length) return null;
   if (compras.length < 2) {
-    return { nivel: "sindatos", txt: "Una compra apuntada; con la siguiente se sabrá cuánto dura un bote." };
+    return { nivel: "sindatos", txt: `Una compra apuntada; con la siguiente se sabrá cuánto ${u.duran}.` };
   }
   const primera = compras[0], ultima = compras[compras.length - 1];
   const dias = (new Date(ultima.datetime) - new Date(primera.datetime)) / 86400000;
-  const gastados = compras.slice(0, -1).reduce((a, c) => a + Number(c.gramos), 0);
+  const gastados = compras.slice(0, -1).reduce((a, c) => a + Number(c.cantidad), 0);
   if (dias < 1 || !(gastados > 0)) {
     return { nivel: "sindatos", txt: "Las compras están demasiado juntas para calcular el ritmo." };
   }
-  const ritmo = gastados / dias;                       // g/dia
+  const ritmo = gastados / dias;
   const desde = (HOY_REAL - new Date(ultima.datetime)) / 86400000;
-  const quedan = Number(ultima.gramos) / ritmo - desde; // dias de bote que quedan
-  const r = Math.round(ritmo);
+  const quedan = Number(ultima.cantidad) / ritmo - desde;
+  const r = ritmo >= 10 ? Math.round(ritmo) : Math.round(ritmo * 10) / 10;
+  const rtxt = `${String(r).replace(".", ",")} ${u.unidad} al día`;
   const marca = ultima.marca ? ` de ${ultima.marca}` : "";
   if (quedan <= 1) {
-    return { nivel: "rojo", txt: `El bote${marca} se acaba ${quedan <= 0 ? "ya" : "mañana"} al ritmo de ${r} g al día. Toca comprar.` };
+    return { nivel: "rojo", txt: `${u.Envase}${marca} se acaba ${quedan <= 0 ? "ya" : "mañana"} al ritmo de ${rtxt}. Toca comprar.` };
   }
   if (quedan <= 3) {
-    return { nivel: "ambar", txt: `Quedan unos ${Math.round(quedan)} días de bote${marca} a ${r} g al día. Conviene comprar.` };
+    return { nivel: "ambar", txt: `Quedan unos ${Math.round(quedan)} días de ${u.envase}${marca} a ${rtxt}. Conviene comprar.` };
   }
-  return { nivel: "verde", txt: `Quedan unos ${Math.round(quedan)} días de bote${marca}; gasta ${r} g al día.` };
+  return { nivel: "verde", txt: `Quedan unos ${Math.round(quedan)} días de ${u.envase}${marca}; gasta ${rtxt}.` };
+}
+function semLecheCompra() {
+  return semConsumo((STATE.comprasLeche || []).map(c => Object.assign({}, c, { cantidad: c.gramos })),
+    { unidad: "g", envase: "bote", Envase: "El bote", duran: "dura un bote" });
+}
+function semComprasDe(tipo) {
+  const u = tipo === "panales" ? { unidad: "pañales", envase: "paquete", Envase: "El paquete", duran: "dura un paquete" }
+                               : { unidad: "toallitas", envase: "toallitas", Envase: "Las toallitas", duran: "duran las toallitas" };
+  return semConsumo((STATE.compras || []).filter(c => c.tipo === tipo), u);
 }
 
 const SEM_FUENTES = {
@@ -9521,6 +9543,8 @@ const SEM_FUENTES = {
   desarrollo: "WHO Motor Development Study 2006",
   panales: "Signo de hidratación (AEP)",
   compra: "Ritmo de las compras apuntadas",
+  compraPanales: "Ritmo de las compras apuntadas",
+  compraToallitas: "Ritmo de las compras apuntadas",
 };
 const SEM_CABECERA = { verde: "Todo en orden", ambar: "Algo que mirar", rojo: "Algo a revisar" };
 
@@ -9537,6 +9561,8 @@ function htmlSemaforo(dia) {
     ["desarrollo", "Desarrollo", semDesarrollo(meses)],
     ["panales", "Pañales", semPanales()],
     ["compra", "Leche en casa", semLecheCompra()],
+    ["compraPanales", "Pañales en casa", semComprasDe("panales")],
+    ["compraToallitas", "Toallitas en casa", semComprasDe("toallitas")],
   ].filter(d => d[2]).map(([k, et, r]) => ({ k, et, ...r }));
 
   const evaluadas = dims.filter(d => d.nivel !== "sindatos");
@@ -10612,6 +10638,17 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
         <span class="linea-texto"><b>Compra de leche</b>${sub ? `<span class="linea-sub">${esc(sub)}</span>` : ""}</span>
       </button>` };
     }),
+    ...(STATE.compras || []).filter(c => (c.datetime || "").slice(0, 10) === dia.fecha).map(c => {
+      const et = c.tipo === "panales" ? "Compra de pañales" : c.tipo === "toallitas" ? "Compra de toallitas" : "Compra";
+      const sub = [c.marca, c.talla ? `talla ${c.talla}` : "", c.cantidad ? `${c.cantidad} ud` : "",
+        c.precio ? `${String(c.precio).replace(".", ",")} €` : ""].filter(Boolean).join(" · ");
+      return { hora: (c.datetime || "").slice(11, 16), html: `
+      <button type="button" class="linea-fila" onclick="PB.editarRegistro('compras','${c.id}')">
+        <span class="linea-hora">${(c.datetime || "").slice(11, 16)}</span>
+        ${iconoLinea("compra")}
+        <span class="linea-texto"><b>${et}</b>${sub ? `<span class="linea-sub">${esc(sub)}</span>` : ""}</span>
+      </button>` };
+    }),
     ...(STATE.banos || []).filter(b => (b.datetime || "").slice(0, 10) === dia.fecha).map(b => ({
       hora: (b.datetime || "").slice(11, 16), html: `
       <button type="button" class="linea-fila" onclick="PB.editarRegistro('banos','${b.id}')">
@@ -10733,7 +10770,7 @@ function modalAnadir(fecha, refrescarFn) {
     ["bano",     "Baño",     `PB.modalBano('${fecha}')`],
     ["alerta",   "Síntomas", `PB.modalSintomas('${fecha}')`],
     ["medicamento", "Medicamento", `PB.modalMedicamento('${fecha}')`],
-    ["compra",   "Compra de leche", `PB.modalCompraLeche('${fecha}')`],
+    ["compra",   "Compra", `PB.modalCompra('${fecha}')`],
   ];
   abrirModal("Añadir", `<div class="anadir-lista">${opciones.map(([ico, et, fn]) =>
     `<button type="button" class="acc-btn" onclick="PB.cerrarModal();${fn}">${iconoLinea(ico)}<span>${et}</span></button>`
@@ -10769,42 +10806,85 @@ function deleteBano(id) {
 }
 /* Compra de leche. La marca y los gramos vienen rellenos con los de la ultima
    compra: casi siempre es el mismo bote, y asi solo hay que tocar el precio. */
-function ultimaCompraLeche() {
-  return (STATE.comprasLeche || []).slice().sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop();
+/* Una sola entrada de "Compra" con el producto a elegir; cada producto pide
+   lo que tiene sentido: la leche en gramos, los pañales en unidades y talla,
+   las toallitas en paquetes y toallitas por paquete. Marca y cantidades
+   vienen rellenas con la ultima compra del mismo producto. */
+const COMPRA_PRODUCTOS = {
+  leche:     { et: "Leche", col: "comprasLeche" },
+  panales:   { et: "Pañales", col: "compras" },
+  toallitas: { et: "Toallitas", col: "compras" },
+};
+function ultimaCompraDe(tipo) {
+  const lista = tipo === "leche" ? (STATE.comprasLeche || []) : (STATE.compras || []).filter(c => c.tipo === tipo);
+  return lista.slice().sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop() || {};
 }
-function modalCompraLeche(fecha) {
-  const ult = ultimaCompraLeche() || {};
-  abrirModal("Compra de leche", `
-    <div class="campo"><label for="cl-dt">Fecha y hora</label>
-      <input type="datetime-local" id="cl-dt" value="${horaAhoraEn(fecha)}"></div>
-    <div class="campo"><label for="cl-marca">Marca</label>
-      <input type="text" id="cl-marca" value="${esc(ult.marca || "")}" placeholder="Ej. Nutribén 2" autocomplete="off"></div>
-    <div class="grid-campos2">
-      <div class="campo"><label for="cl-precio">Precio (€)</label>
-        <input type="number" id="cl-precio" step="0.01" min="0" inputmode="decimal" value="${ult.precio != null ? esc(String(ult.precio)) : ""}" placeholder="0,00"></div>
-      <div class="campo"><label for="cl-gramos">Gramos</label>
-        <input type="number" id="cl-gramos" step="1" min="0" inputmode="numeric" value="${ult.gramos != null ? esc(String(ult.gramos)) : ""}" placeholder="800"></div>
-    </div>
-    <div class="modal-aviso" id="cl-aviso"></div>`,
-    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
-     { et: "Guardar", primario: true, accion: "PB.guardarCompraLeche()" }]);
-}
-function guardarCompraLeche() {
-  const dt = document.getElementById("cl-dt").value || nowDatetimeLocal();
-  const marca = (document.getElementById("cl-marca").value || "").trim();
-  const precio = parseFloat(String(document.getElementById("cl-precio").value).replace(",", "."));
-  const gramos = parseInt(document.getElementById("cl-gramos").value, 10);
-  if (!(gramos > 0)) {
-    const a = document.getElementById("cl-aviso");
-    if (a) { a.textContent = "Hacen falta los gramos del bote para saber cuánto dura."; a.hidden = false; }
-    return;
+function ultimaCompraLeche() { return ultimaCompraDe("leche"); }
+function modalCompra(fecha, tipo) {
+  tipo = COMPRA_PRODUCTOS[tipo] ? tipo : "leche";
+  const ult = ultimaCompraDe(tipo);
+  const num = (id, et, v, paso, ph) => `<div class="campo"><label for="${id}">${et}</label>
+    <input type="number" id="${id}" step="${paso}" min="0" inputmode="${paso === "1" ? "numeric" : "decimal"}" value="${v != null ? esc(String(v)) : ""}" placeholder="${ph}"></div>`;
+  let campos = `<div class="campo"><label for="cp-marca">Marca</label>
+      <input type="text" id="cp-marca" value="${esc(ult.marca || "")}" placeholder="${tipo === "leche" ? "Ej. Nutribén 2" : tipo === "panales" ? "Ej. Dodot" : "Ej. WaterWipes"}" autocomplete="off"></div>`;
+  if (tipo === "leche") {
+    campos += `<div class="grid-campos2">${num("cp-precio", "Precio (€)", ult.precio, "0.01", "0,00")}${num("cp-gramos", "Gramos", ult.gramos, "1", "800")}</div>`;
+  } else if (tipo === "panales") {
+    campos += `<div class="grid-campos2">
+      <div class="campo"><label for="cp-talla">Talla</label>
+        <input type="text" id="cp-talla" value="${esc(ult.talla || "")}" placeholder="3" autocomplete="off" inputmode="numeric"></div>
+      ${num("cp-unidades", "Unidades", ult.cantidad, "1", "56")}</div>
+      ${num("cp-precio", "Precio (€)", ult.precio, "0.01", "0,00")}`;
+  } else {
+    campos += `<div class="grid-campos2">${num("cp-paquetes", "Paquetes", ult.paquetes, "1", "1")}${num("cp-porpaquete", "Toallitas por paquete", ult.porPaquete, "1", "60")}</div>
+      ${num("cp-precio", "Precio (€)", ult.precio, "0.01", "0,00")}`;
   }
-  if (!STATE.comprasLeche) STATE.comprasLeche = [];
-  STATE.comprasLeche.push(sellar({ id: "cl_" + Date.now().toString(36), datetime: dt, marca,
-    precio: Number.isFinite(precio) ? precio : null, gramos }));
+  abrirModal("Compra", `
+    <div class="grid-campos2">
+      <div class="campo"><label for="cp-tipo">Producto</label>
+        <select id="cp-tipo" onchange="PB.modalCompra('${fecha}', this.value)">
+          ${Object.entries(COMPRA_PRODUCTOS).map(([k, p]) => `<option value="${k}"${k === tipo ? " selected" : ""}>${p.et}</option>`).join("")}
+        </select></div>
+      <div class="campo"><label for="cp-dt">Fecha y hora</label>
+        <input type="datetime-local" id="cp-dt" value="${horaAhoraEn(fecha)}"></div>
+    </div>
+    ${campos}
+    <div class="modal-aviso" id="cp-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: `PB.guardarCompra('${tipo}')` }]);
+}
+function guardarCompra(tipo) {
+  const v = id => (document.getElementById(id) || {}).value || "";
+  const aviso = t => { const a = document.getElementById("cp-aviso"); if (a) { a.textContent = t; a.hidden = false; } };
+  const dt = v("cp-dt") || nowDatetimeLocal();
+  const marca = v("cp-marca").trim();
+  const precio = parseFloat(String(v("cp-precio")).replace(",", "."));
+  const p = Number.isFinite(precio) ? precio : null;
+  if (tipo === "leche") {
+    const gramos = parseInt(v("cp-gramos"), 10);
+    if (!(gramos > 0)) return aviso("Hacen falta los gramos del bote para saber cuánto dura.");
+    if (!STATE.comprasLeche) STATE.comprasLeche = [];
+    STATE.comprasLeche.push(sellar({ id: "cl_" + Date.now().toString(36), datetime: dt, marca, precio: p, gramos }));
+  } else if (tipo === "panales") {
+    const cantidad = parseInt(v("cp-unidades"), 10);
+    if (!(cantidad > 0)) return aviso("Hacen falta las unidades del paquete para saber cuánto dura.");
+    if (!STATE.compras) STATE.compras = [];
+    STATE.compras.push(sellar({ id: "cp_" + Date.now().toString(36), datetime: dt, tipo, marca, talla: v("cp-talla").trim(), precio: p, cantidad }));
+  } else {
+    const paquetes = parseInt(v("cp-paquetes"), 10) || 1, porPaquete = parseInt(v("cp-porpaquete"), 10);
+    if (!(porPaquete > 0)) return aviso("Hacen falta las toallitas por paquete para saber cuánto duran.");
+    if (!STATE.compras) STATE.compras = [];
+    STATE.compras.push(sellar({ id: "cp_" + Date.now().toString(36), datetime: dt, tipo, marca, precio: p,
+      paquetes, porPaquete, cantidad: paquetes * porPaquete }));
+  }
   guardarEstado();
   cerrarModal();
   refrescarTrasToma();
+}
+function deleteCompra(id) {
+  anotarBorrado(id);
+  STATE.compras = (STATE.compras || []).filter(x => x.id !== id);
+  guardarEstado();
 }
 /* Medicamento. Los nombres ya usados salen como sugerencia, junto a los de
    siempre, para no teclear "Apiretal" cada vez. */
@@ -14564,7 +14644,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompraLeche, guardarCompraLeche, modalMedicamento, guardarMedicamento, qltToggle, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
