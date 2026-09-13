@@ -6355,6 +6355,16 @@
        que veias al abrir "Hoy" y lo mas ruidoso de la vista. Ahora son filas de
        una tarjeta normal, con la misma anatomia que la linea del dia (circulo
        tintado, titulo, texto en gris, raya que arranca despues del icono). */
+    /* Mientras quede algo pendiente, la tarjeta va tintada de ambar como la
+       del semaforo en "algo que mirar": desde la puerta se ve que hay algo
+       por hacer. El icono, que ya era ambar, pasa a fondo blanco para no
+       fundirse con la tarjeta; la raya entre filas se oscurece un punto. */
+    .pb-app .card.avisos { background: var(--amber-soft); border-color: var(--amber); }
+    .pb-app .card.avisos .aviso-card .ico { background: var(--bg-elev); }
+    .pb-app .card.avisos .aviso-card + .aviso-card::before {
+      border-top-color: color-mix(in srgb, var(--amber) 25%, transparent);
+    }
+    .pb-app .card.avisos .aviso-card .txt { color: var(--text-muted); }
     .pb-app .avisos .aviso-card {
       position: relative;
       display: flex; align-items: center; gap: 10px; padding: 9px 0;
