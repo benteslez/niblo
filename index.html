@@ -9999,11 +9999,9 @@ function iconoLinea(tipo) {
    que el "+ Toma" de la cabecera seria el mismo boton dos veces en la misma
    pantalla. En el panel de un dia del calendario es la unica via, y se queda. */
 /* ---- Lo que suele venir -------------------------------------------------
-   Estimacion a partir de los propios registros de los ultimos 14 dias. La
-   base es la mediana de los intervalos (no la media: una noche de 9 horas se
-   lleva por delante cualquier promedio) y por encima van niveles que solo se
-   activan cuando hay datos para ellos: franja horaria, cantidad de la toma,
-   hambre acumulada y el cruce entre comer y dormir (ver wnModeloToma).
+   Estimacion a partir de los propios registros: un modelo local ponderado
+   (ver "Modelo local ponderado" mas abajo) que da a cada caso pasado el peso
+   que merece por parecerse al de ahora, y se calibra contra lo que ya paso.
    Solo sale con 7 dias registrados: por debajo de eso no es un patron, es
    ruido, y prefiero no enseñar nada antes que inventar una hora. */
 const WN_DIAS_MINIMOS = 7;
@@ -10043,37 +10041,8 @@ function mediana(xs) {
   const o = [...xs].sort((a, b) => a - b), m = o.length >> 1;
   return o.length % 2 ? o[m] : (o[m - 1] + o[m]) / 2;
 }
-/** Intervalos en minutos entre instantes consecutivos, descartando los huecos
-    largos (un dia sin apuntar nada no dice cada cuanto come). */
-function intervalosDe(instantes) {
-  const o = [...instantes].sort((a, b) => a - b);
-  const out = [];
-  for (let i = 1; i < o.length; i++) {
-    const d = (o[i] - o[i - 1]) / 60000;
-    if (d > 0 && d <= WN_TOPE_HORAS * 60) out.push({ hora: minutoDeFecha(o[i - 1]), valor: d });
-  }
-  return out;
-}
-/* Un bebe no hace lo mismo a las 9 que a las 19: la siesta de la mañana no
-   dura lo que la de la tarde, y aguanta despierto mas antes de la noche. Por
-   eso, antes de tirar de la mediana de todo, se busca lo que hizo A ESTA
-   HORA (±75 min) en los ultimos dias; si hay al menos tres veces, manda eso.
-   Si no, se cae a la mediana general y la nota no dice "a esta hora". */
-const WN_FRANJA_MIN = 75;
-const WN_SIMILARES_MINIMOS = 3;
 function minutoDeFecha(d) { return d.getHours() * 60 + d.getMinutes(); }
 function distanciaHora(a, b) { const d = Math.abs(a - b) % 1440; return Math.min(d, 1440 - d); }
-/** muestras: [{ hora, valor }] -> { valor, n, aEstaHora } o null si no hay bastantes. */
-function medianaPorHora(muestras, refHora) {
-  const cerca = muestras.filter(m => distanciaHora(m.hora, refHora) <= WN_FRANJA_MIN);
-  if (cerca.length >= WN_SIMILARES_MINIMOS) {
-    return { valor: mediana(cerca.map(m => m.valor)), n: cerca.length, aEstaHora: true };
-  }
-  if (muestras.length >= WN_INTERVALOS_MINIMOS) {
-    return { valor: mediana(muestras.map(m => m.valor)), n: muestras.length, aEstaHora: false };
-  }
-  return null;
-}
 function wnDesde() {
   const d = new Date(); d.setDate(d.getDate() - WN_VENTANA); d.setHours(0, 0, 0, 0);
   return d;
@@ -10086,72 +10055,97 @@ function wnDiasConDatos() {
   for (const p of STATE.diapers) if (new Date(p.datetime) >= desde) dias.add(p.datetime.slice(0, 10));
   return dias.size;
 }
-/** { cuando: Date, cada, pasado } o null si no hay datos suficientes.
-    Se parte del ultimo apunte QUE YA HA OCURRIDO: si hay algo anotado con hora
-    futura —una toma que se deja preparada— tomarlo como referencia mandaria la
-    estimacion a la madrugada. */
-function wnPrediccion(instantes, ahora) {
-  const pasados = instantes.filter(d => d <= ahora).sort((a, b) => a - b);
-  const ultimo = pasados[pasados.length - 1];
-  if (!ultimo) return null;
-  const m = medianaPorHora(intervalosDe(instantes), minutoDeFecha(ultimo));
-  if (!m) return null;
-  const cuando = new Date(ultimo.getTime() + m.valor * 60000);
-  return { cuando, cada: Math.round(m.valor), pasado: cuando <= ahora, n: m.n, aEstaHora: m.aEstaHora };
-}
+/* ---- Modelo local ponderado --------------------------------------------
+   En vez de escalones (esta franja si, esta no; ±30 % de ml si, si no nada),
+   cada caso pasado pesa segun lo que se parezca al de ahora: en hora del dia,
+   en cantidad de la toma, en lo que llevaba ese dia y en lo reciente que es
+   (un bebe de seis meses no es el de hace tres semanas). La estimacion es la
+   mediana ponderada de lo que paso en esos casos. Con pocos datos los pesos
+   se reparten entre lo que hay; con muchos, mandan los casos casi iguales:
+   afina sola sin cambiar de regla.
+   Los anchos no van a ojo: se prueban varios juegos prediciendo cada toma
+   pasada solo con lo anterior a ella, y se queda el que menos falla. Ese
+   fallo (error mediano) es el "±" que se enseña: no es un intervalo teorico,
+   es lo que se ha equivocado estos dias. */
+const WN_VENTANA_LARGA = 28;          // dias que se miran con peso decreciente
+const WN_JUEGOS = [                   // anchos candidatos: [hora min, ml, deficit ml, vida media dias]
+  { hora: 60,  ml: 30, def: 100, dias: 5 },
+  { hora: 90,  ml: 45, def: 150, dias: 7 },
+  { hora: 120, ml: 70, def: 250, dias: 10 },
+  { hora: 180, ml: 120, def: 400, dias: 14 },
+];
+const WN_NEFF_MINIMO = 4;             // peso efectivo por debajo del cual se abre el ancho
+const WN_PESO_SOLIDO = 0.35;          // cuanto pesa un caso sin solido cuando ahora lo hubo (y al reves)
 
-/* ---- Tomas: cantidad, hambre y sueño -----------------------------------
-   Una toma de 60 ml no aguanta lo que una de 200. El modelo va por niveles y
-   sube de nivel segun haya datos, asi que afina solo con el tiempo:
-     1. mediana de todos los intervalos (desde 3);
-     2. solo los de esta franja horaria (desde 6 en la franja);
-     3. dentro de eso, tomas de una cantidad parecida (±30 %, desde 3);
-     4. con 10 o mas, una recta intervalo ~ ml, que ademas de mirar cuanto
-        comio interpola entre cantidades; y con 14 o mas, se prueba si el
-        "hambre acumulada" (lo que lleva hoy frente a lo normal a esta hora)
-        explica lo que queda: si hoy lleva menos, pide antes.
-   Cada recta solo se acepta si va en el sentido que dice el sentido comun
-   (mas ml, mas rato; mas deficit, menos rato) y explica algo (r >= 0,25): si
-   no, se vuelve al nivel de abajo. Y el resultado nunca sale del rango de lo
-   que se ha visto (percentiles 10-90), que una recta extrapolada a 300 ml no
-   sabe lo que dice. */
-const WN_ML_PARECIDA = 0.3;
-const WN_RECTA_MINIMO = 10;
-const WN_HAMBRE_MINIMO = 14;
-const WN_FRANJA_MINIMO = 6;
-
-function percentil(xs, p) {
-  if (!xs.length) return null;
-  const o = [...xs].sort((a, b) => a - b);
-  const i = (o.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i);
-  return o[lo] + (o[hi] - o[lo]) * (i - lo);
+function gauss(d, ancho) { return Math.exp(-0.5 * (d / ancho) * (d / ancho)); }
+function medianaPonderada(pares) {   // [{ v, w }]
+  const o = pares.filter(p => p.w > 0).sort((a, b) => a.v - b.v);
+  const total = o.reduce((s, p) => s + p.w, 0);
+  if (!total) return null;
+  let acum = 0;
+  for (const p of o) { acum += p.w; if (acum >= total / 2) return p.v; }
+  return o[o.length - 1].v;
 }
-/** Recta y = a + b·x por minimos cuadrados con su correlacion. */
-function recta(pares) {
-  const n = pares.length;
-  if (n < 3) return null;
-  const mx = pares.reduce((s, p) => s + p.x, 0) / n, my = pares.reduce((s, p) => s + p.y, 0) / n;
-  let sxx = 0, syy = 0, sxy = 0;
-  for (const p of pares) { sxx += (p.x - mx) ** 2; syy += (p.y - my) ** 2; sxy += (p.x - mx) * (p.y - my); }
-  if (sxx === 0 || syy === 0) return null;
-  const b = sxy / sxx;
-  return { a: my - b * mx, b, r: sxy / Math.sqrt(sxx * syy) };
+/** Peso de un caso frente a la consulta. Las claves que falten en la
+    consulta o en el caso no se miran. */
+function wnPeso(caso, q, A, escala) {
+  let w = gauss(distanciaHora(caso.hora, q.hora), A.hora * escala) * Math.pow(0.5, caso.dias / (A.dias * escala));
+  if (q.ml != null && caso.ml != null) w *= gauss(caso.ml - q.ml, A.ml * escala);
+  if (q.deficit != null && caso.deficit != null) w *= gauss(caso.deficit - q.deficit, A.def * escala);
+  if (q.solido !== undefined && caso.solido !== undefined && caso.solido !== q.solido) w *= WN_PESO_SOLIDO;
+  return w;
 }
-/** ml que suele llevar a cierto minuto del dia: mediana sobre los dias cerrados. */
-function wnAcumuladoTipico(minuto, desde) {
-  const porDia = new Map();
-  for (const t of STATE.tomas) {
-    if (t.fecha === HOY_ISO || new Date(t.fecha + "T00:00:00") < desde) continue;
-    if (!porDia.has(t.fecha)) porDia.set(t.fecha, 0);
-    if (minutoDelDia(t.hora) <= minuto) porDia.set(t.fecha, porDia.get(t.fecha) + (Number(t.ml) || 0));
+/** Mediana ponderada de caso.valor alrededor de la consulta. Si el peso
+    efectivo es escaso, abre los anchos (x1,5, x2, x3) hasta tenerlo. */
+function wnEstimar(casos, q, A) {
+  for (const escala of [1, 1.5, 2, 3]) {
+    const pesos = casos.map(c => wnPeso(c, q, A, escala));
+    const s1 = pesos.reduce((s, w) => s + w, 0), s2 = pesos.reduce((s, w) => s + w * w, 0);
+    const neff = s2 ? (s1 * s1) / s2 : 0;
+    if (neff >= WN_NEFF_MINIMO || escala === 3) {
+      if (!s1) return null;
+      const v = medianaPonderada(casos.map((c, i) => ({ v: c.valor, w: pesos[i] })));
+      return v === null ? null : { valor: v, neff, escala };
+    }
   }
-  const vals = [...porDia.values()];
-  return vals.length >= 5 ? { ml: mediana(vals), dias: vals.length } : null;
+  return null;
 }
-/** Muestras de tomas en la ventana: cada toma con lo que tardo en llegar la
-    siguiente, cuanto fue, a que hora, y cuanto "deficit" llevaba. */
-/* Instantes en que comio solido (alimentacion complementaria con hora
-   apuntada), en el dia en que se lo comio de verdad. */
+/** Elige el juego de anchos que mejor habria predicho el pasado: cada caso
+    se estima solo con los anteriores a el. Devuelve { A, error } con el
+    error mediano absoluto en minutos (null si no hay con que probar). */
+const WN_CALIBRADO = new Map();
+function wnCalibrar(clave, casos) {
+  const firma = `${clave}:${casos.length}:${HOY_ISO}`;
+  if (WN_CALIBRADO.has(firma)) return WN_CALIBRADO.get(firma);
+  const orden = casos.slice().sort((a, b) => b.dias - a.dias);   // del mas antiguo al mas nuevo
+  let mejor = { A: WN_JUEGOS[1], error: null };
+  if (orden.length >= 8) {
+    let mejorErr = Infinity;
+    for (const A of WN_JUEGOS) {
+      const errores = [];
+      for (let i = 5; i < orden.length; i++) {
+        const q = orden[i];
+        /* Los anteriores, con su antiguedad medida desde ese momento. */
+        const previos = orden.slice(0, i).map(c => Object.assign({}, c, { dias: c.dias - q.dias }));
+        const e = wnEstimar(previos, q, A);
+        if (e) errores.push(Math.abs(e.valor - q.valor));
+      }
+      const err = mediana(errores);
+      if (err !== null && err < mejorErr) { mejorErr = err; mejor = { A, error: Math.round(err) }; }
+    }
+  }
+  WN_CALIBRADO.set(firma, mejor);
+  return mejor;
+}
+function wnDesdeLarga() {
+  const d = new Date(); d.setDate(d.getDate() - WN_VENTANA_LARGA); d.setHours(0, 0, 0, 0);
+  return d;
+}
+function diasHasta(fecha, ahora) { return Math.max(0, (ahora - fecha) / 86400000); }
+
+/* ---- Casos ------------------------------------------------------------- */
+/** Instantes en que comio solido (con hora apuntada), el dia en que se lo
+    comio de verdad. Los rechazos no cuentan. */
 function wnSolidos(desde) {
   const out = [];
   for (const dat of Object.values(STATE.alimentos || {})) {
@@ -10163,15 +10157,28 @@ function wnSolidos(desde) {
   }
   return out.sort((a, b) => a - b);
 }
-const WN_SOLIDO_ANTES = 60;   // un solido hasta una hora antes de la toma cuenta con ella
-/** Hubo solido entre una hora antes de la toma y la siguiente toma (o ahora). */
+const WN_SOLIDO_ANTES = 60;
 function wnConSolido(solidos, desdeT, hastaT) {
   const a = desdeT.getTime() - WN_SOLIDO_ANTES * 60000, b = hastaT.getTime();
   return solidos.some(c => c.getTime() >= a && c.getTime() <= b);
 }
-function wnMuestrasTomas(desde) {
+/** ml que suele llevar a cierto minuto del dia: mediana de los dias cerrados
+    de la ventana corta. */
+function wnAcumuladoTipico(minuto, desde) {
+  const porDia = new Map();
+  for (const t of STATE.tomas) {
+    if (t.fecha === HOY_ISO || new Date(t.fecha + "T00:00:00") < desde) continue;
+    if (!porDia.has(t.fecha)) porDia.set(t.fecha, 0);
+    if (minutoDelDia(t.hora) <= minuto) porDia.set(t.fecha, porDia.get(t.fecha) + (Number(t.ml) || 0));
+  }
+  const vals = [...porDia.values()];
+  return vals.length >= 5 ? { ml: mediana(vals), dias: vals.length } : null;
+}
+/** Cada toma con lo que tardo en llegar la siguiente y sus rasgos. */
+function wnCasosTomas(ahora) {
+  const desde = wnDesdeLarga(), corta = wnDesde();
   const tomas = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desde)
-    .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0, fecha: t.fecha, hora: t.hora }))
+    .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0, fecha: t.fecha }))
     .filter(x => !isNaN(x.t)).sort((a, b) => a.t - b.t);
   const solidos = wnSolidos(desde);
   const out = [];
@@ -10181,71 +10188,30 @@ function wnMuestrasTomas(desde) {
     const x = tomas[i - 1];
     const minuto = minutoDeFecha(x.t);
     const antes = tomas.filter(y => y.fecha === x.fecha && y.t < x.t).reduce((s, y) => s + y.ml, 0);
-    const tipico = wnAcumuladoTipico(minuto, desde);
-    out.push({ hora: minuto, ml: x.ml, valor: d, deficit: tipico ? tipico.ml - antes : null,
-      solido: wnConSolido(solidos, x.t, tomas[i].t), mlSiguiente: tomas[i].ml });
+    const tipico = wnAcumuladoTipico(minuto, corta);
+    out.push({ hora: minuto, ml: x.ml > 0 ? x.ml : null, valor: d, dias: diasHasta(x.t, ahora),
+      deficit: tipico ? tipico.ml - antes : null, solido: wnConSolido(solidos, x.t, tomas[i].t),
+      mlSiguiente: tomas[i].ml });
   }
   return out;
 }
-/* Que hace el solido con la toma de despues: cuanto la espacia y cuanto la
-   acorta. Se compara lo que paso con solido contra lo que paso sin, y solo
-   con al menos 4 casos de cada; el efecto en tiempo se aplica como
-   desplazamiento sobre el modelo de la toma, el de cantidad solo se dice. */
-const WN_SOLIDO_MINIMO = 4;
-function wnEfectoSolido(muestras) {
-  const con = muestras.filter(m => m.solido), sin = muestras.filter(m => !m.solido);
-  if (con.length < WN_SOLIDO_MINIMO || sin.length < WN_SOLIDO_MINIMO) return null;
-  const espacia = Math.round(mediana(con.map(m => m.valor)) - mediana(sin.map(m => m.valor)));
-  const mlCon = con.filter(m => m.mlSiguiente > 0).map(m => m.mlSiguiente);
-  const mlSin = sin.filter(m => m.mlSiguiente > 0).map(m => m.mlSiguiente);
-  const menos = mlCon.length >= WN_SOLIDO_MINIMO && mlSin.length >= WN_SOLIDO_MINIMO
-    ? { con: Math.round(mediana(mlCon)), sin: Math.round(mediana(mlSin)) } : null;
-  return { espacia, menos, n: con.length };
-}
-/** { cada, base, n, rango, usaHambre } o null. */
-function wnModeloToma(muestras, refHora, ml, deficitAhora) {
-  if (muestras.length < WN_INTERVALOS_MINIMOS) return null;
-  const franja = muestras.filter(m => distanciaHora(m.hora, refHora) <= WN_FRANJA_MIN);
-  const F = franja.length >= WN_FRANJA_MINIMO ? franja : muestras;
-  const enFranja = F === franja;
-  const vals = F.map(m => m.valor);
-  const lim = [percentil(vals, 0.1), percentil(vals, 0.9)];
-  const rango = Math.round((percentil(vals, 0.75) - percentil(vals, 0.25)) / 2);
-  const acota = v => Math.min(lim[1], Math.max(lim[0], v));
-
-  /* Nivel 4: recta por cantidad, y hambre sobre lo que la recta no explica.
-     Primero en la franja; si ahi no hay variedad de cantidades (a las 10
-     siempre toma 80), con todas: una toma rara a esta hora se explica mejor
-     por su tamaño que por el reloj. */
-  for (const G of (enFranja ? [F, muestras] : [F])) {
-    if (!(G.length >= WN_RECTA_MINIMO && ml > 0)) continue;
-    const r1 = recta(G.map(m => ({ x: m.ml, y: m.valor })));
-    if (!(r1 && r1.b > 0 && r1.r >= 0.25)) continue;
-    let est = r1.a + r1.b * ml, usaHambre = false;
-    const conDef = G.filter(m => m.deficit !== null);
-    if (conDef.length >= WN_HAMBRE_MINIMO && deficitAhora !== null) {
-      const r2 = recta(conDef.map(m => ({ x: m.deficit, y: m.valor - (r1.a + r1.b * m.ml) })));
-      if (r2 && r2.b < 0 && r2.r <= -0.2) { est += r2.b * deficitAhora; usaHambre = true; }
-    }
-    const gv = G.map(m => m.valor);
-    const gl = [percentil(gv, 0.1), percentil(gv, 0.9)];
-    return { cada: Math.round(Math.min(gl[1], Math.max(gl[0], est))), n: G.length,
-      rango: Math.round((percentil(gv, 0.75) - percentil(gv, 0.25)) / 2), enFranja: G === franja, usaHambre, base: "cantidad" };
+/** Intervalos entre instantes (pañales), con hora y antiguedad. */
+function wnCasosIntervalos(instantes, ahora) {
+  const o = instantes.slice().sort((a, b) => a - b), out = [];
+  for (let i = 1; i < o.length; i++) {
+    const d = (o[i] - o[i - 1]) / 60000;
+    if (d > 0 && d <= WN_TOPE_HORAS * 60) out.push({ hora: minutoDeFecha(o[i - 1]), valor: d, dias: diasHasta(o[i - 1], ahora) });
   }
-  /* Nivel 3: tomas de una cantidad parecida, en la franja o en todas. */
-  if (ml > 0) {
-    for (const G of (enFranja ? [F, muestras] : [F])) {
-      const parecidas = G.filter(m => Math.abs(m.ml - ml) <= Math.max(30, ml * WN_ML_PARECIDA));
-      if (parecidas.length < WN_SIMILARES_MINIMOS) continue;
-      const pv = parecidas.map(m => m.valor);
-      return { cada: Math.round(mediana(pv)), n: parecidas.length, enFranja: G === franja,
-        rango: Math.round((percentil(pv, 0.75) - percentil(pv, 0.25)) / 2), usaHambre: false, base: "parecidas" };
-    }
-  }
-  /* Niveles 1 y 2. */
-  return { cada: Math.round(mediana(vals)), n: F.length, rango, enFranja, usaHambre: false, base: enFranja ? "franja" : "todo" };
+  return out;
 }
-
+/* Que hace el solido con la cantidad de la toma de despues (el tiempo ya lo
+   pondera el modelo caso a caso). */
+function wnSolidoCantidad(casos) {
+  const con = casos.filter(c => c.solido && c.mlSiguiente > 0).map(c => c.mlSiguiente);
+  const sin = casos.filter(c => !c.solido && c.mlSiguiente > 0).map(c => c.mlSiguiente);
+  if (con.length < 4 || sin.length < 4) return null;
+  return { con: Math.round(mediana(con)), sin: Math.round(mediana(sin)), n: con.length };
+}
 /* Sueño y tomas se cruzan por los dos lados: cuanto tarda en dormirse tras
    una toma, y cuanto tarda en comer tras despertarse. Solo se usan cuando el
    patron es claro (bastantes casos y poca dispersion). */
@@ -10254,35 +10220,41 @@ function wnRelacion(pares) {
   const med = mediana(pares), iqr = percentil(pares, 0.75) - percentil(pares, 0.25);
   return iqr <= 60 ? { min: Math.round(med), n: pares.length } : null;
 }
+function percentil(xs, p) {
+  if (!xs.length) return null;
+  const o = [...xs].sort((a, b) => a - b);
+  const i = (o.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i);
+  return o[lo] + (o[hi] - o[lo]) * (i - lo);
+}
+
 function htmlLoQueSueleVenir() {
   const diasConDatos = wnDiasConDatos();
   if (diasConDatos < WN_DIAS_MINIMOS) return "";
-  const desde = wnDesde();
   const ahora = new Date();
+  const desde = wnDesde(), desdeL = wnDesdeLarga();
   const hhmm = d => `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-  const mas = r => r ? ` (±${r} min)` : "";
+  const mas = e => typeof e === "number" ? ` (±${e} min)` : "";
 
-  const tomasL = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desde)
+  const tomasL = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desdeL)
     .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0 }))
     .filter(x => !isNaN(x.t) && x.t <= ahora).sort((a, b) => a.t - b.t);
   const ultToma = tomasL[tomasL.length - 1] || null;
-  const panales = STATE.diapers.filter(p => new Date(p.datetime) >= desde)
+  const panales = STATE.diapers.filter(p => new Date(p.datetime) >= desdeL)
     .map(p => new Date(p.datetime)).filter(d => !isNaN(d));
 
   /* Sueño por episodios: un despertar de cinco minutos no parte la siesta. */
-  const episodios = episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desde));
+  const episodios = episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desdeL));
   const suenios = episodios.filter(e => e.end);
   const tomaAntesDe = fecha => tomasL.filter(x => x.t <= fecha && (fecha - x.t) / 60000 <= 180).pop() || null;
   const despiertos = [];
   for (let i = 1; i < suenios.length; i++) {
     const d = (suenios[i].start - suenios[i - 1].end) / 60000;
-    if (d > 0 && d <= WN_TOPE_HORAS * 60) despiertos.push({ hora: minutoDeFecha(suenios[i - 1].end), valor: d });
+    if (d > 0 && d <= WN_TOPE_HORAS * 60) despiertos.push({ hora: minutoDeFecha(suenios[i - 1].end), valor: d, dias: diasHasta(suenios[i - 1].end, ahora) });
   }
   const fines = suenios.map(x => x.end).filter(d => d <= ahora).sort((a, b) => a - b);
   const ultimoFin = fines.length ? fines[fines.length - 1] : null;
   const enCurso = episodios.filter(e => !e.end && e.start <= ahora).pop();
 
-  /* Relaciones toma <-> sueño. */
   const trasToma = wnRelacion(suenios.map(e => { const t = tomaAntesDe(e.start); return t ? (e.start - t.t) / 60000 : null; })
     .filter(v => v !== null && v > 0));
   const trasDespertar = wnRelacion(suenios.map(e => {
@@ -10291,59 +10263,54 @@ function htmlLoQueSueleVenir() {
   }).filter(v => v !== null));
 
   const filas = [];
-  /* Si la hora estimada ya ha pasado se dice asi, y debajo la hora a la que
-     tocaba, que sirve para ver cuanto se ha pasado. */
   const linea = (p, icono, futuro, vencido, vencidoNota, nota) => {
     if (!p) return;
     filas.push({ icono,
       txt: p.pasado ? vencido : `${futuro} <b>${hhmm(p.cuando)}</b>`,
       nota: p.pasado ? `${vencidoNota} <b>${hhmm(p.cuando)}</b> · ${nota}` : nota });
   };
+  /* Cuantos casos han pesado de verdad: sirve para decir en que se apoya. */
+  const apoyo = e => e.neff >= 5 ? "" : e.neff >= 3 ? " · pocos casos parecidos" : " · casi sin casos parecidos";
 
   /* --- Sueño: cuando se despierta o cuando le entrara --- */
   let despertar = null;
   if (enCurso) {
     const tipo = enCurso.type;
     const tAntes = tomaAntesDe(enCurso.start);
-    const duraciones = suenios.filter(x => x.type === tipo).map(x => {
+    const casos = suenios.filter(x => x.type === tipo).map(x => {
       const t = tomaAntesDe(x.start);
-      return { hora: minutoDeFecha(x.start), valor: (x.end - x.start) / 60000, ml: t ? t.ml : null };
-    }).filter(m => m.valor > 0 && m.valor <= 16 * 60);
-    /* Primero siestas a esta hora Y tras una toma parecida; si no, a esta
-       hora; si no, todas. */
-    let m = null, conToma = false;
-    if (tAntes && tipo === "siesta") {
-      const c = duraciones.filter(d => d.ml !== null && distanciaHora(d.hora, minutoDeFecha(enCurso.start)) <= WN_FRANJA_MIN
-        && Math.abs(d.ml - tAntes.ml) <= Math.max(30, tAntes.ml * WN_ML_PARECIDA));
-      if (c.length >= WN_SIMILARES_MINIMOS) { m = { valor: mediana(c.map(d => d.valor)), n: c.length, aEstaHora: true }; conToma = true; }
-    }
-    if (!m) m = medianaPorHora(duraciones, minutoDeFecha(enCurso.start));
-    if (m) {
-      const dura = Math.round(m.valor);
-      const c = new Date(enCurso.start.getTime() + dura * 60000);
-      despertar = c;
-      const retomado = enCurso.trozos.length > 1;
-      const cuanto = tipo === "nocturno" ? `por la noche suele dormir ${duracionCorta(dura)}`
-        : `${m.aEstaHora ? "a esta hora " : ""}${conToma ? `y tras una toma de unos ${tAntes.ml} ml ` : ""}sus siestas suelen durar ${duracionCorta(dura)}`;
-      const previo = retomado ? enCurso.trozos[enCurso.trozos.length - 2] : null;
-      linea({ cuando: c, pasado: c <= ahora }, "sueno",
-        "Probablemente se despierte sobre las", "Ya lleva durmiendo más de lo habitual",
-        "Se tendría que haber despertado sobre las",
-        retomado ? `${cuanto}; el rato despierto de las ${hhmm(previo.end ? new Date(previo.end) : enCurso.start)} cuenta como el mismo sueño` : cuanto);
+      return { hora: minutoDeFecha(x.start), valor: (x.end - x.start) / 60000, ml: t ? t.ml : null, dias: diasHasta(x.start, ahora) };
+    }).filter(c => c.valor > 0 && c.valor <= 16 * 60);
+    if (casos.length >= WN_INTERVALOS_MINIMOS) {
+      const cal = wnCalibrar("sueno-" + tipo, casos);
+      const e = wnEstimar(casos, { hora: minutoDeFecha(enCurso.start), ml: tAntes ? tAntes.ml : null }, cal.A);
+      if (e) {
+        const dura = Math.round(e.valor);
+        const c = new Date(enCurso.start.getTime() + dura * 60000);
+        despertar = c;
+        const retomado = enCurso.trozos.length > 1;
+        const cuanto = tipo === "nocturno"
+          ? `por la noche suele dormir ${duracionCorta(dura)}${mas(cal.error)}`
+          : `a esta hora${tAntes ? ` y tras una toma de ${tAntes.ml} ml` : ""} sus siestas suelen durar ${duracionCorta(dura)}${mas(cal.error)}${apoyo(e)}`;
+        const previo = retomado ? enCurso.trozos[enCurso.trozos.length - 2] : null;
+        linea({ cuando: c, pasado: c <= ahora }, "sueno",
+          "Probablemente se despierte sobre las", "Ya lleva durmiendo más de lo habitual",
+          "Se tendría que haber despertado sobre las",
+          retomado ? `${cuanto}; el rato despierto de las ${hhmm(previo.end ? new Date(previo.end) : enCurso.start)} cuenta como el mismo sueño` : cuanto);
+      }
     }
   } else if (ultimoFin || (ultToma && trasToma)) {
-    /* Si acaba de comer y suele dormirse un rato despues de la toma, eso
-       manda; si no, cuanto aguanta despierto desde que se desperto. */
     let c = null, nota = "";
     if (ultToma && trasToma && (!ultimoFin || ultToma.t > ultimoFin)) {
       c = new Date(ultToma.t.getTime() + trasToma.min * 60000);
       nota = `suele dormirse ${duracionCorta(trasToma.min)} después de comer (${trasToma.n} veces)`;
-    } else if (ultimoFin) {
-      const m = medianaPorHora(despiertos, minutoDeFecha(ultimoFin));
-      if (m) {
-        const cada = Math.round(m.valor);
+    } else if (ultimoFin && despiertos.length >= WN_INTERVALOS_MINIMOS) {
+      const cal = wnCalibrar("despierto", despiertos);
+      const e = wnEstimar(despiertos, { hora: minutoDeFecha(ultimoFin) }, cal.A);
+      if (e) {
+        const cada = Math.round(e.valor);
         c = new Date(ultimoFin.getTime() + cada * 60000);
-        nota = `${m.aEstaHora ? "a esta hora " : ""}aguanta despierto unas ${duracionCorta(cada)}`;
+        nota = `a esta hora aguanta despierto unas ${duracionCorta(cada)}${mas(cal.error)}${apoyo(e)}`;
       }
     }
     if (c) linea({ cuando: c, pasado: c <= ahora }, "sueno",
@@ -10351,62 +10318,57 @@ function htmlLoQueSueleVenir() {
       "Le tendría que haber entrado el sueño sobre las", nota);
   }
 
-  /* --- Toma: cantidad, hambre y sueño --- */
+  /* --- Toma: hora, cantidad, lo que lleva, solido y sueño, todo a la vez --- */
   if (ultToma) {
-    const tipico = wnAcumuladoTipico(minutoDeFecha(ahora), desde);
-    const hoyMl = totalMlDia(HOY_ISO);
-    const deficit = tipico ? Math.round(tipico.ml - hoyMl) : null;
-    const muestras = wnMuestrasTomas(desde);
-    /* Con solido de por medio, primero se intenta el modelo solo con las
-       tomas que tambien lo tuvieron; si no hay bastantes, el modelo normal
-       mas el desplazamiento aprendido. */
-    const solidoAhora = wnConSolido(wnSolidos(desde), ultToma.t, ahora);
-    const efecto = solidoAhora ? wnEfectoSolido(muestras) : null;
-    const conSolido = solidoAhora ? muestras.filter(m => m.solido) : [];
-    let modelo = conSolido.length >= WN_RECTA_MINIMO
-      ? wnModeloToma(conSolido, minutoDeFecha(ultToma.t), ultToma.ml, deficit) : null;
-    let solidoAparte = false;
-    if (!modelo) {
-      modelo = wnModeloToma(muestras, minutoDeFecha(ultToma.t), ultToma.ml, deficit);
-      if (modelo && efecto && Math.abs(efecto.espacia) >= 10) { modelo.cada = Math.max(30, modelo.cada + efecto.espacia); solidoAparte = true; }
-    }
-    if (modelo) {
-      let cuando = new Date(ultToma.t.getTime() + modelo.cada * 60000);
-      const partes = [];
-      if (modelo.base === "cantidad") partes.push(`con lo que ha comido (${ultToma.ml} ml)${modelo.enFranja ? " a esta hora" : ""} suele aguantar ${duracionCorta(modelo.cada)}${mas(modelo.rango)}`);
-      else if (modelo.base === "parecidas") partes.push(`tras tomas de unos ${ultToma.ml} ml${modelo.enFranja ? " a esta hora" : ""} tarda unas ${duracionCorta(modelo.cada)} en volver a pedir${mas(modelo.rango)}`);
-      else partes.push(`${modelo.enFranja ? "a esta hora " : ""}suele comer cada ${duracionCorta(modelo.cada)}${mas(modelo.rango)}`);
-      if (solidoAhora) {
-        if (conSolido.length >= WN_RECTA_MINIMO) partes.push(`contando solo las veces que comió sólido (${conSolido.length})`);
-        else if (solidoAparte) partes.push(`el sólido ${efecto.espacia > 0 ? "espacia" : "adelanta"} la toma unos ${Math.abs(efecto.espacia)} min (${efecto.n} veces)`);
-        else if (efecto) partes.push(`el sólido no cambia el ritmo de la toma (${efecto.n} veces)`);
-        else partes.push("ha comido sólido; aún no hay casos para saber cómo le afecta");
-        if (efecto && efecto.menos && efecto.menos.sin - efecto.menos.con >= 20) {
-          partes.push(`tras sólido suele tomar menos: unos ${efecto.menos.con} ml en vez de ${efecto.menos.sin}`);
+    const casos = wnCasosTomas(ahora);
+    if (casos.length >= WN_INTERVALOS_MINIMOS) {
+      const tipico = wnAcumuladoTipico(minutoDeFecha(ahora), desde);
+      const hoyMl = totalMlDia(HOY_ISO);
+      const deficit = tipico ? Math.round(tipico.ml - hoyMl) : null;
+      const solidoAhora = wnConSolido(wnSolidos(desdeL), ultToma.t, ahora);
+      const cal = wnCalibrar("tomas", casos);
+      const q = { hora: minutoDeFecha(ultToma.t), ml: ultToma.ml > 0 ? ultToma.ml : null, deficit, solido: solidoAhora };
+      const e = wnEstimar(casos, q, cal.A);
+      if (e) {
+        const cada = Math.round(e.valor);
+        let cuando = new Date(ultToma.t.getTime() + cada * 60000);
+        const partes = [];
+        const rasgos = ["a esta hora"];
+        if (q.ml != null) rasgos.push(`tras ${ultToma.ml} ml`);
+        if (deficit !== null && Math.abs(deficit) >= 60) rasgos.push(`llevando ${Math.abs(deficit)} ml ${deficit > 0 ? "menos" : "más"} que otros días`);
+        if (solidoAhora) rasgos.push("con sólido de por medio");
+        partes.push(`${rasgos.join(", ")} suele aguantar ${duracionCorta(cada)}${mas(cal.error)}${apoyo(e)}`);
+        if (solidoAhora) {
+          const sc = wnSolidoCantidad(casos);
+          if (sc && sc.sin - sc.con >= 20) partes.push(`tras sólido suele tomar menos: unos ${sc.con} ml en vez de ${sc.sin}`);
         }
+        /* Dormido no come: si la toma caeria antes de que se despierte, sera
+           al despertar (y, si es su costumbre, un rato despues). */
+        if (enCurso && despertar && cuando < despertar) {
+          cuando = new Date(despertar.getTime() + (trasDespertar ? trasDespertar.min : 0) * 60000);
+          partes.push(trasDespertar ? `suele comer ${duracionCorta(trasDespertar.min)} después de despertarse` : "cuando se despierte");
+        }
+        linea({ cuando, pasado: cuando <= ahora }, "toma",
+          "Siguiente toma sobre las", "La siguiente toma ya va tocando", "Le tocaba sobre las",
+          partes.join(" · "));
       }
-      if (deficit !== null && Math.abs(deficit) >= 60) {
-        partes.push(deficit > 0
-          ? `lleva ${deficit} ml menos que otros días a esta hora${modelo.usaHambre ? ", y eso adelanta la toma" : ": puede pedir antes"}`
-          : `lleva ${-deficit} ml más que otros días a esta hora${modelo.usaHambre ? ", y eso la retrasa" : ""}`);
-      }
-      /* Dormido no come: si la toma caeria antes de que se despierte, sera
-         al despertar (y, si es su costumbre, un rato despues). */
-      if (enCurso && despertar && cuando < despertar) {
-        cuando = new Date(despertar.getTime() + (trasDespertar ? trasDespertar.min : 0) * 60000);
-        partes.push(trasDespertar ? `suele comer ${duracionCorta(trasDespertar.min)} después de despertarse` : "cuando se despierte");
-      }
-      linea({ cuando, pasado: cuando <= ahora }, "toma",
-        "Siguiente toma sobre las", "La siguiente toma ya va tocando", "Le tocaba sobre las",
-        partes.join(" · "));
     }
   }
 
   /* --- Pañal --- */
-  const pp = wnPrediccion(panales, ahora);
-  linea(pp, "panal",
-    "Toca mirar el pañal sobre las", "Toca mirar el pañal", "Tocaba sobre las",
-    pp ? `${pp.aEstaHora ? "a esta hora " : ""}suele tocar cada ${duracionCorta(pp.cada)}` : "");
+  const ultPanal = panales.filter(d => d <= ahora).sort((a, b) => a - b).pop();
+  const casosP = wnCasosIntervalos(panales, ahora);
+  if (ultPanal && casosP.length >= WN_INTERVALOS_MINIMOS) {
+    const cal = wnCalibrar("panales", casosP);
+    const e = wnEstimar(casosP, { hora: minutoDeFecha(ultPanal) }, cal.A);
+    if (e) {
+      const cada = Math.round(e.valor);
+      const c = new Date(ultPanal.getTime() + cada * 60000);
+      linea({ cuando: c, pasado: c <= ahora }, "panal",
+        "Toca mirar el pañal sobre las", "Toca mirar el pañal", "Tocaba sobre las",
+        `a esta hora suele tocar cada ${duracionCorta(cada)}${mas(cal.error)}${apoyo(e)}`);
+    }
+  }
 
   if (!filas.length) return "";
   return `<div class="card wn">
@@ -10415,10 +10377,10 @@ function htmlLoQueSueleVenir() {
       ${iconoLinea(f.icono)}
       <span class="wn-txt">${f.txt}<span class="wn-nota">${f.nota}</span></span>
     </div>`).join("")}</div>
-    <p class="wn-pie">Con ${diasConDatos} días apuntados de los últimos ${WN_VENTANA}. Cuantos más,
-      más afina: primero aprende la hora del día, luego lo que come y lo que lleva, y cómo se
-      cruzan comer y dormir. Es lo que viene haciendo, no una previsión: un día suelto se sale y
-      no pasa nada.</p>
+    <p class="wn-pie">Con ${diasConDatos} días apuntados de los últimos ${WN_VENTANA} (y hasta ${WN_VENTANA_LARGA}
+      con menos peso). Cada caso pasado cuenta según se parezca al de ahora en hora, cantidad y lo que
+      llevaba; el ± es lo que se ha equivocado prediciendo los últimos días. Cuantos más días, más
+      afina. Es lo que viene haciendo, no una previsión: un día suelto se sale y no pasa nada.</p>
   </div>`;
 }
 
