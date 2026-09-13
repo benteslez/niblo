@@ -10247,12 +10247,20 @@ function wnCasosTomas(ahora) {
     .filter(x => !isNaN(x.t)).sort((a, b) => a.t - b.t);
   const solidos = wnSolidos(desde);
   const raros = wnDiasRaros();
-  const fines = episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desde))
-    .filter(e => e.end).map(e => e.end).sort((a, b) => a - b);
+  const episodios = episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desde));
+  const fines = episodios.filter(e => e.end).map(e => e.end).sort((a, b) => a - b);
+  /* Una toma seguida de la noche no mide hambre, mide sueño: de las 20:30 a
+     las 02:00 no "aguanta" cinco horas, es que esta dormido. Esos intervalos
+     no entran; lo que pasa de noche lo lleva la regla de "dormido no come",
+     que espera al despertar. Sin esto, la toma de las 18:30 heredaba las
+     cinco horas de la de antes de acostarse y salia "siguiente toma a las
+     00:13". */
+  const noches = episodios.filter(e => e.type === "nocturno").map(e => e.start);
   const out = [];
   for (let i = 1; i < tomas.length; i++) {
     const d = (tomas[i].t - tomas[i - 1].t) / 60000;
     if (!(d > 0 && d <= WN_TOPE_HORAS * 60)) continue;
+    if (noches.some(n => n > tomas[i - 1].t && n < tomas[i].t)) continue;
     const x = tomas[i - 1];
     const minuto = minutoDeFecha(x.t);
     const antes = tomas.filter(y => y.fecha === x.fecha && y.t < x.t).reduce((s, y) => s + y.ml, 0);
