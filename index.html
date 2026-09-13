@@ -10070,14 +10070,22 @@ function wnDiasConDatos() {
    fallo (error mediano) es el "±" que se enseña: no es un intervalo teorico,
    es lo que se ha equivocado estos dias. */
 const WN_VENTANA_LARGA = 28;          // dias que se miran con peso decreciente
-const WN_JUEGOS = [                   // anchos candidatos: [hora min, ml, deficit ml, vida media dias]
-  { hora: 60,  ml: 30, def: 100, dias: 5 },
-  { hora: 90,  ml: 45, def: 150, dias: 7 },
-  { hora: 120, ml: 70, def: 250, dias: 10 },
-  { hora: 180, ml: 120, def: 400, dias: 14 },
+const WN_JUEGOS = [                   // anchos candidatos: hora (min), ml, deficit (ml), despierto (min), vida media (dias)
+  { hora: 60,  ml: 30,  def: 100, desp: 45,  dias: 5 },
+  { hora: 90,  ml: 45,  def: 150, desp: 60,  dias: 7 },
+  { hora: 120, ml: 70,  def: 250, desp: 90,  dias: 10 },
+  { hora: 180, ml: 120, def: 400, desp: 150, dias: 14 },
 ];
+/* Variables opcionales. Hora y recencia van siempre; estas solo si la
+   calibracion demuestra que bajan el error: con pocos datos una variable que
+   aun no explica nada solo reparte peso al azar. */
+const WN_VARIABLES = ["ml", "def", "solido", "desp"];
+const WN_VARIABLE_ET = { ml: "cantidad", def: "lo que llevaba", solido: "sólido", desp: "rato despierto" };
 const WN_NEFF_MINIMO = 4;             // peso efectivo por debajo del cual se abre el ancho
 const WN_PESO_SOLIDO = 0.35;          // cuanto pesa un caso sin solido cuando ahora lo hubo (y al reves)
+/* Un dia con fiebre o sintomas apuntados, o el de una vacuna, no dice nada
+   de un dia normal: sus casos pesan un tercio. */
+const WN_PESO_RARO = 0.35;
 
 function gauss(d, ancho) { return Math.exp(-0.5 * (d / ancho) * (d / ancho)); }
 function medianaPonderada(pares) {   // [{ v, w }]
@@ -10091,10 +10099,13 @@ function medianaPonderada(pares) {   // [{ v, w }]
 /** Peso de un caso frente a la consulta. Las claves que falten en la
     consulta o en el caso no se miran. */
 function wnPeso(caso, q, A, escala) {
+  const usa = A.usar || WN_VARIABLES;
   let w = gauss(distanciaHora(caso.hora, q.hora), A.hora * escala) * Math.pow(0.5, caso.dias / (A.dias * escala));
-  if (q.ml != null && caso.ml != null) w *= gauss(caso.ml - q.ml, A.ml * escala);
-  if (q.deficit != null && caso.deficit != null) w *= gauss(caso.deficit - q.deficit, A.def * escala);
-  if (q.solido !== undefined && caso.solido !== undefined && caso.solido !== q.solido) w *= WN_PESO_SOLIDO;
+  if (usa.includes("ml") && q.ml != null && caso.ml != null) w *= gauss(caso.ml - q.ml, A.ml * escala);
+  if (usa.includes("def") && q.deficit != null && caso.deficit != null) w *= gauss(caso.deficit - q.deficit, A.def * escala);
+  if (usa.includes("solido") && q.solido !== undefined && caso.solido !== undefined && caso.solido !== q.solido) w *= WN_PESO_SOLIDO;
+  if (usa.includes("desp") && q.despierto != null && caso.despierto != null) w *= gauss(caso.despierto - q.despierto, A.desp * escala);
+  if (caso.raro) w *= WN_PESO_RARO;
   return w;
 }
 /** Mediana ponderada de caso.valor alrededor de la consulta. Si el peso
@@ -10121,28 +10132,66 @@ function wnEstimar(casos, q, A, minimo) {
     se estima solo con los anteriores a el. Devuelve { A, error } con el
     error mediano absoluto en minutos (null si no hay con que probar). */
 const WN_CALIBRADO = new Map();
+/** Error mediano de predecir cada caso (del sexto en adelante) solo con los
+    anteriores. Con `estimar` propio sirve tambien para la referencia. */
+function wnErrorAtras(orden, A, estimar) {
+  const errores = [];
+  for (let i = 5; i < orden.length; i++) {
+    const q = orden[i];
+    /* Los anteriores, con su antiguedad medida desde ese momento. */
+    const previos = orden.slice(0, i).map(c => Object.assign({}, c, { dias: c.dias - q.dias }));
+    const e = estimar ? estimar(previos, q) : wnEstimar(previos, q, A);
+    if (e) errores.push(Math.abs(e.valor - q.valor));
+  }
+  return mediana(errores);
+}
 function wnCalibrar(clave, casos) {
   const firma = `${clave}:${casos.length}:${HOY_ISO}`;
   if (WN_CALIBRADO.has(firma)) return WN_CALIBRADO.get(firma);
   const orden = casos.slice().sort((a, b) => b.dias - a.dias);   // del mas antiguo al mas nuevo
-  let mejor = { A: WN_JUEGOS[1], error: null };
+  /* Variables que estos casos traen de verdad (los pañales no tienen ml). */
+  const posibles = WN_VARIABLES.filter(v => orden.some(c => ({ ml: c.ml, def: c.deficit, solido: c.solido, desp: c.despierto })[v] != null));
+  let mejor = { A: Object.assign({ usar: posibles }, WN_JUEGOS[1]), error: null, referencia: null };
   if (orden.length >= 8) {
+    /* 1. El juego de anchos con todas las variables. */
     let mejorErr = Infinity;
-    for (const A of WN_JUEGOS) {
-      const errores = [];
-      for (let i = 5; i < orden.length; i++) {
-        const q = orden[i];
-        /* Los anteriores, con su antiguedad medida desde ese momento. */
-        const previos = orden.slice(0, i).map(c => Object.assign({}, c, { dias: c.dias - q.dias }));
-        const e = wnEstimar(previos, q, A);
-        if (e) errores.push(Math.abs(e.valor - q.valor));
+    for (const J of WN_JUEGOS) {
+      const A = Object.assign({ usar: posibles }, J);
+      const err = wnErrorAtras(orden, A);
+      if (err !== null && err < mejorErr) { mejorErr = err; mejor.A = A; }
+    }
+    /* 2. Quitar variables de una en una mientras eso baje el error (medio
+       minuto de margen: si da igual, fuera, que menos variables es mas
+       estable). Se repite hasta que quitar ya no ayuda. */
+    let cambio = true;
+    while (cambio && mejor.A.usar.length) {
+      cambio = false;
+      for (const v of mejor.A.usar) {
+        const A = Object.assign({}, mejor.A, { usar: mejor.A.usar.filter(x => x !== v) });
+        const err = wnErrorAtras(orden, A);
+        if (err !== null && err <= mejorErr + 0.5) { mejorErr = err; mejor.A = A; cambio = true; break; }
       }
-      const err = mediana(errores);
-      if (err !== null && err < mejorErr) { mejorErr = err; mejor = { A, error: Math.round(err) }; }
+    }
+    mejor.error = Math.round(mejorErr);
+    /* Referencia: la mediana simple de lo anterior, sin mirar nada. Si gana
+       a todo lo demas, se usa ella (anchos infinitos): un modelo que falla
+       mas que no tener modelo no tiene sitio. */
+    const ref = wnErrorAtras(orden, null, previos => ({ valor: mediana(previos.map(c => c.valor)) }));
+    mejor.referencia = ref === null ? null : Math.round(ref);
+    if (ref !== null && ref < mejorErr) {
+      mejor.A = Object.assign({}, WN_JUEGOS[3], { hora: 1e6, dias: 1e6, usar: [], simple: true });
+      mejor.error = Math.round(ref);
     }
   }
   WN_CALIBRADO.set(firma, mejor);
   return mejor;
+}
+/** Dias en los que paso algo raro: sintomas apuntados o vacuna puesta. */
+function wnDiasRaros() {
+  const out = new Set();
+  for (const x of (STATE.sintomas || [])) if (x.datetime) out.add(x.datetime.slice(0, 10));
+  for (const f of Object.values(STATE.vaccinesDone || {})) if (f && f <= HOY_ISO) out.add(f);
+  return out;
 }
 function wnDesdeLarga() {
   const d = new Date(); d.setDate(d.getDate() - WN_VENTANA_LARGA); d.setHours(0, 0, 0, 0);
@@ -10182,12 +10231,24 @@ function wnAcumuladoTipico(minuto, desde) {
   return vals.length >= 5 ? { ml: mediana(vals), dias: vals.length } : null;
 }
 /** Cada toma con lo que tardo en llegar la siguiente y sus rasgos. */
+/** Minutos que llevaba despierto en un instante (fin del ultimo sueño
+    cerrado antes), o null si no se sabe o es de hace mas de 8 h. */
+function wnDespiertoEn(fines, t) {
+  let ult = null;
+  for (const f of fines) { if (f <= t) ult = f; else break; }
+  if (!ult) return null;
+  const m = (t - ult) / 60000;
+  return m <= WN_TOPE_HORAS * 60 ? m : null;
+}
 function wnCasosTomas(ahora) {
   const desde = wnDesdeLarga(), corta = wnDesde();
   const tomas = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desde)
     .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0, fecha: t.fecha }))
     .filter(x => !isNaN(x.t)).sort((a, b) => a.t - b.t);
   const solidos = wnSolidos(desde);
+  const raros = wnDiasRaros();
+  const fines = episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desde))
+    .filter(e => e.end).map(e => e.end).sort((a, b) => a - b);
   const out = [];
   for (let i = 1; i < tomas.length; i++) {
     const d = (tomas[i].t - tomas[i - 1].t) / 60000;
@@ -10198,16 +10259,16 @@ function wnCasosTomas(ahora) {
     const tipico = wnAcumuladoTipico(minuto, corta);
     out.push({ hora: minuto, ml: x.ml > 0 ? x.ml : null, valor: d, dias: diasHasta(x.t, ahora),
       deficit: tipico ? tipico.ml - antes : null, solido: wnConSolido(solidos, x.t, tomas[i].t),
-      mlSiguiente: tomas[i].ml });
+      despierto: wnDespiertoEn(fines, x.t), raro: raros.has(x.fecha), mlSiguiente: tomas[i].ml });
   }
   return out;
 }
 /** Intervalos entre instantes (pañales), con hora y antiguedad. */
 function wnCasosIntervalos(instantes, ahora) {
-  const o = instantes.slice().sort((a, b) => a - b), out = [];
+  const o = instantes.slice().sort((a, b) => a - b), out = [], raros = wnDiasRaros();
   for (let i = 1; i < o.length; i++) {
     const d = (o[i] - o[i - 1]) / 60000;
-    if (d > 0 && d <= WN_TOPE_HORAS * 60) out.push({ hora: minutoDeFecha(o[i - 1]), valor: d, dias: diasHasta(o[i - 1], ahora) });
+    if (d > 0 && d <= WN_TOPE_HORAS * 60) out.push({ hora: minutoDeFecha(o[i - 1]), valor: d, dias: diasHasta(o[i - 1], ahora), raro: raros.has(isoLocal(o[i - 1])) });
   }
   return out;
 }
@@ -10219,10 +10280,11 @@ function wnCasosSueno(tipo, ahora) {
     .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0 }))
     .filter(x => !isNaN(x.t)).sort((a, b) => a.t - b.t);
   const tomaAntesDe = f => tomas.filter(x => x.t <= f && (f - x.t) / 60000 <= 180).pop() || null;
+  const raros = wnDiasRaros();
   return episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desdeL))
     .filter(e => e.end && e.type === tipo && e.end <= ahora)
     .map(x => { const t = tomaAntesDe(x.start);
-      return { hora: minutoDeFecha(x.start), valor: (x.end - x.start) / 60000, ml: t ? t.ml : null, dias: diasHasta(x.start, ahora) }; })
+      return { hora: minutoDeFecha(x.start), valor: (x.end - x.start) / 60000, ml: t ? t.ml : null, dias: diasHasta(x.start, ahora), raro: raros.has(isoLocal(x.start)) }; })
     .filter(c => c.valor > 0 && c.valor <= 16 * 60);
 }
 /* Como acierta el modelo: cada apunte de los ultimos 14 dias se predice
@@ -10242,7 +10304,7 @@ function wnAciertos() {
     if (c.casos.length < 8) continue;
     const cal = wnCalibrar(c.clave, c.casos);
     const orden = c.casos.slice().sort((a, b) => b.dias - a.dias);
-    const semana = [], anterior = [];
+    const semana = [], anterior = [], refSemana = [];
     for (let i = 5; i < orden.length; i++) {
       const q = orden[i];
       if (q.dias > 14) continue;
@@ -10250,10 +10312,13 @@ function wnAciertos() {
       const e = wnEstimar(previos, q, cal.A);
       if (!e) continue;
       (q.dias <= 7 ? semana : anterior).push(Math.abs(e.valor - q.valor));
+      /* La referencia, sobre los mismos apuntes, para que sea comparable. */
+      if (q.dias <= 7) refSemana.push(Math.abs(mediana(previos.map(x => x.valor)) - q.valor));
     }
     if (semana.length < 3) continue;
     out.push({ et: c.et, cls: c.cls, n: semana.length, ahora: Math.round(mediana(semana)),
-      antes: anterior.length >= 3 ? Math.round(mediana(anterior)) : null });
+      antes: anterior.length >= 3 ? Math.round(mediana(anterior)) : null,
+      referencia: Math.round(mediana(refSemana)), usa: cal.A.usar || [], simple: !!cal.A.simple });
   }
   return out;
 }
@@ -10268,11 +10333,15 @@ function htmlAciertos() {
         : dif >= umbral ? ` <span class="mal">↑ empeora</span>` : ` <span>≈ igual</span>`;
       return `<div class="pt-res-fila">
         <span class="pt-res-punto ${f.cls}"></span>
-        <span class="pt-res-txt"><b>${f.et}</b><span>${f.n} apuntes${f.antes !== null ? ` · semana anterior ±${f.antes} min` : ""}</span></span>
+        <span class="pt-res-txt"><b>${f.et}</b><span>${f.n} apuntes${f.antes !== null ? ` · semana anterior ±${f.antes}` : ""}${
+          f.referencia !== null ? ` · mediana simple ±${f.referencia}` : ""}${
+          f.simple ? " · de momento, mediana simple" : f.usa.length ? ` · mira ${["hora", ...f.usa.map(v => WN_VARIABLE_ET[v])].join(", ")}` : " · mira la hora"}</span></span>
         <span class="pt-res-val">±${f.ahora} min${tend}</span>
       </div>`; }).join("")}</div>
     <p class="wn-pie">Cuánto se ha equivocado "Lo que suele venir" con cada apunte, prediciéndolo solo con
-      lo anterior. Es el error típico (mediana): la mitad de las veces acierta mejor que eso. Menos es mejor.</p>
+      lo anterior. Es el error típico (mediana): la mitad de las veces acierta mejor que eso. Menos es mejor.
+      "Mediana simple" es lo que fallaría sin modelo; "mira" son las variables que de verdad le ayudan
+      con los datos que hay (las demás se apagan solas hasta que aporten).</p>
   </div>`;
 }
 /* Que hace el solido con la cantidad de la toma de despues (el tiempo ya lo
@@ -10317,10 +10386,11 @@ function htmlLoQueSueleVenir() {
   const episodios = episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desdeL));
   const suenios = episodios.filter(e => e.end);
   const tomaAntesDe = fecha => tomasL.filter(x => x.t <= fecha && (fecha - x.t) / 60000 <= 180).pop() || null;
+  const raros = wnDiasRaros();
   const despiertos = [];
   for (let i = 1; i < suenios.length; i++) {
     const d = (suenios[i].start - suenios[i - 1].end) / 60000;
-    if (d > 0 && d <= WN_TOPE_HORAS * 60) despiertos.push({ hora: minutoDeFecha(suenios[i - 1].end), valor: d, dias: diasHasta(suenios[i - 1].end, ahora) });
+    if (d > 0 && d <= WN_TOPE_HORAS * 60) despiertos.push({ hora: minutoDeFecha(suenios[i - 1].end), valor: d, dias: diasHasta(suenios[i - 1].end, ahora), raro: raros.has(isoLocal(suenios[i - 1].end)) });
   }
   const fines = suenios.map(x => x.end).filter(d => d <= ahora).sort((a, b) => a - b);
   const ultimoFin = fines.length ? fines[fines.length - 1] : null;
@@ -10417,7 +10487,8 @@ function htmlLoQueSueleVenir() {
       const deficitAhora = tipicoAhora ? Math.round(tipicoAhora.ml - hoyMl) : null;
       const solidoAhora = wnConSolido(wnSolidos(desdeL), ultToma.t, ahora);
       const cal = wnCalibrar("tomas", casos);
-      const q = { hora: minutoDeFecha(ultToma.t), ml: ultToma.ml > 0 ? ultToma.ml : null, deficit, solido: solidoAhora };
+      const q = { hora: minutoDeFecha(ultToma.t), ml: ultToma.ml > 0 ? ultToma.ml : null, deficit, solido: solidoAhora,
+        despierto: wnDespiertoEn(fines, ultToma.t) };
       const pasados = (ahora - ultToma.t) / 60000;
       let e = wnEstimar(casos, q, cal.A);
       let reestimada = null;
@@ -10437,6 +10508,10 @@ function htmlLoQueSueleVenir() {
         if (deficitAhora !== null && Math.abs(deficitAhora) >= 60) rasgos.push(`llevando ${Math.abs(deficitAhora)} ml ${deficitAhora > 0 ? "menos" : "más"} que otros días`);
         if (solidoAhora) rasgos.push("con sólido de por medio");
         partes.push(`${rasgos.join(", ")} ${reestimada !== null ? "aguanta" : "suele aguantar"} ${duracionCorta(cada)}${mas(cal.error)}${apoyo(e)}`);
+        if (cal.A.simple) partes.push("de momento, la mediana de todas las tomas: aún no hay patrón claro");
+        else if (cal.A.usar && cal.A.usar.length < WN_VARIABLES.length && cal.error !== null) {
+          partes.push(`de momento afina por ${["hora", ...cal.A.usar.map(v => WN_VARIABLE_ET[v])].join(", ")}`);
+        }
         if (solidoAhora) {
           const sc = wnSolidoCantidad(casos);
           if (sc && sc.sin - sc.con >= 20) partes.push(`tras sólido suele tomar menos: unos ${sc.con} ml en vez de ${sc.sin}`);
