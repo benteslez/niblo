@@ -5839,6 +5839,7 @@
     .pb-app .linea-icono.i-panal { background: var(--yellow-soft); color: var(--yellow); }
     .pb-app .linea-icono.i-compra { background: var(--bg-soft); color: var(--text-muted); }
     .pb-app .linea-icono.i-medicamento { background: var(--red-soft); color: var(--red); }
+    .pb-app .linea-icono.i-vitd { background: var(--amber-soft); color: var(--amber); }
     .pb-app .linea-icono.i-vacuna { background: var(--teal-soft); color: var(--teal); }
     .pb-app .linea-icono.i-bano  { background: var(--deep-soft); color: var(--deep); }
     /* El "+" de la linea del dia: redondo y solo, sin texto al lado. */
@@ -9950,6 +9951,7 @@ LINEA_GLIFOS.compra = '<path d="M5 6.2h14V8H5zM6 9h12v9.4A2.6 2.6 0 0 1 15.4 21H
 /* Gota con la pastilla dentro: lo que se da a cucharadas o con jeringa. */
 LINEA_GLIFOS.medicamento = '<path d="M12 2.8c3.4 4 5.6 6.9 5.6 9.6a5.6 5.6 0 1 1-11.2 0c0-2.7 2.2-5.6 5.6-9.6zm-2.6 8.6v1.8h5.2v-1.8z"/>';
 /* Jeringa en diagonal. */
+LINEA_GLIFOS.vitd = '<path d="M12 7.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6zM11.1 2h1.8v3h-1.8zm0 17h1.8v3h-1.8zM2 11.1h3v1.8H2zm17 0h3v1.8h-3zM4.9 6.2l1.3-1.3 2.1 2.1-1.3 1.3zm10.8 10.8l1.3-1.3 2.1 2.1-1.3 1.3zm0-9.9 2.1-2.1 1.3 1.3-2.1 2.1zM4.9 17.8l2.1-2.1 1.3 1.3-2.1 2.1z"/>';
 LINEA_GLIFOS.vacuna = '<path d="M19.6 3l1.4 1.4-1.6 1.6 1.2 1.2-1.4 1.4-1.2-1.2-1 1 1.8 1.8-7.4 7.4-3.4-.4-1.8 1.8L4.8 22 2 19.2l2.2-2.2-1.4-1.4 1.8-1.8-.4-3.4 7.4-7.4 1.8 1.8 1-1-1.2-1.2 1.4-1.4 1.2 1.2zM12.2 8.8l-5.6 5.6.2 2.2 2.2.2 5.6-5.6z"/>';
 LINEA_GLIFOS.bano  = '<path d="M4 11h16v2.5A5.5 5.5 0 0 1 14.5 19h-5A5.5 5.5 0 0 1 4 13.5zM6 11V6.5A2.5 2.5 0 0 1 11 6.5h-1.8a.7.7 0 0 0-1.4 0V11z"/>';
 function iconoLinea(tipo) {
@@ -10575,6 +10577,12 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
         <span class="linea-texto"><b>${esc(m.nombre || "Medicamento")}</b>${
           m.ml ? `<span class="linea-sub">${esc(String(m.ml).replace(".", ","))} ml</span>` : ""}</span>
       </button>` })),
+    ...((STATE.vitaminaD || {})[dia.fecha] ? [{ hora: horaVitaminaD(dia.fecha), html: `
+      <button type="button" class="linea-fila" onclick="PB.modalVitaminaD('${dia.fecha}')">
+        <span class="linea-hora">${horaVitaminaD(dia.fecha)}</span>
+        ${iconoLinea("vitd")}
+        <span class="linea-texto"><b>Vitamina D</b><span class="linea-sub">400 UI</span></span>
+      </button>` }] : []),
     /* Las vacunas puestas ese dia, todas en una linea: se ponen en la misma
        visita. A las 09:00 salvo que se cambie la hora (queda en la ficha). */
     ...(vac => vac.length ? [{ hora: vac.hora, html: `
@@ -12492,12 +12500,36 @@ function marcarVitaminaD(dia) {
     delete STATE.vitaminaD[f];
     anotarBorradoClave("vitaminaD", f);
   } else {
-    STATE.vitaminaD[f] = true;
+    /* Se guarda la hora (antes era true a secas) para que salga en la linea
+       del dia; todo lo que pregunta "¿esta dada?" sigue valiendo, es truthy. */
+    STATE.vitaminaD[f] = f === HOY_ISO ? nowDatetimeLocal().slice(11, 16) : VACUNA_HORA_DEFECTO;
     olvidarBorradoClave("vitaminaD", f);
   }
   guardarEstado();
   renderAvisos();
   if (VISTA_ACTUAL === "hoy") renderHoy(document.getElementById("view-hoy"));
+  if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
+}
+/* La hora a la que se dio: la guardada, o las 09:00 para los dias marcados
+   antes de que se guardara. */
+function horaVitaminaD(f) {
+  const v = (STATE.vitaminaD || {})[f];
+  return typeof v === "string" && /^\d\d:\d\d$/.test(v) ? v : VACUNA_HORA_DEFECTO;
+}
+function modalVitaminaD(f) {
+  abrirModal("Vitamina D", `
+    <p class="modal-p">Dada el ${fmtFechaCorta(f)}.</p>
+    <div class="campo"><label for="vd-hora">Hora</label>
+      <input type="time" id="vd-hora" value="${horaVitaminaD(f)}"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Quitar", peligro: true, accion: `PB.cerrarModal();PB.marcarVitaminaD('${f}')` },
+     { et: "Guardar", primario: true, accion: `PB.guardarHoraVitaminaD('${f}')` }]);
+}
+function guardarHoraVitaminaD(f) {
+  const hora = (document.getElementById("vd-hora") || {}).value;
+  if (hora) { STATE.vitaminaD[f] = hora; guardarEstado(); }
+  cerrarModal();
+  refrescarTrasToma();
 }
 
 function marcarAvisoVisto(id) {
@@ -12583,10 +12615,13 @@ function calcularAvisos() {
 }
 
 function htmlAvisos() {
-  const avisos = calcularAvisos();
+  /* Lo hecho ya no se queda en la tarjeta: la vitamina D dada sale en la
+     linea del dia (y desde ahi se puede quitar). Sin nada pendiente, la
+     tarjeta desaparece. */
+  const avisos = calcularAvisos().filter(a => !a.hecho);
   if (!avisos.length) return "";
   return `<div class="card avisos">
-    <h2>Pendientes <span class="n">${avisos.filter(a => !a.hecho).length}</span></h2>
+    <h2>Pendientes <span class="n">${avisos.length}</span></h2>
     ${avisos.map(a => {
       /* En la vitamina D el boton "Hecho" y la ✕ hacian exactamente lo mismo
          (marcar el aviso como visto): sobraba uno. En los demas la accion es
@@ -14519,7 +14554,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompraLeche, guardarCompraLeche, modalMedicamento, guardarMedicamento, qltToggle, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompraLeche, guardarCompraLeche, modalMedicamento, guardarMedicamento, qltToggle, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
