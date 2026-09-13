@@ -8704,7 +8704,14 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
       const lapida = borrados["alimentos:" + id + ":" + h.fecha];
       if (lapida && lapida > (tsRemoto || "")) { porFecha.delete(h.fecha); cambio = true; continue; }
       if (!porFecha.has(h.fecha)) { porFecha.set(h.fecha, h); cambio = true; }
-      else if (porFecha.get(h.fecha).resultado !== h.resultado && remotoGana) { porFecha.set(h.fecha, h); cambio = true; }
+      else if (remotoGana) {
+        /* Antes solo se miraba el resultado: cambiar la hora o el dia en que
+           se lo comio en un movil no llegaba nunca al otro. */
+        const x = porFecha.get(h.fecha);
+        if (x.resultado !== h.resultado || (x.hora || "") !== (h.hora || "") || (x.comido || "") !== (h.comido || "")) {
+          porFecha.set(h.fecha, h); cambio = true;
+        }
+      }
     }
     // Y un apunte borrado aqui no sobrevive por estar en la copia local.
     for (const f of [...porFecha.keys()]) {
@@ -9847,6 +9854,21 @@ function htmlComidaDelDia(dia, marcarFn) {
 /* Lo que se marco de ese alimento ESE dia, si se marco. Antes miraba siempre
    HOY_ISO, asi que al abrir un dia pasado del calendario se veia la marca de
    hoy y los botones no correspondian al dia que estabas mirando. */
+/* El dia del plan (fecha) es la clave del apunte; el dia en que se lo comio
+   de verdad puede ser otro (comido): si ayer estaba malo y la racion de ayer
+   se la dio esta mañana, el apunte sigue colgando del dia del plan pero se
+   enseña donde se lo comio. */
+function diaComido(h) { return h.comido || h.fecha; }
+/** Apuntes comidos un dia, vengan del plan del dia que vengan. */
+function comidasDelDia(iso) {
+  const out = [];
+  for (const id in (STATE.alimentos || {})) {
+    for (const h of (STATE.alimentos[id].historial || [])) {
+      if (diaComido(h) === iso) out.push({ id, h });
+    }
+  }
+  return out;
+}
 function marcaDelDia(id, fecha) {
   const h = (ESTADO[id]?.historial || []).filter(x => x.fecha === fecha);
   return h[h.length - 1] || null;
@@ -10249,10 +10271,10 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   /* Solo lo que ha pasado de verdad. Antes se mezclaban aqui las tomas que la
      rutina espera y los bloques del plan, y la lista se llenaba de filas
      "Apuntar" que no eran registros: el plan ya esta arriba. */
-  const marcados = alimentosParaMarcar(dia)
-    .map(({ a }) => ({ a, m: a.id ? marcaDelDia(a.id, dia.fecha) : null }))
-    .filter(({ m }) => m && m.hora)
-    .map(({ a, m }) => ({ a, hora: m.hora, estado: m.resultado }));
+  const marcados = comidasDelDia(dia.fecha)
+    .filter(({ h }) => h.hora)
+    .map(({ id, h }) => ({ a: (al => ({ id, nombre: nombreLocal(al) || id }))(alimentoPorId(id)), hora: h.hora, estado: h.resultado,
+      plan: h.fecha, movido: h.comido && h.comido !== h.fecha }));
   /* Los tres estados que puede tener un alimento, con su glifo y su texto. */
   const MARCA = {
     probando: { icono: "probando", texto: "probando" },
@@ -10344,11 +10366,12 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
       </button>` })),
     ...marcados.map(m => ({ hora: m.hora, html: `
       <button type="button" class="linea-fila"
-        onclick="PB.editarMarcaAlimento('${m.a.id}','${dia.fecha}')">
+        onclick="PB.editarMarcaAlimento('${m.a.id}','${m.plan}')">
         <span class="linea-hora">${m.hora}</span>
         ${iconoLinea((MARCA[m.estado] || MARCA.tolerado).icono)}
         <span class="linea-texto"><b>${capitalizar(m.a.nombre)}</b><span
-          class="linea-sub">${(MARCA[m.estado] || MARCA.tolerado).texto}</span></span>
+          class="linea-sub">${(MARCA[m.estado] || MARCA.tolerado).texto}${
+            m.movido ? ` · ración del ${fmtFechaCorta(m.plan)}` : ""}</span></span>
       </button>` })),
   ].sort((a, b) => a.hora.localeCompare(b.hora));
 
@@ -11307,7 +11330,11 @@ function editarMarcaAlimento(id, fecha) {
         </select></div>
       <div class="campo"><label for="ma-hora">Hora</label>
         <input type="time" id="ma-hora" value="${esc(h.hora || "")}"></div>
-    </div>`,
+    </div>
+    <div class="campo"><label for="ma-dia">Día en que se lo comió</label>
+      <input type="date" id="ma-dia" value="${esc(diaComido(h))}" max="${HOY_ISO}"></div>
+    <p class="modal-p faint">Es la ración del ${fmtFechaCorta(fecha)}. Si se la dio otro día
+      (porque estaba malo, por ejemplo), cambia aquí el día y saldrá en el registro de ese día.</p>`,
     [{ et: "Cancelar", accion: "PB.cerrarModal()" },
      { et: "Quitar marca", peligro: true, accion: "PB.borrarMarcaAlimento()" },
      { et: "Guardar", primario: true, accion: "PB.guardarMarcaAlimento()" }]);
@@ -11318,6 +11345,8 @@ function guardarMarcaAlimento() {
   if (h) {
     h.resultado = document.getElementById("ma-res").value;
     h.hora = document.getElementById("ma-hora").value || h.hora;
+    const dia = (document.getElementById("ma-dia") || {}).value || "";
+    if (dia && dia !== h.fecha) h.comido = dia; else delete h.comido;
     guardarEstado();
   }
   MARCA_ABIERTA = null;
@@ -11543,8 +11572,7 @@ function htmlPatron(centro) {
       ...tomasDelDia(f).map(t => ({ m: minutos(f, t.hora), cls: "pt-toma" })),
       ...STATE.diapers.filter(p2 => (p2.datetime || "").slice(0, 10) === f)
         .map(p2 => ({ m: minutos(f, p2.datetime.slice(11, 16)), cls: "pt-panal" })),
-      ...Object.values(STATE.alimentos || {}).flatMap(dat => (dat.historial || [])
-        .filter(h => h.fecha === f && h.hora).map(h => ({ m: minutos(f, h.hora), cls: "pt-comida" }))),
+      ...comidasDelDia(f).filter(({ h }) => h.hora).map(({ h }) => ({ m: minutos(f, h.hora), cls: "pt-comida" })),
     ].map(r => `<span class="${r.cls}" style="top:${r.m / 14.4}%"></span>`).join("");
     const dow = d.toLocaleDateString("es-ES", { weekday: "short" }).replace(".", "");
     /* La columna entera es el boton, no cada franja: en una tira de 34 px de
@@ -11595,12 +11623,7 @@ function resumenDia(iso) {
   const suenios = sueniosDelDia(iso);
   const tomas = tomasDelDia(iso);
   const panales = STATE.diapers.filter(p => (p.datetime || "").slice(0, 10) === iso);
-  const comidas = [];
-  for (const id in (STATE.alimentos || {})) {
-    for (const h of (STATE.alimentos[id].historial || [])) {
-      if (h.fecha === iso) comidas.push({ id, hora: h.hora || "", resultado: h.resultado });
-    }
-  }
+  const comidas = comidasDelDia(iso).map(({ id, h }) => ({ id, hora: h.hora || "", resultado: h.resultado }));
   const minSueno = suenios.reduce((t, x) => t + x.minutos, 0);
   const ml = tomas.reduce((t, x) => t + (Number(x.ml) || 0), 0);
 
@@ -11666,8 +11689,7 @@ function resApuntes(iso) {
     tomas: tomasDelDia(iso).length,
     sueno: sueniosDelDia(iso).length,
     panales: (STATE.diapers || []).filter(d => (d.datetime || "").slice(0, 10) === iso).length,
-    comida: Object.values(STATE.alimentos || {})
-      .reduce((n, dat) => n + (dat.historial || []).filter(h => h.fecha === iso).length, 0),
+    comida: comidasDelDia(iso).length,
   };
 }
 
