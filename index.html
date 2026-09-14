@@ -10504,9 +10504,87 @@ function percentil(xs, p) {
   return o[lo] + (o[hi] - o[lo]) * (i - lo);
 }
 
+/* ---- Referencias por edad --------------------------------------------
+   Sirven de red mientras no hay datos (menos de 7 dias apuntados) y de aviso
+   cuando lo suyo se sale de lo esperable. No cambian la prevision: los datos
+   de Pablo mandan. Las ventanas despierto y la duracion de las siestas NO
+   estan en ninguna guia oficial: son practica habitual de asesoras de sueño,
+   y asi se dice. Las tomas si: AEP, a los 6-12 meses 4-5 tomas de 180-240 ml.
+   Todo en minutos y ml. */
+const REF_EDAD = [
+  { hasta: 1,  despierto: [45, 60],   siesta: [30, 120], toma: [120, 180], ml: [60, 90] },
+  { hasta: 2,  despierto: [60, 90],   siesta: [30, 120], toma: [150, 210], ml: [90, 120] },
+  { hasta: 3,  despierto: [75, 105],  siesta: [30, 120], toma: [180, 240], ml: [120, 150] },
+  { hasta: 4,  despierto: [90, 120],  siesta: [30, 120], toma: [180, 240], ml: [150, 180] },
+  { hasta: 6,  despierto: [120, 150], siesta: [30, 120], toma: [180, 240], ml: [150, 210] },
+  { hasta: 9,  despierto: [150, 210], siesta: [45, 120], toma: [180, 300], ml: [180, 240] },
+  { hasta: 12, despierto: [180, 240], siesta: [60, 120], toma: [240, 360], ml: [180, 240] },
+  { hasta: 18, despierto: [240, 360], siesta: [60, 150], toma: [240, 420], ml: [180, 240] },
+  { hasta: 99, despierto: [300, 420], siesta: [60, 150], toma: [240, 480], ml: [180, 240] },
+];
+function refEdad(meses) {
+  if (meses == null) return null;
+  return REF_EDAD.find(r => meses < r.hasta) || REF_EDAD[REF_EDAD.length - 1];
+}
+const rangoTexto = (r, unidad) => unidad === "ml" ? `${r[0]}-${r[1]} ml` : `${duracionCorta(r[0])}-${duracionCorta(r[1])}`;
+/** Nota si el valor se sale de la banda de su edad; "" si esta dentro. */
+function fueraDeEdad(valor, banda, meses, que, unidad) {
+  if (!banda || valor == null) return "";
+  if (valor >= banda[0] * 0.85 && valor <= banda[1] * 1.15) return "";
+  const m = Math.floor(meses);
+  return ` · ${valor < banda[0] ? "por debajo" : "por encima"} de lo habitual a los ${m} meses (${que} ${rangoTexto(banda, unidad)})`;
+}
+
+/* Sin datos suficientes: la misma tarjeta con lo que dice la edad, dicho
+   claramente como orientacion y no como lo suyo. */
+function htmlOrientacionEdad(diasConDatos) {
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date());
+  const ref = refEdad(meses);
+  if (!ref) return "";
+  const ahora = new Date();
+  const hhmm = d => `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  const medio = r => Math.round((r[0] + r[1]) / 2);
+  const filas = [];
+  const episodios = episodiosSueno(STATE.sleep);
+  const enCurso = episodios.filter(e => !e.end && e.start <= ahora).pop();
+  const fines = episodios.filter(e => e.end && e.end <= ahora).map(e => e.end).sort((a, b) => a - b);
+  const ultimoFin = fines[fines.length - 1] || null;
+  const tomas = wnTomasModelo(new Date(0), ahora);
+  const ultToma = tomas[tomas.length - 1] || null;
+  const m = Math.floor(meses);
+  if (enCurso && enCurso.type === "siesta") {
+    const c = new Date(enCurso.start.getTime() + medio(ref.siesta) * 60000);
+    filas.push({ icono: "sueno", txt: `Por edad, se despertaría sobre las <b>${hhmm(c)}</b>`,
+      nota: `a los ${m} meses las siestas suelen durar ${rangoTexto(ref.siesta)}` });
+  } else if (!enCurso && ultimoFin) {
+    const c = new Date(ultimoFin.getTime() + medio(ref.despierto) * 60000);
+    filas.push({ icono: "sueno", txt: `Por edad, le entraría el sueño sobre las <b>${hhmm(c)}</b>`,
+      nota: `a los ${m} meses suele aguantar despierto ${rangoTexto(ref.despierto)}` });
+  }
+  if (ultToma) {
+    const c = new Date(ultToma.t.getTime() + medio(ref.toma) * 60000);
+    filas.push({ icono: "toma", txt: `Por edad, la siguiente toma sería sobre las <b>${hhmm(c)}</b>`,
+      nota: `a los ${m} meses, tomas cada ${rangoTexto(ref.toma)} de ${rangoTexto(ref.ml, "ml")}${
+        ultToma.ml > 0 ? fueraDeEdad(ultToma.ml, ref.ml, meses, "lo normal por toma", "ml").replace(/^ · /, " · la última, de " + ultToma.ml + " ml, ") : ""}` });
+  }
+  if (!filas.length) return "";
+  return `<div class="card wn">
+    <h2>Lo que suele venir <span class="n">orientación por edad</span></h2>
+    <div class="wn-lista">${filas.map(f => `<div class="wn-fila">
+      ${iconoLinea(f.icono)}
+      <span class="wn-txt">${f.txt}<span class="wn-nota">${f.nota}</span></span>
+    </div>`).join("")}</div>
+    <p class="wn-pie">Todavía hay ${diasConDatos} ${diasConDatos === 1 ? "día apuntado" : "días apuntados"}: esto es lo
+      habitual a su edad, no lo suyo. Las tomas salen de la AEP; las ventanas de sueño son práctica
+      habitual, no guía oficial. Con 7 días apuntados pasará a usar sus propios datos.</p>
+  </div>`;
+}
+
 function htmlLoQueSueleVenir() {
   const diasConDatos = wnDiasConDatos();
-  if (diasConDatos < WN_DIAS_MINIMOS) return "";
+  if (diasConDatos < WN_DIAS_MINIMOS) return htmlOrientacionEdad(diasConDatos);
+  const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date());
+  const ref = refEdad(meses) || {};
   const ahora = new Date();
   const desde = wnDesde(), desdeL = wnDesdeLarga();
   const hhmm = d => `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
@@ -10589,7 +10667,8 @@ function htmlLoQueSueleVenir() {
         despertar = pv.luego || pv.cuando;
         const cuanto = tipo === "nocturno"
           ? `por la noche suele dormir ${duracionCorta(pv.valor)}${mas(cal.error)}`
-          : `a esta hora${tAntes ? ` y tras una toma de ${tAntes.ml} ml` : ""} sus siestas suelen durar ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}`;
+          : `a esta hora${tAntes ? ` y tras una toma de ${tAntes.ml} ml` : ""} sus siestas suelen durar ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}${
+              fueraDeEdad(pv.valor, ref.siesta, meses, "siestas de")}`;
         linea(pv, "sueno",
           "Probablemente se despierte sobre las", "Ya lleva durmiendo más de lo habitual",
           "Se tendría que haber despertado sobre las", cuanto + siSigue(pv) + notaRetomado);
@@ -10607,7 +10686,8 @@ function htmlLoQueSueleVenir() {
       const pv = prever(despiertos, q, cal.A, ultimoFin);
       if (pv) {
         c = pv.cuando;
-        nota = `a esta hora aguanta despierto unas ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}`;
+        nota = `a esta hora aguanta despierto unas ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}${
+          fueraDeEdad(pv.valor, ref.despierto, meses, "despierto")}`;
       }
     }
     if (c) linea({ cuando: c, pasado: c <= ahora }, "sueno",
@@ -10642,7 +10722,11 @@ function htmlLoQueSueleVenir() {
         if (q.ml != null) rasgos.push(`tras ${ultToma.ml} ml${ultToma.trozos > 1 ? ` (en ${ultToma.trozos} veces)` : ""}`);
         if (deficitAhora !== null && Math.abs(deficitAhora) >= 60) rasgos.push(`llevando ${Math.abs(deficitAhora)} ml ${deficitAhora > 0 ? "menos" : "más"} que otros días`);
         if (solidoAhora) rasgos.push("con sólido de por medio");
-        partes.push(`${rasgos.join(", ")} suele aguantar ${duracionCorta(cada)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}`);
+        partes.push(`${rasgos.join(", ")} suele aguantar ${duracionCorta(cada)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}${
+          fueraDeEdad(cada, ref.toma, meses, "cada")}`);
+        if (q.ml != null && fueraDeEdad(ultToma.ml, ref.ml, meses, "", "ml")) {
+          partes.push(`la última toma, de ${ultToma.ml} ml, está ${ultToma.ml < ref.ml[0] ? "por debajo" : "por encima"} de lo normal por toma a los ${Math.floor(meses)} meses (${rangoTexto(ref.ml, "ml")})`);
+        }
         if (cal.A.simple) partes.push("de momento, la mediana de todas las tomas: aún no hay patrón claro");
         else if (cal.A.usar && cal.A.usar.length < WN_VARIABLES.length && cal.error !== null) {
           partes.push(`de momento afina por ${["hora", ...cal.A.usar.map(v => WN_VARIABLE_ET[v])].join(", ")}`);
@@ -10685,7 +10769,8 @@ function htmlLoQueSueleVenir() {
     <p class="wn-pie">Con ${diasConDatos} días apuntados de los últimos ${WN_VENTANA} (y hasta ${WN_VENTANA_LARGA}
       con menos peso). Cada caso pasado cuenta según se parezca al de ahora en hora, cantidad y lo que
       llevaba; el ± es lo que se ha equivocado prediciendo los últimos días. Cuantos más días, más
-      afina. Es lo que viene haciendo, no una previsión: un día suelto se sale y no pasa nada.</p>
+      afina. Es lo que viene haciendo, no una previsión: un día suelto se sale y no pasa nada. Si algo
+      se sale de lo habitual a su edad se avisa, pero mandan sus datos.</p>
   </div>`;
 }
 
