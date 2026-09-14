@@ -10453,6 +10453,28 @@ function htmlLoQueSueleVenir() {
       txt: p.pasado ? vencido : `${futuro} <b>${hhmm(p.cuando)}</b>`,
       nota: p.pasado ? `${vencidoNota} <b>${hhmm(p.cuando)}</b> · ${nota}` : nota });
   };
+  /* Prevision con su estado. La hora prevista es UNA y no se mueve: si ya
+     ha pasado, se dice que va pasado y, como dato aparte, lo que dicen los
+     casos que aguantaron mas ("si sigue asi, sobre las…"). Antes la linea
+     saltaba de 04:45 a 05:23 en cuanto pasaba un minuto y parecia que la
+     prevision hubiera sido siempre la segunda. La re-estimacion espera 10
+     min de retraso para no cambiar la nota por un minuto de nada. */
+  const WN_RETRASO_MIN = 10;
+  const prever = (casos, q, A, origen) => {
+    const e = wnEstimar(casos, q, A);
+    if (!e) return null;
+    const lleva = (ahora - origen) / 60000;
+    const cuando = new Date(origen.getTime() + Math.round(e.valor) * 60000);
+    const out = { e, cuando, valor: Math.round(e.valor), pasado: cuando <= ahora, luego: null, agotado: false };
+    if (out.pasado && lleva - e.valor >= WN_RETRASO_MIN) {
+      const e2 = wnEstimar(casos, q, A, lleva);
+      if (e2) out.luego = new Date(origen.getTime() + Math.round(e2.valor) * 60000);
+      else out.agotado = true;
+    }
+    return out;
+  };
+  const siSigue = p => p.luego ? ` · si sigue así, sobre las <b>${hhmm(p.luego)}</b>`
+    : p.agotado ? " · nunca ha aguantado tanto en casos parecidos" : "";
   /* Cuantos casos han pesado de verdad: sirve para decir en que se apoya. */
   const apoyo = e => e.neff >= 5 ? "" : e.neff >= 3 ? " · pocos casos parecidos" : " · casi sin casos parecidos";
 
@@ -10465,25 +10487,18 @@ function htmlLoQueSueleVenir() {
     if (casos.length >= WN_INTERVALOS_MINIMOS) {
       const cal = wnCalibrar("sueno-" + tipo, casos);
       const q = { hora: minutoDeFecha(enCurso.start), ml: tAntes ? tAntes.ml : null };
-      const llevaMin = (ahora - enCurso.start) / 60000;
-      let e = wnEstimar(casos, q, cal.A), habitual = null;
-      if (e && e.valor <= llevaMin) { habitual = Math.round(e.valor); e = wnEstimar(casos, q, cal.A, llevaMin); }
+      const pv = prever(casos, q, cal.A, enCurso.start);
       const retomado = enCurso.trozos.length > 1;
       const previo = retomado ? enCurso.trozos[enCurso.trozos.length - 2] : null;
       const notaRetomado = retomado ? `; el rato despierto de las ${hhmm(previo.end ? new Date(previo.end) : enCurso.start)} cuenta como el mismo sueño` : "";
-      if (e) {
-        const dura = Math.round(e.valor);
-        const c = new Date(enCurso.start.getTime() + dura * 60000);
-        despertar = c;
+      if (pv) {
+        despertar = pv.luego || pv.cuando;
         const cuanto = tipo === "nocturno"
-          ? `por la noche suele dormir ${duracionCorta(habitual !== null ? habitual : dura)}${mas(cal.error)}`
-          : `a esta hora${tAntes ? ` y tras una toma de ${tAntes.ml} ml` : ""} sus siestas suelen durar ${duracionCorta(habitual !== null ? habitual : dura)}${mas(cal.error)}${apoyo(e)}`;
-        linea({ cuando: c, pasado: false }, "sueno",
-          habitual !== null ? "Ya duerme más de lo habitual; probablemente se despierte sobre las" : "Probablemente se despierte sobre las",
-          "", "", cuanto + notaRetomado);
-      } else if (habitual !== null) {
-        filas.push({ icono: "sueno", txt: "Ya lleva durmiendo más de lo habitual",
-          nota: `Se tendría que haber despertado sobre las <b>${hhmm(new Date(enCurso.start.getTime() + habitual * 60000))}</b> · nunca ha dormido tanto en casos parecidos${notaRetomado}` });
+          ? `por la noche suele dormir ${duracionCorta(pv.valor)}${mas(cal.error)}`
+          : `a esta hora${tAntes ? ` y tras una toma de ${tAntes.ml} ml` : ""} sus siestas suelen durar ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}`;
+        linea(pv, "sueno",
+          "Probablemente se despierte sobre las", "Ya lleva durmiendo más de lo habitual",
+          "Se tendría que haber despertado sobre las", cuanto + siSigue(pv) + notaRetomado);
       }
     }
   } else if (ultimoFin || (ultToma && trasToma)) {
@@ -10495,18 +10510,10 @@ function htmlLoQueSueleVenir() {
     if ((!c || c <= ahora) && ultimoFin && despiertos.length >= WN_INTERVALOS_MINIMOS) {
       const cal = wnCalibrar("despierto", despiertos);
       const q = { hora: minutoDeFecha(ultimoFin) };
-      const lleva = (ahora - ultimoFin) / 60000;
-      let e = wnEstimar(despiertos, q, cal.A), habitual = null;
-      if (e && e.valor <= lleva) { habitual = Math.round(e.valor); e = wnEstimar(despiertos, q, cal.A, lleva); }
-      if (e) {
-        const cada = Math.round(e.valor);
-        c = new Date(ultimoFin.getTime() + cada * 60000);
-        nota = (habitual !== null ? `ya lleva más despierto de lo habitual (${duracionCorta(habitual)}) · ` : "")
-          + `a esta hora aguanta despierto unas ${duracionCorta(cada)}${mas(cal.error)}${apoyo(e)}`;
-      } else if (habitual !== null) {
-        c = null;
-        filas.push({ icono: "sueno", txt: "Ya lleva despierto más de lo habitual",
-          nota: `Le tendría que haber entrado el sueño sobre las <b>${hhmm(new Date(ultimoFin.getTime() + habitual * 60000))}</b> · nunca ha aguantado tanto en casos parecidos` });
+      const pv = prever(despiertos, q, cal.A, ultimoFin);
+      if (pv) {
+        c = pv.cuando;
+        nota = `a esta hora aguanta despierto unas ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}`;
       }
     }
     if (c) linea({ cuando: c, pasado: c <= ahora }, "sueno",
@@ -10532,25 +10539,16 @@ function htmlLoQueSueleVenir() {
       const cal = wnCalibrar("tomas", casos);
       const q = { hora: minutoDeFecha(ultToma.t), ml: ultToma.ml > 0 ? ultToma.ml : null, deficit, solido: solidoAhora,
         despierto: wnDespiertoEn(fines, ultToma.t) };
-      const pasados = (ahora - ultToma.t) / 60000;
-      let e = wnEstimar(casos, q, cal.A);
-      let reestimada = null;
-      if (e && e.valor <= pasados) {
-        /* Ya se paso: se vuelve a estimar solo con los casos que aguantaron
-           mas que lo que lleva. Si no queda ninguno, se dice que va tocando. */
-        reestimada = Math.round(e.valor);
-        e = wnEstimar(casos, q, cal.A, pasados);
-      }
-      if (e) {
-        const cada = Math.round(e.valor);
-        let cuando = new Date(ultToma.t.getTime() + cada * 60000);
+      const pv = prever(casos, q, cal.A, ultToma.t);
+      if (pv) {
+        const cada = pv.valor;
+        let cuando = pv.cuando;
         const partes = [];
-        if (reestimada !== null) partes.push(`ya va más allá de lo habitual (tocaba sobre las ${hhmm(new Date(ultToma.t.getTime() + reestimada * 60000))})`);
         const rasgos = ["a esta hora"];
         if (q.ml != null) rasgos.push(`tras ${ultToma.ml} ml${ultToma.trozos > 1 ? ` (en ${ultToma.trozos} veces)` : ""}`);
         if (deficitAhora !== null && Math.abs(deficitAhora) >= 60) rasgos.push(`llevando ${Math.abs(deficitAhora)} ml ${deficitAhora > 0 ? "menos" : "más"} que otros días`);
         if (solidoAhora) rasgos.push("con sólido de por medio");
-        partes.push(`${rasgos.join(", ")} ${reestimada !== null ? "aguanta" : "suele aguantar"} ${duracionCorta(cada)}${mas(cal.error)}${apoyo(e)}`);
+        partes.push(`${rasgos.join(", ")} suele aguantar ${duracionCorta(cada)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}`);
         if (cal.A.simple) partes.push("de momento, la mediana de todas las tomas: aún no hay patrón claro");
         else if (cal.A.usar && cal.A.usar.length < WN_VARIABLES.length && cal.error !== null) {
           partes.push(`de momento afina por ${["hora", ...cal.A.usar.map(v => WN_VARIABLE_ET[v])].join(", ")}`);
@@ -10566,13 +10564,8 @@ function htmlLoQueSueleVenir() {
           partes.push(trasDespertar ? `suele comer ${duracionCorta(trasDespertar.min)} después de despertarse` : "cuando se despierte");
         }
         linea({ cuando, pasado: cuando <= ahora }, "toma",
-          reestimada !== null ? "Probablemente pida sobre las" : "Siguiente toma sobre las",
-          "La siguiente toma ya va tocando", "Le tocaba sobre las",
+          "Siguiente toma sobre las", "La siguiente toma ya va tocando", "Le tocaba sobre las",
           partes.join(" · "));
-      } else if (reestimada !== null) {
-        /* Ningun caso aguanto tanto: no hay con que estimar mas alla. */
-        filas.push({ icono: "toma", txt: "La siguiente toma ya va tocando",
-          nota: `Le tocaba sobre las <b>${hhmm(new Date(ultToma.t.getTime() + reestimada * 60000))}</b> · nunca ha aguantado tanto en casos parecidos` });
       }
     }
   }
@@ -10582,19 +10575,10 @@ function htmlLoQueSueleVenir() {
   const casosP = wnCasosIntervalos(panales, ahora);
   if (ultPanal && casosP.length >= WN_INTERVALOS_MINIMOS) {
     const cal = wnCalibrar("panales", casosP);
-    const q = { hora: minutoDeFecha(ultPanal) }, lleva = (ahora - ultPanal) / 60000;
-    let e = wnEstimar(casosP, q, cal.A), habitual = null;
-    if (e && e.valor <= lleva) { habitual = Math.round(e.valor); e = wnEstimar(casosP, q, cal.A, lleva); }
-    if (e) {
-      const cada = Math.round(e.valor);
-      const c = new Date(ultPanal.getTime() + cada * 60000);
-      linea({ cuando: c, pasado: false }, "panal",
-        habitual !== null ? "Toca mirar el pañal; si aguanta, sobre las" : "Toca mirar el pañal sobre las", "", "",
-        `a esta hora suele tocar cada ${duracionCorta(habitual !== null ? habitual : cada)}${mas(cal.error)}${apoyo(e)}`);
-    } else if (habitual !== null) {
-      filas.push({ icono: "panal", txt: "Toca mirar el pañal",
-        nota: `Tocaba sobre las <b>${hhmm(new Date(ultPanal.getTime() + habitual * 60000))}</b>` });
-    }
+    const pv = prever(casosP, { hora: minutoDeFecha(ultPanal) }, cal.A, ultPanal);
+    if (pv) linea(pv, "panal",
+      "Toca mirar el pañal sobre las", "Toca mirar el pañal", "Tocaba sobre las",
+      `a esta hora suele tocar cada ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}`);
   }
 
   if (!filas.length) return "";
