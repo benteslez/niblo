@@ -11212,27 +11212,35 @@ function deleteMedicamento(id) {
   guardarEstado();
 }
 function apiretalDeHoy() {
+  /* Cuenta lo que se marco desde el aviso (lleva la nota) o cualquier
+     antitermico apuntado hoy: si al final fue Dolex, es lo mismo. */
   return (STATE.medicamentos || []).find(m => (m.datetime || "").slice(0, 10) === HOY_ISO
-    && /apiretal/i.test(m.nombre || "")) || null;
+    && (m.notas === "Día de vacunas" || /apiretal|dolex|dalsy|paracetamol|ibuprofeno/i.test(m.nombre || ""))) || null;
 }
 /* Marcar el Apiretal del dia de vacunas: pregunta los ml (y deja tocar la
    hora, por defecto las 07:00) y lo guarda como un medicamento mas. */
 function marcarApiretal() {
   const ult = (STATE.medicamentos || []).filter(m => /apiretal/i.test(m.nombre || ""))
     .sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop();
-  abrirModal("Apiretal", `
+  const usados = (STATE.medicamentos || []).map(m => m.nombre).filter(Boolean);
+  const nombres = [...new Set([...usados.reverse(), ...MEDICAMENTOS_HABITUALES])];
+  abrirModal("Antes de la vacuna", `
     <div class="grid-campos2">
-      <div class="campo"><label for="ap-dt">Hora</label>
-        <input type="datetime-local" id="ap-dt" value="${HOY_ISO}T07:00"></div>
+      <div class="campo"><label for="ap-nombre">Medicamento</label>
+        <input type="text" id="ap-nombre" list="ap-lista" value="Apiretal" autocomplete="off">
+        <datalist id="ap-lista">${nombres.map(n => `<option value="${esc(n)}">`).join("")}</datalist></div>
       <div class="campo"><label for="ap-ml">Cantidad (ml)</label>
         <input type="number" id="ap-ml" step="0.1" min="0" inputmode="decimal" value="${ult && ult.ml != null ? esc(String(ult.ml)) : ""}" placeholder="2,5" autofocus></div>
     </div>
+    <div class="campo"><label for="ap-dt">Hora</label>
+      <input type="datetime-local" id="ap-dt" value="${HOY_ISO}T07:00"></div>
     <div class="modal-aviso" id="ap-aviso"></div>`,
     [{ et: "Cancelar", accion: "PB.cerrarModal()" },
      { et: "Guardar", primario: true, accion: "PB.guardarApiretal()" }]);
 }
 function guardarApiretal() {
   const dt = document.getElementById("ap-dt").value || `${HOY_ISO}T07:00`;
+  const nombre = (document.getElementById("ap-nombre").value || "").trim() || "Apiretal";
   const ml = parseFloat(String(document.getElementById("ap-ml").value).replace(",", "."));
   if (!(ml > 0)) {
     const a = document.getElementById("ap-aviso");
@@ -11240,7 +11248,7 @@ function guardarApiretal() {
     return;
   }
   if (!STATE.medicamentos) STATE.medicamentos = [];
-  STATE.medicamentos.push(sellar({ id: "md_" + Date.now().toString(36), datetime: dt, nombre: "Apiretal", ml, notas: "Día de vacunas" }));
+  STATE.medicamentos.push(sellar({ id: "md_" + Date.now().toString(36), datetime: dt, nombre, ml, notas: "Día de vacunas" }));
   guardarEstado();
   cerrarModal();
   renderAvisos();
