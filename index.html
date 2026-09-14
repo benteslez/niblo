@@ -10819,7 +10819,7 @@ document.addEventListener("visibilitychange", () => {
 
 const LINEA_VISIBLES = 6;
 const LINEA_COMPLETA = {};
-function lineaCompleta(fecha) { LINEA_COMPLETA[fecha] = true; refrescarTrasToma(); }
+function lineaCompleta(fecha, abrir) { LINEA_COMPLETA[fecha] = abrir !== false; refrescarTrasToma(); }
 function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   const tomas = tomasDelDia(dia.fecha);
   const suenios = sueniosDelDia(dia.fecha);
@@ -10981,12 +10981,14 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
           /* Solo las ultimas seis: lo de esta mañana ya no hace falta verlo
              cada vez que se abre Hoy. Un boton discreto despliega el resto y
              se recuerda por dia, para que apuntar algo no lo vuelva a plegar. */
-          const completa = LINEA_COMPLETA[dia.fecha] || filas.length <= LINEA_VISIBLES;
+          const plegable = filas.length > LINEA_VISIBLES;
+          const completa = !plegable || LINEA_COMPLETA[dia.fecha];
           const ocultas = completa ? 0 : filas.length - LINEA_VISIBLES;
           const visibles = completa ? filas : filas.slice(-LINEA_VISIBLES);
-          return `<div class="linea">${ocultas
-            ? `<button type="button" class="linea-mas" onclick="PB.lineaCompleta('${dia.fecha}')">Ver anteriores (${ocultas})</button>` : ""}${
-            visibles.map(f => f.html).join("")}</div>`;
+          const boton = !plegable ? "" : completa
+            ? `<button type="button" class="linea-mas" onclick="PB.lineaCompleta('${dia.fecha}', false)">Ocultar anteriores</button>`
+            : `<button type="button" class="linea-mas" onclick="PB.lineaCompleta('${dia.fecha}', true)">Ver anteriores (${ocultas})</button>`;
+          return `<div class="linea">${boton}${visibles.map(f => f.html).join("")}</div>`;
         })()
       : `<div class="linea-vacio">Todavía no hay nada apuntado hoy.<br>
            Las tomas se añaden con <b>+ Toma</b> y las siestas desde <b>Sueño</b>.</div>`}
