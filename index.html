@@ -5809,12 +5809,14 @@
        pantalla. El glifo va plano dentro de un circulo tintado, un color por
        tipo, y la raya separadora arranca despues del icono como en iOS. */
     .pb-app .linea { display: flex; flex-direction: column; }
+    /* Mismo aspecto que "Por qué toca hoy": texto azul, sin caja, centrado. */
     .pb-app .linea-mas {
-      align-self: flex-start; margin: 2px 0 6px; padding: 4px 10px;
-      border: 1px solid var(--line); border-radius: 999px; background: transparent;
-      font: inherit; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); cursor: pointer;
+      align-self: center; margin: 0 0 4px; padding: 4px 8px;
+      border: 0; background: transparent;
+      font: inherit; font-size: 0.8125rem; font-weight: 600; color: var(--blue); cursor: pointer;
     }
-    .pb-app .linea-mas:hover { border-color: var(--blue); color: var(--blue); }
+    .pb-app .linea-mas::before { content: "\203A "; display: inline-block; }
+    .pb-app .linea-mas:hover { text-decoration: underline; }
     .pb-app .linea-fila {
       position: relative;
       display: flex; align-items: center; gap: 10px; width: 100%;
@@ -10360,7 +10362,12 @@ function wnAciertos() {
 function htmlAciertos() {
   const filas = wnAciertos();
   if (!filas.length) return "";
-  return `<div class="card"><h2>Aciertos <span class="n">últimos 7 días</span></h2>
+  return `<details class="card qlt-card">
+    <summary class="sem-cab">
+      <h2>Aciertos <span class="n">últimos 7 días · ${filas.map(f => `${f.et.toLowerCase()} ±${f.ahora} min`).join(" · ")}</span></h2>
+      <span class="sem-chevron" aria-hidden="true">&#8250;</span>
+    </summary>
+    <div class="sem-cuerpo">
     <div class="pt-res-lista">${filas.map(f => {
       /* Un par de minutos arriba o abajo es ruido, no tendencia. */
       const dif = f.antes === null ? 0 : f.ahora - f.antes, umbral = f.antes === null ? 0 : Math.max(3, f.antes * 0.15);
@@ -10377,7 +10384,8 @@ function htmlAciertos() {
       lo anterior. Es el error típico (mediana): la mitad de las veces acierta mejor que eso. Menos es mejor.
       "Mediana simple" es lo que fallaría sin modelo; "mira" son las variables que de verdad le ayudan
       con los datos que hay (las demás se apagan solas hasta que aporten).</p>
-  </div>`;
+    </div>
+  </details>`;
 }
 /* Que hace el solido con la cantidad de la toma de despues (el tiempo ya lo
    pondera el modelo caso a caso). */
@@ -12293,7 +12301,6 @@ function renderResumen(el) {
        onclick="PB.${fn === "leche" ? "lechePeriodo" : "suenoPeriodo"}('${k}')">${v}</button>`).join("");
 
   let html = htmlRegistroLeche();
-  html += htmlAciertos();
 
   html += `<div class="card"><h2>Cuánto duerme</h2>
     <div class="sueno-modo">${periodos("sueno")}</div>
@@ -12315,6 +12322,7 @@ function renderResumen(el) {
   </div>`;
 
   html += htmlResumenCalendario();
+  html += htmlAciertos();
   el.innerHTML = html;
   /* Los canvas tienen que estar ya en el DOM para que Chart.js los mida. */
   renderLecheChart();
