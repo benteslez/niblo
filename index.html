@@ -8670,11 +8670,27 @@ function anotarBorrado(id) {
 
 /* Fecha de referencia de un registro cuando no tiene "mod" (los de antes de
    este cambio): sirve para no perderlos en la primera fusion. */
-function modDe(reg) { return reg.mod || reg.start || reg.datetime || reg.date || reg.fecha || ""; }
+function modDe(reg) {
+  /* En milisegundos, no como texto: las lapidas van en UTC ("…12:43Z") y la
+     hora de un registro sin "mod" es local sin zona ("…14:30"). Comparadas
+     como texto, en España una siesta de las 14:30 borrada a las 14:43 tenia
+     la lapida "antes" que el registro y volvia a aparecer. */
+  const v = reg.mod || reg.start || reg.datetime || reg.date || reg.fecha || "";
+  const t = Date.parse(v);
+  return isNaN(t) ? 0 : t;
+}
+function msDeSello(v) { const t = Date.parse(v || ""); return isNaN(t) ? 0 : t; }
 
+/** Misma lista de registros (por id y contenido), sin mirar el orden. */
+function mismosRegistros(a, b) {
+  if (a.length !== b.length) return false;
+  const clave = r => JSON.stringify(r, Object.keys(r).sort());
+  const porId = new Map(a.map(r => [r.id, clave(r)]));
+  return b.every(r => porId.get(r.id) === clave(r));
+}
 function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
   if (!remoto || typeof remoto !== "object") return { estado: local, cambio: false };
-  const remotoGana = (tsRemoto || "") > (tsLocal || "");
+  const remotoGana = msDeSello(tsRemoto) > msDeSello(tsLocal);
   const out = Object.assign({}, remotoGana ? remoto : local);
   let cambio = false;
 
@@ -8693,17 +8709,20 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
     for (const reg of (remoto[col] || [])) {
       if (!reg || !reg.id) continue;
       const mio = porId.get(reg.id);
-      if (!mio) { porId.set(reg.id, reg); cambio = true; continue; }
-      if (modDe(reg) > modDe(mio)) { porId.set(reg.id, reg); cambio = true; }
+      if (!mio) { porId.set(reg.id, reg); continue; }
+      if (modDe(reg) > modDe(mio)) porId.set(reg.id, reg);
     }
     // Un borrado solo manda si es posterior a la ultima edicion del registro.
     for (const [id, reg] of [...porId]) {
       const lapida = borrados[id];
-      if (lapida && lapida >= modDe(reg)) { porId.delete(id); cambio = true; }
+      if (lapida && msDeSello(lapida) >= modDe(reg)) porId.delete(id);
     }
-    const antes = (local[col] || []).length;
     out[col] = [...porId.values()];
-    if (out[col].length !== antes) cambio = true;
+    /* "Cambio" es que el resultado no sea lo que ya habia en local: antes se
+       marcaba al meter un registro remoto aunque la lapida lo quitara justo
+       despues, y cada borrado disparaba un repintado entero (y un salto al
+       principio de la pagina) por una fusion que no cambiaba nada. */
+    if (!mismosRegistros(local[col] || [], out[col])) cambio = true;
   }
 
   // Mapas de hitos/dientes/vacunas: union de claves; si ambos tienen la misma
@@ -8714,9 +8733,9 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
       /* Si aqui se borro esa clave DESPUES de lo que sabe el otro documento,
          manda el borrado: si no, desmarcar una vacuna no serviria de nada. */
       const lapida = borrados[m + ":" + k];
-      if (lapida && lapida > (tsRemoto || "")) { delete base[k]; cambio = true; continue; }
-      if (!(k in base)) { base[k] = v; cambio = true; }
-      else if (base[k] !== v && remotoGana) { base[k] = v; cambio = true; }
+      if (lapida && msDeSello(lapida) > msDeSello(tsRemoto)) { delete base[k]; continue; }
+      if (!(k in base)) base[k] = v;
+      else if (remotoGana && JSON.stringify(base[k]) !== JSON.stringify(v)) base[k] = v;
     }
     // Y una clave borrada aqui no puede sobrevivir por estar en la copia local.
     for (const k of Object.keys(base)) {
@@ -8724,6 +8743,7 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
       if (lapida && !(remoto[m] && k in remoto[m])) { delete base[k]; }
     }
     out[m] = base;
+    if (JSON.stringify(base) !== JSON.stringify(local[m] || {})) cambio = true;
   }
 
   // Alimentos: el historial de cada uno se une por fecha.
@@ -8737,14 +8757,14 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
       /* Igual que con las vacunas: sin lapida, desmarcar un alimento no servia
          de nada porque la union por fecha lo devolvia desde la otra copia. */
       const lapida = borrados["alimentos:" + id + ":" + h.fecha];
-      if (lapida && lapida > (tsRemoto || "")) { porFecha.delete(h.fecha); cambio = true; continue; }
-      if (!porFecha.has(h.fecha)) { porFecha.set(h.fecha, h); cambio = true; }
+      if (lapida && msDeSello(lapida) > msDeSello(tsRemoto)) { porFecha.delete(h.fecha); continue; }
+      if (!porFecha.has(h.fecha)) porFecha.set(h.fecha, h);
       else if (remotoGana) {
         /* Antes solo se miraba el resultado: cambiar la hora o el dia en que
            se lo comio en un movil no llegaba nunca al otro. */
         const x = porFecha.get(h.fecha);
         if (x.resultado !== h.resultado || (x.hora || "") !== (h.hora || "") || (x.comido || "") !== (h.comido || "")) {
-          porFecha.set(h.fecha, h); cambio = true;
+          porFecha.set(h.fecha, h);
         }
       }
     }
@@ -8757,7 +8777,14 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
     if (historial.length) alim[id] = { historial };
   }
   out.alimentos = alim;
-  out.modificado = (tsLocal || "") > (tsRemoto || "") ? tsLocal : tsRemoto;
+  {
+    const norm = a => JSON.stringify(Object.keys(a || {}).sort().map(id => [id,
+      ((a[id] && a[id].historial) || []).slice().sort((x, y) => x.fecha.localeCompare(y.fecha))]));
+    if (norm(alim) !== norm(local.alimentos)) cambio = true;
+  }
+  if (remotoGana && (JSON.stringify(out.config) !== JSON.stringify(local.config || {})
+      || JSON.stringify(out.vaccines) !== JSON.stringify(local.vaccines || []))) cambio = true;
+  out.modificado = msDeSello(tsLocal) > msDeSello(tsRemoto) ? tsLocal : tsRemoto;
   return { estado: out, cambio };
 }
 
@@ -8922,6 +8949,11 @@ function irA(vista, param) {
       ORIGEN_ALIMENTO.grupo = BUSCAR_GRUPO_ACTIVO;
     }
   }
+  /* Repintar la vista en la que ya estas (tras guardar, tras una fusion) no
+     es cambiar de vista: se vuelve al mismo sitio de la pagina. Antes cada
+     apunte te mandaba arriba del todo. */
+  const misma = vista === VISTA_ACTUAL && param === undefined;
+  const y = window.scrollY;
   document.querySelectorAll("#pb-app .view").forEach(v => v.classList.remove("active"));
   const el = document.getElementById("view-" + vista);
   el.classList.add("active");
@@ -8931,7 +8963,7 @@ function irA(vista, param) {
   RENDER[vista]?.(el, param);
   // Sincroniza el chip de seccion de la cabecera de Recetas.
   if (typeof onCambioVista === "function") onCambioVista(vista);
-  window.scrollTo(0, 0);
+  window.scrollTo(0, misma ? y : 0);
 }
 
 // Vuelve desde la ficha de un alimento a la vista (y posicion) desde la que
@@ -20823,6 +20855,8 @@ function boot(vistaInicial) {
       const v = PB_CHIP_A_VISTA[id] || "hoy";
       PB.boot(v);
       PB.irA(v);
+      /* Tocar la pestaña en la que ya estas sigue llevando arriba del todo. */
+      window.scrollTo(0, 0);
     }
     /** Lo llama PB cuando navega por su cuenta, para mover el chip activo. */
     function pbSincronizarChip(vista) {

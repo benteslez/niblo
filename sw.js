@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v152";  // la previsión no salta al pasarse: "si sigue así" como dato aparte
+const CACHE_NAME = "niblo-v153";  // borrados que volvían, dobles toques y salto arriba al guardar
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manrope.woff2",
