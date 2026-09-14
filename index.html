@@ -8431,10 +8431,17 @@ let _onGuardar = null;
     apuntaba de Pablo solo subia al abrir la app. */
 function setOnGuardar(fn) { _onGuardar = typeof fn === "function" ? fn : null; }
 
+/* Diagnostico: lo ultimo que paso al guardar y al fusionar, para poder ver
+   en Ajustes por que un registro vuelve o no se guarda. Solo en memoria. */
+const DIAG = { errorGuardado: null, fusiones: [] };
 function guardarEstado() {
   // Marca de tiempo para que la sincronizacion pueda decidir quien gana.
   STATE.modificado = new Date().toISOString();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+  /* Si el almacenamiento del movil falla (cuota llena, modo privado), el
+     cambio seguia en memoria pero no se subia: al recargar, volvia lo de
+     antes. Ahora se sube igual y se avisa en Ajustes. */
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE)); DIAG.errorGuardado = null; }
+  catch (e) { DIAG.errorGuardado = `${new Date().toISOString().slice(11, 19)} ${e && e.message || e}`; }
   if (_onGuardar) { try { _onGuardar(); } catch (_) {} }
 }
 
@@ -8792,6 +8799,19 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
     resultado guardado. Devuelve si ha cambiado algo en local. */
 function fusionarConRemoto(datosRemotos, tsRemoto) {
   const { estado, cambio } = fusionarEstado(STATE, datosRemotos, STATE.modificado || "", tsRemoto || "");
+  /* Que entro y que salio en cada coleccion, para el diagnostico. */
+  try {
+    const dif = {};
+    for (const col of COLECCIONES) {
+      const a = new Set((STATE[col] || []).map(r => r.id)), b = new Set((estado[col] || []).map(r => r.id));
+      const mas = [...b].filter(id => !a.has(id)), menos = [...a].filter(id => !b.has(id));
+      if (mas.length || menos.length) dif[col] = { mas, menos };
+    }
+    DIAG.fusiones.unshift({ cuando: new Date().toISOString().slice(11, 19), cambio, remotoGana: msDeSello(tsRemoto) > msDeSello(STATE.modificado),
+      tsLocal: (STATE.modificado || "").slice(11, 19), tsRemoto: (tsRemoto || "").slice(11, 19), dif,
+      lapidas: Object.keys(estado.borrados || {}).length });
+    DIAG.fusiones.length = Math.min(DIAG.fusiones.length, 6);
+  } catch (_) {}
   if (!cambio) return false;
   STATE = estado;
   /* La fusion une historiales por fecha: si el otro dispositivo aun no se ha
@@ -12422,8 +12442,24 @@ function renderSeguridad(el) {
 }
 
 /* ======================== render: AJUSTES ======================== */
+function htmlDiagnostico() {
+  const f = DIAG.fusiones;
+  const filas = f.map(x => `<li><b>${x.cuando}</b> ${x.cambio ? "cambió" : "sin cambios"}${x.remotoGana ? " · manda el servidor" : ""}
+    · local ${x.tsLocal} / servidor ${x.tsRemoto} · ${x.lapidas} lápidas${Object.keys(x.dif).length
+      ? " · " + Object.entries(x.dif).map(([c, d]) => `${c}: ${d.mas.length ? "+" + d.mas.join(",") : ""}${d.menos.length ? " −" + d.menos.join(",") : ""}`).join("; ") : ""}</li>`).join("");
+  return `<details class="card qlt-card">
+    <summary class="sem-cab"><h2>Diagnóstico <span class="n">guardado y fusión</span></h2><span class="sem-chevron" aria-hidden="true">&#8250;</span></summary>
+    <div class="sem-cuerpo">
+      ${DIAG.errorGuardado ? `<div class="alerta evitar"><div class="titulo">No se ha podido guardar en este móvil</div>${esc(DIAG.errorGuardado)}</div>`
+        : `<div class="faint">Guardado local: sin errores.</div>`}
+      <div class="faint" style="margin-top:6px">Lápidas (borrados recordados): ${Object.keys(STATE.borrados || {}).length}.
+        Últimas fusiones con el servidor (la más reciente arriba):</div>
+      ${filas ? `<ul class="faint" style="margin:6px 0 0 16px;padding:0;font-size:0.75rem;line-height:1.5">${filas}</ul>` : `<div class="faint">Ninguna todavía.</div>`}
+    </div>
+  </details>`;
+}
 function renderAjustes(el) {
-  el.innerHTML = htmlEstadoSync() + htmlAjustesAvisos() + `<div class="card"><h2>Perfil de Pablo</h2>
+  el.innerHTML = htmlEstadoSync() + htmlAjustesAvisos() + htmlDiagnostico() + `<div class="card"><h2>Perfil de Pablo</h2>
     <div class="settings-row"><label>Nombre</label><input type="text" id="cfg-nombre" value="${CONFIG.nombre || 'Pablo'}"></div>
     <div class="settings-row"><label>Fecha de nacimiento</label><input type="date" id="cfg-nacimiento" value="${CONFIG.fechaNacimiento}"></div>
     <div class="settings-row"><label>Método</label>
