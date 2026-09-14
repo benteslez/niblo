@@ -5809,6 +5809,12 @@
        pantalla. El glifo va plano dentro de un circulo tintado, un color por
        tipo, y la raya separadora arranca despues del icono como en iOS. */
     .pb-app .linea { display: flex; flex-direction: column; }
+    .pb-app .linea-mas {
+      align-self: flex-start; margin: 2px 0 6px; padding: 4px 10px;
+      border: 1px solid var(--line); border-radius: 999px; background: transparent;
+      font: inherit; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); cursor: pointer;
+    }
+    .pb-app .linea-mas:hover { border-color: var(--blue); color: var(--blue); }
     .pb-app .linea-fila {
       position: relative;
       display: flex; align-items: center; gap: 10px; width: 100%;
@@ -10240,11 +10246,34 @@ function wnDespiertoEn(fines, t) {
   const m = (t - ult) / 60000;
   return m <= WN_TOPE_HORAS * 60 ? m : null;
 }
+/* Las tomas, tal y como las ve el modelo. Dos cosas que no cambian lo que
+   se apunta, solo como se lee:
+   - Una toma partida (bebe 80, se espera un rato, se le da el resto) son
+     dos apuntes a 20-40 min y no dos tomas: para el modelo es UNA toma de la
+     suma, a la hora del ultimo trozo. Si no, "tras 210 ml aguanta 33 min".
+   - La hora que se apunta es cuando termina, y una toma dura unos 20 min:
+     `inicio` es la hora apuntada menos eso, para los cruces con el sueño. */
+const WN_TOMA_PARTIDA_MIN = 45;
+const WN_TOMA_DURACION_MIN = 20;
+function wnTomasModelo(desde, hasta) {
+  const sueltas = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desde)
+    .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0, fecha: t.fecha }))
+    .filter(x => !isNaN(x.t) && (!hasta || x.t <= hasta)).sort((a, b) => a.t - b.t);
+  const out = [];
+  for (const x of sueltas) {
+    const ult = out[out.length - 1];
+    if (ult && (x.t - ult.t) / 60000 <= WN_TOMA_PARTIDA_MIN) {
+      ult.ml += x.ml; ult.t = x.t; ult.fecha = x.fecha; ult.trozos++;
+    } else {
+      out.push({ t: x.t, ml: x.ml, fecha: x.fecha, trozos: 1 });
+    }
+  }
+  for (const x of out) x.inicio = new Date(x.t.getTime() - WN_TOMA_DURACION_MIN * 60000);
+  return out;
+}
 function wnCasosTomas(ahora) {
   const desde = wnDesdeLarga(), corta = wnDesde();
-  const tomas = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desde)
-    .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0, fecha: t.fecha }))
-    .filter(x => !isNaN(x.t)).sort((a, b) => a.t - b.t);
+  const tomas = wnTomasModelo(desde);
   const solidos = wnSolidos(desde);
   const raros = wnDiasRaros();
   const episodios = episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desde));
@@ -10284,9 +10313,7 @@ function wnCasosIntervalos(instantes, ahora) {
     duracion, ml de la toma previa (si la hubo en las 3 h antes). */
 function wnCasosSueno(tipo, ahora) {
   const desdeL = wnDesdeLarga();
-  const tomas = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desdeL)
-    .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0 }))
-    .filter(x => !isNaN(x.t)).sort((a, b) => a.t - b.t);
+  const tomas = wnTomasModelo(desdeL);
   const tomaAntesDe = f => tomas.filter(x => x.t <= f && (f - x.t) / 60000 <= 180).pop() || null;
   const raros = wnDiasRaros();
   return episodiosSueno(STATE.sleep.filter(x => new Date(x.start) >= desdeL))
@@ -10383,9 +10410,7 @@ function htmlLoQueSueleVenir() {
   const hhmm = d => `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
   const mas = e => typeof e === "number" ? ` (±${e} min)` : "";
 
-  const tomasL = STATE.tomas.filter(t => new Date(t.fecha + "T00:00:00") >= desdeL)
-    .map(t => ({ t: new Date(t.fecha + "T" + t.hora + ":00"), ml: Number(t.ml) || 0 }))
-    .filter(x => !isNaN(x.t) && x.t <= ahora).sort((a, b) => a.t - b.t);
+  const tomasL = wnTomasModelo(desdeL, ahora);
   const ultToma = tomasL[tomasL.length - 1] || null;
   const panales = STATE.diapers.filter(p => new Date(p.datetime) >= desdeL)
     .map(p => new Date(p.datetime)).filter(d => !isNaN(d));
@@ -10406,8 +10431,10 @@ function htmlLoQueSueleVenir() {
 
   const trasToma = wnRelacion(suenios.map(e => { const t = tomaAntesDe(e.start); return t ? (e.start - t.t) / 60000 : null; })
     .filter(v => v !== null && v > 0));
+  /* Se mide hasta la hora apuntada (fin de la toma), como todo lo demas,
+     pero la toma tiene que haber EMPEZADO despues de despertar. */
   const trasDespertar = wnRelacion(suenios.map(e => {
-    const sig = tomasL.find(x => x.t >= e.end && (x.t - e.end) / 60000 <= 180);
+    const sig = tomasL.find(x => x.inicio >= e.end && (x.t - e.end) / 60000 <= 180);
     return sig ? (sig.t - e.end) / 60000 : null;
   }).filter(v => v !== null));
 
@@ -10512,7 +10539,7 @@ function htmlLoQueSueleVenir() {
         const partes = [];
         if (reestimada !== null) partes.push(`ya va más allá de lo habitual (tocaba sobre las ${hhmm(new Date(ultToma.t.getTime() + reestimada * 60000))})`);
         const rasgos = ["a esta hora"];
-        if (q.ml != null) rasgos.push(`tras ${ultToma.ml} ml`);
+        if (q.ml != null) rasgos.push(`tras ${ultToma.ml} ml${ultToma.trozos > 1 ? ` (en ${ultToma.trozos} veces)` : ""}`);
         if (deficitAhora !== null && Math.abs(deficitAhora) >= 60) rasgos.push(`llevando ${Math.abs(deficitAhora)} ml ${deficitAhora > 0 ? "menos" : "más"} que otros días`);
         if (solidoAhora) rasgos.push("con sólido de por medio");
         partes.push(`${rasgos.join(", ")} ${reestimada !== null ? "aguanta" : "suele aguantar"} ${duracionCorta(cada)}${mas(cal.error)}${apoyo(e)}`);
@@ -10704,6 +10731,9 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden) refrescarCeldasSueno();
 });
 
+const LINEA_VISIBLES = 6;
+const LINEA_COMPLETA = {};
+function lineaCompleta(fecha) { LINEA_COMPLETA[fecha] = true; refrescarTrasToma(); }
 function htmlLineaDelDia(dia, refrescarFn, conBoton) {
   const tomas = tomasDelDia(dia.fecha);
   const suenios = sueniosDelDia(dia.fecha);
@@ -10861,7 +10891,17 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
         data-hoy="${esHoy ? 1 : 0}">${htmlCeldaSueno(dia.fecha, esHoy)}</div>
     </div>
     ${filas.length
-      ? `<div class="linea">${filas.map(f => f.html).join("")}</div>`
+      ? (() => {
+          /* Solo las ultimas seis: lo de esta mañana ya no hace falta verlo
+             cada vez que se abre Hoy. Un boton discreto despliega el resto y
+             se recuerda por dia, para que apuntar algo no lo vuelva a plegar. */
+          const completa = LINEA_COMPLETA[dia.fecha] || filas.length <= LINEA_VISIBLES;
+          const ocultas = completa ? 0 : filas.length - LINEA_VISIBLES;
+          const visibles = completa ? filas : filas.slice(-LINEA_VISIBLES);
+          return `<div class="linea">${ocultas
+            ? `<button type="button" class="linea-mas" onclick="PB.lineaCompleta('${dia.fecha}')">Ver anteriores (${ocultas})</button>` : ""}${
+            visibles.map(f => f.html).join("")}</div>`;
+        })()
       : `<div class="linea-vacio">Todavía no hay nada apuntado hoy.<br>
            Las tomas se añaden con <b>+ Toma</b> y las siestas desde <b>Sueño</b>.</div>`}
   </div>`;
@@ -14799,7 +14839,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
@@ -22611,6 +22651,16 @@ function boot(vistaInicial) {
     }
 
     /** Llamada genérica a Supabase. Renueva token si caduca o si recibe 401. */
+    /* fetch con plazo. En iOS, al volver a la app desde segundo plano, una
+       peticion puede quedarse colgada sin responder ni fallar: sin plazo, el
+       hub se quedaba en esqueleto "para siempre" esperando al hogar. */
+    const SUPA_PLAZO_MS = 12000;
+    function fetchConPlazo(url, opts, ms) {
+      const ctrl = typeof AbortController === "function" ? new AbortController() : null;
+      const t = setTimeout(() => { if (ctrl) ctrl.abort(); }, ms || SUPA_PLAZO_MS);
+      return fetch(url, ctrl ? Object.assign({}, opts, { signal: ctrl.signal }) : opts)
+        .finally(() => clearTimeout(t));
+    }
     async function supaFetch(path, options, retry) {
       if (retry === undefined) retry = true;
       const s = sesion.supabase;
@@ -22622,7 +22672,7 @@ function boot(vistaInicial) {
       }, (options && options.headers) || {});
       if (s.token) headers["Authorization"] = "Bearer " + s.token;
       const opts = Object.assign({}, options, { headers });
-      const res = await fetch(s.url + path, opts);
+      const res = await fetchConPlazo(s.url + path, opts);
       if (res.status === 401 && retry && s.refreshToken) {
         if (await refrescarToken()) return supaFetch(path, options, false);
       }
@@ -22645,7 +22695,7 @@ function boot(vistaInicial) {
         const s = sesion.supabase;
         if (!s.refreshToken) return false;
         try {
-          const res = await fetch(s.url + "/auth/v1/token?grant_type=refresh_token", {
+          const res = await fetchConPlazo(s.url + "/auth/v1/token?grant_type=refresh_token", {
             method: "POST",
             headers: { "apikey": s.anonKey, "Content-Type": "application/json" },
             body: JSON.stringify({ refresh_token: s.refreshToken })
@@ -23018,9 +23068,12 @@ function boot(vistaInicial) {
        si hay una guardada de ese mismo usuario, el hub se pinta al instante y
        se corrige solo si el hogar hubiera cambiado. Va atada al userId para
        que al cambiar de cuenta no se vean las areas de la anterior. */
+    /* Sesiones de antes de guardar el userId no lo tienen: sin esto la cache
+       no se escribia nunca y el hub esperaba a la red en cada arranque. */
+    function identidadCache() { return sesion.supabase.userId || sesion.supabase.email || null; }
     function areasEnCache() {
       try {
-        const uid = sesion.supabase.userId;
+        const uid = identidadCache();
         if (!uid) return null;
         const raw = JSON.parse(localStorage.getItem(KEY_HOGAR_AREAS) || "null");
         if (!raw || raw.uid !== uid || !Array.isArray(raw.areas)) return null;
@@ -23029,13 +23082,16 @@ function boot(vistaInicial) {
     }
     function guardarAreasEnCache() {
       try {
-        const uid = sesion.supabase.userId;
+        const uid = identidadCache();
         const h = sesion.hogar;
         if (!uid || !h || !Array.isArray(h.areas)) { localStorage.removeItem(KEY_HOGAR_AREAS); return; }
         localStorage.setItem(KEY_HOGAR_AREAS, JSON.stringify({ uid: uid, areas: h.areas }));
       } catch (_) {}
     }
 
+    /* El esqueleto tiene plazo: si el hogar no ha llegado en 3 s, se pinta
+       con lo que se sepa (la cache, o todas las areas) y ya se corregira. */
+    let hubTardando = false, hubPlazo = null;
     function areasVisibles() {
       const h = sesion.hogar;
       /* Hasta saber de que hogar es la sesion no se pinta ningun area: antes
@@ -23043,8 +23099,10 @@ function boot(vistaInicial) {
          otro hogar se veian medio segundo antes de desaparecer. */
       if (sesion.supabase.token && !hogarResuelto) {
         const guardadas = areasEnCache();
-        if (!guardadas) return null;
-        return AREAS.filter(a => guardadas.indexOf(a.id) >= 0);
+        if (guardadas) return AREAS.filter(a => guardadas.indexOf(a.id) >= 0);
+        if (hubTardando) return AREAS;
+        if (!hubPlazo) hubPlazo = setTimeout(() => { hubPlazo = null; if (!hogarResuelto) { hubTardando = true; renderHub(); } }, 3000);
+        return null;
       }
       if (!h || !Array.isArray(h.areas)) {
         /* hogar null es "no se ha podido saber" (sin conexion, por ejemplo) y
@@ -24970,6 +25028,10 @@ function boot(vistaInicial) {
          entonces no habia sesion. Si no se repinta aqui, esas tarjetas se ven
          hasta que responde el hogar y luego desaparecen las que no tocan. */
       renderHub();
+      /* Si ya se sabe de que hogar es (cache), se pinta todo ya con lo local
+         y la red solo corrige. Antes se esperaba a dos peticiones seguidas
+         (hogar y miembros) antes de enseñar nada. */
+      if (areasEnCache()) { ocultarAlta(); renderTodo(); }
       try { await cargarHogar(); } catch (_) {}
       try { await cargarMiembros(); } catch (_) {}
       if (altaNecesaria()) { mostrarAlta(); return; }
