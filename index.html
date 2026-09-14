@@ -8678,12 +8678,14 @@ function anotarBorrado(id) {
 /* Fecha de referencia de un registro cuando no tiene "mod" (los de antes de
    este cambio): sirve para no perderlos en la primera fusion. */
 function modDe(reg) {
-  /* En milisegundos, no como texto: las lapidas van en UTC ("…12:43Z") y la
-     hora de un registro sin "mod" es local sin zona ("…14:30"). Comparadas
-     como texto, en España una siesta de las 14:30 borrada a las 14:43 tenia
-     la lapida "antes" que el registro y volvia a aparecer. */
-  const v = reg.mod || reg.start || reg.datetime || reg.date || reg.fecha || "";
-  const t = Date.parse(v);
+  /* Solo el sello de edicion, en milisegundos. Antes, sin sello, se usaba la
+     hora del propio registro como si fuera la de su ultima edicion, y eso
+     resucitaba borrados: una siesta apuntada por error a una hora futura
+     (o creada en un movil con la app sin actualizar) tenia "edicion"
+     posterior a la lapida y volvia en cada fusion. Un registro sin sello no
+     tiene edicion conocida: la lapida siempre gana y, entre dos copias sin
+     sello, se queda la local. */
+  const t = Date.parse(reg.mod || "");
   return isNaN(t) ? 0 : t;
 }
 function msDeSello(v) { const t = Date.parse(v || ""); return isNaN(t) ? 0 : t; }
@@ -8699,7 +8701,7 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
   if (!remoto || typeof remoto !== "object") return { estado: local, cambio: false };
   const remotoGana = msDeSello(tsRemoto) > msDeSello(tsLocal);
   const out = Object.assign({}, remotoGana ? remoto : local);
-  let cambio = false;
+  let cambio = false, remotoDesfasado = false;
 
   // Config y catalogo de vacunas: no son registros, gana el documento nuevo.
   out.config = Object.assign({}, defaultState().config, (remotoGana ? remoto : local).config || {});
@@ -8722,7 +8724,12 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
     // Un borrado solo manda si es posterior a la ultima edicion del registro.
     for (const [id, reg] of [...porId]) {
       const lapida = borrados[id];
-      if (lapida && msDeSello(lapida) >= modDe(reg)) porId.delete(id);
+      if (lapida && msDeSello(lapida) >= modDe(reg)) {
+        porId.delete(id);
+        /* Si el servidor aun lo tiene, hay que subir aunque aqui no cambie
+           nada: si no, el otro movil lo seguiria bajando y borrando cada vez. */
+        if ((remoto[col] || []).some(r => r && r.id === id)) remotoDesfasado = true;
+      }
     }
     out[col] = [...porId.values()];
     /* "Cambio" es que el resultado no sea lo que ya habia en local: antes se
@@ -8792,13 +8799,16 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
   if (remotoGana && (JSON.stringify(out.config) !== JSON.stringify(local.config || {})
       || JSON.stringify(out.vaccines) !== JSON.stringify(local.vaccines || []))) cambio = true;
   out.modificado = msDeSello(tsLocal) > msDeSello(tsRemoto) ? tsLocal : tsRemoto;
-  return { estado: out, cambio };
+  return { estado: out, cambio, remotoDesfasado };
 }
 
 /** La usa el area de Recetas: fusiona lo remoto con lo local y deja el
     resultado guardado. Devuelve si ha cambiado algo en local. */
+let _remotoDesfasado = false;
+function remotoDesfasado() { return _remotoDesfasado; }
 function fusionarConRemoto(datosRemotos, tsRemoto) {
-  const { estado, cambio } = fusionarEstado(STATE, datosRemotos, STATE.modificado || "", tsRemoto || "");
+  const { estado, cambio, remotoDesfasado: desf } = fusionarEstado(STATE, datosRemotos, STATE.modificado || "", tsRemoto || "");
+  _remotoDesfasado = !!desf;
   /* Que entro y que salio en cada coleccion, para el diagnostico. */
   try {
     const dif = {};
@@ -14900,7 +14910,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
 
@@ -23413,7 +23423,7 @@ function boot(vistaInicial) {
 
       // Se sube siempre que lo local aporte algo que el remoto no tenga: o
       // bien somos mas nuevos, o bien la fusion ha juntado las dos partes.
-      if (!remoto || cambioLocal || masNuevo(tsFinal, remotoTs)) {
+      if (!remoto || cambioLocal || masNuevo(tsFinal, remotoTs) || (PB.remotoDesfasado && PB.remotoDesfasado())) {
         await supaFetch("/rest/v1/pablo_estado?on_conflict=hogar_id", {
           method: "POST",
           headers: { "Prefer": "resolution=merge-duplicates" },
