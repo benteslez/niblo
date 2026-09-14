@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v155";  // un registro sin sello ya no resucita borrados
+const CACHE_NAME = "niblo-v156";  // la lápida gana a la versión borrada aunque su sello venga de un reloj adelantado
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manrope.woff2",

@@ -8666,9 +8666,16 @@ function olvidarBorradoClave(mapa, clave) {
 }
 
 /** Deja constancia de un borrado para que la fusion no lo resucite. */
-function anotarBorrado(id) {
+function anotarBorrado(id, reg) {
   if (!STATE.borrados) STATE.borrados = {};
-  STATE.borrados[id] = sello();
+  /* La lapida tiene que ganar a la version que se esta borrando aunque el
+     sello de esa version venga de un movil con el reloj adelantado: si no,
+     "editado despues del borrado" se cumplia por un reloj y el registro
+     volvia en cada fusion. Se fecha en el mas tardio de: ahora, o un
+     milisegundo despues del sello del registro. Una edicion posterior de
+     verdad en el otro movil sigue ganando, que es lo que se quiere. */
+  const visto = reg ? modDe(reg) + 1 : 0;
+  STATE.borrados[id] = new Date(Math.max(Date.now(), visto)).toISOString();
   // Las lapidas de mas de 90 dias ya no hacen falta: a esas alturas todos los
   // dispositivos han sincronizado de sobra.
   const limite = new Date(Date.now() - 90 * 86400000).toISOString();
@@ -8911,6 +8918,8 @@ function editarToma(id, hora, ml) {
   guardarEstado();
 }
 function eliminarToma(id) {
+  /* Sin lapida, una toma borrada volvia desde el otro movil en la fusion. */
+  anotarBorrado(id, STATE.tomas.find(x => x.id === id));
   STATE.tomas = STATE.tomas.filter(x => x.id !== id);
   guardarEstado();
 }
@@ -11048,7 +11057,7 @@ function guardarBanoRapido() {
   refrescarTrasToma();
 }
 function deleteBano(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.banos || []).find(x => x && x.id === id));
   STATE.banos = STATE.banos.filter(x => x.id !== id);
   guardarEstado();
 }
@@ -11130,7 +11139,7 @@ function guardarCompra(tipo) {
   refrescarTrasToma();
 }
 function deleteCompra(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.compras || []).find(x => x && x.id === id));
   STATE.compras = (STATE.compras || []).filter(x => x.id !== id);
   guardarEstado();
 }
@@ -11175,7 +11184,7 @@ function guardarMedicamento() {
   refrescarTrasToma();
 }
 function deleteMedicamento(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.medicamentos || []).find(x => x && x.id === id));
   STATE.medicamentos = (STATE.medicamentos || []).filter(x => x.id !== id);
   guardarEstado();
 }
@@ -11214,7 +11223,7 @@ function guardarHoraVacunas(fecha) {
   refrescarTrasToma();
 }
 function deleteCompraLeche(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.comprasLeche || []).find(x => x && x.id === id));
   STATE.comprasLeche = (STATE.comprasLeche || []).filter(x => x.id !== id);
   guardarEstado();
 }
@@ -12742,7 +12751,7 @@ function addGrowth() {
   renderCrecimiento(document.getElementById("view-crecimiento"));
 }
 function deleteGrowth(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.growth || []).find(x => x && x.id === id));
   STATE.growth = STATE.growth.filter(g => g.id !== id);
   guardarEstado();
   renderCrecimiento(document.getElementById("view-crecimiento"));
@@ -13708,7 +13717,7 @@ function guardarSintoma() {
   renderPediatra(document.getElementById("view-pediatra"));
 }
 function deleteSintoma(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.sintomas || []).find(x => x && x.id === id));
   STATE.sintomas = STATE.sintomas.filter(x => x.id !== id);
   guardarEstado();
   renderPediatra(document.getElementById("view-pediatra"));
@@ -13762,7 +13771,7 @@ function savePediatricVisit() {
   renderPediatra(document.getElementById("view-pediatra"));
 }
 function deletePediatricVisit(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.pediatricVisits || []).find(x => x && x.id === id));
   STATE.pediatricVisits = STATE.pediatricVisits.filter(v => v.id !== id);
   STATE.growth = STATE.growth.filter(g => g.visitId !== id);
   guardarEstado();
@@ -14483,7 +14492,7 @@ function stopSleep(id) {
   if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
 }
 function deleteSleep(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.sleep || []).find(x => x && x.id === id));
   STATE.sleep = STATE.sleep.filter(s => s.id !== id);
   guardarEstado();
   renderSueno(document.getElementById("view-sueno"));
@@ -14529,7 +14538,7 @@ function addDiaper() {
   renderPanales(document.getElementById("view-panales"));
 }
 function deleteDiaper(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.diapers || []).find(x => x && x.id === id));
   STATE.diapers = STATE.diapers.filter(d => d.id !== id);
   guardarEstado();
   renderPanales(document.getElementById("view-panales"));
@@ -14878,7 +14887,7 @@ function addNote() {
   renderNotas(document.getElementById("view-notas"));
 }
 function deleteNote(id) {
-  anotarBorrado(id);
+  anotarBorrado(id, (STATE.notes || []).find(x => x && x.id === id));
   STATE.notes = STATE.notes.filter(n => n.id !== id);
   guardarEstado();
   renderNotas(document.getElementById("view-notas"));
