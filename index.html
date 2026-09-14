@@ -8399,6 +8399,7 @@ function cargarEstadoGlobal() {
   st.vaccines = normalizarVacunas(st.vaccines, st.vaccinesDone, st.config.vacunasEditadas);
   migrarVitaminaD(st);
   sembrarCarnet(st);
+  if (purgarFantasmas(st)) st.modificado = new Date().toISOString();
   /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
      sucia y en cada arranque volveria a limpiarse y a marcar el estado como
      modificado, subiendolo una vez por carga sin necesidad. */
@@ -8695,6 +8696,24 @@ function modDe(reg) {
   const t = Date.parse(reg.mod || "");
   return isNaN(t) ? 0 : t;
 }
+/* Registros que se resistieron a borrarse antes de arreglar las lapidas:
+   se quitan de todas partes y se les deja una lapida que ninguna version
+   pueda superar. Lista cerrada, no crece sola. */
+const FANTASMAS = ["sl_mu0lecrd"];
+function purgarFantasmas(st) {
+  if (!st) return false;
+  let quitado = false;
+  st.borrados = st.borrados || {};
+  for (const id of FANTASMAS) {
+    for (const col of COLECCIONES) {
+      const antes = (st[col] || []).length;
+      if (antes) st[col] = st[col].filter(r => !r || r.id !== id);
+      if ((st[col] || []).length !== antes) quitado = true;
+    }
+    if (st.borrados[id] !== "2100-01-01T00:00:00.000Z") { st.borrados[id] = "2100-01-01T00:00:00.000Z"; quitado = true; }
+  }
+  return quitado;
+}
 function msDeSello(v) { const t = Date.parse(v || ""); return isNaN(t) ? 0 : t; }
 
 /** Misma lista de registros (por id y contenido), sin mirar el orden. */
@@ -8829,6 +8848,9 @@ function fusionarConRemoto(datosRemotos, tsRemoto) {
       lapidas: Object.keys(estado.borrados || {}).length });
     DIAG.fusiones.length = Math.min(DIAG.fusiones.length, 6);
   } catch (_) {}
+  /* La lapida "2100" gana en la fusion, pero si el servidor aun lo trae hay
+     que resubir para que el otro movil deje de verlo. */
+  if (FANTASMAS.some(id => COLECCIONES.some(col => (datosRemotos[col] || []).some(r => r && r.id === id)))) _remotoDesfasado = true;
   if (!cambio) return false;
   STATE = estado;
   /* La fusion une historiales por fecha: si el otro dispositivo aun no se ha
@@ -8848,6 +8870,7 @@ function importarEstadoSync(remoto) {
   STATE.config = Object.assign(defaultState().config, remoto.config || {});
   STATE.vaccines = normalizarVacunas(STATE.vaccines, STATE.vaccinesDone, STATE.config.vacunasEditadas);
   sembrarCarnet(STATE);
+  purgarFantasmas(STATE);
   CONFIG = STATE.config;
   ESTADO = STATE.alimentos || {};
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
@@ -11188,6 +11211,42 @@ function deleteMedicamento(id) {
   STATE.medicamentos = (STATE.medicamentos || []).filter(x => x.id !== id);
   guardarEstado();
 }
+function apiretalDeHoy() {
+  return (STATE.medicamentos || []).find(m => (m.datetime || "").slice(0, 10) === HOY_ISO
+    && /apiretal/i.test(m.nombre || "")) || null;
+}
+/* Marcar el Apiretal del dia de vacunas: pregunta los ml (y deja tocar la
+   hora, por defecto las 07:00) y lo guarda como un medicamento mas. */
+function marcarApiretal() {
+  const ult = (STATE.medicamentos || []).filter(m => /apiretal/i.test(m.nombre || ""))
+    .sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop();
+  abrirModal("Apiretal", `
+    <div class="grid-campos2">
+      <div class="campo"><label for="ap-dt">Hora</label>
+        <input type="datetime-local" id="ap-dt" value="${HOY_ISO}T07:00"></div>
+      <div class="campo"><label for="ap-ml">Cantidad (ml)</label>
+        <input type="number" id="ap-ml" step="0.1" min="0" inputmode="decimal" value="${ult && ult.ml != null ? esc(String(ult.ml)) : ""}" placeholder="2,5" autofocus></div>
+    </div>
+    <div class="modal-aviso" id="ap-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: "PB.guardarApiretal()" }]);
+}
+function guardarApiretal() {
+  const dt = document.getElementById("ap-dt").value || `${HOY_ISO}T07:00`;
+  const ml = parseFloat(String(document.getElementById("ap-ml").value).replace(",", "."));
+  if (!(ml > 0)) {
+    const a = document.getElementById("ap-aviso");
+    if (a) { a.textContent = "Pon los ml que le has dado."; a.hidden = false; }
+    return;
+  }
+  if (!STATE.medicamentos) STATE.medicamentos = [];
+  STATE.medicamentos.push(sellar({ id: "md_" + Date.now().toString(36), datetime: dt, nombre: "Apiretal", ml, notas: "Día de vacunas" }));
+  guardarEstado();
+  cerrarModal();
+  renderAvisos();
+  if (VISTA_ACTUAL === "hoy") renderHoy(document.getElementById("view-hoy"));
+  if (DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
+}
 /* Vacunas puestas un dia, con la hora a la que salen en la linea del dia:
    la primera que tenga hora en su ficha, y si ninguna la tiene, las 09:00. */
 const VACUNA_HORA_DEFECTO = "09:00";
@@ -12943,6 +13002,18 @@ function calcularAvisos() {
       /* "Hecho" no decia si era un estado o un boton. "Marcar" es un verbo y
          "✓ Dada" un estado: no hay forma de leerlos al reves. */
       accion: { et: dada ? "✓ Dada" : "Marcar", fn: `PB.marcarVitaminaD()` } });
+  }
+
+  /* El dia de las vacunas, Apiretal a las 07:00 (pauta de la pediatra). Se
+     apunta como medicamento normal, asi que sale en la linea del dia con
+     sus ml y desaparece de aqui en cuanto esta dado. */
+  const vacHoy = vacunasDelDia(HOY_ISO);
+  if (vacHoy.length) {
+    const dado = apiretalDeHoy();
+    out.push({ id: "apiretal:" + HOY_ISO, tipo: "diario", icono: "💧", hecho: !!dado,
+      titulo: "Apiretal a las 07:00",
+      texto: `Hoy tiene vacunas (${vacHoy.map(v => `${v.vaccine} ${v.dose}`).join(" · ")}). Márcalo cuando se lo hayas dado.`,
+      accion: { et: dado ? "✓ Dado" : "Marcar", fn: "PB.marcarApiretal()" } });
   }
 
   /* Vacunas ya vencidas y sin marcar. Con la cita puesta no se avisa: ya sale
@@ -14918,7 +14989,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
