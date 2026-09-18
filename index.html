@@ -5715,7 +5715,12 @@
       border-bottom: 1px solid var(--line-soft); border-radius: 8px;
     }
     .pb-app .esq-fila:last-child { border-bottom: 0; }
-    .pb-app .esq-fila.ahora { background: var(--blue-soft); }
+    .pb-app .esq-fila.ok   { background: var(--green-soft); }
+    .pb-app .esq-fila.casi { background: var(--amber-soft); }
+    .pb-app .esq-fila.no   { background: var(--red-soft); }
+    /* "Ahora" se marca con una raya azul a la izquierda, para que conviva con el color de cumplimiento. */
+    .pb-app .esq-fila.ahora { box-shadow: inset 3px 0 0 var(--blue); }
+    .pb-app .esq-fila.ahora:not(.ok):not(.casi):not(.no) { background: var(--blue-soft); }
     .pb-app .esq-hora { flex: none; width: 82px; font-family: var(--serif); font-size: 0.8125rem; color: var(--text-muted); padding-top: 1px; }
     .pb-app .esq-fila.ahora .esq-hora { color: var(--blue); font-weight: 600; }
     .pb-app .esq-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
@@ -9320,43 +9325,114 @@ function renderHoy(el) {
    referencia fija, no sale de los datos: por eso va al final y plegado. Se
    resalta la franja en la que estamos ahora. */
 const ESQUEMA_DIA = [
-  { h: "06:30",       ini: 390,  fin: 420,  act: "Despertar + toma",           toma: "~180 ml",    nota: "" },
-  { h: "07:00-09:00", ini: 420,  fin: 540,  act: "Vigilia",                    toma: "",           nota: "" },
-  { h: "09:00-10:00", ini: 540,  fin: 600,  act: "Siesta 1",                   toma: "",           nota: "" },
-  { h: "10:00",       ini: 600,  fin: 600,  act: "Toma",                       toma: "~150 ml",    nota: "" },
-  { h: "10:00-12:15", ini: 600,  fin: 735,  act: "Vigilia",                    toma: "",           nota: "" },
-  { h: "12:15-13:45", ini: 735,  fin: 825,  act: "Siesta 2",                   toma: "",           nota: "" },
-  { h: "13:45",       ini: 825,  fin: 825,  act: "Toma + comida sólida (mediodía)", toma: "~170 ml", nota: "" },
-  { h: "13:45-16:00", ini: 825,  fin: 960,  act: "Vigilia",                    toma: "",           nota: "" },
-  { h: "16:00-16:45", ini: 960,  fin: 1005, act: "Siesta 3 (corta)",           toma: "",           nota: "" },
-  { h: "16:45",       ini: 1005, fin: 1005, act: "Toma",                       toma: "~150 ml",    nota: "" },
-  { h: "16:45-19:00", ini: 1005, fin: 1140, act: "Vigilia (~2 h 15)",          toma: "",           nota: "Encaja bien con la cena a las 19:00" },
-  { h: "19:00",       ini: 1140, fin: 1155, act: "Cena (sólido)",              toma: "",           nota: "Fijo, por vuestro horario" },
-  { h: "19:15-19:20", ini: 1155, fin: 1160, act: "Toma tras la cena",          toma: "~150-180 ml",
+  { h: "06:30",       ini: 390,  fin: 420,  tipo: "despertar", act: "Despertar + toma",           toma: "~180 ml",    nota: "" },
+  { h: "07:00-09:00", ini: 420,  fin: 540,  tipo: "vigilia",   act: "Vigilia",                    toma: "",           nota: "" },
+  { h: "09:00-10:00", ini: 540,  fin: 600,  tipo: "siesta",    act: "Siesta 1",                   toma: "",           nota: "" },
+  { h: "10:00",       ini: 600,  fin: 600,  tipo: "toma",      act: "Toma",                       toma: "~150 ml",    nota: "" },
+  { h: "10:00-12:15", ini: 600,  fin: 735,  tipo: "vigilia",   act: "Vigilia",                    toma: "",           nota: "" },
+  { h: "12:15-13:45", ini: 735,  fin: 825,  tipo: "siesta",    act: "Siesta 2",                   toma: "",           nota: "" },
+  { h: "13:45",       ini: 825,  fin: 825,  tipo: "tomaSolido", act: "Toma + comida sólida (mediodía)", toma: "~170 ml", nota: "" },
+  { h: "13:45-16:00", ini: 825,  fin: 960,  tipo: "vigilia",   act: "Vigilia",                    toma: "",           nota: "" },
+  { h: "16:00-16:45", ini: 960,  fin: 1005, tipo: "siesta",    act: "Siesta 3 (corta)",           toma: "",           nota: "" },
+  { h: "16:45",       ini: 1005, fin: 1005, tipo: "toma",      act: "Toma",                       toma: "~150 ml",    nota: "" },
+  { h: "16:45-19:00", ini: 1005, fin: 1140, tipo: "vigilia",   act: "Vigilia (~2 h 15)",          toma: "",           nota: "Encaja bien con la cena a las 19:00" },
+  { h: "19:00",       ini: 1140, fin: 1155, tipo: "solido",    act: "Cena (sólido)",              toma: "",           nota: "Fijo, por vuestro horario" },
+  { h: "19:15-19:20", ini: 1155, fin: 1160, tipo: "toma",      act: "Toma tras la cena",          toma: "~150-180 ml",
     nota: "La toma de cierre: si ese día ha cenado bien y con ganas, probad a bajarla un poco (130-150 ml) y ver si sigue durmiendo igual; si la deja bajar de forma consistente, ajustadla hacia abajo de forma permanente" },
-  { h: "19:20-19:50", ini: 1160, fin: 1190, act: "Baño + rutina de bajada de estímulos", toma: "", nota: "Poca luz, sin pantallas" },
-  { h: "19:50-20:00", ini: 1190, fin: 1200, act: "Acostar",                    toma: "",
+  { h: "19:20-19:50", ini: 1160, fin: 1190, tipo: "bano",      act: "Baño + rutina de bajada de estímulos", toma: "", nota: "Poca luz, sin pantallas" },
+  { h: "19:50-20:00", ini: 1190, fin: 1200, tipo: "acostar",   act: "Acostar",                    toma: "",
     nota: "Dentro de la franja 19-20 h que mejor le ha funcionado en sus datos, aunque en el extremo tardío" },
-  { h: "20:00 →",     ini: 1200, fin: 1830, act: "Noche",                      toma: "A demanda",  nota: "" },
+  { h: "20:00 →",     ini: 1200, fin: 1830, tipo: "noche",     act: "Noche",                      toma: "A demanda",  nota: "" },
 ];
+
+/* Cumplimiento de cada fila con lo apuntado hoy: verde (cumplido), ambar
+   (cerca) o rojo (no). Nada hasta que llega su hora; las franjas se juzgan
+   cuando acaban. Minutos del dia en todo, con el sueño recortado a hoy. */
+function esquemaEstados() {
+  const d = new Date(), ahora = d.getHours() * 60 + d.getMinutes();
+  const min = hhmm => minutoDelDia(hhmm);
+  const tomas = tomasDelDia(HOY_ISO).map(t => min(t.hora));
+  const solidos = comidasDelDia(HOY_ISO).filter(({ h }) => h.hora && h.resultado !== "rechazo").map(({ h }) => min(h.hora));
+  const banos = (STATE.banos || []).filter(b => (b.datetime || "").slice(0, 10) === HOY_ISO).map(b => min(b.datetime.slice(11, 16)));
+  const suenios = sueniosDelDia(HOY_ISO).map(x => ({ ini: min(x.hora), fin: x.enCurso ? ahora : (min(x.fin) || 1440), tipo: x.tipo, vieneDeAntes: x.vieneDeAntes }));
+  const dormido = (a, b) => suenios.reduce((s, x) => s + Math.max(0, Math.min(b, x.fin) - Math.max(a, x.ini)), 0);
+  const masCerca = (lista, m) => lista.reduce((mejor, x) => Math.abs(x - m) < mejor ? Math.abs(x - m) : mejor, Infinity);
+  const porDistancia = (dist, ok, casi) => dist <= ok ? "ok" : dist <= casi ? "casi" : "no";
+  const puntual = (lista, m, ok, casi) => ahora < m - ok ? "" : (masCerca(lista, m) <= ok ? "ok" : ahora < m + casi ? "" : porDistancia(masCerca(lista, m), ok, casi));
+  return ESQUEMA_DIA.map(f => {
+    switch (f.tipo) {
+      case "toma": return puntual(tomas, f.ini, 30, 60);
+      case "solido": return puntual(solidos, f.ini, 45, 90);
+      case "tomaSolido": {
+        const a = puntual(tomas, f.ini, 30, 60), b = puntual(solidos, f.ini, 60, 90);
+        if (!a && !b) return "";
+        if (a === "ok" && b === "ok") return "ok";
+        if (a === "no" && b === "no") return "no";
+        return "casi";
+      }
+      case "despertar": {
+        if (ahora < f.ini - 30) return "";
+        const fines = suenios.filter(x => x.tipo === "nocturno").map(x => x.fin);
+        const dDesp = masCerca(fines, f.ini), dToma = masCerca(tomas, f.ini);
+        if (dDesp <= 30 && dToma <= 30) return "ok";
+        if (ahora < f.ini + 60) return dDesp <= 30 || dToma <= 30 ? "casi" : "";
+        return (dDesp <= 60 || dToma <= 60) ? "casi" : "no";
+      }
+      case "siesta": {
+        if (ahora < f.fin) return dormido(f.ini, Math.min(ahora, f.fin)) > 0 ? "ok" : "";
+        const r = dormido(f.ini, f.fin) / (f.fin - f.ini);
+        return r >= 0.6 ? "ok" : r >= 0.25 ? "casi" : "no";
+      }
+      case "vigilia": {
+        if (ahora < f.fin) return "";
+        const r = dormido(f.ini, f.fin) / (f.fin - f.ini);
+        return r <= 0.15 ? "ok" : r <= 0.4 ? "casi" : "no";
+      }
+      case "bano": {
+        if (ahora < f.fin) return banos.some(b => b >= f.ini - 30) ? "ok" : "";
+        return banos.some(b => b >= f.ini - 30 && b <= f.fin + 30) ? "ok" : banos.length ? "casi" : "no";
+      }
+      case "acostar": {
+        const inicios = suenios.filter(x => x.tipo === "nocturno" && !x.vieneDeAntes).map(x => x.ini);
+        if (ahora < f.ini - 20) return "";
+        if (inicios.some(i => i >= f.ini - 20 && i <= f.fin + 20)) return "ok";
+        if (ahora < f.fin + 60) return "";
+        return inicios.some(i => i >= f.ini - 50 && i <= f.fin + 60) ? "casi" : "no";
+      }
+      case "noche": {
+        if (ahora < f.ini + 60) return "";
+        const r = dormido(f.ini, Math.min(ahora, 1440)) / (Math.min(ahora, 1440) - f.ini);
+        return r >= 0.8 ? "ok" : r >= 0.6 ? "casi" : "no";
+      }
+    }
+    return "";
+  });
+}
 function htmlEsquemaDia() {
   const d = new Date(), ahora = d.getHours() * 60 + d.getMinutes();
   const enFranja = f => f.fin > f.ini ? (ahora >= f.ini && ahora < f.fin) : Math.abs(ahora - f.ini) < 15;
   /* La noche cruza la medianoche: de 20:00 a 06:30 del dia siguiente. */
   const esAhora = f => enFranja(f) || (f.act === "Noche" && ahora < 390);
   const cls = f => /Siesta|Noche/.test(f.act) ? "sueno" : /Toma|Despertar/.test(f.act) ? "toma" : /Cena|sólida/.test(f.act) ? "comida" : "";
+  const estados = esquemaEstados();
   return `<details class="card qlt-card esq-card">
     <summary class="sem-cab">
       <h2>Esquema del día <span class="n">horario tipo con la cena a las 19:00</span></h2>
       <span class="sem-chevron" aria-hidden="true">&#8250;</span>
     </summary>
     <div class="sem-cuerpo">
-      <div class="esq-lista">${ESQUEMA_DIA.map(f => `<div class="esq-fila${esAhora(f) ? " ahora" : ""}">
+      <div class="esq-lista">${ESQUEMA_DIA.map((f, i) => `<div class="esq-fila${esAhora(f) ? " ahora" : ""}${estados[i] ? " " + estados[i] : ""}">
         <span class="esq-hora">${f.h}</span>
         <span class="esq-txt"><span class="esq-punto ${cls(f)}"></span><b>${f.act}</b></span>
         <span class="esq-toma">${f.toma || "—"}</span>${f.nota ? `<span class="esq-nota">${f.nota}</span>` : ""}
       </div>`).join("")}</div>
-      <p class="wn-pie">Es el horario que os habéis marcado, no lo que sale de los datos: para eso está "Lo que suele venir". La fila resaltada es la franja en la que estáis ahora.</p>
+      <div class="pb-cal-leyenda">
+        <span><i class="punto" style="background:var(--green)"></i>cumplido</span>
+        <span><i class="punto" style="background:var(--amber)"></i>cerca</span>
+        <span><i class="punto" style="background:var(--red)"></i>no</span>
+        <span><i class="punto" style="background:var(--blue)"></i>ahora</span>
+      </div>
+      <p class="wn-pie">Es el horario que os habéis marcado, no lo que sale de los datos: para eso está "Lo que suele venir". Cada fila se colorea con lo apuntado hoy cuando llega su hora (tomas y sólidos a ±30-60 min; siestas y vigilias por cuánto ha dormido en la franja).</p>
     </div>
   </details>`;
 }
