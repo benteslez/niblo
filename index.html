@@ -6186,6 +6186,12 @@
       font-size: 0.8125rem; font-weight: 600; cursor: pointer;
     }
     .pb-app .en-curso-stop:hover { filter: brightness(1.1); }
+    /* Despierto: la misma pastilla en azul, con el punto fijo (no late). */
+    .pb-app .en-curso.despierto { background: var(--blue-soft); }
+    .pb-app .en-curso.despierto .en-curso-punto { background: var(--blue); animation: none; }
+    .pb-app .en-curso.despierto .en-curso-txt { color: var(--blue); }
+    .pb-app .en-curso.despierto .en-curso-txt span { color: color-mix(in srgb, var(--blue) 70%, var(--text-muted)); }
+    .pb-app .en-curso.despierto .en-curso-stop { background: var(--blue); }
     /* Con el texto grande no cabe la hora: lo que se cae es el "desde", que es
        el dato accesorio. "Siesta en curso" y el boton no se tocan. */
     html.a11y-fuente-2 .pb-app .en-curso-txt span,
@@ -9278,14 +9284,14 @@ function renderHoy(el) {
   const loQueViene = htmlLoQueSueleVenir();
   const barra = htmlBarraAhora();
   const plegada = barraPlegada();
-  let html = `<p class="hoy-cab"><span class="hoy-cab-txt">${capitalizar(fmtFechaLarga(dia.fecha))}<span aria-hidden="true">·</span>${dia.edadTexto}</span>${
+  /* La pastilla de sueño (o "Despierto") va arriba del todo: por encima de
+     la fecha, la barra y todo lo demas. */
+  let html = htmlSuenoEnCurso(true);
+  html += `<p class="hoy-cab"><span class="hoy-cab-txt">${capitalizar(fmtFechaLarga(dia.fecha))}<span aria-hidden="true">·</span>${dia.edadTexto}</span>${
     (barra || plegada) ? `<button type="button" class="hoy-cab-btn${plegada ? " plegada" : ""}" onclick="PB.plegarBarra()"
       aria-label="${plegada ? "Mostrar" : "Ocultar"} la línea de tiempo" aria-expanded="${!plegada}">&#8250;</button>` : ""}</p>`;
   if (!plegada) html += barra;
   arrancarTicBarra();
-  /* Mientras duerme, lo unico que hace falta de esta pantalla es poder
-     pararlo: el aviso va por encima incluso de los accesos directos. */
-  html += htmlSuenoEnCurso();
   /* Los dos registros que se apuntan varias veces al dia, arriba del todo:
      antes la toma estaba al final de la vista y el sueno en otra pestana. */
   /* Tres accesos en una sola fila: con "Registrar" delante no caben ni en el
@@ -9635,6 +9641,7 @@ function semPercentil(etiqueta) {
    rutina (bandaFormula), que son orientacion practica. Lo unico oficial es el
    minimo de ~500 ml/dia de lacteos entre los 6 y los 12 meses (AEP 2018), y
    es lo que marca el rojo. */
+const SEM_LECHE_MARGEN = 0.15;
 function semBandaLeche(meses) {
   if (meses < 7)  return [700, 800];
   if (meses < 8)  return [600, 700];
@@ -9673,7 +9680,16 @@ function semLeche(meses) {
   const [min, max] = semBandaLeche(meses);
   const suelo = meses < 12 ? 400 : 350;
   if (media < suelo) return { nivel: "rojo", txt: `Media de ${media} ml/día, por debajo del mínimo de lácteos de esta edad.` };
-  if (media < min || media > max) return { nivel: "ambar", txt: `Media de ${media} ml/día, fuera de los ${min}-${max} ml orientativos.` };
+  /* La banda es orientativa y depende de cuanto solido coma: un 15 % por
+     encima o por debajo no es "algo que mirar". Solo se avisa cuando se
+     sale de verdad (el esquema del dia, sin la noche, ya suma unos 800). */
+  const margen = SEM_LECHE_MARGEN;
+  if (media < min * (1 - margen) || media > max * (1 + margen)) {
+    return { nivel: "ambar", txt: `Media de ${media} ml/día, ${media < min ? "bastante por debajo" : "bastante por encima"} de los ${min}-${max} ml orientativos.` };
+  }
+  if (media < min || media > max) {
+    return { nivel: "verde", txt: `Media de ${media} ml/día, ${media < min ? "algo por debajo" : "algo por encima"} de los ${min}-${max} ml orientativos, dentro del margen.` };
+  }
   return { nivel: "verde", txt: `Media de ${media} ml/día, dentro de los ${min}-${max} ml de su edad.` };
 }
 
@@ -10810,7 +10826,7 @@ function htmlBarraAhora() {
   /* Lo ultimo que ha pasado, para saber de donde viene la prevision. */
   /* wnTomasModelo filtra por el dia entero, asi que se pide desde anteayer. */
   const ultimaToma = wnTomasModelo(new Date(ini - 48 * 3600000), ahora).pop();
-  if (ultimaToma && ultimaToma.t.getTime() >= ini) puntos.push({ icono: "toma", cuando: ultimaToma.t, hecho: true, et: `${ultimaToma.ml} ml` });
+  if (ultimaToma && ultimaToma.t.getTime() >= ini) puntos.push({ icono: "toma", cuando: ultimaToma.t, hecho: true, ml: `${ultimaToma.ml} ml` });
   const episodios = episodiosSueno(STATE.sleep.filter(x => new Date(x.start).getTime() >= ini - 12 * 3600000));
   for (const e of episodios) {
     if (e.start.getTime() >= ini && e.start <= ahora) puntos.push({ icono: "sueno", cuando: e.start, hecho: true, et: "se durmió" });
@@ -10826,7 +10842,7 @@ function htmlBarraAhora() {
        izquierdo, con su hora, para que no se pierda. */
     const fuera = f.pasado && f.cuando.getTime() < ini;
     puntos.push({ icono: f.icono, cuando: fuera ? new Date(ini) : f.cuando, hecho: false, pasado: f.pasado,
-      et, hora: fuera ? `tocaba ${hhmm(f.cuando)}` : null });
+      et, hora: fuera ? hhmm(f.cuando) : null });
     if (f.luego && f.luego.getTime() <= ini + span) puntos.push({ icono: f.icono, cuando: f.luego, hecho: false, tenue: true, et: "si sigue así" });
   }
   if (!puntos.length) return "";
@@ -10844,7 +10860,7 @@ function htmlBarraAhora() {
     const borde = x < 6 ? " izq" : x > 94 ? " der" : "";
     return `<div class="ab-pto${p.hecho ? " hecho" : ""}${p.pasado ? " pasado" : ""}${p.tenue ? " tenue" : ""}${fila === "arriba" ? " arriba" : ""}${borde}" style="left:${x.toFixed(1)}%">
       <span class="ab-ico i-${p.icono}"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">${LINEA_GLIFOS[p.icono]}</svg></span>
-      <span class="ab-et">${p.hora ? `<b>${p.hora}</b>` : `<b>${hhmm(p.cuando)}</b> ${p.et}`}</span>
+      <span class="ab-et"><b>${p.hora || hhmm(p.cuando)}</b>${p.ml ? ` ${p.ml}` : ""}</span>
     </div>`;
   }).join("");
   const horas = [];
@@ -11740,10 +11756,13 @@ function guardarToma(fecha, id) {
 /* Sueño en curso: pastilla con el punto parpadeando y el boton de parar. Se
    mira STATE.sleep entero y no el dia, porque un nocturno que empezo ayer y
    sigue abierto tiene que salir igual. */
-function htmlSuenoEnCurso() {
+/* conDespierto: en Hoy, cuando no duerme, la misma pastilla en azul dice
+   "Despierto" (desde que se desperto) con el boton de empezar a dormir. No
+   es un registro: despierto es lo que hay cuando no esta durmiendo. */
+function htmlSuenoEnCurso(conDespierto) {
   const activos = STATE.sleep.filter(s => !s.end)
     .sort((a, b) => new Date(b.start) - new Date(a.start));
-  return activos.map(s => `<div class="en-curso">
+  if (activos.length) return activos.map(s => `<div class="en-curso">
     <span class="en-curso-punto" aria-hidden="true"></span>
     <span class="en-curso-txt">
       <b>${s.type === "siesta" ? "Siesta" : "Sueño nocturno"} en curso</b>
@@ -11751,6 +11770,16 @@ function htmlSuenoEnCurso() {
     </span>
     <button type="button" class="en-curso-stop" onclick="PB.stopSleep('${s.id}')">Parar</button>
   </div>`).join("");
+  if (!conDespierto) return "";
+  const ahora = new Date();
+  const fines = STATE.sleep.filter(s => s.end).map(s => new Date(s.end)).filter(d => !isNaN(d) && d <= ahora).sort((a, b) => a - b);
+  const ultimo = fines[fines.length - 1];
+  const desde = ultimo && (ahora - ultimo) < 16 * 3600000 ? `<span>desde ${fmtHoraCorta(ultimo)}</span>` : "";
+  return `<div class="en-curso despierto">
+    <span class="en-curso-punto" aria-hidden="true"></span>
+    <span class="en-curso-txt"><b>Despierto</b>${desde}</span>
+    <button type="button" class="en-curso-stop" onclick="PB.modalSueno()">A dormir</button>
+  </div>`;
 }
 
 /* Alta de sueño sin salir de "Hoy", con los dos modos de la pestaña de Sueño:
