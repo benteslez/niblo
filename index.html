@@ -5710,8 +5710,8 @@
     /* Esquema del dia: filas hora · actividad · toma, con la de ahora resaltada. */
     .pb-app .esq-lista { display: flex; flex-direction: column; }
     .pb-app .esq-fila {
-      display: grid; grid-template-columns: 82px 1fr auto; column-gap: 10px; align-items: start;
-      padding: 7px 6px; margin: 0 -6px;
+      display: grid; grid-template-columns: 92px 1fr auto; column-gap: 10px; align-items: start;
+      padding: 9px 6px; margin: 0 -6px;
       border-bottom: 1px solid var(--line-soft); border-radius: 8px;
     }
     .pb-app .esq-fila:last-child { border-bottom: 0; }
@@ -5721,17 +5721,17 @@
     /* "Ahora" se marca con una raya azul a la izquierda, para que conviva con el color de cumplimiento. */
     .pb-app .esq-fila.ahora { box-shadow: inset 3px 0 0 var(--blue); }
     .pb-app .esq-fila.ahora:not(.ok):not(.casi):not(.no) { background: var(--blue-soft); }
-    .pb-app .esq-hora { flex: none; width: 82px; font-family: var(--serif); font-size: 0.8125rem; color: var(--text-muted); padding-top: 1px; }
+    .pb-app .esq-hora { flex: none; width: 92px; font-family: var(--serif); font-size: 0.9375rem; color: var(--text-muted); padding-top: 1px; }
     .pb-app .esq-fila.ahora .esq-hora { color: var(--blue); font-weight: 600; }
-    .pb-app .esq-txt { flex: 1; min-width: 0; font-size: 0.875rem; }
+    .pb-app .esq-txt { flex: 1; min-width: 0; font-size: 1rem; }
     .pb-app .esq-txt b { font-weight: 600; }
     .pb-app .esq-punto { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; background: var(--text-faint); vertical-align: 1px; }
     .pb-app .esq-punto.sueno { background: var(--purple); }
     .pb-app .esq-punto.toma { background: var(--blue); }
     .pb-app .esq-punto.comida { background: var(--green); }
     /* La nota va debajo, a todo el ancho de la actividad y la toma. */
-    .pb-app .esq-nota { grid-column: 2 / 4; font-size: 0.78125rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
-    .pb-app .esq-toma { flex: none; font-family: var(--serif); font-size: 0.8125rem; color: var(--text-muted); white-space: nowrap; padding-top: 1px; }
+    .pb-app .esq-nota { grid-column: 2 / 4; font-size: 0.875rem; color: var(--text-muted); margin-top: 3px; line-height: 1.45; }
+    .pb-app .esq-toma { flex: none; font-family: var(--serif); font-size: 0.9375rem; color: var(--text-muted); white-space: nowrap; padding-top: 1px; }
     .pb-app .pt-res-fila {
       display: flex; align-items: center; gap: 10px;
       padding: 8px 0; border-bottom: 1px solid var(--line-soft);
