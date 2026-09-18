@@ -5773,8 +5773,9 @@
     .pb-app .hoy-cab .hoy-cab-txt { flex: 1; min-width: 0; margin: 0; opacity: 1; }
     /* El chevron de plegar la barra: como el de las tarjetas desplegables. */
     .pb-app .hoy-cab-btn {
-      flex: none; width: 24px; height: 24px; margin: 0; padding: 0; border: 0; background: transparent;
-      font: inherit; font-size: 1.125rem; line-height: 1; color: var(--text-faint); cursor: pointer;
+      flex: none; width: 32px; height: 32px; margin: -4px -6px -4px 0; padding: 0; border: 0; background: transparent;
+      font: inherit; font-size: 1.25rem; line-height: 1; color: var(--text-faint); cursor: pointer;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
       transform: rotate(90deg); transition: transform .18s ease; opacity: 1;
     }
     .pb-app .hoy-cab-btn.plegada { transform: rotate(0deg); }
@@ -9253,7 +9254,7 @@ function renderHoy(el) {
   const barra = htmlBarraAhora();
   const plegada = barraPlegada();
   let html = `<p class="hoy-cab"><span class="hoy-cab-txt">${capitalizar(fmtFechaLarga(dia.fecha))}<span aria-hidden="true">·</span>${dia.edadTexto}</span>${
-    barra ? `<button type="button" class="hoy-cab-btn${plegada ? " plegada" : ""}" onclick="PB.plegarBarra()"
+    (barra || plegada) ? `<button type="button" class="hoy-cab-btn${plegada ? " plegada" : ""}" onclick="PB.plegarBarra()"
       aria-label="${plegada ? "Mostrar" : "Ocultar"} la línea de tiempo" aria-expanded="${!plegada}">&#8250;</button>` : ""}</p>`;
   if (!plegada) html += barra;
   arrancarTicBarra();
@@ -10720,9 +10721,16 @@ function htmlBarraAhora() {
 let AB_TIC = null;
 /* Plegada o no: preferencia de este movil, no viaja. Por defecto se ve. */
 const AB_KEY = "niblo.barra.plegada";
-function barraPlegada() { try { return localStorage.getItem(AB_KEY) === "1"; } catch (_) { return false; } }
+/* En memoria, con copia en localStorage: si el almacenamiento falla, el
+   boton sigue funcionando dentro de la sesion. */
+let AB_PLEGADA = null;
+function barraPlegada() {
+  if (AB_PLEGADA === null) { try { AB_PLEGADA = localStorage.getItem(AB_KEY) === "1"; } catch (_) { AB_PLEGADA = false; } }
+  return AB_PLEGADA;
+}
 function plegarBarra() {
-  try { localStorage.setItem(AB_KEY, barraPlegada() ? "0" : "1"); } catch (_) {}
+  AB_PLEGADA = !barraPlegada();
+  try { localStorage.setItem(AB_KEY, AB_PLEGADA ? "1" : "0"); } catch (_) {}
   renderHoy(document.getElementById("view-hoy"));
 }
 function ticBarraAhora() {
