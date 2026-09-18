@@ -5769,6 +5769,15 @@
       letter-spacing: 0.01em;
     }
     .pb-app .hoy-cab span { margin: 0 5px; opacity: .55; }
+    .pb-app .hoy-cab { display: flex; align-items: center; gap: 8px; }
+    .pb-app .hoy-cab .hoy-cab-txt { flex: 1; min-width: 0; margin: 0; opacity: 1; }
+    /* El chevron de plegar la barra: como el de las tarjetas desplegables. */
+    .pb-app .hoy-cab-btn {
+      flex: none; width: 24px; height: 24px; margin: 0; padding: 0; border: 0; background: transparent;
+      font: inherit; font-size: 1.125rem; line-height: 1; color: var(--text-faint); cursor: pointer;
+      transform: rotate(90deg); transition: transform .18s ease; opacity: 1;
+    }
+    .pb-app .hoy-cab-btn.plegada { transform: rotate(0deg); }
     /* Barra de lo que toca ahora: una linea, la hora, y puntos encima. Sin
        caja: es un instrumento, no una tarjeta. */
     .pb-app .ahora-barra {
@@ -9241,11 +9250,15 @@ function renderHoy(el) {
      tocan nunca. Son contexto, no un registro: van de cabecera, pequeñas y
      sin caja, y lo que se gana es una pantalla que empieza por lo que hay
      que hacer. */
-  let html = `<p class="hoy-cab">${capitalizar(fmtFechaLarga(dia.fecha))}<span aria-hidden="true">·</span>${dia.edadTexto}</p>`;
   /* La tarjeta de previsiones va abajo, pero se calcula ya: la barra de
      arriba se dibuja con lo que deja calculado. */
   const loQueViene = htmlLoQueSueleVenir();
-  html += htmlBarraAhora();
+  const barra = htmlBarraAhora();
+  const plegada = barraPlegada();
+  let html = `<p class="hoy-cab"><span class="hoy-cab-txt">${capitalizar(fmtFechaLarga(dia.fecha))}<span aria-hidden="true">·</span>${dia.edadTexto}</span>${
+    barra ? `<button type="button" class="hoy-cab-btn${plegada ? " plegada" : ""}" onclick="PB.plegarBarra()"
+      aria-label="${plegada ? "Mostrar" : "Ocultar"} la línea de tiempo" aria-expanded="${!plegada}">&#8250;</button>` : ""}</p>`;
+  if (!plegada) html += barra;
   arrancarTicBarra();
   /* Mientras duerme, lo unico que hace falta de esta pantalla es poder
      pararlo: el aviso va por encima incluso de los accesos directos. */
@@ -10708,6 +10721,13 @@ function htmlBarraAhora() {
 /* La barra se mueve con el reloj: cada minuto se vuelve a dibujar sola,
    sin repintar la pantalla entera (que se comeria un toque a medias). */
 let AB_TIC = null;
+/* Plegada o no: preferencia de este movil, no viaja. Por defecto se ve. */
+const AB_KEY = "niblo.barra.plegada";
+function barraPlegada() { try { return localStorage.getItem(AB_KEY) === "1"; } catch (_) { return false; } }
+function plegarBarra() {
+  try { localStorage.setItem(AB_KEY, barraPlegada() ? "0" : "1"); } catch (_) {}
+  renderHoy(document.getElementById("view-hoy"));
+}
 function ticBarraAhora() {
   if (VISTA_ACTUAL !== "hoy" || document.hidden) return;
   const vieja = document.querySelector("#view-hoy .ahora-barra");
@@ -15260,7 +15280,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader };
 })();
   </script>
