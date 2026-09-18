@@ -5781,7 +5781,7 @@
     /* Barra de lo que toca ahora: una linea, la hora, y puntos encima. Sin
        caja: es un instrumento, no una tarjeta. */
     .pb-app .ahora-barra {
-      position: relative; height: 82px; margin: 2px 6px var(--gap-3);
+      position: relative; height: 78px; margin: 2px 6px var(--gap-3);
       font-family: var(--font-ui); user-select: none;
     }
     .pb-app .ab-horas { position: absolute; left: 0; right: 0; top: 0; height: 12px; }
@@ -5794,29 +5794,26 @@
       background: linear-gradient(90deg, var(--line) 0, var(--line) 25%, var(--line-soft) 25%, var(--line-soft) 100%);
     }
     .pb-app .ab-ahora { position: absolute; top: 34px; bottom: 4px; width: 0; }
+    /* La linea de ahora: un hilo, sin halo ni hora. Se ve donde va el dia y
+       con eso basta; la hora del movil no siempre cuadra con la de aqui. */
     .pb-app .ab-ahora i {
-      position: absolute; top: 0; bottom: 0; left: -1px; width: 2px; border-radius: 2px;
-      background: var(--red); box-shadow: 0 0 0 3px color-mix(in srgb, var(--red) 16%, transparent);
-    }
-    .pb-app .ab-ahora span {
-      position: absolute; bottom: -4px; left: 0; transform: translateX(-50%);
-      font-size: 0.5625rem; font-weight: 700; color: var(--red); white-space: nowrap;
+      position: absolute; top: 4px; bottom: 6px; left: -0.5px; width: 1px;
+      background: var(--red); opacity: .7;
     }
     .pb-app .ab-pto { position: absolute; top: 38px; width: 0; }
+    /* Iconos ligeros: aro y glifo en su color, fondo del papel. Lo hecho va
+       en un aro fino y apagado; lo previsto, en aro mas grueso; lo que ya
+       tocaba, con el aro rojo. */
     .pb-app .ab-ico {
       position: absolute; left: -11px; top: 0; width: 22px; height: 22px; border-radius: 50%;
       display: inline-flex; align-items: center; justify-content: center;
-      background: var(--bg-elev); box-shadow: 0 0 0 2px var(--bg-elev);
+      background: var(--bg); box-shadow: inset 0 0 0 1.5px currentColor, 0 0 0 2px var(--bg);
     }
-    .pb-app .ab-ico.i-toma  { background: var(--blue); color: #fff; }
-    .pb-app .ab-ico.i-sueno { background: var(--purple); color: #fff; }
-    .pb-app .ab-ico.i-panal { background: var(--yellow); color: #fff; }
-    /* Lo que ya paso: hueco. Lo previsto: lleno. Lo que ya tocaba: anillo rojo. */
-    .pb-app .ab-pto.hecho .ab-ico { background: var(--bg-elev); box-shadow: inset 0 0 0 2px currentColor, 0 0 0 2px var(--bg-elev); }
-    .pb-app .ab-pto.hecho .ab-ico.i-toma  { color: var(--blue); }
-    .pb-app .ab-pto.hecho .ab-ico.i-sueno { color: var(--purple); }
-    .pb-app .ab-pto.hecho .ab-ico.i-panal { color: var(--yellow); }
-    .pb-app .ab-pto.pasado .ab-ico { box-shadow: 0 0 0 2px var(--red), 0 0 0 4px var(--bg-elev); }
+    .pb-app .ab-ico.i-toma  { color: var(--blue); }
+    .pb-app .ab-ico.i-sueno { color: var(--purple); }
+    .pb-app .ab-ico.i-panal { color: var(--yellow); }
+    .pb-app .ab-pto.hecho .ab-ico { box-shadow: inset 0 0 0 1px currentColor, 0 0 0 2px var(--bg); opacity: .55; }
+    .pb-app .ab-pto.pasado .ab-ico { box-shadow: inset 0 0 0 1.5px var(--red), 0 0 0 2px var(--bg); }
     .pb-app .ab-pto.tenue { opacity: .45; }
     .pb-app .ab-et {
       position: absolute; top: 25px; left: 0; transform: translateX(-50%);
@@ -10713,7 +10710,7 @@ function htmlBarraAhora() {
   return `<div class="ahora-barra" aria-label="Lo que toca ahora">
     <div class="ab-horas">${horas.join("")}</div>
     <div class="ab-linea"></div>
-    <div class="ab-ahora" style="left:${pct(ahora).toFixed(1)}%"><i></i><span>${hhmm(ahora)}</span></div>
+    <div class="ab-ahora" style="left:${pct(ahora).toFixed(1)}%"><i></i></div>
     ${html}
   </div>`;
 }
