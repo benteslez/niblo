@@ -5769,6 +5769,57 @@
       letter-spacing: 0.01em;
     }
     .pb-app .hoy-cab span { margin: 0 5px; opacity: .55; }
+    /* Barra de lo que toca ahora: una linea, la hora, y puntos encima. Sin
+       caja: es un instrumento, no una tarjeta. */
+    .pb-app .ahora-barra {
+      position: relative; height: 82px; margin: 2px 6px var(--gap-3);
+      font-family: var(--font-ui); user-select: none;
+    }
+    .pb-app .ab-horas { position: absolute; left: 0; right: 0; top: 0; height: 12px; }
+    .pb-app .ab-horas span {
+      position: absolute; transform: translateX(-50%); font-size: 0.5625rem;
+      color: var(--text-faint); font-weight: 600; letter-spacing: .02em;
+    }
+    .pb-app .ab-linea {
+      position: absolute; left: 0; right: 0; top: 48px; height: 2px; border-radius: 2px;
+      background: linear-gradient(90deg, var(--line) 0, var(--line) 25%, var(--line-soft) 25%, var(--line-soft) 100%);
+    }
+    .pb-app .ab-ahora { position: absolute; top: 34px; bottom: 4px; width: 0; }
+    .pb-app .ab-ahora i {
+      position: absolute; top: 0; bottom: 0; left: -1px; width: 2px; border-radius: 2px;
+      background: var(--red); box-shadow: 0 0 0 3px color-mix(in srgb, var(--red) 16%, transparent);
+    }
+    .pb-app .ab-ahora span {
+      position: absolute; bottom: -4px; left: 0; transform: translateX(-50%);
+      font-size: 0.5625rem; font-weight: 700; color: var(--red); white-space: nowrap;
+    }
+    .pb-app .ab-pto { position: absolute; top: 38px; width: 0; }
+    .pb-app .ab-ico {
+      position: absolute; left: -11px; top: 0; width: 22px; height: 22px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--bg-elev); box-shadow: 0 0 0 2px var(--bg-elev);
+    }
+    .pb-app .ab-ico.i-toma  { background: var(--blue); color: #fff; }
+    .pb-app .ab-ico.i-sueno { background: var(--purple); color: #fff; }
+    .pb-app .ab-ico.i-panal { background: var(--yellow); color: #fff; }
+    /* Lo que ya paso: hueco. Lo previsto: lleno. Lo que ya tocaba: anillo rojo. */
+    .pb-app .ab-pto.hecho .ab-ico { background: var(--bg-elev); box-shadow: inset 0 0 0 2px currentColor, 0 0 0 2px var(--bg-elev); }
+    .pb-app .ab-pto.hecho .ab-ico.i-toma  { color: var(--blue); }
+    .pb-app .ab-pto.hecho .ab-ico.i-sueno { color: var(--purple); }
+    .pb-app .ab-pto.hecho .ab-ico.i-panal { color: var(--yellow); }
+    .pb-app .ab-pto.pasado .ab-ico { box-shadow: 0 0 0 2px var(--red), 0 0 0 4px var(--bg-elev); }
+    .pb-app .ab-pto.tenue { opacity: .45; }
+    .pb-app .ab-et {
+      position: absolute; top: 25px; left: 0; transform: translateX(-50%);
+      font-size: 0.5625rem; color: var(--text-muted); white-space: nowrap; line-height: 1.2;
+    }
+    .pb-app .ab-et b { color: var(--text); font-weight: 700; }
+    .pb-app .ab-pto.arriba .ab-et { top: auto; bottom: 12px; }
+    /* En los bordes la etiqueta no se centra, que se saldria de la barra. */
+    .pb-app .ab-pto.izq .ab-et { left: -11px; transform: none; }
+    .pb-app .ab-pto.der .ab-et { left: auto; right: -11px; transform: none; }
+    .pb-app .ab-pto.hecho .ab-et { color: var(--text-faint); }
+    .pb-app .ab-pto.hecho .ab-et b { color: var(--text-muted); font-weight: 600; }
     .pb-app .hoy-nota {
       margin: 0 0 var(--gap-3);
       font-size: 0.8125rem; line-height: 1.5; color: var(--text-muted);
@@ -9191,6 +9242,11 @@ function renderHoy(el) {
      sin caja, y lo que se gana es una pantalla que empieza por lo que hay
      que hacer. */
   let html = `<p class="hoy-cab">${capitalizar(fmtFechaLarga(dia.fecha))}<span aria-hidden="true">·</span>${dia.edadTexto}</p>`;
+  /* La tarjeta de previsiones va abajo, pero se calcula ya: la barra de
+     arriba se dibuja con lo que deja calculado. */
+  const loQueViene = htmlLoQueSueleVenir();
+  html += htmlBarraAhora();
+  arrancarTicBarra();
   /* Mientras duerme, lo unico que hace falta de esta pantalla es poder
      pararlo: el aviso va por encima incluso de los accesos directos. */
   html += htmlSuenoEnCurso();
@@ -9221,7 +9277,7 @@ function renderHoy(el) {
      final de Hoy, y "lo que suele venir" debajo: primero lo que ha pasado,
      luego lo que viene. */
   html += htmlPatron();
-  html += htmlLoQueSueleVenir();
+  html += loQueViene;
 
   el.innerHTML = html;
   sincronizarTicSueno();
@@ -10556,19 +10612,20 @@ function htmlOrientacionEdad(diasConDatos) {
   const m = Math.floor(meses);
   if (enCurso && enCurso.type === "siesta") {
     const c = new Date(enCurso.start.getTime() + medio(ref.siesta) * 60000);
-    filas.push({ icono: "sueno", txt: `Por edad, se despertaría sobre las <b>${hhmm(c)}</b>`,
+    filas.push({ icono: "sueno", cuando: c, pasado: c <= ahora, txt: `Por edad, se despertaría sobre las <b>${hhmm(c)}</b>`,
       nota: `a los ${m} meses las siestas suelen durar ${rangoTexto(ref.siesta)}` });
   } else if (!enCurso && ultimoFin) {
     const c = new Date(ultimoFin.getTime() + medio(ref.despierto) * 60000);
-    filas.push({ icono: "sueno", txt: `Por edad, le entraría el sueño sobre las <b>${hhmm(c)}</b>`,
+    filas.push({ icono: "sueno", cuando: c, pasado: c <= ahora, txt: `Por edad, le entraría el sueño sobre las <b>${hhmm(c)}</b>`,
       nota: `a los ${m} meses suele aguantar despierto ${rangoTexto(ref.despierto)}` });
   }
   if (ultToma) {
     const c = new Date(ultToma.t.getTime() + medio(ref.toma) * 60000);
-    filas.push({ icono: "toma", txt: `Por edad, la siguiente toma sería sobre las <b>${hhmm(c)}</b>`,
+    filas.push({ icono: "toma", cuando: c, pasado: c <= ahora, txt: `Por edad, la siguiente toma sería sobre las <b>${hhmm(c)}</b>`,
       nota: `a los ${m} meses, tomas cada ${rangoTexto(ref.toma)} de ${rangoTexto(ref.ml, "ml")}${
         ultToma.ml > 0 ? fueraDeEdad(ultToma.ml, ref.ml, meses, "lo normal por toma", "ml").replace(/^ · /, " · la última, de " + ultToma.ml + " ml, ") : ""}` });
   }
+  WN_EVENTOS = filas.filter(f => f.cuando);
   if (!filas.length) return "";
   return `<div class="card wn">
     <h2>Lo que suele venir <span class="n">orientación por edad</span></h2>
@@ -10581,6 +10638,86 @@ function htmlOrientacionEdad(diasConDatos) {
       habitual, no guía oficial. Con 7 días apuntados pasará a usar sus propios datos.</p>
   </div>`;
 }
+
+/* ---- Barra de "lo que toca ahora" -------------------------------------
+   Una linea de tiempo de seis horas (hora y media atras, cuatro y media
+   adelante) con la hora actual marcada y, sobre ella, lo ultimo que ha
+   pasado (vacio) y lo que se preve (lleno): toma, sueño, pañal. Es la
+   tarjeta de abajo hecha dibujo, para verlo sin leer. Se pinta con lo que
+   htmlLoQueSueleVenir deja en WN_EVENTOS, asi que hay que llamarla despues. */
+let WN_EVENTOS = [];
+const AB_ANTES = 90, AB_DESPUES = 270;       // minutos a cada lado de ahora
+function htmlBarraAhora() {
+  const ahora = new Date();
+  const ini = ahora.getTime() - AB_ANTES * 60000, span = (AB_ANTES + AB_DESPUES) * 60000;
+  const pct = d => Math.max(0, Math.min(100, (d.getTime() - ini) / span * 100));
+  const hhmm = d => `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+  const puntos = [];
+  /* Lo ultimo que ha pasado, para saber de donde viene la prevision. */
+  /* wnTomasModelo filtra por el dia entero, asi que se pide desde anteayer. */
+  const ultimaToma = wnTomasModelo(new Date(ini - 48 * 3600000), ahora).pop();
+  if (ultimaToma && ultimaToma.t.getTime() >= ini) puntos.push({ icono: "toma", cuando: ultimaToma.t, hecho: true, et: `${ultimaToma.ml} ml` });
+  const episodios = episodiosSueno(STATE.sleep.filter(x => new Date(x.start).getTime() >= ini - 12 * 3600000));
+  for (const e of episodios) {
+    if (e.start.getTime() >= ini && e.start <= ahora) puntos.push({ icono: "sueno", cuando: e.start, hecho: true, et: "se durmió" });
+    if (e.end && e.end.getTime() >= ini && e.end <= ahora) puntos.push({ icono: "sueno", cuando: e.end, hecho: true, et: "despertó" });
+  }
+  const ultPanal = STATE.diapers.map(p => new Date(p.datetime)).filter(d => !isNaN(d) && d.getTime() >= ini && d <= ahora).sort((a, b) => a - b).pop();
+  if (ultPanal) puntos.push({ icono: "panal", cuando: ultPanal, hecho: true, et: "pañal" });
+  /* Lo previsto. Si ya se paso, se queda donde tocaba, marcado. */
+  for (const f of WN_EVENTOS) {
+    if (f.cuando.getTime() > ini + span) continue;
+    const et = f.icono === "toma" ? "toma" : f.icono === "panal" ? "pañal" : /despiert/.test(f.txt) ? "despierta" : "sueño";
+    /* Lo que ya tocaba antes de donde empieza la barra se deja en el borde
+       izquierdo, con su hora, para que no se pierda. */
+    const fuera = f.pasado && f.cuando.getTime() < ini;
+    puntos.push({ icono: f.icono, cuando: fuera ? new Date(ini) : f.cuando, hecho: false, pasado: f.pasado,
+      et, hora: fuera ? `tocaba ${hhmm(f.cuando)}` : null });
+    if (f.luego && f.luego.getTime() <= ini + span) puntos.push({ icono: f.icono, cuando: f.luego, hecho: false, tenue: true, et: "si sigue así" });
+  }
+  if (!puntos.length) return "";
+  puntos.sort((a, b) => a.cuando - b.cuando);
+  /* Las etiquetas van en dos filas (debajo y encima de la linea) y cada una
+     se pone en la fila donde no pise a la anterior. */
+  const ultimo = { abajo: -100, arriba: -100 };
+  let xPrev = -100;
+  const html = puntos.map(p => {
+    /* Dos iconos no se pisan: el segundo se corre lo justo a la derecha. */
+    const x = Math.min(100, Math.max(pct(p.cuando), xPrev + 7));
+    xPrev = x;
+    const fila = x - ultimo.abajo >= 21 ? "abajo" : x - ultimo.arriba >= 21 ? "arriba" : "abajo";
+    ultimo[fila] = x;
+    const borde = x < 6 ? " izq" : x > 94 ? " der" : "";
+    return `<div class="ab-pto${p.hecho ? " hecho" : ""}${p.pasado ? " pasado" : ""}${p.tenue ? " tenue" : ""}${fila === "arriba" ? " arriba" : ""}${borde}" style="left:${x.toFixed(1)}%">
+      <span class="ab-ico i-${p.icono}"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor">${LINEA_GLIFOS[p.icono]}</svg></span>
+      <span class="ab-et">${p.hora ? `<b>${p.hora}</b>` : `<b>${hhmm(p.cuando)}</b> ${p.et}`}</span>
+    </div>`;
+  }).join("");
+  const horas = [];
+  for (let t = Math.ceil(ini / 3600000) * 3600000; t <= ini + span; t += 3600000) {
+    const d = new Date(t); horas.push(`<span style="left:${pct(d).toFixed(1)}%">${d.getHours()}h</span>`);
+  }
+  return `<div class="ahora-barra" aria-label="Lo que toca ahora">
+    <div class="ab-horas">${horas.join("")}</div>
+    <div class="ab-linea"></div>
+    <div class="ab-ahora" style="left:${pct(ahora).toFixed(1)}%"><i></i><span>${hhmm(ahora)}</span></div>
+    ${html}
+  </div>`;
+}
+
+/* La barra se mueve con el reloj: cada minuto se vuelve a dibujar sola,
+   sin repintar la pantalla entera (que se comeria un toque a medias). */
+let AB_TIC = null;
+function ticBarraAhora() {
+  if (VISTA_ACTUAL !== "hoy" || document.hidden) return;
+  const vieja = document.querySelector("#view-hoy .ahora-barra");
+  if (!vieja) return;
+  htmlLoQueSueleVenir();
+  const tmp = document.createElement("div"); tmp.innerHTML = htmlBarraAhora();
+  const nueva = tmp.firstElementChild;
+  if (nueva) vieja.replaceWith(nueva); else vieja.remove();
+}
+function arrancarTicBarra() { if (!AB_TIC) AB_TIC = setInterval(ticBarraAhora, 60000); }
 
 function htmlLoQueSueleVenir() {
   const diasConDatos = wnDiasConDatos();
@@ -10623,7 +10760,7 @@ function htmlLoQueSueleVenir() {
   const filas = [];
   const linea = (p, icono, futuro, vencido, vencidoNota, nota) => {
     if (!p) return;
-    filas.push({ icono,
+    filas.push({ icono, cuando: p.cuando, pasado: p.pasado, luego: p.luego || null,
       txt: p.pasado ? vencido : `${futuro} <b>${hhmm(p.cuando)}</b>`,
       nota: p.pasado ? `${vencidoNota} <b>${hhmm(p.cuando)}</b> · ${nota}` : nota });
   };
@@ -10761,6 +10898,7 @@ function htmlLoQueSueleVenir() {
       `a esta hora suele tocar cada ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}`);
   }
 
+  WN_EVENTOS = filas.filter(f => f.cuando);
   if (!filas.length) return "";
   return `<div class="card wn">
     <h2>Lo que suele venir</h2>
@@ -10901,7 +11039,7 @@ function sincronizarTicSueno() {
 /* Al volver a la app el intervalo puede llevar minutos congelado (el
    navegador los frena en segundo plano): se pone al dia al momento. */
 document.addEventListener("visibilitychange", () => {
-  if (!document.hidden) refrescarCeldasSueno();
+  if (!document.hidden) { refrescarCeldasSueno(); ticBarraAhora(); }
 });
 
 const LINEA_VISIBLES = 6;
