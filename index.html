@@ -9334,9 +9334,10 @@ function renderHoy(el) {
 const ESQUEMA_DIA = [
   { h: "06:30",       ini: 390,  fin: 420,  tipo: "despertar", act: "Despertar + toma",           toma: "~180 ml",    nota: "" },
   { h: "07:00-09:00", ini: 420,  fin: 540,  tipo: "vigilia",   act: "Vigilia",                    toma: "",           nota: "" },
-  { h: "09:00-10:00", ini: 540,  fin: 600,  tipo: "siesta",    act: "Siesta 1",                   toma: "",           nota: "" },
-  { h: "10:00",       ini: 600,  fin: 600,  tipo: "toma",      act: "Toma",                       toma: "~150 ml",    nota: "" },
-  { h: "10:00-12:15", ini: 600,  fin: 735,  tipo: "vigilia",   act: "Vigilia",                    toma: "",           nota: "" },
+  { h: "09:00-10:45", ini: 540,  fin: 645,  tipo: "siesta",    act: "Siesta 1",                   toma: "",
+    nota: "Hasta las 10:30-10:45, dejarlo dormir; si se despierta solo, perfecto. Pasadas las 10:45, si sigue profundamente dormido, despertarlo con suavidad: luz, voz, cogerlo en brazos poco a poco" },
+  { h: "~10:30",      ini: 630,  fin: 630,  tipo: "toma",      act: "Toma al despertar",          toma: "~150 ml",    nota: "" },
+  { h: "10:30-12:15", ini: 630,  fin: 735,  tipo: "vigilia",   act: "Vigilia (~1 h 45)",          toma: "",           nota: "" },
   { h: "12:15-14:30", ini: 735,  fin: 870,  tipo: "siesta",    act: "Siesta 2",                   toma: "",
     nota: "Hasta las 14:15-14:30, dejarlo dormir; si se despierta solo, perfecto. Pasadas las 14:30, si sigue profundamente dormido, despertarlo con suavidad: luz, voz, cogerlo en brazos poco a poco" },
   { h: "~14:15",      ini: 855,  fin: 855,  tipo: "tomaSolido", act: "Toma + comida sólida (mediodía)", toma: "~170 ml", nota: "Al despertar" },
