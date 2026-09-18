@@ -7351,6 +7351,8 @@
     #pb-informe .inf-n { font-weight: 500; color: #888; }
     #pb-informe .inf-graf { width: 100%; height: auto; display: block; margin-bottom: 6px; page-break-inside: avoid; }
     #pb-informe .inf-tabla { width: 100%; border-collapse: collapse; font-size: 11px; }
+    #pb-informe .inf-dia { font-size: 12px; margin: 12px 0 4px; page-break-after: avoid; }
+    #pb-informe .inf-dia span { font-weight: 400; color: #666; margin-left: 6px; }
     #pb-informe .inf-tabla th {
       text-align: left; font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em;
       color: #666; border-bottom: 1px solid #bbb; padding: 5px 6px;
@@ -13311,6 +13313,8 @@ const INFORME_SECCIONES = [
   { k: "listaAlimentos", et: "Qué puede comer (hoja aparte)",
     nota: "Tolerados, en prueba y con reacción. Al día de hoy, no depende del rango" },
   { k: "tomas",        et: "Tomas de leche",            nota: "Volumen diario" },
+  { k: "tomasDetalle", et: "Detalle diario de tomas",   nota: "Cada toma con su hora y sus ml, día a día" },
+  { k: "suenoDetalle", et: "Detalle diario de sueño",   nota: "Cada siesta y noche con sus horas, día a día" },
   { k: "panales",      et: "Pañales",                   nota: "Recuento diario" },
   { k: "desarrollo",   et: "Desarrollo y dientes",      nota: "Hitos OMS conseguidos" },
   { k: "vacunas",      et: "Vacunas",                   nota: "Puestas y pendientes" },
@@ -13560,6 +13564,40 @@ function generarInformeCompleto() {
     doc += `<h3>Tomas de leche</h3>`;
     if (filas.length) doc += `<p class="inf-nota">Media de <b>${Math.round(totalMl / filas.length)} ml/día</b> en ${filas.length} días con registro.</p>`;
     doc += tabla(["Día", "Tomas", "Volumen"], filas);
+  }
+
+  /* ---- detalle diario de tomas ---- */
+  if (S("tomasDetalle")) {
+    doc += `<h3>Detalle diario de tomas</h3>`;
+    const dias = [...new Set(STATE.tomas.filter(t => enRango(t.fecha)).map(t => t.fecha))].sort();
+    if (!dias.length) doc += `<p class="inf-vacio">Sin tomas en este periodo.</p>`;
+    dias.forEach(f => {
+      const ts = tomasDelDia(f);
+      const total = ts.reduce((a, t) => a + (Number(t.ml) || 0), 0);
+      doc += `<h4 class="inf-dia">${fmtFechaLarga(f)} <span>${ts.length} ${ts.length === 1 ? "toma" : "tomas"} · ${total} ml</span></h4>`;
+      doc += tabla(["Hora", "ml"], ts.map(t => [t.hora, (Number(t.ml) || 0) + " ml"]));
+    });
+  }
+
+  /* ---- detalle diario de sueño ---- */
+  if (S("suenoDetalle")) {
+    doc += `<h3>Detalle diario de sueño</h3>`;
+    let alguno = false;
+    for (let d = new Date(desde); d < hasta; d.setDate(d.getDate() + 1)) {
+      const iso = isoDeFecha(d);
+      const ss = sueniosDelDia(iso).sort((a, b) => a.hora.localeCompare(b.hora));
+      if (!ss.length) continue;
+      alguno = true;
+      const total = ss.reduce((a, x) => a + x.minutos, 0);
+      const siestas = ss.filter(x => x.tipo === "siesta").length;
+      doc += `<h4 class="inf-dia">${fmtFechaLarga(iso)} <span>${fmtHM(total / 60)} · ${siestas} ${siestas === 1 ? "siesta" : "siestas"}</span></h4>`;
+      doc += tabla(["Tipo", "Desde", "Hasta", "Duración"], ss.map(x => [
+        x.tipo === "siesta" ? "Siesta" : "Nocturno",
+        x.vieneDeAntes ? "desde el día anterior" : x.hora,
+        x.enCurso ? "en curso" : x.sigueDespues ? "sigue al día siguiente" : x.fin,
+        duracionCorta(x.minutos)]));
+    }
+    if (!alguno) doc += `<p class="inf-vacio">Sin registros de sueño en este periodo.</p>`;
   }
 
   /* ---- panales ---- */
