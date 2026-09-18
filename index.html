@@ -5846,12 +5846,13 @@
       font-size: 0.6875rem; color: var(--text-muted); white-space: nowrap; line-height: 1.2;
     }
     .pb-app .ab-et b { color: var(--text); font-weight: 700; }
-    .pb-app .ab-pto.arriba .ab-et { top: auto; bottom: 14px; }
+    .pb-app .ab-et-g { position: absolute; top: 45px; width: 0; }
+    .pb-app .ab-et-g.arriba .ab-et { top: auto; bottom: 14px; }
     /* En los bordes la etiqueta no se centra, que se saldria de la barra. */
-    .pb-app .ab-pto.izq .ab-et { left: -14px; transform: none; }
-    .pb-app .ab-pto.der .ab-et { left: auto; right: -14px; transform: none; }
-    .pb-app .ab-pto.hecho .ab-et { color: var(--text-faint); }
-    .pb-app .ab-pto.hecho .ab-et b { color: var(--text-muted); font-weight: 600; }
+    .pb-app .ab-et-g.izq .ab-et { left: -14px; transform: none; }
+    .pb-app .ab-et-g.der .ab-et { left: auto; right: -14px; transform: none; }
+    .pb-app .ab-et-g.hecho .ab-et { color: var(--text-faint); }
+    .pb-app .ab-et-g.hecho .ab-et b { color: var(--text-muted); font-weight: 600; }
     .pb-app .hoy-nota {
       margin: 0 0 var(--gap-3);
       font-size: 0.8125rem; line-height: 1.5; color: var(--text-muted);
@@ -10849,20 +10850,35 @@ function htmlBarraAhora() {
   puntos.sort((a, b) => a.cuando - b.cuando);
   /* Las etiquetas van en dos filas (debajo y encima de la linea) y cada una
      se pone en la fila donde no pise a la anterior. */
-  const ultimo = { abajo: -100, arriba: -100 };
+  /* Posicion de cada icono: dos no se pisan, el segundo se corre lo justo. */
   let xPrev = -100;
-  const html = puntos.map(p => {
-    /* Dos iconos no se pisan: el segundo se corre lo justo a la derecha. */
-    const x = Math.min(100, Math.max(pct(p.cuando), xPrev + 9));
-    xPrev = x;
+  for (const p of puntos) { p.x = Math.min(100, Math.max(pct(p.cuando), xPrev + 9)); xPrev = p.x; }
+  /* Puntos a menos de 30 min unos de otros (en cadena) comparten una sola
+     etiqueta, "≈10:00", en vez de tres horas casi iguales pisandose. Con
+     mas de 30 min de separacion, cada uno lleva la suya. */
+  const grupos = [];
+  for (const p of puntos) {
+    const g = grupos[grupos.length - 1];
+    if (g && (p.cuando - g[g.length - 1].cuando) / 60000 <= 30) g.push(p); else grupos.push([p]);
+  }
+  const ultimo = { abajo: -100, arriba: -100 };
+  const etiquetas = grupos.map(g => {
+    const x = (g[0].x + g[g.length - 1].x) / 2;
     const fila = x - ultimo.abajo >= 24 ? "abajo" : x - ultimo.arriba >= 24 ? "arriba" : "abajo";
     ultimo[fila] = x;
     const borde = x < 6 ? " izq" : x > 94 ? " der" : "";
-    return `<div class="ab-pto${p.hecho ? " hecho" : ""}${p.pasado ? " pasado" : ""}${p.tenue ? " tenue" : ""}${fila === "arriba" ? " arriba" : ""}${borde}" style="left:${x.toFixed(1)}%">
-      <span class="ab-ico i-${p.icono}"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">${LINEA_GLIFOS[p.icono]}</svg></span>
-      <span class="ab-et"><b>${p.hora || hhmm(p.cuando)}</b>${p.ml ? ` ${p.ml}` : ""}</span>
-    </div>`;
+    let texto;
+    if (g.length === 1) texto = `<b>${g[0].hora || hhmm(g[0].cuando)}</b>${g[0].ml ? ` ${g[0].ml}` : ""}`;
+    else {
+      const d = new Date(g[0].cuando); d.setMinutes(Math.floor(d.getMinutes() / 5) * 5);
+      texto = `<b>≈${hhmm(d)}</b>`;
+    }
+    const hecho = g.every(p => p.hecho);
+    return `<div class="ab-et-g${fila === "arriba" ? " arriba" : ""}${borde}${hecho ? " hecho" : ""}" style="left:${x.toFixed(1)}%"><span class="ab-et">${texto}</span></div>`;
   }).join("");
+  const html = puntos.map(p => `<div class="ab-pto${p.hecho ? " hecho" : ""}${p.pasado ? " pasado" : ""}${p.tenue ? " tenue" : ""}" style="left:${p.x.toFixed(1)}%">
+      <span class="ab-ico i-${p.icono}"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">${LINEA_GLIFOS[p.icono]}</svg></span>
+    </div>`).join("") + etiquetas;
   const horas = [];
   for (let t = Math.ceil(ini / 3600000) * 3600000; t <= ini + span; t += 3600000) {
     const d = new Date(t); horas.push(`<span style="left:${pct(d).toFixed(1)}%">${d.getHours()}h</span>`);
