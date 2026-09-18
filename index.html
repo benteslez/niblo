@@ -5721,7 +5721,7 @@
     /* "Ahora" se marca con una raya azul a la izquierda, para que conviva con el color de cumplimiento. */
     .pb-app .esq-fila.ahora { box-shadow: inset 3px 0 0 var(--blue); }
     .pb-app .esq-fila.ahora:not(.ok):not(.casi):not(.no) { background: var(--blue-soft); }
-    .pb-app .esq-hora { flex: none; width: 92px; font-family: var(--serif); font-size: 0.9375rem; color: var(--text-muted); padding-top: 1px; }
+    .pb-app .esq-hora { flex: none; width: 92px; font-family: var(--serif); font-size: 0.8125rem; font-variant-numeric: tabular-nums; letter-spacing: .01em; color: var(--text-muted); padding-top: 3px; }
     .pb-app .esq-fila.ahora .esq-hora { color: var(--blue); font-weight: 600; }
     .pb-app .esq-txt { flex: 1; min-width: 0; font-size: 1rem; }
     .pb-app .esq-txt b { font-weight: 600; }
@@ -9334,18 +9334,18 @@ function renderHoy(el) {
 const ESQUEMA_DIA = [
   { h: "06:30",       ini: 390,  fin: 420,  tipo: "despertar", act: "Despertar + toma",           toma: "~180 ml",    nota: "" },
   { h: "07:00-09:00", ini: 420,  fin: 540,  tipo: "vigilia",   act: "Despierto",                    toma: "",           nota: "" },
-  { h: "09:00-10:45", ini: 540,  fin: 645,  tipo: "siesta",    act: "Siesta 1",                   toma: "", despertar: [630, 645],
-    nota: "Hasta las 10:30-10:45, dejarlo dormir; si se despierta solo, perfecto. Pasadas las 10:45, si sigue profundamente dormido, despertarlo con suavidad: luz, voz, cogerlo en brazos poco a poco" },
-  { h: "~10:30",      ini: 630,  fin: 630,  tipo: "toma",      act: "Toma al despertar",          toma: "~150 ml",    nota: "" },
-  { h: "10:30-12:15", ini: 630,  fin: 735,  tipo: "vigilia",   act: "Despierto (~1 h 45)",          toma: "",           nota: "" },
-  { h: "12:15-14:30", ini: 735,  fin: 870,  tipo: "siesta",    act: "Siesta 2",                   toma: "", despertar: [855, 870],
-    nota: "Hasta las 14:15-14:30, dejarlo dormir; si se despierta solo, perfecto. Pasadas las 14:30, si sigue profundamente dormido, despertarlo con suavidad: luz, voz, cogerlo en brazos poco a poco" },
-  { h: "~14:15",      ini: 855,  fin: 855,  tipo: "tomaSolido", act: "Toma + comida sólida (mediodía)", toma: "~170 ml", nota: "Al despertar" },
-  { h: "14:15-16:00", ini: 855,  fin: 960,  tipo: "vigilia",   act: "Despierto (~1 h 45)",          toma: "",           nota: "" },
-  { h: "16:00-17:15", ini: 960,  fin: 1035, tipo: "siesta",    act: "Siesta 3",                   toma: "", despertar: [1020, 1035],
-    nota: "Hasta las 17:00-17:15, dejarlo dormir; si se despierta solo a las 16:50-17:00, perfecto, ni lo tocas. Pasadas las 17:15, si sigue profundamente dormido, despertarlo con suavidad: luz, voz, cogerlo en brazos poco a poco" },
-  { h: "~17:00",      ini: 1020, fin: 1020, tipo: "toma",      act: "Toma al despertar",          toma: "~150 ml",    nota: "" },
-  { h: "17:00-19:00", ini: 1020, fin: 1140, tipo: "vigilia",   act: "Despierto (~2 h)",             toma: "",           nota: "Encaja bien con la cena a las 19:00" },
+  { h: "09:00-10:00", ini: 540,  fin: 600,  tipo: "siesta",    act: "Siesta 1",                   toma: "", despertar: [580, 645],
+    nota: "Si se alarga, hasta las 10:30-10:45 dejarlo dormir; si se despierta solo, perfecto. Pasadas las 10:45, si sigue profundamente dormido, despertarlo con suavidad: luz, voz, cogerlo en brazos poco a poco" },
+  { h: "≈10:00",      ini: 615,  fin: 615,  tipo: "toma",      act: "Toma al despertar",          toma: "~150 ml",    nota: "" },
+  { h: "10:00-12:15", ini: 600,  fin: 735,  evalIni: 645, tipo: "vigilia", act: "Despierto",         toma: "",           nota: "" },
+  { h: "12:15-13:45", ini: 735,  fin: 825,  tipo: "siesta",    act: "Siesta 2",                   toma: "", despertar: [805, 870],
+    nota: "Si se alarga, hasta las 14:15-14:30 dejarlo dormir; si se despierta solo, perfecto. Pasadas las 14:30, si sigue profundamente dormido, despertarlo con suavidad: luz, voz, cogerlo en brazos poco a poco" },
+  { h: "≈13:45",      ini: 845,  fin: 845,  tipo: "tomaSolido", act: "Toma + comida sólida (mediodía)", toma: "~170 ml", nota: "Al despertar" },
+  { h: "13:45-16:00", ini: 825,  fin: 960,  evalIni: 870, tipo: "vigilia", act: "Despierto",         toma: "",           nota: "" },
+  { h: "16:00-16:45", ini: 960,  fin: 1005, tipo: "siesta",    act: "Siesta 3",                   toma: "", despertar: [985, 1035],
+    nota: "Si se alarga, hasta las 17:00-17:15 dejarlo dormir; si se despierta solo a las 16:50-17:00, perfecto, ni lo tocas. Pasadas las 17:15, si sigue profundamente dormido, despertarlo con suavidad: luz, voz, cogerlo en brazos poco a poco" },
+  { h: "≈16:45",      ini: 1020, fin: 1020, tipo: "toma",      act: "Toma al despertar",          toma: "~150 ml",    nota: "" },
+  { h: "16:45-19:00", ini: 1005, fin: 1140, evalIni: 1035, tipo: "vigilia", act: "Despierto (~2 h 15)", toma: "",       nota: "Encaja bien con la cena a las 19:00" },
   { h: "19:00",       ini: 1140, fin: 1155, tipo: "solido",    act: "Cena (sólido)",              toma: "",           nota: "Fijo, por vuestro horario" },
   { h: "19:15-19:20", ini: 1155, fin: 1160, tipo: "toma",      act: "Toma tras la cena",          toma: "~150-180 ml",
     nota: "La toma de cierre: si ese día ha cenado bien y con ganas, probad a bajarla un poco (130-150 ml) y ver si sigue durmiendo igual; si la deja bajar de forma consistente, ajustadla hacia abajo de forma permanente" },
@@ -9394,8 +9394,12 @@ function esquemaEstados() {
            no llega a dormir, se despierta muy pronto o hay que dejarlo mas
            alla del margen. Mientras duerme dentro del margen, nada aun. */
         if (f.despertar) {
+          /* [a, b]: desde 20 min antes del fin previsto hasta el tope de
+             "dejarlo dormir". Despertar ahi es verde; hasta media hora antes
+             o un cuarto despues, ambar; mas alla (siesta muy corta, sin
+             siesta, o sigue dormido pasado el tope), rojo. */
           const [a, b] = f.despertar;
-          const enFranja = suenios.filter(x => x.fin > f.ini && x.ini < f.fin + 60).sort((x, y) => x.fin - y.fin);
+          const enFranja = suenios.filter(x => x.fin > f.ini && x.ini < b).sort((x, y) => x.fin - y.fin);
           const ult = enFranja[enFranja.length - 1];
           if (!ult) return ahora < f.fin ? "" : "no";
           if (ult.enCurso) return ahora > b + 15 ? "no" : "";
@@ -9410,7 +9414,10 @@ function esquemaEstados() {
       }
       case "vigilia": {
         if (ahora < f.fin) return "";
-        const r = dormido(f.ini, f.fin) / (f.fin - f.ini);
+        /* Se mide desde el tope de la siesta anterior: si se alargo dentro
+           de su margen, eso no cuenta contra el rato despierto. */
+        const ini = f.evalIni || f.ini;
+        const r = dormido(ini, f.fin) / (f.fin - ini);
         return r <= 0.15 ? "ok" : r <= 0.4 ? "casi" : "no";
       }
       case "bano": {
@@ -9457,7 +9464,7 @@ function htmlEsquemaDia() {
         <span><i class="punto" style="background:var(--red)"></i>no</span>
         <span><i class="punto" style="background:var(--blue)"></i>ahora</span>
       </div>
-      <p class="wn-pie">Es el horario que os habéis marcado, no lo que sale de los datos: para eso está "Lo que suele venir". Cada fila se colorea con lo apuntado hoy cuando llega su hora: tomas y sólidos a ±30-60 min; siestas en verde si se despierta dentro del margen (10:30-10:45, 14:15-14:30, 17:00-17:15), ámbar si cerca; vigilias por cuánto ha dormido en la franja.</p>
+      <p class="wn-pie">Es el horario que os habéis marcado, no lo que sale de los datos: para eso está "Lo que suele venir". Cada fila se colorea con lo apuntado hoy cuando llega su hora: tomas y sólidos a ±30-60 min; siestas en verde si se despierta entre 20 min antes del fin previsto y el tope de "dejarlo dormir" (09:40-10:45, 13:25-14:30, 16:25-17:15), ámbar si cerca; despierto por cuánto ha dormido en la franja.</p>
     </div>
   </details>`;
 }
