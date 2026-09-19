@@ -5210,6 +5210,119 @@
     .pc-pasos li { cursor: default; }
     .pc-pasos li:hover { background: transparent; }
 
+
+    /* ---- Plan antiinflamatorio (pestana "Inflamacion") -------------------
+       Reutiliza .pc-comida y .bloque; solo anade la tarjeta de fase, el punto
+       del calendario y los dos desplegables de material de referencia. */
+    /* El punto de color no tenia regla base: solo se le pasaba --pc-color. */
+    .pc-punto {
+      display: inline-block;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      flex: none;
+      background: var(--pc-color, var(--accent));
+    }
+    /* Marca de dia dentro de los 30 dias del plan antiinflamatorio. */
+    .pc-inf-marca {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      flex: none;
+      background: var(--pc-color, var(--accent));
+    }
+    .pc-celda.pc-pasado .pc-inf-marca { opacity: 0.45; }
+    @media (max-width: 600px) { .pc-inf-marca { width: 5px; height: 5px; } }
+
+    .pc-leyenda {
+      display: flex; flex-wrap: wrap;
+      gap: var(--gap-2) var(--gap-4);
+      align-items: center;
+      margin-top: var(--gap-3);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+    .pc-leyenda span { display: inline-flex; align-items: center; gap: 7px; }
+
+    .pc-inf-panel:not([hidden]) {
+      display: flex; flex-direction: column;
+      gap: var(--gap-4);
+    }
+    .pc-inf-fase {
+      background: var(--bg-elev);
+      border: 1px solid var(--line-soft);
+      border-left: 4px solid var(--pc-color, var(--accent));
+      border-radius: var(--r-lg);
+      padding: var(--gap-4) var(--gap-5);
+      box-shadow: var(--sh-1);
+    }
+    .pc-inf-fase-rango {
+      font-family: var(--font-num);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: var(--gap-2);
+    }
+    .pc-inf-fase-obj {
+      font-size: 0.9375rem;
+      color: var(--text);
+      margin-bottom: var(--gap-3);
+    }
+    /* Selector de persona dentro de la pestana Inflamacion: Sergio / Ruben. */
+    .pc-persona-bar { margin-bottom: 0; }
+    .pc-persona button { padding: 8px 20px; }
+    .pc-persona-pista {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      flex: 1;
+      min-width: 0;
+    }
+    /* "Que cambia respecto al plato de Sergio" */
+    .pc-rub-cambios li { cursor: default; align-items: flex-start; }
+    .pc-rub-cambios li:hover { background: var(--bg-soft); }
+    .pc-rub-cambios .ing-nombre {
+      font-size: 0.875rem;
+      line-height: 1.55;
+      white-space: normal;
+      color: var(--text-muted);
+    }
+    .pc-rub-cambios .ing-nombre b { color: var(--text); }
+    .pc-inf-fase-obj:last-child { margin-bottom: 0; }
+    .pc-inf-fuera-lista { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill.pc-inf-fuera {
+      background: color-mix(in srgb, var(--danger) 13%, var(--bg-soft));
+      color: var(--text);
+    }
+    .pc-inf-detalles {
+      background: var(--bg-elev);
+      border: 1px solid var(--line-soft);
+      border-radius: var(--r-lg);
+      box-shadow: var(--sh-1);
+      padding: var(--gap-3) var(--gap-4);
+    }
+    .pc-inf-detalles summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      letter-spacing: -0.01em;
+    }
+    .pc-inf-detalles[open] summary { margin-bottom: var(--gap-3); }
+    .pc-inf-largo p {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      margin-bottom: var(--gap-3);
+    }
+    .pc-inf-largo p:last-child { margin-bottom: 0; }
+    .pc-inf-largo b { color: var(--text); font-weight: 600; }
+    .pc-inf-fijas li { cursor: default; align-items: flex-start; }
+    .pc-inf-fijas li:hover { background: var(--bg-soft); }
+    .pc-inf-fijas .ing-nombre {
+      font-size: 0.875rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      white-space: normal;
+    }
+    .pc-inf-fijas .ing-nombre b { color: var(--text); }
+
     /* ---- Entrenos --------------------------------------------------------- */
     .pc-ex { padding: var(--gap-3) 0; border-top: 1px solid var(--line-soft); }
     .pc-ex:first-child { border-top: none; padding-top: 0; }
@@ -7697,6 +7810,20 @@
   <!-- Datos del plan semanal (dieta + entreno) por dia. -->
   <script id="pc-plan-data" type="application/json">
 [{"date": "2026-09-01", "day_num": 1, "weekday": "Martes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "espalda_biceps", "totales": {"kcal": 1847, "proteina": 176.6, "carbs": 190.1, "grasa": 45.8, "fibra": 39.5}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L1_lentejas_pollo", "items": [["lentejas_cocidas", 200], ["pollo_pechuga_crudo", 170], ["verduras_salteado", 150], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 50], ["pan_integral", 30]], "macros": [673, 70.4, 61.3, 16.2, 21.1]}, "cena": {"key": "D1_crema_calabacin_pollo", "items": [["calabacin", 300], ["puerro", 50], ["caldo_verduras", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 120], ["queso_fresco_batido_0", 40], ["pollo_pechuga_crudo", 65], ["patata_cocida", 100]], "macros": [449, 50.3, 34.7, 12.2, 4.8]}}}, {"date": "2026-09-02", "day_num": 2, "weekday": "Miercoles", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_tecnico", "totales": {"kcal": 1854, "proteina": 158.0, "carbs": 169.9, "grasa": 61.3, "fibra": 28.2}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L4_arroz_pollo_verduras", "items": [["pollo_pechuga_crudo", 190], ["verduras_salteado", 150], ["espinacas", 60], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["arroz_blanco_cocido", 135]], "macros": [636, 68.5, 49.0, 16.6, 5.2]}, "cena": {"key": "D6_crema_alubias_pollo", "items": [["judias_blancas_cocidas", 140], ["puerro", 50], ["caldo_verduras", 150], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 130], ["pollo_pechuga_crudo", 20]], "macros": [424, 44.9, 36.6, 10.9, 8.8]}}}, {"date": "2026-09-03", "day_num": 3, "weekday": "Jueves", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pierna_core", "totales": {"kcal": 1850, "proteina": 157.9, "carbs": 186.3, "grasa": 57.9, "fibra": 30.9}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L6_garbanzos_huevo_espinacas", "items": [["garbanzos_cocidos_escurridos", 180], ["huevo_entero", 120], ["pollo_pechuga_crudo", 80], ["espinacas", 80], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 10]], "macros": [673, 52.8, 52.8, 28.5, 15.4]}, "cena": {"key": "D2_crema_calabaza_pollo", "items": [["calabaza", 300], ["cebolla", 40], ["caldo_verduras", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 150], ["pollo_pechuga_crudo", 60], ["patata_cocida", 70]], "macros": [452, 49.2, 39.4, 12.0, 1.9]}}}, {"date": "2026-09-04", "day_num": 4, "weekday": "Viernes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "hombro_brazos_core", "totales": {"kcal": 1854, "proteina": 144.9, "carbs": 153.3, "grasa": 75.2, "fibra": 28.3}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L2_salmon_patata", "items": [["salmon_crudo", 160], ["patata_cocida", 150], ["espinacas", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 85]], "macros": [636, 55.8, 33.6, 29.6, 4.9]}, "cena": {"key": "D9_crema_zanahoria_curry_pollo", "items": [["zanahoria", 300], ["cebolla", 40], ["caldo_verduras", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 150], ["pollo_pechuga_crudo", 45], ["patata_cocida", 5]], "macros": [424, 44.5, 35.4, 11.8, 9.2]}}}, {"date": "2026-09-05", "day_num": 5, "weekday": "Sabado", "flexible": false, "target_kcal": 1850, "sat_prep": true, "training_key": "descanso", "totales": {"kcal": 1850, "proteina": 175.3, "carbs": 178.4, "grasa": 49.9, "fibra": 26.6}, "meals": {"desayuno": {"key": "C", "items": [["huevo_entero", 100], ["pan_integral", 70], ["tomate", 80], ["queso_fresco_batido_0", 60]], "macros": [383, 30.0, 35.0, 14.3, 5.5]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M3", "items": [["pan_integral", 40], ["queso_curado", 20], ["tomate", 60]], "macros": [190, 10.7, 19.0, 8.4, 3.3]}, "comida": {"key": "L5_pollo_horno_patata", "items": [["pollo_pechuga_crudo", 190], ["patata_cocida", 150], ["pimiento", 80], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["patata_cocida", 150]], "macros": [687, 67.7, 64.8, 16.1, 7.1]}, "cena": {"key": "D10_crema_brocoli_queso_pollo", "items": [["brocoli", 280], ["caldo_verduras", 100], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 130], ["queso_fresco_batido_0", 50], ["pollo_pechuga_crudo", 30], ["patata_cocida", 115]], "macros": [461, 50.0, 45.2, 10.6, 9.3]}}}, {"date": "2026-09-06", "day_num": 6, "weekday": "Domingo", "flexible": true, "target_kcal": 2200, "sat_prep": false, "training_key": "descanso", "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M3", "items": [["pan_integral", 40], ["queso_curado", 20], ["tomate", 60]], "macros": [190, 10.7, 19.0, 8.4, 3.3]}, "comida": {"flex": true}, "cena": {"flex": true}}}, {"date": "2026-09-07", "day_num": 7, "weekday": "Lunes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_triceps", "totales": {"kcal": 1905, "proteina": 146.1, "carbs": 182.1, "grasa": 69.0, "fibra": 42.2}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L3_alubias_atun", "items": [["judias_blancas_cocidas", 180], ["atun_lata_aceite_escurrido", 150], ["tomate", 100], ["cebolla", 30], ["pimiento", 50], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 15]], "macros": [635, 59.5, 51.0, 21.7, 14.1]}, "cena": {"key": "D3_guiso_garbanzos_pollo", "items": [["garbanzos_cocidos_escurridos", 140], ["verduras_salteado", 150], ["pollo_pechuga_crudo", 130], ["aceite_oliva", 6]], "macros": [476, 42.0, 46.8, 13.5, 13.9]}}}, {"date": "2026-09-08", "day_num": 8, "weekday": "Martes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "espalda_biceps", "totales": {"kcal": 1852, "proteina": 169.0, "carbs": 189.9, "grasa": 48.3, "fibra": 25.6}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L10_cerdo_pimientos_arroz", "items": [["cerdo_lomo_crudo", 170], ["pimiento", 120], ["cebolla", 40], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 100], ["arroz_blanco_cocido", 165]], "macros": [678, 62.8, 57.0, 19.7, 3.9]}, "cena": {"key": "D5_crema_espinacas_pollo", "items": [["espinacas", 250], ["caldo_verduras", 100], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 140], ["pollo_pechuga_crudo", 50], ["patata_cocida", 145]], "macros": [449, 50.3, 38.8, 11.2, 8.1]}}}, {"date": "2026-09-09", "day_num": 9, "weekday": "Miercoles", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_tecnico", "totales": {"kcal": 1849, "proteina": 166.8, "carbs": 119.4, "grasa": 78.9, "fibra": 20.0}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L7_pasta_atun", "items": [["atun_lata_aceite_escurrido", 160], ["salsa_tomate_fresco_casera", 180], ["aceite_oliva", 4], ["pollo_pechuga_crudo", 100], ["pasta_cocida", 90]], "macros": [632, 69.1, 31.1, 24.1, 4.0]}, "cena": {"key": "D8_tortilla_pollo_espinacas", "items": [["pollo_pechuga_crudo", 130], ["huevo_entero", 100], ["espinacas", 80], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 50]], "macros": [423, 53.1, 4.0, 21.0, 1.8]}}}, {"date": "2026-09-10", "day_num": 10, "weekday": "Jueves", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pierna_core", "totales": {"kcal": 1852, "proteina": 165.0, "carbs": 143.2, "grasa": 71.0, "fibra": 31.5}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L8_lentejas_salmon", "items": [["lentejas_cocidas", 160], ["salmon_crudo", 170], ["verduras_salteado", 120], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 50]], "macros": [676, 60.7, 39.2, 29.4, 15.3]}, "cena": {"key": "D4_tortilla_patata_atun", "items": [["huevo_entero", 150], ["atun_lata_aceite_escurrido", 60], ["tomate", 80], ["espinacas", 60], ["pollo_pechuga_crudo", 50], ["patata_cocida", 15]], "macros": [451, 48.4, 9.9, 24.2, 2.6]}}}, {"date": "2026-09-11", "day_num": 11, "weekday": "Viernes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "hombro_brazos_core", "totales": {"kcal": 1891, "proteina": 155.0, "carbs": 175.5, "grasa": 66.6, "fibra": 34.4}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L9_merluza_pure_espinacas", "items": [["merluza_cruda", 220], ["patata_cocida", 150], ["espinacas", 120], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["patata_cocida", 115]], "macros": [632, 68.9, 57.3, 14.2, 7.4]}, "cena": {"key": "D7_sopa_lentejas_huevo", "items": [["lentejas_cocidas", 140], ["huevo_entero", 100], ["pollo_pechuga_crudo", 70], ["verduras_salteado", 80], ["aceite_oliva", 5]], "macros": [465, 41.5, 33.9, 18.6, 12.8]}}}, {"date": "2026-09-12", "day_num": 12, "weekday": "Sabado", "flexible": false, "target_kcal": 1850, "sat_prep": true, "training_key": "descanso", "totales": {"kcal": 1849, "proteina": 173.8, "carbs": 175.6, "grasa": 51.2, "fibra": 19.5}, "meals": {"desayuno": {"key": "C", "items": [["huevo_entero", 100], ["pan_integral", 70], ["tomate", 80], ["queso_fresco_batido_0", 60]], "macros": [383, 30.0, 35.0, 14.3, 5.5]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M3", "items": [["pan_integral", 40], ["queso_curado", 20], ["tomate", 60]], "macros": [190, 10.7, 19.0, 8.4, 3.3]}, "comida": {"key": "L5_pollo_horno_patata", "items": [["pollo_pechuga_crudo", 190], ["patata_cocida", 150], ["pimiento", 80], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["patata_cocida", 150]], "macros": [687, 67.7, 64.8, 16.1, 7.1]}, "cena": {"key": "D2_crema_calabaza_pollo", "items": [["calabaza", 300], ["cebolla", 40], ["caldo_verduras", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 150], ["pollo_pechuga_crudo", 55], ["patata_cocida", 85]], "macros": [460, 48.5, 42.4, 11.9, 2.2]}}}, {"date": "2026-09-13", "day_num": 13, "weekday": "Domingo", "flexible": true, "target_kcal": 2200, "sat_prep": false, "training_key": "descanso", "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M3", "items": [["pan_integral", 40], ["queso_curado", 20], ["tomate", 60]], "macros": [190, 10.7, 19.0, 8.4, 3.3]}, "comida": {"flex": true}, "cena": {"flex": true}}}, {"date": "2026-09-14", "day_num": 14, "weekday": "Lunes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_triceps", "totales": {"kcal": 1851, "proteina": 170.8, "carbs": 157.0, "grasa": 62.2, "fibra": 37.1}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L1_lentejas_pollo", "items": [["lentejas_cocidas", 200], ["pollo_pechuga_crudo", 170], ["verduras_salteado", 150], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 80]], "macros": [633, 72.8, 49.0, 15.8, 19.1]}, "cena": {"key": "D1_crema_calabacin_pollo", "items": [["calabacin", 300], ["puerro", 50], ["caldo_verduras", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 120], ["queso_fresco_batido_0", 40], ["pollo_pechuga_crudo", 85], ["patata_cocida", 45]], "macros": [424, 53.4, 23.7, 12.6, 3.8]}}}, {"date": "2026-09-15", "day_num": 15, "weekday": "Martes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "espalda_biceps", "totales": {"kcal": 1850, "proteina": 173.4, "carbs": 190.1, "grasa": 45.4, "fibra": 27.9}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L4_arroz_pollo_verduras", "items": [["pollo_pechuga_crudo", 190], ["verduras_salteado", 150], ["espinacas", 60], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["arroz_blanco_cocido", 165]], "macros": [675, 69.3, 57.4, 16.7, 5.3]}, "cena": {"key": "D6_crema_alubias_pollo", "items": [["judias_blancas_cocidas", 140], ["puerro", 50], ["caldo_verduras", 150], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 130], ["pollo_pechuga_crudo", 35], ["patata_cocida", 10]], "macros": [450, 48.2, 38.6, 11.3, 9.0]}}}, {"date": "2026-09-16", "day_num": 16, "weekday": "Miercoles", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_tecnico", "totales": {"kcal": 1877, "proteina": 149.6, "carbs": 162.9, "grasa": 73.9, "fibra": 36.5}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L6_garbanzos_huevo_espinacas", "items": [["garbanzos_cocidos_escurridos", 180], ["huevo_entero", 120], ["pollo_pechuga_crudo", 80], ["espinacas", 80], ["aceite_oliva", 8]], "macros": [662, 50.7, 52.8, 28.3, 15.4]}, "cena": {"key": "D5_crema_espinacas_pollo", "items": [["espinacas", 250], ["caldo_verduras", 100], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 140], ["pollo_pechuga_crudo", 75], ["patata_cocida", 80]], "macros": [421, 54.3, 25.8, 11.8, 6.9]}}}, {"date": "2026-09-17", "day_num": 17, "weekday": "Jueves", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pierna_core", "totales": {"kcal": 1851, "proteina": 164.5, "carbs": 149.7, "grasa": 67.8, "fibra": 21.9}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L2_salmon_patata", "items": [["salmon_crudo", 160], ["patata_cocida", 150], ["espinacas", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 100], ["patata_cocida", 25]], "macros": [675, 59.4, 38.6, 30.0, 5.4]}, "cena": {"key": "D8_tortilla_pollo_espinacas", "items": [["pollo_pechuga_crudo", 130], ["huevo_entero", 100], ["espinacas", 80], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 25], ["patata_cocida", 65]], "macros": [451, 49.2, 17.0, 20.4, 2.9]}}}, {"date": "2026-09-18", "day_num": 18, "weekday": "Viernes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "hombro_brazos_core", "totales": {"kcal": 1847, "proteina": 158.4, "carbs": 148.5, "grasa": 71.8, "fibra": 23.9}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L9_merluza_pure_espinacas", "items": [["merluza_cruda", 220], ["patata_cocida", 150], ["espinacas", 120], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["patata_cocida", 115]], "macros": [632, 68.9, 57.3, 14.2, 7.4]}, "cena": {"key": "D4_tortilla_patata_atun", "items": [["huevo_entero", 150], ["atun_lata_aceite_escurrido", 60], ["tomate", 80], ["espinacas", 60], ["pollo_pechuga_crudo", 35]], "macros": [421, 44.9, 6.9, 23.8, 2.3]}}}, {"date": "2026-09-19", "day_num": 19, "weekday": "Sabado", "flexible": false, "target_kcal": 1850, "sat_prep": true, "training_key": "descanso", "totales": {"kcal": 1851, "proteina": 168.7, "carbs": 167.6, "grasa": 55.1, "fibra": 23.6}, "meals": {"desayuno": {"key": "C", "items": [["huevo_entero", 100], ["pan_integral", 70], ["tomate", 80], ["queso_fresco_batido_0", 60]], "macros": [383, 30.0, 35.0, 14.3, 5.5]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M3", "items": [["pan_integral", 40], ["queso_curado", 20], ["tomate", 60]], "macros": [190, 10.7, 19.0, 8.4, 3.3]}, "comida": {"key": "L10_cerdo_pimientos_arroz", "items": [["cerdo_lomo_crudo", 170], ["pimiento", 120], ["cebolla", 40], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 100], ["arroz_blanco_cocido", 175]], "macros": [691, 63.1, 59.8, 19.7, 3.9]}, "cena": {"key": "D9_crema_zanahoria_curry_pollo", "items": [["zanahoria", 300], ["cebolla", 40], ["caldo_verduras", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 150], ["pollo_pechuga_crudo", 60], ["patata_cocida", 25]], "macros": [458, 48.0, 39.4, 12.2, 9.5]}}}, {"date": "2026-09-20", "day_num": 20, "weekday": "Domingo", "flexible": true, "target_kcal": 2200, "sat_prep": false, "training_key": "descanso", "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M3", "items": [["pan_integral", 40], ["queso_curado", 20], ["tomate", 60]], "macros": [190, 10.7, 19.0, 8.4, 3.3]}, "comida": {"flex": true}, "cena": {"flex": true}}}, {"date": "2026-09-21", "day_num": 21, "weekday": "Lunes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_triceps", "totales": {"kcal": 1905, "proteina": 146.1, "carbs": 182.1, "grasa": 69.0, "fibra": 42.2}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L3_alubias_atun", "items": [["judias_blancas_cocidas", 180], ["atun_lata_aceite_escurrido", 150], ["tomate", 100], ["cebolla", 30], ["pimiento", 50], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 15]], "macros": [635, 59.5, 51.0, 21.7, 14.1]}, "cena": {"key": "D3_guiso_garbanzos_pollo", "items": [["garbanzos_cocidos_escurridos", 140], ["verduras_salteado", 150], ["pollo_pechuga_crudo", 130], ["aceite_oliva", 6]], "macros": [476, 42.0, 46.8, 13.5, 13.9]}}}, {"date": "2026-09-22", "day_num": 22, "weekday": "Martes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "espalda_biceps", "totales": {"kcal": 1851, "proteina": 176.4, "carbs": 176.2, "grasa": 52.5, "fibra": 27.3}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L7_pasta_atun", "items": [["atun_lata_aceite_escurrido", 160], ["salsa_tomate_fresco_casera", 180], ["aceite_oliva", 4], ["pollo_pechuga_crudo", 100], ["pasta_cocida", 125]], "macros": [678, 70.8, 39.9, 24.5, 4.6]}, "cena": {"key": "D10_crema_brocoli_queso_pollo", "items": [["brocoli", 280], ["caldo_verduras", 100], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 130], ["queso_fresco_batido_0", 50], ["pollo_pechuga_crudo", 30], ["patata_cocida", 100]], "macros": [448, 49.7, 42.2, 10.6, 9.1]}}}, {"date": "2026-09-23", "day_num": 23, "weekday": "Miercoles", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_tecnico", "totales": {"kcal": 1896, "proteina": 139.4, "carbs": 157.4, "grasa": 80.9, "fibra": 42.3}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L8_lentejas_salmon", "items": [["lentejas_cocidas", 160], ["salmon_crudo", 170], ["verduras_salteado", 120], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 15]], "macros": [637, 53.3, 39.2, 28.5, 15.3]}, "cena": {"key": "D7_sopa_lentejas_huevo", "items": [["lentejas_cocidas", 140], ["huevo_entero", 100], ["pollo_pechuga_crudo", 70], ["verduras_salteado", 80], ["aceite_oliva", 5]], "macros": [465, 41.5, 33.9, 18.6, 12.8]}}}, {"date": "2026-09-24", "day_num": 24, "weekday": "Jueves", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pierna_core", "totales": {"kcal": 1851, "proteina": 164.5, "carbs": 149.7, "grasa": 67.8, "fibra": 21.9}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L2_salmon_patata", "items": [["salmon_crudo", 160], ["patata_cocida", 150], ["espinacas", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 100], ["patata_cocida", 25]], "macros": [675, 59.4, 38.6, 30.0, 5.4]}, "cena": {"key": "D8_tortilla_pollo_espinacas", "items": [["pollo_pechuga_crudo", 130], ["huevo_entero", 100], ["espinacas", 80], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 25], ["patata_cocida", 65]], "macros": [451, 49.2, 17.0, 20.4, 2.9]}}}, {"date": "2026-09-25", "day_num": 25, "weekday": "Viernes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "hombro_brazos_core", "totales": {"kcal": 1847, "proteina": 158.4, "carbs": 148.5, "grasa": 71.8, "fibra": 23.9}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L9_merluza_pure_espinacas", "items": [["merluza_cruda", 220], ["patata_cocida", 150], ["espinacas", 120], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["patata_cocida", 115]], "macros": [632, 68.9, 57.3, 14.2, 7.4]}, "cena": {"key": "D4_tortilla_patata_atun", "items": [["huevo_entero", 150], ["atun_lata_aceite_escurrido", 60], ["tomate", 80], ["espinacas", 60], ["pollo_pechuga_crudo", 35]], "macros": [421, 44.9, 6.9, 23.8, 2.3]}}}, {"date": "2026-09-26", "day_num": 26, "weekday": "Sabado", "flexible": false, "target_kcal": 1850, "sat_prep": true, "training_key": "descanso", "totales": {"kcal": 1849, "proteina": 173.8, "carbs": 175.6, "grasa": 51.2, "fibra": 19.5}, "meals": {"desayuno": {"key": "C", "items": [["huevo_entero", 100], ["pan_integral", 70], ["tomate", 80], ["queso_fresco_batido_0", 60]], "macros": [383, 30.0, 35.0, 14.3, 5.5]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M3", "items": [["pan_integral", 40], ["queso_curado", 20], ["tomate", 60]], "macros": [190, 10.7, 19.0, 8.4, 3.3]}, "comida": {"key": "L5_pollo_horno_patata", "items": [["pollo_pechuga_crudo", 190], ["patata_cocida", 150], ["pimiento", 80], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["patata_cocida", 150]], "macros": [687, 67.7, 64.8, 16.1, 7.1]}, "cena": {"key": "D2_crema_calabaza_pollo", "items": [["calabaza", 300], ["cebolla", 40], ["caldo_verduras", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 150], ["pollo_pechuga_crudo", 55], ["patata_cocida", 85]], "macros": [460, 48.5, 42.4, 11.9, 2.2]}}}, {"date": "2026-09-27", "day_num": 27, "weekday": "Domingo", "flexible": true, "target_kcal": 2200, "sat_prep": false, "training_key": "descanso", "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M3", "items": [["pan_integral", 40], ["queso_curado", 20], ["tomate", 60]], "macros": [190, 10.7, 19.0, 8.4, 3.3]}, "comida": {"flex": true}, "cena": {"flex": true}}}, {"date": "2026-09-28", "day_num": 28, "weekday": "Lunes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_triceps", "totales": {"kcal": 1851, "proteina": 170.8, "carbs": 157.0, "grasa": 62.2, "fibra": 37.1}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L1_lentejas_pollo", "items": [["lentejas_cocidas", 200], ["pollo_pechuga_crudo", 170], ["verduras_salteado", 150], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 80]], "macros": [633, 72.8, 49.0, 15.8, 19.1]}, "cena": {"key": "D1_crema_calabacin_pollo", "items": [["calabacin", 300], ["puerro", 50], ["caldo_verduras", 100], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 120], ["queso_fresco_batido_0", 40], ["pollo_pechuga_crudo", 85], ["patata_cocida", 45]], "macros": [424, 53.4, 23.7, 12.6, 3.8]}}}, {"date": "2026-09-29", "day_num": 29, "weekday": "Martes", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "espalda_biceps", "totales": {"kcal": 1850, "proteina": 173.4, "carbs": 190.1, "grasa": 45.4, "fibra": 27.9}, "meals": {"desayuno": {"key": "B", "items": [["yogur_griego_0", 250], ["avena", 40], ["arandanos", 80], ["almendras", 10]], "macros": [402, 34.5, 48.8, 9.0, 7.2]}, "snack_am": {"key": "S2", "items": [["skyr", 150], ["arandanos", 60]], "macros": [129, 16.9, 14.4, 0.5, 1.4]}, "merienda": {"key": "M2", "items": [["platano", 120], ["almendras", 15]], "macros": [194, 4.5, 30.9, 7.9, 5.0]}, "comida": {"key": "L4_arroz_pollo_verduras", "items": [["pollo_pechuga_crudo", 190], ["verduras_salteado", 150], ["espinacas", 60], ["aceite_oliva", 8], ["pollo_pechuga_crudo", 100], ["arroz_blanco_cocido", 165]], "macros": [675, 69.3, 57.4, 16.7, 5.3]}, "cena": {"key": "D6_crema_alubias_pollo", "items": [["judias_blancas_cocidas", 140], ["puerro", 50], ["caldo_verduras", 150], ["aceite_oliva", 6], ["pollo_pechuga_crudo", 130], ["pollo_pechuga_crudo", 35], ["patata_cocida", 10]], "macros": [450, 48.2, 38.6, 11.3, 9.0]}}}, {"date": "2026-09-30", "day_num": 30, "weekday": "Miercoles", "flexible": false, "target_kcal": 1850, "sat_prep": false, "training_key": "pecho_tecnico", "totales": {"kcal": 1877, "proteina": 149.6, "carbs": 162.9, "grasa": 73.9, "fibra": 36.5}, "meals": {"desayuno": {"key": "A", "items": [["huevo_entero", 120], ["arepa_blanca", 60], ["aguacate", 40], ["fruta_variada", 100]], "macros": [435, 20.5, 44.1, 20.4, 6.0]}, "snack_am": {"key": "S1", "items": [["manzana", 150], ["almendras", 15]], "macros": [165, 3.6, 24.3, 7.8, 5.5]}, "merienda": {"key": "M1", "items": [["queso_fresco_batido_0", 150], ["arandanos", 60], ["almendras", 10]], "macros": [194, 20.5, 15.9, 5.6, 2.7]}, "comida": {"key": "L6_garbanzos_huevo_espinacas", "items": [["garbanzos_cocidos_escurridos", 180], ["huevo_entero", 120], ["pollo_pechuga_crudo", 80], ["espinacas", 80], ["aceite_oliva", 8]], "macros": [662, 50.7, 52.8, 28.3, 15.4]}, "cena": {"key": "D5_crema_espinacas_pollo", "items": [["espinacas", 250], ["caldo_verduras", 100], ["aceite_oliva", 5], ["pollo_pechuga_crudo", 140], ["pollo_pechuga_crudo", 75], ["patata_cocida", 80]], "macros": [421, 54.3, 25.8, 11.8, 6.9]}}}]
+  </script>
+
+  <!-- Plan antiinflamatorio de 30 dias (19 sep - 18 oct 2026): gastritis,
+       higado graso y proceso diarreico. Mismo formato que pc-plan-data,
+       con "fase" (1-4) y "plan_dia" (1-30) anadidos. -->
+  <script id="pc-inflam-data" type="application/json">
+[{"date": "2026-09-19", "day_num": 19, "plan_dia": 1, "weekday": "Sabado", "fase": 1, "target_kcal": 1650, "totales": {"kcal": 1638, "proteina": 146.8, "carbs": 173.5, "grasa": 37.7, "fibra": 9.1}, "meals": {"desayuno": {"key": "ID1", "items": [["arroz_blanco_cocido", 110], ["clara_huevo", 180], ["bebida_almendra", 120], ["platano", 80]], "macros": [319, 24.1, 50.9, 2.4, 2.8]}, "snack_am": {"key": "IS1", "items": [["platano", 100], ["pavo_pechuga_crudo", 60]], "macros": [156, 15.3, 22.8, 1.3, 2.6]}, "comida": {"key": "IC1", "items": [["arroz_blanco_cocido", 152], ["pollo_pechuga_crudo", 185], ["zanahoria_cocida", 60], ["aceite_oliva", 12]], "macros": [547, 46.2, 47.8, 17.4, 2.4]}, "merienda": {"key": "IM2", "items": [["tortita_arroz", 20], ["pavo_pechuga_crudo", 80]], "macros": [166, 20.5, 16.3, 2.0, 0.8]}, "cena": {"key": "IN1", "items": [["caldo_pollo_desgrasado", 250], ["arroz_blanco_cocido", 122], ["pollo_pechuga_crudo", 155], ["aceite_oliva", 10]], "macros": [450, 40.7, 35.7, 14.6, 0.5]}}}, {"date": "2026-09-20", "day_num": 20, "plan_dia": 2, "weekday": "Domingo", "fase": 1, "target_kcal": 1650, "totales": {"kcal": 1546, "proteina": 136.7, "carbs": 158.8, "grasa": 41.0, "fibra": 11.9}, "meals": {"desayuno": {"key": "ID2", "items": [["pan_blanco_tostado", 60], ["pavo_pechuga_crudo", 100], ["aceite_oliva", 7]], "macros": [347, 29.4, 32.4, 10.6, 1.7]}, "snack_am": {"key": "IS2", "items": [["manzana_asada", 150], ["pavo_pechuga_crudo", 50]], "macros": [134, 12.3, 20.7, 1.0, 2.1]}, "comida": {"key": "IC2", "items": [["arroz_blanco_cocido", 142], ["merluza_cruda", 215], ["caldo_verduras", 150], ["zanahoria_cocida", 60], ["aceite_oliva", 12]], "macros": [473, 38.9, 46.5, 14.4, 2.4]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 50], ["pavo_pechuga_crudo", 70]], "macros": [223, 21.3, 27.0, 2.8, 1.4]}, "cena": {"key": "IN2", "items": [["calabacin_pelado", 200], ["patata_cocida", 130], ["merluza_cruda", 190], ["aceite_oliva", 10]], "macros": [369, 34.8, 32.2, 12.2, 4.3]}}}, {"date": "2026-09-21", "day_num": 21, "plan_dia": 3, "weekday": "Lunes", "fase": 1, "target_kcal": 1650, "totales": {"kcal": 1726, "proteina": 145.3, "carbs": 189.4, "grasa": 41.7, "fibra": 12.0}, "meals": {"desayuno": {"key": "ID1", "items": [["arroz_blanco_cocido", 110], ["clara_huevo", 180], ["bebida_almendra", 120], ["platano", 80]], "macros": [319, 24.1, 50.9, 2.4, 2.8]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 40], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [216, 15.7, 21.6, 7.1, 1.1]}, "comida": {"key": "IC13", "items": [["pasta_blanca_cocida", 168], ["pollo_pechuga_crudo", 185], ["zanahoria_cocida", 50], ["aceite_oliva", 12]], "macros": [611, 51.8, 56.2, 18.4, 4.5]}, "merienda": {"key": "IM2", "items": [["tortita_arroz", 20], ["pavo_pechuga_crudo", 80]], "macros": [166, 20.5, 16.3, 2.0, 0.8]}, "cena": {"key": "IN3", "items": [["clara_huevo", 270], ["patata_cocida", 142], ["arroz_blanco_cocido", 50], ["aceite_oliva", 11]], "macros": [414, 33.2, 44.4, 11.8, 2.8]}}}, {"date": "2026-09-22", "day_num": 22, "plan_dia": 4, "weekday": "Martes", "fase": 1, "target_kcal": 1650, "totales": {"kcal": 1671, "proteina": 152.2, "carbs": 161.8, "grasa": 43.2, "fibra": 8.3}, "meals": {"desayuno": {"key": "ID3", "items": [["clara_huevo", 220], ["pan_blanco_tostado", 50], ["aceite_oliva", 5]], "macros": [295, 28.7, 28.5, 7.1, 1.4]}, "snack_am": {"key": "IS1", "items": [["platano", 100], ["pavo_pechuga_crudo", 60]], "macros": [156, 15.3, 22.8, 1.3, 2.6]}, "comida": {"key": "IC1", "items": [["arroz_blanco_cocido", 152], ["pollo_pechuga_crudo", 185], ["zanahoria_cocida", 60], ["aceite_oliva", 12]], "macros": [547, 46.2, 47.8, 17.4, 2.4]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 50], ["pavo_pechuga_crudo", 70]], "macros": [223, 21.3, 27.0, 2.8, 1.4]}, "cena": {"key": "IN1", "items": [["caldo_pollo_desgrasado", 250], ["arroz_blanco_cocido", 122], ["pollo_pechuga_crudo", 155], ["aceite_oliva", 10]], "macros": [450, 40.7, 35.7, 14.6, 0.5]}}}, {"date": "2026-09-23", "day_num": 23, "plan_dia": 5, "weekday": "Miercoles", "fase": 1, "target_kcal": 1650, "totales": {"kcal": 1623, "proteina": 141.7, "carbs": 169.0, "grasa": 42.1, "fibra": 11.3}, "meals": {"desayuno": {"key": "ID2", "items": [["pan_blanco_tostado", 60], ["pavo_pechuga_crudo", 100], ["aceite_oliva", 7]], "macros": [347, 29.4, 32.4, 10.6, 1.7]}, "snack_am": {"key": "IS2", "items": [["manzana_asada", 150], ["pavo_pechuga_crudo", 50]], "macros": [134, 12.3, 20.7, 1.0, 2.1]}, "comida": {"key": "IC2", "items": [["arroz_blanco_cocido", 142], ["merluza_cruda", 215], ["caldo_verduras", 150], ["zanahoria_cocida", 60], ["aceite_oliva", 12]], "macros": [473, 38.9, 46.5, 14.4, 2.4]}, "merienda": {"key": "IM2", "items": [["tortita_arroz", 20], ["pavo_pechuga_crudo", 80]], "macros": [166, 20.5, 16.3, 2.0, 0.8]}, "cena": {"key": "IN13", "items": [["pasta_blanca_cocida", 158], ["merluza_cruda", 195], ["zanahoria_cocida", 50], ["aceite_oliva", 11]], "macros": [503, 40.6, 53.1, 14.1, 4.3]}}}, {"date": "2026-09-24", "day_num": 24, "plan_dia": 6, "weekday": "Jueves", "fase": 2, "target_kcal": 1700, "totales": {"kcal": 1697, "proteina": 143.7, "carbs": 171.4, "grasa": 47.7, "fibra": 15.1}, "meals": {"desayuno": {"key": "ID3", "items": [["clara_huevo", 220], ["pan_blanco_tostado", 50], ["aceite_oliva", 5]], "macros": [295, 28.7, 28.5, 7.1, 1.4]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 40], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [216, 15.7, 21.6, 7.1, 1.1]}, "comida": {"key": "IC4", "items": [["pollo_pechuga_crudo", 165], ["patata_cocida", 220], ["calabacin_pelado", 120], ["aceite_oliva", 10]], "macros": [496, 42.3, 47.7, 14.9, 5.2]}, "merienda": {"key": "IM3", "items": [["pan_blanco_tostado", 50], ["pollo_pechuga_crudo", 80], ["aceite_oliva", 4]], "macros": [276, 22.8, 27.0, 7.7, 1.4]}, "cena": {"key": "IN4", "items": [["merluza_cruda", 190], ["patata_cocida", 200], ["zanahoria_cocida", 80], ["aceite_oliva", 9]], "macros": [414, 34.2, 46.6, 10.9, 6.0]}}}, {"date": "2026-09-25", "day_num": 25, "plan_dia": 7, "weekday": "Viernes", "fase": 2, "target_kcal": 1700, "totales": {"kcal": 1633, "proteina": 128.3, "carbs": 194.5, "grasa": 40.5, "fibra": 14.3}, "meals": {"desayuno": {"key": "ID4", "items": [["huevo_entero", 60], ["clara_huevo", 120], ["pan_blanco_tostado", 60], ["aceite_oliva", 6]], "macros": [370, 26.3, 33.7, 13.9, 1.7]}, "snack_am": {"key": "IS7", "items": [["manzana_asada", 120], ["pera_cocida", 100]], "macros": [119, 0.8, 31.8, 0.2, 3.8]}, "comida": {"key": "IC5", "items": [["arroz_blanco_cocido", 200], ["calabaza", 150], ["lenguado_crudo", 190], ["aceite_oliva", 9]], "macros": [511, 38.9, 64.5, 11.7, 2.5]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 50], ["pavo_pechuga_crudo", 70]], "macros": [223, 21.3, 27.0, 2.8, 1.4]}, "cena": {"key": "IN5", "items": [["calabaza", 250], ["patata_cocida", 120], ["pavo_pechuga_crudo", 155], ["aceite_oliva", 9]], "macros": [410, 41.0, 37.5, 11.9, 4.9]}}}, {"date": "2026-09-26", "day_num": 26, "plan_dia": 8, "weekday": "Sabado", "fase": 2, "target_kcal": 1700, "totales": {"kcal": 1829, "proteina": 156.7, "carbs": 182.0, "grasa": 48.1, "fibra": 10.4}, "meals": {"desayuno": {"key": "ID8", "items": [["pan_blanco_tostado", 60], ["pollo_pechuga_crudo", 90], ["aceite_oliva", 5]], "macros": [326, 25.9, 32.4, 9.3, 1.7]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 30]], "macros": [165, 19.4, 16.2, 2.1, 0.8]}, "comida": {"key": "IC6", "items": [["pasta_blanca_cocida", 180], ["pollo_pechuga_crudo", 160], ["calabacin_pelado", 120], ["aceite_oliva", 9]], "macros": [576, 47.9, 59.5, 15.1, 4.4]}, "merienda": {"key": "IM3", "items": [["pan_blanco_tostado", 50], ["pollo_pechuga_crudo", 80], ["aceite_oliva", 4]], "macros": [276, 22.8, 27.0, 7.7, 1.4]}, "cena": {"key": "IN6", "items": [["pollo_pechuga_crudo", 155], ["arroz_blanco_cocido", 150], ["calabacin_pelado", 150], ["aceite_oliva", 9]], "macros": [486, 40.7, 46.9, 13.9, 2.1]}}}, {"date": "2026-09-27", "day_num": 27, "plan_dia": 9, "weekday": "Domingo", "fase": 2, "target_kcal": 1700, "totales": {"kcal": 1644, "proteina": 142.2, "carbs": 171.4, "grasa": 42.8, "fibra": 15.1}, "meals": {"desayuno": {"key": "ID3", "items": [["clara_huevo", 220], ["pan_blanco_tostado", 50], ["aceite_oliva", 5]], "macros": [295, 28.7, 28.5, 7.1, 1.4]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 40], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [216, 15.7, 21.6, 7.1, 1.1]}, "comida": {"key": "IC4", "items": [["pollo_pechuga_crudo", 165], ["patata_cocida", 220], ["calabacin_pelado", 120], ["aceite_oliva", 10]], "macros": [496, 42.3, 47.7, 14.9, 5.2]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 50], ["pavo_pechuga_crudo", 70]], "macros": [223, 21.3, 27.0, 2.8, 1.4]}, "cena": {"key": "IN4", "items": [["merluza_cruda", 190], ["patata_cocida", 200], ["zanahoria_cocida", 80], ["aceite_oliva", 9]], "macros": [414, 34.2, 46.6, 10.9, 6.0]}}}, {"date": "2026-09-28", "day_num": 28, "plan_dia": 10, "weekday": "Lunes", "fase": 2, "target_kcal": 1700, "totales": {"kcal": 1686, "proteina": 129.8, "carbs": 194.5, "grasa": 45.4, "fibra": 14.3}, "meals": {"desayuno": {"key": "ID4", "items": [["huevo_entero", 60], ["clara_huevo", 120], ["pan_blanco_tostado", 60], ["aceite_oliva", 6]], "macros": [370, 26.3, 33.7, 13.9, 1.7]}, "snack_am": {"key": "IS7", "items": [["manzana_asada", 120], ["pera_cocida", 100]], "macros": [119, 0.8, 31.8, 0.2, 3.8]}, "comida": {"key": "IC5", "items": [["arroz_blanco_cocido", 200], ["calabaza", 150], ["lenguado_crudo", 190], ["aceite_oliva", 9]], "macros": [511, 38.9, 64.5, 11.7, 2.5]}, "merienda": {"key": "IM3", "items": [["pan_blanco_tostado", 50], ["pollo_pechuga_crudo", 80], ["aceite_oliva", 4]], "macros": [276, 22.8, 27.0, 7.7, 1.4]}, "cena": {"key": "IN5", "items": [["calabaza", 250], ["patata_cocida", 120], ["pavo_pechuga_crudo", 155], ["aceite_oliva", 9]], "macros": [410, 41.0, 37.5, 11.9, 4.9]}}}, {"date": "2026-09-29", "day_num": 29, "plan_dia": 11, "weekday": "Martes", "fase": 2, "target_kcal": 1700, "totales": {"kcal": 1776, "proteina": 155.2, "carbs": 182.0, "grasa": 43.2, "fibra": 10.4}, "meals": {"desayuno": {"key": "ID8", "items": [["pan_blanco_tostado", 60], ["pollo_pechuga_crudo", 90], ["aceite_oliva", 5]], "macros": [326, 25.9, 32.4, 9.3, 1.7]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 30]], "macros": [165, 19.4, 16.2, 2.1, 0.8]}, "comida": {"key": "IC6", "items": [["pasta_blanca_cocida", 180], ["pollo_pechuga_crudo", 160], ["calabacin_pelado", 120], ["aceite_oliva", 9]], "macros": [576, 47.9, 59.5, 15.1, 4.4]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 50], ["pavo_pechuga_crudo", 70]], "macros": [223, 21.3, 27.0, 2.8, 1.4]}, "cena": {"key": "IN6", "items": [["pollo_pechuga_crudo", 155], ["arroz_blanco_cocido", 150], ["calabacin_pelado", 150], ["aceite_oliva", 9]], "macros": [486, 40.7, 46.9, 13.9, 2.1]}}}, {"date": "2026-09-30", "day_num": 30, "plan_dia": 12, "weekday": "Miercoles", "fase": 2, "target_kcal": 1700, "totales": {"kcal": 1613, "proteina": 144.6, "carbs": 171.5, "grasa": 39.3, "fibra": 14.1}, "meals": {"desayuno": {"key": "ID3", "items": [["clara_huevo", 220], ["pan_blanco_tostado", 50], ["aceite_oliva", 5]], "macros": [295, 28.7, 28.5, 7.1, 1.4]}, "snack_am": {"key": "IS2", "items": [["manzana_asada", 150], ["pavo_pechuga_crudo", 50]], "macros": [134, 12.3, 20.7, 1.0, 2.1]}, "comida": {"key": "IC3", "items": [["patata_cocida", 150], ["arroz_blanco_cocido", 100], ["zanahoria_cocida", 60], ["pavo_pechuga_crudo", 170], ["aceite_oliva", 8]], "macros": [539, 46.0, 63.1, 11.3, 4.9]}, "merienda": {"key": "IM3", "items": [["pan_blanco_tostado", 50], ["pollo_pechuga_crudo", 80], ["aceite_oliva", 4]], "macros": [276, 22.8, 27.0, 7.7, 1.4]}, "cena": {"key": "IN2", "items": [["calabacin_pelado", 200], ["patata_cocida", 130], ["merluza_cruda", 190], ["aceite_oliva", 10]], "macros": [369, 34.8, 32.2, 12.2, 4.3]}}}, {"date": "2026-10-01", "day_num": 1, "plan_dia": 13, "weekday": "Jueves", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1647, "proteina": 127.8, "carbs": 194.6, "grasa": 45.0, "fibra": 28.7}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC7", "items": [["merluza_cruda", 220], ["patata_cocida", 230], ["judia_verde", 100], ["aceite_oliva", 12]], "macros": [488, 40.5, 51.8, 14.2, 7.3]}, "merienda": {"key": "IM4", "items": [["avena", 30], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [204, 19.1, 21.3, 4.7, 3.6]}, "cena": {"key": "IN7", "items": [["lenguado_crudo", 210], ["patata_cocida", 210], ["judia_verde", 100], ["aceite_oliva", 11]], "macros": [459, 40.7, 47.8, 13.5, 7.0]}}}, {"date": "2026-10-02", "day_num": 2, "plan_dia": 14, "weekday": "Viernes", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1817, "proteina": 145.5, "carbs": 165.2, "grasa": 60.7, "fibra": 16.6}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 60], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [376, 26.3, 34.6, 13.7, 5.0]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 30]], "macros": [165, 19.4, 16.2, 2.1, 0.8]}, "comida": {"key": "IC8", "items": [["ternera_magra_cruda", 160], ["zanahoria_cocida", 90], ["arroz_blanco_cocido", 180], ["aceite_oliva", 10]], "macros": [564, 40.0, 58.1, 18.4, 3.4]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN8", "items": [["clara_huevo", 250], ["huevo_entero", 55], ["calabacin_pelado", 150], ["pan_blanco_tostado", 40], ["aceite_oliva", 9]], "macros": [420, 39.8, 28.4, 16.5, 2.6]}}}, {"date": "2026-10-03", "day_num": 3, "plan_dia": 15, "weekday": "Sabado", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1708, "proteina": 149.7, "carbs": 164.9, "grasa": 51.0, "fibra": 26.3}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 40], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [216, 15.7, 21.6, 7.1, 1.1]}, "comida": {"key": "IC9", "items": [["pollo_pechuga_crudo", 180], ["boniato_asado", 170], ["espinacas_cocidas", 120], ["aceite_oliva", 12]], "macros": [503, 47.5, 39.8, 17.4, 8.5]}, "merienda": {"key": "IM4", "items": [["avena", 30], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [204, 19.1, 21.3, 4.7, 3.6]}, "cena": {"key": "IN9", "items": [["calabaza", 200], ["zanahoria_cocida", 90], ["patata_cocida", 80], ["pollo_pechuga_crudo", 170], ["aceite_oliva", 11]], "macros": [446, 42.1, 34.2, 15.9, 6.3]}}}, {"date": "2026-10-04", "day_num": 4, "plan_dia": 16, "weekday": "Domingo", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1722, "proteina": 129.3, "carbs": 185.6, "grasa": 53.7, "fibra": 24.8}, "meals": {"desayuno": {"key": "ID8", "items": [["pan_blanco_tostado", 60], ["pollo_pechuga_crudo", 90], ["aceite_oliva", 5]], "macros": [326, 25.9, 32.4, 9.3, 1.7]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC7", "items": [["merluza_cruda", 220], ["patata_cocida", 230], ["judia_verde", 100], ["aceite_oliva", 12]], "macros": [488, 40.5, 51.8, 14.2, 7.3]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN7", "items": [["lenguado_crudo", 210], ["patata_cocida", 210], ["judia_verde", 100], ["aceite_oliva", 11]], "macros": [459, 40.7, 47.8, 13.5, 7.0]}}}, {"date": "2026-10-05", "day_num": 5, "plan_dia": 17, "weekday": "Lunes", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1729, "proteina": 144.6, "carbs": 158.6, "grasa": 55.4, "fibra": 15.4}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 60], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [376, 26.3, 34.6, 13.7, 5.0]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 30]], "macros": [165, 19.4, 16.2, 2.1, 0.8]}, "comida": {"key": "IC8", "items": [["ternera_magra_cruda", 160], ["zanahoria_cocida", 90], ["arroz_blanco_cocido", 180], ["aceite_oliva", 10]], "macros": [564, 40.0, 58.1, 18.4, 3.4]}, "merienda": {"key": "IM4", "items": [["avena", 30], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [204, 19.1, 21.3, 4.7, 3.6]}, "cena": {"key": "IN8", "items": [["clara_huevo", 250], ["huevo_entero", 55], ["calabacin_pelado", 150], ["pan_blanco_tostado", 40], ["aceite_oliva", 9]], "macros": [420, 39.8, 28.4, 16.5, 2.6]}}}, {"date": "2026-10-06", "day_num": 6, "plan_dia": 18, "weekday": "Martes", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1699, "proteina": 135.7, "carbs": 181.7, "grasa": 49.4, "fibra": 30.2}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS7", "items": [["manzana_asada", 120], ["pera_cocida", 100]], "macros": [119, 0.8, 31.8, 0.2, 3.8]}, "comida": {"key": "IC9", "items": [["pollo_pechuga_crudo", 180], ["boniato_asado", 170], ["espinacas_cocidas", 120], ["aceite_oliva", 12]], "macros": [503, 47.5, 39.8, 17.4, 8.5]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN9", "items": [["calabaza", 200], ["zanahoria_cocida", 90], ["patata_cocida", 80], ["pollo_pechuga_crudo", 170], ["aceite_oliva", 11]], "macros": [446, 42.1, 34.2, 15.9, 6.3]}}}, {"date": "2026-10-07", "day_num": 7, "plan_dia": 19, "weekday": "Miercoles", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1645, "proteina": 127.9, "carbs": 161.8, "grasa": 55.8, "fibra": 22.5}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 60], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [376, 26.3, 34.6, 13.7, 5.0]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC7", "items": [["merluza_cruda", 220], ["patata_cocida", 230], ["judia_verde", 100], ["aceite_oliva", 12]], "macros": [488, 40.5, 51.8, 14.2, 7.3]}, "merienda": {"key": "IM4", "items": [["avena", 30], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [204, 19.1, 21.3, 4.7, 3.6]}, "cena": {"key": "IN8", "items": [["clara_huevo", 250], ["huevo_entero", 55], ["calabacin_pelado", 150], ["pan_blanco_tostado", 40], ["aceite_oliva", 9]], "macros": [420, 39.8, 28.4, 16.5, 2.6]}}}, {"date": "2026-10-08", "day_num": 8, "plan_dia": 20, "weekday": "Jueves", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1793, "proteina": 147.4, "carbs": 168.8, "grasa": 55.7, "fibra": 17.0}, "meals": {"desayuno": {"key": "ID8", "items": [["pan_blanco_tostado", 60], ["pollo_pechuga_crudo", 90], ["aceite_oliva", 5]], "macros": [326, 25.9, 32.4, 9.3, 1.7]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 30]], "macros": [165, 19.4, 16.2, 2.1, 0.8]}, "comida": {"key": "IC8", "items": [["ternera_magra_cruda", 160], ["zanahoria_cocida", 90], ["arroz_blanco_cocido", 180], ["aceite_oliva", 10]], "macros": [564, 40.0, 58.1, 18.4, 3.4]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN9", "items": [["calabaza", 200], ["zanahoria_cocida", 90], ["patata_cocida", 80], ["pollo_pechuga_crudo", 170], ["aceite_oliva", 11]], "macros": [446, 42.1, 34.2, 15.9, 6.3]}}}, {"date": "2026-10-09", "day_num": 9, "plan_dia": 21, "weekday": "Viernes", "fase": 3, "target_kcal": 1750, "totales": {"kcal": 1721, "proteina": 148.3, "carbs": 178.5, "grasa": 48.6, "fibra": 27.0}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 40], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [216, 15.7, 21.6, 7.1, 1.1]}, "comida": {"key": "IC9", "items": [["pollo_pechuga_crudo", 180], ["boniato_asado", 170], ["espinacas_cocidas", 120], ["aceite_oliva", 12]], "macros": [503, 47.5, 39.8, 17.4, 8.5]}, "merienda": {"key": "IM4", "items": [["avena", 30], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [204, 19.1, 21.3, 4.7, 3.6]}, "cena": {"key": "IN7", "items": [["lenguado_crudo", 210], ["patata_cocida", 210], ["judia_verde", 100], ["aceite_oliva", 11]], "macros": [459, 40.7, 47.8, 13.5, 7.0]}}}, {"date": "2026-10-10", "day_num": 10, "plan_dia": 22, "weekday": "Sabado", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1849, "proteina": 117.5, "carbs": 204.7, "grasa": 67.7, "fibra": 34.0}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [405, 26.9, 49.6, 12.4, 8.2]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC10", "items": [["lentejas_cocidas", 120], ["arroz_blanco_cocido", 120], ["pollo_pechuga_crudo", 140], ["zanahoria_cocida", 70], ["aceite_oliva", 12]], "macros": [594, 46.1, 63.7, 16.6, 12.1]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN10", "items": [["sardina_fresca", 155], ["patata_cocida", 190], ["espinacas_cocidas", 120], ["aceite_oliva", 7]], "macros": [519, 39.2, 42.6, 22.6, 6.3]}}}, {"date": "2026-10-11", "day_num": 11, "plan_dia": 23, "weekday": "Domingo", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1945, "proteina": 127.1, "carbs": 169.4, "grasa": 85.1, "fibra": 24.6}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 60], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [376, 26.3, 34.6, 13.7, 5.0]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC11", "items": [["salmon_crudo", 165], ["patata_cocida", 200], ["calabacin_pelado", 150], ["aceite_oliva", 8]], "macros": [565, 38.2, 44.6, 26.8, 5.1]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN11", "items": [["salmon_crudo", 160], ["quinoa_cocida", 150], ["calabacin_pelado", 150], ["aceite_oliva", 7]], "macros": [555, 40.4, 36.6, 27.9, 5.7]}}}, {"date": "2026-10-12", "day_num": 12, "plan_dia": 24, "weekday": "Lunes", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1882, "proteina": 116.3, "carbs": 200.7, "grasa": 72.6, "fibra": 31.4}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [405, 26.9, 49.6, 12.4, 8.2]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC12", "items": [["quinoa_cocida", 190], ["pollo_pechuga_crudo", 170], ["calabacin_pelado", 120], ["aguacate", 40], ["aceite_oliva", 8]], "macros": [587, 48.8, 44.9, 22.3, 9.2]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN12", "items": [["calabacin_pelado", 200], ["calabaza", 150], ["patata_cocida", 100], ["huevo_entero", 120], ["clara_huevo", 100], ["pan_blanco_tostado", 40], ["aceite_oliva", 8]], "macros": [559, 35.3, 57.4, 21.8, 6.6]}}}, {"date": "2026-10-13", "day_num": 13, "plan_dia": 25, "weekday": "Martes", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1901, "proteina": 132.8, "carbs": 207.9, "grasa": 61.8, "fibra": 34.0}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC10", "items": [["lentejas_cocidas", 120], ["arroz_blanco_cocido", 120], ["pollo_pechuga_crudo", 140], ["zanahoria_cocida", 70], ["aceite_oliva", 12]], "macros": [594, 46.1, 63.7, 16.6, 12.1]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN10", "items": [["sardina_fresca", 155], ["patata_cocida", 190], ["espinacas_cocidas", 120], ["aceite_oliva", 7]], "macros": [519, 39.2, 42.6, 22.6, 6.3]}}}, {"date": "2026-10-14", "day_num": 14, "plan_dia": 26, "weekday": "Miercoles", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1856, "proteina": 110.8, "carbs": 179.6, "grasa": 83.2, "fibra": 26.4}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [405, 26.9, 49.6, 12.4, 8.2]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC11", "items": [["salmon_crudo", 165], ["patata_cocida", 200], ["calabacin_pelado", 150], ["aceite_oliva", 8]], "macros": [565, 38.2, 44.6, 26.8, 5.1]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN11", "items": [["salmon_crudo", 160], ["quinoa_cocida", 150], ["calabacin_pelado", 150], ["aceite_oliva", 7]], "macros": [555, 40.4, 36.6, 27.9, 5.7]}}}, {"date": "2026-10-15", "day_num": 15, "plan_dia": 27, "weekday": "Jueves", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1971, "proteina": 132.6, "carbs": 190.5, "grasa": 74.5, "fibra": 29.6}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 60], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [376, 26.3, 34.6, 13.7, 5.0]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC12", "items": [["quinoa_cocida", 190], ["pollo_pechuga_crudo", 170], ["calabacin_pelado", 120], ["aguacate", 40], ["aceite_oliva", 8]], "macros": [587, 48.8, 44.9, 22.3, 9.2]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN12", "items": [["calabacin_pelado", 200], ["calabaza", 150], ["patata_cocida", 100], ["huevo_entero", 120], ["clara_huevo", 100], ["pan_blanco_tostado", 40], ["aceite_oliva", 8]], "macros": [559, 35.3, 57.4, 21.8, 6.6]}}}, {"date": "2026-10-16", "day_num": 16, "plan_dia": 28, "weekday": "Viernes", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1885, "proteina": 118.7, "carbs": 198.7, "grasa": 73.0, "fibra": 33.4}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [405, 26.9, 49.6, 12.4, 8.2]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC10", "items": [["lentejas_cocidas", 120], ["arroz_blanco_cocido", 120], ["pollo_pechuga_crudo", 140], ["zanahoria_cocida", 70], ["aceite_oliva", 12]], "macros": [594, 46.1, 63.7, 16.6, 12.1]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN11", "items": [["salmon_crudo", 160], ["quinoa_cocida", 150], ["calabacin_pelado", 150], ["aceite_oliva", 7]], "macros": [555, 40.4, 36.6, 27.9, 5.7]}}}, {"date": "2026-10-17", "day_num": 17, "plan_dia": 29, "weekday": "Sabado", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1872, "proteina": 124.9, "carbs": 188.8, "grasa": 72.0, "fibra": 27.0}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC11", "items": [["salmon_crudo", 165], ["patata_cocida", 200], ["calabacin_pelado", 150], ["aceite_oliva", 8]], "macros": [565, 38.2, 44.6, 26.8, 5.1]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN10", "items": [["sardina_fresca", 155], ["patata_cocida", 190], ["espinacas_cocidas", 120], ["aceite_oliva", 7]], "macros": [519, 39.2, 42.6, 22.6, 6.3]}}}, {"date": "2026-10-18", "day_num": 18, "plan_dia": 30, "weekday": "Domingo", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1882, "proteina": 116.3, "carbs": 200.7, "grasa": 72.6, "fibra": 31.4}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [405, 26.9, 49.6, 12.4, 8.2]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC12", "items": [["quinoa_cocida", 190], ["pollo_pechuga_crudo", 170], ["calabacin_pelado", 120], ["aguacate", 40], ["aceite_oliva", 8]], "macros": [587, 48.8, 44.9, 22.3, 9.2]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN12", "items": [["calabacin_pelado", 200], ["calabaza", 150], ["patata_cocida", 100], ["huevo_entero", 120], ["clara_huevo", 100], ["pan_blanco_tostado", 40], ["aceite_oliva", 8]], "macros": [559, 35.3, 57.4, 21.8, 6.6]}}}]
+  </script>
+
+  <!-- Version de Ruben del mismo plan: derivada dia a dia de pc-inflam-data
+       con reglas fijas (cereal integral, piel, ensalada, legumbre) y ajustada
+       a 1.850 kcal. Mismo formato. -->
+  <script id="pc-ruben-data" type="application/json">
+[{"date": "2026-09-19", "day_num": 19, "plan_dia": 1, "weekday": "Sabado", "fase": 1, "target_kcal": 1850, "totales": {"kcal": 1852, "proteina": 156.8, "carbs": 200.2, "grasa": 45.4, "fibra": 23.5}, "meals": {"desayuno": {"key": "ID1", "items": [["arroz_blanco_cocido", 105], ["clara_huevo", 180], ["bebida_almendra", 120], ["platano", 80]], "macros": [312, 23.9, 49.5, 2.4, 2.7]}, "snack_am": {"key": "IS1", "items": [["platano", 100], ["pavo_pechuga_crudo", 60]], "macros": [156, 15.3, 22.8, 1.3, 2.6]}, "comida": {"key": "IC1", "items": [["arroz_blanco_cocido", 145], ["pollo_pechuga_crudo", 185], ["zanahoria_cocida", 120], ["aceite_oliva", 15], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [711, 53.7, 70.7, 22.4, 12.6]}, "merienda": {"key": "IM2", "items": [["tortita_arroz", 20], ["pavo_pechuga_crudo", 80]], "macros": [166, 20.5, 16.3, 2.0, 0.8]}, "cena": {"key": "IN1", "items": [["caldo_pollo_desgrasado", 250], ["arroz_blanco_cocido", 115], ["pollo_pechuga_crudo", 155], ["aceite_oliva", 12], ["ensalada_variada", 240]], "macros": [507, 43.4, 40.9, 17.3, 4.8]}}}, {"date": "2026-09-20", "day_num": 20, "plan_dia": 2, "weekday": "Domingo", "fase": 1, "target_kcal": 1850, "totales": {"kcal": 1862, "proteina": 151.0, "carbs": 205.7, "grasa": 49.7, "fibra": 28.8}, "meals": {"desayuno": {"key": "ID2", "items": [["pan_blanco_tostado", 65], ["pavo_pechuga_crudo", 100], ["aceite_oliva", 7]], "macros": [361, 29.9, 35.1, 10.7, 1.8]}, "snack_am": {"key": "IS2", "items": [["manzana_asada", 150], ["pavo_pechuga_crudo", 50]], "macros": [134, 12.3, 20.7, 1.0, 2.1]}, "comida": {"key": "IC2", "items": [["arroz_blanco_cocido", 150], ["merluza_cruda", 215], ["caldo_verduras", 150], ["zanahoria_cocida", 120], ["aceite_oliva", 15], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [657, 46.8, 73.6, 19.5, 12.6]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 55], ["pavo_pechuga_crudo", 70]], "macros": [237, 21.8, 29.7, 2.9, 1.5]}, "cena": {"key": "IN2", "items": [["calabacin_pelado", 400], ["patata_cocida", 135], ["merluza_cruda", 190], ["aceite_oliva", 12], ["ensalada_variada", 240]], "macros": [473, 40.2, 46.6, 15.6, 10.8]}}}, {"date": "2026-09-21", "day_num": 21, "plan_dia": 3, "weekday": "Lunes", "fase": 1, "target_kcal": 1850, "totales": {"kcal": 1845, "proteina": 152.6, "carbs": 196.7, "grasa": 48.9, "fibra": 25.1}, "meals": {"desayuno": {"key": "ID1", "items": [["arroz_blanco_cocido", 95], ["clara_huevo", 180], ["bebida_almendra", 120], ["platano", 80]], "macros": [299, 23.7, 46.7, 2.3, 2.7]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 35], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [201, 15.2, 18.9, 7.0, 1.0]}, "comida": {"key": "IC13", "items": [["pasta_blanca_cocida", 145], ["pollo_pechuga_crudo", 185], ["zanahoria_cocida", 100], ["aceite_oliva", 15], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [744, 58.0, 73.1, 23.3, 14.1]}, "merienda": {"key": "IM2", "items": [["tortita_arroz", 15], ["pavo_pechuga_crudo", 80]], "macros": [147, 20.1, 12.2, 1.8, 0.6]}, "cena": {"key": "IN3", "items": [["clara_huevo", 270], ["patata_cocida", 120], ["arroz_blanco_cocido", 45], ["aceite_oliva", 13], ["ensalada_variada", 240]], "macros": [454, 35.6, 45.8, 14.5, 6.7]}}}, {"date": "2026-09-22", "day_num": 22, "plan_dia": 4, "weekday": "Martes", "fase": 1, "target_kcal": 1850, "totales": {"kcal": 1849, "proteina": 161.2, "carbs": 181.7, "grasa": 50.5, "fibra": 22.6}, "meals": {"desayuno": {"key": "ID3", "items": [["clara_huevo", 220], ["pan_blanco_tostado", 45], ["aceite_oliva", 5]], "macros": [280, 28.3, 25.8, 6.9, 1.3]}, "snack_am": {"key": "IS1", "items": [["platano", 100], ["pavo_pechuga_crudo", 60]], "macros": [156, 15.3, 22.8, 1.3, 2.6]}, "comida": {"key": "IC1", "items": [["arroz_blanco_cocido", 140], ["pollo_pechuga_crudo", 185], ["zanahoria_cocida", 120], ["aceite_oliva", 15], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [704, 53.5, 69.3, 22.4, 12.6]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 45], ["pavo_pechuga_crudo", 70]], "macros": [208, 20.9, 24.3, 2.6, 1.3]}, "cena": {"key": "IN1", "items": [["caldo_pollo_desgrasado", 250], ["arroz_blanco_cocido", 110], ["pollo_pechuga_crudo", 155], ["aceite_oliva", 12], ["ensalada_variada", 240]], "macros": [501, 43.2, 39.5, 17.3, 4.8]}}}, {"date": "2026-09-23", "day_num": 23, "plan_dia": 5, "weekday": "Miercoles", "fase": 1, "target_kcal": 1850, "totales": {"kcal": 1842, "proteina": 151.5, "carbs": 198.0, "grasa": 49.7, "fibra": 27.0}, "meals": {"desayuno": {"key": "ID2", "items": [["pan_blanco_tostado", 55], ["pavo_pechuga_crudo", 100], ["aceite_oliva", 7]], "macros": [332, 28.9, 29.7, 10.4, 1.5]}, "snack_am": {"key": "IS2", "items": [["manzana_asada", 150], ["pavo_pechuga_crudo", 50]], "macros": [134, 12.3, 20.7, 1.0, 2.1]}, "comida": {"key": "IC2", "items": [["arroz_blanco_cocido", 135], ["merluza_cruda", 215], ["caldo_verduras", 150], ["zanahoria_cocida", 120], ["aceite_oliva", 15], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [637, 46.4, 69.4, 19.5, 12.6]}, "merienda": {"key": "IM2", "items": [["tortita_arroz", 20], ["pavo_pechuga_crudo", 80]], "macros": [166, 20.5, 16.3, 2.0, 0.8]}, "cena": {"key": "IN13", "items": [["pasta_blanca_cocida", 150], ["merluza_cruda", 195], ["zanahoria_cocida", 100], ["aceite_oliva", 13], ["ensalada_variada", 240]], "macros": [573, 43.4, 61.9, 16.8, 10.0]}}}, {"date": "2026-09-24", "day_num": 24, "plan_dia": 6, "weekday": "Jueves", "fase": 2, "target_kcal": 1850, "totales": {"kcal": 1863, "proteina": 153.4, "carbs": 187.7, "grasa": 55.3, "fibra": 30.0}, "meals": {"desayuno": {"key": "ID3", "items": [["clara_huevo", 220], ["pan_blanco_tostado", 45], ["aceite_oliva", 5]], "macros": [280, 28.3, 25.8, 6.9, 1.3]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 35], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [201, 15.2, 18.9, 7.0, 1.0]}, "comida": {"key": "IC4", "items": [["pollo_pechuga_crudo", 165], ["patata_cocida", 185], ["calabacin_pelado", 240], ["aceite_oliva", 13], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [638, 50.3, 64.4, 20.1, 14.2]}, "merienda": {"key": "IM3", "items": [["pan_blanco_tostado", 45], ["pollo_pechuga_crudo", 80], ["aceite_oliva", 4]], "macros": [262, 22.3, 24.3, 7.6, 1.3]}, "cena": {"key": "IN4", "items": [["merluza_cruda", 190], ["patata_cocida", 170], ["zanahoria_cocida", 160], ["aceite_oliva", 11], ["ensalada_variada", 240]], "macros": [482, 37.3, 54.3, 13.7, 12.2]}}}, {"date": "2026-09-25", "day_num": 25, "plan_dia": 7, "weekday": "Viernes", "fase": 2, "target_kcal": 1850, "totales": {"kcal": 1850, "proteina": 139.7, "carbs": 225.1, "grasa": 47.9, "fibra": 30.6}, "meals": {"desayuno": {"key": "ID4", "items": [["huevo_entero", 60], ["clara_huevo", 120], ["pan_blanco_tostado", 50], ["aceite_oliva", 6]], "macros": [341, 25.4, 28.3, 13.6, 1.4]}, "snack_am": {"key": "IS7", "items": [["manzana_asada", 120], ["pera_cocida", 100]], "macros": [119, 0.8, 31.8, 0.2, 3.8]}, "comida": {"key": "IC5", "items": [["arroz_blanco_cocido", 175], ["calabaza", 300], ["lenguado_crudo", 190], ["aceite_oliva", 12], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [664, 46.7, 85.5, 16.7, 12.4]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 45], ["pavo_pechuga_crudo", 70]], "macros": [208, 20.9, 24.3, 2.6, 1.3]}, "cena": {"key": "IN5", "items": [["calabaza", 500], ["patata_cocida", 105], ["pavo_pechuga_crudo", 155], ["aceite_oliva", 11], ["ensalada_variada", 240]], "macros": [518, 45.9, 55.2, 14.8, 11.7]}}}, {"date": "2026-09-26", "day_num": 26, "plan_dia": 8, "weekday": "Sabado", "fase": 2, "target_kcal": 1850, "totales": {"kcal": 1847, "proteina": 162.2, "carbs": 169.2, "grasa": 54.8, "fibra": 23.9}, "meals": {"desayuno": {"key": "ID8", "items": [["pan_blanco_tostado", 45], ["pollo_pechuga_crudo", 90], ["aceite_oliva", 5]], "macros": [283, 24.5, 24.3, 8.8, 1.3]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 20]], "macros": [136, 18.5, 10.8, 1.8, 0.6]}, "comida": {"key": "IC6", "items": [["pasta_blanca_cocida", 130], ["pollo_pechuga_crudo", 160], ["calabacin_pelado", 240], ["aceite_oliva", 12], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [670, 53.6, 67.7, 20.0, 13.2]}, "merienda": {"key": "IM3", "items": [["pan_blanco_tostado", 35], ["pollo_pechuga_crudo", 80], ["aceite_oliva", 4]], "macros": [233, 21.3, 18.9, 7.2, 1.0]}, "cena": {"key": "IN6", "items": [["pollo_pechuga_crudo", 155], ["arroz_blanco_cocido", 110], ["calabacin_pelado", 300], ["aceite_oliva", 11], ["ensalada_variada", 240]], "macros": [525, 44.3, 47.5, 17.0, 7.8]}}}, {"date": "2026-09-27", "day_num": 27, "plan_dia": 9, "weekday": "Domingo", "fase": 2, "target_kcal": 1850, "totales": {"kcal": 1840, "proteina": 152.6, "carbs": 194.7, "grasa": 50.4, "fibra": 30.6}, "meals": {"desayuno": {"key": "ID3", "items": [["clara_huevo", 220], ["pan_blanco_tostado", 45], ["aceite_oliva", 5]], "macros": [280, 28.3, 25.8, 6.9, 1.3]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 35], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [201, 15.2, 18.9, 7.0, 1.0]}, "comida": {"key": "IC4", "items": [["pollo_pechuga_crudo", 165], ["patata_cocida", 205], ["calabacin_pelado", 240], ["aceite_oliva", 13], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [656, 50.7, 68.4, 20.2, 14.5]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 45], ["pavo_pechuga_crudo", 70]], "macros": [208, 20.9, 24.3, 2.6, 1.3]}, "cena": {"key": "IN4", "items": [["merluza_cruda", 190], ["patata_cocida", 185], ["zanahoria_cocida", 160], ["aceite_oliva", 11], ["ensalada_variada", 240]], "macros": [495, 37.5, 57.3, 13.7, 12.5]}}}, {"date": "2026-09-28", "day_num": 28, "plan_dia": 10, "weekday": "Lunes", "fase": 2, "target_kcal": 1850, "totales": {"kcal": 1860, "proteina": 140.0, "carbs": 216.2, "grasa": 52.6, "fibra": 30.2}, "meals": {"desayuno": {"key": "ID4", "items": [["huevo_entero", 60], ["clara_huevo", 120], ["pan_blanco_tostado", 50], ["aceite_oliva", 6]], "macros": [341, 25.4, 28.3, 13.6, 1.4]}, "snack_am": {"key": "IS7", "items": [["manzana_asada", 120], ["pera_cocida", 100]], "macros": [119, 0.8, 31.8, 0.2, 3.8]}, "comida": {"key": "IC5", "items": [["arroz_blanco_cocido", 160], ["calabaza", 300], ["lenguado_crudo", 190], ["aceite_oliva", 12], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [644, 46.3, 81.3, 16.6, 12.4]}, "merienda": {"key": "IM3", "items": [["pan_blanco_tostado", 40], ["pollo_pechuga_crudo", 80], ["aceite_oliva", 4]], "macros": [247, 21.8, 21.6, 7.4, 1.1]}, "cena": {"key": "IN5", "items": [["calabaza", 500], ["patata_cocida", 95], ["pavo_pechuga_crudo", 155], ["aceite_oliva", 11], ["ensalada_variada", 240]], "macros": [509, 45.7, 53.2, 14.8, 11.5]}}}, {"date": "2026-09-29", "day_num": 29, "plan_dia": 11, "weekday": "Martes", "fase": 2, "target_kcal": 1850, "totales": {"kcal": 1851, "proteina": 162.7, "carbs": 180.5, "grasa": 50.2, "fibra": 24.3}, "meals": {"desayuno": {"key": "ID8", "items": [["pan_blanco_tostado", 45], ["pollo_pechuga_crudo", 90], ["aceite_oliva", 5]], "macros": [283, 24.5, 24.3, 8.8, 1.3]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 25]], "macros": [150, 19.0, 13.5, 1.9, 0.7]}, "comida": {"key": "IC6", "items": [["pasta_blanca_cocida", 140], ["pollo_pechuga_crudo", 160], ["calabacin_pelado", 240], ["aceite_oliva", 12], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [686, 54.2, 70.8, 20.1, 13.4]}, "merienda": {"key": "IM1", "items": [["pan_blanco_tostado", 40], ["pavo_pechuga_crudo", 70]], "macros": [194, 20.4, 21.6, 2.4, 1.1]}, "cena": {"key": "IN6", "items": [["pollo_pechuga_crudo", 155], ["arroz_blanco_cocido", 120], ["calabacin_pelado", 300], ["aceite_oliva", 11], ["ensalada_variada", 240]], "macros": [538, 44.6, 50.3, 17.0, 7.8]}}}, {"date": "2026-09-30", "day_num": 30, "plan_dia": 12, "weekday": "Miercoles", "fase": 2, "target_kcal": 1850, "totales": {"kcal": 1837, "proteina": 156.3, "carbs": 200.0, "grasa": 47.4, "fibra": 30.2}, "meals": {"desayuno": {"key": "ID3", "items": [["clara_huevo", 220], ["pan_blanco_tostado", 45], ["aceite_oliva", 5]], "macros": [280, 28.3, 25.8, 6.9, 1.3]}, "snack_am": {"key": "IS2", "items": [["manzana_asada", 150], ["pavo_pechuga_crudo", 50]], "macros": [134, 12.3, 20.7, 1.0, 2.1]}, "comida": {"key": "IC3", "items": [["patata_cocida", 140], ["arroz_blanco_cocido", 95], ["zanahoria_cocida", 120], ["pavo_pechuga_crudo", 170], ["aceite_oliva", 11], ["ensalada_variada", 300], ["garbanzos_cocidos", 40]], "macros": [697, 53.4, 84.6, 16.3, 14.9]}, "merienda": {"key": "IM3", "items": [["pan_blanco_tostado", 45], ["pollo_pechuga_crudo", 80], ["aceite_oliva", 4]], "macros": [262, 22.3, 24.3, 7.6, 1.3]}, "cena": {"key": "IN2", "items": [["calabacin_pelado", 400], ["patata_cocida", 125], ["merluza_cruda", 190], ["aceite_oliva", 12], ["ensalada_variada", 240]], "macros": [464, 40.0, 44.6, 15.6, 10.6]}}}, {"date": "2026-10-01", "day_num": 1, "plan_dia": 13, "weekday": "Jueves", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1863, "proteina": 135.4, "carbs": 223.8, "grasa": 53.0, "fibra": 39.0}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 50], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [359, 26.2, 51.4, 6.3, 7.4]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC7", "items": [["merluza_cruda", 220], ["patata_cocida", 250], ["judia_verde", 140], ["aceite_oliva", 15], ["ensalada_variada", 180]], "macros": [579, 43.6, 63.5, 17.8, 12.2]}, "merienda": {"key": "IM4", "items": [["avena", 35], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [224, 20.0, 24.6, 5.1, 4.1]}, "cena": {"key": "IN7", "items": [["lenguado_crudo", 210], ["patata_cocida", 230], ["judia_verde", 140], ["aceite_oliva", 14], ["ensalada_variada", 150]], "macros": [544, 43.4, 58.6, 17.1, 11.3]}}}, {"date": "2026-10-02", "day_num": 2, "plan_dia": 14, "weekday": "Viernes", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1852, "proteina": 147.5, "carbs": 159.3, "grasa": 67.0, "fibra": 23.5}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [347, 25.4, 29.2, 13.4, 4.8]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 25]], "macros": [150, 19.0, 13.5, 1.9, 0.7]}, "comida": {"key": "IC8", "items": [["ternera_magra_cruda", 160], ["zanahoria_cocida", 126], ["arroz_blanco_cocido", 155], ["aceite_oliva", 13], ["ensalada_variada", 180]], "macros": [606, 41.8, 59.4, 21.9, 7.6]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 45], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [277, 19.5, 25.2, 9.8, 4.6]}, "cena": {"key": "IN8", "items": [["clara_huevo", 250], ["huevo_entero", 55], ["calabacin_pelado", 210], ["pan_blanco_tostado", 35], ["aceite_oliva", 12], ["ensalada_variada", 150]], "macros": [472, 41.8, 32.0, 20.0, 5.8]}}}, {"date": "2026-10-03", "day_num": 3, "plan_dia": 15, "weekday": "Sabado", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1863, "proteina": 156.0, "carbs": 182.8, "grasa": 58.3, "fibra": 35.2}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 40], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [216, 15.7, 21.6, 7.1, 1.1]}, "comida": {"key": "IC9", "items": [["pollo_pechuga_crudo", 180], ["boniato_asado", 165], ["espinacas_cocidas", 168], ["aceite_oliva", 15], ["ensalada_variada", 180]], "macros": [572, 51.0, 45.9, 21.1, 12.7]}, "merienda": {"key": "IM4", "items": [["avena", 30], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [204, 19.1, 21.3, 4.7, 3.6]}, "cena": {"key": "IN9", "items": [["calabaza", 280], ["zanahoria_cocida", 126], ["patata_cocida", 80], ["pollo_pechuga_crudo", 170], ["aceite_oliva", 14], ["ensalada_variada", 150]], "macros": [532, 44.9, 46.0, 19.5, 11.0]}}}, {"date": "2026-10-04", "day_num": 4, "plan_dia": 16, "weekday": "Domingo", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1856, "proteina": 134.3, "carbs": 198.1, "grasa": 60.8, "fibra": 33.2}, "meals": {"desayuno": {"key": "ID8", "items": [["pan_blanco_tostado", 60], ["pollo_pechuga_crudo", 90], ["aceite_oliva", 5]], "macros": [326, 25.9, 32.4, 9.3, 1.7]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC7", "items": [["merluza_cruda", 220], ["patata_cocida", 225], ["judia_verde", 140], ["aceite_oliva", 15], ["ensalada_variada", 180]], "macros": [558, 43.2, 58.5, 17.8, 11.8]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN7", "items": [["lenguado_crudo", 210], ["patata_cocida", 205], ["judia_verde", 140], ["aceite_oliva", 14], ["ensalada_variada", 150]], "macros": [523, 43.0, 53.6, 17.0, 10.9]}}}, {"date": "2026-10-05", "day_num": 5, "plan_dia": 17, "weekday": "Lunes", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1863, "proteina": 149.4, "carbs": 171.9, "grasa": 62.6, "fibra": 23.0}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 60], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [376, 26.3, 34.6, 13.7, 5.0]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 30]], "macros": [165, 19.4, 16.2, 2.1, 0.8]}, "comida": {"key": "IC8", "items": [["ternera_magra_cruda", 160], ["zanahoria_cocida", 126], ["arroz_blanco_cocido", 175], ["aceite_oliva", 13], ["ensalada_variada", 180]], "macros": [632, 42.3, 65.1, 22.0, 7.7]}, "merienda": {"key": "IM4", "items": [["avena", 30], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [204, 19.1, 21.3, 4.7, 3.6]}, "cena": {"key": "IN8", "items": [["clara_huevo", 250], ["huevo_entero", 55], ["calabacin_pelado", 210], ["pan_blanco_tostado", 40], ["aceite_oliva", 12], ["ensalada_variada", 150]], "macros": [486, 42.3, 34.7, 20.1, 5.9]}}}, {"date": "2026-10-06", "day_num": 6, "plan_dia": 18, "weekday": "Martes", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1854, "proteina": 142.0, "carbs": 199.6, "grasa": 56.7, "fibra": 39.1}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS7", "items": [["manzana_asada", 120], ["pera_cocida", 100]], "macros": [119, 0.8, 31.8, 0.2, 3.8]}, "comida": {"key": "IC9", "items": [["pollo_pechuga_crudo", 180], ["boniato_asado", 165], ["espinacas_cocidas", 168], ["aceite_oliva", 15], ["ensalada_variada", 180]], "macros": [572, 51.0, 45.9, 21.1, 12.7]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 50], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [292, 20.0, 27.9, 10.0, 4.8]}, "cena": {"key": "IN9", "items": [["calabaza", 280], ["zanahoria_cocida", 126], ["patata_cocida", 80], ["pollo_pechuga_crudo", 170], ["aceite_oliva", 14], ["ensalada_variada", 150]], "macros": [532, 44.9, 46.0, 19.5, 11.0]}}}, {"date": "2026-10-07", "day_num": 7, "plan_dia": 19, "weekday": "Miercoles", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1855, "proteina": 135.5, "carbs": 189.5, "grasa": 63.8, "fibra": 31.7}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 65], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [390, 26.8, 37.3, 13.9, 5.2]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC7", "items": [["merluza_cruda", 220], ["patata_cocida", 255], ["judia_verde", 140], ["aceite_oliva", 15], ["ensalada_variada", 180]], "macros": [583, 43.7, 64.5, 17.8, 12.3]}, "merienda": {"key": "IM4", "items": [["avena", 35], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [224, 20.0, 24.6, 5.1, 4.1]}, "cena": {"key": "IN8", "items": [["clara_huevo", 250], ["huevo_entero", 55], ["calabacin_pelado", 210], ["pan_blanco_tostado", 45], ["aceite_oliva", 12], ["ensalada_variada", 150]], "macros": [501, 42.8, 37.4, 20.3, 6.1]}}}, {"date": "2026-10-08", "day_num": 8, "plan_dia": 20, "weekday": "Jueves", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1854, "proteina": 150.1, "carbs": 169.1, "grasa": 62.1, "fibra": 25.1}, "meals": {"desayuno": {"key": "ID8", "items": [["pan_blanco_tostado", 50], ["pollo_pechuga_crudo", 90], ["aceite_oliva", 5]], "macros": [297, 25.0, 27.0, 9.0, 1.4]}, "snack_am": {"key": "IS4", "items": [["pavo_pechuga_crudo", 70], ["pan_blanco_tostado", 25]], "macros": [150, 19.0, 13.5, 1.9, 0.7]}, "comida": {"key": "IC8", "items": [["ternera_magra_cruda", 160], ["zanahoria_cocida", 126], ["arroz_blanco_cocido", 155], ["aceite_oliva", 13], ["ensalada_variada", 180]], "macros": [606, 41.8, 59.4, 21.9, 7.6]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 45], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [277, 19.5, 25.2, 9.8, 4.6]}, "cena": {"key": "IN9", "items": [["calabaza", 280], ["zanahoria_cocida", 126], ["patata_cocida", 70], ["pollo_pechuga_crudo", 170], ["aceite_oliva", 14], ["ensalada_variada", 150]], "macros": [524, 44.8, 44.0, 19.5, 10.8]}}}, {"date": "2026-10-09", "day_num": 9, "plan_dia": 21, "weekday": "Viernes", "fase": 3, "target_kcal": 1850, "totales": {"kcal": 1854, "proteina": 154.1, "carbs": 190.4, "grasa": 55.8, "fibra": 35.1}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 45], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [339, 25.3, 48.0, 5.9, 6.8]}, "snack_am": {"key": "IS3", "items": [["pan_blanco_tostado", 40], ["pavo_pechuga_crudo", 50], ["aceite_oliva", 5]], "macros": [216, 15.7, 21.6, 7.1, 1.1]}, "comida": {"key": "IC9", "items": [["pollo_pechuga_crudo", 180], ["boniato_asado", 165], ["espinacas_cocidas", 168], ["aceite_oliva", 15], ["ensalada_variada", 180]], "macros": [572, 51.0, 45.9, 21.1, 12.7]}, "merienda": {"key": "IM4", "items": [["avena", 30], ["clara_huevo", 120], ["bebida_almendra", 200]], "macros": [204, 19.1, 21.3, 4.7, 3.6]}, "cena": {"key": "IN7", "items": [["lenguado_crudo", 210], ["patata_cocida", 205], ["judia_verde", 140], ["aceite_oliva", 14], ["ensalada_variada", 150]], "macros": [523, 43.0, 53.6, 17.0, 10.9]}}}, {"date": "2026-10-10", "day_num": 10, "plan_dia": 22, "weekday": "Sabado", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1846, "proteina": 118.5, "carbs": 193.8, "grasa": 71.8, "fibra": 37.8}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 35], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [366, 25.2, 42.9, 11.7, 7.1]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC10", "items": [["lentejas_cocidas", 120], ["arroz_blanco_cocido", 95], ["pollo_pechuga_crudo", 140], ["zanahoria_cocida", 84], ["aceite_oliva", 14], ["ensalada_variada", 140]], "macros": [612, 47.2, 62.0, 19.0, 14.9]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN10", "items": [["sardina_fresca", 155], ["patata_cocida", 155], ["espinacas_cocidas", 144], ["aceite_oliva", 9], ["ensalada_variada", 120]], "macros": [537, 40.8, 40.1, 25.0, 8.4]}}}, {"date": "2026-10-11", "day_num": 11, "plan_dia": 23, "weekday": "Domingo", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1849, "proteina": 125.0, "carbs": 141.3, "grasa": 88.1, "fibra": 26.6}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 45], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [332, 24.9, 26.5, 13.2, 4.6]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC11", "items": [["salmon_crudo", 165], ["patata_cocida", 140], ["calabacin_pelado", 180], ["aceite_oliva", 10], ["ensalada_variada", 140]], "macros": [564, 39.2, 37.8, 29.2, 6.8]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 35], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [248, 18.5, 19.8, 9.5, 4.3]}, "cena": {"key": "IN11", "items": [["salmon_crudo", 160], ["quinoa_cocida", 105], ["calabacin_pelado", 180], ["aceite_oliva", 9], ["ensalada_variada", 120]], "macros": [548, 40.2, 31.5, 29.5, 6.9]}}}, {"date": "2026-10-12", "day_num": 12, "plan_dia": 24, "weekday": "Lunes", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1844, "proteina": 115.4, "carbs": 185.5, "grasa": 75.6, "fibra": 33.9}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 35], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [366, 25.2, 42.9, 11.7, 7.1]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC12", "items": [["quinoa_cocida", 145], ["pollo_pechuga_crudo", 170], ["calabacin_pelado", 144], ["aguacate", 40], ["aceite_oliva", 10], ["ensalada_variada", 140]], "macros": [583, 48.8, 40.3, 23.9, 10.7]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN12", "items": [["calabacin_pelado", 240], ["calabaza", 180], ["patata_cocida", 75], ["huevo_entero", 120], ["clara_huevo", 100], ["pan_blanco_tostado", 30], ["aceite_oliva", 10], ["ensalada_variada", 120]], "macros": [564, 36.1, 53.5, 23.9, 8.7]}}}, {"date": "2026-10-13", "day_num": 13, "plan_dia": 25, "weekday": "Martes", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1854, "proteina": 132.5, "carbs": 188.3, "grasa": 65.5, "fibra": 37.4}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 35], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [301, 23.6, 41.4, 5.2, 5.8]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC10", "items": [["lentejas_cocidas", 120], ["arroz_blanco_cocido", 90], ["pollo_pechuga_crudo", 140], ["zanahoria_cocida", 84], ["aceite_oliva", 14], ["ensalada_variada", 140]], "macros": [605, 47.1, 60.6, 19.0, 14.9]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 40], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [263, 19.0, 22.5, 9.6, 4.5]}, "cena": {"key": "IN10", "items": [["sardina_fresca", 155], ["patata_cocida", 145], ["espinacas_cocidas", 144], ["aceite_oliva", 9], ["ensalada_variada", 120]], "macros": [528, 40.6, 38.1, 25.0, 8.2]}}}, {"date": "2026-10-14", "day_num": 14, "plan_dia": 26, "weekday": "Miercoles", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1845, "proteina": 111.0, "carbs": 168.2, "grasa": 86.9, "fibra": 29.0}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 35], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [366, 25.2, 42.9, 11.7, 7.1]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC11", "items": [["salmon_crudo", 165], ["patata_cocida", 160], ["calabacin_pelado", 180], ["aceite_oliva", 10], ["ensalada_variada", 140]], "macros": [582, 39.6, 41.8, 29.3, 7.2]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN11", "items": [["salmon_crudo", 160], ["quinoa_cocida", 120], ["calabacin_pelado", 180], ["aceite_oliva", 9], ["ensalada_variada", 120]], "macros": [566, 40.9, 34.7, 29.8, 7.3]}}}, {"date": "2026-10-15", "day_num": 15, "plan_dia": 27, "weekday": "Jueves", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1854, "proteina": 129.5, "carbs": 159.9, "grasa": 76.8, "fibra": 31.8}, "meals": {"desayuno": {"key": "ID6", "items": [["pan_blanco_tostado", 40], ["aguacate", 50], ["clara_huevo", 180], ["aceite_oliva", 4]], "macros": [318, 24.4, 23.8, 13.0, 4.5]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC12", "items": [["quinoa_cocida", 135], ["pollo_pechuga_crudo", 170], ["calabacin_pelado", 144], ["aguacate", 40], ["aceite_oliva", 10], ["ensalada_variada", 140]], "macros": [571, 48.4, 38.1, 23.7, 10.4]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 35], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [248, 18.5, 19.8, 9.5, 4.3]}, "cena": {"key": "IN12", "items": [["calabacin_pelado", 240], ["calabaza", 180], ["patata_cocida", 70], ["huevo_entero", 120], ["clara_huevo", 100], ["pan_blanco_tostado", 30], ["aceite_oliva", 10], ["ensalada_variada", 120]], "macros": [560, 36.0, 52.5, 23.9, 8.6]}}}, {"date": "2026-10-16", "day_num": 16, "plan_dia": 28, "weekday": "Viernes", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1856, "proteina": 118.0, "carbs": 184.9, "grasa": 76.4, "fibra": 36.4}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 35], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [366, 25.2, 42.9, 11.7, 7.1]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC10", "items": [["lentejas_cocidas", 120], ["arroz_blanco_cocido", 90], ["pollo_pechuga_crudo", 140], ["zanahoria_cocida", 84], ["aceite_oliva", 14], ["ensalada_variada", 140]], "macros": [605, 47.1, 60.6, 19.0, 14.9]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN11", "items": [["salmon_crudo", 160], ["quinoa_cocida", 110], ["calabacin_pelado", 180], ["aceite_oliva", 9], ["ensalada_variada", 120]], "macros": [554, 40.4, 32.6, 29.6, 7.0]}}}, {"date": "2026-10-17", "day_num": 17, "plan_dia": 29, "weekday": "Sabado", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1844, "proteina": 125.2, "carbs": 172.5, "grasa": 75.8, "fibra": 30.0}, "meals": {"desayuno": {"key": "ID5", "items": [["avena", 35], ["clara_huevo", 150], ["bebida_almendra", 200], ["manzana_asada", 120]], "macros": [301, 23.6, 41.4, 5.2, 5.8]}, "snack_am": {"key": "IS5", "items": [["pera_cocida", 160], ["nueces", 10]], "macros": [157, 2.2, 25.7, 6.7, 4.0]}, "comida": {"key": "IC11", "items": [["salmon_crudo", 165], ["patata_cocida", 165], ["calabacin_pelado", 180], ["aceite_oliva", 10], ["ensalada_variada", 140]], "macros": [586, 39.6, 42.8, 29.3, 7.3]}, "merienda": {"key": "IM6", "items": [["pan_blanco_tostado", 40], ["aguacate", 50], ["pavo_pechuga_crudo", 60]], "macros": [263, 19.0, 22.5, 9.6, 4.5]}, "cena": {"key": "IN10", "items": [["sardina_fresca", 155], ["patata_cocida", 155], ["espinacas_cocidas", 144], ["aceite_oliva", 9], ["ensalada_variada", 120]], "macros": [537, 40.8, 40.1, 25.0, 8.4]}}}, {"date": "2026-10-18", "day_num": 18, "plan_dia": 30, "weekday": "Domingo", "fase": 4, "target_kcal": 1850, "totales": {"kcal": 1844, "proteina": 115.4, "carbs": 185.5, "grasa": 75.6, "fibra": 33.9}, "meals": {"desayuno": {"key": "ID7", "items": [["avena", 35], ["clara_huevo", 150], ["bebida_almendra", 200], ["pera_cocida", 110], ["nueces", 10]], "macros": [366, 25.2, 42.9, 11.7, 7.1]}, "snack_am": {"key": "IS6", "items": [["nueces", 12], ["platano", 100]], "macros": [167, 2.9, 24.4, 8.1, 3.4]}, "comida": {"key": "IC12", "items": [["quinoa_cocida", 145], ["pollo_pechuga_crudo", 170], ["calabacin_pelado", 144], ["aguacate", 40], ["aceite_oliva", 10], ["ensalada_variada", 140]], "macros": [583, 48.8, 40.3, 23.9, 10.7]}, "merienda": {"key": "IM5", "items": [["nueces", 12], ["pera_cocida", 150]], "macros": [164, 2.4, 24.4, 8.0, 4.0]}, "cena": {"key": "IN12", "items": [["calabacin_pelado", 240], ["calabaza", 180], ["patata_cocida", 75], ["huevo_entero", 120], ["clara_huevo", 100], ["pan_blanco_tostado", 30], ["aceite_oliva", 10], ["ensalada_variada", 120]], "macros": [564, 36.1, 53.5, 23.9, 8.7]}}}]
   </script>
 
   <!-- Planning de alimentacion complementaria de Pablo (6-15 meses):
@@ -24660,6 +24787,962 @@ function boot(vistaInicial) {
     const PC_ENTRENOS_ORDEN = ["pecho_triceps", "espalda_biceps", "pecho_tecnico",
                               "pierna_core", "hombro_brazos_core", "descanso"];
 
+
+    /* ========================================================================
+       PLAN ANTIINFLAMATORIO (pestana "Inflamacion" del Plan semanal)
+       30 dias, del 19 de septiembre al 18 de octubre de 2026, pensados para
+       tres cosas a la vez: inflamacion gastrica, higado graso y un proceso
+       diarreico. Vive al lado del plan de deficit: misma anatomia de datos
+       (un objeto por dia con comidas, items en gramos y macros), mismo
+       acordeon de comidas y mismo escalado por comensales.
+
+       Por que va por fases y no es un menu plano: los tres objetivos no piden
+       lo mismo. La diarrea exige residuo bajo (poca fibra, poca grasa, nada de
+       lactosa); el higado graso pide justo lo contrario a medio plazo (fibra,
+       grasa de oliva, pescado azul, cero azucares libres). La unica forma
+       honesta de servir a los dos es empezar restrictivo y abrir el menu a
+       medida que el intestino aguanta. Por eso la fibra sube de ~11 g/dia en
+       la fase 1 a ~30 g/dia en la fase 4, y la grasa del 18% al 35% de las
+       calorias.
+       ======================================================================== */
+
+    const PC_INF = (() => {
+      try {
+        const el = document.getElementById("pc-inflam-data");
+        return el ? JSON.parse(el.textContent) : [];
+      } catch (_) { return []; }
+    })();
+    const PC_INF_POR_FECHA = new Map(PC_INF.map(d => [d.date, d]));
+
+    const PC_INF_NOMBRES = {
+      arroz_blanco_cocido: "Arroz blanco cocido", patata_cocida: "Patata cocida sin piel",
+      zanahoria_cocida: "Zanahoria cocida", calabacin_pelado: "Calabacín sin piel ni pepitas",
+      calabaza: "Calabaza (auyama)", judia_verde: "Judía verde sin hilos",
+      espinacas_cocidas: "Espinacas cocidas", boniato_asado: "Boniato asado sin piel",
+      platano: "Plátano maduro", manzana_asada: "Manzana asada sin piel",
+      pera_cocida: "Pera cocida sin piel", pollo_pechuga_crudo: "Pechuga de pollo (cruda)",
+      pavo_pechuga_crudo: "Pechuga de pavo (cruda)", ternera_magra_cruda: "Ternera magra (cruda)",
+      merluza_cruda: "Merluza (cruda)", lenguado_crudo: "Lenguado (crudo)",
+      salmon_crudo: "Salmón (crudo)", sardina_fresca: "Sardinas frescas limpias",
+      clara_huevo: "Clara de huevo", huevo_entero: "Huevo entero",
+      pan_blanco_tostado: "Pan blanco tostado (del día anterior)",
+      pasta_blanca_cocida: "Pasta blanca cocida", quinoa_cocida: "Quinoa cocida",
+      avena: "Copos de avena finos", tortita_arroz: "Tortitas de arroz",
+      lentejas_cocidas: "Lentejas cocidas y pasadas por el pasapurés",
+      aguacate: "Aguacate", nueces: "Nueces",
+      aceite_oliva: "Aceite de oliva virgen extra",
+      bebida_almendra: "Bebida de almendras sin azúcar añadido",
+      caldo_pollo_desgrasado: "Caldo de pollo desgrasado y colado",
+      caldo_verduras: "Caldo de verduras colado",
+      /* Solo aparecen en la versión de Rubén, y no sustituyen a nada: se
+         suman en crudo al emplatar. */
+      ensalada_variada: "Ensalada de hoja verde, tomate y pepino",
+      garbanzos_cocidos: "Garbanzos cocidos (de bote, escurridos)"
+    };
+
+    /* Las cuatro fases. El color tiñe la cabecera del día y el punto del
+       calendario, igual que el color de rutina hace en la pestaña de dieta. */
+    const PC_INF_FASES = {
+      1: {
+        titulo: "Fase 1 · Reposo digestivo",
+        rango: "Días 1-5 · 19 a 23 de septiembre",
+        color: "var(--tipo-sopas_cremas-fg)",
+        objetivo: "Cortar el proceso diarreico y descargar la mucosa gástrica, con la " +
+          "proteína alta para no perder músculo y el almidón recortado para no cargar de glucosa.",
+        diana: "≈1.650 kcal · proteína ≈145 g · fibra ≈10 g · grasa ≈22% de las kcal",
+        claves: [
+          "<b>Hidratación por delante de la comida.</b> 2-2,5 L al día a sorbos pequeños y frecuentes: agua, caldo colado, suero oral de farmacia o limonada alcalina. La diarrea pierde agua, sodio y potasio; si solo bebes agua, diluyes el sodio.",
+          "<b>Cinco tomas pequeñas.</b> El estómago inflamado tolera mucho mejor volúmenes pequeños y frecuentes que tres comidas grandes.",
+          "<b>Texturas blandas y temperatura templada.</b> Ni muy frío ni muy caliente: ambos extremos estimulan el peristaltismo y molestan la mucosa.",
+          "<b>Cocciones sin grasa:</b> hervido, vapor, horno y plancha con el aceite <i>añadido en crudo al final</i>, nunca frito ni rehogado.",
+          "<b>Almidón blanco, sí; pero el menos glucémico posible.</b> Dos de los cinco días cambian el arroz por <b>pasta blanca muy cocida</b>: mismo residuo bajo y bastante menos índice glucémico (≈50 frente a ≈73 del arroz y ≈78 de la patata). Importa porque la resistencia a la insulina es el motor del hígado graso. Lo que <b>no</b> vale es enfriar el arroz o la patata para bajar el índice glucémico: el almidón resistente que se forma fermenta en el colon y da gas y urgencia.",
+          "<b>Se sale de esta fase por tolerancia, no por calendario.</b> En cuanto las heces se formen y bajes de tres deposiciones al día, pasa a la fase 2 aunque no hayan pasado los cinco días. Si al quinto día sigues igual, no la alargues por tu cuenta: consulta."
+        ],
+        fuera: ["Leche y derivados", "Fibra insoluble (integrales, legumbre entera, verdura cruda, piel y pepitas)",
+                "Café, té, alcohol y refrescos (con y sin gas)", "Fritos, rebozados, embutidos y ultraprocesados",
+                "Picante, vinagre, cítricos y tomate", "Azúcares libres, zumos y edulcorantes polioles (sorbitol, manitol, xilitol)"]
+      },
+      2: {
+        titulo: "Fase 2 · Reintroducción controlada",
+        rango: "Días 6-12 · 24 a 30 de septiembre",
+        color: "var(--tipo-huevos-fg)",
+        objetivo: "Con las deposiciones ya formándose, subir proteína y volver a " +
+          "meter verdura cocida sin piel y algo más de aceite de oliva en crudo.",
+        diana: "≈1.700 kcal · fibra ≈13 g · grasa ≈23% de las kcal",
+        claves: [
+          "<b>Un alimento nuevo cada vez.</b> Si algo sienta mal, quítalo y vuelve a probarlo 3-4 días después: solo así sabes qué te lo ha hecho.",
+          "<b>Verdura siempre cocida, pelada y sin pepitas.</b> Calabacín, calabaza y zanahoria son las mejor toleradas.",
+          "<b>El aceite, en crudo.</b> Calentar el aceite no lo hace más digestivo, lo hace menos.",
+          "<b>Sigue sin lácteos.</b> Tras un cuadro diarreico la lactasa del borde en cepillo tarda semanas en recuperarse: es un déficit secundario transitorio, no una alergia."
+        ],
+        fuera: ["Leche y derivados", "Legumbre entera y cereales integrales", "Verdura cruda y fruta con piel",
+                "Café, alcohol y bebidas con gas", "Fritos y salsas grasas", "Azúcares libres y zumos"]
+      },
+      3: {
+        titulo: "Fase 3 · Estabilización hepática",
+        rango: "Días 13-21 · 1 a 9 de octubre",
+        color: "var(--tipo-pescados_mariscos-fg)",
+        objetivo: "El intestino ya aguanta: ahora manda el hígado. Entra fibra " +
+          "soluble, entra grasa buena (oliva, pescado) y se mantiene el déficit calórico.",
+        diana: "≈1.750 kcal · fibra ≈23 g · grasa ≈28% de las kcal",
+        claves: [
+          "<b>El déficit calórico es el tratamiento.</b> En el hígado graso metabólico no hay ningún alimento que iguale el efecto de perder peso: una pérdida del 5% reduce la grasa hepática y a partir del 7-10% mejora también la inflamación.",
+          "<b>Fibra soluble antes que insoluble:</b> avena, zanahoria, calabaza, manzana y pera cocidas. Es la que el intestino recién recuperado tolera y la que mejora el perfil lipídico.",
+          "<b>Cero azúcares libres y cero fructosa líquida.</b> Refrescos, zumos y bollería van directos a lipogénesis hepática de novo. Esto no se relaja en ninguna fase.",
+          "<b>Cero alcohol.</b> Innegociable con hígado graso y con gastritis."
+        ],
+        fuera: ["Leche y derivados", "Alcohol (en todas sus formas)", "Azúcares libres, zumos y bollería",
+                "Ultraprocesados y embutidos", "Fritos", "Café en ayunas y picante"]
+      },
+      4: {
+        titulo: "Fase 4 · Consolidación mediterránea",
+        rango: "Días 22-30 · 10 a 18 de octubre",
+        color: "var(--tipo-verduras_ensaladas-fg)",
+        objetivo: "Aterrizar en el patrón que sí tiene evidencia a largo plazo en " +
+          "hígado graso: mediterráneo, con pescado azul, aceite de oliva, frutos secos " +
+          "y legumbre, adaptado para no reactivar la gastritis.",
+        diana: "≈1.850 kcal · fibra ≈30 g · grasa ≈35% de las kcal",
+        claves: [
+          "<b>Pescado azul 2-3 veces por semana.</b> Los omega-3 de cadena larga reducen la grasa hepática; es de lo poco con señal consistente más allá de la pérdida de peso.",
+          "<b>Legumbre, pero pasada por el pasapurés.</b> Quitar el hollejo baja mucho el residuo y los gases sin renunciar a la proteína vegetal ni a la fibra soluble.",
+          "<b>Aceite de oliva virgen extra como grasa principal</b>, 3-4 cucharadas al día repartidas y siempre en crudo.",
+          "<b>Este es el punto de llegada, no el final.</b> A partir del día 30 el plan se sostiene tal cual; lo que cambia es que ya puedes ampliar variedad."
+        ],
+        fuera: ["Alcohol", "Azúcares libres, refrescos y zumos", "Ultraprocesados y carne procesada",
+                "Fritos", "Lácteos hasta que un digestivo valore reintroducirlos"]
+      }
+    };
+
+    /* Reglas que no cambian en ninguna de las cuatro fases. */
+    const PC_INF_FIJAS = [
+      ["Nada de lácteos", "Ni leche, ni yogur, ni queso, ni nata, ni mantequilla. Tras una diarrea la lactasa intestinal tarda semanas en volver, y la grasa láctea es de las que peor tolera un estómago inflamado."],
+      ["Nada de alcohol", "Es el único punto en el que gastritis e hígado graso coinciden al 100%. Cero, también cerveza y vino."],
+      ["Nada de azúcares libres", "Azúcar, miel, siropes, zumos, refrescos y bollería. La fructosa líquida alimenta directamente la síntesis de grasa en el hígado."],
+      ["Sin café ni té", "La cafeína aumenta la secreción ácida y acelera el tránsito. Sustitúyelos por manzanilla o agua templada."],
+      ["Sin fritos ni rebozados", "La grasa calentada retrasa el vaciado gástrico: más ardor, más pesadez y más diarrea."],
+      ["Sin cebolla, ajo, picante, vinagre ni tomate", "Los cuatro primeros son irritantes gástricos directos; cebolla y ajo además aportan fructanos, que fermentan y dan gas y urgencia."],
+      ["Sin edulcorantes polioles", "Sorbitol, manitol, xilitol e isomalt (chicles y productos <i>sin azúcar</i>) tienen efecto laxante osmótico."],
+      ["Cinco tomas al día, sin saltarse ninguna", "El ayuno largo con gastritis deja el ácido sin nada que tamponar."],
+      ["Cenar 2-3 horas antes de acostarse", "Y con la cabecera de la cama algo elevada si hay reflujo."],
+      ["Aceite de oliva siempre en crudo", "Se añade al plato terminado, no a la sartén."]
+    ];
+
+    /* Recetas del plan antiinflamatorio. Misma firma que PC_RECETAS: reciben
+       los items del dia y el multiplicador de comensales, y devuelven titulo,
+       pasos ya escalados y notas opcionales. */
+    const PC_INF_RECETAS = {
+      /* ---- Desayunos ---- */
+      ID1: (it, m) => {
+        const a = pcEsc(pcG(it,"arroz_blanco_cocido"),m), c = pcEsc(pcG(it,"clara_huevo"),m),
+              b = pcEsc(pcG(it,"bebida_almendra"),m), p = pcEsc(pcG(it,"platano"),m);
+        return { titulo: "Natillas de arroz y clara con plátano", pasos: [
+          `Tritura ${a} g de arroz blanco ya cocido con ${b} ml de bebida de almendras hasta que quede una crema fina.`,
+          `Llévalo a fuego muy suave y añade ${c} g de clara de huevo en hilo, removiendo sin parar 2-3 min hasta que espese. No debe hervir o la clara se corta.`,
+          `Aparta del fuego, deja templar y sirve con ${p} g de plátano maduro en rodajas y canela por encima.`
+        ], nota: "Usa arroz recién hecho, no el del día anterior: el arroz cocido y enfriado " +
+             "genera almidón resistente, que fermenta en el colon y da gas y urgencia." };
+      },
+      ID2: (it, m) => {
+        const pn = pcEsc(pcG(it,"pan_blanco_tostado"),m), pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Tostada de pan blanco con pavo a la plancha", pasos: [
+          `Tuesta ${pn} g de pan blanco (mejor del día anterior: tiene menos humedad y sienta mejor).`,
+          `Haz ${pv} g de pechuga de pavo en plancha caliente sin aceite, 2 min por lado, y sálala al final.`,
+          `Monta el pavo sobre la tostada y riega con ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      ID3: (it, m) => {
+        const c = pcEsc(pcG(it,"clara_huevo"),m), pn = pcEsc(pcG(it,"pan_blanco_tostado"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Tortilla de claras con tostada", pasos: [
+          `Bate ${c} g de clara de huevo con una pizca de sal.`,
+          `Cuájala a fuego medio-bajo en sartén antiadherente sin aceite, 2-3 min, doblándola al final.`,
+          `Sirve con ${pn} g de pan blanco tostado y ${ac} g de aceite de oliva en crudo.`
+        ], nota: "La clara sola es proteína sin grasa: es el desayuno que mejor tolera un estómago inflamado." };
+      },
+      ID4: (it, m) => {
+        const h = pcEsc(pcG(it,"huevo_entero"),m), c = pcEsc(pcG(it,"clara_huevo"),m),
+              pn = pcEsc(pcG(it,"pan_blanco_tostado"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Huevo poché con tostada", pasos: [
+          `Escalfa ${h} g de huevo entero (aprox. 1 huevo) en agua a 90 °C, 3 min.`,
+          `Cuaja aparte ${c} g de clara en sartén antiadherente sin aceite.`,
+          `Sirve sobre ${pn} g de pan blanco tostado con ${ac} g de aceite de oliva en crudo.`
+        ], nota: "Primer huevo entero del plan: la yema aporta grasa, así que va escalfada y de una en una." };
+      },
+      ID5: (it, m) => {
+        const av = pcEsc(pcG(it,"avena"),m), c = pcEsc(pcG(it,"clara_huevo"),m),
+              b = pcEsc(pcG(it,"bebida_almendra"),m), mz = pcEsc(pcG(it,"manzana_asada"),m);
+        return { titulo: "Porridge de avena con clara y manzana asada", pasos: [
+          `Cuece ${av} g de copos de avena finos con ${b} ml de bebida de almendras sin azúcar, 5 min a fuego suave.`,
+          `Baja el fuego al mínimo e incorpora ${c} g de clara en hilo removiendo, 2 min más.`,
+          `Sirve con ${mz} g de manzana asada sin piel, troceada, y canela.`
+        ], nota: "El betaglucano de la avena es fibra soluble: forma gel, no irrita y ayuda con el perfil lipídico." };
+      },
+      ID6: (it, m) => {
+        const pn = pcEsc(pcG(it,"pan_blanco_tostado"),m), ag = pcEsc(pcG(it,"aguacate"),m),
+              c = pcEsc(pcG(it,"clara_huevo"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Tostada de aguacate con claras", pasos: [
+          `Tuesta ${pn} g de pan blanco y extiende ${ag} g de aguacate machacado con un tenedor.`,
+          `Cuaja ${c} g de clara en sartén antiadherente sin aceite y colócala encima.`,
+          `Termina con ${ac} g de aceite de oliva en crudo y sal.`
+        ]};
+      },
+      ID7: (it, m) => {
+        const av = pcEsc(pcG(it,"avena"),m), c = pcEsc(pcG(it,"clara_huevo"),m),
+              b = pcEsc(pcG(it,"bebida_almendra"),m), pe = pcEsc(pcG(it,"pera_cocida"),m),
+              nu = pcEsc(pcG(it,"nueces"),m);
+        return { titulo: "Porridge de avena con pera y nueces", pasos: [
+          `Cuece ${av} g de avena con ${b} ml de bebida de almendras, 5 min.`,
+          `Añade ${c} g de clara en hilo a fuego mínimo y remueve 2 min.`,
+          `Sirve con ${pe} g de pera cocida sin piel y ${nu} g de nueces muy picadas.`
+        ], nota: "Las nueces van picadas finas, no enteras: menos residuo y mejor tolerancia." };
+      },
+      ID8: (it, m) => {
+        const pn = pcEsc(pcG(it,"pan_blanco_tostado"),m), po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Tostada con pollo a la plancha", pasos: [
+          `Haz ${po} g de pechuga de pollo en plancha sin aceite, 3 min por lado, y lamínala.`,
+          `Tuesta ${pn} g de pan blanco y monta el pollo encima.`,
+          `Riega con ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      /* ---- Media mañana ---- */
+      IS1: (it, m) => {
+        const p = pcEsc(pcG(it,"platano"),m), pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m);
+        return { titulo: "Plátano maduro con pavo", pasos: [
+          `${p} g de plátano bien maduro (con motitas en la piel), con ${pv} g de pavo a la plancha.`
+        ], nota: "Maduro es importante: el plátano verde tiene almidón resistente, que fermenta y da gas. " +
+             "El pavo está ahí para que la toma no sea solo azúcar de fruta." };
+      },
+      IS2: (it, m) => {
+        const mz = pcEsc(pcG(it,"manzana_asada"),m), pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m);
+        return { titulo: "Manzana asada con pavo", pasos: [
+          `Asa ${mz} g de manzana pelada y sin corazón, 20 min a 180 °C, con canela. Puedes dejar varias hechas.`,
+          `Acompaña con ${pv} g de pechuga de pavo a la plancha, fría o templada.`
+        ], nota: "La manzana asada pierde parte de la fibra insoluble de la piel y gana pectina: es astringente." };
+      },
+      IS3: (it, m) => {
+        const pn = pcEsc(pcG(it,"pan_blanco_tostado"),m), pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Tostada con pavo y aceite", pasos: [
+          `Tuesta ${pn} g de pan blanco, monta ${pv} g de pavo a la plancha y riega con ${ac} g de aceite en crudo.`
+        ]};
+      },
+      IS4: (it, m) => {
+        const pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m), pn = pcEsc(pcG(it,"pan_blanco_tostado"),m);
+        return { titulo: "Pavo a la plancha con pan", pasos: [
+          `${pv} g de pechuga de pavo a la plancha con ${pn} g de pan blanco tostado. Sin salsa.`
+        ]};
+      },
+      IS5: (it, m) => {
+        const pe = pcEsc(pcG(it,"pera_cocida"),m), nu = pcEsc(pcG(it,"nueces"),m);
+        return { titulo: "Pera cocida con nueces", pasos: [
+          `Cuece ${pe} g de pera pelada y sin corazón en agua con canela, 15 min, y déjala templar.`,
+          `Sirve con ${nu} g de nueces picadas.`
+        ]};
+      },
+      IS6: (it, m) => {
+        const nu = pcEsc(pcG(it,"nueces"),m), p = pcEsc(pcG(it,"platano"),m);
+        return { titulo: "Plátano con nueces", pasos: [
+          `${p} g de plátano maduro con ${nu} g de nueces. Sin preparación.`
+        ]};
+      },
+      IS7: (it, m) => {
+        const mz = pcEsc(pcG(it,"manzana_asada"),m), pe = pcEsc(pcG(it,"pera_cocida"),m);
+        return { titulo: "Compota de manzana y pera sin azúcar", pasos: [
+          `Cuece ${mz} g de manzana y ${pe} g de pera, ambas peladas y sin corazón, con un dedo de agua y canela, 20 min.`,
+          `Tritura o machaca con tenedor. Sin azúcar, sin miel y sin edulcorante.`
+        ], nota: "Aguanta 4 días en nevera: hazla para varios días." };
+      },
+      /* ---- Comidas ---- */
+      IC1: (it, m) => {
+        const a = pcEsc(pcG(it,"arroz_blanco_cocido"),m), po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m),
+              z = pcEsc(pcG(it,"zanahoria_cocida"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Arroz blanco con pollo a la plancha y zanahoria", pasos: [
+          `Cuece el arroz hasta tener ${a} g cocidos (unos ${Math.round(a/2.8)} g en crudo), en agua con sal y una hoja de laurel.`,
+          `Cuece ${z} g de zanahoria en rodajas 15 min, hasta que se aplaste con el tenedor.`,
+          `Haz ${po} g de pechuga de pollo a la plancha sin aceite, 4 min por lado, y sálala al final.`,
+          `Monta el plato y añade ${ac} g de aceite de oliva en crudo por encima.`
+        ], nota: "Nada de sofrito: ni cebolla, ni ajo, ni tomate. El sabor lo dan el laurel y el aceite en crudo." };
+      },
+      IC2: (it, m) => {
+        const a = pcEsc(pcG(it,"arroz_blanco_cocido"),m), me = pcEsc(pcG(it,"merluza_cruda"),m),
+              cv = pcEsc(pcG(it,"caldo_verduras"),m), z = pcEsc(pcG(it,"zanahoria_cocida"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Arroz caldoso con merluza y zanahoria", pasos: [
+          `Calienta ${cv} ml de caldo de verduras colado con ${z} g de zanahoria en rodajas, 15 min.`,
+          `Añade el arroz ya cocido (${a} g) y deja que se empape 2 min.`,
+          `Pon encima ${me} g de merluza en lomos y tapa 4-5 min: se hace con el vapor, sin removerla.`,
+          `Fuera del fuego, ${ac} g de aceite de oliva en crudo.`
+        ], nota: "Caldo colado y desgrasado. El caldo de verduras con cebolla o puerro no vale aquí." };
+      },
+      IC3: (it, m) => {
+        const pa = pcEsc(pcG(it,"patata_cocida"),m), a = pcEsc(pcG(it,"arroz_blanco_cocido"),m),
+              z = pcEsc(pcG(it,"zanahoria_cocida"),m), pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Puré de patata y zanahoria con pavo", pasos: [
+          `Cuece ${pa} g de patata pelada y ${z} g de zanahoria, 20 min, y aplasta con tenedor con un poco del agua de cocción. Sin leche y sin mantequilla.`,
+          `Añade ${a} g de arroz blanco cocido al puré o sírvelo al lado.`,
+          `Haz ${pv} g de pechuga de pavo a la plancha, 3 min por lado.`,
+          `Termina con ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IC4: (it, m) => {
+        const po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              cl = pcEsc(pcG(it,"calabacin_pelado"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Pollo al horno con patata y calabacín", pasos: [
+          `Pela ${pa} g de patata y ${cl} g de calabacín (sin piel ni pepitas) y córtalos en rodajas finas.`,
+          `Hornéalos 25 min a 190 °C sobre papel, con sal y un poco de agua en la bandeja para que no se resequen.`,
+          `Añade ${po} g de pechuga de pollo y hornea 12-15 min más.`,
+          `Fuera del horno, riega con ${ac} g de aceite de oliva en crudo.`
+        ], nota: "Primera verdura que no es zanahoria: el calabacín pelado es de lo menos residual que hay." };
+      },
+      IC5: (it, m) => {
+        const a = pcEsc(pcG(it,"arroz_blanco_cocido"),m), ca = pcEsc(pcG(it,"calabaza"),m),
+              le = pcEsc(pcG(it,"lenguado_crudo"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Arroz con calabaza y lenguado al vapor", pasos: [
+          `Cuece ${ca} g de calabaza en dados, 15 min, y mézclala con ${a} g de arroz blanco cocido.`,
+          `Cocina ${le} g de lenguado al vapor o en el horno a 180 °C, 8 min. Sal al final.`,
+          `Sirve junto y añade ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IC6: (it, m) => {
+        const pt = pcEsc(pcG(it,"pasta_blanca_cocida"),m), po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m),
+              cl = pcEsc(pcG(it,"calabacin_pelado"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Pasta blanca con pollo y calabacín", pasos: [
+          `Cuece la pasta hasta tener ${pt} g cocidos (unos ${Math.round(pt/2.4)} g en crudo). Bien cocida, no al dente.`,
+          `Cuece al vapor ${cl} g de calabacín pelado en dados, 10 min.`,
+          `Haz ${po} g de pollo a la plancha y córtalo en tiras.`,
+          `Mezcla todo y añade ${ac} g de aceite de oliva en crudo. Sin tomate y sin queso.`
+        ], nota: "Pasta blanca, no integral, y muy cocida: el almidón gelatinizado se digiere mucho antes." };
+      },
+      IC7: (it, m) => {
+        const me = pcEsc(pcG(it,"merluza_cruda"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              jv = pcEsc(pcG(it,"judia_verde"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Merluza al horno con patata panadera y judía verde", pasos: [
+          `Pela ${pa} g de patata, córtala en rodajas de medio centímetro y hornéala 25 min a 190 °C con sal y un chorro de agua.`,
+          `Cuece ${jv} g de judía verde sin hilos, 15 min, hasta que esté muy tierna.`,
+          `Coloca ${me} g de merluza sobre la patata y hornea 10-12 min más.`,
+          `Riega el plato terminado con ${ac} g de aceite de oliva en crudo.`
+        ], nota: "Panadera de verdad: al horno con agua, no frita en aceite." };
+      },
+      IC8: (it, m) => {
+        const te = pcEsc(pcG(it,"ternera_magra_cruda"),m), z = pcEsc(pcG(it,"zanahoria_cocida"),m),
+              a = pcEsc(pcG(it,"arroz_blanco_cocido"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Ternera magra guisada con zanahoria y arroz", pasos: [
+          `Dora ${te} g de ternera magra en dados en una cazuela antiadherente sin aceite, solo para sellar.`,
+          `Cubre con agua o caldo colado, añade ${z} g de zanahoria en rodajas y una hoja de laurel, y guisa 60-70 min a fuego bajo hasta que la carne se deshaga.`,
+          `Sirve con ${a} g de arroz blanco cocido y ${ac} g de aceite de oliva en crudo.`
+        ], nota: "Primera carne roja del plan, y magra: guisada larga queda mucho más digestible que a la plancha." };
+      },
+      IC9: (it, m) => {
+        const po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m), bo = pcEsc(pcG(it,"boniato_asado"),m),
+              es = pcEsc(pcG(it,"espinacas_cocidas"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Pollo con boniato asado y espinacas", pasos: [
+          `Asa ${bo} g de boniato pelado en dados, 30 min a 200 °C.`,
+          `Cuece ${es} g de espinacas 5 min, escúrrelas bien apretando y pícalas.`,
+          `Haz ${po} g de pechuga de pollo a la plancha, 4 min por lado.`,
+          `Monta y añade ${ac} g de aceite de oliva en crudo.`
+        ], nota: "Espinaca cocida y escurrida, nunca cruda en ensalada: la hoja cruda es fibra insoluble pura." };
+      },
+      IC10: (it, m) => {
+        const le = pcEsc(pcG(it,"lentejas_cocidas"),m), a = pcEsc(pcG(it,"arroz_blanco_cocido"),m),
+              po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m), z = pcEsc(pcG(it,"zanahoria_cocida"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Lentejas pasadas por el pasapurés con arroz y pollo", pasos: [
+          `Cuece ${le} g de lentejas (peso ya cocido) con ${z} g de zanahoria y laurel, sin embutido y sin sofrito.`,
+          `<b>Pásalas por el pasapurés</b>, no por la batidora: el pasapurés retiene el hollejo, que es lo que da gases y residuo.`,
+          `Mezcla el puré con ${a} g de arroz blanco cocido.`,
+          `Sirve con ${po} g de pollo a la plancha y ${ac} g de aceite de oliva en crudo.`
+        ], nota: "Primera legumbre en 22 días. Si da gases o urgencia, retrásala una semana y repite el día anterior." };
+      },
+      IC11: (it, m) => {
+        const sa = pcEsc(pcG(it,"salmon_crudo"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              cl = pcEsc(pcG(it,"calabacin_pelado"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Salmón al horno con patata y calabacín", pasos: [
+          `Hornea ${pa} g de patata pelada en rodajas y ${cl} g de calabacín pelado, 25 min a 190 °C.`,
+          `Añade ${sa} g de salmón y hornea 10 min más: que quede jugoso, no seco.`,
+          `Termina con ${ac} g de aceite de oliva en crudo, sal y un poco de perejil.`
+        ], nota: "Pescado azul: aquí el omega-3 trabaja para el hígado. Al horno, nunca a la brasa ni frito." };
+      },
+      IC12: (it, m) => {
+        const q = pcEsc(pcG(it,"quinoa_cocida"),m), po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m),
+              cl = pcEsc(pcG(it,"calabacin_pelado"),m), ag = pcEsc(pcG(it,"aguacate"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Quinoa con pollo, calabacín y aguacate", pasos: [
+          `Lava bien la quinoa bajo el grifo (la saponina de fuera amarga e irrita) y cuécela hasta tener ${q} g cocidos.`,
+          `Saltea al vapor ${cl} g de calabacín pelado en dados, 8 min.`,
+          `Añade ${po} g de pollo a la plancha en tiras y ${ag} g de aguacate en dados.`,
+          `Aliña con ${ac} g de aceite de oliva en crudo y sal. Sin vinagre y sin limón.`
+        ]};
+      },
+      IC13: (it, m) => {
+        const pt = pcEsc(pcG(it,"pasta_blanca_cocida"),m), po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m),
+              z = pcEsc(pcG(it,"zanahoria_cocida"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Pasta blanca muy cocida con pollo y zanahoria", pasos: [
+          `Cuece la pasta hasta tener ${pt} g cocidos (unos ${Math.round(pt/2.4)} g en crudo). Muy hecha, nunca al dente.`,
+          `Cuece ${z} g de zanahoria en rodajas 15 min, hasta que se aplaste con el tenedor.`,
+          `Haz ${po} g de pechuga de pollo a la plancha sin aceite, 4 min por lado.`,
+          `Mezcla y añade ${ac} g de aceite de oliva en crudo. Sin tomate, sin queso y sin sofrito.`
+        ], nota: "La pasta blanca tiene el mismo residuo bajo que el arroz y bastante menos índice " +
+             "glucémico (≈50 frente a ≈73), porque su matriz proteica frena la digestión del almidón." };
+      },
+      IN13: (it, m) => {
+        const pt = pcEsc(pcG(it,"pasta_blanca_cocida"),m), me = pcEsc(pcG(it,"merluza_cruda"),m),
+              z = pcEsc(pcG(it,"zanahoria_cocida"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Pasta blanca con merluza y zanahoria", pasos: [
+          `Cuece la pasta hasta tener ${pt} g cocidos (unos ${Math.round(pt/2.4)} g en crudo), muy hecha.`,
+          `Cuece ${z} g de zanahoria en rodajas 15 min.`,
+          `Haz ${me} g de merluza al vapor o a la plancha suave, 4-5 min.`,
+          `Sirve junto con ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      /* ---- Meriendas ---- */
+      IM1: (it, m) => {
+        const pn = pcEsc(pcG(it,"pan_blanco_tostado"),m), pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m);
+        return { titulo: "Tostada con pavo", pasos: [
+          `${pn} g de pan blanco tostado con ${pv} g de pechuga de pavo a la plancha.`
+        ]};
+      },
+      IM2: (it, m) => {
+        const to = pcEsc(pcG(it,"tortita_arroz"),m), pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m);
+        return { titulo: "Tortitas de arroz con pavo", pasos: [
+          `${to} g de tortitas de arroz (unas 2-3) con ${pv} g de pavo a la plancha encima.`
+        ], nota: "Mira la etiqueta: tortitas de arroz y sal, sin azúcar, sin cobertura y sin aroma." };
+      },
+      IM3: (it, m) => {
+        const pn = pcEsc(pcG(it,"pan_blanco_tostado"),m), po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Tostada con pollo y aceite", pasos: [
+          `${pn} g de pan blanco tostado con ${po} g de pollo a la plancha y ${ac} g de aceite en crudo.`
+        ]};
+      },
+      IM4: (it, m) => {
+        const av = pcEsc(pcG(it,"avena"),m), c = pcEsc(pcG(it,"clara_huevo"),m),
+              b = pcEsc(pcG(it,"bebida_almendra"),m);
+        return { titulo: "Avena con bebida de almendras y clara", pasos: [
+          `Cuece ${av} g de avena con ${b} ml de bebida de almendras sin azúcar, 5 min.`,
+          `Añade ${c} g de clara en hilo a fuego mínimo removiendo 2 min. Canela al servir.`
+        ]};
+      },
+      IM5: (it, m) => {
+        const nu = pcEsc(pcG(it,"nueces"),m), pe = pcEsc(pcG(it,"pera_cocida"),m);
+        return { titulo: "Pera cocida con nueces", pasos: [
+          `${pe} g de pera cocida sin piel con ${nu} g de nueces picadas.`
+        ]};
+      },
+      IM6: (it, m) => {
+        const pn = pcEsc(pcG(it,"pan_blanco_tostado"),m), ag = pcEsc(pcG(it,"aguacate"),m),
+              pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m);
+        return { titulo: "Tostada de aguacate con pavo", pasos: [
+          `${pn} g de pan blanco tostado con ${ag} g de aguacate machacado y ${pv} g de pavo a la plancha.`
+        ]};
+      },
+      /* ---- Cenas ---- */
+      IN1: (it, m) => {
+        const cp = pcEsc(pcG(it,"caldo_pollo_desgrasado"),m), a = pcEsc(pcG(it,"arroz_blanco_cocido"),m),
+              po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Sopa de arroz con pollo desmenuzado", pasos: [
+          `Cuece ${po} g de pechuga de pollo en agua con laurel y sal, 20 min, y desmenúzala.`,
+          `Cuela el caldo, déjalo enfriar y retira la grasa de la superficie. Necesitas ${cp} ml.`,
+          `Calienta el caldo con ${a} g de arroz blanco cocido y el pollo desmenuzado, 3 min.`,
+          `Sirve templado, no ardiendo, con ${ac} g de aceite de oliva en crudo.`
+        ], nota: "El caldo desgrasado repone líquido y sodio a la vez: es la cena del día 1." };
+      },
+      IN2: (it, m) => {
+        const cl = pcEsc(pcG(it,"calabacin_pelado"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              me = pcEsc(pcG(it,"merluza_cruda"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Crema de calabacín y patata con merluza", pasos: [
+          `Cuece ${cl} g de calabacín pelado y sin pepitas con ${pa} g de patata pelada, 20 min, con poca agua.`,
+          `Tritura hasta que quede fina. Sin nata, sin leche y sin quesitos.`,
+          `Haz ${me} g de merluza al vapor o a la plancha suave, 5 min, y sírvela sobre la crema.`,
+          `Añade ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IN3: (it, m) => {
+        const c = pcEsc(pcG(it,"clara_huevo"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              a = pcEsc(pcG(it,"arroz_blanco_cocido"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Tortilla de claras con patata cocida", pasos: [
+          `Cuece ${pa} g de patata pelada, 20 min, y córtala en rodajas.`,
+          `Bate ${c} g de clara con sal y cuájala en sartén antiadherente sin aceite, a fuego medio-bajo.`,
+          `Sirve con la patata, ${a} g de arroz blanco cocido y ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IN4: (it, m) => {
+        const me = pcEsc(pcG(it,"merluza_cruda"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              z = pcEsc(pcG(it,"zanahoria_cocida"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Merluza a la plancha con puré de patata y zanahoria", pasos: [
+          `Cuece ${pa} g de patata y ${z} g de zanahoria, 20 min, y aplástalas con el tenedor y un poco de agua de cocción.`,
+          `Haz ${me} g de merluza a la plancha a fuego medio, 3 min por lado.`,
+          `Monta y termina con ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IN5: (it, m) => {
+        const ca = pcEsc(pcG(it,"calabaza"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              pv = pcEsc(pcG(it,"pavo_pechuga_crudo"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Crema de calabaza con pavo a la plancha", pasos: [
+          `Cuece ${ca} g de calabaza y ${pa} g de patata, peladas y en dados, 20 min.`,
+          `Tritura con parte del agua de cocción hasta que quede sedosa. Sin nata.`,
+          `Haz ${pv} g de pechuga de pavo a la plancha y sírvela cortada sobre la crema.`,
+          `Añade ${ac} g de aceite de oliva en crudo.`
+        ], nota: "La calabaza es carotenos y pectina: dulce natural sin necesidad de azúcar." };
+      },
+      IN6: (it, m) => {
+        const po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m), a = pcEsc(pcG(it,"arroz_blanco_cocido"),m),
+              cl = pcEsc(pcG(it,"calabacin_pelado"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Pollo a la plancha con arroz y calabacín", pasos: [
+          `Cuece al vapor ${cl} g de calabacín pelado en dados, 10 min.`,
+          `Haz ${po} g de pechuga de pollo a la plancha, 4 min por lado.`,
+          `Sirve con ${a} g de arroz blanco cocido y ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IN7: (it, m) => {
+        const le = pcEsc(pcG(it,"lenguado_crudo"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              jv = pcEsc(pcG(it,"judia_verde"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Lenguado al horno con patata y judía verde", pasos: [
+          `Hornea ${pa} g de patata pelada en rodajas, 25 min a 190 °C.`,
+          `Cuece ${jv} g de judía verde sin hilos, 15 min, hasta que esté muy tierna.`,
+          `Añade ${le} g de lenguado al horno los últimos 8 min.`,
+          `Riega con ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IN8: (it, m) => {
+        const c = pcEsc(pcG(it,"clara_huevo"),m), h = pcEsc(pcG(it,"huevo_entero"),m),
+              cl = pcEsc(pcG(it,"calabacin_pelado"),m), pn = pcEsc(pcG(it,"pan_blanco_tostado"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Revuelto de claras y calabacín con tostada", pasos: [
+          `Cuece al vapor ${cl} g de calabacín pelado en dados, 8 min, y escúrrelo.`,
+          `Bate ${c} g de clara con ${h} g de huevo entero y cuájalo con el calabacín a fuego bajo, removiendo, 3 min.`,
+          `Sirve con ${pn} g de pan blanco tostado y ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IN9: (it, m) => {
+        const ca = pcEsc(pcG(it,"calabaza"),m), z = pcEsc(pcG(it,"zanahoria_cocida"),m),
+              pa = pcEsc(pcG(it,"patata_cocida"),m), po = pcEsc(pcG(it,"pollo_pechuga_crudo"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Crema de calabaza y zanahoria con pollo", pasos: [
+          `Cuece ${ca} g de calabaza, ${z} g de zanahoria y ${pa} g de patata, todo pelado, 20 min.`,
+          `Tritura con parte del caldo de cocción hasta dejarlo fino.`,
+          `Sirve con ${po} g de pollo a la plancha en tiras y ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IN10: (it, m) => {
+        const sa = pcEsc(pcG(it,"sardina_fresca"),m), pa = pcEsc(pcG(it,"patata_cocida"),m),
+              es = pcEsc(pcG(it,"espinacas_cocidas"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Sardinas al horno con patata y espinacas", pasos: [
+          `Hornea ${pa} g de patata pelada en rodajas, 25 min a 190 °C.`,
+          `Cuece ${es} g de espinacas 5 min y escúrrelas bien.`,
+          `Añade ${sa} g de sardinas limpias y sin espina al horno, 8 min a 190 °C. Al horno, no a la brasa.`,
+          `Termina con ${ac} g de aceite de oliva en crudo.`
+        ], nota: "Sardina: omega-3 muy barato. Si la gastritis se queja, cámbiala por salmón al horno." };
+      },
+      IN11: (it, m) => {
+        const sa = pcEsc(pcG(it,"salmon_crudo"),m), q = pcEsc(pcG(it,"quinoa_cocida"),m),
+              cl = pcEsc(pcG(it,"calabacin_pelado"),m), ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Salmón a la plancha con quinoa y calabacín", pasos: [
+          `Cuece la quinoa lavada hasta tener ${q} g cocidos.`,
+          `Cocina al vapor ${cl} g de calabacín pelado, 8 min.`,
+          `Haz ${sa} g de salmón a la plancha a fuego medio, 3 min por lado, sin que se dore en exceso.`,
+          `Monta y añade ${ac} g de aceite de oliva en crudo.`
+        ]};
+      },
+      IN12: (it, m) => {
+        const cl = pcEsc(pcG(it,"calabacin_pelado"),m), ca = pcEsc(pcG(it,"calabaza"),m),
+              pa = pcEsc(pcG(it,"patata_cocida"),m), h = pcEsc(pcG(it,"huevo_entero"),m),
+              c = pcEsc(pcG(it,"clara_huevo"),m), pn = pcEsc(pcG(it,"pan_blanco_tostado"),m),
+              ac = pcEsc(pcG(it,"aceite_oliva"),m);
+        return { titulo: "Crema de verduras con huevo poché y tostada", pasos: [
+          `Cuece ${cl} g de calabacín pelado, ${ca} g de calabaza y ${pa} g de patata, 20 min, y tritura.`,
+          `Escalfa ${h} g de huevo entero en agua a 90 °C, 3 min, y cuaja aparte ${c} g de clara.`,
+          `Sirve el huevo sobre la crema, con ${pn} g de pan blanco tostado y ${ac} g de aceite en crudo.`
+        ]};
+      }
+    };
+
+
+    /* ------------------------------------------------------------------------
+       VERSION DE RUBEN. Misma compra, misma sarten, mismo dia del plan; lo que
+       cambia son cuatro palancas: cereal integral en vez de blanco, fruta y
+       verdura con piel, ensalada cruda y legumbre de guarnicion, y el alino
+       libre (ajo, cebolla, tomate, vinagre, especias) que Sergio no puede.
+       Los datos salen del mismo generador: cada dia de Ruben se deriva del de
+       Sergio, asi que los dos menus no pueden separarse.
+       ------------------------------------------------------------------------ */
+    const PC_RUB = (() => {
+      try {
+        const el = document.getElementById("pc-ruben-data");
+        return el ? JSON.parse(el.textContent) : [];
+      } catch (_) { return []; }
+    })();
+    const PC_RUB_POR_FECHA = new Map(PC_RUB.map(d => [d.date, d]));
+
+    /* No hay sustituciones: el plato cocinado es exactamente el de Sergio.
+       Si se cuece un solo arroz tiene que ser el blanco, porque el integral le
+       daria a Sergio justo la fibra que hay que quitarle. Lo unico que cambia
+       es cuanto se sirve de cada cosa y lo que se anade en crudo al final. */
+    const PC_RUB_EXTRAS = new Set(["ensalada_variada", "garbanzos_cocidos"]);
+
+    /** Lista de diferencias entre el plato de Sergio y el de Ruben. */
+    function pcRubCambios(cS, cR, n) {
+      const gS = new Map(), gR = new Map();
+      (cS.items || []).forEach(([a, g]) => gS.set(a, (gS.get(a) || 0) + g));
+      (cR.items || []).forEach(([a, g]) => gR.set(a, (gR.get(a) || 0) + g));
+      const nombre = a => esc(PC_INF_NOMBRES[a] || a);
+      const filas = [];
+
+      // Raciones distintas del mismo puchero.
+      gS.forEach((g, a) => {
+        if (a === "aceite_oliva") return;          // se explica aparte
+        const r = gR.get(a);
+        if (r == null || r === g) return;
+        const mas = r > g;
+        filas.push(`<li><span class="ing-nombre">${nombre(a)}:
+          <b>${mas ? "más" : "menos"} ración</b>, ${pcEsc(g, n)} g &rarr; ${pcEsc(r, n)} g</span></li>`);
+      });
+      // Lo que se suma en crudo.
+      gR.forEach((g, a) => {
+        if (!PC_RUB_EXTRAS.has(a) || gS.has(a)) return;
+        filas.push(`<li><span class="ing-nombre">Se añade al emplatar:
+          <b>${nombre(a)}</b>, ${pcEsc(g, n)} g</span></li>`);
+      });
+      const acS = gS.get("aceite_oliva") || 0, acR = gR.get("aceite_oliva") || 0;
+      if (acR !== acS) {
+        filas.push(`<li><span class="ing-nombre">Aceite de oliva:
+          <b>${pcEsc(Math.abs(acR - acS), n)} g ${acR > acS ? "más" : "menos"}</b>${
+          acR > acS ? ", para aliñar la ensalada" : ""}</span></li>`);
+      }
+      return filas.join("");
+    }
+
+    /** Una comida de la versión de Rubén. */
+    function pcRubComidaHTML(slot, cR, cS) {
+      const mk = "rub:" + slot;
+      const et = PC_ET_COMIDA[slot] || slot;
+      const principal = PC_PRINCIPALES.has(slot);
+      const abierta = pcEstado.abiertas.has(mk);
+      const constructor = PC_INF_RECETAS[cR.key];
+      if (!constructor) return "";
+      const n = pcComensalesDe(mk);
+      // Los pasos son los de la receta, con los gramos de la ración de Rubén.
+      // El aceite conserva el de Sergio: el extra es para aliñar la ensalada y
+      // va en su propio paso.
+      const acS = (cS.items || []).reduce((t, [a, g]) => a === "aceite_oliva" ? t + g : t, 0);
+      const itemsPasos = (cR.items || [])
+        .filter(([a]) => !PC_RUB_EXTRAS.has(a))
+        .map(([a, g]) => a === "aceite_oliva" ? [a, acS] : [a, g]);
+      const base = constructor(itemsPasos, n);
+      const titulo = base.titulo;   // es el mismo plato, no otro
+      const ma = cR.macros || [];
+
+      const ings = (cR.items || []).reduce((acc, [alim, gr]) => {
+        const g = pcEsc(gr, n);
+        if (g <= 0) return acc;
+        acc.push(`<li><span class="ing-nombre">${esc(PC_INF_NOMBRES[alim] || alim)}</span>
+          <span class="pc-ing-g">${g} g</span></li>`);
+        return acc;
+      }, []).join("");
+
+      const pasos = base.pasos.map((p, i) => `
+        <li><span class="paso-num">${i + 1}</span><span class="paso-texto">${p}</span></li>`).join("");
+
+      const cambios = pcRubCambios(cS, cR, n);
+      const llevaEnsalada = (cR.items || []).some(([a]) => a === "ensalada_variada");
+      const extras = [];
+      if (llevaEnsalada) {
+        extras.push(`Alíña la ensalada con el aceite extra, vinagre o limón y sal.
+          Esto Sergio no lo puede tomar; tú sí.`);
+      }
+      if (principal) {
+        extras.push(`Sazona a tu gusto: ajo, cebolla, tomate, pimienta o especias.
+          La versión de Sergio va sin ellos por la gastritis, no por sabor.`);
+      }
+      const pasosExtra = extras.map((p, i) => `
+        <li><span class="paso-num">${base.pasos.length + i + 1}</span>
+        <span class="paso-texto">${p}</span></li>`).join("");
+
+      return `
+        <div class="pc-comida${principal ? " pc-principal" : ""}" data-abierta="${abierta}">
+          <button type="button" class="pc-comida-head" data-pc="toggle-comida" data-comida="${mk}"
+                  aria-expanded="${abierta}">
+            <span class="pc-comida-et">${et}</span>
+            <span class="pc-comida-nombre">${esc(titulo)}</span>
+            <span class="pc-comida-kcal">${ma[0]} kcal</span>
+            <span class="pc-comida-chevron" aria-hidden="true">&#9662;</span>
+          </button>
+          <div class="pc-comida-body">
+            <div class="pc-comida-barra">
+              <div class="raciones">
+                <span class="raciones-et">Comensales</span>
+                <button type="button" class="raciones-btn" data-pc="comensales" data-comida="${mk}"
+                        data-delta="-1" aria-label="Menos comensales"${n <= 1 ? " disabled" : ""}>&minus;</button>
+                <span class="raciones-num">${n}</span>
+                <button type="button" class="raciones-btn" data-pc="comensales" data-comida="${mk}"
+                        data-delta="1" aria-label="Más comensales"${n >= 8 ? " disabled" : ""}>+</button>
+              </div>
+              <div class="pc-macros">
+                <span class="pill">P <b>${pcNum(ma[1])} g</b></span>
+                <span class="pill">C <b>${pcNum(ma[2])} g</b></span>
+                <span class="pill">G <b>${pcNum(ma[3])} g</b></span>
+                <span class="pill">Fibra <b>${pcNum(ma[4])} g</b></span>
+              </div>
+            </div>
+            <p class="pc-sub">Los macros son los de tu ración; los ingredientes se ajustan a los comensales.</p>
+            ${cambios ? `
+              <div class="grupo-ing-titulo" style="margin-top:var(--gap-3)">Qué cambia respecto al plato de Sergio</div>
+              <ul class="lista-ing pc-rub-cambios">${cambios}</ul>` : `
+              <p class="pc-nota">Este plato es idéntico al de Sergio. Solo cambia la ración.</p>`}
+            <div class="grupo-ing-titulo" style="margin-top:var(--gap-3)">Ingredientes</div>
+            <ul class="lista-ing pc-lista-ing">${ings}</ul>
+            <div class="grupo-ing-titulo" style="margin-top:var(--gap-3)">Preparación</div>
+            <p class="pc-sub">Es <b>exactamente el mismo plato de Sergio</b>: una sola olla, una
+            sola sartén. Los gramos de arriba son los de tu ración, así que cocina la suma de las
+            dos. Lo tuyo llega después, en el plato.</p>
+            <ul class="lista-paso pc-pasos">${pasos}${pasosExtra}</ul>
+          </div>
+        </div>`;
+    }
+
+    /** Panel completo de la versión de Rubén para un día del plan. */
+    function pcRubPanelHTML(rub, inf) {
+      const t = rub.totales;
+      const comidas = PC_ORDEN_COMIDAS
+        .filter(slot => rub.meals && rub.meals[slot] && inf.meals && inf.meals[slot])
+        .map(slot => pcRubComidaHTML(slot, rub.meals[slot], inf.meals[slot])).join("");
+
+      const dif = [
+        ["Nada se sustituye", "El arroz, la pasta, la patata, la verdura y la proteína son los mismos y salen de la misma olla. Cocer dos arroces no tendría sentido, y si solo se cuece uno tiene que ser el blanco: el integral le daría a Sergio justo la fibra que hay que quitarle."],
+        ["Te sirves el doble de verdura", "De la misma cazuela. Es la palanca más eficiente que queda: llena el plato y aporta fibra por muy pocas calorías."],
+        ["Ensalada cruda en comida y cena", "Hoja verde, tomate y pepino. Ni se cocina ni se comparte: se monta en tu plato."],
+        ["Legumbre de guarnición", "Garbanzos de bote escurridos, en las fases 1 y 2, cuando Sergio todavía no los puede tomar. No hay que cocinarlos."],
+        ["Aliño libre", "Ajo, cebolla, tomate, vinagre, limón, pimienta y especias, añadidos en tu plato. Sergio los tiene fuera por la gastritis, no por sabor."]
+      ].map(([a, b]) => `<li><span class="ing-nombre"><b>${esc(a)}</b> — ${esc(b)}</span></li>`).join("");
+
+      return `
+        <div class="pc-inf-fase" style="--pc-color:var(--tipo-verduras_ensaladas-fg)">
+          <div class="pc-inf-fase-rango">Día ${rub.plan_dia} de 30 &middot; misma comida que Sergio, sin sus restricciones</div>
+          <p class="pc-inf-fase-obj">Se cocina <b>una sola vez y lo mismo para los dos</b>. Ningún
+          ingrediente se sustituye: lo que cambia es cuánto te sirves de cada cosa y lo que se suma
+          en crudo al emplatar — ensalada, legumbre de bote y aliño libre —, con el total ajustado
+          a tu déficit.</p>
+        </div>
+
+        <p class="pc-nota pc-nota-acento"><b>Por qué no haces la dieta de Sergio:</b> su plan baja
+        la fibra a ~10 g/día a propósito, para cortar la diarrea. En alguien sin diarrea eso no es
+        reposo digestivo, es <b>estreñimiento</b>, además de peor saciedad justo cuando estás en
+        déficit. Aquí la fibra va de <b>23 a 39 g/día</b> (media 30), y llega toda de la ensalada,
+        la verdura y la legumbre: no hace falta cambiarle el arroz a nadie.</p>
+
+        <div class="bloque">
+          <div class="bloque-head"><h2>Las cinco diferencias</h2>
+            <span class="pc-entreno-dias">≈1.850 kcal &middot; proteína ${pcNum(t.proteina)} g &middot; fibra ${pcNum(t.fibra)} g</span></div>
+          <ul class="lista-ing pc-inf-fijas">${dif}</ul>
+        </div>
+
+        <div class="pc-comidas">${comidas}</div>
+
+        <details class="pc-inf-detalles">
+          <summary>Lácteos, café y otros extras que tú sí puedes</summary>
+          <div class="pc-inf-largo">
+            <p><b>Lácteos: añadido opcional, no están contados en los macros.</b> Un yogur griego 0%
+            o un skyr de 150 g (unas 90 kcal y 15 g de proteína) de postre o a media mañana. Suman
+            proteína y calcio y no rompen la compra compartida, porque son solo para ti. Si los
+            metes a diario, cuenta esas ~90 kcal dentro de tu objetivo.</p>
+            <p><b>Café, té e infusiones:</b> sin problema. Sergio los tiene fuera porque la cafeína
+            aumenta la secreción ácida y acelera el tránsito, no porque sean malos.</p>
+            <p><b>Alcohol:</b> aquí sí coincidís. No aporta nada a un déficit (7 kcal/g sin
+            saciedad ni nutrientes) y desordena el apetito y el sueño. No lo he incluido en ningún
+            día.</p>
+            <p><b>Si no estás acostumbrado a tanta fibra,</b> sube de forma gradual la primera
+            semana y bebe más agua: pasar de golpe a 30-35 g/día da gases e hinchazón. Si te
+            ocurre, la palanca es <b>reducir la ensalada de la cena</b> (la de la comida se queda) y,
+            si no basta, la legumbre. Con eso bajas unos 6-7 g sin tocar el plato cocinado.</p>
+          </div>
+        </details>
+
+        <details class="pc-inf-detalles">
+          <summary>Cómo se ha construido tu versión</summary>
+          <div class="pc-inf-largo">
+            <p>Cada día tuyo <b>se deriva del de Sergio</b> con reglas fijas, no se ha escrito
+            aparte: se duplica tu ración de la verdura del puchero, se añade ensalada en comida y
+            cena, legumbre de guarnición en las fases 1 y 2, y aceite para aliñar; después se ajusta
+            el cereal para aterrizar en las 1.850 kcal. <b>Cero sustituciones.</b> Así los dos menús
+            no pueden separarse: si cambia el de Sergio, cambia el tuyo.</p>
+            <p><b>Tu ración de arroz o de patata no es mayor que la suya, y a veces es menor.</b>
+            No es un error: el hueco calórico que tienes por encima de él (unas 200 kcal) se gasta
+            en ensalada, verdura y legumbre, que sacian mucho más por caloría que el almidón. Estás
+            en déficit; te interesa llenar el plato con lo que pesa poco en calorías. En la fase 4
+            la diferencia se nota más porque el objetivo de Sergio sube a 1.850-1.900 y el tuyo
+            sigue fijo en 1.850.</p>
+            <p><b>Sobre la cantidad de fibra.</b> El beneficio se concentra en torno a los
+            <b>25-30 g/día</b> (revisión de Reynolds y cols., <i>The Lancet</i> 2019). Tus días van
+            de <b>23 a 39 g</b>, con media de 30, justo en el rango. Los más altos son los de las
+            fases 3 y 4, donde el menú de Sergio ya es rico en fibra de por sí; no existe una
+            ingesta máxima establecida (EFSA no fija ninguna), así que ahí es cuestión de tolerancia,
+            no de seguridad.</p>
+          </div>
+        </details>
+
+        <p class="pc-nota"><b>Esto no es una prescripción médica.</b> Las 1.850 kcal vienen de tu
+        plan de déficit actual, no de un cálculo hecho sobre tu peso, tu altura y tu actividad. Si
+        quieres afinarlo, hace falta ese dato o la valoración de un dietista-nutricionista. Los
+        macros están calculados con tablas de composición estándar: son aproximados.</p>`;
+    }
+
+    function pcInfFaseDe(d) {
+      return PC_INF_FASES[(d && d.fase) || 1] || PC_INF_FASES[1];
+    }
+
+    /** Una comida del plan antiinflamatorio. El estado (desplegada, comensales)
+        se guarda con clave "inf:<slot>" para no pisar el de la pestaña Dieta. */
+    function pcInfComidaHTML(slot, comida) {
+      const mk = "inf:" + slot;
+      const et = PC_ET_COMIDA[slot] || slot;
+      const principal = PC_PRINCIPALES.has(slot);
+      const abierta = pcEstado.abiertas.has(mk);
+      const constructor = PC_INF_RECETAS[comida.key];
+      if (!constructor) return "";
+      const n = pcComensalesDe(mk);
+      const r = constructor(comida.items, n);
+      const ma = comida.macros || [];
+
+      const ings = (comida.items || []).reduce((acc, [alim, gr]) => {
+        const g = pcEsc(gr, n);
+        if (g <= 0) return acc;
+        acc.push(`<li><span class="ing-nombre">${esc(PC_INF_NOMBRES[alim] || alim)}</span>
+          <span class="pc-ing-g">${g} g</span></li>`);
+        return acc;
+      }, []).join("");
+
+      const pasos = r.pasos.map((p, i) => `
+        <li><span class="paso-num">${i + 1}</span><span class="paso-texto">${p}</span></li>`).join("");
+
+      return `
+        <div class="pc-comida${principal ? " pc-principal" : ""}" data-abierta="${abierta}">
+          <button type="button" class="pc-comida-head" data-pc="toggle-comida" data-comida="${mk}"
+                  aria-expanded="${abierta}">
+            <span class="pc-comida-et">${et}</span>
+            <span class="pc-comida-nombre">${esc(r.titulo)}</span>
+            <span class="pc-comida-kcal">${ma[0]} kcal</span>
+            <span class="pc-comida-chevron" aria-hidden="true">&#9662;</span>
+          </button>
+          <div class="pc-comida-body">
+            <div class="pc-comida-barra">
+              <div class="raciones">
+                <span class="raciones-et">Comensales</span>
+                <button type="button" class="raciones-btn" data-pc="comensales" data-comida="${mk}"
+                        data-delta="-1" aria-label="Menos comensales"${n <= 1 ? " disabled" : ""}>&minus;</button>
+                <span class="raciones-num">${n}</span>
+                <button type="button" class="raciones-btn" data-pc="comensales" data-comida="${mk}"
+                        data-delta="1" aria-label="Más comensales"${n >= 8 ? " disabled" : ""}>+</button>
+              </div>
+              <div class="pc-macros">
+                <span class="pill">P <b>${pcNum(ma[1])} g</b></span>
+                <span class="pill">C <b>${pcNum(ma[2])} g</b></span>
+                <span class="pill">G <b>${pcNum(ma[3])} g</b></span>
+                <span class="pill">Fibra <b>${pcNum(ma[4])} g</b></span>
+              </div>
+            </div>
+            <p class="pc-sub">Los macros son los de tu ración; los ingredientes se ajustan a los comensales.</p>
+            ${r.nota ? `<p class="pc-nota">${r.nota}</p>` : ""}
+            <div class="grupo-ing-titulo" style="margin-top:var(--gap-3)">Ingredientes</div>
+            <ul class="lista-ing pc-lista-ing">${ings}</ul>
+            <div class="grupo-ing-titulo" style="margin-top:var(--gap-3)">Preparación</div>
+            <ul class="lista-paso pc-pasos">${pasos}</ul>
+          </div>
+        </div>`;
+    }
+
+    /** Panel completo de la pestaña Inflamación para un día del plan. */
+    function pcInfPanelHTML(inf) {
+      const f = pcInfFaseDe(inf);
+
+      const claves = f.claves.map(x => `<li><span class="paso-num">&bull;</span>
+        <span class="paso-texto">${x}</span></li>`).join("");
+      const fuera = f.fuera.map(x => `<span class="pill pc-inf-fuera">${esc(x)}</span>`).join("");
+
+      const comidas = PC_ORDEN_COMIDAS
+        .filter(slot => inf.meals && inf.meals[slot])
+        .map(slot => pcInfComidaHTML(slot, inf.meals[slot])).join("");
+
+      const fijas = PC_INF_FIJAS.map(([t2, x]) =>
+        `<li><span class="ing-nombre"><b>${esc(t2)}</b> — ${x}</span></li>`).join("");
+
+      const hidratacion = inf.fase <= 2 ? `
+        <p class="pc-nota pc-nota-acento"><b>Hidratación del día:</b> 2-2,5 L a sorbos pequeños
+        repartidos, no de golpe. Agua, caldo colado, manzanilla e, <b>si hay más de 4-5 deposiciones
+        líquidas al día</b>, suero oral de farmacia (no bebidas isotónicas de deporte: llevan
+        demasiada azúcar y poco sodio).</p>` : "";
+
+      return `
+        <div class="pc-inf-fase" style="--pc-color:${f.color}">
+          <div class="pc-inf-fase-rango">${esc(f.rango)}</div>
+          <p class="pc-inf-fase-obj">${esc(f.objetivo)}</p>
+        </div>
+
+        ${hidratacion}
+
+        <div class="bloque">
+          <div class="bloque-head"><h2>Claves de esta fase</h2>
+            <span class="pc-entreno-dias">${esc(f.diana)}</span></div>
+          <ul class="lista-paso pc-pasos">${claves}</ul>
+          <div class="grupo-ing-titulo" style="margin-top:var(--gap-3)">Fuera del plato en esta fase</div>
+          <div class="pc-inf-fuera-lista">${fuera}</div>
+        </div>
+
+        <div class="pc-comidas">${comidas}</div>
+
+        <details class="pc-inf-detalles">
+          <summary>Las diez reglas que no cambian en ningún día</summary>
+          <ul class="lista-ing pc-inf-fijas">${fijas}</ul>
+        </details>
+
+        <details class="pc-inf-detalles">
+          <summary>Por qué el plan va por fases (y qué vigilar)</summary>
+          <div class="pc-inf-largo">
+            <p><b>Los tres objetivos se contradicen entre sí.</b> Un proceso diarreico pide
+            residuo bajo: poca fibra, poca grasa, nada de lactosa. El hígado graso pide justo lo
+            contrario a medio plazo: fibra, aceite de oliva, pescado azul, frutos secos y legumbre.
+            Y la gastritis excluye irritantes de los dos lados (café, alcohol, picante, ácidos,
+            fritos). No existe un menú único que sirva para las tres cosas el mismo día: por eso
+            esto va en cuatro fases y la restricción se levanta por orden.</p>
+            <p><b>La fase 1 se apoya en almidón blanco, y eso no es un problema hepático.</b> Lo
+            que dispara la fabricación de grasa en el hígado (la lipogénesis <i>de novo</i>) es la
+            <b>fructosa libre</b> y el <b>superávit calórico</b>, no el almidón. Aquí no hay azúcares
+            libres, ni zumos, ni alcohol, y se come en déficit: en esas condiciones el arroz y la
+            patata no engrasan el hígado. Lo que sí cuenta es la carga glucémica, porque la
+            resistencia a la insulina es el motor del hígado graso, y por eso la fase 1 lleva el
+            almidón recortado (≈170 g de hidratos, no 210), la proteína alta (≈145 g) y dos días con pasta
+            blanca muy cocida en lugar de arroz.</p>
+            <p><b>Y el almidón no está solo por ser blando.</b> La glucosa arrastra sodio y agua a
+            través de la pared intestinal (cotransporte sodio-glucosa), que es exactamente el
+            principio del suero oral: vaciar la fase 1 de hidratos empeoraría la rehidratación. Hay
+            suelo, no solo techo. Lo que sí sería un error es alargar esta fase más de una semana,
+            porque es pobre en micronutrientes.</p>
+            <p><b>Lo que de verdad mueve la aguja en el hígado graso es el peso.</b> Una pérdida
+            del 5% del peso corporal ya reduce la grasa hepática; a partir del 7-10% mejora también
+            la inflamación. Por eso el plan mantiene déficit calórico en las cuatro fases
+            (1.600-1.850 kcal/día) con proteína alta, que es lo que protege la masa muscular
+            mientras adelgazas. Nada de bajar de golpe: perder más de 1-1,5 kg por semana empeora
+            el hígado en lugar de mejorarlo.</p>
+            <p><b>La dieta BRAT clásica</b> (banana, rice, apple, toast) ya no se recomienda como
+            régimen prolongado: es insuficiente en proteína, grasa y micronutrientes. Lo que sí
+            está respaldado es <i>realimentar pronto</i> con una dieta blanda de bajo residuo, que
+            es exactamente lo que hace la fase 1 pero con proteína suficiente (≈130 g/día).</p>
+            <p><b>Señales para parar y consultar</b>, sin esperar al día 30: sangre en las heces,
+            heces negras, fiebre alta mantenida, vómitos que impiden beber, dolor abdominal
+            intenso o localizado, pérdida de peso no buscada, o diarrea que sigue igual pasados
+            7 días. Con hígado graso, además, conviene tener control analítico de transaminasas,
+            perfil lipídico y glucemia.</p>
+          </div>
+        </details>
+
+        <p class="pc-nota"><b>Esto no es una prescripción médica.</b> Organiza pautas dietéticas
+        estándar para bajo residuo, gastritis e hígado graso metabólico, pero no sustituye al
+        diagnóstico ni al seguimiento de tu médico o de un dietista-nutricionista, que son quienes
+        conocen tu analítica, tu medicación y la causa real de la diarrea. Los macros están
+        calculados con tablas de composición estándar: son aproximados.</p>`;
+    }
+
     /* ---- Estado de la vista ---------------------------------------------- */
     const pcEstado = {
       anio: null,        // mes visible del calendario
@@ -24668,17 +25751,27 @@ function boot(vistaInicial) {
       diaHoy: null,      // dia visible en la vista Hoy (null = hoy de verdad)
       comensales: {},    // { [slotComida]: n } del dia abierto
       abiertas: new Set(),  // comidas desplegadas (de salida, todas plegadas)
-      tab: "dieta"
+      tab: "dieta",
+      persona: "sergio"     // a quién le toca el plan antiinflamatorio que se ve
     };
 
+    /* Los dos planes no cubren las mismas fechas (el de deficit va del 1 al 30
+       de septiembre; el antiinflamatorio, del 19 de septiembre al 18 de
+       octubre), asi que el recorrido de las flechas y lo que el calendario
+       considera "dia con plan" es la union de ambos. */
+    const PC_FECHAS = Array.from(new Set(
+      PC_PLAN.map(d => d.date).concat(PC_INF.map(d => d.date))
+    )).sort();
+    /** True si esa fecha tiene algo que enseniar: dieta, inflamacion o las dos. */
+    function pcHayDia(iso) { return PC_POR_FECHA.has(iso) || PC_INF_POR_FECHA.has(iso); }
     /* Indice del dia dentro del plan, para las flechas de anterior/siguiente. */
-    function pcIndiceDe(iso) { return PC_PLAN.findIndex(d => d.date === iso); }
+    function pcIndiceDe(iso) { return PC_FECHAS.indexOf(iso); }
     /** Dia contiguo con plan (delta -1 / +1), o null si no hay. */
     function pcDiaVecino(iso, delta) {
       const i = pcIndiceDe(iso);
       if (i < 0) return null;
       const j = i + delta;
-      return (j >= 0 && j < PC_PLAN.length) ? PC_PLAN[j].date : null;
+      return (j >= 0 && j < PC_FECHAS.length) ? PC_FECHAS[j] : null;
     }
     /** Al cambiar de dia se parte de cero: todo plegado y comensales por defecto. */
     function pcResetDia() {
@@ -24695,9 +25788,9 @@ function boot(vistaInicial) {
     /** Mes por defecto: el de hoy si tiene plan; si no, el del primer dia planificado. */
     function pcMesInicial() {
       const hoy = new Date();
-      if (PC_POR_FECHA.has(pcHoyISO())) return [hoy.getFullYear(), hoy.getMonth()];
-      if (PC_PLAN.length) {
-        const p = PC_PLAN[0].date.split("-");
+      if (pcHayDia(pcHoyISO())) return [hoy.getFullYear(), hoy.getMonth()];
+      if (PC_FECHAS.length) {
+        const p = PC_FECHAS[0].split("-");
         return [Number(p[0]), Number(p[1]) - 1];
       }
       return [hoy.getFullYear(), hoy.getMonth()];
@@ -24742,14 +25835,16 @@ function boot(vistaInicial) {
 
       let celdasHTML = "";
       let conPlan = 0;
+      let conInf = 0;
       for (let n = 1; n <= dias; n++) {
         const iso = pcISO(y, m, n);
         const d = PC_POR_FECHA.get(iso);
+        const inf = PC_INF_POR_FECHA.get(iso);
         let cls = "plan-celda pc-celda";
         if (iso === hoyStr) cls += " hoy";
         else if (iso < hoyStr) cls += " pc-pasado";
 
-        if (!d) {
+        if (!d && !inf) {
           celdasHTML += `
             <div class="${cls} pc-sin-plan">
               <div class="plan-dia-num">${n}</div>
@@ -24757,24 +25852,46 @@ function boot(vistaInicial) {
           continue;
         }
 
-        conPlan++;
-        const ent = pcEntrenoDe(d);
-        const kcal = d.totales ? d.totales.kcal : d.target_kcal;
+        if (d) conPlan++;
+        if (inf) conInf++;
+
+        // Punto bajo el numero = dia dentro del plan antiinflamatorio, con el
+        // color de su fase. Los dias de octubre solo llevan este punto.
+        const marca = inf
+          ? `<span class="pc-inf-marca" style="--pc-color:${pcInfFaseDe(inf).color}"></span>`
+          : "";
+        const etiqueta = [
+          d ? `${d.totales ? d.totales.kcal : d.target_kcal} kcal, ${pcEntrenoDe(d).titulo}` : "",
+          inf ? `plan antiinflamatorio, día ${inf.plan_dia} de 30` : ""
+        ].filter(Boolean).join(" · ");
 
         celdasHTML += `
           <button type="button" class="${cls}" data-pc="abrir-dia" data-fecha="${iso}"
-                  aria-label="${esc(pcDiaSemana(d.weekday))} ${n}: ${kcal} kcal, ${esc(ent.titulo)}">
+                  aria-label="${esc(pcDiaSemana(d ? d.weekday : inf.weekday))} ${n}: ${esc(etiqueta)}">
             <div class="plan-dia-num">${n}</div>
+            ${marca}
           </button>`;
       }
 
-      const sinDatos = conPlan === 0
+      const sinDatos = (conPlan === 0 && conInf === 0)
         ? `<div class="vacio">Este mes todavía no tiene plan configurado.</div>`
+        : "";
+
+      // Leyenda: que significa el punto de color de cada celda.
+      const fasesDelMes = Object.keys(PC_INF_FASES)
+        .filter(k => PC_INF.some(x => String(x.fase) === k && x.date.slice(0, 7) === `${y}-${pcPad2(m + 1)}`))
+        .map(k => `<span><span class="pc-inf-marca" style="--pc-color:${PC_INF_FASES[k].color}"></span>
+                   ${esc(PC_INF_FASES[k].titulo)}</span>`).join("");
+      const leyenda = fasesDelMes
+        ? `<div class="pc-leyenda">
+             <span><b>${conInf}</b> días del plan antiinflamatorio</span>${fasesDelMes}
+           </div>`
         : "";
 
       return `
         <h1 class="vista-titulo">Calendario</h1>
-        <p class="vista-subtitulo">Dieta y entreno día a día. Click en un día para ver sus comidas y su rutina.</p>
+        <p class="vista-subtitulo">Dieta, inflamación y entreno día a día. Click en un día para ver
+        sus comidas y su rutina. El punto de color marca los 30 días del plan antiinflamatorio.</p>
 
         <div class="plan-bar">
           <div class="plan-nav-grupo">
@@ -24793,6 +25910,7 @@ function boot(vistaInicial) {
           ${celdasHTML}
           ${despuesHTML}
         </div>
+        ${leyenda}
         ${sinDatos}`;
     }
 
@@ -24910,39 +26028,84 @@ function boot(vistaInicial) {
       return `${ent.aviso ? `<p class="pc-nota pc-nota-acento">${esc(ent.aviso)}</p>` : ""}${cuerpo}${prog}`;
     }
 
-    /* ---- Detalle de un dia ------------------------------------------------ */
-    function pcDiaHTML(d, opciones) {
+    /* ---- Detalle de un dia ------------------------------------------------
+       Recibe la fecha, no el objeto del plan: un dia puede tener plan de
+       deficit, plan antiinflamatorio o los dos, y las pestanias se construyen
+       con lo que haya. Los dias de octubre, por ejemplo, solo tienen la
+       pestania de Inflamacion. */
+    function pcDiaHTML(iso, opciones) {
+      const d = PC_POR_FECHA.get(iso) || null;
+      const inf = PC_INF_POR_FECHA.get(iso) || null;
+      if (!d && !inf) return "";
       const conVolver = !!(opciones && opciones.volver);
-      const ent = pcEntrenoDe(d);
-      const color = pcColorDe(d);
-      const fecha = new Date(d.date + "T00:00:00");
-      const titulo = `${pcDiaSemana(d.weekday)}, ${d.day_num} de ${PC_MESES[fecha.getMonth()]}`;
-      const t = d.totales;
 
-      const stats = d.flexible
-        ? `<span>Objetivo<b>${d.target_kcal} kcal</b></span>`
-        : `<span>Objetivo<b>${d.target_kcal} kcal</b></span>
+      // Orden de las pestanias: Dieta · Inflamacion · Entreno.
+      const tabs = [];
+      if (d)   tabs.push(["dieta", "Dieta"]);
+      if (inf) tabs.push(["inflamacion", "Inflamación"]);
+      if (d)   tabs.push(["entreno", "Entreno"]);
+      const activa = tabs.some(x => x[0] === pcEstado.tab) ? pcEstado.tab : tabs[0][0];
+      pcEstado.tab = activa;
+
+      const ent = d ? pcEntrenoDe(d) : null;
+      const fase = inf ? pcInfFaseDe(inf) : null;
+      const color = (d && activa !== "inflamacion")
+        ? pcColorDe(d)
+        : (pcEstado.persona === "ruben" && PC_RUB_POR_FECHA.has(iso))
+          ? "var(--tipo-verduras_ensaladas-fg)"
+          : fase ? fase.color : pcColorDe(d);
+      const fecha = new Date(iso + "T00:00:00");
+      const weekday = d ? d.weekday : inf.weekday;
+      const dayNum = d ? d.day_num : inf.day_num;
+      const titulo = `${pcDiaSemana(weekday)}, ${dayNum} de ${PC_MESES[fecha.getMonth()]}`;
+
+      // La cabecera resume el plan que manda ese dia: el de deficit si existe,
+      // y si no, el antiinflamatorio.
+      const usaInf = (activa === "inflamacion") || !d;
+      let stats, eyebrow;
+      if (d && !usaInf) {
+        const t = d.totales;
+        stats = d.flexible
+          ? `<span>Objetivo<b>${d.target_kcal} kcal</b></span>`
+          : `<span>Objetivo<b>${d.target_kcal} kcal</b></span>
+             <span>Total<b>${t.kcal} kcal</b></span>
+             <span>Proteína<b>${pcNum(t.proteina)} g</b></span>
+             <span>Carbohidratos<b>${pcNum(t.carbs)} g</b></span>
+             <span>Grasa<b>${pcNum(t.grasa)} g</b></span>
+             <span>Fibra<b>${pcNum(t.fibra)} g</b></span>`;
+        eyebrow = `${esc(ent.titulo)}${d.flexible ? " &middot; Día flexible" : ""}`;
+      } else {
+        // En la pestania de Inflamacion los numeros son los de la persona activa.
+        const fuente = (pcEstado.persona === "ruben" && PC_RUB_POR_FECHA.has(iso))
+          ? PC_RUB_POR_FECHA.get(iso) : inf;
+        const t = fuente.totales;
+        // El % de grasa sobre las kcal es el dato que ordena las cuatro fases:
+        // sube del 22% al 35% segun el intestino va tolerando.
+        const pctGrasa = Math.round(t.grasa * 9 / t.kcal * 100);
+        stats = `<span>Objetivo<b>${fuente.target_kcal} kcal</b></span>
            <span>Total<b>${t.kcal} kcal</b></span>
            <span>Proteína<b>${pcNum(t.proteina)} g</b></span>
            <span>Carbohidratos<b>${pcNum(t.carbs)} g</b></span>
-           <span>Grasa<b>${pcNum(t.grasa)} g</b></span>
+           <span>Grasa<b>${pcNum(t.grasa)} g · ${pctGrasa}%</b></span>
            <span>Fibra<b>${pcNum(t.fibra)} g</b></span>`;
+        eyebrow = (fuente === inf)
+          ? `Sergio &middot; ${esc(fase.titulo)} &middot; Día ${inf.plan_dia} de 30`
+          : `Rubén &middot; Déficit calórico &middot; Día ${fuente.plan_dia} de 30`;
+      }
 
-      const comidas = PC_ORDEN_COMIDAS
+      const comidas = d ? PC_ORDEN_COMIDAS
         .filter(mk => d.meals && d.meals[mk])
-        .map(mk => pcComidaHTML(mk, d.meals[mk])).join("");
+        .map(mk => pcComidaHTML(mk, d.meals[mk])).join("") : "";
 
-      const notaSabado = d.sat_prep
+      const notaSabado = (d && d.sat_prep)
         ? `<p class="pc-nota pc-nota-acento">Comida y cena pensadas para dejarlas preparadas
            el <b>viernes</b> y recalentar.</p>`
         : "";
 
-      const esDieta = pcEstado.tab !== "entreno";
-
       // Flechas de dia anterior / siguiente (se apagan en los extremos del plan).
-      const prev = pcDiaVecino(d.date, -1);
-      const sig  = pcDiaVecino(d.date, 1);
-      const volverHoy = (!conVolver && d.date !== pcHoyISO())
+      const prev = pcDiaVecino(iso, -1);
+      const sig  = pcDiaVecino(iso, 1);
+      const volverHoy = (!conVolver && iso !== pcHoyISO())
         ? `<button type="button" class="plan-hoy" data-pc="volver-hoy">Hoy</button>` : "";
       const barra = `
         <div class="pc-dia-bar">
@@ -24958,34 +26121,60 @@ function boot(vistaInicial) {
           </div>
         </div>`;
 
+      const tabsHTML = tabs.map(([id, et]) =>
+        `<button type="button" data-pc="tab" data-tab="${id}"
+                 aria-pressed="${activa === id}">${et}</button>`).join("");
+
+      const panelDieta = d ? `
+          <div data-pc-panel="dieta"${activa === "dieta" ? "" : " hidden"}>
+            ${notaSabado}
+            <div class="pc-comidas">${comidas}</div>
+          </div>` : "";
+
+      const rub = PC_RUB_POR_FECHA.get(iso) || null;
+      const esRuben = (pcEstado.persona === "ruben") && !!rub;
+      const selector = rub ? `
+        <div class="detalle-tabs-bar pc-persona-bar">
+          <div class="detalle-tabs pc-persona" role="tablist">
+            <button type="button" data-pc="persona" data-persona="sergio"
+                    aria-pressed="${!esRuben}">Sergio</button>
+            <button type="button" data-pc="persona" data-persona="ruben"
+                    aria-pressed="${esRuben}">Rubén</button>
+          </div>
+          <span class="pc-persona-pista">${esRuben
+            ? "Mismo plato y misma olla; cambia la ración y lo que se añade en crudo"
+            : "Plan antiinflamatorio: gastritis, hígado graso y diarrea"}</span>
+        </div>` : "";
+      const panelInf = inf ? `
+          <div class="pc-inf-panel" data-pc-panel="inflamacion"${activa === "inflamacion" ? "" : " hidden"}>
+            ${selector}
+            ${esRuben ? pcRubPanelHTML(rub, inf) : pcInfPanelHTML(inf)}
+          </div>` : "";
+
+      const panelEnt = d ? `
+          <div class="bloque" data-pc-panel="entreno"${activa === "entreno" ? "" : " hidden"}>
+            <div class="bloque-head"><h2>${esc(ent.titulo)}</h2>
+              <span class="pc-entreno-dias">${esc(ent.dia || "")}</span></div>
+            ${pcEntrenoHTML(ent, !ent.descanso)}
+          </div>` : "";
+
       return `
         <div class="pc-dia">
           ${barra}
           <div class="pc-dia-cabecera" style="--pc-color:${color}">
             <div class="pc-eyebrow">
               <span class="pc-punto" style="--pc-color:${color}"></span>
-              ${esc(ent.titulo)}${d.flexible ? " &middot; Día flexible" : ""}
+              ${eyebrow}
             </div>
             <h1>${esc(titulo)}</h1>
             <div class="detalle-tiempos">${stats}</div>
           </div>
           <div class="detalle-tabs-bar">
-            <div class="detalle-tabs" role="tablist">
-              <button type="button" data-pc="tab" data-tab="dieta"
-                      aria-pressed="${esDieta}">Dieta</button>
-              <button type="button" data-pc="tab" data-tab="entreno"
-                      aria-pressed="${!esDieta}">Entreno</button>
-            </div>
+            <div class="detalle-tabs" role="tablist">${tabsHTML}</div>
           </div>
-          <div data-pc-panel="dieta"${esDieta ? "" : " hidden"}>
-            ${notaSabado}
-            <div class="pc-comidas">${comidas}</div>
-          </div>
-          <div class="bloque" data-pc-panel="entreno"${esDieta ? " hidden" : ""}>
-            <div class="bloque-head"><h2>${esc(ent.titulo)}</h2>
-              <span class="pc-entreno-dias">${esc(ent.dia || "")}</span></div>
-            ${pcEntrenoHTML(ent, !ent.descanso)}
-          </div>
+          ${panelDieta}
+          ${panelInf}
+          ${panelEnt}
         </div>`;
     }
 
@@ -24993,8 +26182,8 @@ function boot(vistaInicial) {
     function renderPcCalendario() {
       const cont = document.getElementById("pc-calendario-contenedor");
       if (!cont) return;
-      if (pcEstado.diaAbierto && PC_POR_FECHA.has(pcEstado.diaAbierto)) {
-        cont.innerHTML = pcDiaHTML(PC_POR_FECHA.get(pcEstado.diaAbierto), { volver: true });
+      if (pcEstado.diaAbierto && pcHayDia(pcEstado.diaAbierto)) {
+        cont.innerHTML = pcDiaHTML(pcEstado.diaAbierto, { volver: true });
       } else {
         cont.innerHTML = pcCalendarioHTML();
       }
@@ -25003,16 +26192,16 @@ function boot(vistaInicial) {
     function renderPcHoy() {
       const cont = document.getElementById("pc-hoy-contenedor");
       if (!cont) return;
-      const d = PC_POR_FECHA.get(pcEstado.diaHoy || pcHoyISO());
-      if (!d) {
+      const iso = pcEstado.diaHoy || pcHoyISO();
+      if (!pcHayDia(iso)) {
         cont.innerHTML = `
           <h1 class="vista-titulo">Hoy</h1>
-          <p class="vista-subtitulo">Tu día de dieta y entreno, de un vistazo.</p>
+          <p class="vista-subtitulo">Tu día de dieta, inflamación y entreno, de un vistazo.</p>
           <div class="vacio">Hoy no hay ningún día del plan configurado.<br>
             Mira el calendario para ver los días planificados.</div>`;
         return;
       }
-      cont.innerHTML = pcDiaHTML(d, { volver: false });
+      cont.innerHTML = pcDiaHTML(iso, { volver: false });
     }
 
     function renderPcEntrenos() {
@@ -25045,7 +26234,7 @@ function boot(vistaInicial) {
 
     /** Abre el detalle de un dia concreto dentro de la vista Calendario. */
     function pcAbrirDia(iso) {
-      if (!PC_POR_FECHA.has(iso)) return;
+      if (!pcHayDia(iso)) return;
       pcEstado.diaAbierto = iso;
       pcResetDia();
       pcEstado.tab = "dieta";
@@ -25109,16 +26298,15 @@ function boot(vistaInicial) {
             pcEstado.comensales[mk] = n;
             pcEstado.abiertas.add(mk);
             if (id === "pc-hoy-contenedor") renderPcHoy(); else renderPcCalendario();
+          } else if (accion === "persona") {
+            pcEstado.persona = b.dataset.persona;
+            // Igual que con las pestanias: la cabecera depende de quien come.
+            if (id === "pc-hoy-contenedor") renderPcHoy(); else renderPcCalendario();
           } else if (accion === "tab") {
             pcEstado.tab = b.dataset.tab;
-            const raiz = b.closest(".pc-dia");
-            if (!raiz) return;
-            raiz.querySelectorAll("[data-pc='tab']").forEach(t => {
-              t.setAttribute("aria-pressed", String(t.dataset.tab === pcEstado.tab));
-            });
-            raiz.querySelectorAll("[data-pc-panel]").forEach(p => {
-              p.hidden = (p.dataset.pcPanel !== pcEstado.tab);
-            });
+            // Repintado completo: la cabecera (kcal, macros, color) depende de
+            // la pestania activa, asi que no basta con ocultar y mostrar paneles.
+            if (id === "pc-hoy-contenedor") renderPcHoy(); else renderPcCalendario();
           }
         });
       });
