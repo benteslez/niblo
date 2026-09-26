@@ -8145,6 +8145,15 @@ function sustituirHigado(items, delDia) {
   });
 }
 
+/* Los alimentos sin ficha salian todos con la racion de plato, y eso daba
+   "¾ taza" de mostaza. La mostaza es una punta de cuchillo y la hoja verde
+   cruda acompaña, no es el plato. */
+function cantidadSinFicha(nombre, meses) {
+  const n = (nombre || "").toLowerCase();
+  if (/punta de cuchillo|mostaza/.test(n)) return "una punta de cuchillo";
+  if (/hoja verde/.test(n)) return "una cantidad pequeña: acompaña, no es el plato";
+  return cantidadEtapa(Math.max(meses, 6)).plato;
+}
 /** Convierte un item del planning en el objeto que espera la vista. */
 function itemDePlan(it, meses, esNuevo) {
   const ficha = it.id ? alimentoPorId(it.id) : null;
@@ -8157,8 +8166,7 @@ function itemDePlan(it, meses, esNuevo) {
     texturaPapilla: ficha ? textura(ficha, Math.max(meses, 6), "papilla") : null,
     texturaBlw:     ficha ? textura(ficha, Math.max(meses, 6), "blw") : null,
     porcion: porcion(Math.max(meses, 6)),
-    cantidad: ficha ? textoCantidad(ficha, Math.max(meses, 6))
-                    : cantidadEtapa(Math.max(meses, 6)).plato,
+    cantidad: ficha ? textoCantidad(ficha, Math.max(meses, 6)) : cantidadSinFicha(it.n, meses),
     // "Que le doy exactamente": opciones concretas para los alimentos que en
     // el plan son una categoria (trigo, pescado blanco, frutos secos...).
     opciones: (ficha && ficha.receta && ficha.receta.opciones) || null,
@@ -9348,7 +9356,7 @@ function formaDeDarlo(a, meses) {
      textura BLW, y el apio salia "en la mano" cuando la ficha dice "nunca en
      baston". */
   const b = blwDe(a, meses);
-  if (b && b.modo === "mixto") return "A cuchara se lo das tú y, además, un trozo en la mano para que lo coja él";
+  if (b && b.modo === "mixto") return "A cuchara se lo das tú y, además, 1-2 trozos en la mano para que los coja él";
   if (b) return {
     mano:    "Lo coge él con la mano; tú solo supervisas",
     cuchara: "En cuchara precargada: se la das cargada y la lleva él a la boca",
@@ -9427,7 +9435,7 @@ const BLW_DENTRO = new Set(["apio", "cebolla", "espinaca", "ciruela_pasa",
    legumbres (hamburguesita) y lo que no se da suelto. */
 const BLW_SIN_DADOS = new Set(["apio", "atun", "carne_de_res", "cerdo", "pescado",
   "salmon", "pollo_e_higado", "camaron", "blueberry", "fresa", "frambuesa",
-  "zarzamora", "garbanzo", "haba", "guayaba", "pasta_de_trigo", "queso"]);
+  "zarzamora", "garbanzo", "haba", "guayaba", "pasta_de_trigo", "queso", "betabel"]);
 const BLW_LEGUMBRES = new Set(["alubia", "frijol", "garbanzo", "haba", "lenteja",
                                "chicharo", "edamame"]);
 const BLW_BAYAS = new Set(["uva", "cereza", "fresa", "blueberry", "frambuesa", "zarzamora"]);
@@ -9435,6 +9443,9 @@ const BLW_BAYAS = new Set(["uva", "cereza", "fresa", "blueberry", "frambuesa", "
    una verdura. */
 const BLW_TUBERCULOS = new Set(["papa", "camote", "yuca", "name", "arracacha", "platano_macho"]);
 const BLW_PESCADOS = new Set(["merluza", "lenguado", "pescado", "salmon", "atun", "sardina"]);
+/* Lo que se da en baston grande para roer, no para deshacer: la prueba de
+   blandura no aplica y decirla contradiria la presentacion. */
+const BLW_SIN_BLANDURA = new Set(["pina", "pepino", "pan_de_caja"]);
 const BLW_BLANDURA = "Antes de dárselo, apriétalo entre tu pulgar y tu índice: se tiene que aplastar sin esfuerzo.";
 
 /** Presentacion segun el nombre del planning, cuando dice mas que la ficha
@@ -9451,7 +9462,7 @@ function blwPorNombre(nombre, meses) {
     como: "Tira de pan sin sal tostado, del ancho de un dedo. Sin corteza y sin apelmazar." };
   if (/^trigo/.test(n)) return { via: "mano",
     como: "Fusilli o conchitas muy cocidos (2-3 min más de lo que diga el paquete), enteros y sin trocear; o una tira de pan sin sal tostado del ancho de un dedo." };
-  if (/rallad/.test(n)) return { via: "dentro",
+  if (/rallad/.test(n) && !/coco/.test(n)) return { via: "dentro",
     como: "Rallada muy fina y mezclada con otro alimento del plato. Cruda en palito, nunca: es de las que más atragantan." };
   if (/punta de cuchillo|mostaza/.test(n)) return { via: "encima",
     como: "Una punta de cuchillo untada sobre un trozo, nunca aparte." };
@@ -9484,7 +9495,7 @@ function blwPresentacion(a, meses) {
   if (a.id === "cacahuete" || a.id === "ajonjoli") return { via: "encima",
     como: "Crema en capa finísima untada sobre un bastón o una tira de pan. Nunca a cucharadas: es pegajosa." };
   if (ADEREZOS.has(a.id)) return { via: "encima",
-    como: "Molido y espolvoreado sobre los trozos húmedos, para que se pegue. Sirve también para rebozar los que resbalan (aguacate, plátano)." };
+    como: "Molido y espolvoreado sobre los trozos húmedos, para que se pegue. Sirve también para rebozar los que resbalan (aguacate, plátano), una vez tolerado." };
   if (a.id === "yogur_y_derivados_lacteos") return { via: "cuchara",
     como: "Espeso, en cuchara precargada que coge él; o para mojar un bastón de fruta." };
   if (a.id === "queso" && meses < 9) return { via: "cuchara",
@@ -9494,6 +9505,9 @@ function blwPresentacion(a, meses) {
   let via = BLW_DENTRO.has(a.id) ? "dentro" : BLW_CUCHARA.has(a.id) ? "cuchara" : "mano";
   let como = trozos || t[meses < 9 ? "6-9m" : "9-12m+"] ||
     "Trozo blando del tamaño de un dedo, que se aplaste entre tus dedos.";
+  if (/rebóz/i.test(como)) {
+    como += " Rebózalo solo con algo que ya haya tolerado; si todavía no hay nada, sin rebozar.";
+  }
   if (meses >= 9 && !BLW_SIN_DADOS.has(a.id) && /^(Cubos|Dados)/.test(t["9-12m+"] || "")) {
     como += " Desde los 9 meses, también en <b>dados blandos del tamaño de un garbanzo</b>, para que los coja con la pinza.";
   }
@@ -9516,12 +9530,12 @@ function blwTirasProteina(meses) {
 /** Lo que se le pone delante, segun el metodo. */
 function blwCantidad(a, meses, via, modo) {
   const f = a.id ? alimentoPorId(a.id) : null;
-  const racion = f ? textoCantidad(f, meses) : cantidadEtapa(meses).plato;
+  const racion = f ? textoCantidad(f, meses) : (a.cantidad || cantidadSinFicha(a.nombre, meses));
   if (via === "vaso" || via === "encima") return racion;
-  if (via === "dentro") return `la de siempre, ${racion}, repartida sobre los trozos o dentro de ellos`;
+  if (via === "dentro") return `${capitalizar(racion)}; va repartida sobre los trozos o dentro de ellos, nunca suelta`;
   if (via === "cuchara") return `${racion}: le cargas la cuchara, se la dejas delante y la vuelves a cargar cuando la suelte`;
   // En mano
-  if (modo === "mixto") return "1-2 trozos para que los explore; la ración va en el puré";
+  if (modo === "mixto") return "1-2 trozos para que los explore; la ración entera sigue yendo a cuchara";
   if (f && f.grupo === "proteina_animal" && !LACTEOS.has(f.id) && !/yema/i.test(a.nombre)) {
     const g = (racion.match(/(\d+(?:\s*[-–]\s*\d+)?)\s*g\b/) || [])[1];
     return `${blwTirasProteina(meses)} trozos del tamaño de un dedo${g ? ` (≈${g} g en total)` : ""}`;
@@ -9545,12 +9559,20 @@ function blwDe(a, meses) {
 /* Como se cocina el trozo. La ficha del libro esta escrita para el pure
    ("en dados", "tritura"): para la mano se corta antes y se cuece mas, hasta
    que el trozo este blando tambien por dentro. */
-function blwCoccion(a) {
+function blwCoccion(a, via) {
   const f = a.id ? alimentoPorId(a.id) : null;
   if (!f) return null;
+  const n = (a.nombre || "").toLowerCase();
+  if (/rallad/.test(n) && !/coco/.test(n)) return "No se cuece: se ralla cruda justo antes de servir.";
+  if (/yema/.test(n)) return "Huevo duro: 10 minutos desde que rompe a hervir, bien cuajado. Separa la yema y cháfala con el tenedor.";
+  if (/h[ií]gado/.test(n)) return "Cuécelo en agua sin sal 8-10 minutos, hasta que por dentro no quede nada rosado, y cháfalo con el tenedor. Solo una vez por semana.";
+  if (["camaron", "mejillon", "jaiba"].includes(f.id)) return "Cuécelo en agua sin sal hasta que esté bien hecho (el mejillón y la almeja, hasta que se abran: los que sigan cerrados se tiran) y pícalo fino.";
+  if (f.id === "sardina") return "De lata al natural: ya está cocida. Escúrrela, quita la piel y repasa las espinas con los dedos.";
+  if (via === "dentro") return "Cuécelo hasta que esté muy tierno y pícalo fino después.";
   if (f.id === "manzana") return "Cuécela: gajos al vapor 5-8 minutos. Cruda en trozo, no hasta los 4 años.";
   if (f.id === "pera") return "Si está firme, al vapor 3-5 minutos; si está muy madura, cruda.";
   if (f.grupo === "fruta" || f.id === "aguacate") return "No se cuece: la pieza tiene que estar muy madura.";
+  if (f.id === "jitomate" || f.id === "pepino") return "No se cuece: pélalo y quítale las semillas antes de cortarlo.";
   if (f.grupo === "verdura" || BLW_TUBERCULOS.has(f.id)) {
     return "Córtalo ya con esa forma y cuécelo al vapor o en poca agua sin sal, o ásalo al horno a 200 °C con un hilo de aceite. Tarda más que para el puré: el trozo tiene que quedar blando también por dentro.";
   }
@@ -9584,7 +9606,7 @@ function htmlBlwNormas() {
     <summary>${modo === "blw" ? "Cómo ofrecer los trozos (BLW)" : "Cómo ofrecer los trozos del mixto"}</summary>
     <ul>
       <li><b>Sentado erguido</b> en la trona, nunca recostado, y tú delante todo el rato.</li>
-      <li>${BLW_BLANDURA}</li>
+      <li>${BLW_BLANDURA} Solo se libran el pan tostado y los bastones grandes para roer (piña, pepino).</li>
       <li>De 6 a 8 meses coge con el puño: trozos <b>del tamaño de un dedo adulto</b> (5-6 cm), con un extremo asomando. Desde los 9, con la pinza, ya valen dados blandos.</li>
       <li><b>2-3 trozos a la vez</b> en la bandeja, y repón. Él decide cuánto come: no se le mete nada en la boca.</li>
       ${modo === "mixto" ? `<li>Primero los trozos, con hambre y ganas de explorar; después el puré a cuchara.</li>` : ""}
@@ -10395,14 +10417,20 @@ function rdFicha(a, meses) {
      blandura. En mixto se mantiene la del puré y se anade el trozo aparte. */
   const b = blwDe(a, meses);
   if (b && b.modo === "blw" && (b.via === "mano" || b.via === "dentro")) {
-    const coccion = blwCoccion(a);
+    const coccion = blwCoccion(a, b.via);
     return `<div class="rd-ficha">
       <div class="rd-ficha-cab"><b>${capitalizar(a.nombre)}</b><span>${esc(b.cuanto)}</span></div>
       <ol><li>${b.como}</li>${coccion ? `<li>${coccion}</li>` : ""}${
-        b.via === "mano" && !/^pan\b/i.test(a.nombre || "") ? `<li>${BLW_BLANDURA}</li>` : ""}</ol>
+        b.via === "mano" && !BLW_SIN_BLANDURA.has(a.id) && !/^pan\b/i.test(a.nombre || "") ? `<li>${BLW_BLANDURA}</li>` : ""}</ol>
     </div>`;
   }
   const pasos = (f && f.receta && f.receta.pasos) || [];
+  if (!pasos.length && b && b.via === "mano") {
+    return `<div class="rd-ficha">
+      <div class="rd-ficha-cab"><b>${capitalizar(a.nombre)}</b></div>
+      <ol><li class="rd-blw"><b>Para la mano, aparte:</b> ${b.como}</li></ol>
+    </div>`;
+  }
   if (!pasos.length) return null;
   const c = cantidadEtapa(meses);
   const resolver = t => String(t)
@@ -10417,7 +10445,10 @@ function rdFicha(a, meses) {
       cuanto ? `<span>${esc(cuanto)}</span>` : ""}</div>
     <ol>${utiles.map(t => `<li>${resolver(t)}</li>`).join("")}${b && b.via === "mano" ? `<li class="rd-blw"><b>Para la mano,
       aparte:</b> ${b.como} ${f && (f.grupo === "verdura" || BLW_TUBERCULOS.has(f.id))
-        ? "Córtalo ya con esa forma y cuécelo con lo demás (o ásalo), pero sácalo cuando se aplaste entre tus dedos." : ""}</li>` : ""}</ol>
+        ? "Córtalo ya con esa forma y cuécelo con lo demás (o ásalo), pero sácalo cuando se aplaste entre tus dedos."
+        : f && f.grupo === "proteina_animal" && !LACTEOS.has(f.id) && !BLW_PESCADOS.has(f.id) && !/^huevo/.test(f.id)
+        ? "Antes de cortar el resto en dados, reserva una tira entera y cuécela con lo demás." : ""}</li>`
+      : b ? `<li class="rd-blw"><b>En BLW:</b> ${b.como}</li>` : ""}</ol>
   </div>`;
 }
 /* El cierre: como se juntan. Los tiempos y los cortes ya los ha dicho cada
@@ -12756,7 +12787,6 @@ function renderAlimento(el, id) {
   const edad = edadEnMeses(CONFIG.fechaNacimiento, HOY_REAL);
   const r = resolver(a, GUIAS, Math.max(edad.meses, 6));
   const texPapilla = textura(a, Math.max(edad.meses, 6), "papilla");
-  const texBlw = textura(a, Math.max(edad.meses, 6), "blw");
   const porc = porcion(Math.max(edad.meses, 6));
   const est = estadoActual(a.id) || "no_probado";
   const historial = ESTADO[a.id]?.historial || [];
@@ -12821,7 +12851,7 @@ function renderAlimento(el, id) {
   }
   if (CONFIG.metodo === "blw" || CONFIG.metodo === "mixto") {
     html += CONFIG.troncoEstable
-      ? `<div style="font-weight:700;font-size:0.9375rem;margin-top:4px">BLW: ${texBlw || 'no aplica en este método a esta edad'}</div>`
+      ? `<div style="font-weight:700;font-size:0.9375rem;margin-top:4px">BLW: ${blwPresentacion({ id: a.id, nombre: "" }, Math.max(edad.meses, 6)).como}</div>`
       : `<div class="alerta limitar" style="margin-top:8px"><div class="titulo">Trozos: todavía no</div>
          Para darle trozos que coja él hace falta que aguante el tronco <b>erguido y estable, sin apuntalar</b>
          (AEP 2018: «erguido, nunca recostado»). Sentarse con apoyo basta para empezar con papilla y chafado,
@@ -12840,8 +12870,8 @@ function renderAlimento(el, id) {
     </div>
     <div class="faint" style="margin:12px 0 4px">Método BLW</div>
     <div class="textura-grid" style="grid-template-columns:repeat(2,1fr)">
-      <div><div class="edad-t">6-9m</div><div class="val">${a.texturas.blw["6-9m"] || "No aplica"}</div></div>
-      <div><div class="edad-t">9-12m+</div><div class="val">${a.texturas.blw["9-12m+"] || "No aplica"}</div></div>
+      <div><div class="edad-t">6-9m</div><div class="val">${blwPresentacion({ id: a.id, nombre: "" }, 6).como}</div></div>
+      <div><div class="edad-t">9-12m+</div><div class="val">${blwPresentacion({ id: a.id, nombre: "" }, 9).como}</div></div>
     </div>
   </div>`;
 
