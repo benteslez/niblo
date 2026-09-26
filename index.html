@@ -10901,6 +10901,8 @@ const WN_PESO_SOLIDO = 0.35;          // cuanto pesa un caso sin solido cuando a
    de un dia normal: sus casos pesan un tercio. */
 const WN_PESO_RARO = 0.35;
 const WN_PESO_OTRA_FASE = 0.05;
+const WN_PANAL_CON_TOMA = 30;     // min: un cambio a esta distancia de una toma va "con la toma"
+const WN_PANAL_TRAS_CAMBIO = 120; // min: antes de esto no se espera otro cambio
 
 function gauss(d, ancho) { return Math.exp(-0.5 * (d / ancho) * (d / ancho)); }
 function medianaPonderada(pares) {   // [{ v, w }]
@@ -11118,7 +11120,7 @@ function wnNoches(episodios) {
 /** Marca en cada toma si es de noche (x.nocturna) y si es la de antes de
     acostarse (x.antesDeDormir). */
 function wnMarcarNocturnas(tomas, noches) {
-  for (const x of tomas) { x.nocturna = false; x.antesDeDormir = false; }
+  for (const x of tomas) { x.nocturna = false; x.antesDeDormir = false; x.acuesta = null; }
   for (const n of noches) {
     let previa = null;
     for (const x of tomas) {
@@ -11128,7 +11130,7 @@ function wnMarcarNocturnas(tomas, noches) {
       x.nocturna = true;
     }
     if (previa && (n.ini - previa.t) / 60000 <= WN_ANTES_DE_DORMIR) {
-      previa.nocturna = true; previa.antesDeDormir = true;
+      previa.nocturna = true; previa.antesDeDormir = true; previa.acuesta = n.ini;
     }
   }
 }
@@ -11615,16 +11617,26 @@ function htmlLoQueSueleVenir() {
   const pPre = (() => {
     if (!ultToma || durmiendoNoche || despiertoDeNoche || (enCurso && enCurso.type === "nocturno")) return 0;
     const q = minutoDeFecha(ultToma.t);
+    /* Y con lo que ya se sabe: lleva un rato sin dormirse y sin volver a
+       comer. Solo cuentan los dias en que, a estas alturas tras la toma,
+       tampoco se habia acostado ni habia vuelto a comer. La ultima toma
+       suele ir seguida de la cama en media hora; si sigue despierto a la
+       hora y media, lo normal es que aun le den otra antes de dormir. */
+    const lleva = (ahora - ultToma.t) / 60000;
     let w = 0, wPre = 0;
-    for (const x of tomasL) {
+    for (let i = 0; i < tomasL.length; i++) {
+      const x = tomasL[i], sig = tomasL[i + 1];
       if ((ultToma.t - x.t) / 3600000 < 12 || (x.nocturna && !x.antesDeDormir)) continue;
+      if (sig && (sig.t - x.t) / 60000 <= lleva) continue;
+      if (x.antesDeDormir && x.acuesta && (x.acuesta - x.t) / 60000 <= lleva) continue;
       const g = gauss(distanciaHora(minutoDeFecha(x.t), q), 45);
       w += g; if (x.antesDeDormir) wPre += g;
     }
-    return w >= 2 ? wPre / w : 0;
+    return w >= 1.5 ? wPre / w : 0;
   })();
   const modoNoche = durmiendoNoche || despiertoDeNoche || pPre >= 0.6;
   let hechaDeNoche = false;
+  let tomaPrevista = null;
   const casosN = ultToma ? wnCasosTomas(ahora, "noche") : [];
   const calN = casosN.length >= WN_INTERVALOS_MINIMOS ? wnCalibrar("tomas-noche", casosN) : null;
   const qNoche = ultToma ? { hora: minutoDeFecha(ultToma.t), ml: ultToma.ml > 0 ? ultToma.ml : null,
@@ -11648,6 +11660,7 @@ function htmlLoQueSueleVenir() {
         else if (deDiez >= 2) partes.push(`aunque en ${deDiez} de cada 10 noches parecidas ya no pidió hasta la mañana`);
         if (pPre >= 0.6 && !durmiendoNoche) partes.push(`a esta hora suele ser ya su última toma antes de dormir (${Math.round(pPre * 10)} de cada 10 días)`);
         if (cal.A.simple) partes.push("de momento, la mediana de las noches: aún no hay patrón claro");
+        tomaPrevista = { cuando: pv.cuando, luego: pv.luego };
         linea({ cuando: pv.cuando, pasado: pv.cuando <= ahora, luego: pv.luego }, "toma",
           "Siguiente toma sobre las", "La siguiente toma ya va tocando", "Le tocaba sobre las",
           partes.join(" · "));
@@ -11707,7 +11720,11 @@ function htmlLoQueSueleVenir() {
           cuando = new Date(despertar.getTime() + (trasDespertar ? trasDespertar.min : 0) * 60000);
           partes.push(trasDespertar ? `suele comer ${duracionCorta(trasDespertar.min)} después de despertarse` : "cuando se despierte");
         }
-        linea({ cuando, pasado: cuando <= ahora }, "toma",
+        /* El "si sigue asi" de la nota tambien va a la barra, como en el
+           sueño y el pañal. Si la hora la ha movido el despertar, ya no vale. */
+        const luego = cuando === pv.cuando ? pv.luego : null;
+        tomaPrevista = { cuando, luego };
+        linea({ cuando, pasado: cuando <= ahora, luego }, "toma",
           "Siguiente toma sobre las", "La siguiente toma ya va tocando", "Le tocaba sobre las",
           partes.join(" · "));
       }
@@ -11717,7 +11734,28 @@ function htmlLoQueSueleVenir() {
   /* --- Pañal --- */
   const ultPanal = panales.filter(d => d <= ahora).sort((a, b) => a - b).pop();
   const casosP = wnCasosIntervalos(panales, ahora);
-  if (ultPanal && casosP.length >= WN_INTERVALOS_MINIMOS) {
+  /* El pañal no va por reloj: se cambia al darle de comer. En sus datos,
+     siete de cada diez cambios caen a menos de media hora de una toma,
+     mientras que el rato entre dos cambios va de 3 a casi 6 horas. Si es su
+     costumbre (la mitad de los cambios o mas), el siguiente se espera con la
+     siguiente toma, siempre que para entonces hayan pasado dos horas desde el
+     ultimo: en la de justo despues de cambiarlo no se vuelve a cambiar. */
+  const conToma = (() => {
+    if (!ultPanal || !tomaPrevista) return null;
+    const hist = panales.filter(d => d <= ahora);
+    if (hist.length < 10) return null;
+    const n = hist.filter(d => tomasL.some(x => Math.abs(x.t - d) / 60000 <= WN_PANAL_CON_TOMA)).length;
+    const f = n / hist.length;
+    if (f < 0.5) return null;
+    const cuando = tomaPrevista.luego && tomaPrevista.cuando <= ahora ? tomaPrevista.luego : tomaPrevista.cuando;
+    if ((cuando - ultPanal) / 60000 < WN_PANAL_TRAS_CAMBIO) return null;
+    return { cuando, deDiez: Math.round(f * 10) };
+  })();
+  if (conToma) {
+    linea({ cuando: conToma.cuando, pasado: conToma.cuando <= ahora }, "panal",
+      "Toca mirar el pañal sobre las", "Toca mirar el pañal", "Tocaba sobre las",
+      `con la siguiente toma: ${conToma.deDiez} de cada 10 cambios han sido al darle de comer`);
+  } else if (ultPanal && casosP.length >= WN_INTERVALOS_MINIMOS) {
     const cal = wnCalibrar("panales", casosP);
     const pv = prever(casosP, { hora: minutoDeFecha(ultPanal) }, cal.A, ultPanal);
     if (pv) linea(pv, "panal",
