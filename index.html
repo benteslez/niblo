@@ -5735,6 +5735,23 @@
     }
     .pb-app .comida-meta { font-size: 0.8125rem; color: var(--text-muted); margin-top: 6px; }
     .pb-app .comida-como { font-size: 0.875rem; margin-top: 2px; line-height: 1.5; }
+    /* BLW: que trozo y cuanto, debajo del "como se lo das". */
+    .pb-app .comida-blw {
+      margin-top: 8px; padding: 10px 12px;
+      background: var(--accent-bg); border-radius: var(--r-md);
+      font-size: 0.84375rem; line-height: 1.5;
+    }
+    .pb-app .comida-blw-cab {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;
+    }
+    .pb-app .comida-blw-fila { display: flex; gap: 10px; }
+    .pb-app .comida-blw-fila + .comida-blw-fila { margin-top: 4px; }
+    .pb-app .comida-blw-et { flex: none; width: 52px; font-weight: 600; color: var(--text-muted); }
+    .pb-app .comida-blw-normas { margin: 4px 0 12px; font-size: 0.84375rem; }
+    .pb-app .comida-blw-normas > summary { cursor: pointer; font-weight: 600; color: var(--blue); }
+    .pb-app .comida-blw-normas ul { margin: 8px 0 0 18px; padding: 0; line-height: 1.55; }
+    .pb-app .comida-blw-normas li { margin-bottom: 4px; }
     .pb-app .comida-hecho {
       font-size: 0.8125rem; font-weight: 600; color: var(--green); margin-top: 6px;
     }
@@ -9325,7 +9342,20 @@ function diaDeCalendario(iso) { return CAL.dias.find(d => d.fecha === iso); }
 const ADEREZOS = new Set(["aceite_de_oliva", "cacahuete", "ajonjoli", "chia",
                           "linaza", "coco_rallado", "oleaginosas",
                           "nuez_avellana", "anacardo_pistacho"]);
-function formaDeDarlo(a) {
+function formaDeDarlo(a, meses) {
+  /* Con los trozos desbloqueados manda lo que diga blwDe, que es lo que
+     sale debajo en la tarjeta: antes bastaba con que el libro tuviera una
+     textura BLW, y el apio salia "en la mano" cuando la ficha dice "nunca en
+     baston". */
+  const b = blwDe(a, meses);
+  if (b && b.modo === "mixto") return "A cuchara se lo das tú y, además, un trozo en la mano para que lo coja él";
+  if (b) return {
+    mano:    "Lo coge él con la mano; tú solo supervisas",
+    cuchara: "En cuchara precargada: se la das cargada y la lleva él a la boca",
+    dentro:  "No va suelto: picado o untado sobre otro trozo del plato",
+    encima:  "Por encima de los trozos, no aparte",
+    vaso:    "En vaso abierto o de aprendizaje, nunca en biberón",
+  }[b.via];
   /* Los alimentos sin ficha propia (frutas colombianas, alcachofa, mostaza)
      llevan la instruccion en su propio nombre dentro del planning: se
      aprovecha en vez de dejarlos sin indicacion. */
@@ -9335,16 +9365,12 @@ function formaDeDarlo(a) {
     if (n.includes("colad"))             return "Colado y sin pepitas, a cuchara";
     if (n.includes("cuartos"))           return "En cuartos a lo largo, nunca entero";
     if (n.includes("rallad"))            return "Rallado muy fino";
-    return CONFIG.troncoEstable
+    return modoTrozos() !== "papilla"
       ? "A cuchara o en trozos pequeños en la mano; tú supervisas"
       : "Se lo das tú con la cuchara, poco a poco y sin forzar";
   }
   if (a.id === "leche_vaca_entera") return "En vaso abierto o de aprendizaje, nunca en biberón";
   if (ADEREZOS.has(a.id)) return "Por encima del plato o mezclado, no aparte";
-  const conMano = CONFIG.troncoEstable && CONFIG.metodo !== "papilla" && a.texturaBlw;
-  const conCuchara = CONFIG.metodo !== "blw";
-  if (conMano && conCuchara) return "A cuchara se lo das tú, y además un trozo en la mano para que lo coja él";
-  if (conMano) return "Lo coge él con la mano; tú solo supervisas";
   if (CONFIG.metodo === "blw" && !CONFIG.troncoEstable) {
     return "Se lo das tú con la cuchara: para dárselo en la mano falta que aguante el tronco erguido";
   }
@@ -9363,6 +9389,209 @@ function comoTextoAlimento(a) {
     else partes.push(`BLW: ${a.texturaBlw || "sin trozo definido para esta edad, usa la textura de puré"}`);
   }
   return partes.join(" · ");
+}
+
+/* ======================== BLW: que, como y cuanto ========================
+   Con el BLW activado la tarjeta del dia solo decia "y ademas un trozo en la
+   mano", sin decir que trozo ni cuanto: el plan diario era el mismo que con
+   papilla. Aqui se resuelve, alimento a alimento y a la edad de ese dia:
+     - via:    "mano" (trozo que coge el), "cuchara" (precargada, la coge el),
+               "dentro" (va picado o untado en otro trozo, nunca suelto),
+               "encima" (aderezo) o "vaso".
+     - como:   la presentacion exacta.
+     - cuanto: lo que se le pone delante.
+
+   La presentacion sale de la ficha ("receta.trozos"), que es la que esta
+   revisada por seguridad; la del libro a secas ("Palitos", "Cubos") se queda
+   corta y en algun caso es peligrosa (manzana cruda en palito). A partir de
+   los 9 meses, cuando aparece la pinza, se anaden los dados blandos solo en
+   los alimentos en que no hay riesgo: nunca en carne en taco, marisco
+   elastico ni bayas, que tienen su propia regla.
+
+   Las cantidades son orientativas: ninguna guia oficial fija gramos para el
+   BLW. La AEP (2018) pide respetar las senales de hambre y saciedad, asi que
+   lo que se da es lo que se OFRECE, con la racion del puré como referencia. */
+
+/* Solo cuenta si el metodo lo pide y Pablo aguanta el tronco: sin eso los
+   trozos no se desbloquean (ver cfg-tronco). */
+function modoTrozos() {
+  if (!CONFIG.troncoEstable || CONFIG.metodo === "papilla") return "papilla";
+  return CONFIG.metodo === "blw" ? "blw" : "mixto";
+}
+
+const BLW_CUCHARA = new Set(["guayaba", "granada", "yogur_y_derivados_lacteos"]);
+const BLW_DENTRO = new Set(["apio", "cebolla", "espinaca", "ciruela_pasa",
+                            "camaron", "mejillon", "jaiba", "champinon"]);
+/* Dados a partir de los 9 meses: fuera la carne en taco, el marisco, el pollo
+   (que va en tira o albondiga), las bayas (van en cuartos o mitades), las
+   legumbres (hamburguesita) y lo que no se da suelto. */
+const BLW_SIN_DADOS = new Set(["apio", "atun", "carne_de_res", "cerdo", "pescado",
+  "salmon", "pollo_e_higado", "camaron", "blueberry", "fresa", "frambuesa",
+  "zarzamora", "garbanzo", "haba", "guayaba", "pasta_de_trigo", "queso"]);
+const BLW_LEGUMBRES = new Set(["alubia", "frijol", "garbanzo", "haba", "lenteja",
+                               "chicharo", "edamame"]);
+const BLW_BAYAS = new Set(["uva", "cereza", "fresa", "blueberry", "frambuesa", "zarzamora"]);
+/* Tuberculos y platano macho: en la ficha son "cereal", pero se cocinan como
+   una verdura. */
+const BLW_TUBERCULOS = new Set(["papa", "camote", "yuca", "name", "arracacha", "platano_macho"]);
+const BLW_PESCADOS = new Set(["merluza", "lenguado", "pescado", "salmon", "atun", "sardina"]);
+const BLW_BLANDURA = "Antes de dárselo, apriétalo entre tu pulgar y tu índice: se tiene que aplastar sin esfuerzo.";
+
+/** Presentacion segun el nombre del planning, cuando dice mas que la ficha
+    ("Pan (trigo)" y "Cuscús (trigo)" comparten ficha con la pasta). */
+function blwPorNombre(nombre, meses) {
+  const n = (nombre || "").toLowerCase();
+  if (/yema/.test(n)) return { via: "dentro",
+    como: "Yema de huevo duro chafada y untada sobre un bastón del plato (papa, calabaza): sola se desmigaja y reseca la boca." };
+  if (/h[ií]gado/.test(n)) return { via: "dentro",
+    como: "Cocido y chafado, untado en capa fina sobre un bastón del plato o dentro de una albóndiga blanda: en trozo se desmigaja." };
+  if (/cusc[uú]s/.test(n)) return { via: "mano",
+    como: "Muy cocido y apretado en bolitas blandas que pueda coger con la mano, o en cuchara precargada." };
+  if (/^pan\b/.test(n)) return { via: "mano",
+    como: "Tira de pan sin sal tostado, del ancho de un dedo. Sin corteza y sin apelmazar." };
+  if (/^trigo/.test(n)) return { via: "mano",
+    como: "Fusilli o conchitas muy cocidos (2-3 min más de lo que diga el paquete), enteros y sin trocear; o una tira de pan sin sal tostado del ancho de un dedo." };
+  if (/rallad/.test(n)) return { via: "dentro",
+    como: "Rallada muy fina y mezclada con otro alimento del plato. Cruda en palito, nunca: es de las que más atragantan." };
+  if (/punta de cuchillo|mostaza/.test(n)) return { via: "encima",
+    como: "Una punta de cuchillo untada sobre un trozo, nunca aparte." };
+  if (/colad/.test(n)) return { via: "cuchara",
+    como: "Colado y sin pepitas, en cuchara precargada: se la das cargada y la lleva él a la boca." };
+  if (/hoja verde cruda/.test(n)) return { via: "dentro",
+    como: "Picada muy fina y mezclada en el plato. La hoja entera no: se pega al paladar." };
+  if (/alcachofa/.test(n)) return { via: "mano",
+    como: "Corazón bien cocido, en cuartos, que se aplaste entre tus dedos. Las hojas duras, no." };
+  if (/zapote|n[ií]spero|chirimoya/.test(n)) return { via: "mano",
+    como: "Pulpa muy madura, sin piel y <b>sin ninguna semilla</b>, en trozo blando o en cuchara precargada." };
+  if (/cuartos/.test(n)) return { via: "mano",
+    como: "En cuartos <b>a lo largo</b>, nunca entera ni en rodajas." };
+  return null;
+}
+
+/** Via y presentacion de un alimento del plan a una edad. */
+function blwPresentacion(a, meses) {
+  const porNombre = blwPorNombre(a.nombre, meses);
+  if (porNombre) return porNombre;
+  if (!a.id) return { via: "mano",
+    como: "Trozo blando del tamaño de un dedo, sin piel ni semillas." };
+  const f = alimentoPorId(a.id);
+  const trozos = f && f.receta && f.receta.trozos;
+  const t = (f && f.texturas && f.texturas.blw) || {};
+  if (a.id === "leche_vaca_entera") return { via: "vaso",
+    como: "En vaso abierto o de aprendizaje, nunca en biberón." };
+  if (a.id === "aceite_de_oliva") return { via: "encima",
+    como: "Un hilo por encima de los trozos, o para asarlos." };
+  if (a.id === "cacahuete" || a.id === "ajonjoli") return { via: "encima",
+    como: "Crema en capa finísima untada sobre un bastón o una tira de pan. Nunca a cucharadas: es pegajosa." };
+  if (ADEREZOS.has(a.id)) return { via: "encima",
+    como: "Molido y espolvoreado sobre los trozos húmedos, para que se pegue. Sirve también para rebozar los que resbalan (aguacate, plátano)." };
+  if (a.id === "yogur_y_derivados_lacteos") return { via: "cuchara",
+    como: "Espeso, en cuchara precargada que coge él; o para mojar un bastón de fruta." };
+  if (a.id === "queso" && meses < 9) return { via: "cuchara",
+    como: t["6-9m"] || "Desmenuzado, en cuchara precargada." };
+  if (a.id === "puerro" && meses < 9) return { via: "dentro",
+    como: "Muy cocido y picado, mezclado con otro alimento del plato: en rodaja, sus hebras se enredan en la boca." };
+  let via = BLW_DENTRO.has(a.id) ? "dentro" : BLW_CUCHARA.has(a.id) ? "cuchara" : "mano";
+  let como = trozos || t[meses < 9 ? "6-9m" : "9-12m+"] ||
+    "Trozo blando del tamaño de un dedo, que se aplaste entre tus dedos.";
+  if (meses >= 9 && !BLW_SIN_DADOS.has(a.id) && /^(Cubos|Dados)/.test(t["9-12m+"] || "")) {
+    como += " Desde los 9 meses, también en <b>dados blandos del tamaño de un garbanzo</b>, para que los coja con la pinza.";
+  }
+  if (meses >= 12 && BLW_LEGUMBRES.has(a.id)) {
+    como += " Con 12 meses ya puede ir entera, muy cocida y aplastada un poco con el dedo.";
+  }
+  return { via, como };
+}
+
+/* Cuantos trozos de proteina: una tira del tamano de un dedo adulto son unos
+   10-15 g, asi que la racion de la etapa (10-20 g a los 6 meses, 30-35 g a
+   los 11) sale en tiras. */
+function blwTirasProteina(meses) {
+  if (meses < 8) return "1-2";
+  if (meses < 10) return "2";
+  if (meses < 11) return "2-3";
+  return "3";
+}
+
+/** Lo que se le pone delante, segun el metodo. */
+function blwCantidad(a, meses, via, modo) {
+  const f = a.id ? alimentoPorId(a.id) : null;
+  const racion = f ? textoCantidad(f, meses) : cantidadEtapa(meses).plato;
+  if (via === "vaso" || via === "encima") return racion;
+  if (via === "dentro") return `la de siempre, ${racion}, repartida sobre los trozos o dentro de ellos`;
+  if (via === "cuchara") return `${racion}: le cargas la cuchara, se la dejas delante y la vuelves a cargar cuando la suelte`;
+  // En mano
+  if (modo === "mixto") return "1-2 trozos para que los explore; la ración va en el puré";
+  if (f && f.grupo === "proteina_animal" && !LACTEOS.has(f.id) && !/yema/i.test(a.nombre)) {
+    const g = (racion.match(/(\d+(?:\s*[-–]\s*\d+)?)\s*g\b/) || [])[1];
+    return `${blwTirasProteina(meses)} trozos del tamaño de un dedo${g ? ` (≈${g} g en total)` : ""}`;
+  }
+  if (f && f.id === "queso") return "2-3 dados a la vez; en total, unas 2-3 cucharadas. Fresco y lo más bajo en sal que encuentres";
+  if ((f && BLW_BAYAS.has(f.id)) || /cuartos/i.test(a.nombre || "")) return "1-2 piezas, partidas como se indica";
+  return `2-3 trozos a la vez, y repón cuando se los acabe. Como referencia, la ración en puré: ${racion}`;
+}
+
+/** {via, como, cuanto} o null si hoy no toca trozo (papilla, o mixto y ese
+    alimento no va en la mano). */
+function blwDe(a, meses) {
+  const modo = modoTrozos();
+  if (modo === "papilla") return null;
+  const m = Math.max(meses || 6, 6);
+  const p = blwPresentacion(a, m);
+  if (modo === "mixto" && p.via !== "mano") return null;
+  return { ...p, cuanto: blwCantidad(a, m, p.via, modo), modo };
+}
+
+/* Como se cocina el trozo. La ficha del libro esta escrita para el pure
+   ("en dados", "tritura"): para la mano se corta antes y se cuece mas, hasta
+   que el trozo este blando tambien por dentro. */
+function blwCoccion(a) {
+  const f = a.id ? alimentoPorId(a.id) : null;
+  if (!f) return null;
+  if (f.id === "manzana") return "Cuécela: gajos al vapor 5-8 minutos. Cruda en trozo, no hasta los 4 años.";
+  if (f.id === "pera") return "Si está firme, al vapor 3-5 minutos; si está muy madura, cruda.";
+  if (f.grupo === "fruta" || f.id === "aguacate") return "No se cuece: la pieza tiene que estar muy madura.";
+  if (f.grupo === "verdura" || BLW_TUBERCULOS.has(f.id)) {
+    return "Córtalo ya con esa forma y cuécelo al vapor o en poca agua sin sal, o ásalo al horno a 200 °C con un hilo de aceite. Tarda más que para el puré: el trozo tiene que quedar blando también por dentro.";
+  }
+  if (/^huevo/.test(f.id)) return "Huevo duro (10 minutos desde que rompe a hervir) o tortilla francesa sin sal muy cuajada, nunca poco hecha.";
+  if (BLW_PESCADOS.has(f.id)) return "Al vapor, al horno o en agua sin sal, hasta que se separe en lascas. Repasa dos veces con los dedos que no quede ninguna espina.";
+  if (f.grupo === "proteina_animal" && !LACTEOS.has(f.id)) {
+    return "Cocínala en pieza (muslo de pollo, filete de ternera) en agua o caldo sin sal, a fuego suave, hasta que esté muy tierna. Quita piel, cartílagos y huesos, y córtala después, a favor de la fibra.";
+  }
+  if (BLW_LEGUMBRES.has(f.id)) return "Cocida muy tierna (o de bote, bien enjuagada). Cháfala con el tenedor, mézclala con el cereal y dale forma con las manos húmedas; pásala por la sartén sin sal o por el horno para que se sostenga.";
+  return null;
+}
+
+/** El bloque de la tarjeta del dia: via, presentacion y cantidad. */
+const BLW_ETIQUETA = { mano: "En la mano", cuchara: "Cuchara precargada",
+                       dentro: "Dentro de otro trozo", encima: "Por encima", vaso: "En vaso" };
+function htmlBlwItem(a, meses) {
+  const b = blwDe(a, meses);
+  if (!b) return "";
+  return `<div class="comida-blw">
+    <div class="comida-blw-cab">${b.modo === "mixto" ? "Además, en la mano" : "BLW · " + BLW_ETIQUETA[b.via]}</div>
+    <div class="comida-blw-fila"><span class="comida-blw-et">Cómo</span><span>${b.como}</span></div>
+    <div class="comida-blw-fila"><span class="comida-blw-et">Cuánto</span><span>${esc(b.cuanto)}</span></div>
+  </div>`;
+}
+
+/* Lo que vale para todos los trozos, una vez por tarjeta y no en cada fila. */
+function htmlBlwNormas() {
+  const modo = modoTrozos();
+  if (modo === "papilla") return "";
+  return `<details class="comida-blw-normas">
+    <summary>${modo === "blw" ? "Cómo ofrecer los trozos (BLW)" : "Cómo ofrecer los trozos del mixto"}</summary>
+    <ul>
+      <li><b>Sentado erguido</b> en la trona, nunca recostado, y tú delante todo el rato.</li>
+      <li>${BLW_BLANDURA}</li>
+      <li>De 6 a 8 meses coge con el puño: trozos <b>del tamaño de un dedo adulto</b> (5-6 cm), con un extremo asomando. Desde los 9, con la pinza, ya valen dados blandos.</li>
+      <li><b>2-3 trozos a la vez</b> en la bandeja, y repón. Él decide cuánto come: no se le mete nada en la boca.</li>
+      ${modo === "mixto" ? `<li>Primero los trozos, con hambre y ganas de explorar; después el puré a cuchara.</li>` : ""}
+      <li>Las arcadas son normales al principio y lo protegen. Si se atraganta de verdad —no tose, no llora, no le sale la voz— es una emergencia.</li>
+      <li>Las cantidades son orientativas: ninguna guía oficial fija gramos para el BLW.</li>
+    </ul>
+  </details>`;
 }
 
 /* Aqui vivian htmlDiaCompleto y sus bloques (comida, rutina, toma registrada
@@ -10161,6 +10390,18 @@ function texturaDelDia(meses) {
 const RD_PASO_SOBRA = /mismo plato|platos aparte|Comb[ií]nal[ao] con|del d[ií]a para completar/i;
 function rdFicha(a, meses) {
   const f = a.id ? alimentoPorId(a.id) : null;
+  /* En BLW la ficha del libro (escrita para el puré) no sirve para lo que va
+     en trozo: se cambia por como cortarlo, como cocinarlo y la prueba de
+     blandura. En mixto se mantiene la del puré y se anade el trozo aparte. */
+  const b = blwDe(a, meses);
+  if (b && b.modo === "blw" && (b.via === "mano" || b.via === "dentro")) {
+    const coccion = blwCoccion(a);
+    return `<div class="rd-ficha">
+      <div class="rd-ficha-cab"><b>${capitalizar(a.nombre)}</b><span>${esc(b.cuanto)}</span></div>
+      <ol><li>${b.como}</li>${coccion ? `<li>${coccion}</li>` : ""}${
+        b.via === "mano" && !/^pan\b/i.test(a.nombre || "") ? `<li>${BLW_BLANDURA}</li>` : ""}</ol>
+    </div>`;
+  }
   const pasos = (f && f.receta && f.receta.pasos) || [];
   if (!pasos.length) return null;
   const c = cantidadEtapa(meses);
@@ -10174,12 +10415,32 @@ function rdFicha(a, meses) {
   return `<div class="rd-ficha">
     <div class="rd-ficha-cab"><b>${capitalizar(a.nombre)}</b>${
       cuanto ? `<span>${esc(cuanto)}</span>` : ""}</div>
-    <ol>${utiles.map(t => `<li>${resolver(t)}</li>`).join("")}</ol>
+    <ol>${utiles.map(t => `<li>${resolver(t)}</li>`).join("")}${b && b.via === "mano" ? `<li class="rd-blw"><b>Para la mano,
+      aparte:</b> ${b.como} ${f && (f.grupo === "verdura" || BLW_TUBERCULOS.has(f.id))
+        ? "Córtalo ya con esa forma y cuécelo con lo demás (o ásalo), pero sácalo cuando se aplaste entre tus dedos." : ""}</li>` : ""}</ol>
   </div>`;
 }
 /* El cierre: como se juntan. Los tiempos y los cortes ya los ha dicho cada
    ficha, asi que aqui solo queda el plato. */
 function rdCierre(bloque, meses) {
+  const modo = modoTrozos();
+  /* En BLW no hay plato que juntar: cada cosa va en su trozo. */
+  if (modo === "blw") {
+    const por = { mano: [], cuchara: [], dentro: [], encima: [], vaso: [] };
+    for (const a of bloque.alimentos) {
+      const b = blwDe(a, meses);
+      if (b) por[b.via].push(a);
+    }
+    const fr = [];
+    if (por.mano.length) fr.push(`<b>No se tritura nada.</b> ${rdNombres(por.mano)} ${por.mano.length > 1
+      ? "van en trozos, cada uno por separado en la bandeja" : "va en trozos en la bandeja"}, 2-3 trozos a la vez.`);
+    if (por.dentro.length) fr.push(`${rdNombres(por.dentro)} no va suelto: picado o untado sobre ${por.mano.length
+      ? "uno de los trozos" : "otro alimento"}, como dice arriba.`);
+    if (por.encima.length) fr.push(`${rdNombres(por.encima)}, por encima de los trozos.`);
+    if (por.cuchara.length) fr.push(`${rdNombres(por.cuchara)}, en cuchara precargada: se la dejas cargada delante y la coge él.`);
+    if (por.vaso.length) fr.push(`${rdNombres(por.vaso)}, en vaso.`);
+    return fr;
+  }
   const { cocer, crudo, encima, lacteo } = rdReparto(bloque.alimentos);
   const tex = texturaDelDia(meses);
   const conCaldo = cocer.length ? ", aflojando con el caldo que has reservado" : "";
@@ -10204,6 +10465,12 @@ function rdCierre(bloque, meses) {
   }
   /* El lacteo no se mezcla con el plato: es su propia toma. */
   if (lacteo.length) frases.push(`${rdNombres(lacteo)}, aparte y sin azúcar, a cuchara.`);
+  /* Mixto: lo que va en la mano se aparta ANTES de triturar. */
+  if (modo === "mixto") {
+    const mano = bloque.alimentos.filter(a => blwDe(a, meses));
+    if (mano.length) frases.unshift(`Antes de triturar o chafar, <b>aparta para la mano</b>
+      1-2 trozos de ${rdNombres(mano)}, sin triturar. Se los das primero, y después el puré a cuchara.`);
+  }
   return frases;
 }
 /* ---- Cocinar de una vez para varios dias --------------------------------
@@ -10330,9 +10597,12 @@ function htmlRecetasDelDia(dia) {
         <summary><span class="rd-det-tit">Ver la receta</span>
           <span class="rd-det-hora">${b.hora} · ${esc(b.etiqueta)}</span></summary>
         <div class="rd-cuerpo">
-          <p class="rd-agua">El agua, la justa para cubrir y <b>sin sal</b>. Al escurrir,
+          ${modoTrozos() === "blw"
+            ? `<p class="rd-agua">Todo <b>sin sal</b>. Los trozos se cuecen más que para el puré:
+                tienen que quedar blandos también por dentro, no solo por fuera.</p>`
+            : `<p class="rd-agua">El agua, la justa para cubrir y <b>sin sal</b>. Al escurrir,
             guarda ese caldo: es lo que se usa para aflojar el puré, y es lo que evita que
-            la carne o el pescado queden arenosos.</p>
+            la carne o el pescado queden arenosos.</p>`}
           ${b.alimentos.map(a => rdFicha(a, meses)).filter(Boolean).join("")}
           <p class="rd-final">${rdCierre(b, meses).join(" ")}</p>
           ${htmlCocinarDeUnaVez(dia, b)}
@@ -10364,6 +10634,7 @@ function htmlComidaDelDia(dia, marcarFn, abierta) {
     <div class="sem-cuerpo">
     ${lista.length > 1 ? `<p class="comida-plato">Lo que entra de uno en uno es el alimento nuevo,
       no las comidas: la receta de abajo dice qué va junto y qué no.</p>` : ""}
+    ${htmlBlwNormas()}
     <div class="comida-lista">${lista.map(({ a, horas }) => {
       /* Los botones dicen lo que se marco ESE dia; la pastilla, en cambio,
          dice como esta el alimento hoy por hoy (su ultimo apunte). */
@@ -10390,8 +10661,11 @@ function htmlComidaDelDia(dia, marcarFn, abierta) {
         </div>
         ${esElNuevo ? `<div class="progreso-bar">${Array.from({ length: nuevo.total })
           .map((_, i) => `<div class="${i < nuevo.dia ? "done" : ""}"></div>`).join("")}</div>` : ''}
-        <div class="comida-meta">${horas.join(" · ")}${cuanto ? " · " + cuanto : ""}</div>
-        <div class="comida-como">${formaDeDarlo(a)}</div>
+        <div class="comida-meta">${horas.join(" · ")}${
+          /* En BLW la cantidad del puré confunde: la que vale va en el bloque BLW. */
+          cuanto && modoTrozos() !== "blw" ? " · " + cuanto : ""}</div>
+        <div class="comida-como">${formaDeDarlo(a, dia.edadMeses)}</div>
+        ${htmlBlwItem(a, dia.edadMeses)}
         ${marca && marca.hora ? `<div class="comida-hecho">${
           (PASTILLA_ESTADO[est] || {}).et || "Marcado"} a las ${esc(marca.hora)}</div>` : ""}
         ${a.id ? `<div class="seg-btns">
