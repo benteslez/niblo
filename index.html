@@ -10900,6 +10900,7 @@ const WN_PESO_SOLIDO = 0.35;          // cuanto pesa un caso sin solido cuando a
 /* Un dia con fiebre o sintomas apuntados, o el de una vacuna, no dice nada
    de un dia normal: sus casos pesan un tercio. */
 const WN_PESO_RARO = 0.35;
+const WN_PESO_OTRA_FASE = 0.05;
 
 function gauss(d, ancho) { return Math.exp(-0.5 * (d / ancho) * (d / ancho)); }
 function medianaPonderada(pares) {   // [{ v, w }]
@@ -10919,6 +10920,10 @@ function wnPeso(caso, q, A, escala) {
   if (usa.includes("def") && q.deficit != null && caso.deficit != null) w *= gauss(caso.deficit - q.deficit, A.def * escala);
   if (usa.includes("solido") && q.solido !== undefined && caso.solido !== undefined && caso.solido !== q.solido) w *= WN_PESO_SOLIDO;
   if (usa.includes("desp") && q.despierto != null && caso.despierto != null) w *= gauss(caso.despierto - q.despierto, A.desp * escala);
+  /* De la toma de antes de dormir a la primera de la noche van 5-6 h; entre
+     tomas de madrugada, 4-4,5. No se mezclan: un caso del otro tipo casi no
+     cuenta. */
+  if (q.pre !== undefined && caso.pre !== undefined && q.pre !== caso.pre) w *= WN_PESO_OTRA_FASE;
   if (caso.raro) w *= WN_PESO_RARO;
   return w;
 }
@@ -11094,7 +11099,7 @@ function wnTomasModelo(desde, hasta) {
    casos, calibrado aparte. El dia deja de verlos, que era lo que se queria al
    apartarlos ("una toma seguida de la noche no mide hambre"). */
 const WN_NOCHE_HUECO = 180;        // min: dos nocturnos a menos distancia son la misma noche
-const WN_ANTES_DE_DORMIR = 120;    // min: la toma de antes de acostarse, si es de este rato antes
+const WN_ANTES_DE_DORMIR = 180;    // min: la toma de antes de acostarse, si es de este rato antes (se acuesta entre las 18:30 y las 21:15)
 const WN_TOMA_AL_DESPERTAR = 20;   // min: la que se da justo antes de apuntar el despertar ya es del dia
 const WN_TOPE_NOCHE_HORAS = 14;    // de la toma de antes de dormir a la de la mañana, si duerme del tiron
 
@@ -11152,7 +11157,9 @@ function wnCasosTomas(ahora, cual = "dia") {
   for (let i = 1; i < tomas.length; i++) {
     const d = (tomas[i].t - tomas[i - 1].t) / 60000;
     const x = tomas[i - 1];
-    /* Cada intervalo va a su conjunto segun la toma de la que sale. */
+    /* Cada intervalo va a su conjunto segun la toma de la que sale. La de
+       antes de dormir es de noche: por la tarde, despierto, se decide aparte
+       si la ultima toma lo es (ver "pPre" en htmlLoQueSueleVenir). */
     if (x.nocturna !== (cual === "noche")) continue;
     if (cual === "noche") {
       /* Hasta 14 h: si duerme del tiron, de la toma de antes de dormir a la
@@ -11162,7 +11169,7 @@ function wnCasosTomas(ahora, cual = "dia") {
          pone a cero a las 00:00. */
       out.push({ hora: minutoDeFecha(x.t), ml: x.ml > 0 ? x.ml : null, valor: d, dias: diasHasta(x.t, ahora),
         deficit: null, despierto: wnDespiertoEn(fines, x.t), raro: raros.has(x.fecha), mlSiguiente: tomas[i].ml,
-        hastaLaManana: !tomas[i].nocturna });
+        hastaLaManana: !tomas[i].nocturna, pre: x.antesDeDormir });
       continue;
     }
     if (!(d > 0 && d <= WN_TOPE_HORAS * 60)) continue;
@@ -11591,33 +11598,44 @@ function htmlLoQueSueleVenir() {
   wnMarcarNocturnas(tomasL, nochesL);
   const largoNoche = wnLargoNoche(nochesL, ahora);
   const ultNoche = nochesL[nochesL.length - 1] || null;
-  /* Hora habitual de la toma de antes de dormir, para reconocerla antes de
-     que se duerma (a las 19:30 ya interesa saber cuando pedira de noche). */
-  const minPreCama = (() => {
-    const m = tomasL.filter(x => x.antesDeDormir && x !== ultToma).map(x => minutoDeFecha(x.t));
-    return m.length >= 3 ? mediana(m) : null;
+  /* Es de noche para la toma si duerme la noche y la ultima toma es de esa
+     noche, o si esta despierto a mitad de noche: la noche acabo hace poco,
+     aun no es su hora de levantarse y la toma es de despues de acostarse
+     (la que se da entre dos trozos de sueño, que es lo normal: se despierta,
+     come y se vuelve a dormir). Despierto por la tarde manda el modelo de
+     dia, que ya conoce lo que suele pasar tras la toma de antes de dormir. */
+  const despiertoDeNoche = !!ultToma && !enCurso && !!ultNoche && !!ultNoche.fin &&
+    ultToma.t >= ultNoche.ini && (ahora - ultNoche.fin) / 60000 <= WN_NOCHE_HUECO &&
+    largoNoche !== null && ahora < new Date(ultNoche.ini.getTime() + (largoNoche - 45) * 60000);
+  const durmiendoNoche = !!ultToma && !!enCurso && enCurso.type === "nocturno" && ultToma.nocturna;
+  /* Despierto por la tarde no se sabe si la ultima toma sera la de antes de
+     dormir o si habra otra antes de acostarse: en sus datos, entre las 18:00
+     y las 19:00 es mitad y mitad; despues de las 19:00, casi siempre la
+     ultima. Se mira que fueron las tomas de otros dias a esa hora. */
+  const pPre = (() => {
+    if (!ultToma || durmiendoNoche || despiertoDeNoche || (enCurso && enCurso.type === "nocturno")) return 0;
+    const q = minutoDeFecha(ultToma.t);
+    let w = 0, wPre = 0;
+    for (const x of tomasL) {
+      if ((ultToma.t - x.t) / 3600000 < 12 || (x.nocturna && !x.antesDeDormir)) continue;
+      const g = gauss(distanciaHora(minutoDeFecha(x.t), q), 45);
+      w += g; if (x.antesDeDormir) wPre += g;
+    }
+    return w >= 2 ? wPre / w : 0;
   })();
-  /* Es de noche para la toma si: duerme la noche y la ultima toma es de esa
-     noche; o esta despierto a mitad de noche (la noche acabo hace poco y aun
-     no es su hora de levantarse); o es su toma de antes de dormir. */
-  const modoNoche = !!ultToma && (
-    (enCurso && enCurso.type === "nocturno" && ultToma.nocturna) ||
-    (!enCurso && ultNoche && ultNoche.fin && ultToma.nocturna && ultToma.t >= ultNoche.ini &&
-      (ahora - ultNoche.fin) / 60000 <= WN_NOCHE_HUECO &&
-      largoNoche !== null && ahora < new Date(ultNoche.ini.getTime() + (largoNoche - 45) * 60000)) ||
-    (!enCurso && minPreCama !== null && distanciaHora(minutoDeFecha(ultToma.t), minPreCama) <= 45 &&
-      (ahora - ultToma.t) / 60000 <= WN_ANTES_DE_DORMIR));
+  const modoNoche = durmiendoNoche || despiertoDeNoche || pPre >= 0.6;
   let hechaDeNoche = false;
-  if (modoNoche) {
-    const casosN = wnCasosTomas(ahora, "noche");
-    if (casosN.length >= WN_INTERVALOS_MINIMOS) {
-      const cal = wnCalibrar("tomas-noche", casosN);
-      const q = { hora: minutoDeFecha(ultToma.t), ml: ultToma.ml > 0 ? ultToma.ml : null,
-        despierto: wnDespiertoEn(fines, ultToma.t) };
+  const casosN = ultToma ? wnCasosTomas(ahora, "noche") : [];
+  const calN = casosN.length >= WN_INTERVALOS_MINIMOS ? wnCalibrar("tomas-noche", casosN) : null;
+  const qNoche = ultToma ? { hora: minutoDeFecha(ultToma.t), ml: ultToma.ml > 0 ? ultToma.ml : null,
+    despierto: wnDespiertoEn(fines, ultToma.t), pre: despiertoDeNoche ? false : (durmiendoNoche ? ultToma.antesDeDormir : true) } : null;
+  if (modoNoche && calN) {
+    {
+      const cal = calN, q = qNoche;
       const pv = prever(casosN, q, cal.A, ultToma.t);
       if (pv) {
         hechaDeNoche = true;
-        const partes = [`de noche, tras ${ultToma.antesDeDormir || distanciaHora(minutoDeFecha(ultToma.t), minPreCama ?? -999) <= 45
+        const partes = [`de noche, tras ${q.pre
           ? `la toma de antes de dormir (${ultToma.ml} ml)` : `${ultToma.ml} ml`}, suele aguantar ${duracionCorta(pv.valor)}${mas(cal.error)}${apoyo(pv.e)}${siSigue(pv)}`];
         /* La noche no es una hora, son dos caminos: pide otra vez o ya no
            pide hasta la mañana. La mediana elige uno; aqui se dice cuantas
@@ -11628,6 +11646,7 @@ function htmlLoQueSueleVenir() {
         const deDiez = Math.round(fManana * 10);
         if (deDiez >= 5) partes.push(`lo más probable es que ya no pida hasta la mañana (${deDiez} de cada 10 noches parecidas)`);
         else if (deDiez >= 2) partes.push(`aunque en ${deDiez} de cada 10 noches parecidas ya no pidió hasta la mañana`);
+        if (pPre >= 0.6 && !durmiendoNoche) partes.push(`a esta hora suele ser ya su última toma antes de dormir (${Math.round(pPre * 10)} de cada 10 días)`);
         if (cal.A.simple) partes.push("de momento, la mediana de las noches: aún no hay patrón claro");
         linea({ cuando: pv.cuando, pasado: pv.cuando <= ahora, luego: pv.luego }, "toma",
           "Siguiente toma sobre las", "La siguiente toma ya va tocando", "Le tocaba sobre las",
@@ -11675,6 +11694,12 @@ function htmlLoQueSueleVenir() {
         if (solidoAhora) {
           const sc = wnSolidoCantidad(casos);
           if (sc && sc.sin - sc.con >= 20) partes.push(`tras sólido suele tomar menos: unos ${sc.con} ml en vez de ${sc.sin}`);
+        }
+        /* Por la tarde, si hay dudas de que sea la ultima antes de dormir, se
+           da tambien lo que pasa cuando lo es. */
+        if (pPre >= 0.3 && calN) {
+          const alt = wnEstimar(casosN, qNoche, calN.A);
+          if (alt) partes.push(`si esta es su última toma antes de dormir (${Math.round(pPre * 10)} de cada 10 días a esta hora), la siguiente suele ser sobre las <b>${hhmm(new Date(ultToma.t.getTime() + Math.round(alt.valor) * 60000))}</b>`);
         }
         /* Dormido no come: si la toma caeria antes de que se despierte, sera
            al despertar (y, si es su costumbre, un rato despues). */
