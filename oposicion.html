@@ -1542,7 +1542,13 @@ async function supa(ruta, opts, reintento) {
     if (await renovarToken()) return supa(ruta, opts, false);
     const e = new Error("sesión caducada"); e.sesion = true; throw e;
   }
-  if (!r.ok) { const txt = await r.text().catch(() => ""); const e = new Error("Supabase " + r.status + ": " + txt); e.status = r.status; throw e; }
+  if (!r.ok) {
+    const txt = await r.text().catch(() => "");
+    let j = null; try { j = JSON.parse(txt); } catch (_) {}
+    const e = new Error("Supabase " + r.status + ": " + ((j && j.message) || txt));
+    e.status = r.status; e.code = j && j.code; e.pg = (j && [j.message, j.details, j.hint].filter(Boolean).join(" · ")) || txt;
+    throw e;
+  }
   if (r.status === 204 || r.status === 201) return null;
   const ct = r.headers.get("Content-Type") || "";
   return ct.indexOf("json") >= 0 ? r.json() : r.text();
@@ -1687,10 +1693,15 @@ function sincronizar() {
       const m = e.message || String(e);
       if (e.sesion) ponerSync("sesion", "La sesión de Niblo ha caducado: vuelve a entrar en Niblo.");
       else if (e.sinHogar) ponerSync("error", "Tu cuenta no tiene hogar en Niblo.");
-      else if (/42P01|does not exist|Could not find the table|PGRST205/i.test(m)) ponerSync("error", "Falta ejecutar la migración 009_oposicion_sync.sql en Supabase.");
-      else if (/PGRST204|datos.{0,40}column|column.{0,40}datos/i.test(m)) ponerSync("error", "Falta ejecutar la migración 010_oposicion_mezcla_partes.sql en Supabase.");
+      /* Cada caso con su mensaje y siempre con el texto real de Supabase, para
+         no confundir una tabla que falta con una columna que la API aún no
+         conoce (después de una migración, su caché tarda en enterarse). */
+      else if (/datos/i.test(m) && (e.code === "42703" || e.code === "PGRST204" || /column/i.test(m)))
+        ponerSync("error", "Supabase no encuentra la columna «datos» (migración 010). Si ya la ejecutaste, recarga la caché de la API con: NOTIFY pgrst, 'reload schema';  — Detalle: " + (e.pg || m));
+      else if ((e.code === "42P01" || e.code === "PGRST205" || /relation .* does not exist|Could not find the table/i.test(m)) && /oposicion_/i.test(m))
+        ponerSync("error", "Supabase no encuentra las tablas del hub (migración 009). Si ya la ejecutaste, recarga la caché con: NOTIFY pgrst, 'reload schema';  — Detalle: " + (e.pg || m));
       else if (!navigator.onLine || /Failed to fetch|NetworkError|aborted|Load failed/i.test(m)) ponerSync("offline");
-      else ponerSync("error", m.slice(0, 220));
+      else ponerSync("error", "Error de Supabase" + (e.code ? " (" + e.code + ")" : "") + ": " + (e.pg || m).slice(0, 300));
       console.warn("Sync oposición:", e);
     } finally {
       S.enCurso = null;
@@ -1825,13 +1836,13 @@ function claveAnio(y) {
 }
 function romano(s) { const v = { I:1, V:5, X:10, L:50, C:100, D:500, M:1000 }; let r = 0, p = 0; for (let i = s.length - 1; i >= 0; i--) { const x = v[s[i]] || 0; r += x < p ? -x : x; p = x; } return r; }
 
-function toast(msg, tipo) {
+function toast(msg, tipo, duracion) {
   const box = document.getElementById("toast-box");
   const t = document.createElement("div");
   t.className = "toast" + (tipo === "error" ? " error" : "");
   t.textContent = msg;
   box.appendChild(t);
-  setTimeout(() => t.remove(), 3600);
+  setTimeout(() => t.remove(), duracion || 3600);
 }
 
 /** Texto de la tabla del documento -> HTML con los enlaces que el documento
@@ -3672,7 +3683,11 @@ document.getElementById("panel-volver").addEventListener("click", () => abrirPan
 document.getElementById("btn-servidor").addEventListener("click", buscarEnServidor);
 document.getElementById("sync-pill").addEventListener("click", () => {
   if (!haySesion()) { toast("Entra en Niblo con tu cuenta para sincronizar el hub entre dispositivos"); return; }
-  if (S.estado === "error" || S.estado === "sesion") toast(S.detalle, "error");
+  if (S.estado === "error" || S.estado === "sesion") {
+    let copiado = false;
+    try { if (navigator.clipboard) { navigator.clipboard.writeText(S.detalle); copiado = true; } } catch (_) {}
+    toast(S.detalle + (copiado ? "  (copiado)" : ""), "error", 12000);
+  }
   sincronizar();
 });
 window.addEventListener("hashchange", render);
