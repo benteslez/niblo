@@ -425,6 +425,19 @@
       background: linear-gradient(135deg, hsl(var(--ph, 220) 65% 55%), hsl(calc(var(--ph, 220) + 25) 70% 42%));
     }
     .doc-grupo-tit .doc-avatar { width: 22px; height: 22px; letter-spacing: 0; }
+    /* Al agrupar por persona, el nombre va con la letra del titulo de la
+       pagina ("Documentos"), en pequeño. */
+    .doc-grupo-tit.doc-grupo-persona {
+      align-items: center; font-family: var(--font-titulo);
+      font-size: 1.375rem; font-weight: 600; letter-spacing: -0.03em;
+      text-transform: none; color: var(--text);
+    }
+    .doc-grupo-persona .doc-avatar { width: 30px; height: 30px; font-size: 0.8125rem; }
+    .doc-grupo-persona .emoji { font-size: 1.25rem; }
+    .doc-grupo-persona .doc-cuenta {
+      font-family: var(--font-num, inherit); font-size: 0.875rem; font-weight: 500;
+      letter-spacing: 0; color: var(--text-muted);
+    }
     /* Pie: cuando caduca, cuanto queda y una barra de vida si hay expedicion. */
     .doc-card-pie { margin-top: auto; padding: var(--gap-4); }
     .doc-cad-fila { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--gap-2); }
@@ -26871,7 +26884,7 @@ function boot(vistaInicial) {
         // Las cuatro personas fijas, en su orden.
         DOCS_PERSONAS.filter(p => p.clave !== "otros").forEach(p => {
           const items = docs.filter(d => d.assignee === p.clave);
-          if (items.length) grupos.push({ clave: p.clave, avatar: docsAvatar(p.clave, p.nombre), titulo: p.nombre, items: docsOrdenar(items) });
+          if (items.length) grupos.push({ clave: p.clave, persona: true, avatar: docsAvatar(p.clave, p.nombre), titulo: p.nombre, items: docsOrdenar(items) });
         });
         // "Otros": un grupo por cada nombre escrito (sin distinguir mayusculas),
         // por orden alfabetico, y al final los que no dicen quien.
@@ -26884,9 +26897,9 @@ function boot(vistaInicial) {
         });
         [...otros.entries()]
           .sort(([ka, a], [kb, b]) => (ka === "") - (kb === "") || a.nombre.localeCompare(b.nombre, "es"))
-          .forEach(([k, g]) => grupos.push({ clave: "otros:" + k, avatar: docsAvatar("otros", g.nombre), titulo: g.nombre, items: docsOrdenar(g.items) }));
+          .forEach(([k, g]) => grupos.push({ clave: "otros:" + k, persona: true, avatar: docsAvatar("otros", g.nombre), titulo: g.nombre, items: docsOrdenar(g.items) }));
         const sin = docs.filter(d => !d.assignee);
-        if (sin.length) grupos.push({ clave: "sin", emoji: "\u{2754}", titulo: "Sin asignar", items: docsOrdenar(sin) });
+        if (sin.length) grupos.push({ clave: "sin", persona: true, emoji: "\u{2754}", titulo: "Sin asignar", items: docsOrdenar(sin) });
         return grupos;
       }
       // Por tipo (por defecto): una seccion por tipo CON documentos.
@@ -26928,9 +26941,9 @@ function boot(vistaInicial) {
       cont.innerHTML = docsCabecera() + docsGrupos().map(g => {
         const items = g.items;
         return `<section class="doc-grupo">
-          <h3 class="doc-grupo-tit">
+          <h3 class="doc-grupo-tit${g.persona ? " doc-grupo-persona" : ""}">
             ${g.avatar ? g.avatar : g.emoji ? `<span class="emoji" aria-hidden="true">${esc(g.emoji)}</span>` : ""}
-            <span>${esc(g.titulo.toUpperCase())}</span>
+            <span>${esc(g.persona ? g.titulo : g.titulo.toUpperCase())}</span>
             <span class="doc-cuenta">· ${items.length}</span>
           </h3>
           <ul class="doc-lista">${items.map(d => {
