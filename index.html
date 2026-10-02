@@ -23505,13 +23505,38 @@ function boot(vistaInicial) {
       return res.text();
     }
 
+    /** Si otra pestana (el hub de la oposicion) ha renovado los tokens de esta
+        misma cuenta, se usan esos. Sin esto, el siguiente guardarSupabase()
+        volveria a escribir el refresh token viejo, ya gastado. */
+    function adoptarTokensGuardados() {
+      try {
+        const o = JSON.parse(localStorage.getItem(KEY_SUPABASE) || "null");
+        const s = sesion.supabase;
+        if (!o || !s.token || !o.token || !o.refreshToken) return false;
+        if (o.email && s.email && o.email !== s.email) return false;
+        if (o.refreshToken === s.refreshToken) return false;
+        s.token = o.token;
+        s.refreshToken = o.refreshToken;
+        return true;
+      } catch (_) { return false; }
+    }
+    window.addEventListener("storage", (e) => {
+      if (e.key === KEY_SUPABASE && e.newValue) adoptarTokensGuardados();
+    });
+
     let _refrescando = null;
     function refrescarToken() {
       /* De una en una: quien llegue mientras hay una en vuelo espera a esa
          misma promesa en vez de gastar el refresh token por su cuenta. */
       if (_refrescando) return _refrescando;
-      _refrescando = (async () => {
+      /* El hub de la oposicion (oposicion.html) usa esta misma sesion. Las
+         dos paginas se ponen en fila con el mismo cerrojo entre pestanas, y
+         antes de pedir se mira si la otra ya lo ha renovado: gastar dos veces
+         el mismo refresh token puede cerrar la sesion en todas partes. */
+      const tokenAntes = sesion.supabase.token;
+      const renovar = async () => {
         const s = sesion.supabase;
+        if (adoptarTokensGuardados() && s.token !== tokenAntes && !tokenCaducaPronto(s.token)) return true;
         if (!s.refreshToken) return false;
         try {
           const res = await fetchConPlazo(s.url + "/auth/v1/token?grant_type=refresh_token", {
@@ -23526,7 +23551,10 @@ function boot(vistaInicial) {
           guardarSupabase();
           return true;
         } catch (_) { return false; }
-      })();
+      };
+      _refrescando = (navigator.locks && navigator.locks.request)
+        ? navigator.locks.request("niblo-auth-refresh", renovar)
+        : renovar();
       _refrescando.finally(() => { _refrescando = null; });
       return _refrescando;
     }

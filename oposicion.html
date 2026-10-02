@@ -496,6 +496,25 @@ pre.formato {
 .toast.error { background:var(--danger); color:#fff; }
 @keyframes toastIn { from { transform:translateY(20px); opacity:0; } to { transform:none; opacity:1; } }
 
+/* Estado de sincronización (como la píldora de Viajes) */
+.sync-pill {
+  display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px; flex-shrink:0;
+  border:1px solid var(--line); background:var(--bg-elev); border-radius:var(--r-pill);
+  font-size:12.5px; font-weight:600; color:var(--text-muted); cursor:pointer; white-space:nowrap;
+}
+.sync-pill .dot { width:8px; height:8px; background:var(--text-muted); }
+.sync-pill[data-estado="vivo"] .dot { background:var(--ok); box-shadow:0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
+.sync-pill[data-estado="ok"] .dot { background:var(--ok); }
+.sync-pill[data-estado="sync"] .dot { background:var(--accent); animation:latido 1s ease-in-out infinite; }
+.sync-pill[data-estado="offline"] .dot { background:var(--warn); }
+.sync-pill[data-estado="error"] .dot, .sync-pill[data-estado="sesion"] .dot { background:var(--danger); }
+.sync-pill[data-estado="error"], .sync-pill[data-estado="sesion"] { color:var(--danger); }
+@keyframes latido { 50% { opacity:.35; } }
+@media (max-width:560px) {
+  .sync-pill { width:38px; height:38px; padding:0; justify-content:center; border-radius:var(--r-md); }
+  .sync-pill .t { display:none; }
+}
+
 /* Banner de búsqueda en el servidor */
 .banner {
   display:flex; align-items:center; gap:12px; padding:12px 16px; margin-bottom:14px;
@@ -513,6 +532,7 @@ pre.formato {
     </a>
     <div class="topbar-title" id="topbar-title">Oposición</div>
     <div class="topbar-spacer"></div>
+    <button class="sync-pill" id="sync-pill" data-estado="local" aria-label="Estado de sincronización"><span class="dot" aria-hidden="true"></span><span class="t">…</span></button>
     <button class="icon-btn" id="btn-servidor" aria-label="Buscar temas en el servidor" title="Buscar temas publicados junto a esta página">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
     </button>
@@ -974,38 +994,96 @@ function semaforo(t) {
 }
 
 /* ========================================================================
-   (b) ESTADO + persistencia
-   - Ajustes y progreso de flashcards: localStorage.
+   (b) ESTADO + persistencia local
    - Contenido desarrollado de cada tema: IndexedDB (puede ser grande: se
-     guarda también el HTML original para poder abrirlo sin servidor).
-   Nombres propios para no chocar con otros hubs publicados en el mismo
-   dominio (github.io comparte origen entre repositorios).
+     guarda también el HTML original para poder abrirlo sin servidor). Es del
+     HOGAR: se sincroniza con la tabla oposicion_temas.
+   - Progreso de flashcards: localStorage, una copia por usuario. Es de cada
+     PERSONA: se sincroniza con oposicion_progreso, tarjeta a tarjeta.
+   Todo funciona sin conexión; lo pendiente de subir vive en una cola que
+   sobrevive a recargas. Nombres propios para no chocar con otros hubs
+   publicados en el mismo dominio (github.io comparte origen entre repos).
    ====================================================================== */
-const KEY_AJUSTES = "gestion_hub_ajustes_v1";
+const KEY_AJUSTES_V1 = "gestion_hub_ajustes_v1";   // progreso antiguo (por posición); se migra
+const KEY_PROG    = "gestion_hub_progreso_v2:";     // + uid | "local"
+const KEY_PEND    = "gestion_hub_pendientes_v1";    // { temas:{id:1}, prog:{"uid|clave":1} }
+const KEY_BORR    = "gestion_hub_borrados_v1";      // { id: ms } temas quitados, hasta subirlos
+const KEY_SYNC    = "gestion_hub_sync_v1";          // { hogar, uid, cT, cP } cursores de bajada
 const KEY_EMBED   = "gestion_hub_embebido_v1";
-const KEY_TEMA    = "recetas:tema";           // compartida con Niblo
+const KEY_TEMA    = "recetas:tema";                 // compartida con Niblo
+const KEY_SUPABASE = "recetas:supabase";            // sesión de Niblo (mismo sitio)
 const DB_NOMBRE   = "gestion_hub_db";
 const FORMATO     = "gestion_hub_config";
-const CARPETA_TEMAS = "oposicion/";           // para «Buscar en el servidor»
+const CARPETA_TEMAS = "oposicion/";                 // para «Buscar en el servidor»
 
 const estado = {
-  temas: {},                       // id -> contenido cargado
-  fc: { known: [] },               // "B4T11:3"
+  temas: {},                       // id -> contenido cargado (con .modificado en ms)
   filtroTemas: "todos",
-  pestanaBloque: "temas",
   hubTab: { bloque:"buscar", global:"buscar" }
 };
 
-function cargarAjustes() {
-  try {
-    const s = JSON.parse(localStorage.getItem(KEY_AJUSTES) || "null");
-    if (s && s.fc && Array.isArray(s.fc.known)) estado.fc.known = s.fc.known;
-  } catch (_) {}
+function leerJSON(k, def) { try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v == null ? def : v; } catch (_) { return def; } }
+function escribirJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} }
+
+const pend = Object.assign({ temas:{}, prog:{} }, leerJSON(KEY_PEND, {}));
+const borrados = leerJSON(KEY_BORR, {});
+function guardarPend() { escribirJSON(KEY_PEND, pend); escribirJSON(KEY_BORR, borrados); pintarSync(); }
+function nPendientes() { return Object.keys(pend.temas).length + Object.keys(pend.prog).length; }
+
+/* ---- Progreso de flashcards (por persona) ------------------------------
+   Cada tarjeta se identifica por el tema y un resumen de su pregunta, no por
+   su posición: si el tema se edita y las tarjetas cambian de orden, lo que
+   ya sabías sigue marcado. Valor: { s: sabida, m: ms de la última marca }. */
+const prog = { duenno:"local", mapa:{} };
+function hashCorto(txt) {
+  let h = 0x811c9dc5;
+  const s = String(txt || "").trim();
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+  return (h >>> 0).toString(36);
 }
-function guardarAjustes() {
-  try { localStorage.setItem(KEY_AJUSTES, JSON.stringify({ fc: estado.fc })); } catch (_) {}
+function claveFc(id, f) { return id + ":" + hashCorto(f && f.q); }
+function sabida(k) { const v = prog.mapa[k]; return !!(v && v.s); }
+function sabidasDe(t) { return t.flashcards.filter(f => sabida(claveFc(t.id, f))).length; }
+function guardarProg() { escribirJSON(KEY_PROG + prog.duenno, prog.mapa); }
+function marcarFc(k, valor) {
+  prog.mapa[k] = { s:!!valor, m:Date.now() };
+  guardarProg();
+  pend.prog[prog.duenno + "|" + k] = 1; guardarPend();
+  programarSync();
+}
+/** Carga el progreso de quien tenga la sesión. Lo marcado sin sesión se
+    suma al de la primera persona que entre (y se sube). */
+function cargarProgreso(uid) {
+  const duenno = uid || "local";
+  prog.duenno = duenno;
+  prog.mapa = leerJSON(KEY_PROG + duenno, {});
+  if (uid) {
+    const local = leerJSON(KEY_PROG + "local", null);
+    if (local && Object.keys(local).length) {
+      for (const k in local) {
+        const a = prog.mapa[k];
+        if (!a || local[k].m > a.m) { prog.mapa[k] = local[k]; pend.prog[uid + "|" + k] = 1; }
+      }
+      Object.keys(pend.prog).forEach(pk => { if (pk.startsWith("local|")) delete pend.prog[pk]; });
+      try { localStorage.removeItem(KEY_PROG + "local"); } catch (_) {}
+      guardarProg(); guardarPend();
+    }
+  }
+}
+/** Progreso de la primera versión del hub (claves por posición). */
+function migrarProgresoV1() {
+  const v1 = leerJSON(KEY_AJUSTES_V1, null);
+  if (!v1 || !v1.fc || !Array.isArray(v1.fc.known)) return;
+  v1.fc.known.forEach(k => {
+    const [id, i] = k.split(":");
+    const t = estado.temas[id];
+    const f = t && t.flashcards[parseInt(i, 10)];
+    if (f && !sabida(claveFc(id, f))) marcarFc(claveFc(id, f), true);
+  });
+  try { localStorage.removeItem(KEY_AJUSTES_V1); } catch (_) {}
 }
 
+/* ---- IndexedDB ---------------------------------------------------------- */
 let db = null;
 function abrirDB() {
   return new Promise((ok, ko) => {
@@ -1048,19 +1126,355 @@ function dbBorrar(id) {
 }
 /* Los mazos de flashcards se rehacen al cambiar el contenido. */
 function olvidarMazos() { Object.keys(hubLocal).forEach(k => { hubLocal[k].mazo = null; hubLocal[k].test = null; }); }
-async function guardarTema(t) {
+function olvidarBlob(id) { if (blobs[id]) { URL.revokeObjectURL(blobs[id]); delete blobs[id]; } }
+
+/** Guarda un tema. Si viene de una acción tuya (no de la bajada) se sella con
+    la hora y entra en la cola de subida. */
+async function guardarTema(t, deServidor, marca) {
+  if (!deServidor) {
+    t.modificado = marca || Date.now();
+    pend.temas[t.id] = 1; delete borrados[t.id]; guardarPend();
+  }
   estado.temas[t.id] = t;
-  olvidarMazos();
-  if (blobs[t.id]) { URL.revokeObjectURL(blobs[t.id]); delete blobs[t.id]; }
+  olvidarMazos(); olvidarBlob(t.id);
   await dbPut(t);
+  if (!deServidor) programarSync();
 }
-async function quitarTema(id) {
+/** Quita el contenido de un tema. El borrado también se sincroniza (queda una
+    marca en el servidor); el progreso de cada persona no se toca. */
+async function quitarTema(id, deServidor) {
   delete estado.temas[id];
-  olvidarMazos();
-  if (blobs[id]) { URL.revokeObjectURL(blobs[id]); delete blobs[id]; }
-  estado.fc.known = estado.fc.known.filter(k => !k.startsWith(id + ":"));
-  guardarAjustes();
+  olvidarMazos(); olvidarBlob(id);
+  if (!deServidor) { borrados[id] = Date.now(); pend.temas[id] = 1; guardarPend(); }
   await dbBorrar(id);
+  if (!deServidor) programarSync();
+}
+
+/* ========================================================================
+   (b2) SINCRONIZACIÓN con Supabase — la misma cuenta y el mismo hogar que
+   Niblo, sin librerías (REST + WebSocket), como en Niblo.
+   - Subida: cola de pendientes; se reintenta sola al volver la conexión.
+   - Bajada: solo lo cambiado desde el último cursor (con 2 min de solape:
+     una fila que se confirma tarde no se pierde; aplicar dos veces es inocuo).
+   - Conflictos: gana la última modificación, por tema y por tarjeta. El
+     servidor lo hace cumplir también (trigger): una subida vieja nunca pisa
+     una nueva, aunque llegue después.
+   - En vivo: WebSocket de Realtime; cada aviso dispara una bajada.
+   ====================================================================== */
+const SUPA = { url:null, anon:null, token:null, refresh:null, uid:null, email:null };
+const SYNC = Object.assign({ hogar:null, uid:null, cT:null, cP:null }, leerJSON(KEY_SYNC, {}));
+const S = { estado:"local", detalle:"", enCurso:null, repetir:false, timer:null, ultimaSubida:0, ultimaOk:null };
+
+function jwt(token) {
+  try { return JSON.parse(atob(String(token).split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))); } catch (_) { return null; }
+}
+function caducaPronto(token) { const c = jwt(token); return !c || (typeof c.exp === "number" && c.exp * 1000 < Date.now() + 60000); }
+/** Lee la sesión que guarda Niblo. Devuelve true si hay sesión utilizable. */
+function leerSesion() {
+  const o = leerJSON(KEY_SUPABASE, null);
+  if (!o || !o.token || !o.url || !o.anonKey) {
+    Object.assign(SUPA, { url:null, anon:null, token:null, refresh:null, uid:null, email:null });
+    return false;
+  }
+  const c = jwt(o.token);
+  Object.assign(SUPA, { url:o.url, anon:o.anonKey, token:o.token, refresh:o.refreshToken || null,
+    uid:(c && c.sub) || o.userId || null, email:o.email || null });
+  return !!SUPA.uid;
+}
+const haySesion = () => !!(SUPA.token && SUPA.uid);
+
+/* Renovar el token. Supabase ROTA el refresh token: si Niblo y el hub lo
+   gastaran a la vez, el segundo recibiría «ya usado» y la detección de reuso
+   podría cerrar la sesión en todas partes. Por eso: (1) cerrojo compartido
+   entre pestañas con Niblo (Web Locks, mismo nombre); (2) antes de pedir,
+   se mira si otra pestaña ya lo ha renovado; (3) el resultado se escribe en
+   la misma clave que lee Niblo. */
+const CERROJO_AUTH = "niblo-auth-refresh";
+let _renovando = null;
+function renovarToken() {
+  if (_renovando) return _renovando;
+  const tokenAntes = SUPA.token;
+  const hacer = async () => {
+    const g = leerJSON(KEY_SUPABASE, null);
+    if (g && g.token && g.token !== tokenAntes && !caducaPronto(g.token)) {
+      SUPA.token = g.token; SUPA.refresh = g.refreshToken || SUPA.refresh;
+      return true;
+    }
+    const refresh = (g && g.refreshToken) || SUPA.refresh;
+    if (!refresh) return false;
+    try {
+      const r = await fetchPlazo(SUPA.url + "/auth/v1/token?grant_type=refresh_token", {
+        method:"POST", headers:{ "apikey":SUPA.anon, "Content-Type":"application/json" },
+        body:JSON.stringify({ refresh_token:refresh })
+      });
+      if (!r.ok) return false;
+      const d = await r.json();
+      SUPA.token = d.access_token; SUPA.refresh = d.refresh_token || refresh;
+      const o = leerJSON(KEY_SUPABASE, {}) || {};
+      o.token = SUPA.token; o.refreshToken = SUPA.refresh;
+      escribirJSON(KEY_SUPABASE, o);
+      return true;
+    } catch (_) { return false; }
+  };
+  _renovando = (navigator.locks && navigator.locks.request ? navigator.locks.request(CERROJO_AUTH, hacer) : hacer())
+    .then(ok => { if (ok) rtToken(); return ok; })
+    .finally(() => { _renovando = null; });
+  return _renovando;
+}
+function fetchPlazo(url, opts, ms) {
+  const ctrl = typeof AbortController === "function" ? new AbortController() : null;
+  const t = setTimeout(() => { if (ctrl) ctrl.abort(); }, ms || 20000);
+  return fetch(url, ctrl ? Object.assign({}, opts, { signal:ctrl.signal }) : opts).finally(() => clearTimeout(t));
+}
+async function supa(ruta, opts, reintento) {
+  if (reintento === undefined) reintento = true;
+  if (reintento && SUPA.refresh && caducaPronto(SUPA.token)) await renovarToken();
+  const headers = Object.assign({ "apikey":SUPA.anon, "Authorization":"Bearer " + SUPA.token, "Content-Type":"application/json" }, (opts && opts.headers) || {});
+  const r = await fetchPlazo(SUPA.url + ruta, Object.assign({}, opts, { headers }), opts && opts.plazo);
+  if (r.status === 401 && reintento) {
+    if (await renovarToken()) return supa(ruta, opts, false);
+    const e = new Error("sesión caducada"); e.sesion = true; throw e;
+  }
+  if (!r.ok) { const txt = await r.text().catch(() => ""); const e = new Error("Supabase " + r.status + ": " + txt); e.status = r.status; throw e; }
+  if (r.status === 204 || r.status === 201) return null;
+  const ct = r.headers.get("Content-Type") || "";
+  return ct.indexOf("json") >= 0 ? r.json() : r.text();
+}
+const ms = iso => { const n = Date.parse(iso); return isNaN(n) ? 0 : n; };
+const iso = n => new Date(n).toISOString();
+function guardarSyncMeta() { escribirJSON(KEY_SYNC, { hogar:SYNC.hogar, uid:SYNC.uid, cT:SYNC.cT, cP:SYNC.cP }); }
+
+/** Hogar de la sesión (RLS solo devuelve los tuyos). Si cambia, lo guardado
+    aquí era de otro hogar: se descarta el contenido local para no mezclarlo. */
+async function asegurarHogar() {
+  const filas = await supa("/rest/v1/hogares?select=id&limit=1");
+  const h = filas && filas[0] && filas[0].id;
+  if (!h) { const e = new Error("tu cuenta no tiene hogar en Niblo"); e.sinHogar = true; throw e; }
+  if (SYNC.hogar && SYNC.hogar !== h) {
+    for (const id of Object.keys(estado.temas)) await quitarTema(id, true);
+    Object.keys(pend.temas).forEach(id => delete pend.temas[id]);
+    Object.keys(borrados).forEach(id => delete borrados[id]);
+    guardarPend();
+    SYNC.cT = null;
+  }
+  if (SYNC.uid !== SUPA.uid) { SYNC.cP = null; SYNC.uid = SUPA.uid; }
+  SYNC.hogar = h; guardarSyncMeta();
+  return h;
+}
+
+/** Lee páginas de 1000 filas (el límite de PostgREST) ordenadas por cursor. */
+async function bajarTabla(base, cursor) {
+  const desde = cursor ? "&actualizado=gte." + encodeURIComponent(iso(ms(cursor) - 120000)) : "";
+  const filas = [];
+  for (let off = 0; ; off += 1000) {
+    const pag = await supa(base + desde + "&order=actualizado.asc&limit=1000&offset=" + off);
+    filas.push(...(pag || []));
+    if (!pag || pag.length < 1000) break;
+  }
+  return filas;
+}
+async function bajar() {
+  let cambios = 0;
+  // Temas del hogar
+  const ft = await bajarTabla(`/rest/v1/oposicion_temas?select=tema_id,datos,borrado,modificado,actualizado&hogar_id=eq.${SYNC.hogar}`, SYNC.cT);
+  for (const r of ft) {
+    const id = r.tema_id;
+    if (!TEMA_POR_ID[id]) continue;
+    const tm = ms(r.modificado);
+    const lm = estado.temas[id] ? (estado.temas[id].modificado || 0) : (borrados[id] || 0);
+    if (tm > lm) {
+      if (r.borrado) { if (estado.temas[id]) { await quitarTema(id, true); cambios++; } delete borrados[id]; }
+      else if (r.datos) {
+        const rec = normalizarTema(id, r.datos, r.datos.fileName, r.datos.html);
+        rec.modificado = tm; rec.cargado = r.datos.cargado || rec.cargado;
+        await guardarTema(rec, true); cambios++;
+      }
+      delete pend.temas[id];
+    }
+    if (!SYNC.cT || ms(r.actualizado) > ms(SYNC.cT)) SYNC.cT = r.actualizado;
+  }
+  // Progreso propio
+  const fp = await bajarTabla(`/rest/v1/oposicion_progreso?select=tarjeta,sabida,modificado,actualizado&user_id=eq.${SUPA.uid}`, SYNC.cP);
+  let cambioProg = false;
+  for (const r of fp) {
+    const tm = ms(r.modificado), a = prog.mapa[r.tarjeta];
+    if (!a || tm > a.m) {
+      prog.mapa[r.tarjeta] = { s:!!r.sabida, m:tm };
+      delete pend.prog[SUPA.uid + "|" + r.tarjeta];
+      cambioProg = true; cambios++;
+    }
+    if (!SYNC.cP || ms(r.actualizado) > ms(SYNC.cP)) SYNC.cP = r.actualizado;
+  }
+  if (cambioProg) { guardarProg(); olvidarMazos(); }
+  guardarPend(); guardarSyncMeta();
+  return cambios;
+}
+async function subir() {
+  // Temas: de uno en uno (pueden llevar el HTML completo del tema).
+  for (const id of Object.keys(pend.temas)) {
+    if (!TEMA_POR_ID[id]) { delete pend.temas[id]; continue; }
+    const t = estado.temas[id];
+    const marca = t ? t.modificado : borrados[id];
+    if (!marca) { delete pend.temas[id]; continue; }
+    let datos = null;
+    if (t) { datos = Object.assign({}, t); delete datos.id; delete datos.modificado; }
+    await supa("/rest/v1/oposicion_temas?on_conflict=hogar_id,tema_id", {
+      method:"POST", plazo:60000,
+      headers:{ "Prefer":"resolution=merge-duplicates,return=minimal" },
+      body:JSON.stringify({ hogar_id:SYNC.hogar, tema_id:id, datos, borrado:!t, modificado:iso(marca) })
+    });
+    S.ultimaSubida = Date.now();
+    // Solo se da por subido si no ha vuelto a cambiar mientras tanto.
+    const ahora = estado.temas[id] ? estado.temas[id].modificado : borrados[id];
+    if (ahora === marca) { delete pend.temas[id]; if (!t) delete borrados[id]; }
+    guardarPend();
+  }
+  // Progreso: por lotes; solo lo de la persona con sesión.
+  const mias = Object.keys(pend.prog).filter(pk => pk.startsWith(SUPA.uid + "|"));
+  for (let i = 0; i < mias.length; i += 500) {
+    const lote = mias.slice(i, i + 500);
+    const filas = lote.map(pk => { const k = pk.slice(SUPA.uid.length + 1); const v = prog.mapa[k]; return v ? { user_id:SUPA.uid, tarjeta:k, sabida:!!v.s, modificado:iso(v.m) } : null; }).filter(Boolean);
+    const marcas = lote.map(pk => { const v = prog.mapa[pk.slice(SUPA.uid.length + 1)]; return v ? v.m : null; });
+    if (filas.length) {
+      await supa("/rest/v1/oposicion_progreso?on_conflict=user_id,tarjeta", {
+        method:"POST", headers:{ "Prefer":"resolution=merge-duplicates,return=minimal" }, body:JSON.stringify(filas)
+      });
+      S.ultimaSubida = Date.now();
+    }
+    lote.forEach((pk, j) => { const v = prog.mapa[pk.slice(SUPA.uid.length + 1)]; if (!v || v.m === marcas[j]) delete pend.prog[pk]; });
+    guardarPend();
+  }
+}
+
+function sincronizar() {
+  if (!haySesion()) { ponerSync("local"); return Promise.resolve(); }
+  if (!navigator.onLine) { ponerSync("offline"); return Promise.resolve(); }
+  if (S.enCurso) { S.repetir = true; return S.enCurso; }
+  S.enCurso = (async () => {
+    ponerSync("sync");
+    try {
+      await asegurarHogar();
+      const cambios = await bajar();
+      await subir();
+      S.ultimaOk = new Date();
+      ponerSync("ok");
+      if (cambios) render();
+      rtConectar();
+    } catch (e) {
+      const m = e.message || String(e);
+      if (e.sesion) ponerSync("sesion", "La sesión de Niblo ha caducado: vuelve a entrar en Niblo.");
+      else if (e.sinHogar) ponerSync("error", "Tu cuenta no tiene hogar en Niblo.");
+      else if (/42P01|does not exist|Could not find the table|PGRST205/i.test(m)) ponerSync("error", "Falta ejecutar la migración 008_oposicion_sync.sql en Supabase.");
+      else if (!navigator.onLine || /Failed to fetch|NetworkError|aborted|Load failed/i.test(m)) ponerSync("offline");
+      else ponerSync("error", m.slice(0, 220));
+      console.warn("Sync oposición:", e);
+    } finally {
+      S.enCurso = null;
+      if (S.repetir) { S.repetir = false; programarSync(300); }
+    }
+  })();
+  return S.enCurso;
+}
+function programarSync(espera) {
+  clearTimeout(S.timer);
+  pintarSync();
+  S.timer = setTimeout(() => sincronizar(), espera == null ? 500 : espera);
+}
+
+/* ---- Tiempo real (WebSocket de Supabase Realtime) ---------------------- */
+const RT = { ws:null, ref:0, latido:null, reintento:null, intentos:0, conectado:false, tema:"realtime:oposicion", aviso:null };
+function rtEnviar(topic, event, payload) {
+  if (RT.ws && RT.ws.readyState === 1) RT.ws.send(JSON.stringify({ topic, event, payload:payload || {}, ref:String(++RT.ref) }));
+}
+function rtConectar() {
+  if (!haySesion() || !SYNC.hogar) return;
+  if (RT.ws && RT.ws.readyState <= 1) return;
+  clearTimeout(RT.reintento);
+  let ws;
+  try { ws = new WebSocket(`wss://${SUPA.url.replace(/^https?:\/\//, "")}/realtime/v1/websocket?apikey=${encodeURIComponent(SUPA.anon)}&vsn=1.0.0`); }
+  catch (_) { return; }
+  RT.ws = ws;
+  ws.onopen = async () => {
+    if (caducaPronto(SUPA.token)) await renovarToken();
+    rtEnviar(RT.tema, "phx_join", {
+      config:{
+        broadcast:{ self:false },
+        postgres_changes:[
+          { event:"*", schema:"public", table:"oposicion_temas",    filter:`hogar_id=eq.${SYNC.hogar}` },
+          { event:"*", schema:"public", table:"oposicion_progreso", filter:`user_id=eq.${SUPA.uid}` }
+        ]
+      },
+      access_token:SUPA.token
+    });
+    clearInterval(RT.latido);
+    RT.latido = setInterval(() => {
+      rtEnviar("phoenix", "heartbeat", {});
+      // El canal se cierra cuando caduca el token: se renueva antes.
+      if (caducaPronto(SUPA.token)) renovarToken();
+    }, 25000);
+  };
+  ws.onmessage = ev => {
+    let m; try { m = JSON.parse(ev.data); } catch (_) { return; }
+    if (m.topic !== RT.tema) return;
+    if (m.event === "phx_reply" && m.payload && m.payload.status === "ok" && m.payload.response && m.payload.response.postgres_changes) {
+      RT.conectado = true; RT.intentos = 0; pintarSync();
+      // Lo que cambiara mientras no había canal se recoge ahora.
+      programarSync(200);
+      return;
+    }
+    if ((m.event === "system" && m.payload && m.payload.status === "error") || m.event === "phx_error" || m.event === "phx_close") {
+      RT.conectado = false; pintarSync();
+      try { ws.close(); } catch (_) {}
+      return;
+    }
+    if (m.event === "postgres_changes") {
+      // Puede ser el eco de lo que acabamos de subir: se deja pasar la ventana.
+      const espera = Math.max(300, 1500 - (Date.now() - S.ultimaSubida));
+      programarSync(espera);
+    }
+  };
+  ws.onclose = () => {
+    RT.conectado = false; clearInterval(RT.latido); pintarSync();
+    if (RT.ws !== ws) return;
+    RT.ws = null;
+    if (!haySesion()) return;
+    const espera = Math.min(30000, 1000 * Math.pow(2, RT.intentos++));
+    RT.reintento = setTimeout(rtConectar, espera);
+  };
+  ws.onerror = () => { try { ws.close(); } catch (_) {} };
+}
+/** Token nuevo: se lo pasa al canal abierto para que no lo cierre al caducar. */
+function rtToken() { if (RT.conectado) rtEnviar(RT.tema, "access_token", { access_token:SUPA.token }); }
+function rtCerrar() {
+  clearTimeout(RT.reintento); clearInterval(RT.latido); RT.conectado = false;
+  if (RT.ws) { const w = RT.ws; RT.ws = null; try { w.close(); } catch (_) {} }
+}
+
+/* ---- Indicador de sincronización -------------------------------------- */
+function ponerSync(est, detalle) { S.estado = est; S.detalle = detalle || ""; pintarSync(); }
+function pintarSync() {
+  const el = document.getElementById("sync-pill");
+  if (!el) return;
+  const n = nPendientes();
+  const txt = {
+    local:   "Solo este dispositivo",
+    sync:    "Sincronizando…",
+    ok:      n ? `${n} pendiente${n === 1 ? "" : "s"}` : (RT.conectado ? "Sincronizado" : "Sincronizado"),
+    offline: n ? `Sin conexión · ${n} pendiente${n === 1 ? "" : "s"}` : "Sin conexión",
+    sesion:  "Sesión caducada",
+    error:   "Error al sincronizar"
+  }[S.estado];
+  el.dataset.estado = S.estado === "ok" && RT.conectado ? "vivo" : S.estado;
+  el.querySelector(".t").textContent = txt;
+  const hora = S.ultimaOk ? " · última: " + S.ultimaOk.toLocaleTimeString("es-ES", { hour:"2-digit", minute:"2-digit" }) : "";
+  el.title = ({
+    local:   "Sin sesión de Niblo: los cambios se guardan solo en este navegador. Entra en Niblo para sincronizar.",
+    sync:    "Sincronizando con Niblo…",
+    ok:      (RT.conectado ? "Sincronizado y en vivo: los cambios de otros dispositivos llegan al momento" : "Sincronizado (sin canal en vivo: se comprueba al volver a la página)") + hora,
+    offline: "Sin conexión: los cambios se guardan aquí y se subirán solos al volver la red.",
+    sesion:  S.detalle,
+    error:   S.detalle
+  }[S.estado]) || "";
 }
 
 /* ========================================================================
@@ -1274,7 +1688,7 @@ function activarDrop(el) {
 async function exportarCopia() {
   const temas = {};
   Object.values(estado.temas).forEach(t => { temas[t.id] = t; });
-  const datos = { _format:FORMATO, _version:1, _exportedAt:new Date().toISOString(), ajustes:{ fc:estado.fc }, temas };
+  const datos = { _format:FORMATO, _version:2, _exportedAt:new Date().toISOString(), ajustes:{ progreso:prog.mapa }, temas };
   const url = URL.createObjectURL(new Blob([JSON.stringify(datos, null, 2)], { type:"application/json" }));
   const a = document.createElement("a");
   a.href = url; a.download = "gestion_hub_" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + ".json";
@@ -1288,14 +1702,27 @@ async function importarCopia(j, silencioso) {
     const fecha = j._exportedAt ? new Date(j._exportedAt).toLocaleString("es-ES") : "fecha desconocida";
     if (!confirm(`¿Importar la copia del ${fecha} con ${plural(n, "tema")}?\nSustituye los temas con el mismo número y el progreso de flashcards.`)) return false;
   }
-  if (j.ajustes && j.ajustes.fc && Array.isArray(j.ajustes.fc.known)) { estado.fc.known = j.ajustes.fc.known; guardarAjustes(); }
   let ok = 0;
   for (const k in (j.temas || {})) {
     const v = j.temas[k];
     const id = idValido(k, v);
     if (!id) continue;
-    await guardarTema(normalizarTema(id, v, v.fileName, v.html)); ok++;
+    /* Lo embebido en la página lleva la fecha de la copia, no la de ahora: si
+       no, cada dispositivo que abriera la página por primera vez pisaría lo
+       que se hubiera editado después en otro. */
+    const marca = silencioso ? ms(j._exportedAt) || 1 : null;
+    if (marca && estado.temas[id] && (estado.temas[id].modificado || 0) >= marca) continue;
+    await guardarTema(normalizarTema(id, v, v.fileName, v.html), false, marca); ok++;
   }
+  // Progreso: se suma al tuyo tarjeta a tarjeta (gana la marca más reciente).
+  const pr = j.ajustes && j.ajustes.progreso;
+  if (pr && typeof pr === "object") {
+    for (const k in pr) { const v = pr[k], a = prog.mapa[k]; if (v && typeof v.m === "number" && (!a || v.m > a.m)) { prog.mapa[k] = { s:!!v.s, m:v.m }; pend.prog[prog.duenno + "|" + k] = 1; } }
+    guardarProg(); guardarPend(); programarSync();
+  }
+  // Copias de la primera versión: claves por posición.
+  const v1 = j.ajustes && j.ajustes.fc && j.ajustes.fc.known;
+  if (Array.isArray(v1)) v1.forEach(k => { const [id, i] = k.split(":"); const t = estado.temas[id]; const f = t && t.flashcards[parseInt(i, 10)]; if (f) marcarFc(claveFc(id, f), true); });
   if (!silencioso) toast(`✓ Importados ${plural(ok, "tema")}`);
   return true;
 }
@@ -1308,9 +1735,8 @@ async function cargarEmbebidos() {
     if (j._format !== FORMATO) return;
     const sello = j._exportedAt || "sin-fecha";
     if (localStorage.getItem(KEY_EMBED) === sello) return;
-    const primera = Object.keys(estado.temas).length === 0;
-    // Progreso de flashcards solo en la primera carga: no se machaca el tuyo.
-    if (!primera && j.ajustes) j = Object.assign({}, j, { ajustes:null });
+    // El progreso es de cada persona: lo embebido en la página no lo trae.
+    j = Object.assign({}, j, { ajustes:null });
     await importarCopia(j, true);
     localStorage.setItem(KEY_EMBED, sello);
   } catch (e) { console.warn("Datos embebidos:", e); }
@@ -1439,6 +1865,7 @@ function renderInicio() {
   const nAmbar = TEMAS.filter(t => semaforo(t) === "ambar").length;
   const nAct = TEMAS.filter(t => t.v[0] === "ACTUALIZAR").length;
   const totalFc = Object.values(estado.temas).reduce((s, t) => s + t.flashcards.length, 0);
+  const sabidasFc = Object.values(estado.temas).reduce((s, t) => s + sabidasDe(t), 0);
   vista().innerHTML = `
     <h1 class="titulo-grande">Gestión AGE (A2)</h1>
     <p class="view-sub">Gestión de la Administración Civil del Estado · turno libre · ${TEMAS.length} temas en ${BLOQUES.length} bloques · programa: anexo VII, <a href="https://www.boe.es/diario_boe/txt.php?id=${PROGRAMA_REF}" target="_blank" rel="noopener">${PROGRAMA_REF}</a></p>
@@ -1453,7 +1880,7 @@ function renderInicio() {
         <div class="kpi"><div class="k"><span class="dot ok"></span>Verdes</div><div class="v">${nVerde}</div><div class="s">solo BOE y estables</div></div>
         <div class="kpi"><div class="k"><span class="dot warn"></span>Ámbar</div><div class="v">${nAmbar}</div><div class="s">solo BOE, revisar</div></div>
         <div class="kpi"><div class="k"><span class="dot hot"></span>Actualizar</div><div class="v">${nAct}</div><div class="s">los que más caducan</div></div>
-        <div class="kpi"><div class="k">Flashcards</div><div class="v">${estado.fc.known.length}/${totalFc}</div><div class="s">dominadas</div></div>
+        <div class="kpi"><div class="k">Flashcards</div><div class="v">${sabidasFc}/${totalFc}</div><div class="s">dominadas</div></div>
       </div>
     </section>
 
@@ -1570,7 +1997,7 @@ function tarjetaTema(p) {
   let cuerpo;
   if (t) {
     const fcT = t.flashcards.length;
-    const fcK = estado.fc.known.filter(k => k.startsWith(p.id + ":")).length;
+    const fcK = sabidasDe(t);
     const pct = fcT ? Math.round(fcK / fcT * 100) : 0;
     cuerpo = `
       <div class="tema-stats">
@@ -1675,7 +2102,7 @@ function renderTema(id) {
 }
 function bloqueContenido(t) {
   const fcT = t.flashcards.length;
-  const fcK = estado.fc.known.filter(k => k.startsWith(t.id + ":")).length;
+  const fcK = sabidasDe(t);
   return `
     <div class="card">
       ${t.subtitle ? `<p style="margin:0 0 12px;font-weight:600">${esc(t.subtitle)}</p>` : ""}
@@ -1872,12 +2299,12 @@ function hubFc(c, ambito, temas) {
   const enFiltro = temas.filter(t => s.fcTema === "todos" || t.id === s.fcTema);
   const rehacer = () => {
     const pool = [];
-    enFiltro.forEach(t => t.flashcards.forEach((f, i) => { const k = t.id + ":" + i; if (!estado.fc.known.includes(k)) pool.push(Object.assign({ _id:t.id, _k:k }, f)); }));
+    enFiltro.forEach(t => t.flashcards.forEach(f => { const k = claveFc(t.id, f); if (!sabida(k)) pool.push(Object.assign({ _id:t.id, _k:k }, f)); }));
     s.mazo = barajar(pool); s.idx = 0; s.volteada = false;
   };
   if (!s.mazo) rehacer();
   const total = enFiltro.reduce((n, t) => n + t.flashcards.length, 0);
-  const sabidas = estado.fc.known.filter(k => enFiltro.some(t => k.startsWith(t.id + ":"))).length;
+  const sabidas = enFiltro.reduce((n, t) => n + sabidasDe(t), 0);
   const f = s.mazo[s.idx];
   c.innerHTML = `
     <div class="fc-ctrl">
@@ -1904,8 +2331,8 @@ function hubFc(c, ambito, temas) {
   document.getElementById("fc-mezclar").addEventListener("click", () => { s.mazo = barajar(s.mazo); s.idx = 0; s.volteada = false; rep(); });
   document.getElementById("fc-reiniciar").addEventListener("click", () => {
     if (!confirm("¿Reiniciar el progreso de flashcards de este ámbito?")) return;
-    estado.fc.known = estado.fc.known.filter(k => !enFiltro.some(t => k.startsWith(t.id + ":")));
-    guardarAjustes(); rehacer(); rep();
+    enFiltro.forEach(t => t.flashcards.forEach(f => { const k = claveFc(t.id, f); if (sabida(k)) marcarFc(k, false); }));
+    rehacer(); rep();
   });
   c.querySelectorAll("[data-ft]").forEach(x => x.addEventListener("click", () => { s.fcTema = x.dataset.ft; s.mazo = null; rep(); }));
   const carta = document.getElementById("fc");
@@ -1914,8 +2341,7 @@ function hubFc(c, ambito, temas) {
     carta.addEventListener("click", voltear);
     carta.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); voltear(); } });
     document.getElementById("fc-si").addEventListener("click", () => {
-      if (!estado.fc.known.includes(f._k)) estado.fc.known.push(f._k);
-      guardarAjustes();
+      if (!sabida(f._k)) marcarFc(f._k, true);
       s.mazo.splice(s.idx, 1); if (s.idx >= s.mazo.length) s.idx = 0; s.volteada = false; rep();
     });
     document.getElementById("fc-no").addEventListener("click", () => {
@@ -2008,7 +2434,7 @@ function pintarPregunta(c, ambito, temas) {
 function hubProgreso(c, ambito, temas) {
   const sum = k => temas.reduce((n, t) => n + t[k].length, 0);
   const fcT = sum("flashcards");
-  const fcK = estado.fc.known.filter(k => temas.some(t => k.startsWith(t.id + ":"))).length;
+  const fcK = temas.reduce((n, t) => n + sabidasDe(t), 0);
   const total = ambito === "global" ? TEMAS.length : BLOQUE_POR_CODE[ambito].total;
   c.innerHTML = `
     <div class="kpis" style="margin-top:0">
@@ -2026,7 +2452,7 @@ function hubProgreso(c, ambito, temas) {
       </tbody></table></div>` : ""}
     <h2 class="section-title">Por tema</h2>
     <div class="card tabla-wrap"><table class="tabla"><thead><tr><th>Tema</th><th class="n">Gl.</th><th class="n">Hitos</th><th class="n">FC</th><th class="n">Preg.</th></tr></thead><tbody>
-      ${temas.map(t => `<tr class="clic" data-ir="#/tema/${t.id}"><td><b style="color:var(--accent)">${esc(codigoDe(t.id))}</b> · ${esc(TEMA_POR_ID[t.id].e)}</td><td class="n">${t.glossary.length}</td><td class="n">${t.timeline.length}</td><td class="n">${estado.fc.known.filter(k => k.startsWith(t.id + ":")).length}/${t.flashcards.length}</td><td class="n">${t.questions.length}</td></tr>`).join("")}
+      ${temas.map(t => `<tr class="clic" data-ir="#/tema/${t.id}"><td><b style="color:var(--accent)">${esc(codigoDe(t.id))}</b> · ${esc(TEMA_POR_ID[t.id].e)}</td><td class="n">${t.glossary.length}</td><td class="n">${t.timeline.length}</td><td class="n">${sabidasDe(t)}/${t.flashcards.length}</td><td class="n">${t.questions.length}</td></tr>`).join("")}
     </tbody></table></div>`;
   c.querySelectorAll("[data-ir]").forEach(x => x.addEventListener("click", () => ir(x.dataset.ir)));
 }
@@ -2141,8 +2567,9 @@ function renderGuia() {
     <section class="card">
       <h3 class="card-title">Cómo añadir el contenido de un tema</h3>
       <ul>
-        <li>Desde la ficha de cada tema: <b>Descargar plantilla</b> → completar → arrastrarla al hub. Se guarda en este navegador (IndexedDB) y se puede abrir sin conexión.</li>
-        <li>Para no perderlo, usa el botón de descarga de la cabecera: guarda todos los temas y el progreso en un <code>.json</code> que se puede volver a importar.</li>
+        <li>Desde la ficha de cada tema: <b>Descargar plantilla</b> → completar → arrastrarla al hub. Se guarda también en este dispositivo, así que se puede abrir sin conexión.</li>
+        <li><b>Sincronización:</b> con la sesión de Niblo iniciada, el contenido de los temas se comparte con tu hogar y tu progreso de flashcards (solo tuyo) se sincroniza entre tus dispositivos al momento. Sin conexión se guarda aquí y se sube solo al volver la red. El indicador de la cabecera dice en qué estado está.</li>
+        <li>Copia de seguridad: el botón de descarga de la cabecera guarda todos los temas y tu progreso en un <code>.json</code> que se puede volver a importar.</li>
         <li>También se pueden publicar junto a esta página en <code>${CARPETA_TEMAS}B4T11_estudio.html</code> (etc.) y cargarlos con el botón de recargar de la cabecera.</li>
       </ul>
       <pre class="formato">window.TEMARIO_DATA = {
@@ -2175,24 +2602,65 @@ document.getElementById("btn-tema").addEventListener("click", () => {
 });
 document.getElementById("btn-guardar").addEventListener("click", exportarCopia);
 document.getElementById("btn-servidor").addEventListener("click", buscarEnServidor);
+document.getElementById("sync-pill").addEventListener("click", () => {
+  if (!haySesion()) { toast("Entra en Niblo con tu cuenta para sincronizar el hub entre dispositivos"); return; }
+  if (S.estado === "error" || S.estado === "sesion") toast(S.detalle, "error");
+  sincronizar();
+});
 window.addEventListener("hashchange", render);
-// Si se cambia el tema en Niblo con esta pestaña abierta, se sigue.
-window.addEventListener("storage", e => { if (e.key === KEY_TEMA && (e.newValue === "claro" || e.newValue === "oscuro")) aplicarTema(e.newValue); });
+window.addEventListener("storage", e => {
+  // Si se cambia el tema en Niblo con esta pestaña abierta, se sigue.
+  if (e.key === KEY_TEMA && (e.newValue === "claro" || e.newValue === "oscuro")) aplicarTema(e.newValue);
+  // Entrar, salir o renovar el token en Niblo (otra pestaña) se nota aquí.
+  if (e.key === KEY_SUPABASE) cambioDeSesion();
+});
+/** Relee la sesión de Niblo y actúa si ha cambiado de persona. */
+function cambioDeSesion() {
+  const uidAntes = SUPA.uid;
+  leerSesion();
+  if (SUPA.uid !== uidAntes) {
+    rtCerrar();
+    cargarProgreso(SUPA.uid);
+    olvidarMazos(); render();
+  } else if (RT.conectado) rtToken();
+  if (haySesion()) programarSync(100); else ponerSync("local");
+}
+window.addEventListener("online", () => programarSync(100));
+window.addEventListener("offline", () => ponerSync("offline"));
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "visible") return;
+  // En el móvil el WebSocket muere en segundo plano: al volver, ponerse al día.
+  leerSesion();
+  programarSync(100);
+});
+// Red de seguridad por si se pierde algún aviso en vivo.
+setInterval(() => { if (document.visibilityState === "visible" && haySesion()) sincronizar(); }, 120000);
 
 (async function arrancar() {
-  cargarAjustes();
+  leerSesion();
+  cargarProgreso(SUPA.uid);
+  pintarSync();
   render();                       // el programa se ve ya; el contenido llega después
   try {
     await abrirDB();
     estado.temas = {};
     const guardados = await dbTodos();
-    for (const k in guardados) if (TEMA_POR_ID[k]) estado.temas[k] = guardados[k];
+    for (const k in guardados) {
+      if (!TEMA_POR_ID[k]) continue;
+      const t = guardados[k];
+      // Temas cargados antes de existir la sincronización: a la cola.
+      if (!t.modificado) { t.modificado = ms(t.cargado) || Date.now(); pend.temas[k] = 1; await dbPut(t); }
+      estado.temas[k] = t;
+    }
+    guardarPend();
+    migrarProgresoV1();
     await cargarEmbebidos();
   } catch (e) {
     console.error(e);
     toast("No se pudo abrir el almacenamiento local: el contenido no se guardará", "error");
   }
   render();
+  sincronizar();
 })();
 </script>
 </body>
