@@ -1,0 +1,2667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+<title>Oposición · Gestión A2</title>
+<meta name="description" content="Hub de estudio de la oposición de Gestión de la Administración Civil del Estado (A2), turno libre.">
+<meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Oposición">
+
+<!-- Tema antes del primer pintado. Comparte la clave con Niblo: si alli esta
+     en oscuro, aqui tambien. -->
+<script>
+(function(){
+  try {
+    var t = localStorage.getItem('recetas:tema');
+    if (t === 'claro' || t === 'oscuro') document.documentElement.setAttribute('data-tema', t);
+  } catch (e) {}
+})();
+</script>
+
+<link rel="preload" href="manrope.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face {
+  font-family:"Manrope"; font-style:normal; font-weight:300 800; font-display:swap;
+  src:url("manrope.woff2") format("woff2");
+}
+</style>
+
+<style>
+/* ========================================================================
+   Sistema de diseño — el de Viajes: paleta slate/azul, Manrope única,
+   tarjetas redondeadas, chips en pastilla y cabecera translúcida.
+   ====================================================================== */
+:root {
+  --r-sm:8px; --r-md:14px; --r-lg:20px; --r-pill:999px;
+  --sh-1:0 1px 2px rgba(0,0,0,.04),0 1px 1px rgba(0,0,0,.03);
+  --sh-2:0 2px 10px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --sh-3:0 12px 28px rgba(0,0,0,.10);
+  --font-ui:'Manrope', system-ui, -apple-system, sans-serif;
+  --font-titulo:'Manrope', system-ui, -apple-system, sans-serif;
+  --font-code:ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+:root, :root[data-tema="claro"] {
+  --bg:#f8fafc; --bg-elev:#fff; --bg-soft:#f1f5f9; --bg-input:#fff;
+  --text:#0f172a; --text-muted:#64748b; --text-inv:#fff;
+  --line:#e2e8f0; --line-soft:#f1f5f9;
+  --accent:#2563eb; --accent-2:#06b6d4; --accent-bg:#dbeafe;
+  --focus:#2563eb; --danger:#dc2626;
+  /* Semáforo del PDF: verde (solo BOE + estable), ámbar (solo BOE + revisar),
+     rojo (actualizar), lila (sin correlato en el TAC) */
+  --ok:#059669; --ok-bg:#dcfce7;
+  --warn:#b45309; --warn-bg:#fef3c7;
+  --hot:#b91c1c; --hot-bg:#fee2e2;
+  --lila:#7c3aed; --lila-bg:#ede9fe;
+  --azul:#1d4ed8; --azul-bg:#dbeafe;
+}
+:root[data-tema="oscuro"] {
+  --bg:#0b1220; --bg-elev:#111a2e; --bg-soft:#1e293b; --bg-input:#111a2e;
+  --text:#f1f5f9; --text-muted:#94a3b8; --text-inv:#0b1220;
+  --line:#334155; --line-soft:#1e293b;
+  --accent:#60a5fa; --accent-2:#22d3ee; --accent-bg:#1e3a5f;
+  --focus:#93c5fd; --danger:#f87171;
+  --ok:#34d399; --ok-bg:#064e3b;
+  --warn:#fbbf24; --warn-bg:#4a3510;
+  --hot:#fca5a5; --hot-bg:#4c1d1d;
+  --lila:#c4b5fd; --lila-bg:#2e1f5e;
+  --azul:#93c5fd; --azul-bg:#1e3a5f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema]) {
+    --bg:#0b1220; --bg-elev:#111a2e; --bg-soft:#1e293b; --bg-input:#111a2e;
+    --text:#f1f5f9; --text-muted:#94a3b8; --text-inv:#0b1220;
+    --line:#334155; --line-soft:#1e293b;
+    --accent:#60a5fa; --accent-2:#22d3ee; --accent-bg:#1e3a5f;
+    --focus:#93c5fd; --danger:#f87171;
+    --ok:#34d399; --ok-bg:#064e3b;
+    --warn:#fbbf24; --warn-bg:#4a3510;
+    --hot:#fca5a5; --hot-bg:#4c1d1d;
+    --lila:#c4b5fd; --lila-bg:#2e1f5e;
+    --azul:#93c5fd; --azul-bg:#1e3a5f;
+  }
+}
+
+/* ---- Color por bloque (solo el acento: el resto del sistema no cambia) -- */
+[data-b="B1"] { --accent:#2563eb; --accent-2:#3b82f6; --accent-bg:#dbeafe; }
+[data-b="B2"] { --accent:#4f46e5; --accent-2:#6366f1; --accent-bg:#e0e7ff; }
+[data-b="B3"] { --accent:#0d9488; --accent-2:#14b8a6; --accent-bg:#ccfbf1; }
+[data-b="B4"] { --accent:#7c3aed; --accent-2:#a855f7; --accent-bg:#ede9fe; }
+[data-b="B5"] { --accent:#c2410c; --accent-2:#f97316; --accent-bg:#ffedd5; }
+[data-b="B6"] { --accent:#be123c; --accent-2:#f43f5e; --accent-bg:#ffe4e6; }
+:root[data-tema="oscuro"] [data-b="B1"] { --accent:#60a5fa; --accent-2:#93c5fd; --accent-bg:#1e3a5f; }
+:root[data-tema="oscuro"] [data-b="B2"] { --accent:#818cf8; --accent-2:#a5b4fc; --accent-bg:#272b5e; }
+:root[data-tema="oscuro"] [data-b="B3"] { --accent:#2dd4bf; --accent-2:#5eead4; --accent-bg:#123b3a; }
+:root[data-tema="oscuro"] [data-b="B4"] { --accent:#c084fc; --accent-2:#d8b4fe; --accent-bg:#2e1f5e; }
+:root[data-tema="oscuro"] [data-b="B5"] { --accent:#fb923c; --accent-2:#fdba74; --accent-bg:#45260f; }
+:root[data-tema="oscuro"] [data-b="B6"] { --accent:#fb7185; --accent-2:#fda4af; --accent-bg:#4a1525; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema]) [data-b="B1"] { --accent:#60a5fa; --accent-2:#93c5fd; --accent-bg:#1e3a5f; }
+  :root:not([data-tema]) [data-b="B2"] { --accent:#818cf8; --accent-2:#a5b4fc; --accent-bg:#272b5e; }
+  :root:not([data-tema]) [data-b="B3"] { --accent:#2dd4bf; --accent-2:#5eead4; --accent-bg:#123b3a; }
+  :root:not([data-tema]) [data-b="B4"] { --accent:#c084fc; --accent-2:#d8b4fe; --accent-bg:#2e1f5e; }
+  :root:not([data-tema]) [data-b="B5"] { --accent:#fb923c; --accent-2:#fdba74; --accent-bg:#45260f; }
+  :root:not([data-tema]) [data-b="B6"] { --accent:#fb7185; --accent-2:#fda4af; --accent-bg:#4a1525; }
+}
+
+* { box-sizing:border-box; }
+html, body { margin:0; padding:0; overflow-x:clip; }
+html { -webkit-text-size-adjust:100%; }
+body {
+  font-family:var(--font-ui); background:var(--bg); color:var(--text);
+  font-size:16px; line-height:1.5;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+button, input, select, textarea { font:inherit; color:inherit; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+:focus-visible { outline:2px solid var(--focus); outline-offset:2px; border-radius:6px; }
+.num { font-feature-settings:"tnum","ss01"; }
+.muted { color:var(--text-muted); }
+[hidden] { display:none !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+
+/* ---- Cabecera ---------------------------------------------------------- */
+header.topbar {
+  position:sticky; top:0; z-index:40;
+  background:color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter:saturate(180%) blur(14px); -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line-soft);
+  padding:12px 16px; padding-top:calc(12px + env(safe-area-inset-top));
+}
+.topbar-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:10px; }
+.topbar-title {
+  font-weight:700; letter-spacing:-.02em; font-size:17px;
+  min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.topbar-spacer { flex:1; }
+.icon-btn {
+  border:1px solid var(--line); background:var(--bg-elev); color:var(--text);
+  width:38px; height:38px; border-radius:var(--r-md); flex-shrink:0;
+  display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+  transition:transform .18s var(--ease), box-shadow .18s var(--ease);
+  text-decoration:none;
+}
+.icon-btn:hover { transform:translateY(-1px); box-shadow:var(--sh-2); text-decoration:none; }
+.icon-btn svg { width:18px; height:18px; }
+.icon-btn.girando svg { animation:girar 1s linear infinite; }
+@keyframes girar { to { transform:rotate(360deg); } }
+
+main {
+  max-width:1100px; margin:0 auto; padding:16px 16px 64px; width:100%;
+  overflow-x:clip; animation:fadeIn .18s var(--ease);
+}
+@keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+
+/* ---- Tipografía de vista ---------------------------------------------- */
+.titulo-grande {
+  font-size:34px; font-weight:700; letter-spacing:-.03em; line-height:1.12;
+  margin:10px 0 6px; padding-bottom:.08em;
+  background-image:linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 70%, #000 30%) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
+  overflow-wrap:break-word;
+}
+:root[data-tema="oscuro"] .titulo-grande {
+  background-image:linear-gradient(135deg, color-mix(in srgb, var(--accent) 80%, #fff 20%) 0%, var(--accent) 100%);
+}
+@media (min-width:720px) { .titulo-grande { font-size:46px; letter-spacing:-.035em; } }
+.view-sub { color:var(--text-muted); font-size:14px; margin:0 0 20px; }
+h2.section-title { font-weight:700; letter-spacing:-.02em; font-size:20px; margin:32px 0 12px; }
+h3.card-title { font-size:16px; font-weight:700; letter-spacing:-.01em; margin:0 0 10px; }
+
+/* ---- Botones ----------------------------------------------------------- */
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  height:42px; padding:0 18px; border:1px solid var(--line); background:var(--bg-elev); color:var(--text);
+  border-radius:var(--r-pill); font-weight:600; font-size:14px; letter-spacing:-.01em;
+  cursor:pointer; text-decoration:none;
+  transition:transform .18s var(--ease), box-shadow .18s var(--ease);
+}
+.btn:hover { transform:translateY(-1px); box-shadow:var(--sh-2); text-decoration:none; }
+.btn:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+.btn-primary {
+  background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#fff; border:none;
+  box-shadow:0 6px 18px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.btn-sm { height:32px; padding:0 12px; font-size:13px; }
+.btn-row { display:flex; gap:8px; flex-wrap:wrap; }
+
+/* ---- Chips y segmentado ------------------------------------------------ */
+.chip-row {
+  display:flex; gap:8px; overflow-x:auto; padding:2px; margin:0 -2px 16px;
+  -webkit-overflow-scrolling:touch; scrollbar-width:none;
+}
+.chip-row::-webkit-scrollbar { display:none; }
+.chip-row.wrap { flex-wrap:wrap; overflow:visible; }
+.chip {
+  flex-shrink:0; display:inline-flex; align-items:center; gap:7px;
+  height:34px; padding:0 14px; background:var(--bg-elev); border:1px solid var(--line); color:var(--text-muted);
+  border-radius:var(--r-pill); font-size:13px; font-weight:600; cursor:pointer;
+  transition:all .18s var(--ease); white-space:nowrap;
+}
+.chip:hover { color:var(--text); }
+.chip.active {
+  background:var(--accent); border-color:var(--accent); color:#fff;
+  box-shadow:0 4px 12px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.chip .badge {
+  font-size:11px; font-weight:600; font-feature-settings:"tnum";
+  background:color-mix(in srgb, var(--text) 8%, transparent); padding:2px 7px; border-radius:var(--r-pill);
+}
+.chip.active .badge { background:rgba(255,255,255,.22); color:#fff; }
+.chip.peq { height:28px; padding:0 11px; font-size:12px; }
+
+.seg {
+  display:flex; gap:2px; padding:3px; margin:0 0 20px;
+  background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--r-pill);
+}
+.seg button {
+  flex:1; min-width:0; border:none; background:transparent; color:var(--text-muted);
+  font-size:14px; font-weight:600; min-height:40px; border-radius:var(--r-pill); cursor:pointer;
+  transition:background .15s, color .15s;
+}
+.seg button.on { background:var(--bg-elev); color:var(--text); box-shadow:var(--sh-1); }
+
+/* ---- Etiquetas (vigencia, fuente, bloque) ------------------------------ */
+.tag {
+  display:inline-flex; align-items:center; gap:5px; white-space:nowrap;
+  font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase;
+  padding:3px 9px; border-radius:var(--r-pill); line-height:1.3;
+  background:var(--bg-soft); color:var(--text-muted);
+}
+.tag.ok   { background:var(--ok-bg);   color:var(--ok); }
+.tag.warn { background:var(--warn-bg); color:var(--warn); }
+.tag.hot  { background:var(--hot-bg);  color:var(--hot); }
+.tag.lila { background:var(--lila-bg); color:var(--lila); }
+.tag.azul { background:var(--azul-bg); color:var(--azul); }
+.tag.acc  { background:var(--accent-bg); color:var(--accent); }
+.tags { display:flex; flex-wrap:wrap; gap:6px; }
+.dot { display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.dot.ok { background:var(--ok); } .dot.warn { background:var(--warn); } .dot.hot { background:var(--hot); }
+
+/* ---- Tarjetas ---------------------------------------------------------- */
+.card {
+  background:var(--bg-elev); border:1px solid var(--line); border-radius:var(--r-lg);
+  box-shadow:var(--sh-1); padding:20px; min-width:0;
+}
+.card + .card { margin-top:14px; }
+/* En rejilla el hueco lo pone gap, no el margen de apilado */
+.grid > .card, .ficha > .card { margin-top:0; }
+.card.interactive { cursor:pointer; transition:transform .18s var(--ease), box-shadow .18s var(--ease); }
+.card.interactive:hover { transform:translateY(-2px); box-shadow:var(--sh-2); }
+
+/* Hero del inicio */
+.hero { padding:22px 20px; }
+.prog-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.prog-row .lbl { font-size:13px; font-weight:600; color:var(--text-muted); }
+.bar { flex:1; min-width:160px; height:8px; background:var(--bg-soft); border-radius:99px; overflow:hidden; }
+.bar > div { height:100%; background:linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius:99px; transition:width .4s var(--ease); }
+.prog-row .pct { font-weight:800; font-size:18px; color:var(--accent); font-feature-settings:"tnum"; }
+.kpis { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; margin-top:16px; }
+@media (min-width:720px) { .kpis { grid-template-columns:repeat(4, minmax(0,1fr)); } }
+.kpi { background:var(--bg-soft); border-radius:var(--r-md); padding:12px 14px; min-width:0; }
+.kpi .k { font-size:11.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.04em; display:flex; align-items:center; gap:6px; }
+.kpi .v { font-size:24px; font-weight:800; letter-spacing:-.02em; font-feature-settings:"tnum"; }
+.kpi .s { font-size:12px; color:var(--text-muted); }
+
+/* Rejillas */
+.grid { display:grid; gap:16px; grid-template-columns:minmax(0,1fr); }
+@media (min-width:720px) { .grid.g2 { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+@media (min-width:720px) { .grid.g3 { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+@media (min-width:1000px) { .grid.g3 { grid-template-columns:repeat(3, minmax(0,1fr)); } }
+
+/* Tarjeta de bloque */
+.bloque-card { display:flex; flex-direction:column; gap:10px; position:relative; overflow:hidden; }
+.bloque-card::before {
+  content:""; position:absolute; inset:0 0 auto 0; height:4px;
+  background:linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+.bloque-cab { display:flex; align-items:center; gap:12px; }
+.bloque-rom {
+  width:48px; height:48px; border-radius:var(--r-md); flex-shrink:0;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:var(--accent-bg); color:var(--accent); font-weight:800; font-size:18px; letter-spacing:-.02em;
+}
+.bloque-nombre { font-weight:700; font-size:18px; letter-spacing:-.02em; line-height:1.25; }
+.bloque-sub { font-size:12.5px; color:var(--text-muted); font-weight:600; }
+.mini-stats { display:flex; gap:16px; flex-wrap:wrap; font-size:12.5px; color:var(--text-muted); }
+.mini-stats b { color:var(--text); font-size:15px; font-feature-settings:"tnum"; margin-right:3px; }
+.semaforo { display:flex; height:6px; border-radius:99px; overflow:hidden; background:var(--bg-soft); }
+.semaforo span { display:block; height:100%; }
+.bloque-pie { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; padding-top:4px; }
+.ir { font-weight:700; font-size:14px; color:var(--accent); }
+
+/* CTA (hub global, guía) */
+.cta { display:flex; align-items:center; gap:16px; }
+.cta-ico {
+  width:52px; height:52px; border-radius:var(--r-md); flex-shrink:0;
+  display:inline-flex; align-items:center; justify-content:center; font-size:26px;
+  background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#fff;
+}
+.cta-ico.suave { background:var(--accent-bg); }
+.cta-t { font-weight:700; font-size:17px; letter-spacing:-.02em; }
+.cta-d { font-size:13.5px; color:var(--text-muted); }
+
+/* Cabecera de bloque */
+.bloque-head { display:flex; align-items:center; gap:14px; margin:6px 0 18px; }
+.bloque-head .bloque-rom { width:56px; height:56px; font-size:20px; }
+.bloque-head h1 { margin:0; font-size:24px; font-weight:700; letter-spacing:-.025em; line-height:1.2; }
+@media (min-width:720px) { .bloque-head h1 { font-size:30px; } }
+
+/* Tarjeta de tema */
+.tema-card { display:flex; flex-direction:column; gap:10px; }
+.tema-cab { display:flex; align-items:baseline; gap:10px; }
+.tema-cod { font-weight:800; font-size:22px; letter-spacing:-.03em; color:var(--accent); font-feature-settings:"tnum"; }
+.tema-estado { margin-left:auto; }
+.tema-epi { font-weight:600; font-size:15px; line-height:1.35; letter-spacing:-.01em; }
+.tema-stats { display:flex; gap:12px; flex-wrap:wrap; font-size:12px; color:var(--text-muted); }
+.tema-stats b { color:var(--text); font-feature-settings:"tnum"; }
+.tema-card.pendiente { background:color-mix(in srgb, var(--bg-soft) 55%, var(--bg-elev)); }
+.tema-card.pendiente .tema-epi { color:var(--text); }
+.tema-card.lila-borde { box-shadow:inset 4px 0 0 var(--lila), var(--sh-1); }
+.prog-mini { display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-muted); font-weight:600; }
+
+/* Detalle del tema */
+.ficha { display:grid; gap:14px; grid-template-columns:minmax(0,1fr); }
+@media (min-width:860px) { .ficha { grid-template-columns:repeat(2, minmax(0,1fr)); } .ficha .ancho { grid-column:1 / -1; } }
+.ficha-k {
+  font-size:11.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--text-muted); margin:0 0 8px; display:flex; align-items:center; gap:8px;
+}
+.ficha-v { font-size:15px; line-height:1.55; overflow-wrap:break-word; }
+.ficha-v a { font-weight:600; }
+.verif {
+  font-size:11px; font-weight:700; color:var(--warn); background:var(--warn-bg);
+  padding:1px 6px; border-radius:var(--r-pill); white-space:nowrap; cursor:help;
+}
+.nota-destacada { border-left:4px solid var(--accent); background:color-mix(in srgb, var(--accent-bg) 45%, var(--bg-elev)); }
+.secciones { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px; }
+.secciones button {
+  width:100%; text-align:left; border:none; background:transparent; cursor:pointer;
+  padding:9px 10px; border-radius:var(--r-sm); font-size:14px; color:var(--text);
+}
+.secciones button:hover { background:var(--bg-soft); }
+.secciones .sub { padding-left:26px; color:var(--text-muted); font-size:13.5px; }
+
+/* Zona de carga */
+.drop {
+  border:2px dashed var(--line); border-radius:var(--r-lg); padding:26px 18px; text-align:center;
+  background:var(--bg-elev); cursor:pointer; transition:border-color .18s, background .18s;
+}
+.drop:hover, .drop.encima { border-color:var(--accent); background:color-mix(in srgb, var(--accent-bg) 40%, var(--bg-elev)); }
+.drop .ico { font-size:28px; }
+.drop .t { font-weight:700; margin-top:6px; }
+.drop .s { font-size:13px; color:var(--text-muted); margin-top:4px; }
+code, .code { font-family:var(--font-code); font-size:.86em; background:var(--bg-soft); padding:1px 6px; border-radius:6px; }
+.cargados { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 14px; }
+.cargado {
+  display:inline-flex; align-items:center; gap:6px; padding:4px 6px 4px 11px;
+  background:var(--bg-soft); border:1px solid var(--line); border-radius:var(--r-pill); font-size:12.5px; font-weight:600;
+}
+.cargado button {
+  width:22px; height:22px; border-radius:50%; border:none; cursor:pointer;
+  background:color-mix(in srgb, var(--danger) 14%, transparent); color:var(--danger); font-weight:700; line-height:1;
+}
+
+/* ---- Hub: búsqueda, cronología, glosario, flashcards, test, progreso ---- */
+.toolbar { margin-bottom:12px; }
+.input {
+  width:100%; min-width:0; border:1px solid var(--line); background:var(--bg-input); color:var(--text);
+  border-radius:var(--r-md); padding:11px 14px; font-size:16px;
+  transition:border .18s, box-shadow .18s;
+}
+.input:focus { border-color:var(--accent); outline:none; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+.stats-line { font-size:12.5px; color:var(--text-muted); font-weight:600; margin:0 0 10px; }
+.res {
+  padding:12px 14px; border:1px solid var(--line-soft); border-radius:var(--r-md);
+  background:var(--bg-elev); margin-bottom:8px; cursor:pointer; transition:border-color .15s, box-shadow .15s;
+}
+.res:hover { border-color:var(--line); box-shadow:var(--sh-1); }
+.res-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.res-tit { font-weight:700; font-size:14.5px; letter-spacing:-.01em; }
+.res-txt { font-size:13.5px; color:var(--text-muted); margin-top:4px; line-height:1.5; }
+mark { background:color-mix(in srgb, #facc15 45%, transparent); color:inherit; border-radius:3px; padding:0 1px; }
+
+.tl { position:relative; padding-left:18px; }
+.tl::before { content:""; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:var(--line); border-radius:2px; }
+.tl-item { position:relative; padding:10px 12px; margin-bottom:8px; border-radius:var(--r-md); background:var(--bg-elev); border:1px solid var(--line-soft); cursor:pointer; }
+.tl-item::before { content:""; position:absolute; left:-17px; top:16px; width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--bg); }
+.tl-y { font-weight:800; color:var(--accent); font-feature-settings:"tnum"; margin-right:8px; }
+.tl-cons { font-size:13px; color:var(--text-muted); margin-top:3px; }
+
+.letras { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:12px; }
+.letra {
+  min-width:32px; height:32px; padding:0 8px; border-radius:var(--r-sm); border:1px solid var(--line);
+  background:var(--bg-elev); font-size:12.5px; font-weight:700; cursor:pointer; color:var(--text-muted);
+}
+.letra.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+.letra:disabled { opacity:.3; cursor:default; }
+
+.fc-ctrl { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin-bottom:12px; font-size:13px; color:var(--text-muted); }
+.fc-ctrl b { color:var(--text); font-feature-settings:"tnum"; }
+.fc { perspective:1200px; cursor:pointer; margin:6px 0 14px; }
+.fc-in { position:relative; min-height:230px; transition:transform .5s var(--ease); transform-style:preserve-3d; }
+.fc.volteada .fc-in { transform:rotateY(180deg); }
+.fc-cara {
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:var(--r-lg); padding:24px 22px; display:flex; flex-direction:column; justify-content:center; gap:10px;
+  border:1px solid var(--line); background:var(--bg-elev); box-shadow:var(--sh-2); overflow:auto;
+}
+.fc-cara.atras { transform:rotateY(180deg); background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#fff; border:none; }
+.fc-q { font-size:19px; font-weight:700; letter-spacing:-.015em; line-height:1.35; }
+.fc-a { font-size:16px; line-height:1.55; }
+.fc-hint { font-size:12px; color:var(--text-muted); }
+.fc-btns { display:flex; gap:10px; }
+.fc-btns .btn { flex:1; }
+.btn-no { color:var(--danger); border-color:color-mix(in srgb, var(--danger) 40%, var(--line)); }
+.btn-si { color:var(--ok); border-color:color-mix(in srgb, var(--ok) 45%, var(--line)); }
+
+.test-cfg { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.test-cfg select { border:1px solid var(--line); background:var(--bg-input); border-radius:var(--r-md); padding:8px 12px; font-size:15px; }
+.q-meta { display:flex; justify-content:space-between; gap:8px; font-size:12.5px; color:var(--text-muted); font-weight:600; margin-bottom:8px; }
+.q-txt { font-size:17px; font-weight:700; line-height:1.4; letter-spacing:-.01em; margin-bottom:14px; }
+.q-opts { display:flex; flex-direction:column; gap:8px; }
+.q-opt {
+  display:flex; gap:12px; align-items:flex-start; text-align:left; width:100%;
+  padding:12px 14px; border:1px solid var(--line); border-radius:var(--r-md); background:var(--bg-elev);
+  cursor:pointer; font-size:15px; line-height:1.4; transition:border-color .15s, background .15s;
+}
+.q-opt:hover:not(:disabled) { border-color:var(--accent); }
+.q-opt .l {
+  width:26px; height:26px; border-radius:50%; flex-shrink:0; display:inline-flex; align-items:center; justify-content:center;
+  background:var(--bg-soft); font-weight:800; font-size:13px;
+}
+.q-opt.bien { border-color:var(--ok); background:var(--ok-bg); }
+.q-opt.mal  { border-color:var(--danger); background:var(--hot-bg); }
+.q-opt:disabled { cursor:default; }
+.q-fb { margin-top:12px; padding:12px 14px; border-radius:var(--r-md); font-size:14px; line-height:1.5; }
+.q-fb.bien { background:var(--ok-bg); color:var(--text); }
+.q-fb.mal  { background:var(--hot-bg); color:var(--text); }
+.resultado { text-align:center; padding:12px 0; }
+.resultado .big { font-size:56px; font-weight:800; letter-spacing:-.04em; color:var(--accent); font-feature-settings:"tnum"; }
+
+table.tabla { width:100%; border-collapse:collapse; font-size:13.5px; }
+.tabla th { text-align:left; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted); padding:8px 8px; border-bottom:2px solid var(--line); }
+.tabla td { padding:9px 8px; border-bottom:1px solid var(--line-soft); vertical-align:top; }
+.tabla td.n, .tabla th.n { text-align:right; font-feature-settings:"tnum"; white-space:nowrap; }
+.tabla tr.clic { cursor:pointer; }
+.tabla tr.clic:hover td { background:var(--bg-soft); }
+.tabla-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+/* Guía */
+.guia p, .guia li { font-size:14.5px; line-height:1.6; }
+.guia ul { padding-left:20px; margin:8px 0; }
+.guia li { margin-bottom:6px; }
+.guia .tabla td { font-size:13.5px; }
+.lista-temas { display:flex; flex-wrap:wrap; gap:5px; }
+.lista-temas button {
+  border:1px solid var(--line); background:var(--bg-elev); border-radius:var(--r-pill);
+  padding:3px 10px; font-size:12.5px; font-weight:700; cursor:pointer; font-feature-settings:"tnum";
+}
+.lista-temas button:hover { border-color:var(--accent); color:var(--accent); }
+pre.formato {
+  font-family:var(--font-code); font-size:12px; line-height:1.5; background:var(--bg-soft);
+  border-radius:var(--r-md); padding:14px; overflow-x:auto; margin:8px 0 0;
+}
+
+/* Vacío */
+.empty { text-align:center; padding:40px 20px; color:var(--text-muted); }
+.empty .ico {
+  display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px;
+  border-radius:50%; background:var(--bg-soft); font-size:26px; margin-bottom:12px;
+}
+.empty h3 { color:var(--text); font-weight:700; margin:4px 0; font-size:16px; }
+.empty p { margin:0 auto; font-size:14px; max-width:340px; }
+
+/* Toast */
+.toast-box {
+  position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom)); transform:translateX(-50%);
+  z-index:100; pointer-events:none; display:flex; flex-direction:column; gap:8px; align-items:center;
+  width:max-content; max-width:calc(100vw - 32px);
+}
+.toast {
+  background:var(--text); color:var(--text-inv); padding:10px 16px; border-radius:var(--r-pill);
+  font-size:14px; box-shadow:var(--sh-3); animation:toastIn .25s var(--ease); text-align:center;
+}
+.toast.error { background:var(--danger); color:#fff; }
+@keyframes toastIn { from { transform:translateY(20px); opacity:0; } to { transform:none; opacity:1; } }
+
+/* Estado de sincronización (como la píldora de Viajes) */
+.sync-pill {
+  display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px; flex-shrink:0;
+  border:1px solid var(--line); background:var(--bg-elev); border-radius:var(--r-pill);
+  font-size:12.5px; font-weight:600; color:var(--text-muted); cursor:pointer; white-space:nowrap;
+}
+.sync-pill .dot { width:8px; height:8px; background:var(--text-muted); }
+.sync-pill[data-estado="vivo"] .dot { background:var(--ok); box-shadow:0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
+.sync-pill[data-estado="ok"] .dot { background:var(--ok); }
+.sync-pill[data-estado="sync"] .dot { background:var(--accent); animation:latido 1s ease-in-out infinite; }
+.sync-pill[data-estado="offline"] .dot { background:var(--warn); }
+.sync-pill[data-estado="error"] .dot, .sync-pill[data-estado="sesion"] .dot { background:var(--danger); }
+.sync-pill[data-estado="error"], .sync-pill[data-estado="sesion"] { color:var(--danger); }
+@keyframes latido { 50% { opacity:.35; } }
+@media (max-width:560px) {
+  .sync-pill { width:38px; height:38px; padding:0; justify-content:center; border-radius:var(--r-md); }
+  .sync-pill .t { display:none; }
+}
+
+/* Banner de búsqueda en el servidor */
+.banner {
+  display:flex; align-items:center; gap:12px; padding:12px 16px; margin-bottom:14px;
+  border-radius:var(--r-md); background:var(--accent-bg); color:var(--text); font-size:14px;
+}
+.banner .bar { min-width:80px; max-width:200px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="icon-btn" id="btn-atras" href="./" aria-label="Volver a Niblo" title="Volver a Niblo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <div class="topbar-title" id="topbar-title">Oposición</div>
+    <div class="topbar-spacer"></div>
+    <button class="sync-pill" id="sync-pill" data-estado="local" aria-label="Estado de sincronización"><span class="dot" aria-hidden="true"></span><span class="t">…</span></button>
+    <button class="icon-btn" id="btn-servidor" aria-label="Buscar temas en el servidor" title="Buscar temas publicados junto a esta página">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-guardar" aria-label="Guardar copia (JSON)" title="Guardar los temas cargados y el progreso en un archivo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+    </button>
+    <button class="icon-btn" id="btn-tema" aria-label="Cambiar tema claro/oscuro" title="Cambiar tema">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="vista" tabindex="-1"></main>
+<div class="toast-box" id="toast-box" role="status" aria-live="polite"></div>
+
+<!-- Contenido desarrollado embebido. Vacío de momento: cuando haya temas
+     terminados se puede pegar aquí una copia guardada con el botón de
+     descarga (formato gestion_hub_config) y se importará sola la primera vez
+     que se abra la página, o cuando cambie su _exportedAt. -->
+<script type="application/json" id="datos-embebidos"></script>
+
+<script>
+"use strict";
+/* ========================================================================
+   (a) DATOS — Programa oficial (58 temas)
+   Fuente: «Temario de Gestión de la Administración Civil del Estado (A2) ·
+   58 temas del turno libre», v2 · 2-10-2026. Programa: anexo VII de la
+   convocatoria, BOE-A-2025-26262. Los epígrafes están RESUMIDOS (igual que
+   en el documento de origen); el texto íntegro y vinculante es el del BOE.
+   Campos por tema:
+     c  código (bloque romano . número)
+     e  epígrafe resumido
+     n  normativa principal · texto consolidado (nivel A)
+     i  fuente institucional de estudio (nivel B)
+     p  nota de preparación (lo preguntable)
+     v  [vigencia: ESTABLE | REVISAR | ACTUALIZAR, cuándo actualizar]
+     f  [fuente recomendada: BOE | BOE+T | INST, comentario]
+     tac  true en los tres temas sin correlato en el TAC (IV.8, IV.9, V.8)
+   ====================================================================== */
+const PROGRAMA_REF = "BOE-A-2025-26262";
+
+const BLOQUES = [
+  { code:"B1", rom:"I",   nombre:"Organización del Estado y de la Administración Pública" },
+  { code:"B2", rom:"II",  nombre:"Unión Europea" },
+  { code:"B3", rom:"III", nombre:"Políticas públicas" },
+  { code:"B4", rom:"IV",  nombre:"Derecho administrativo general" },
+  { code:"B5", rom:"V",   nombre:"Administración de recursos humanos" },
+  { code:"B6", rom:"VI",  nombre:"Gestión financiera y Seguridad Social" }
+];
+
+const TEMAS_PROGRAMA = {
+  B1: [
+    { c:"I.1", e:"CE: estructura y contenido; reforma",
+      n:"CE BOE-A-1978-31229: Título preliminar y Título X (arts. 166-169). Reformas de 1992 (art. 13.2), 2011 (art. 135) y 2024 (art. 49).",
+      i:"Sinopsis de la CE (Congreso) (comentario oficial por artículo).",
+      p:"Preguntable: procedimientos ordinario (167) y agravado (168); reformas habidas y su contenido.",
+      v:["REVISAR","Comprobar si hay nueva reforma constitucional (la última, art. 49, en 2024)."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"I.2", e:"Derechos fundamentales; garantía y suspensión; Defensor del Pueblo",
+      n:"CE BOE-A-1978-31229: Título I (arts. 10-55), en especial 53-55. LO 4/1981, estados de alarma, excepción y sitio BOE-A-1981-12774. LO 3/1981, Defensor del Pueblo BOE-A-1981-10325.",
+      i:"Sinopsis de la CE (Congreso); www.defensordelpueblo.es (informe anual).",
+      p:"La suspensión (art. 55) no está en el TAC: estudiarla aquí a fondo.",
+      v:["ESTABLE","Estable. Revisar solo el informe anual más reciente del Defensor."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"I.3", e:"Tribunal Constitucional: organización, composición, atribuciones",
+      n:"CE BOE-A-1978-31229: Título IX (arts. 159-165). LOTC 2/1979 BOE-A-1979-23709.",
+      i:"Sinopsis de la CE (Congreso); www.tribunalconstitucional.es (composición actual, memorias).",
+      p:"Composición (12; procedencia y mandato) y procesos (RI, CI, amparo, conflictos).",
+      v:["REVISAR","Composición y presidencia del TC cambian con las renovaciones parciales (por tercios)."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"I.4", e:"Corona; funciones del Rey; sucesión, regencia, refrendo",
+      n:"CE BOE-A-1978-31229: Título II (arts. 56-65).",
+      i:"Sinopsis de la CE (Congreso); www.casareal.es (organización de la Casa).",
+      p:"Tema corto y muy literal: memorizar artículos.",
+      v:["ESTABLE","Estable: texto constitucional sin cambios."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"I.5", e:"Cortes Generales: composición y atribuciones",
+      n:"CE BOE-A-1978-31229: Título III (arts. 66-96). Reglamento del Congreso (1982) y Reglamento del Senado (texto refundido de 1994).",
+      i:"Sinopsis de la CE (Congreso); www.congreso.es, www.senado.es.",
+      p:"Cifras (350; senadores provinciales y autonómicos), órganos y procedimiento legislativo.",
+      v:["REVISAR","Legislatura en curso y reformas de los Reglamentos de las Cámaras."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"I.6", e:"Presidente y Consejo de Ministros; relaciones con las Cortes; Consejo de Estado",
+      n:"CE BOE-A-1978-31229: Títulos IV y V (arts. 97-116). Ley 50/1997, del Gobierno BOE-A-1997-25336. LO 3/1980, del Consejo de Estado BOE-A-1980-8648.",
+      i:"Sinopsis de la CE (Congreso); www.consejo-estado.es (memorias).",
+      p:"Investidura, moción de censura, cuestión de confianza; Gobierno en funciones (Ley 50/1997).",
+      v:["REVISAR","Composición del Gobierno vigente si se pregunta (n.º de ministerios, vicepresidencias)."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"I.7", e:"Poder Judicial; unidad jurisdiccional; CGPJ; organización judicial",
+      n:"CE BOE-A-1978-31229: Título VI (arts. 117-127). LOPJ 6/1985 BOE-A-1985-12666. EOMF, Ley 50/1981 BOE-A-1982-837. LO 1/2025, de eficiencia del Servicio Público de Justicia (tribunales de instancia).",
+      i:"www.poderjudicial.es (organización de juzgados y tribunales).",
+      p:"Trampa: la organización judicial cambió con la LO 1/2025; usar solo la LOPJ consolidada.",
+      v:["REVISAR","Implantación escalonada de los tribunales de instancia (LO 1/2025): comprobar la fase vigente."],
+      f:["BOE+T","LOPJ muy extensa: el temario filtra qué artículos entran."] },
+    { c:"I.8", e:"AGE: principios, órganos centrales y territoriales, servicios comunes, exterior",
+      n:"Ley 40/2015 BOE-A-2015-10566: arts. 3 y Título I, cap. II-IV (arts. 54-80). Ley 2/2014, de la Acción y del Servicio Exterior BOE-A-2014-3248. RD de reestructuración de departamentos ministeriales vigente.",
+      i:"Estructura actual de ministerios en administracion.gob.es (verif.).",
+      p:"Cuadro de órganos superiores/directivos (art. 55 LRJSP) y Delegados/Subdelegados.",
+      v:["ACTUALIZAR","La estructura ministerial cambia con cada RD de reestructuración: usar el último."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"I.9", e:"Sector público institucional",
+      n:"Ley 40/2015 BOE-A-2015-10566: Título II (arts. 81-158). LGP (Ley 47/2003) BOE-A-2003-21614: arts. 2-3 (clasificación).",
+      i:"Inventario de Entes del Sector Público (INVENTE, IGAE): www.igae.pap.hacienda.gob.es.",
+      p:"Tabla comparativa OA / EPE / autoridades independientes / sociedades / consorcios / fundaciones.",
+      v:["ESTABLE","Estable. Las cifras del INVENTE cambian, pero rara vez se preguntan."],
+      f:["BOE","Título II LRJSP; hacer tabla propia de entes."] },
+    { c:"I.10", e:"CC. AA.: estatutos, organización, delimitación de competencias",
+      n:"CE BOE-A-1978-31229: Título VIII, cap. III (arts. 143-158). Ley 40/2015 BOE-A-2015-10566: Título III (relaciones interadministrativas). Estatutos de Autonomía (BOE).",
+      i:"Sinopsis de la CE (Congreso) (arts. 148-150).",
+      p:"Listas de los arts. 148 y 149 CE; vías de acceso a la autonomía.",
+      v:["ESTABLE","Estable salvo reformas de Estatutos."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"I.11", e:"Administración local: autonomía; municipio; provincia",
+      n:"CE BOE-A-1978-31229: arts. 137 y 140-142. LBRL, Ley 7/1985 BOE-A-1985-5392. TRRL, RDLeg 781/1986 (verif.).",
+      i:"Sinopsis de la CE (Congreso) (art. 140).",
+      p:"El TAC no detalla municipio y provincia: preparar órganos y competencias (LBRL arts. 19-41).",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] }
+  ],
+  B2: [
+    { c:"II.1", e:"UE: antecedentes, Tratados, TUE y TFUE, ampliación, cooperaciones reforzadas",
+      n:"TUE y TFUE, versiones consolidadas (EUR-Lex). TUE art. 20 y TFUE arts. 326-334 (cooperaciones reforzadas); TUE art. 49 (adhesión).",
+      i:"Fichas temáticas del PE (cap. 1.1, evolución histórica); Síntesis EUR-Lex.",
+      p:"Cronología de Tratados (París 1951 → Lisboa 2009) con fechas de firma y entrada en vigor.",
+      v:["REVISAR","Estado de las ampliaciones y países candidatos."],
+      f:["INST","Historia de los Tratados: no está en ninguna norma."] },
+    { c:"II.2", e:"Consejo Europeo, Consejo, Comisión; procedimiento decisorio; Estados miembros",
+      n:"TUE arts. 13, 15-17; TFUE arts. 235-250 y 289-294 (procedimiento legislativo ordinario).",
+      i:"Fichas temáticas del PE (cap. 1.3, instituciones); www.consilium.europa.eu/es.",
+      p:"Mayoría cualificada (55 % Estados / 65 % población) y fases del procedimiento ordinario.",
+      v:["REVISAR","Presidencias rotatorias del Consejo y Colegio de Comisarios vigente."],
+      f:["BOE+T","Tratados (EUR-Lex) + Fichas del PE para el funcionamiento real."] },
+    { c:"II.3", e:"Parlamento Europeo, TJUE, Tribunal de Cuentas, BCE",
+      n:"TUE arts. 14 y 19; TFUE arts. 223-234 (PE), 251-281 (TJUE), 282-284 (BCE), 285-287 (Tribunal de Cuentas).",
+      i:"Fichas temáticas del PE (cap. 1.3).",
+      p:"El TAC no nombra el Tribunal de Cuentas ni el BCE: estudiarlos aquí.",
+      v:["REVISAR","Composición del PE (n.º de eurodiputados por legislatura)."],
+      f:["BOE+T","Tratados + Fichas del PE."] },
+    { c:"II.4", e:"Fuentes del derecho de la UE; relación con los ordenamientos",
+      n:"TFUE art. 288 (actos jurídicos); Declaración n.º 17 aneja a Lisboa (primacía). CE BOE-A-1978-31229: arts. 93-96.",
+      i:"Fichas temáticas del PE (cap. 1.2, fuentes); Síntesis EUR-Lex.",
+      p:"Primacía y efecto directo: jurisprudencia clave del TJUE (Van Gend en Loos, Costa/ENEL).",
+      v:["ESTABLE","Estable: base jurídica de Lisboa."],
+      f:["BOE+T","TFUE art. 288 + jurisprudencia del TJUE (doctrina)."] },
+    { c:"II.5", e:"Presupuesto comunitario; fondos europeos; cohesión",
+      n:"TFUE arts. 310-325. Reglamento (UE, Euratom) 2020/2093 (MFP 2021-2027); Decisión (UE, Euratom) 2020/2053 (recursos propios); Reglamento (UE) 2021/1060 (disposiciones comunes de los fondos); Reglamento (UE) 2021/241 (MRR).",
+      i:"Fichas temáticas del PE (cap. 1.4, finanzas; cap. 3.1, cohesión).",
+      p:"Distinguir MFP / presupuesto anual / Next Generation EU. Comprobar revisiones del MFP.",
+      v:["ACTUALIZAR","MFP revisado y negociación del MFP posterior a 2027; plazos del MRR (fin en 2026)."],
+      f:["INST","MFP, fondos y cifras: Fichas del PE o temario."] },
+    { c:"II.6", e:"Mercado interior, UEM, PESC, ELSJ, competencia, PAC y pesca",
+      n:"TFUE arts. 26-66 (libertades), 38-44 (PAC), 67-89 (ELSJ), 101-109 (competencia), 119-144 (UEM); TUE arts. 21-46 (PESC).",
+      i:"Fichas temáticas del PE (un capítulo por política: mercado interior, UEM, PAC, pesca, ELSJ, PESC).",
+      p:"Tema muy extenso: un esquema por política con base jurídica + instrumentos.",
+      v:["REVISAR","Reformas recientes de la gobernanza económica y del Pacto de Migración y Asilo."],
+      f:["INST","Ocho políticas sin texto único: Fichas del PE o temario."] }
+  ],
+  B3: [
+    { c:"III.1", e:"Modernización, administración electrónica, Agenda Digital, calidad, mejora regulatoria y AIN",
+      n:"Ley 39/2015 BOE-A-2015-10565 y Ley 40/2015 BOE-A-2015-10566 (medios electrónicos). RD 203/2021, Reglamento de actuación por medios electrónicos BOE-A-2021-5032. RD 951/2005, marco de calidad. Ley 50/1997, arts. 25-28 (planificación normativa, MAIN). RD 931/2017 (MAIN). Ley 27/2022, de evaluación de políticas públicas (verif.).",
+      i:"Portal de Administración Electrónica: administracionelectronica.gob.es; agenda digital vigente en espanadigital.gob.es (verif.).",
+      p:"El AIN no aparece en el TAC. Datos de planes cambian: estudiar el vigente a la fecha del examen.",
+      v:["ACTUALIZAR","Planes y agendas digitales con fecha de caducidad; normativa de IA y administración digital."],
+      f:["INST","Planes, calidad y AIN: síntesis de varias fuentes."] },
+    { c:"III.2", e:"Política económica, presupuestaria y fiscal; gasto público; unidad de mercado",
+      n:"LO 2/2012, de Estabilidad Presupuestaria BOE-A-2012-5730. Ley 20/2013, de garantía de la unidad de mercado BOE-A-2013-12888. Marco fiscal de la UE reformado en 2024.",
+      i:"Informe económico-financiero de los PGE (www.sepg.pap.hacienda.gob.es); informes de la AIReF (www.airef.es).",
+      p:"Reglas fiscales (estabilidad, deuda, gasto) y su suspensión/aplicación reciente.",
+      v:["ACTUALIZAR","Reglas fiscales, objetivos de déficit y deuda y marco UE: cambian cada año."],
+      f:["INST","Política económica: conceptos y datos, poca norma."] },
+    { c:"III.3", e:"Política ambiental; biodiversidad; contaminación y cambio climático",
+      n:"Ley 7/2021, de cambio climático BOE-A-2021-8447. Ley 42/2007, del Patrimonio Natural y la Biodiversidad BOE-A-2007-21490. Ley 7/2022, de residuos (verif.). PNIEC vigente.",
+      i:"www.miteco.gob.es (estrategias y planes).",
+      p:"Objetivos cuantitativos de la Ley 7/2021 (2030 y 2050): muy preguntables en test.",
+      v:["REVISAR","PNIEC y estrategias: comprobar la versión vigente y los objetivos cuantitativos."],
+      f:["INST","Política ambiental: estrategias y objetivos."] },
+    { c:"III.4", e:"Seguridad Social: estructura, financiación, regímenes, prestaciones",
+      n:"LGSS (RDLeg 8/2015) BOE-A-2015-11724. Reformas de pensiones: Ley 21/2021 y RDL 2/2023 (verif.).",
+      i:"www.seg-social.es (guías de prestaciones; Presupuestos de la Seguridad Social).",
+      p:"Cuadro de prestaciones contributivas / no contributivas y entidades gestoras (INSS, TGSS, ISM).",
+      v:["REVISAR","Reformas de pensiones con aplicación gradual: cifras del año del examen."],
+      f:["BOE+T","LGSS enorme: el temario selecciona."] },
+    { c:"III.5", e:"Empleo; servicios públicos de empleo; prestaciones",
+      n:"Ley 3/2023, de Empleo BOE-A-2023-5365. LGSS (RDLeg 8/2015) BOE-A-2015-11724: Título III (desempleo). RDL 2/2024 (reforma del subsidio) (verif.).",
+      i:"www.sepe.es; Estrategia Española de Apoyo Activo al Empleo vigente.",
+      p:"Sistema Nacional de Empleo: Agencia Española de Empleo (Ley 3/2023) y servicios autonómicos.",
+      v:["ACTUALIZAR","Reforma del desempleo, Estrategia de empleo y Agencia Española de Empleo: en desarrollo."],
+      f:["BOE+T","Ley 3/2023 + prestaciones y estrategia."] },
+    { c:"III.6", e:"Inmigración; régimen de extranjería; asilo y refugio",
+      n:"LO 4/2000, de extranjería BOE-A-2000-544. Reglamento de extranjería RD 1155/2024. Ley 12/2009, de asilo BOE-A-2009-17242. Pacto UE de Migración y Asilo (2024) (verif.).",
+      i:"Portal de Inmigración: extranjeros.inclusion.gob.es.",
+      p:"Trampa: el reglamento anterior (RD 557/2011) está derogado. Sin correlato jurídico en el TAC.",
+      v:["ACTUALIZAR","Nuevo reglamento (RD 1155/2024) y aplicación del Pacto UE de Migración y Asilo."],
+      f:["BOE+T","LO 4/2000 + reglamento: el temario ordena regímenes."] },
+    { c:"III.7", e:"Gobierno abierto; planes de España; Ley 19/2013",
+      n:"Ley 19/2013, de transparencia BOE-A-2013-12887. Plan de Gobierno Abierto vigente.",
+      i:"transparencia.gob.es; criterios interpretativos del CTBG (www.consejodetransparencia.es).",
+      p:"Límites (art. 14), plazos de acceso (1 mes) y reclamación ante el CTBG.",
+      v:["ACTUALIZAR","Plan de Gobierno Abierto en vigor y criterios del CTBG."],
+      f:["BOE+T","Ley 19/2013 + planes de gobierno abierto."] },
+    { c:"III.8", e:"Protección de datos; responsable, encargado, DPD; derechos digitales",
+      n:"Reglamento (UE) 2016/679 (RGPD). LO 3/2018, LOPDGDD BOE-A-2018-16673.",
+      i:"Guías de la AEPD: www.aepd.es.",
+      p:"Bases de licitud (art. 6 RGPD), derechos ARSOPOL y Título X LOPDGDD (derechos digitales).",
+      v:["REVISAR","Estable en la base; revisar novedades (p. ej., normativa de IA con impacto en datos)."],
+      f:["BOE","RGPD + LOPDGDD contienen el tema."] },
+    { c:"III.9", e:"Igualdad, violencia de género, LGTBI, discapacidad y dependencia",
+      n:"LO 3/2007 BOE-A-2007-6115. LO 1/2004 BOE-A-2004-21760. Ley 4/2023 (trans y LGTBI) BOE-A-2023-5366. Ley 15/2022 BOE-A-2022-11589. RDLeg 1/2013 BOE-A-2013-12632. Ley 39/2006 BOE-A-2006-21990. LO 2/2024 (paridad).",
+      i:"Plan para la Igualdad de Género en la AGE vigente (IV Plan); portal del Ministerio de Igualdad.",
+      p:"Ocho normas: hacer una ficha por ley (objeto, órganos, medidas clave).",
+      v:["REVISAR","Planes de igualdad y estrategias con vigencia temporal; leyes recientes (LO 2/2024)."],
+      f:["BOE+T","Ocho leyes: el temario sintetiza."] },
+    { c:"III.10", e:"Sanidad; política exterior y cooperación; telecomunicaciones; Agenda 2030",
+      n:"Ley 14/1986, General de Sanidad BOE-A-1986-10499. Ley 16/2003, de cohesión del SNS BOE-A-2003-10715. Ley 2/2014 BOE-A-2014-3248. Ley 1/2023, de cooperación (verif.). Ley 11/2022, de telecomunicaciones BOE-A-2022-10757. Resolución A/RES/70/1 (Agenda 2030).",
+      i:"www.agenda2030.gob.es (verif.); www.sanidad.gob.es.",
+      p:"Tema fragmentado en cuatro materias: estudiarlas como cuatro mini-temas.",
+      v:["ACTUALIZAR","Cuatro materias con planes y estrategias que caducan (sanidad, cooperación, telecomunicaciones, Agenda 2030)."],
+      f:["INST","Cuatro materias con planes y estrategias."] }
+  ],
+  B4: [
+    { c:"IV.1", e:"Fuentes del derecho administrativo: concepto, clases, jerarquía",
+      n:"CE BOE-A-1978-31229: arts. 9.3 y 81-97. Código Civil, art. 1 BOE-A-1889-4763.",
+      i:"Código electrónico de Derecho Administrativo (BOE · Biblioteca Jurídica Digital).",
+      p:"Jerarquía y competencia como principios ordenadores.",
+      v:["ESTABLE","Estable."],
+      f:["BOE+T","Teoría de las fuentes: doctrina."] },
+    { c:"IV.2", e:"La ley; tipos; reserva de ley; decreto-ley y decreto legislativo",
+      n:"CE BOE-A-1978-31229: arts. 81-86.",
+      i:"Sinopsis de la CE (Congreso) (arts. 81, 82 y 86).",
+      p:"Límites materiales del DL (art. 86) y convalidación en 30 días: clásico de test.",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"IV.3", e:"Reglamento; principios generales del derecho; tratados internacionales",
+      n:"CE BOE-A-1978-31229: arts. 93-97 y 106. Ley 50/1997: Título V (arts. 22-28). Ley 39/2015 BOE-A-2015-10565: arts. 127-133. Ley 25/2014, de Tratados (verif.).",
+      i:"Sinopsis de la CE (Congreso).",
+      p:"Inderogabilidad singular (art. 37 LRJSP) e iniciativa normativa (Título VI LPAC).",
+      v:["ESTABLE","Estable."],
+      f:["BOE+T","Principios generales del derecho: doctrina."] },
+    { c:"IV.4", e:"Acto administrativo; eficacia y validez; motivación y notificación",
+      n:"Ley 39/2015 BOE-A-2015-10565: arts. 34-52.",
+      i:"Código electrónico de Derecho Administrativo (BOE).",
+      p:"Nulidad (art. 47) vs anulabilidad (art. 48): listas literales.",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"IV.5", e:"Contratos del sector público (I): preparación, adjudicación, efectos, extinción",
+      n:"LCSP (Ley 9/2017) BOE-A-2017-12902. Directiva 2014/24/UE.",
+      i:"Plataforma de Contratación (contrataciondelestado.es); informes de la Junta Consultiva de Contratación Pública del Estado (Ministerio de Hacienda).",
+      p:"Umbrales SARA (se actualizan cada 2 años): comprobar la cifra vigente.",
+      v:["ACTUALIZAR","Umbrales SARA revisados cada 2 años por la Comisión Europea: comprobar la cifra vigente."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"IV.6", e:"Contratos (II): tipos y características",
+      n:"LCSP (Ley 9/2017) BOE-A-2017-12902: arts. 12-18 y Libro II, Título II.",
+      i:"Código electrónico de Contratación del Sector Público (BOE).",
+      p:"Duraciones máximas por tipo de contrato (art. 29 LCSP).",
+      v:["REVISAR","Revisar modificaciones puntuales de la LCSP (frecuentes vía leyes ómnibus y RDL)."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"IV.7", e:"Formas de actividad: intervención, arbitral, servicio público, fomento; subvenciones",
+      n:"Ley 38/2003, General de Subvenciones BOE-A-2003-20977 y su Reglamento, RD 887/2006 BOE-A-2006-13371. Ley 40/2015 BOE-A-2015-10566: arts. 47-53 (convenios). LCSP (Ley 9/2017) BOE-A-2017-12902: arts. 31-33 (encargos).",
+      i:"Base de Datos Nacional de Subvenciones: infosubvenciones.es (IGAE).",
+      p:"Policía y fomento no aparecen como tales en el TAC: requieren manual de academia.",
+      v:["REVISAR","Ley de Subvenciones: revisar reformas recientes."],
+      f:["BOE+T","Policía, fomento, servicio público: doctrina."] },
+    { c:"IV.8", e:"Expropiación forzosa", tac:true,
+      n:"Ley de Expropiación Forzosa de 16-12-1954 BOE-A-1954-15431 y su Reglamento (Decreto de 26-4-1957). CE BOE-A-1978-31229: art. 33.3.",
+      i:"Código electrónico de Derecho Administrativo (BOE).",
+      p:"Sin correlato en el TAC con sociales: estudio íntegro nuevo. Fases: necesidad de ocupación → justiprecio → pago.",
+      v:["ESTABLE","Muy estable (ley de 1954)."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"IV.9", e:"Régimen patrimonial; dominio público; Patrimonio Nacional; bienes comunales", tac:true,
+      n:"Ley 33/2003, del Patrimonio de las AA. PP. BOE-A-2003-20254; RD 1373/2009, Reglamento BOE-A-2009-14788. Ley 23/1982, de Patrimonio Nacional. CE BOE-A-1978-31229: art. 132. LBRL arts. 79-80 y RD 1372/1986 (bienes de las EE. LL.).",
+      i:"Código electrónico de Derecho Administrativo (BOE).",
+      p:"Sin correlato en el TAC con sociales. Distinguir demaniales / patrimoniales / comunales.",
+      v:["ESTABLE","Estable."],
+      f:["BOE+T","Demanio/patrimoniales: concepto doctrinal + Ley 33/2003."] },
+    { c:"IV.10", e:"Responsabilidad patrimonial; procedimiento",
+      n:"CE BOE-A-1978-31229: art. 106.2. Ley 40/2015 BOE-A-2015-10566: arts. 32-37. Ley 39/2015 BOE-A-2015-10565: arts. 65, 67, 81, 91 y 92.",
+      i:"Dictámenes del Consejo de Estado (memorias).",
+      p:"Plazo de reclamación de 1 año; requisitos del daño (efectivo, evaluable, individualizado).",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"IV.11", e:"LPAC y LRJSP; procedimiento común; obligación de resolver; silencio",
+      n:"Ley 39/2015 BOE-A-2015-10565: Títulos I-IV (arts. 21-25 silencio). Ley 40/2015 BOE-A-2015-10566: Título preliminar.",
+      i:"Código electrónico de Derecho Administrativo (BOE).",
+      p:"Núcleo del test y del supuesto: dominio literal de plazos.",
+      v:["REVISAR","Revisar la última versión consolidada de la LPAC (modificaciones puntuales)."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"IV.12", e:"Derechos de los ciudadanos; garantías; revisión de oficio y recursos",
+      n:"Ley 39/2015 BOE-A-2015-10565: arts. 13, 53 y 106-126.",
+      i:"Código electrónico de Derecho Administrativo (BOE).",
+      p:"Cuadro de recursos: alzada (1 mes / 3 meses), reposición (1 mes / 1 mes), extraordinario de revisión.",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"IV.13", e:"Jurisdicción contencioso-administrativa",
+      n:"LJCA, Ley 29/1998 BOE-A-1998-16718. CE BOE-A-1978-31229: arts. 24 y 106.1.",
+      i:"Código electrónico de Derecho Administrativo (BOE).",
+      p:"Reparto competencial entre órganos (arts. 8-12 LJCA) y plazos de interposición (art. 46).",
+      v:["REVISAR","Revisar cambios de la LJCA introducidos por la LO 1/2025 (verif.)."],
+      f:["BOE","La norma contiene el epígrafe."] }
+  ],
+  B5: [
+    { c:"V.1", e:"Personal: concepto y clases; adquisición y pérdida; régimen jurídico",
+      n:"TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 8-13 y 55-68. RD 364/1995 BOE-A-1995-8729. Disposiciones de función pública del RDL 6/2023.",
+      i:"Portal de Función Pública (funcionpublica.digital.gob.es) (verif.); Código electrónico de Función Pública (BOE).",
+      p:"Trampa: Ley 30/1984 sigue parcialmente vigente (disp. derogatoria TREBEP).",
+      v:["REVISAR","Reformas del TREBEP (RDL 6/2023, temporalidad) y posibles nuevas leyes de función pública."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"V.2", e:"Derechos y deberes; régimen disciplinario",
+      n:"TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 14-20, 52-54 y 93-98. RD 33/1986, Reglamento de Régimen Disciplinario (verif.).",
+      i:"Código electrónico de Función Pública (BOE).",
+      p:"Faltas muy graves (art. 95.2) y prescripción (art. 97): literal.",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"V.3", e:"Planificación de RR. HH.; OEP; selección; competencias",
+      n:"TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 55-62 y 69-70. RD 364/1995. Orden HFP/688/2017 (bases comunes). RD de OEP del año.",
+      i:"Portal de Función Pública; convocatorias en el BOE.",
+      p:"Plazo de 3 años para ejecutar la OEP (art. 70 TREBEP).",
+      v:["REVISAR","OEP anual: plazas y novedades del último RD de oferta."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"V.4", e:"Provisión de puestos y movilidad; promoción interna; carrera",
+      n:"TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 16-18 y 78-84. RD 364/1995: Títulos III-V.",
+      i:"Criterios de la DGFP (BODECO, citado en el PDF base).",
+      p:"Concurso vs libre designación; permanencia de 2 años (art. 41.2 RD 364/1995).",
+      v:["REVISAR","Desarrollo reglamentario pendiente de la carrera y la evaluación del desempeño."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"V.5", e:"Situaciones administrativas; incompatibilidades",
+      n:"TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 85-92. RD 365/1995 BOE-A-1995-8730. Ley 53/1984, de incompatibilidades BOE-A-1985-151; RD 598/1985 BOE-A-1985-7820.",
+      i:"Fichas de excedencias de la DGFP (citadas en el PDF base, §17).",
+      p:"Tabla de excedencias (requisitos, duración, efectos): te sirve también para tu propio plan.",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"V.6", e:"Retribuciones e indemnizaciones por razón del servicio",
+      n:"TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 21-30. Ley de PGE vigente y RDL 14/2025 (cuantías 2026). RD 462/2002, indemnizaciones BOE-A-2002-10337.",
+      i:"Tablas retributivas de la SEPG (www.sepg.pap.hacienda.gob.es).",
+      p:"Básicas vs complementarias; grupos de dietas del RD 462/2002.",
+      v:["ACTUALIZAR","Cuantías retributivas y subidas anuales (PGE o RDL); dietas del RD 462/2002."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"V.7", e:"Personal laboral; IV Convenio Único",
+      n:"TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 7 y 11. Estatuto de los Trabajadores, RDLeg 2/2015 BOE-A-2015-11430. IV Convenio Único AGE BOE-A-2019-7414.",
+      i:"Texto del Convenio en el BOE.",
+      p:"El TAC no nombra el IV Convenio: grupos profesionales y clasificación.",
+      v:["REVISAR","Posible nuevo convenio o revisiones del IV Convenio Único."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"V.8", e:"Negociación colectiva; representación; derecho de huelga", tac:true,
+      n:"CE BOE-A-1978-31229: arts. 28 y 37. TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 31-46. LOLS 11/1985 BOE-A-1985-16660. RDL 17/1977, de relaciones de trabajo BOE-A-1977-6061.",
+      i:"Código electrónico de Función Pública (BOE).",
+      p:"Sin correlato en el TAC con sociales. Mesas de negociación (arts. 34-36 TREBEP).",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"V.9", e:"Régimen especial de Seguridad Social de funcionarios; MUFACE; clases pasivas",
+      n:"RDLeg 4/2000 (mutualismo administrativo) y RD 375/2003 (Reglamento). RDLeg 670/1987 (Clases Pasivas) BOE-A-1987-12636. RDL 13/2010 (integración en el RGSS desde 2011).",
+      i:"www.muface.es; portal de Clases Pasivas (Ministerio de Inclusión).",
+      p:"Clave: quien ingresa desde 2011 cotiza al Régimen General para pensiones (mantiene MUFACE).",
+      v:["REVISAR","Conciertos de MUFACE con las aseguradoras (cambios recientes)."],
+      f:["BOE+T","Normativa dispersa (MUFACE, clases pasivas, RGSS)."] },
+    { c:"V.10", e:"Acceso al empleo público y provisión de puestos de personas con discapacidad",
+      n:"TREBEP (RDLeg 5/2015) BOE-A-2015-11719: art. 59. RDLeg 1/2013 BOE-A-2013-12632. RD 2271/2004. Orden PJC/804/2025 (adaptaciones).",
+      i:"Bases de las convocatorias (base 13).",
+      p:"Cupo mínimo del 7 % (2 % discapacidad intelectual).",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] }
+  ],
+  B6: [
+    { c:"VI.1", e:"Presupuesto; Ley General Presupuestaria; leyes de estabilidad",
+      n:"LGP (Ley 47/2003) BOE-A-2003-21614: Títulos I-II. LO 2/2012 BOE-A-2012-5730.",
+      i:"Documentación de los PGE en la SEPG (www.sepg.pap.hacienda.gob.es).",
+      p:"Principios presupuestarios (LGP arts. 26-27) y programación plurianual.",
+      v:["REVISAR","Senda de estabilidad del año y aplicación del nuevo marco fiscal UE."],
+      f:["BOE+T","Principios presupuestarios: conceptos + LGP."] },
+    { c:"VI.2", e:"Leyes anuales de presupuestos; presupuesto del Estado; estructura",
+      n:"CE BOE-A-1978-31229: art. 134. LGP (Ley 47/2003) BOE-A-2003-21614: arts. 32-45. Ley de PGE vigente (comprobar si es una ley nueva o una prórroga). Orden anual de elaboración de los PGE.",
+      i:"«Libro Amarillo» (Presentación de los PGE), SEPG.",
+      p:"Clasificaciones orgánica, por programas y económica (capítulos 1-9).",
+      v:["ACTUALIZAR","Saber si rige una Ley de PGE nueva o una prórroga, y la estructura del último presupuesto."],
+      f:["BOE+T","Estructura y clasificaciones: Libro Amarillo."] },
+    { c:"VI.3", e:"Gastos plurianuales; modificaciones de crédito",
+      n:"LGP (Ley 47/2003) BOE-A-2003-21614: arts. 47 y 51-61.",
+      i:"Código electrónico de Derecho Financiero (BOE).",
+      p:"Cuadro de modificaciones (crédito extraordinario, suplemento, ampliación, transferencia, generación, incorporación) y órgano competente.",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"VI.4", e:"Control del gasto; IGAE; función interventora; auditoría; Tribunal de Cuentas",
+      n:"LGP (Ley 47/2003) BOE-A-2003-21614: Título VI (arts. 140-175). RD 2188/1995, control interno de la IGAE. LO 2/1982, del Tribunal de Cuentas BOE-A-1982-11584; Ley 7/1988, de funcionamiento BOE-A-1988-8678.",
+      i:"www.igae.pap.hacienda.gob.es; www.tcu.es.",
+      p:"Fases de la función interventora y fiscalización previa limitada.",
+      v:["ESTABLE","Estable."],
+      f:["BOE+T","Función interventora: RD 2188/1995 técnico."] },
+    { c:"VI.5", e:"Ejecución del gasto; documentos contables; tesorería del Estado",
+      n:"LGP (Ley 47/2003) BOE-A-2003-21614: arts. 73-79 y 90-114. Orden de 1-2-1996 (instrucción operatoria contable). Orden EHA/1037/2010 (PGCP).",
+      i:"Manuales de la IGAE.",
+      p:"Fases A-D-O-P y documentos (A, D, AD, ADOK…): imprescindible para el supuesto.",
+      v:["ESTABLE","Estable."],
+      f:["BOE+T","Documentos contables: práctica guiada."] },
+    { c:"VI.6", e:"Gastos corrientes, de inversión y transferencias; ACF; pagos a justificar",
+      n:"LGP (Ley 47/2003) BOE-A-2003-21614: arts. 78-79. RD 725/1989 (anticipos de caja fija). RD 640/1987 (pagos «a justificar»).",
+      i:"Manuales de la IGAE.",
+      p:"Plazos de justificación (ACF vs pagos a justificar) y límites cuantitativos.",
+      v:["ESTABLE","Estable."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"VI.7", e:"Ingresos públicos; sistema tributario; tasas y precios públicos",
+      n:"LGT, Ley 58/2003 BOE-A-2003-23186. Ley 8/1989, de tasas y precios públicos BOE-A-1989-8508.",
+      i:"sede.agenciatributaria.gob.es (manuales prácticos).",
+      p:"Tributo: impuesto / tasa / contribución especial (art. 2 LGT).",
+      v:["REVISAR","Cambios tributarios anuales (si el tema los exige)."],
+      f:["BOE","La norma contiene el epígrafe."] },
+    { c:"VI.8", e:"Retribuciones; nóminas; altas y bajas; ingresos en formalización",
+      n:"Orden de 30-7-1992 (confección de nóminas). Ley de PGE vigente y RDL 14/2025. TREBEP (RDLeg 5/2015) BOE-A-2015-11719: arts. 21-30.",
+      i:"Tablas de la SEPG.",
+      p:"Tema muy práctico: suele aparecer en el supuesto (cálculo de nómina, trienios, pagas).",
+      v:["ACTUALIZAR","Cuantías de sueldo, trienios, pagas y cotizaciones del año del examen."],
+      f:["BOE+T","Nóminas: práctica con casos."] }
+  ]
+};
+
+/* Etiquetas de las columnas «Vigencia» y «Fuente recomendada», con la
+   explicación del propio documento (valoración del autor, no oficial). */
+const VIGENCIA = {
+  ESTABLE:    { txt:"Estable",    cls:"ok",   def:"Cambios improbables; basta una comprobación rápida del BOE consolidado." },
+  REVISAR:    { txt:"Revisar",    cls:"warn", def:"Base estable con elementos que pueden haber cambiado: comprobar la versión consolidada y la composición de órganos." },
+  ACTUALIZAR: { txt:"Actualizar", cls:"hot",  def:"Contenido que cambia de forma casi segura entre convocatorias (cifras, planes, estructura o normas recientes): rehacer el dato justo antes del examen." }
+};
+const FUENTE = {
+  "BOE":   { txt:"Solo BOE",              cls:"ok",   def:"El epígrafe coincide con el contenido de una o pocas normas; basta el texto consolidado (más la Sinopsis del Congreso en temas constitucionales) y preguntas de exámenes." },
+  "BOE+T": { txt:"BOE + temario",         cls:"azul", def:"La norma es la base, pero el epígrafe incluye doctrina, exige seleccionar dentro de una ley muy extensa o requiere práctica guiada." },
+  "INST":  { txt:"Temario / fuentes inst.", cls:"lila", def:"No hay una norma que contenga el tema (políticas, planes, historia, datos): estudiar con temario o con las Fichas del PE y webs institucionales." }
+};
+
+/* Enlaces de las fuentes institucionales, tal como los enlaza el documento. */
+const ENLACES_TEXTO = [
+  ["Sinopsis de la CE (Congreso)", "https://app.congreso.es/consti/"],
+  ["Fichas temáticas del PE",      "https://www.europarl.europa.eu/factsheets/es"],
+  ["Síntesis EUR-Lex",             "https://eur-lex.europa.eu/browse/summaries.html"],
+  ["BOE · Biblioteca Jurídica Digital", "https://www.boe.es/biblioteca_juridica/"]
+];
+const DOMINIOS_SIN_WWW = [
+  "administracion.gob.es", "administracionelectronica.gob.es", "espanadigital.gob.es",
+  "extranjeros.inclusion.gob.es", "funcionpublica.digital.gob.es", "sede.agenciatributaria.gob.es",
+  "sede.inap.gob.es/espacio-del-opositor", "transparencia.gob.es", "contrataciondelestado.es"
+];
+
+/* ---- Índice plano de temas (se construye una vez) --------------------- */
+const TEMAS = [];          // [{id, b, num, c, e, n, i, p, v, f, tac}]
+const TEMA_POR_ID = {};
+const ID_POR_CODIGO = {};
+BLOQUES.forEach((b, bi) => {
+  b.temas = TEMAS_PROGRAMA[b.code];
+  b.total = b.temas.length;
+  b.temas.forEach((t, k) => {
+    const id = b.code + "T" + String(k + 1).padStart(2, "0");
+    const o = Object.assign({ id, b:b.code, num:k + 1 }, t);
+    TEMAS.push(o); TEMA_POR_ID[id] = o; ID_POR_CODIGO[t.c] = id;
+  });
+});
+const BLOQUE_POR_CODE = Object.fromEntries(BLOQUES.map(b => [b.code, b]));
+/** Verde: solo BOE + estable. Ámbar: solo BOE + revisar (criterio del documento). */
+function semaforo(t) {
+  if (t.f[0] === "BOE" && t.v[0] === "ESTABLE") return "verde";
+  if (t.f[0] === "BOE" && t.v[0] === "REVISAR") return "ambar";
+  return null;
+}
+
+/* ========================================================================
+   (b) ESTADO + persistencia local
+   - Contenido desarrollado de cada tema: IndexedDB (puede ser grande: se
+     guarda también el HTML original para poder abrirlo sin servidor). Es del
+     HOGAR: se sincroniza con la tabla oposicion_temas.
+   - Progreso de flashcards: localStorage, una copia por usuario. Es de cada
+     PERSONA: se sincroniza con oposicion_progreso, tarjeta a tarjeta.
+   Todo funciona sin conexión; lo pendiente de subir vive en una cola que
+   sobrevive a recargas. Nombres propios para no chocar con otros hubs
+   publicados en el mismo dominio (github.io comparte origen entre repos).
+   ====================================================================== */
+const KEY_AJUSTES_V1 = "gestion_hub_ajustes_v1";   // progreso antiguo (por posición); se migra
+const KEY_PROG    = "gestion_hub_progreso_v2:";     // + uid | "local"
+const KEY_PEND    = "gestion_hub_pendientes_v1";    // { temas:{id:1}, prog:{"uid|clave":1} }
+const KEY_BORR    = "gestion_hub_borrados_v1";      // { id: ms } temas quitados, hasta subirlos
+const KEY_SYNC    = "gestion_hub_sync_v1";          // { hogar, uid, cT, cP } cursores de bajada
+const KEY_EMBED   = "gestion_hub_embebido_v1";
+const KEY_TEMA    = "recetas:tema";                 // compartida con Niblo
+const KEY_SUPABASE = "recetas:supabase";            // sesión de Niblo (mismo sitio)
+const DB_NOMBRE   = "gestion_hub_db";
+const FORMATO     = "gestion_hub_config";
+const CARPETA_TEMAS = "oposicion/";                 // para «Buscar en el servidor»
+
+const estado = {
+  temas: {},                       // id -> contenido cargado (con .modificado en ms)
+  filtroTemas: "todos",
+  hubTab: { bloque:"buscar", global:"buscar" }
+};
+
+function leerJSON(k, def) { try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v == null ? def : v; } catch (_) { return def; } }
+function escribirJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} }
+
+const pend = Object.assign({ temas:{}, prog:{} }, leerJSON(KEY_PEND, {}));
+const borrados = leerJSON(KEY_BORR, {});
+function guardarPend() { escribirJSON(KEY_PEND, pend); escribirJSON(KEY_BORR, borrados); pintarSync(); }
+function nPendientes() { return Object.keys(pend.temas).length + Object.keys(pend.prog).length; }
+
+/* ---- Progreso de flashcards (por persona) ------------------------------
+   Cada tarjeta se identifica por el tema y un resumen de su pregunta, no por
+   su posición: si el tema se edita y las tarjetas cambian de orden, lo que
+   ya sabías sigue marcado. Valor: { s: sabida, m: ms de la última marca }. */
+const prog = { duenno:"local", mapa:{} };
+function hashCorto(txt) {
+  let h = 0x811c9dc5;
+  const s = String(txt || "").trim();
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+  return (h >>> 0).toString(36);
+}
+function claveFc(id, f) { return id + ":" + hashCorto(f && f.q); }
+function sabida(k) { const v = prog.mapa[k]; return !!(v && v.s); }
+function sabidasDe(t) { return t.flashcards.filter(f => sabida(claveFc(t.id, f))).length; }
+function guardarProg() { escribirJSON(KEY_PROG + prog.duenno, prog.mapa); }
+function marcarFc(k, valor) {
+  prog.mapa[k] = { s:!!valor, m:Date.now() };
+  guardarProg();
+  pend.prog[prog.duenno + "|" + k] = 1; guardarPend();
+  programarSync();
+}
+/** Carga el progreso de quien tenga la sesión. Lo marcado sin sesión se
+    suma al de la primera persona que entre (y se sube). */
+function cargarProgreso(uid) {
+  const duenno = uid || "local";
+  prog.duenno = duenno;
+  prog.mapa = leerJSON(KEY_PROG + duenno, {});
+  if (uid) {
+    const local = leerJSON(KEY_PROG + "local", null);
+    if (local && Object.keys(local).length) {
+      for (const k in local) {
+        const a = prog.mapa[k];
+        if (!a || local[k].m > a.m) { prog.mapa[k] = local[k]; pend.prog[uid + "|" + k] = 1; }
+      }
+      Object.keys(pend.prog).forEach(pk => { if (pk.startsWith("local|")) delete pend.prog[pk]; });
+      try { localStorage.removeItem(KEY_PROG + "local"); } catch (_) {}
+      guardarProg(); guardarPend();
+    }
+  }
+}
+/** Progreso de la primera versión del hub (claves por posición). */
+function migrarProgresoV1() {
+  const v1 = leerJSON(KEY_AJUSTES_V1, null);
+  if (!v1 || !v1.fc || !Array.isArray(v1.fc.known)) return;
+  v1.fc.known.forEach(k => {
+    const [id, i] = k.split(":");
+    const t = estado.temas[id];
+    const f = t && t.flashcards[parseInt(i, 10)];
+    if (f && !sabida(claveFc(id, f))) marcarFc(claveFc(id, f), true);
+  });
+  try { localStorage.removeItem(KEY_AJUSTES_V1); } catch (_) {}
+}
+
+/* ---- IndexedDB ---------------------------------------------------------- */
+let db = null;
+function abrirDB() {
+  return new Promise((ok, ko) => {
+    const r = indexedDB.open(DB_NOMBRE, 1);
+    r.onerror = () => ko(r.error);
+    r.onsuccess = () => { db = r.result; ok(db); };
+    r.onupgradeneeded = e => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains("temas")) d.createObjectStore("temas", { keyPath:"id" });
+    };
+  });
+}
+function dbTodos() {
+  return new Promise((ok, ko) => {
+    if (!db) return ok({});
+    const out = {};
+    const tx = db.transaction("temas", "readonly");
+    tx.objectStore("temas").openCursor().onsuccess = e => {
+      const c = e.target.result;
+      if (c) { out[c.key] = c.value; c.continue(); } else ok(out);
+    };
+    tx.onerror = () => ko(tx.error);
+  });
+}
+function dbPut(obj) {
+  return new Promise((ok, ko) => {
+    if (!db) return ok();
+    const tx = db.transaction("temas", "readwrite");
+    tx.objectStore("temas").put(obj);
+    tx.oncomplete = ok; tx.onerror = () => ko(tx.error);
+  });
+}
+function dbBorrar(id) {
+  return new Promise((ok, ko) => {
+    if (!db) return ok();
+    const tx = db.transaction("temas", "readwrite");
+    tx.objectStore("temas").delete(id);
+    tx.oncomplete = ok; tx.onerror = () => ko(tx.error);
+  });
+}
+/* Los mazos de flashcards se rehacen al cambiar el contenido. */
+function olvidarMazos() { Object.keys(hubLocal).forEach(k => { hubLocal[k].mazo = null; hubLocal[k].test = null; }); }
+function olvidarBlob(id) { if (blobs[id]) { URL.revokeObjectURL(blobs[id]); delete blobs[id]; } }
+
+/** Guarda un tema. Si viene de una acción tuya (no de la bajada) se sella con
+    la hora y entra en la cola de subida. */
+async function guardarTema(t, deServidor, marca) {
+  if (!deServidor) {
+    t.modificado = marca || Date.now();
+    pend.temas[t.id] = 1; delete borrados[t.id]; guardarPend();
+  }
+  estado.temas[t.id] = t;
+  olvidarMazos(); olvidarBlob(t.id);
+  await dbPut(t);
+  if (!deServidor) programarSync();
+}
+/** Quita el contenido de un tema. El borrado también se sincroniza (queda una
+    marca en el servidor); el progreso de cada persona no se toca. */
+async function quitarTema(id, deServidor) {
+  delete estado.temas[id];
+  olvidarMazos(); olvidarBlob(id);
+  if (!deServidor) { borrados[id] = Date.now(); pend.temas[id] = 1; guardarPend(); }
+  await dbBorrar(id);
+  if (!deServidor) programarSync();
+}
+
+/* ========================================================================
+   (b2) SINCRONIZACIÓN con Supabase — la misma cuenta y el mismo hogar que
+   Niblo, sin librerías (REST + WebSocket), como en Niblo.
+   - Subida: cola de pendientes; se reintenta sola al volver la conexión.
+   - Bajada: solo lo cambiado desde el último cursor (con 2 min de solape:
+     una fila que se confirma tarde no se pierde; aplicar dos veces es inocuo).
+   - Conflictos: gana la última modificación, por tema y por tarjeta. El
+     servidor lo hace cumplir también (trigger): una subida vieja nunca pisa
+     una nueva, aunque llegue después.
+   - En vivo: WebSocket de Realtime; cada aviso dispara una bajada.
+   ====================================================================== */
+const SUPA = { url:null, anon:null, token:null, refresh:null, uid:null, email:null };
+const SYNC = Object.assign({ hogar:null, uid:null, cT:null, cP:null }, leerJSON(KEY_SYNC, {}));
+const S = { estado:"local", detalle:"", enCurso:null, repetir:false, timer:null, ultimaSubida:0, ultimaOk:null };
+
+function jwt(token) {
+  try { return JSON.parse(atob(String(token).split(".")[1].replace(/-/g, "+").replace(/_/g, "/"))); } catch (_) { return null; }
+}
+function caducaPronto(token) { const c = jwt(token); return !c || (typeof c.exp === "number" && c.exp * 1000 < Date.now() + 60000); }
+/** Lee la sesión que guarda Niblo. Devuelve true si hay sesión utilizable. */
+function leerSesion() {
+  const o = leerJSON(KEY_SUPABASE, null);
+  if (!o || !o.token || !o.url || !o.anonKey) {
+    Object.assign(SUPA, { url:null, anon:null, token:null, refresh:null, uid:null, email:null });
+    return false;
+  }
+  const c = jwt(o.token);
+  Object.assign(SUPA, { url:o.url, anon:o.anonKey, token:o.token, refresh:o.refreshToken || null,
+    uid:(c && c.sub) || o.userId || null, email:o.email || null });
+  return !!SUPA.uid;
+}
+const haySesion = () => !!(SUPA.token && SUPA.uid);
+
+/* Renovar el token. Supabase ROTA el refresh token: si Niblo y el hub lo
+   gastaran a la vez, el segundo recibiría «ya usado» y la detección de reuso
+   podría cerrar la sesión en todas partes. Por eso: (1) cerrojo compartido
+   entre pestañas con Niblo (Web Locks, mismo nombre); (2) antes de pedir,
+   se mira si otra pestaña ya lo ha renovado; (3) el resultado se escribe en
+   la misma clave que lee Niblo. */
+const CERROJO_AUTH = "niblo-auth-refresh";
+let _renovando = null;
+function renovarToken() {
+  if (_renovando) return _renovando;
+  const tokenAntes = SUPA.token;
+  const hacer = async () => {
+    const g = leerJSON(KEY_SUPABASE, null);
+    if (g && g.token && g.token !== tokenAntes && !caducaPronto(g.token)) {
+      SUPA.token = g.token; SUPA.refresh = g.refreshToken || SUPA.refresh;
+      return true;
+    }
+    const refresh = (g && g.refreshToken) || SUPA.refresh;
+    if (!refresh) return false;
+    try {
+      const r = await fetchPlazo(SUPA.url + "/auth/v1/token?grant_type=refresh_token", {
+        method:"POST", headers:{ "apikey":SUPA.anon, "Content-Type":"application/json" },
+        body:JSON.stringify({ refresh_token:refresh })
+      });
+      if (!r.ok) return false;
+      const d = await r.json();
+      SUPA.token = d.access_token; SUPA.refresh = d.refresh_token || refresh;
+      const o = leerJSON(KEY_SUPABASE, {}) || {};
+      o.token = SUPA.token; o.refreshToken = SUPA.refresh;
+      escribirJSON(KEY_SUPABASE, o);
+      return true;
+    } catch (_) { return false; }
+  };
+  _renovando = (navigator.locks && navigator.locks.request ? navigator.locks.request(CERROJO_AUTH, hacer) : hacer())
+    .then(ok => { if (ok) rtToken(); return ok; })
+    .finally(() => { _renovando = null; });
+  return _renovando;
+}
+function fetchPlazo(url, opts, ms) {
+  const ctrl = typeof AbortController === "function" ? new AbortController() : null;
+  const t = setTimeout(() => { if (ctrl) ctrl.abort(); }, ms || 20000);
+  return fetch(url, ctrl ? Object.assign({}, opts, { signal:ctrl.signal }) : opts).finally(() => clearTimeout(t));
+}
+async function supa(ruta, opts, reintento) {
+  if (reintento === undefined) reintento = true;
+  if (reintento && SUPA.refresh && caducaPronto(SUPA.token)) await renovarToken();
+  const headers = Object.assign({ "apikey":SUPA.anon, "Authorization":"Bearer " + SUPA.token, "Content-Type":"application/json" }, (opts && opts.headers) || {});
+  const r = await fetchPlazo(SUPA.url + ruta, Object.assign({}, opts, { headers }), opts && opts.plazo);
+  if (r.status === 401 && reintento) {
+    if (await renovarToken()) return supa(ruta, opts, false);
+    const e = new Error("sesión caducada"); e.sesion = true; throw e;
+  }
+  if (!r.ok) { const txt = await r.text().catch(() => ""); const e = new Error("Supabase " + r.status + ": " + txt); e.status = r.status; throw e; }
+  if (r.status === 204 || r.status === 201) return null;
+  const ct = r.headers.get("Content-Type") || "";
+  return ct.indexOf("json") >= 0 ? r.json() : r.text();
+}
+const ms = iso => { const n = Date.parse(iso); return isNaN(n) ? 0 : n; };
+const iso = n => new Date(n).toISOString();
+function guardarSyncMeta() { escribirJSON(KEY_SYNC, { hogar:SYNC.hogar, uid:SYNC.uid, cT:SYNC.cT, cP:SYNC.cP }); }
+
+/** Hogar de la sesión (RLS solo devuelve los tuyos). Si cambia, lo guardado
+    aquí era de otro hogar: se descarta el contenido local para no mezclarlo. */
+async function asegurarHogar() {
+  const filas = await supa("/rest/v1/hogares?select=id&limit=1");
+  const h = filas && filas[0] && filas[0].id;
+  if (!h) { const e = new Error("tu cuenta no tiene hogar en Niblo"); e.sinHogar = true; throw e; }
+  if (SYNC.hogar && SYNC.hogar !== h) {
+    for (const id of Object.keys(estado.temas)) await quitarTema(id, true);
+    Object.keys(pend.temas).forEach(id => delete pend.temas[id]);
+    Object.keys(borrados).forEach(id => delete borrados[id]);
+    guardarPend();
+    SYNC.cT = null;
+  }
+  if (SYNC.uid !== SUPA.uid) { SYNC.cP = null; SYNC.uid = SUPA.uid; }
+  SYNC.hogar = h; guardarSyncMeta();
+  return h;
+}
+
+/** Lee páginas de 1000 filas (el límite de PostgREST) ordenadas por cursor. */
+async function bajarTabla(base, cursor) {
+  const desde = cursor ? "&actualizado=gte." + encodeURIComponent(iso(ms(cursor) - 120000)) : "";
+  const filas = [];
+  for (let off = 0; ; off += 1000) {
+    const pag = await supa(base + desde + "&order=actualizado.asc&limit=1000&offset=" + off);
+    filas.push(...(pag || []));
+    if (!pag || pag.length < 1000) break;
+  }
+  return filas;
+}
+async function bajar() {
+  let cambios = 0;
+  // Temas del hogar
+  const ft = await bajarTabla(`/rest/v1/oposicion_temas?select=tema_id,datos,borrado,modificado,actualizado&hogar_id=eq.${SYNC.hogar}`, SYNC.cT);
+  for (const r of ft) {
+    const id = r.tema_id;
+    if (!TEMA_POR_ID[id]) continue;
+    const tm = ms(r.modificado);
+    const lm = estado.temas[id] ? (estado.temas[id].modificado || 0) : (borrados[id] || 0);
+    if (tm > lm) {
+      if (r.borrado) { if (estado.temas[id]) { await quitarTema(id, true); cambios++; } delete borrados[id]; }
+      else if (r.datos) {
+        const rec = normalizarTema(id, r.datos, r.datos.fileName, r.datos.html);
+        rec.modificado = tm; rec.cargado = r.datos.cargado || rec.cargado;
+        await guardarTema(rec, true); cambios++;
+      }
+      delete pend.temas[id];
+    }
+    if (!SYNC.cT || ms(r.actualizado) > ms(SYNC.cT)) SYNC.cT = r.actualizado;
+  }
+  // Progreso propio
+  const fp = await bajarTabla(`/rest/v1/oposicion_progreso?select=tarjeta,sabida,modificado,actualizado&user_id=eq.${SUPA.uid}`, SYNC.cP);
+  let cambioProg = false;
+  for (const r of fp) {
+    const tm = ms(r.modificado), a = prog.mapa[r.tarjeta];
+    if (!a || tm > a.m) {
+      prog.mapa[r.tarjeta] = { s:!!r.sabida, m:tm };
+      delete pend.prog[SUPA.uid + "|" + r.tarjeta];
+      cambioProg = true; cambios++;
+    }
+    if (!SYNC.cP || ms(r.actualizado) > ms(SYNC.cP)) SYNC.cP = r.actualizado;
+  }
+  if (cambioProg) { guardarProg(); olvidarMazos(); }
+  guardarPend(); guardarSyncMeta();
+  return cambios;
+}
+async function subir() {
+  // Temas: de uno en uno (pueden llevar el HTML completo del tema).
+  for (const id of Object.keys(pend.temas)) {
+    if (!TEMA_POR_ID[id]) { delete pend.temas[id]; continue; }
+    const t = estado.temas[id];
+    const marca = t ? t.modificado : borrados[id];
+    if (!marca) { delete pend.temas[id]; continue; }
+    let datos = null;
+    if (t) { datos = Object.assign({}, t); delete datos.id; delete datos.modificado; }
+    await supa("/rest/v1/oposicion_temas?on_conflict=hogar_id,tema_id", {
+      method:"POST", plazo:60000,
+      headers:{ "Prefer":"resolution=merge-duplicates,return=minimal" },
+      body:JSON.stringify({ hogar_id:SYNC.hogar, tema_id:id, datos, borrado:!t, modificado:iso(marca) })
+    });
+    S.ultimaSubida = Date.now();
+    // Solo se da por subido si no ha vuelto a cambiar mientras tanto.
+    const ahora = estado.temas[id] ? estado.temas[id].modificado : borrados[id];
+    if (ahora === marca) { delete pend.temas[id]; if (!t) delete borrados[id]; }
+    guardarPend();
+  }
+  // Progreso: por lotes; solo lo de la persona con sesión.
+  const mias = Object.keys(pend.prog).filter(pk => pk.startsWith(SUPA.uid + "|"));
+  for (let i = 0; i < mias.length; i += 500) {
+    const lote = mias.slice(i, i + 500);
+    const filas = lote.map(pk => { const k = pk.slice(SUPA.uid.length + 1); const v = prog.mapa[k]; return v ? { user_id:SUPA.uid, tarjeta:k, sabida:!!v.s, modificado:iso(v.m) } : null; }).filter(Boolean);
+    const marcas = lote.map(pk => { const v = prog.mapa[pk.slice(SUPA.uid.length + 1)]; return v ? v.m : null; });
+    if (filas.length) {
+      await supa("/rest/v1/oposicion_progreso?on_conflict=user_id,tarjeta", {
+        method:"POST", headers:{ "Prefer":"resolution=merge-duplicates,return=minimal" }, body:JSON.stringify(filas)
+      });
+      S.ultimaSubida = Date.now();
+    }
+    lote.forEach((pk, j) => { const v = prog.mapa[pk.slice(SUPA.uid.length + 1)]; if (!v || v.m === marcas[j]) delete pend.prog[pk]; });
+    guardarPend();
+  }
+}
+
+function sincronizar() {
+  if (!haySesion()) { ponerSync("local"); return Promise.resolve(); }
+  if (!navigator.onLine) { ponerSync("offline"); return Promise.resolve(); }
+  if (S.enCurso) { S.repetir = true; return S.enCurso; }
+  S.enCurso = (async () => {
+    ponerSync("sync");
+    try {
+      await asegurarHogar();
+      const cambios = await bajar();
+      await subir();
+      S.ultimaOk = new Date();
+      ponerSync("ok");
+      if (cambios) render();
+      rtConectar();
+    } catch (e) {
+      const m = e.message || String(e);
+      if (e.sesion) ponerSync("sesion", "La sesión de Niblo ha caducado: vuelve a entrar en Niblo.");
+      else if (e.sinHogar) ponerSync("error", "Tu cuenta no tiene hogar en Niblo.");
+      else if (/42P01|does not exist|Could not find the table|PGRST205/i.test(m)) ponerSync("error", "Falta ejecutar la migración 009_oposicion_sync.sql en Supabase.");
+      else if (!navigator.onLine || /Failed to fetch|NetworkError|aborted|Load failed/i.test(m)) ponerSync("offline");
+      else ponerSync("error", m.slice(0, 220));
+      console.warn("Sync oposición:", e);
+    } finally {
+      S.enCurso = null;
+      if (S.repetir) { S.repetir = false; programarSync(300); }
+    }
+  })();
+  return S.enCurso;
+}
+function programarSync(espera) {
+  clearTimeout(S.timer);
+  pintarSync();
+  S.timer = setTimeout(() => sincronizar(), espera == null ? 500 : espera);
+}
+
+/* ---- Tiempo real (WebSocket de Supabase Realtime) ---------------------- */
+const RT = { ws:null, ref:0, latido:null, reintento:null, intentos:0, conectado:false, tema:"realtime:oposicion", aviso:null };
+function rtEnviar(topic, event, payload) {
+  if (RT.ws && RT.ws.readyState === 1) RT.ws.send(JSON.stringify({ topic, event, payload:payload || {}, ref:String(++RT.ref) }));
+}
+function rtConectar() {
+  if (!haySesion() || !SYNC.hogar) return;
+  if (RT.ws && RT.ws.readyState <= 1) return;
+  clearTimeout(RT.reintento);
+  let ws;
+  try { ws = new WebSocket(`wss://${SUPA.url.replace(/^https?:\/\//, "")}/realtime/v1/websocket?apikey=${encodeURIComponent(SUPA.anon)}&vsn=1.0.0`); }
+  catch (_) { return; }
+  RT.ws = ws;
+  ws.onopen = async () => {
+    if (caducaPronto(SUPA.token)) await renovarToken();
+    rtEnviar(RT.tema, "phx_join", {
+      config:{
+        broadcast:{ self:false },
+        postgres_changes:[
+          { event:"*", schema:"public", table:"oposicion_temas",    filter:`hogar_id=eq.${SYNC.hogar}` },
+          { event:"*", schema:"public", table:"oposicion_progreso", filter:`user_id=eq.${SUPA.uid}` }
+        ]
+      },
+      access_token:SUPA.token
+    });
+    clearInterval(RT.latido);
+    RT.latido = setInterval(() => {
+      rtEnviar("phoenix", "heartbeat", {});
+      // El canal se cierra cuando caduca el token: se renueva antes.
+      if (caducaPronto(SUPA.token)) renovarToken();
+    }, 25000);
+  };
+  ws.onmessage = ev => {
+    let m; try { m = JSON.parse(ev.data); } catch (_) { return; }
+    if (m.topic !== RT.tema) return;
+    if (m.event === "phx_reply" && m.payload && m.payload.status === "ok" && m.payload.response && m.payload.response.postgres_changes) {
+      RT.conectado = true; RT.intentos = 0; pintarSync();
+      // Lo que cambiara mientras no había canal se recoge ahora.
+      programarSync(200);
+      return;
+    }
+    if ((m.event === "system" && m.payload && m.payload.status === "error") || m.event === "phx_error" || m.event === "phx_close") {
+      RT.conectado = false; pintarSync();
+      try { ws.close(); } catch (_) {}
+      return;
+    }
+    if (m.event === "postgres_changes") {
+      // Puede ser el eco de lo que acabamos de subir: se deja pasar la ventana.
+      const espera = Math.max(300, 1500 - (Date.now() - S.ultimaSubida));
+      programarSync(espera);
+    }
+  };
+  ws.onclose = () => {
+    RT.conectado = false; clearInterval(RT.latido); pintarSync();
+    if (RT.ws !== ws) return;
+    RT.ws = null;
+    if (!haySesion()) return;
+    const espera = Math.min(30000, 1000 * Math.pow(2, RT.intentos++));
+    RT.reintento = setTimeout(rtConectar, espera);
+  };
+  ws.onerror = () => { try { ws.close(); } catch (_) {} };
+}
+/** Token nuevo: se lo pasa al canal abierto para que no lo cierre al caducar. */
+function rtToken() { if (RT.conectado) rtEnviar(RT.tema, "access_token", { access_token:SUPA.token }); }
+function rtCerrar() {
+  clearTimeout(RT.reintento); clearInterval(RT.latido); RT.conectado = false;
+  if (RT.ws) { const w = RT.ws; RT.ws = null; try { w.close(); } catch (_) {} }
+}
+
+/* ---- Indicador de sincronización -------------------------------------- */
+function ponerSync(est, detalle) { S.estado = est; S.detalle = detalle || ""; pintarSync(); }
+function pintarSync() {
+  const el = document.getElementById("sync-pill");
+  if (!el) return;
+  const n = nPendientes();
+  const txt = {
+    local:   "Solo este dispositivo",
+    sync:    "Sincronizando…",
+    ok:      n ? `${n} pendiente${n === 1 ? "" : "s"}` : (RT.conectado ? "Sincronizado" : "Sincronizado"),
+    offline: n ? `Sin conexión · ${n} pendiente${n === 1 ? "" : "s"}` : "Sin conexión",
+    sesion:  "Sesión caducada",
+    error:   "Error al sincronizar"
+  }[S.estado];
+  el.dataset.estado = S.estado === "ok" && RT.conectado ? "vivo" : S.estado;
+  el.querySelector(".t").textContent = txt;
+  const hora = S.ultimaOk ? " · última: " + S.ultimaOk.toLocaleTimeString("es-ES", { hour:"2-digit", minute:"2-digit" }) : "";
+  el.title = ({
+    local:   "Sin sesión de Niblo: los cambios se guardan solo en este navegador. Entra en Niblo para sincronizar.",
+    sync:    "Sincronizando con Niblo…",
+    ok:      (RT.conectado ? "Sincronizado y en vivo: los cambios de otros dispositivos llegan al momento" : "Sincronizado (sin canal en vivo: se comprueba al volver a la página)") + hora,
+    offline: "Sin conexión: los cambios se guardan aquí y se subirán solos al volver la red.",
+    sesion:  S.detalle,
+    error:   S.detalle
+  }[S.estado]) || "";
+}
+
+/* ========================================================================
+   (c) UTILIDADES
+   ====================================================================== */
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const norm = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+function barajar(a) { const r = a.slice(); for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; }
+function plural(n, s, p) { return n + " " + (n === 1 ? s : (p || s + "s")); }
+function resaltar(texto, q) {
+  const txt = String(texto || "");
+  if (!q) return esc(txt);
+  const i = norm(txt).indexOf(norm(q));
+  if (i < 0) return esc(txt);
+  return esc(txt.slice(0, i)) + "<mark>" + esc(txt.slice(i, i + q.length)) + "</mark>" + esc(txt.slice(i + q.length));
+}
+/** Ordena hitos: primer año de 4 cifras; siglos en romano; lo demás al final. */
+function claveAnio(y) {
+  const s = String(y || "");
+  const m = s.match(/\d{4}/); if (m) return parseInt(m[0], 10);
+  const r = s.match(/s\.?\s*([ivxlcdm]+)/i);
+  if (r) return romano(r[1].toUpperCase()) * 100 - 50;
+  return 99999;
+}
+function romano(s) { const v = { I:1, V:5, X:10, L:50, C:100, D:500, M:1000 }; let r = 0, p = 0; for (let i = s.length - 1; i >= 0; i--) { const x = v[s[i]] || 0; r += x < p ? -x : x; p = x; } return r; }
+
+function toast(msg, tipo) {
+  const box = document.getElementById("toast-box");
+  const t = document.createElement("div");
+  t.className = "toast" + (tipo === "error" ? " error" : "");
+  t.textContent = msg;
+  box.appendChild(t);
+  setTimeout(() => t.remove(), 3600);
+}
+
+/** Texto de la tabla del documento -> HTML con los enlaces que el documento
+    enlaza: identificadores BOE (texto consolidado), webs institucionales y
+    las fuentes citadas por su nombre. «(verif.)» se marca aparte. */
+function enlazar(texto) {
+  let h = esc(texto);
+  const marcas = [];
+  const guardar = html => { marcas.push(html); return "\u0000" + (marcas.length - 1) + "\u0000"; };
+  h = h.replace(/BOE-A-\d{4}-\d+/g, id =>
+    guardar(`<a href="https://www.boe.es/buscar/act.php?id=${id}" target="_blank" rel="noopener">${id}</a>`));
+  ENLACES_TEXTO.forEach(([t, url]) => {
+    h = h.split(esc(t)).join(guardar(`<a href="${url}" target="_blank" rel="noopener">${esc(t)}</a>`));
+  });
+  h = h.replace(/\bwww\.[a-z0-9.-]+\.[a-z]{2,}(?:\/[a-z0-9\/._-]*[a-z0-9\/])?/gi, d =>
+    guardar(`<a href="https://${d}" target="_blank" rel="noopener">${d}</a>`));
+  DOMINIOS_SIN_WWW.forEach(d => {
+    h = h.replace(new RegExp("(^|[\\s(;,])(" + d.replace(/[.\/]/g, "\\$&") + ")(?![\\w.-]*\\w)", "g"),
+      (m, pre, dom) => pre + guardar(`<a href="https://${dom}" target="_blank" rel="noopener">${dom}</a>`));
+  });
+  h = h.replace(/\(verif\.\)/g, () =>
+    guardar('<span class="verif" title="Norma, cifra o web citada sin identificador o sin comprobar en la revisión del documento: contrástala antes de incorporarla a tus temas.">verif.</span>'));
+  return h.replace(/\u0000(\d+)\u0000/g, (m, i) => marcas[+i]);
+}
+
+function tagVigencia(t) { const v = VIGENCIA[t.v[0]]; return `<span class="tag ${v.cls}" title="${esc(v.def)}">${v.txt}</span>`; }
+function tagFuente(t)   { const f = FUENTE[t.f[0]];   return `<span class="tag ${f.cls}" title="${esc(f.def)}">${f.txt}</span>`; }
+function tagTac(t)      { return t.tac ? `<span class="tag lila" title="Sin correlato en el TAC con grupo de sociales (§15.6 del PDF base)">Sin correlato TAC</span>` : ""; }
+
+function temasDeBloque(code) { return Object.values(estado.temas).filter(t => t.group === code).sort((a, b) => a.id.localeCompare(b.id)); }
+function temasDeAmbito(ambito) {
+  if (ambito === "global") return Object.values(estado.temas).sort((a, b) => a.id.localeCompare(b.id));
+  return temasDeBloque(ambito);
+}
+function codigoDe(id) { return TEMA_POR_ID[id] ? TEMA_POR_ID[id].c : id; }
+
+/* ---- Abrir el tema desarrollado ---------------------------------------- */
+const blobs = {};
+function urlTema(t, ancla) {
+  let base;
+  if (t.html) {
+    if (!blobs[t.id]) blobs[t.id] = URL.createObjectURL(new Blob([t.html], { type:"text/html" }));
+    base = blobs[t.id];
+  } else {
+    base = CARPETA_TEMAS + (t.fileName || (t.id + "_estudio.html"));
+  }
+  return base + (ancla ? "#" + encodeURIComponent(ancla) : "");
+}
+function abrirTema(id, ancla) {
+  const t = estado.temas[id];
+  if (!t) { ir("#/tema/" + id); return; }
+  window.open(urlTema(t, ancla), "_blank", "noopener");
+}
+
+/* ========================================================================
+   Carga de contenido: archivos HTML con window.TEMARIO_DATA (mismo formato
+   que los temas de estudio ya existentes) o JSON.
+   ====================================================================== */
+/** Acepta "B4T11", "IV.11", "iv-11"… y devuelve el id interno o null. */
+function idValido(k, v) {
+  const cand = [v && v.id, k, v && v.codigo, v && v.c].filter(Boolean).map(x => String(x).trim());
+  for (const c of cand) {
+    const u = c.toUpperCase();
+    if (TEMA_POR_ID[u]) return u;
+    const m = u.match(/^(I{1,3}|IV|V|VI)[.\-_ ]?(\d{1,2})$/);
+    if (m && ID_POR_CODIGO[m[1] + "." + parseInt(m[2], 10)]) return ID_POR_CODIGO[m[1] + "." + parseInt(m[2], 10)];
+  }
+  // Por número de bloque y tema, si vienen sueltos.
+  if (v && v.group && v.number) {
+    const g = String(v.group).toUpperCase().replace(/^G/, "B");
+    const id = g + "T" + String(v.number).padStart(2, "0");
+    if (TEMA_POR_ID[id]) return id;
+  }
+  return null;
+}
+function normalizarTema(id, v, fileName, html) {
+  const p = TEMA_POR_ID[id];
+  const arr = x => Array.isArray(x) ? x : [];
+  return {
+    id, group:p.b, number:p.num,
+    title: v.title || p.e, subtitle: v.subtitle || "",
+    fileName: fileName || v.fileName || v.url || "",
+    timeline: arr(v.timeline), glossary: arr(v.glossary), flashcards: arr(v.flashcards),
+    questions: arr(v.questions).filter(q => q && Array.isArray(q.o) && q.o.length >= 2 && Number.isInteger(q.c) && q.c >= 0 && q.c < q.o.length),
+    sections: arr(v.sections),
+    html: html || v.html || null,
+    cargado: new Date().toISOString()
+  };
+}
+function datosATemas(datos, fileName, html) {
+  const out = [], ignorados = [];
+  for (const k in datos) {
+    const v = datos[k];
+    if (!v || typeof v !== "object") continue;
+    const id = idValido(k, v);
+    if (id) out.push(normalizarTema(id, v, fileName, html)); else ignorados.push(k);
+  }
+  return { out, ignorados };
+}
+
+/** Ejecuta el HTML en un iframe aislado (sin acceso a esta página) y recoge
+    window.TEMARIO_DATA por postMessage. */
+function leerHTMLTema(texto) {
+  return new Promise((ok, ko) => {
+    const testigo = "gestion-" + Math.random().toString(36).slice(2);
+    const sonda = `<script>addEventListener("load",function(){setTimeout(function(){var d=null;try{d=JSON.parse(JSON.stringify(window.TEMARIO_DATA||window.GESTION_DATA||null));}catch(e){}parent.postMessage({testigo:${JSON.stringify(testigo)},datos:d},"*");},300);});<\/script>`;
+    const ifr = document.createElement("iframe");
+    ifr.setAttribute("sandbox", "allow-scripts");
+    ifr.style.cssText = "position:absolute;left:-10000px;top:0;width:1px;height:1px;visibility:hidden";
+    ifr.srcdoc = texto + sonda;
+    let hecho = false;
+    const fin = () => { hecho = true; window.removeEventListener("message", oir); clearTimeout(plazo); ifr.remove(); };
+    const oir = e => {
+      if (hecho || !e.data || e.data.testigo !== testigo) return;
+      const d = e.data.datos;
+      fin();
+      if (!d || typeof d !== "object" || !Object.keys(d).length) ko(new Error("no contiene window.TEMARIO_DATA"));
+      else ok(d);
+    };
+    const plazo = setTimeout(() => { if (!hecho) { fin(); ko(new Error("tiempo agotado al leer el archivo")); } }, 15000);
+    window.addEventListener("message", oir);
+    document.body.appendChild(ifr);
+  });
+}
+function leerArchivo(f) {
+  return new Promise((ok, ko) => { const r = new FileReader(); r.onerror = () => ko(new Error("no se pudo leer")); r.onload = () => ok(r.result); r.readAsText(f); });
+}
+
+async function procesarArchivos(lista) {
+  const archivos = Array.from(lista || []);
+  const validos = archivos.filter(f => /\.(html?|json)$/i.test(f.name));
+  if (!validos.length) { toast("Suelta archivos .html (temas) o .json (copia o temas)", "error"); return; }
+  let total = 0;
+  for (const f of validos) {
+    try {
+      const texto = await leerArchivo(f);
+      let datos, html = null;
+      if (/\.json$/i.test(f.name)) {
+        const j = JSON.parse(texto);
+        if (j && j._format === FORMATO) { if (await importarCopia(j)) total += Object.keys(j.temas || {}).length; continue; }
+        datos = (j && j.id && (j.glossary || j.flashcards || j.questions || j.timeline || j.sections)) ? { [j.id]: j } : j;
+      } else {
+        datos = await leerHTMLTema(texto);
+        html = texto;
+      }
+      const { out, ignorados } = datosATemas(datos, f.name, html);
+      for (const t of out) await guardarTema(t);
+      total += out.length;
+      if (out.length) toast(`✓ ${f.name}: ${out.map(t => codigoDe(t.id)).join(", ")}`);
+      if (ignorados.length) toast(`${f.name}: ${ignorados.join(", ")} no corresponde a ningún tema del programa`, "error");
+      if (!out.length && !ignorados.length) toast(`${f.name}: sin temas reconocibles`, "error");
+    } catch (e) {
+      toast(`✗ ${f.name}: ${e.message}`, "error");
+    }
+  }
+  if (total) render();
+}
+
+function elegirArchivos() {
+  const inp = document.createElement("input");
+  inp.type = "file"; inp.accept = ".html,.htm,.json"; inp.multiple = true;
+  inp.style.cssText = "position:fixed;left:-10000px";
+  inp.addEventListener("change", () => { procesarArchivos(inp.files); setTimeout(() => inp.remove(), 500); });
+  document.body.appendChild(inp);
+  inp.click();
+}
+function activarDrop(el) {
+  el.addEventListener("click", e => { if (e.target.closest("a,button")) return; elegirArchivos(); });
+  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); elegirArchivos(); } });
+  el.addEventListener("dragover", e => { e.preventDefault(); el.classList.add("encima"); });
+  el.addEventListener("dragleave", e => { if (!el.contains(e.relatedTarget)) el.classList.remove("encima"); });
+  el.addEventListener("drop", e => { e.preventDefault(); el.classList.remove("encima"); procesarArchivos(e.dataTransfer && e.dataTransfer.files); });
+}
+// Soltar fuera de una zona de carga no debe abrir el archivo en el navegador.
+["dragover", "drop"].forEach(ev => document.addEventListener(ev, e => { if (!e.target.closest || !e.target.closest(".drop")) e.preventDefault(); }));
+
+/* ---- Copia completa (💾) ------------------------------------------------ */
+async function exportarCopia() {
+  const temas = {};
+  Object.values(estado.temas).forEach(t => { temas[t.id] = t; });
+  const datos = { _format:FORMATO, _version:2, _exportedAt:new Date().toISOString(), ajustes:{ progreso:prog.mapa }, temas };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(datos, null, 2)], { type:"application/json" }));
+  const a = document.createElement("a");
+  a.href = url; a.download = "gestion_hub_" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + ".json";
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 300);
+  toast(`✓ Copia guardada: ${plural(Object.keys(temas).length, "tema")} + progreso`);
+}
+async function importarCopia(j, silencioso) {
+  const n = Object.keys(j.temas || {}).length;
+  if (!silencioso) {
+    const fecha = j._exportedAt ? new Date(j._exportedAt).toLocaleString("es-ES") : "fecha desconocida";
+    if (!confirm(`¿Importar la copia del ${fecha} con ${plural(n, "tema")}?\nSustituye los temas con el mismo número y el progreso de flashcards.`)) return false;
+  }
+  let ok = 0;
+  for (const k in (j.temas || {})) {
+    const v = j.temas[k];
+    const id = idValido(k, v);
+    if (!id) continue;
+    /* Lo embebido en la página lleva la fecha de la copia, no la de ahora: si
+       no, cada dispositivo que abriera la página por primera vez pisaría lo
+       que se hubiera editado después en otro. */
+    const marca = silencioso ? ms(j._exportedAt) || 1 : null;
+    if (marca && estado.temas[id] && (estado.temas[id].modificado || 0) >= marca) continue;
+    await guardarTema(normalizarTema(id, v, v.fileName, v.html), false, marca); ok++;
+  }
+  // Progreso: se suma al tuyo tarjeta a tarjeta (gana la marca más reciente).
+  const pr = j.ajustes && j.ajustes.progreso;
+  if (pr && typeof pr === "object") {
+    for (const k in pr) { const v = pr[k], a = prog.mapa[k]; if (v && typeof v.m === "number" && (!a || v.m > a.m)) { prog.mapa[k] = { s:!!v.s, m:v.m }; pend.prog[prog.duenno + "|" + k] = 1; } }
+    guardarProg(); guardarPend(); programarSync();
+  }
+  // Copias de la primera versión: claves por posición.
+  const v1 = j.ajustes && j.ajustes.fc && j.ajustes.fc.known;
+  if (Array.isArray(v1)) v1.forEach(k => { const [id, i] = k.split(":"); const t = estado.temas[id]; const f = t && t.flashcards[parseInt(i, 10)]; if (f) marcarFc(claveFc(id, f), true); });
+  if (!silencioso) toast(`✓ Importados ${plural(ok, "tema")}`);
+  return true;
+}
+async function cargarEmbebidos() {
+  const el = document.getElementById("datos-embebidos");
+  const txt = el ? el.textContent.trim() : "";
+  if (!txt) return;
+  try {
+    let j = JSON.parse(txt);
+    if (j._format !== FORMATO) return;
+    const sello = j._exportedAt || "sin-fecha";
+    if (localStorage.getItem(KEY_EMBED) === sello) return;
+    // El progreso es de cada persona: lo embebido en la página no lo trae.
+    j = Object.assign({}, j, { ajustes:null });
+    await importarCopia(j, true);
+    localStorage.setItem(KEY_EMBED, sello);
+  } catch (e) { console.warn("Datos embebidos:", e); }
+}
+
+/* ---- Buscar temas publicados junto a la página ------------------------- */
+async function buscarEnServidor() {
+  if (!/^https?:$/.test(location.protocol)) { toast("Solo funciona con la página publicada (http/https)", "error"); return; }
+  const btn = document.getElementById("btn-servidor");
+  btn.classList.add("girando"); btn.disabled = true;
+  let hallados = 0, cursor = 0;
+  const lista = TEMAS.map(t => t.id);
+  async function trabajador() {
+    while (cursor < lista.length) {
+      const id = lista[cursor++];
+      try {
+        const r = await fetch(CARPETA_TEMAS + id + "_estudio.html", { cache:"no-cache" });
+        if (!r.ok) continue;
+        const texto = await r.text();
+        if (!/TEMARIO_DATA|GESTION_DATA/.test(texto)) continue;
+        const { out } = datosATemas(await leerHTMLTema(texto), id + "_estudio.html", null);
+        for (const t of out) { await guardarTema(t); hallados++; }
+      } catch (_) {}
+    }
+  }
+  await Promise.all(Array.from({ length:6 }, trabajador));
+  btn.classList.remove("girando"); btn.disabled = false;
+  toast(hallados ? `✓ ${plural(hallados, "tema")} cargado${hallados === 1 ? "" : "s"} desde ${CARPETA_TEMAS}` : `No hay temas publicados en ${CARPETA_TEMAS}`, hallados ? "" : "error");
+  if (hallados) render();
+}
+
+/** Plantilla de un tema para completarla: mismo formato que reconoce el hub. */
+function descargarPlantilla(id) {
+  const t = TEMA_POR_ID[id];
+  const datos = {
+    [id]: { id, group:t.b, number:t.num, codigo:t.c, title:t.e, subtitle:"",
+      sections:[], glossary:[], timeline:[], flashcards:[], questions:[] }
+  };
+  const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(t.c)} · ${esc(t.e)}</title>
+<style>
+  body{font-family:system-ui,-apple-system,sans-serif;max-width:780px;margin:0 auto;padding:24px 16px 64px;line-height:1.6;color:#0f172a}
+  h1{font-size:28px;letter-spacing:-.02em;line-height:1.2}
+  h2{margin-top:32px;font-size:21px}
+  .ref{color:#64748b;font-size:14px}
+</style>
+<!--
+  CÓMO COMPLETAR ESTE TEMA
+  1. Escribe el desarrollo dentro de <main>, una <section id="s1">, <section id="s2">…
+     por epígrafe (los id sirven de ancla desde el hub).
+  2. Rellena window.TEMARIO_DATA:
+     sections   [{ "id":"s1", "title":"1. Título" }]
+     glossary   [{ "t":"Término", "d":"Definición", "cat":"categoría", "section":"s1" }]
+     timeline   [{ "y":"2015", "txt":"Hecho", "cons":"Consecuencia", "cat":"normativo", "target":"s1" }]
+     flashcards [{ "cat":"Conceptos", "q":"Pregunta", "a":"Respuesta" }]
+     questions  [{ "q":"Enunciado", "o":["A","B","C","D"], "c":0, "e":"Explicación (artículo)" }]
+        "c" es el índice (desde 0) de la opción correcta.
+  3. Arrástralo al hub (o publícalo como ${CARPETA_TEMAS}${id}_estudio.html).
+-->
+<script>
+window.TEMARIO_DATA = ${JSON.stringify(datos, null, 2)};
+<\/script>
+</head>
+<body>
+<main>
+  <p class="ref">Gestión AGE (A2) · Bloque ${esc(BLOQUE_POR_CODE[t.b].rom)} · ${esc(BLOQUE_POR_CODE[t.b].nombre)}</p>
+  <h1>Tema ${esc(t.c)}. ${esc(t.e)}</h1>
+  <p class="ref">Epígrafe resumido. Texto íntegro: anexo VII de la convocatoria (${PROGRAMA_REF}).</p>
+</main>
+</body>
+</html>
+`;
+  const url = URL.createObjectURL(new Blob([html], { type:"text/html" }));
+  const a = document.createElement("a");
+  a.href = url; a.download = id + "_estudio.html";
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 300);
+}
+
+/* ========================================================================
+   (d) RENDER
+   Rutas: #/  ·  #/bloque/B4[/hub]  ·  #/tema/B4T11  ·  #/global  ·  #/guia
+   ====================================================================== */
+const vista = () => document.getElementById("vista");
+function ir(h) { if (location.hash === h) render(); else location.hash = h; }
+function ruta() {
+  const h = location.hash.replace(/^#\/?/, "");
+  const p = h.split("/").filter(Boolean);
+  if (p[0] === "bloque" && BLOQUE_POR_CODE[p[1]]) return { v:"bloque", b:p[1], hub:p[2] === "hub" };
+  if (p[0] === "tema" && TEMA_POR_ID[p[1]]) return { v:"tema", id:p[1] };
+  if (p[0] === "global") return { v:"global" };
+  if (p[0] === "guia") return { v:"guia" };
+  return { v:"inicio" };
+}
+let rutaPrevia = "";
+function render() {
+  const r = ruta();
+  const clave = JSON.stringify(r);
+  const atras = document.getElementById("btn-atras");
+  const titulo = document.getElementById("topbar-title");
+  document.body.removeAttribute("data-b");
+  if (r.v === "inicio") {
+    atras.href = "./"; atras.setAttribute("aria-label", "Volver a Niblo"); atras.title = "Volver a Niblo";
+    titulo.textContent = "Oposición";
+    renderInicio();
+  } else {
+    const destino = r.v === "tema" ? "#/bloque/" + TEMA_POR_ID[r.id].b : "#/";
+    atras.href = destino; atras.setAttribute("aria-label", "Volver"); atras.title = "Volver";
+    if (r.v === "bloque") { document.body.dataset.b = r.b; titulo.textContent = "Bloque " + BLOQUE_POR_CODE[r.b].rom; renderBloque(r.b, r.hub); }
+    else if (r.v === "tema") { document.body.dataset.b = TEMA_POR_ID[r.id].b; titulo.textContent = "Tema " + TEMA_POR_ID[r.id].c; renderTema(r.id); }
+    else if (r.v === "global") { titulo.textContent = "Hub global"; renderGlobal(); }
+    else if (r.v === "guia") { titulo.textContent = "Guía de fuentes"; renderGuia(); }
+  }
+  if (clave !== rutaPrevia) { window.scrollTo(0, 0); rutaPrevia = clave; }
+}
+
+/* ---- Inicio: índice general ------------------------------------------- */
+function renderInicio() {
+  const cargados = Object.keys(estado.temas).length;
+  const pct = Math.round(cargados / TEMAS.length * 100);
+  const nVerde = TEMAS.filter(t => semaforo(t) === "verde").length;
+  const nAmbar = TEMAS.filter(t => semaforo(t) === "ambar").length;
+  const nAct = TEMAS.filter(t => t.v[0] === "ACTUALIZAR").length;
+  const totalFc = Object.values(estado.temas).reduce((s, t) => s + t.flashcards.length, 0);
+  const sabidasFc = Object.values(estado.temas).reduce((s, t) => s + sabidasDe(t), 0);
+  vista().innerHTML = `
+    <h1 class="titulo-grande">Gestión AGE (A2)</h1>
+    <p class="view-sub">Gestión de la Administración Civil del Estado · turno libre · ${TEMAS.length} temas en ${BLOQUES.length} bloques · programa: anexo VII, <a href="https://www.boe.es/diario_boe/txt.php?id=${PROGRAMA_REF}" target="_blank" rel="noopener">${PROGRAMA_REF}</a></p>
+
+    <section class="card hero">
+      <div class="prog-row">
+        <span class="lbl">Temas desarrollados</span>
+        <div class="bar"><div style="width:${pct}%"></div></div>
+        <span class="pct">${cargados}/${TEMAS.length}</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="k"><span class="dot ok"></span>Verdes</div><div class="v">${nVerde}</div><div class="s">solo BOE y estables</div></div>
+        <div class="kpi"><div class="k"><span class="dot warn"></span>Ámbar</div><div class="v">${nAmbar}</div><div class="s">solo BOE, revisar</div></div>
+        <div class="kpi"><div class="k"><span class="dot hot"></span>Actualizar</div><div class="v">${nAct}</div><div class="s">los que más caducan</div></div>
+        <div class="kpi"><div class="k">Flashcards</div><div class="v">${sabidasFc}/${totalFc}</div><div class="s">dominadas</div></div>
+      </div>
+    </section>
+
+    <h2 class="section-title">Bloques del programa</h2>
+    <div class="grid g2" id="bloques">
+      ${BLOQUES.map(tarjetaBloque).join("")}
+    </div>
+
+    <h2 class="section-title">Herramientas</h2>
+    <div class="grid g2">
+      <button class="card interactive cta" data-ir="#/global" style="text-align:left">
+        <span class="cta-ico" aria-hidden="true">🌐</span>
+        <span><span class="cta-t">Hub global</span><br><span class="cta-d">Búsqueda, cronología, glosario, flashcards y test a través de los seis bloques</span></span>
+      </button>
+      <button class="card interactive cta" data-ir="#/guia" style="text-align:left">
+        <span class="cta-ico suave" aria-hidden="true">📚</span>
+        <span><span class="cta-t">Guía de fuentes</span><br><span class="cta-d">Niveles de fuente, recursos, temarios de academia, método y qué fuente usar en cada tema</span></span>
+      </button>
+    </div>`;
+  vista().querySelectorAll("[data-ir]").forEach(b => b.addEventListener("click", () => ir(b.dataset.ir)));
+}
+function tarjetaBloque(b) {
+  const cargados = temasDeBloque(b.code);
+  const pct = Math.round(cargados.length / b.total * 100);
+  const v = b.temas.filter(t => semaforo(t) === "verde").length;
+  const a = b.temas.filter(t => semaforo(t) === "ambar").length;
+  const act = b.temas.filter(t => t.v[0] === "ACTUALIZAR").length;
+  const conceptos = cargados.reduce((s, t) => s + t.glossary.length, 0);
+  const fc = cargados.reduce((s, t) => s + t.flashcards.length, 0);
+  const w = n => (n / b.total * 100).toFixed(2) + "%";
+  return `
+    <a class="card interactive bloque-card" data-b="${b.code}" href="#/bloque/${b.code}" style="color:inherit;text-decoration:none">
+      <div class="bloque-cab">
+        <span class="bloque-rom">${b.rom}</span>
+        <div><div class="bloque-sub">Bloque ${b.rom} · ${plural(b.total, "tema")}</div><div class="bloque-nombre">${esc(b.nombre)}</div></div>
+      </div>
+      <div class="mini-stats">
+        <span><b>${cargados.length}/${b.total}</b>desarrollados</span>
+        <span><b>${conceptos}</b>conceptos</span>
+        <span><b>${fc}</b>flashcards</span>
+      </div>
+      <div class="bar" style="flex:none"><div style="width:${pct}%"></div></div>
+      <div class="semaforo" title="${v} verdes · ${a} ámbar · ${act} actualizar">
+        <span style="width:${w(v)};background:var(--ok)"></span><span style="width:${w(a)};background:var(--warn)"></span><span style="width:${w(act)};background:var(--hot)"></span>
+      </div>
+      <div class="bloque-pie"><span class="muted" style="font-size:12px">${v} verdes · ${a} ámbar · ${act} actualizar</span><span class="ir">Entrar →</span></div>
+    </a>`;
+}
+
+/* ---- Bloque: temas + hub del bloque ------------------------------------ */
+const FILTROS_TEMAS = [
+  { id:"todos",      txt:"Todos",            f:() => true },
+  { id:"verde",      txt:"Verdes",           f:t => semaforo(t) === "verde" },
+  { id:"ambar",      txt:"Ámbar",            f:t => semaforo(t) === "ambar" },
+  { id:"actualizar", txt:"Actualizar",       f:t => t.v[0] === "ACTUALIZAR" },
+  { id:"boe",        txt:"Solo BOE",         f:t => t.f[0] === "BOE" },
+  { id:"boet",       txt:"BOE + temario",    f:t => t.f[0] === "BOE+T" },
+  { id:"inst",       txt:"Temario / fuentes", f:t => t.f[0] === "INST" },
+  { id:"pend",       txt:"Pendientes",       f:t => !estado.temas[t.id] },
+  { id:"hechos",     txt:"Desarrollados",    f:t => !!estado.temas[t.id] }
+];
+function renderBloque(code, hub) {
+  const b = BLOQUE_POR_CODE[code];
+  const cargados = temasDeBloque(code);
+  vista().innerHTML = `
+    <div class="bloque-head">
+      <span class="bloque-rom">${b.rom}</span>
+      <div><div class="bloque-sub">Bloque ${b.rom} · ${cargados.length}/${b.total} temas desarrollados</div><h1>${esc(b.nombre)}</h1></div>
+    </div>
+    <div class="seg" role="tablist">
+      <button role="tab" class="${hub ? "" : "on"}" data-ir="#/bloque/${code}">📚 Temas</button>
+      <button role="tab" class="${hub ? "on" : ""}" data-ir="#/bloque/${code}/hub">🛠 Hub del bloque</button>
+    </div>
+    <div id="panel"></div>`;
+  vista().querySelectorAll("[data-ir]").forEach(x => x.addEventListener("click", () => ir(x.dataset.ir)));
+  const panel = document.getElementById("panel");
+  if (hub) montarHub(panel, code); else renderTemasBloque(panel, b);
+}
+function renderTemasBloque(panel, b) {
+  const filtro = FILTROS_TEMAS.find(x => x.id === estado.filtroTemas) || FILTROS_TEMAS[0];
+  const visibles = b.temas.map(t => TEMA_POR_ID[ID_POR_CODIGO[t.c]]).filter(filtro.f);
+  const cargados = temasDeBloque(b.code);
+  panel.innerHTML = `
+    <div class="chip-row" role="tablist" aria-label="Filtrar temas">
+      ${FILTROS_TEMAS.map(x => {
+        const n = b.temas.map(t => TEMA_POR_ID[ID_POR_CODIGO[t.c]]).filter(x.f).length;
+        return `<button class="chip ${x.id === filtro.id ? "active" : ""}" data-f="${x.id}">${x.txt}<span class="badge">${n}</span></button>`;
+      }).join("")}
+    </div>
+    ${visibles.length ? `<div class="grid g3">${visibles.map(tarjetaTema).join("")}</div>`
+      : `<div class="empty"><div class="ico">🔎</div><h3>Ningún tema con este filtro</h3></div>`}
+
+    <h2 class="section-title">Añadir o gestionar contenido</h2>
+    <div class="card">
+      <p class="muted" style="margin:0 0 12px;font-size:14px">${cargados.length ? `${plural(cargados.length, "tema desarrollado", "temas desarrollados")} en este bloque:` : "Aún no hay temas desarrollados en este bloque."}</p>
+      ${cargados.length ? `<div class="cargados">${cargados.map(t => `<span class="cargado">${esc(codigoDe(t.id))}<button data-quitar="${t.id}" aria-label="Quitar ${esc(codigoDe(t.id))}">×</button></span>`).join("")}</div>` : ""}
+      <div class="drop" tabindex="0" role="button" aria-label="Cargar archivos de temas">
+        <div class="ico" aria-hidden="true">📥</div>
+        <div class="t">Arrastra aquí los temas (<code>.html</code>) o una copia (<code>.json</code>)</div>
+        <div class="s">o pulsa para elegirlos · nombre recomendado: <code>${b.code}T01_estudio.html</code> … · cada tema se asigna por su id (<code>${b.code}T01</code> o <code>${b.rom}.1</code>)</div>
+      </div>
+    </div>`;
+  panel.querySelectorAll("[data-f]").forEach(x => x.addEventListener("click", () => { estado.filtroTemas = x.dataset.f; renderTemasBloque(panel, b); }));
+  panel.querySelectorAll("[data-tema]").forEach(x => x.addEventListener("click", () => ir("#/tema/" + x.dataset.tema)));
+  panel.querySelectorAll("[data-quitar]").forEach(x => x.addEventListener("click", async () => {
+    const id = x.dataset.quitar;
+    if (!confirm(`¿Quitar el contenido del tema ${codigoDe(id)}? El programa y las fuentes se quedan.`)) return;
+    await quitarTema(id); toast(`Tema ${codigoDe(id)} quitado`); render();
+  }));
+  activarDrop(panel.querySelector(".drop"));
+}
+function tarjetaTema(p) {
+  const t = estado.temas[p.id];
+  let cuerpo;
+  if (t) {
+    const fcT = t.flashcards.length;
+    const fcK = sabidasDe(t);
+    const pct = fcT ? Math.round(fcK / fcT * 100) : 0;
+    cuerpo = `
+      <div class="tema-stats">
+        <span><b>${t.glossary.length}</b> conceptos</span><span><b>${t.timeline.length}</b> hitos</span>
+        <span><b>${fcT}</b> flashcards</span><span><b>${t.questions.length}</b> preguntas</span>
+      </div>
+      ${fcT ? `<div class="prog-mini"><span>Flashcards dominadas</span><span>${pct}%</span></div><div class="bar" style="flex:none;min-width:0"><div style="width:${pct}%"></div></div>` : ""}`;
+  } else {
+    cuerpo = `<div class="tema-stats"><span>Pendiente de desarrollar</span></div>`;
+  }
+  return `
+    <button class="card interactive tema-card ${t ? "" : "pendiente"} ${p.tac ? "lila-borde" : ""}" data-tema="${p.id}" style="text-align:left">
+      <div class="tema-cab">
+        <span class="tema-cod">${esc(p.c)}</span>
+        <span class="tema-estado">${t ? '<span class="tag acc">Desarrollado</span>' : ""}</span>
+      </div>
+      <div class="tema-epi">${esc(p.e)}</div>
+      <div class="tags">${tagVigencia(p)}${tagFuente(p)}${tagTac(p)}</div>
+      ${cuerpo}
+    </button>`;
+}
+
+/* ---- Tema: ficha del programa + contenido desarrollado ----------------- */
+function renderTema(id) {
+  const p = TEMA_POR_ID[id];
+  const b = BLOQUE_POR_CODE[p.b];
+  const t = estado.temas[id];
+  const lista = b.temas.map(x => ID_POR_CODIGO[x.c]);
+  const k = lista.indexOf(id);
+  const ant = lista[k - 1], sig = lista[k + 1];
+  const sem = semaforo(p);
+  vista().innerHTML = `
+    <div class="bloque-sub" style="margin-top:6px">Bloque ${b.rom} · ${esc(b.nombre)}</div>
+    <h1 class="titulo-grande">${esc(p.c)}. ${esc(p.e)}</h1>
+    <div class="tags" style="margin:4px 0 20px">
+      ${tagVigencia(p)}${tagFuente(p)}${tagTac(p)}
+      ${sem === "verde" ? '<span class="tag ok" title="Solo BOE y estable: se puede preparar ya, de una vez">● Tema verde</span>' : ""}
+      ${sem === "ambar" ? '<span class="tag warn" title="Solo BOE pero con cambios previsibles: dejar para la vuelta de revisión">● Tema ámbar</span>' : ""}
+    </div>
+
+    <div class="ficha">
+      <section class="card nota-destacada ancho">
+        <div class="ficha-k">🎯 Nota de preparación · lo preguntable</div>
+        <div class="ficha-v">${enlazar(p.p)}</div>
+      </section>
+      <section class="card">
+        <div class="ficha-k">⚖️ Normativa principal · nivel A</div>
+        <div class="ficha-v">${enlazar(p.n)}</div>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0">Enlaces al texto consolidado del BOE: la legislación exigible es la vigente en la fecha de cada ejercicio.</p>
+      </section>
+      <section class="card">
+        <div class="ficha-k">🏛️ Fuente institucional · nivel B</div>
+        <div class="ficha-v">${enlazar(p.i)}</div>
+      </section>
+      <section class="card">
+        <div class="ficha-k">🗓️ Vigencia · cuándo actualizar ${tagVigencia(p)}</div>
+        <div class="ficha-v">${enlazar(p.v[1])}</div>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0">${esc(VIGENCIA[p.v[0]].def)}</p>
+      </section>
+      <section class="card">
+        <div class="ficha-k">📖 Fuente recomendada ${tagFuente(p)}</div>
+        <div class="ficha-v">${enlazar(p.f[1])}</div>
+        <p class="muted" style="font-size:12.5px;margin:10px 0 0">${esc(FUENTE[p.f[0]].def)}</p>
+      </section>
+    </div>
+
+    <h2 class="section-title">Contenido desarrollado</h2>
+    ${t ? bloqueContenido(t) : `
+      <div class="card">
+        <div class="empty" style="padding:16px 8px 20px">
+          <div class="ico">✍️</div>
+          <h3>Tema pendiente de desarrollar</h3>
+          <p>Descarga la plantilla, complétala y súbela aquí. Conserva el id <code>${id}</code> para que se asigne a este tema.</p>
+        </div>
+        <div class="btn-row" style="justify-content:center;margin-bottom:14px">
+          <button class="btn btn-primary" id="btn-plantilla">Descargar plantilla</button>
+        </div>
+        <div class="drop" tabindex="0" role="button" aria-label="Cargar el tema ${esc(p.c)}">
+          <div class="ico" aria-hidden="true">📥</div>
+          <div class="t">Suelta aquí <code>${id}_estudio.html</code></div>
+          <div class="s">o pulsa para elegir el archivo</div>
+        </div>
+      </div>`}
+
+    <div class="btn-row" style="justify-content:space-between;margin-top:24px">
+      ${ant ? `<button class="btn" data-ir="#/tema/${ant}">← ${esc(TEMA_POR_ID[ant].c)}</button>` : "<span></span>"}
+      ${sig ? `<button class="btn" data-ir="#/tema/${sig}">${esc(TEMA_POR_ID[sig].c)} →</button>` : "<span></span>"}
+    </div>`;
+  vista().querySelectorAll("[data-ir]").forEach(x => x.addEventListener("click", () => ir(x.dataset.ir)));
+  const pl = document.getElementById("btn-plantilla");
+  if (pl) pl.addEventListener("click", () => descargarPlantilla(id));
+  const drop = vista().querySelector(".drop");
+  if (drop) activarDrop(drop);
+  vista().querySelectorAll("[data-ancla]").forEach(x => x.addEventListener("click", () => abrirTema(id, x.dataset.ancla)));
+  const ab = document.getElementById("btn-abrir"); if (ab) ab.addEventListener("click", () => abrirTema(id));
+  const re = document.getElementById("btn-reemplazar"); if (re) re.addEventListener("click", elegirArchivos);
+  const qu = document.getElementById("btn-quitar");
+  if (qu) qu.addEventListener("click", async () => {
+    if (!confirm(`¿Quitar el contenido del tema ${p.c}?`)) return;
+    await quitarTema(id); toast(`Tema ${p.c} quitado`); render();
+  });
+}
+function bloqueContenido(t) {
+  const fcT = t.flashcards.length;
+  const fcK = sabidasDe(t);
+  return `
+    <div class="card">
+      ${t.subtitle ? `<p style="margin:0 0 12px;font-weight:600">${esc(t.subtitle)}</p>` : ""}
+      <div class="kpis" style="margin-top:0">
+        <div class="kpi"><div class="k">Conceptos</div><div class="v">${t.glossary.length}</div></div>
+        <div class="kpi"><div class="k">Hitos</div><div class="v">${t.timeline.length}</div></div>
+        <div class="kpi"><div class="k">Flashcards</div><div class="v">${fcK}/${fcT}</div><div class="s">dominadas</div></div>
+        <div class="kpi"><div class="k">Preguntas</div><div class="v">${t.questions.length}</div></div>
+      </div>
+      <div class="btn-row" style="margin-top:16px">
+        <button class="btn btn-primary" id="btn-abrir">Abrir tema ↗</button>
+        <a class="btn" href="#/bloque/${t.group}/hub">Repasar en el hub del bloque</a>
+        <button class="btn" id="btn-reemplazar">Reemplazar</button>
+        <button class="btn" id="btn-quitar" style="color:var(--danger)">Quitar</button>
+      </div>
+      <p class="muted" style="font-size:12px;margin:12px 0 0">${t.fileName ? "Archivo: " + esc(t.fileName) + " · " : ""}cargado el ${new Date(t.cargado || Date.now()).toLocaleDateString("es-ES")}</p>
+    </div>
+    ${t.sections.length ? `
+      <section class="card">
+        <h3 class="card-title">Índice del tema</h3>
+        <ul class="secciones">
+          ${t.sections.map(s => `<li><button class="${/-/.test(s.id || "") ? "sub" : ""}" data-ancla="${esc(s.id || "")}">${esc(s.title)}</button></li>`).join("")}
+        </ul>
+      </section>` : ""}`;
+}
+
+/* ---- Hub: el mismo para un bloque y para el conjunto ------------------- */
+const HUB_TABS = [
+  { id:"buscar",   txt:"🔍 Búsqueda" },
+  { id:"crono",    txt:"📅 Cronología" },
+  { id:"glosario", txt:"📖 Glosario" },
+  { id:"fc",       txt:"🎴 Flashcards" },
+  { id:"test",     txt:"📝 Test" },
+  { id:"progreso", txt:"📊 Progreso" }
+];
+function renderGlobal() {
+  vista().innerHTML = `
+    <h1 class="titulo-grande">Hub global</h1>
+    <p class="view-sub">Herramientas sobre los ${plural(Object.keys(estado.temas).length, "tema desarrollado", "temas desarrollados")} de los seis bloques.</p>
+    <div id="panel"></div>`;
+  montarHub(document.getElementById("panel"), "global");
+}
+/* Estado local del hub por ámbito (B1…B6 o global). */
+const hubLocal = {};
+function hl(ambito) {
+  return hubLocal[ambito] || (hubLocal[ambito] = {
+    q:"", tipo:"todo", cq:"", ccat:"todas", ctema:"todos", gq:"", gletra:"", gtema:"todos",
+    fcTema:"todos", mazo:null, idx:0, volteada:false, testSel:new Set(), testN:20, test:null
+  });
+}
+function montarHub(panel, ambito) {
+  const tab = estado.hubTab[ambito === "global" ? "global" : "bloque"];
+  panel.innerHTML = `
+    <div class="chip-row" role="tablist" aria-label="Herramientas">
+      ${HUB_TABS.map(t => `<button class="chip ${t.id === tab ? "active" : ""}" data-tab="${t.id}" role="tab">${t.txt}</button>`).join("")}
+    </div>
+    <div id="hub-cuerpo"></div>`;
+  panel.querySelectorAll("[data-tab]").forEach(x => x.addEventListener("click", () => {
+    estado.hubTab[ambito === "global" ? "global" : "bloque"] = x.dataset.tab;
+    montarHub(panel, ambito);
+  }));
+  const c = document.getElementById("hub-cuerpo");
+  const temas = temasDeAmbito(ambito);
+  if (!temas.length) {
+    c.innerHTML = `<div class="card"><div class="empty"><div class="ico">📂</div><h3>Sin temas desarrollados ${ambito === "global" ? "todavía" : "en este bloque"}</h3>
+      <p>Carga el contenido de un tema desde su ficha o desde la pestaña Temas del bloque.</p></div></div>`;
+    return;
+  }
+  ({ buscar:hubBuscar, crono:hubCrono, glosario:hubGlosario, fc:hubFc, test:hubTest, progreso:hubProgreso })[tab](c, ambito, temas);
+}
+/** Chips de filtro por tema (solo si hay más de uno). */
+function chipsTemas(temas, activo, attr, conTodos) {
+  if (temas.length <= 1) return "";
+  return `<div class="chip-row">${conTodos !== false ? `<button class="chip peq ${activo === "todos" ? "active" : ""}" data-${attr}="todos">Todos</button>` : ""}${temas.map(t =>
+    `<button class="chip peq ${activo === t.id || (activo instanceof Set && activo.has(t.id)) ? "active" : ""}" data-${attr}="${t.id}">${esc(codigoDe(t.id))}</button>`).join("")}</div>`;
+}
+const etiquetaRes = { glosario:"📖 Glosario", crono:"📅 Cronología", fc:"🎴 Flashcard", test:"📝 Pregunta", seccion:"📑 Sección" };
+
+/* 1 · Búsqueda */
+function hubBuscar(c, ambito, temas) {
+  const s = hl(ambito);
+  c.innerHTML = `
+    <div class="toolbar"><input class="input" type="search" id="q" placeholder="Buscar en glosario, cronología, flashcards, test y secciones…" value="${esc(s.q)}"></div>
+    <div class="chip-row">
+      ${[["todo","Todo"],["glosario","📖 Glosario"],["crono","📅 Cronología"],["fc","🎴 Flashcards"],["test","📝 Preguntas"],["seccion","📑 Secciones"]].map(([k, v]) =>
+        `<button class="chip peq ${s.tipo === k ? "active" : ""}" data-tipo="${k}">${v}</button>`).join("")}
+    </div>
+    <div class="stats-line" id="st"></div><div id="res"></div>`;
+  const pintar = () => {
+    let pool = [];
+    temas.forEach(t => {
+      t.glossary.forEach(g => pool.push({ tipo:"glosario", t, tit:g.t || g.term || "", txt:g.d || g.def || "", ancla:g.section || "" }));
+      t.timeline.forEach(i => pool.push({ tipo:"crono", t, tit:i.y, txt:(i.txt || "") + (i.cons ? " — " + i.cons : ""), ancla:i.target || "" }));
+      t.flashcards.forEach(f => pool.push({ tipo:"fc", t, tit:f.q, txt:f.a, ancla:"" }));
+      t.questions.forEach(q => pool.push({ tipo:"test", t, tit:q.q, txt:q.o.join(" / ") + (q.e ? " · " + q.e : ""), ancla:"" }));
+      t.sections.forEach(x => pool.push({ tipo:"seccion", t, tit:x.title, txt:"", ancla:x.id }));
+    });
+    if (s.tipo !== "todo") pool = pool.filter(p => p.tipo === s.tipo);
+    const q = s.q.trim();
+    if (q) { const nq = norm(q); pool = pool.filter(p => norm(p.tit).includes(nq) || norm(p.txt).includes(nq)); }
+    document.getElementById("st").textContent = q ? `${plural(pool.length, "resultado")} para «${q}»` : plural(pool.length, "elemento");
+    const res = document.getElementById("res");
+    if (!pool.length) { res.innerHTML = `<div class="empty"><div class="ico">🔍</div><h3>Sin coincidencias</h3></div>`; return; }
+    res.innerHTML = pool.slice(0, 200).map(p => `
+      <div class="res" data-id="${p.t.id}" data-ancla="${esc(p.ancla)}">
+        <div class="res-row"><span class="tag acc">${esc(codigoDe(p.t.id))}</span><span class="tag">${etiquetaRes[p.tipo]}</span><span class="res-tit">${resaltar(p.tit, q)}</span></div>
+        ${p.txt ? `<div class="res-txt">${resaltar(p.txt.length > 260 ? p.txt.slice(0, 260) + "…" : p.txt, q)}</div>` : ""}
+      </div>`).join("") + (pool.length > 200 ? `<div class="stats-line">+${pool.length - 200} más…</div>` : "");
+    res.querySelectorAll(".res").forEach(x => x.addEventListener("click", () => abrirTema(x.dataset.id, x.dataset.ancla)));
+  };
+  document.getElementById("q").addEventListener("input", e => { s.q = e.target.value; pintar(); });
+  c.querySelectorAll("[data-tipo]").forEach(x => x.addEventListener("click", () => { s.tipo = x.dataset.tipo; hubBuscar(c, ambito, temas); }));
+  pintar();
+}
+
+/* 2 · Cronología. Las categorías salen de los datos cargados, no de una lista fija. */
+function hubCrono(c, ambito, temas) {
+  const s = hl(ambito);
+  const cats = [...new Set(temas.flatMap(t => t.timeline.map(i => i.cat)).filter(Boolean))].sort((a, b) => a.localeCompare(b, "es"));
+  if (s.ccat !== "todas" && !cats.includes(s.ccat)) s.ccat = "todas";
+  if (s.ctema !== "todos" && !temas.some(t => t.id === s.ctema)) s.ctema = "todos";
+  c.innerHTML = `
+    <div class="toolbar"><input class="input" type="search" id="cq" placeholder="Buscar año o hito…" value="${esc(s.cq)}"></div>
+    ${cats.length ? `<div class="chip-row"><button class="chip peq ${s.ccat === "todas" ? "active" : ""}" data-cat="todas">Todas</button>${cats.map(k => `<button class="chip peq ${s.ccat === k ? "active" : ""}" data-cat="${esc(k)}">${esc(k)}</button>`).join("")}</div>` : ""}
+    ${chipsTemas(temas, s.ctema, "ct")}
+    <div class="stats-line" id="st"></div><div class="tl" id="res"></div>`;
+  const pintar = () => {
+    let pool = [];
+    temas.forEach(t => { if (s.ctema !== "todos" && t.id !== s.ctema) return; t.timeline.forEach(i => pool.push(Object.assign({ _t:t, _k:claveAnio(i.y) }, i))); });
+    if (s.ccat !== "todas") pool = pool.filter(i => i.cat === s.ccat);
+    const q = s.cq.trim();
+    if (q) { const nq = norm(q); pool = pool.filter(i => norm(i.y).includes(nq) || norm(i.txt).includes(nq) || norm(i.cons).includes(nq)); }
+    pool.sort((a, b) => a._k - b._k);
+    document.getElementById("st").textContent = plural(pool.length, "hito");
+    const res = document.getElementById("res");
+    if (!pool.length) { res.innerHTML = `<div class="empty"><div class="ico">📅</div><h3>Sin hitos</h3></div>`; return; }
+    res.innerHTML = pool.map(i => `
+      <div class="tl-item" data-id="${i._t.id}" data-ancla="${esc(i.target || "")}">
+        <div><span class="tl-y">${resaltar(i.y, q)}</span>${resaltar(i.txt, q)}</div>
+        ${i.cons ? `<div class="tl-cons">→ ${resaltar(i.cons, q)}</div>` : ""}
+        <div class="tags" style="margin-top:6px"><span class="tag acc">${esc(codigoDe(i._t.id))}</span>${i.cat ? `<span class="tag">${esc(i.cat)}</span>` : ""}</div>
+      </div>`).join("");
+    res.querySelectorAll(".tl-item").forEach(x => x.addEventListener("click", () => abrirTema(x.dataset.id, x.dataset.ancla)));
+  };
+  document.getElementById("cq").addEventListener("input", e => { s.cq = e.target.value; pintar(); });
+  c.querySelectorAll("[data-cat]").forEach(x => x.addEventListener("click", () => { s.ccat = x.dataset.cat; hubCrono(c, ambito, temas); }));
+  c.querySelectorAll("[data-ct]").forEach(x => x.addEventListener("click", () => { s.ctema = x.dataset.ct; hubCrono(c, ambito, temas); }));
+  pintar();
+}
+
+/* 3 · Glosario */
+function hubGlosario(c, ambito, temas) {
+  const s = hl(ambito);
+  if (s.gtema !== "todos" && !temas.some(t => t.id === s.gtema)) s.gtema = "todos";
+  const inicial = x => { const ch = String(x).trim().charAt(0).toUpperCase(); return ch === "Ñ" ? "Ñ" : norm(ch).toUpperCase(); };
+  const todos = temas.flatMap(t => t.glossary.map(g => Object.assign({ _t:t, _term:g.t || g.term || "", _def:g.d || g.def || "" }, g)));
+  todos.forEach(g => { g._ini = inicial(g._term); });
+  const presentes = new Set(todos.map(g => g._ini));
+  const letras = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  c.innerHTML = `
+    <div class="toolbar"><input class="input" type="search" id="gq" placeholder="Buscar término o definición…" value="${esc(s.gq)}"></div>
+    <div class="letras">
+      <button class="letra ${!s.gletra ? "active" : ""}" data-l="">Todas</button>
+      ${letras.map(L => `<button class="letra ${s.gletra === L ? "active" : ""}" data-l="${L}" ${presentes.has(L) ? "" : "disabled"}>${L}</button>`).join("")}
+    </div>
+    ${chipsTemas(temas, s.gtema, "gt")}
+    <div class="stats-line" id="st"></div><div id="res"></div>`;
+  const pintar = () => {
+    let pool = todos.filter(g => s.gtema === "todos" || g._t.id === s.gtema);
+    if (s.gletra) pool = pool.filter(g => g._ini === s.gletra);
+    const q = s.gq.trim();
+    if (q) { const nq = norm(q); pool = pool.filter(g => norm(g._term).includes(nq) || norm(g._def).includes(nq)); }
+    pool.sort((a, b) => a._term.localeCompare(b._term, "es"));
+    document.getElementById("st").textContent = plural(pool.length, "término");
+    const res = document.getElementById("res");
+    if (!pool.length) { res.innerHTML = `<div class="empty"><div class="ico">📖</div><h3>Sin entradas</h3></div>`; return; }
+    res.innerHTML = pool.map(g => `
+      <div class="res" data-id="${g._t.id}" data-ancla="${esc(g.section || "")}">
+        <div class="res-row"><span class="res-tit">${resaltar(g._term, q)}</span><span class="tag acc">${esc(codigoDe(g._t.id))}</span>${g.cat ? `<span class="tag">${esc(g.cat)}</span>` : ""}${g.ref ? `<span class="tag">${esc(g.ref)}</span>` : ""}</div>
+        <div class="res-txt">${resaltar(g._def, q)}</div>
+      </div>`).join("");
+    res.querySelectorAll(".res").forEach(x => x.addEventListener("click", () => abrirTema(x.dataset.id, x.dataset.ancla)));
+  };
+  document.getElementById("gq").addEventListener("input", e => { s.gq = e.target.value; pintar(); });
+  c.querySelectorAll("[data-l]").forEach(x => x.addEventListener("click", () => { s.gletra = x.dataset.l; hubGlosario(c, ambito, temas); }));
+  c.querySelectorAll("[data-gt]").forEach(x => x.addEventListener("click", () => { s.gtema = x.dataset.gt; hubGlosario(c, ambito, temas); }));
+  pintar();
+}
+
+/* 4 · Flashcards. Progreso: claves "id:índice" de las que «la sabía». */
+function hubFc(c, ambito, temas) {
+  const s = hl(ambito);
+  if (s.fcTema !== "todos" && !temas.some(t => t.id === s.fcTema)) { s.fcTema = "todos"; s.mazo = null; }
+  const enFiltro = temas.filter(t => s.fcTema === "todos" || t.id === s.fcTema);
+  const rehacer = () => {
+    const pool = [];
+    enFiltro.forEach(t => t.flashcards.forEach(f => { const k = claveFc(t.id, f); if (!sabida(k)) pool.push(Object.assign({ _id:t.id, _k:k }, f)); }));
+    s.mazo = barajar(pool); s.idx = 0; s.volteada = false;
+  };
+  if (!s.mazo) rehacer();
+  const total = enFiltro.reduce((n, t) => n + t.flashcards.length, 0);
+  const sabidas = enFiltro.reduce((n, t) => n + sabidasDe(t), 0);
+  const f = s.mazo[s.idx];
+  c.innerHTML = `
+    <div class="fc-ctrl">
+      <span><b>${total}</b> tarjetas</span><span>Dominadas: <b>${sabidas}</b></span><span>Pendientes: <b>${s.mazo.length}</b></span>
+      <button class="chip peq" id="fc-mezclar">🔀 Mezclar</button><button class="chip peq" id="fc-reiniciar">♻ Reiniciar</button>
+    </div>
+    ${chipsTemas(temas, s.fcTema, "ft")}
+    ${!total ? `<div class="empty"><div class="ico">🎴</div><h3>Sin flashcards</h3></div>`
+      : !f ? `<div class="empty"><div class="ico">🏆</div><h3>¡Mazo dominado!</h3><p>Pulsa «Reiniciar» para repasar.</p></div>`
+      : `<div class="fc ${s.volteada ? "volteada" : ""}" id="fc" role="button" tabindex="0" aria-label="Voltear tarjeta">
+          <div class="fc-in">
+            <div class="fc-cara">
+              <div class="tags"><span class="tag acc">${esc(codigoDe(f._id))}</span>${f.cat ? `<span class="tag">${esc(f.cat)}</span>` : ""}</div>
+              <div class="fc-q">${esc(f.q)}</div><div class="fc-hint">Pulsa para voltear</div>
+            </div>
+            <div class="fc-cara atras"><div class="fc-a">${esc(f.a)}</div></div>
+          </div>
+        </div>
+        <div class="fc-btns" ${s.volteada ? "" : "hidden"} id="fc-btns">
+          <button class="btn btn-no" id="fc-no">✗ No la sabía</button>
+          <button class="btn btn-si" id="fc-si">✓ La sabía</button>
+        </div>`}`;
+  const rep = () => hubFc(c, ambito, temas);
+  document.getElementById("fc-mezclar").addEventListener("click", () => { s.mazo = barajar(s.mazo); s.idx = 0; s.volteada = false; rep(); });
+  document.getElementById("fc-reiniciar").addEventListener("click", () => {
+    if (!confirm("¿Reiniciar el progreso de flashcards de este ámbito?")) return;
+    enFiltro.forEach(t => t.flashcards.forEach(f => { const k = claveFc(t.id, f); if (sabida(k)) marcarFc(k, false); }));
+    rehacer(); rep();
+  });
+  c.querySelectorAll("[data-ft]").forEach(x => x.addEventListener("click", () => { s.fcTema = x.dataset.ft; s.mazo = null; rep(); }));
+  const carta = document.getElementById("fc");
+  if (carta) {
+    const voltear = () => { s.volteada = !s.volteada; carta.classList.toggle("volteada", s.volteada); document.getElementById("fc-btns").hidden = !s.volteada; };
+    carta.addEventListener("click", voltear);
+    carta.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); voltear(); } });
+    document.getElementById("fc-si").addEventListener("click", () => {
+      if (!sabida(f._k)) marcarFc(f._k, true);
+      s.mazo.splice(s.idx, 1); if (s.idx >= s.mazo.length) s.idx = 0; s.volteada = false; rep();
+    });
+    document.getElementById("fc-no").addEventListener("click", () => {
+      s.mazo.push(s.mazo.splice(s.idx, 1)[0]); if (s.idx >= s.mazo.length) s.idx = 0; s.volteada = false; rep();
+    });
+  }
+}
+
+/* 5 · Test. Opciones barajadas; acepta cualquier número de opciones. */
+function hubTest(c, ambito, temas) {
+  const s = hl(ambito);
+  [...s.testSel].forEach(id => { if (!temas.some(t => t.id === id)) s.testSel.delete(id); });
+  if (s.test) return pintarPregunta(c, ambito, temas);
+  const disp = temas.filter(t => !s.testSel.size || s.testSel.has(t.id)).reduce((n, t) => n + t.questions.length, 0);
+  c.innerHTML = `
+    <div class="card">
+      <div class="test-cfg">
+        <label>Nº de preguntas <select id="tn">${[10, 20, 30, 50, 100].map(n => `<option ${n === s.testN ? "selected" : ""}>${n}</option>`).join("")}</select></label>
+        <button class="btn btn-primary" id="t-go" ${disp ? "" : "disabled"}>🚀 Empezar</button>
+        <span class="muted" style="font-size:13px">${plural(disp, "pregunta disponible", "preguntas disponibles")}</span>
+      </div>
+      ${temas.length > 1 ? `<div class="chip-row wrap" style="margin-bottom:0"><button class="chip peq ${!s.testSel.size ? "active" : ""}" data-tt="todos">Todos</button>${temas.map(t =>
+        `<button class="chip peq ${s.testSel.has(t.id) ? "active" : ""}" data-tt="${t.id}">${esc(codigoDe(t.id))}<span class="badge">${t.questions.length}</span></button>`).join("")}</div>` : ""}
+      <p class="muted" style="font-size:13px;margin:12px 0 0">El examen real descuenta 1/3 por error: practica también a dejar en blanco.</p>
+    </div>`;
+  document.getElementById("tn").addEventListener("change", e => { s.testN = parseInt(e.target.value, 10); });
+  c.querySelectorAll("[data-tt]").forEach(x => x.addEventListener("click", () => {
+    const id = x.dataset.tt;
+    if (id === "todos") s.testSel.clear(); else if (s.testSel.has(id)) s.testSel.delete(id); else s.testSel.add(id);
+    hubTest(c, ambito, temas);
+  }));
+  document.getElementById("t-go").addEventListener("click", () => {
+    const pool = [];
+    temas.forEach(t => { if (s.testSel.size && !s.testSel.has(t.id)) return; t.questions.forEach(q => pool.push(Object.assign({ _id:t.id }, q))); });
+    if (!pool.length) { toast("Sin preguntas en este filtro", "error"); return; }
+    const elegidas = barajar(pool).slice(0, Math.min(s.testN, pool.length)).map(q => {
+      const orden = barajar(q.o.map((_, i) => i));
+      return Object.assign({}, q, { o:orden.map(i => q.o[i]), _c:orden.indexOf(q.c) });
+    });
+    s.test = { qs:elegidas, i:0, bien:0, mal:0, inicio:Date.now(), resp:null };
+    pintarPregunta(c, ambito, temas);
+  });
+}
+function pintarPregunta(c, ambito, temas) {
+  const s = hl(ambito), r = s.test;
+  if (r.i >= r.qs.length) {
+    const n = r.qs.length;
+    const neta = Math.max(0, r.bien - r.mal / 3);
+    const seg = Math.round((Date.now() - r.inicio) / 1000);
+    c.innerHTML = `
+      <div class="card resultado">
+        <div class="big">${Math.round(r.bien / n * 100)}%</div>
+        <p style="margin:0 0 6px">${plural(r.bien, "acierto")} y ${plural(r.mal, "error", "errores")} de ${n} · ${Math.floor(seg / 60)} min ${seg % 60} s</p>
+        <p class="muted" style="margin:0 0 16px;font-size:14px">Con penalización de −1/3 por error: <b>${neta.toFixed(2)}</b> de ${n} (${(neta / n * 100).toFixed(1)} %)</p>
+        <button class="btn btn-primary" id="t-fin">← Volver</button>
+      </div>`;
+    document.getElementById("t-fin").addEventListener("click", () => { s.test = null; hubTest(c, ambito, temas); });
+    return;
+  }
+  const q = r.qs[r.i];
+  const letras = "ABCDEFGH";
+  c.innerHTML = `
+    <div class="card">
+      <div class="q-meta"><span>Pregunta ${r.i + 1} de ${r.qs.length}</span><span class="tag acc">${esc(codigoDe(q._id))}</span></div>
+      <div class="q-txt">${esc(q.q)}</div>
+      <div class="q-opts">${q.o.map((o, i) => `<button class="q-opt" data-i="${i}"><span class="l">${letras[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>
+      <div id="fb"></div>
+      <div class="btn-row" style="justify-content:space-between;margin-top:14px">
+        <button class="btn btn-sm" id="t-salir">Terminar</button>
+        <button class="btn btn-sm" id="t-blanco">Dejar en blanco →</button>
+      </div>
+    </div>`;
+  const sig = () => { r.i++; pintarPregunta(c, ambito, temas); };
+  document.getElementById("t-salir").addEventListener("click", () => { r.qs = r.qs.slice(0, r.i); pintarPregunta(c, ambito, temas); });
+  document.getElementById("t-blanco").addEventListener("click", sig);
+  c.querySelectorAll(".q-opt").forEach(b => b.addEventListener("click", () => {
+    const i = parseInt(b.dataset.i, 10);
+    const ok = i === q._c;
+    if (ok) r.bien++; else r.mal++;
+    c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === q._c) x.classList.add("bien"); if (j === i && !ok) x.classList.add("mal"); });
+    document.getElementById("t-blanco").hidden = true;
+    document.getElementById("fb").innerHTML = `
+      <div class="q-fb ${ok ? "bien" : "mal"}">${ok ? "✓ Correcto." : "✗ Era la " + letras[q._c] + "."} ${esc(q.e || "")}</div>
+      <div class="btn-row" style="justify-content:flex-end;margin-top:12px"><button class="btn btn-primary" id="t-sig">${r.i + 1 === r.qs.length ? "Ver resultado →" : "Siguiente →"}</button></div>`;
+    document.getElementById("t-sig").addEventListener("click", sig);
+  }));
+}
+
+/* 6 · Progreso */
+function hubProgreso(c, ambito, temas) {
+  const sum = k => temas.reduce((n, t) => n + t[k].length, 0);
+  const fcT = sum("flashcards");
+  const fcK = temas.reduce((n, t) => n + sabidasDe(t), 0);
+  const total = ambito === "global" ? TEMAS.length : BLOQUE_POR_CODE[ambito].total;
+  c.innerHTML = `
+    <div class="kpis" style="margin-top:0">
+      <div class="kpi"><div class="k">Temas</div><div class="v">${temas.length}/${total}</div><div class="s">desarrollados</div></div>
+      <div class="kpi"><div class="k">Glosario</div><div class="v">${sum("glossary")}</div><div class="s">conceptos</div></div>
+      <div class="kpi"><div class="k">Cronología</div><div class="v">${sum("timeline")}</div><div class="s">hitos</div></div>
+      <div class="kpi"><div class="k">Flashcards</div><div class="v">${fcK}/${fcT}</div><div class="s">${fcT ? Math.round(fcK / fcT * 100) : 0}% dominadas</div></div>
+      <div class="kpi"><div class="k">Test</div><div class="v">${sum("questions")}</div><div class="s">preguntas</div></div>
+    </div>
+    ${ambito === "global" ? `
+      <h2 class="section-title">Por bloque</h2>
+      <div class="card tabla-wrap"><table class="tabla"><thead><tr><th>Bloque</th><th class="n">Temas</th><th class="n">Gl.</th><th class="n">Hitos</th><th class="n">FC</th><th class="n">Preg.</th></tr></thead><tbody>
+        ${BLOQUES.map(b => { const ts = temas.filter(t => t.group === b.code); const s2 = k => ts.reduce((n, t) => n + t[k].length, 0);
+          return `<tr class="clic" data-ir="#/bloque/${b.code}"><td><b>${b.rom}</b> · ${esc(b.nombre)}</td><td class="n">${ts.length}/${b.total}</td><td class="n">${s2("glossary")}</td><td class="n">${s2("timeline")}</td><td class="n">${s2("flashcards")}</td><td class="n">${s2("questions")}</td></tr>`; }).join("")}
+      </tbody></table></div>` : ""}
+    <h2 class="section-title">Por tema</h2>
+    <div class="card tabla-wrap"><table class="tabla"><thead><tr><th>Tema</th><th class="n">Gl.</th><th class="n">Hitos</th><th class="n">FC</th><th class="n">Preg.</th></tr></thead><tbody>
+      ${temas.map(t => `<tr class="clic" data-ir="#/tema/${t.id}"><td><b style="color:var(--accent)">${esc(codigoDe(t.id))}</b> · ${esc(TEMA_POR_ID[t.id].e)}</td><td class="n">${t.glossary.length}</td><td class="n">${t.timeline.length}</td><td class="n">${sabidasDe(t)}/${t.flashcards.length}</td><td class="n">${t.questions.length}</td></tr>`).join("")}
+    </tbody></table></div>`;
+  c.querySelectorAll("[data-ir]").forEach(x => x.addEventListener("click", () => ir(x.dataset.ir)));
+}
+
+/* ---- Guía de fuentes (secciones 1, 2, 3, 5 y 6 del documento) ---------- */
+function botonesTemas(codigos) {
+  return `<div class="lista-temas">${codigos.map(c => `<button data-ir="#/tema/${ID_POR_CODIGO[c]}">${c}</button>`).join("")}</div>`;
+}
+function renderGuia() {
+  const porFuente = k => TEMAS.filter(t => t.f[0] === k).map(t => t.c);
+  const verdes = TEMAS.filter(t => semaforo(t) === "verde").map(t => t.c);
+  const ambar = TEMAS.filter(t => semaforo(t) === "ambar").map(t => t.c);
+  const actualizar = TEMAS.filter(t => t.v[0] === "ACTUALIZAR").map(t => t.c);
+  const porBloque = lista => BLOQUES.map(b => `${b.rom}: ${lista.filter(c => c.split(".")[0] === b.rom).length}`).join("; ");
+  vista().innerHTML = `
+    <h1 class="titulo-grande">Guía de fuentes</h1>
+    <p class="view-sub">Del documento «Temario con fuentes de estudio» (v2 · 2-10-2026). Las normas cambian: estudiar siempre la versión consolidada vigente.</p>
+    <div class="guia">
+
+    <section class="card">
+      <h3 class="card-title">1. Cómo leer las fuentes</h3>
+      <div class="tabla-wrap"><table class="tabla">
+        <thead><tr><th>Nivel</th><th>Qué es</th><th>Fiabilidad</th><th>Uso recomendado</th></tr></thead>
+        <tbody>
+          <tr><td><b>A · Norma oficial</b></td><td>Texto consolidado en el BOE (enlace directo al identificador BOE-A-…)</td><td>Máxima: es lo que se pregunta</td><td>Base del test (preguntas literales) y del supuesto</td></tr>
+          <tr><td><b>B · Fuente institucional</b></td><td>Webs de órganos públicos (Congreso, PE, IGAE, AEPD, SEPE…)</td><td>Alta; comentario no normativo</td><td>Comprender y esquematizar; datos actualizados</td></tr>
+          <tr><td><b>C · Manual de academia</b></td><td>Temario desarrollado comercial</td><td>Variable; depende de la edición</td><td>Redacción del tema completo; ahorro de tiempo</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>No existe un «temario oficial» desarrollado. El INAP y la Comisión Permanente de Selección publican solo el programa (los epígrafes del anexo VII). Cualquier temario desarrollado es de una academia o propio.</li>
+        <li>La legislación exigible es la vigente en la fecha de cada ejercicio. Por eso los enlaces apuntan al texto consolidado y no a la publicación original.</li>
+        <li>Identificadores BOE verificados uno a uno contra la ficha oficial del BOE (2-10-2026). <span class="verif">verif.</span> marca normas, cifras o webs citadas sin identificador o sin comprobar en esa revisión: contrástalas antes de incorporarlas a tus temas.</li>
+        <li>Los epígrafes están resumidos. El texto íntegro y vinculante está en el anexo VII de la convocatoria (<a href="https://www.boe.es/diario_boe/txt.php?id=${PROGRAMA_REF}" target="_blank" rel="noopener">${PROGRAMA_REF}</a>).</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">2. Temarios desarrollados de academias</h3>
+      <div class="tabla-wrap"><table class="tabla">
+        <thead><tr><th>Editorial / academia</th><th>Qué ofrece</th><th>Cautela</th></tr></thead>
+        <tbody>
+          <tr><td><b>Adams</b> (Ediciones Valbuena)</td><td>Temario de Gestión de la Administración Civil del Estado; tema 1 descargable gratis en <a href="https://www.adams.es/recursos-descargas/gestion-estado-gratis/" target="_blank" rel="noopener">adams.es</a></td><td>Su página de descarga describe un programa de 46 temas en bloques antiguos: comprobar que la edición que compres corresponde al programa de 58 temas de la Resolución de 18-12-2025.</td></tr>
+          <tr><td><b>CEF</b> (Centro de Estudios Financieros)</td><td>Temario y preparación de Gestión turno libre (ficha en aprendemas.com)</td><td>La ficha consultada describe bloques y ejercicios de convocatorias anteriores (cuestionario de 15 preguntas): confirmar edición actualizada.</td></tr>
+          <tr><td><b>OpositaTest</b></td><td>Tests y exámenes oficiales corregidos descargables (<a href="https://blog.opositatest.com/examenes-gestion-civil-descargar" target="_blank" rel="noopener">blog.opositatest.com</a>)</td><td>Herramienta de práctica, no temario.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="muted" style="font-size:13px;margin:10px 0 0">El documento no encontró una recomendación bibliográfica «oficial» por tema emitida por academias; por eso cada tema prioriza la norma (nivel A) y la fuente institucional (nivel B), verificables y gratuitas.</p>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">3. Recursos transversales</h3>
+      <div class="tabla-wrap"><table class="tabla">
+        <thead><tr><th>Recurso</th><th>Contenido</th><th>Para qué</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://sede.inap.gob.es/espacio-del-opositor" target="_blank" rel="noopener"><b>INAP · Espacio del Opositor</b></a></td><td>Cuestionarios y plantillas de los tests; supuestos prácticos digitalizados y transcripción de una muestra de los mejores ejercicios prácticos (nota CPS de 13-5-2025).</td><td>Lo más valioso para «aprobar holgadamente»: indica el nivel real exigido.</td></tr>
+          <tr><td><a href="https://www.boe.es/biblioteca_juridica/" target="_blank" rel="noopener"><b>BOE · Biblioteca Jurídica Digital</b></a></td><td>Códigos electrónicos gratuitos y actualizados (Derecho Administrativo, Función Pública, Contratación, Derecho Financiero…), descargables en PDF/ePub.</td><td>Sustituye a comprar recopilaciones legislativas.</td></tr>
+          <tr><td><a href="https://app.congreso.es/consti/" target="_blank" rel="noopener"><b>Sinopsis de la Constitución</b></a></td><td>Comentario de cada artículo de la CE elaborado por los servicios del Congreso.</td><td>Bloque I.</td></tr>
+          <tr><td><a href="https://www.europarl.europa.eu/factsheets/es" target="_blank" rel="noopener"><b>Fichas temáticas del Parlamento Europeo</b></a></td><td>Resumen oficial y actualizado de instituciones, fuentes, finanzas y cada política.</td><td>Bloque II y parte del III.</td></tr>
+          <tr><td><a href="https://eur-lex.europa.eu/browse/summaries.html" target="_blank" rel="noopener"><b>Síntesis de la legislación de la UE</b></a></td><td>Síntesis EUR-Lex.</td><td>Bloque II.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">4. Cómo convertir las fuentes en un tema que apruebe holgadamente</h3>
+      <ul>
+        <li><b>Test</b> (100 preguntas, −1/3 por error): se nutre casi solo del nivel A. Leer la norma consolidada, no un resumen: los distractores juegan con plazos, órganos y cifras literales.</li>
+        <li><b>Supuesto práctico</b> (bloques IV-VI, 150 min): el modelo real son los mejores ejercicios publicados por el INAP en el Espacio del Opositor. Practicar con ellos antes que con supuestos de academia.</li>
+        <li><b>Orden de trabajo por tema:</b> (1) epígrafe literal del BOE → (2) norma consolidada → (3) fuente institucional para entender y actualizar datos → (4) temario de academia para la redacción final → (5) preguntas de exámenes oficiales del tema.</li>
+        <li><b>Temas que más caducan</b> (ACTUALIZAR): reservar una vuelta específica de actualización en las 4-6 semanas previas al examen.</li>
+      </ul>
+      ${botonesTemas(actualizar)}
+      <ul>
+        <li><b>Método de actualización:</b> abrir el texto consolidado del BOE y mirar la fecha de «última actualización» y la lista de modificaciones al pie; contrastar los datos de planes y estrategias en la web del ministerio responsable.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">5. Qué fuente usar en cada tema</h3>
+      <div class="tabla-wrap"><table class="tabla">
+        <thead><tr><th>Fuente</th><th>Temas</th><th class="n">N.º</th><th>Cómo trabajarlos</th></tr></thead>
+        <tbody>
+          <tr><td>${'<span class="tag ok">Solo BOE</span>'}</td><td>${botonesTemas(porFuente("BOE"))}</td><td class="n">${porFuente("BOE").length}</td><td>Lectura del texto consolidado, esquema propio y test de exámenes oficiales.</td></tr>
+          <tr><td>${'<span class="tag azul">BOE + temario</span>'}</td><td>${botonesTemas(porFuente("BOE+T"))}</td><td class="n">${porFuente("BOE+T").length}</td><td>La norma como fuente principal; el temario como mapa (qué artículos entran) y para la parte doctrinal o práctica. Todo dato se contrasta con el BOE.</td></tr>
+          <tr><td>${'<span class="tag lila">Temario / fuentes inst.</span>'}</td><td>${botonesTemas(porFuente("INST"))}</td><td class="n">${porFuente("INST").length}</td><td>Temario o Fichas temáticas del PE y webs institucionales; el BOE solo para las normas concretas que se citen. Son los temas que más caducan.</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><b>Lectura por bloques:</b> IV, V y VI se pueden preparar casi enteros desde el BOE (con apoyo en doctrina en IV.1, IV.3, IV.7 e IV.9 y práctica en VI.5 y VI.8); I es casi todo BOE más la Sinopsis; II y III son los que de verdad necesitan temario o fuentes institucionales.</li>
+        <li><b>Consecuencia práctica:</b> si compras temario, la parte que más rinde es la de los bloques II y III; para el resto puede bastar como índice. Valoración del documento basada en la letra de los epígrafes.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title"><span class="dot ok"></span> Temas verdes: legislación al 100 % y contenido estable (${verdes.length} de ${TEMAS.length})</h3>
+      ${botonesTemas(verdes)}
+      <p class="muted" style="font-size:13px;margin:10px 0 0">Por bloque: ${porBloque(verdes)}. Se pueden preparar ya y de una vez; su versión definitiva solo requerirá revisar la última actualización del BOE consolidado.</p>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title"><span class="dot warn"></span> Temas ámbar: legislación al 100 %, con cambios previsibles (${ambar.length} de ${TEMAS.length})</h3>
+      ${botonesTemas(ambar)}
+      <p class="muted" style="font-size:13px;margin:10px 0 0">Por bloque: ${porBloque(ambar)}. Se estudian igual que los verdes, solo con el BOE, pero conviene dejarlos para una vuelta de revisión en las semanas previas al examen.</p>
+    </section>
+
+    <section class="card">
+      <h3 class="card-title"><span class="tag lila">Sin correlato TAC</span> Temas de Gestión sin correlato en el TAC con grupo de sociales</h3>
+      ${botonesTemas(TEMAS.filter(t => t.tac).map(t => t.c))}
+    </section>
+
+    <section class="card">
+      <h3 class="card-title">Cómo añadir el contenido de un tema</h3>
+      <ul>
+        <li>Desde la ficha de cada tema: <b>Descargar plantilla</b> → completar → arrastrarla al hub. Se guarda también en este dispositivo, así que se puede abrir sin conexión.</li>
+        <li><b>Sincronización:</b> con la sesión de Niblo iniciada, el contenido de los temas se comparte con tu hogar y tu progreso de flashcards (solo tuyo) se sincroniza entre tus dispositivos al momento. Sin conexión se guarda aquí y se sube solo al volver la red. El indicador de la cabecera dice en qué estado está.</li>
+        <li>Copia de seguridad: el botón de descarga de la cabecera guarda todos los temas y tu progreso en un <code>.json</code> que se puede volver a importar.</li>
+        <li>También se pueden publicar junto a esta página en <code>${CARPETA_TEMAS}B4T11_estudio.html</code> (etc.) y cargarlos con el botón de recargar de la cabecera.</li>
+      </ul>
+      <pre class="formato">window.TEMARIO_DATA = {
+  "B4T11": {                       // o "IV.11"
+    "title": "…", "subtitle": "…",
+    "sections":   [{ "id": "s1", "title": "1. …" }],
+    "glossary":   [{ "t": "Término", "d": "Definición", "cat": "…", "section": "s1" }],
+    "timeline":   [{ "y": "2015", "txt": "Hecho", "cons": "Consecuencia", "cat": "…", "target": "s1" }],
+    "flashcards": [{ "cat": "…", "q": "Pregunta", "a": "Respuesta" }],
+    "questions":  [{ "q": "Enunciado", "o": ["A", "B", "C", "D"], "c": 0, "e": "Explicación" }]
+  }
+};</pre>
+    </section>
+    </div>`;
+  vista().querySelectorAll("[data-ir]").forEach(x => x.addEventListener("click", () => ir(x.dataset.ir)));
+}
+
+/* ========================================================================
+   (e) EVENTOS + arranque
+   ====================================================================== */
+function aplicarTema(t) {
+  if (t) document.documentElement.setAttribute("data-tema", t);
+}
+document.getElementById("btn-tema").addEventListener("click", () => {
+  const actual = document.documentElement.getAttribute("data-tema")
+    || (matchMedia("(prefers-color-scheme: dark)").matches ? "oscuro" : "claro");
+  const nuevo = actual === "oscuro" ? "claro" : "oscuro";
+  aplicarTema(nuevo);
+  try { localStorage.setItem(KEY_TEMA, nuevo); } catch (_) {}
+});
+document.getElementById("btn-guardar").addEventListener("click", exportarCopia);
+document.getElementById("btn-servidor").addEventListener("click", buscarEnServidor);
+document.getElementById("sync-pill").addEventListener("click", () => {
+  if (!haySesion()) { toast("Entra en Niblo con tu cuenta para sincronizar el hub entre dispositivos"); return; }
+  if (S.estado === "error" || S.estado === "sesion") toast(S.detalle, "error");
+  sincronizar();
+});
+window.addEventListener("hashchange", render);
+window.addEventListener("storage", e => {
+  // Si se cambia el tema en Niblo con esta pestaña abierta, se sigue.
+  if (e.key === KEY_TEMA && (e.newValue === "claro" || e.newValue === "oscuro")) aplicarTema(e.newValue);
+  // Entrar, salir o renovar el token en Niblo (otra pestaña) se nota aquí.
+  if (e.key === KEY_SUPABASE) cambioDeSesion();
+});
+/** Relee la sesión de Niblo y actúa si ha cambiado de persona. */
+function cambioDeSesion() {
+  const uidAntes = SUPA.uid;
+  leerSesion();
+  if (SUPA.uid !== uidAntes) {
+    rtCerrar();
+    cargarProgreso(SUPA.uid);
+    olvidarMazos(); render();
+  } else if (RT.conectado) rtToken();
+  if (haySesion()) programarSync(100); else ponerSync("local");
+}
+window.addEventListener("online", () => programarSync(100));
+window.addEventListener("offline", () => ponerSync("offline"));
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "visible") return;
+  // En el móvil el WebSocket muere en segundo plano: al volver, ponerse al día.
+  leerSesion();
+  programarSync(100);
+});
+// Red de seguridad por si se pierde algún aviso en vivo.
+setInterval(() => { if (document.visibilityState === "visible" && haySesion()) sincronizar(); }, 120000);
+
+(async function arrancar() {
+  leerSesion();
+  cargarProgreso(SUPA.uid);
+  pintarSync();
+  render();                       // el programa se ve ya; el contenido llega después
+  try {
+    await abrirDB();
+    estado.temas = {};
+    const guardados = await dbTodos();
+    for (const k in guardados) {
+      if (!TEMA_POR_ID[k]) continue;
+      const t = guardados[k];
+      // Temas cargados antes de existir la sincronización: a la cola.
+      if (!t.modificado) { t.modificado = ms(t.cargado) || Date.now(); pend.temas[k] = 1; await dbPut(t); }
+      estado.temas[k] = t;
+    }
+    guardarPend();
+    migrarProgresoV1();
+    await cargarEmbebidos();
+  } catch (e) {
+    console.error(e);
+    toast("No se pudo abrir el almacenamiento local: el contenido no se guardará", "error");
+  }
+  render();
+  sincronizar();
+})();
+</script>
+</body>
+</html>

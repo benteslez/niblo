@@ -21664,6 +21664,11 @@ function boot(vistaInicial) {
         desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." },
       { id: "documentos", label: "Documentos", labelCorto: "Docs",    icono: "&#128194;",
         desc: "Enlaces a la documentaci\u00f3n de casa: DNI, pasaportes, seguros, titulaciones. Agrupados por tipo." },
+      /* El hub de la oposicion es una pagina aparte (oposicion.html), del
+         mismo sitio: se abre en la misma pestana y vuelve aqui con su flecha. */
+      { id: "oposicion", label: "Oposici\u00f3n", labelCorto: "Oposici\u00f3n", icono: "&#127891;",
+        url: "oposicion.html", mismaPestana: true,
+        desc: "Hub de estudio de Gesti\u00f3n de la Administraci\u00f3n Civil del Estado (A2): los 58 temas con sus fuentes, glosario, flashcards y test." },
       /* Estas dos no son secciones de Niblo: son otras apps del mismo autor y
          la tarjeta solo abre su web en otra pestana. Se filtran por hogar como
          las demas, para que un invitado no vea lo que no le toca. */
@@ -23595,13 +23600,38 @@ function boot(vistaInicial) {
       return res.text();
     }
 
+    /** Si otra pestana (el hub de la oposicion) ha renovado los tokens de esta
+        misma cuenta, se usan esos. Sin esto, el siguiente guardarSupabase()
+        volveria a escribir el refresh token viejo, ya gastado. */
+    function adoptarTokensGuardados() {
+      try {
+        const o = JSON.parse(localStorage.getItem(KEY_SUPABASE) || "null");
+        const s = sesion.supabase;
+        if (!o || !s.token || !o.token || !o.refreshToken) return false;
+        if (o.email && s.email && o.email !== s.email) return false;
+        if (o.refreshToken === s.refreshToken) return false;
+        s.token = o.token;
+        s.refreshToken = o.refreshToken;
+        return true;
+      } catch (_) { return false; }
+    }
+    window.addEventListener("storage", (e) => {
+      if (e.key === KEY_SUPABASE && e.newValue) adoptarTokensGuardados();
+    });
+
     let _refrescando = null;
     function refrescarToken() {
       /* De una en una: quien llegue mientras hay una en vuelo espera a esa
          misma promesa en vez de gastar el refresh token por su cuenta. */
       if (_refrescando) return _refrescando;
-      _refrescando = (async () => {
+      /* El hub de la oposicion (oposicion.html) usa esta misma sesion. Las
+         dos paginas se ponen en fila con el mismo cerrojo entre pestanas, y
+         antes de pedir se mira si la otra ya lo ha renovado: gastar dos veces
+         el mismo refresh token puede cerrar la sesion en todas partes. */
+      const tokenAntes = sesion.supabase.token;
+      const renovar = async () => {
         const s = sesion.supabase;
+        if (adoptarTokensGuardados() && s.token !== tokenAntes && !tokenCaducaPronto(s.token)) return true;
         if (!s.refreshToken) return false;
         try {
           const res = await fetchConPlazo(s.url + "/auth/v1/token?grant_type=refresh_token", {
@@ -23616,7 +23646,10 @@ function boot(vistaInicial) {
           guardarSupabase();
           return true;
         } catch (_) { return false; }
-      })();
+      };
+      _refrescando = (navigator.locks && navigator.locks.request)
+        ? navigator.locks.request("niblo-auth-refresh", renovar)
+        : renovar();
       _refrescando.finally(() => { _refrescando = null; });
       return _refrescando;
     }
@@ -26559,7 +26592,8 @@ function boot(vistaInicial) {
         recetas: `<span><b class="num">${nRecetas}</b> recetas</span>`,
         plan:    `<span><b class="num">${PC_PLAN.length}</b> días planificados</span>`,
         pablo:   `<span><b class="num">${nAlimentos}</b> alimentos</span>`,
-        documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`
+        documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`,
+        oposicion: `<span><b class="num">58</b> temas</span>`
       };
       /* Las areas externas se pintan como enlace, no como boton: asi el
          navegador hace su trabajo (abrir en otra pestana, copiar el enlace) y
@@ -26574,8 +26608,9 @@ function boot(vistaInicial) {
         const cuerpo = `<span class="hub-card-icono" aria-hidden="true">${a.icono}</span>
           <span class="hub-card-nombre">${a.label}</span>
           <span class="hub-card-desc">${a.desc}</span>
-          <span class="hub-card-meta">${a.url ? "<span>otra app</span>" : (meta[a.id] || "")}
-            <span class="hub-card-ir" aria-hidden="true">${a.url ? "&#8599;" : "&#8594;"}</span></span>`;
+          <span class="hub-card-meta">${a.url ? (meta[a.id] || "<span>otra app</span>") : (meta[a.id] || "")}
+            <span class="hub-card-ir" aria-hidden="true">${a.url && !a.mismaPestana ? "&#8599;" : "&#8594;"}</span></span>`;
+        if (a.url && a.mismaPestana) return `<a class="hub-card" data-area="${a.id}" href="${a.url}">${cuerpo}</a>`;
         return a.url
           ? `<a class="hub-card" data-area="${a.id}" href="${a.url}"
                target="_blank" rel="noopener noreferrer">${cuerpo}</a>`
