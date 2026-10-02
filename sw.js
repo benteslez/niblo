@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v185";  // documentos con degradados nuevos + errores de sync del hub de la oposición más claros
+const CACHE_NAME = "niblo-v186";  // hub de la oposición: barras de progreso con etiqueta y cifra
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manrope.woff2",
