@@ -1,5 +1,5 @@
 -- ============================================================================
--- Niblo · 008 — Sincronización del hub de la oposición (oposicion.html)
+-- Niblo · 009 — Sincronización del hub de la oposición (oposicion.html)
 --
 -- Dos tablas:
 --   oposicion_temas     contenido desarrollado de cada tema. Es del HOGAR, como

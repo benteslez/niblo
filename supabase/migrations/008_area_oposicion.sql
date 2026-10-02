@@ -1,4 +1,4 @@
--- 007 — Añade el hub de estudio de la oposición (oposicion.html) al hogar de casa.
+-- 008 — Añade el hub de estudio de la oposición (oposicion.html) al hogar de casa.
 --
 -- El hub solo pinta las áreas que están en hogares.areas, para que un hogar
 -- invitado no vea las secciones de otro. La tarjeta nueva no aparecerá

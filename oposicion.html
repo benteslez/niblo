@@ -1364,7 +1364,7 @@ function sincronizar() {
       const m = e.message || String(e);
       if (e.sesion) ponerSync("sesion", "La sesión de Niblo ha caducado: vuelve a entrar en Niblo.");
       else if (e.sinHogar) ponerSync("error", "Tu cuenta no tiene hogar en Niblo.");
-      else if (/42P01|does not exist|Could not find the table|PGRST205/i.test(m)) ponerSync("error", "Falta ejecutar la migración 008_oposicion_sync.sql en Supabase.");
+      else if (/42P01|does not exist|Could not find the table|PGRST205/i.test(m)) ponerSync("error", "Falta ejecutar la migración 009_oposicion_sync.sql en Supabase.");
       else if (!navigator.onLine || /Failed to fetch|NetworkError|aborted|Load failed/i.test(m)) ponerSync("offline");
       else ponerSync("error", m.slice(0, 220));
       console.warn("Sync oposición:", e);
