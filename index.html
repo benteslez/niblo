@@ -21569,6 +21569,11 @@ function boot(vistaInicial) {
         desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." },
       { id: "documentos", label: "Documentos", labelCorto: "Docs",    icono: "&#128194;",
         desc: "Enlaces a la documentaci\u00f3n de casa: DNI, pasaportes, seguros, titulaciones. Agrupados por tipo." },
+      /* El hub de la oposicion es una pagina aparte (oposicion.html), del
+         mismo sitio: se abre en la misma pestana y vuelve aqui con su flecha. */
+      { id: "oposicion", label: "Oposici\u00f3n", labelCorto: "Oposici\u00f3n", icono: "&#127891;",
+        url: "oposicion.html", mismaPestana: true,
+        desc: "Hub de estudio de Gesti\u00f3n de la Administraci\u00f3n Civil del Estado (A2): los 58 temas con sus fuentes, glosario, flashcards y test." },
       /* Estas dos no son secciones de Niblo: son otras apps del mismo autor y
          la tarjeta solo abre su web en otra pestana. Se filtran por hogar como
          las demas, para que un invitado no vea lo que no le toca. */
@@ -26464,7 +26469,8 @@ function boot(vistaInicial) {
         recetas: `<span><b class="num">${nRecetas}</b> recetas</span>`,
         plan:    `<span><b class="num">${PC_PLAN.length}</b> días planificados</span>`,
         pablo:   `<span><b class="num">${nAlimentos}</b> alimentos</span>`,
-        documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`
+        documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`,
+        oposicion: `<span><b class="num">58</b> temas</span>`
       };
       /* Las areas externas se pintan como enlace, no como boton: asi el
          navegador hace su trabajo (abrir en otra pestana, copiar el enlace) y
@@ -26479,8 +26485,9 @@ function boot(vistaInicial) {
         const cuerpo = `<span class="hub-card-icono" aria-hidden="true">${a.icono}</span>
           <span class="hub-card-nombre">${a.label}</span>
           <span class="hub-card-desc">${a.desc}</span>
-          <span class="hub-card-meta">${a.url ? "<span>otra app</span>" : (meta[a.id] || "")}
-            <span class="hub-card-ir" aria-hidden="true">${a.url ? "&#8599;" : "&#8594;"}</span></span>`;
+          <span class="hub-card-meta">${a.url ? (meta[a.id] || "<span>otra app</span>") : (meta[a.id] || "")}
+            <span class="hub-card-ir" aria-hidden="true">${a.url && !a.mismaPestana ? "&#8599;" : "&#8594;"}</span></span>`;
+        if (a.url && a.mismaPestana) return `<a class="hub-card" data-area="${a.id}" href="${a.url}">${cuerpo}</a>`;
         return a.url
           ? `<a class="hub-card" data-area="${a.id}" href="${a.url}"
                target="_blank" rel="noopener noreferrer">${cuerpo}</a>`
