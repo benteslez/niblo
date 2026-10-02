@@ -269,6 +269,7 @@ h3.card-title { font-size:16px; font-weight:700; letter-spacing:-.01em; margin:0
 .prog-row .pct { font-weight:800; font-size:18px; color:var(--accent); font-feature-settings:"tnum"; }
 .kpis { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; margin-top:16px; }
 @media (min-width:720px) { .kpis { grid-template-columns:repeat(4, minmax(0,1fr)); } }
+.kpis.kpis3 { grid-template-columns:repeat(3, minmax(0,1fr)); }
 .kpi { background:var(--bg-soft); border-radius:var(--r-md); padding:12px 14px; min-width:0; }
 .kpi .k { font-size:11.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:.04em; display:flex; align-items:center; gap:6px; }
 .kpi .v { font-size:24px; font-weight:800; letter-spacing:-.02em; font-feature-settings:"tnum"; }
@@ -298,8 +299,15 @@ h3.card-title { font-size:16px; font-weight:700; letter-spacing:-.01em; margin:0
 .mini-stats b { color:var(--text); font-size:15px; font-feature-settings:"tnum"; margin-right:3px; }
 .semaforo { display:flex; height:6px; border-radius:99px; overflow:hidden; background:var(--bg-soft); }
 .semaforo span { display:block; height:100%; }
+.pfilas { display:flex; flex-direction:column; gap:10px; }
+.pfila-cab { display:flex; justify-content:space-between; gap:8px; font-size:12.5px; color:var(--text-muted); font-weight:600; margin-bottom:5px; }
+.pfila-cab b { color:var(--text); font-feature-settings:"tnum"; font-weight:700; }
+.pdf-etq { display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px; font-size:12px; color:var(--text-muted); cursor:help; }
+.pdf-etq span { display:inline-flex; align-items:center; gap:5px; }
+.pdf-etq .pdf-k { font-weight:700; text-transform:uppercase; letter-spacing:.05em; font-size:10.5px; }
+.pdf-etq .dot { width:7px; height:7px; }
 .bloque-pie { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; padding-top:4px; }
-.ir { font-weight:700; font-size:14px; color:var(--accent); }
+.ir { font-weight:700; font-size:14px; color:var(--accent); white-space:nowrap; }
 
 /* CTA (hub global, guía) */
 .cta { display:flex; align-items:center; gap:16px; }
@@ -2181,21 +2189,22 @@ function renderInicio() {
   const nAct = TEMAS.filter(t => t.v[0] === "ACTUALIZAR").length;
   const totalFc = Object.values(estado.temas).reduce((s, t) => s + fcs(t).length, 0);
   const sabidasFc = Object.values(estado.temas).reduce((s, t) => s + sabidasDe(t), 0);
+  const repG = Object.values(estado.temas).reduce((r, t) => { const x = repasoDe(t); r.h += x.hechos; r.n += x.n; return r; }, { h:0, n:0 });
   vista().innerHTML = `
     <h1 class="titulo-grande">Gestión AGE (A2)</h1>
     <p class="view-sub">Gestión de la Administración Civil del Estado · turno libre · ${TEMAS.length} temas en ${BLOQUES.length} bloques · programa: anexo VII, <a href="https://www.boe.es/diario_boe/txt.php?id=${PROGRAMA_REF}" target="_blank" rel="noopener">${PROGRAMA_REF}</a></p>
 
     <section class="card hero">
-      <div class="prog-row">
-        <span class="lbl">Temas desarrollados</span>
-        <div class="bar"><div style="width:${pct}%"></div></div>
-        <span class="pct">${cargados}/${TEMAS.length}</span>
+      <div class="pfilas">
+        ${filaProgreso("Temas desarrollados", cargados, TEMAS.length)}
+        ${filaProgreso("Apartados repasados", repG.h, repG.n, "sin apuntes aún")}
+        ${filaProgreso("Flashcards dominadas", sabidasFc, totalFc, "sin flashcards aún")}
       </div>
-      <div class="kpis">
+      <p class="muted" style="font-size:12px;margin:16px 0 0">Clasificación de los ${TEMAS.length} temas según el documento de fuentes (no es tu progreso; detalle en la <a href="#/guia">Guía</a>):</p>
+      <div class="kpis kpis3">
         <div class="kpi"><div class="k"><span class="dot ok"></span>Verdes</div><div class="v">${nVerde}</div><div class="s">solo BOE y estables</div></div>
         <div class="kpi"><div class="k"><span class="dot warn"></span>Ámbar</div><div class="v">${nAmbar}</div><div class="s">solo BOE, revisar</div></div>
         <div class="kpi"><div class="k"><span class="dot hot"></span>Actualizar</div><div class="v">${nAct}</div><div class="s">los que más caducan</div></div>
-        <div class="kpi"><div class="k">Flashcards</div><div class="v">${sabidasFc}/${totalFc}</div><div class="s">dominadas</div></div>
       </div>
     </section>
 
@@ -2217,31 +2226,48 @@ function renderInicio() {
     </div>`;
   vista().querySelectorAll("[data-ir]").forEach(b => b.addEventListener("click", () => ir(b.dataset.ir)));
 }
+/* Cada barra mide UNA cosa y lleva su etiqueta y su cifra:
+   - Temas desarrollados: temas con contenido / temas del bloque.
+   - Apartados repasados: tu lectura («Marcar como repasada»).
+   - Flashcards dominadas: las que marcaste «La sabía».
+   La clasificación del PDF (verde / ámbar / actualizar) no es progreso: va
+   aparte, como etiquetas, con su explicación. */
+function filaProgreso(txt, hechos, total, vacio) {
+  const pct = total ? Math.round(hechos / total * 100) : 0;
+  return `<div class="pfila">
+      <div class="pfila-cab"><span>${txt}</span><b>${total ? `${hechos} de ${total}` : vacio}</b></div>
+      <div class="bar" style="flex:none;min-width:0"><div style="width:${pct}%"></div></div>
+    </div>`;
+}
+function etiquetasPDF(lista) {
+  const v = lista.filter(t => semaforo(t) === "verde").length;
+  const a = lista.filter(t => semaforo(t) === "ambar").length;
+  const act = lista.filter(t => t.v[0] === "ACTUALIZAR").length;
+  return `<div class="pdf-etq" title="Clasificación del documento de fuentes (no es tu progreso). Verde: se estudia solo con el BOE y es estable. Ámbar: solo con el BOE, pero puede cambiar. Actualizar: el contenido caduca entre convocatorias.">
+      <span class="pdf-k">Según el PDF</span>
+      ${v ? `<span><i class="dot ok"></i>${v} ${v === 1 ? "verde" : "verdes"}</span>` : ""}
+      ${a ? `<span><i class="dot warn"></i>${a} ámbar</span>` : ""}
+      ${act ? `<span><i class="dot hot"></i>${act} actualizar</span>` : ""}
+    </div>`;
+}
 function tarjetaBloque(b) {
   const cargados = temasDeBloque(b.code);
-  const pct = Math.round(cargados.length / b.total * 100);
-  const v = b.temas.filter(t => semaforo(t) === "verde").length;
-  const a = b.temas.filter(t => semaforo(t) === "ambar").length;
-  const act = b.temas.filter(t => t.v[0] === "ACTUALIZAR").length;
-  const conceptos = cargados.reduce((s, t) => s + t.glossary.length, 0);
-  const fc = cargados.reduce((s, t) => s + fcs(t).length, 0);
-  const w = n => (n / b.total * 100).toFixed(2) + "%";
+  const lista = b.temas.map(t => TEMA_POR_ID[ID_POR_CODIGO[t.c]]);
+  const rep = cargados.reduce((r, t) => { const x = repasoDe(t); r.h += x.hechos; r.n += x.n; return r; }, { h:0, n:0 });
+  const fcT = cargados.reduce((n, t) => n + fcs(t).length, 0);
+  const fcK = cargados.reduce((n, t) => n + sabidasDe(t), 0);
   return `
     <a class="card interactive bloque-card" data-b="${b.code}" href="#/bloque/${b.code}" style="color:inherit;text-decoration:none">
       <div class="bloque-cab">
         <span class="bloque-rom">${b.rom}</span>
         <div><div class="bloque-sub">Bloque ${b.rom} · ${plural(b.total, "tema")}</div><div class="bloque-nombre">${esc(b.nombre)}</div></div>
       </div>
-      <div class="mini-stats">
-        <span><b>${cargados.length}/${b.total}</b>desarrollados</span>
-        <span><b>${conceptos}</b>conceptos</span>
-        <span><b>${fc}</b>flashcards</span>
+      <div class="pfilas">
+        ${filaProgreso("Temas desarrollados", cargados.length, b.total)}
+        ${filaProgreso("Apartados repasados", rep.h, rep.n, "sin apuntes aún")}
+        ${filaProgreso("Flashcards dominadas", fcK, fcT, "sin flashcards aún")}
       </div>
-      <div class="bar" style="flex:none"><div style="width:${pct}%"></div></div>
-      <div class="semaforo" title="${v} verdes · ${a} ámbar · ${act} actualizar">
-        <span style="width:${w(v)};background:var(--ok)"></span><span style="width:${w(a)};background:var(--warn)"></span><span style="width:${w(act)};background:var(--hot)"></span>
-      </div>
-      <div class="bloque-pie"><span class="muted" style="font-size:12px">${v} verdes · ${a} ámbar · ${act} actualizar</span><span class="ir">Entrar →</span></div>
+      <div class="bloque-pie">${etiquetasPDF(lista)}<span class="ir">Entrar →</span></div>
     </a>`;
 }
 
