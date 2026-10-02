@@ -565,6 +565,28 @@
       }
       .doc-barra { justify-content: stretch; }
       .doc-barra button { flex: 1; white-space: nowrap; }
+      /* Tarjetas compactas: en movil cabian dos por pantalla. Banda mas baja,
+         menos aire y la caducidad en una sola linea. */
+      .doc-lista { gap: var(--gap-3); }
+      .doc-card { border-radius: 16px; }
+      .doc-abrir::after { border-radius: 16px; }
+      .doc-card-banda { min-height: 0; padding: 10px 12px; gap: 10px; }
+      .doc-card-emoji { width: 34px; height: 34px; font-size: 1.125rem; border-radius: 10px; }
+      .doc-card-tipo { font-size: 0.625rem; padding-right: 68px; }
+      .doc-acciones { top: 8px; right: 8px; gap: 4px; }
+      .doc-acciones .icon-btn { width: 28px; height: 28px; min-width: 28px; min-height: 28px; font-size: 0.8125rem; }
+      .doc-abrir { padding: 10px 12px 0; gap: 4px; }
+      .doc-titulo { font-size: 0.9375rem; }
+      .doc-persona { font-size: 0.75rem; }
+      .doc-persona .doc-avatar { width: 20px; height: 20px; font-size: 0.625rem; }
+      .doc-card-pie { padding: 8px 12px 12px; }
+      .doc-cad-fila { align-items: center; }
+      .doc-cad-fila > span:first-child { display: flex; align-items: baseline; gap: 6px; }
+      .doc-cad-et { font-size: 0.625rem; }
+      .doc-cad-fecha { font-size: 0.8125rem; }
+      .doc-estado { font-size: 0.6875rem; padding: 3px 8px; }
+      .doc-vida { height: 4px; margin-top: var(--gap-2); }
+      .doc-grupo { margin-bottom: var(--gap-5); }
       .doc-tipo-fila {
         grid-template-columns: 44px 1fr auto auto auto;
         grid-template-areas: "emoji campos n ok del"
