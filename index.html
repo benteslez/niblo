@@ -587,6 +587,24 @@
       .doc-estado { font-size: 0.6875rem; padding: 3px 8px; }
       .doc-vida { height: 4px; margin-top: var(--gap-2); }
       .doc-grupo { margin-bottom: var(--gap-5); }
+      /* Dos tarjetas por fila. El tipo ya lo dice el emoji (y el encabezado
+         del grupo), asi que su nombre se oculta para dejar sitio a los botones;
+         fecha y estado van uno debajo de otro. */
+      .doc-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .doc-card-tipo { display: none; }
+      .doc-card-banda { padding: 8px 10px; }
+      .doc-acciones { top: 8px; right: 6px; }
+      .doc-abrir { padding: 8px 10px 0; }
+      .doc-titulo { font-size: 0.875rem; }
+      .doc-notas { font-size: 0.75rem; }
+      .doc-card-pie { padding: 6px 10px 10px; }
+      .doc-cad-fila { flex-direction: column; align-items: flex-start; gap: 6px; }
+      /* La fecha ya va encima: vigente y renovar solo dicen cuanto queda (el
+         color dice el estado); caducado solo dice "Caducado". */
+      .doc-card.est-ok .doc-estado-et, .doc-card.est-ok .doc-estado-sep,
+      .doc-card.est-pronto .doc-estado-et:not(:only-child), .doc-card.est-pronto .doc-estado-sep,
+      .doc-card.est-caducado .doc-estado-sep, .doc-card.est-caducado .doc-estado-t { display: none; }
+      .doc-cad-sin { font-size: 0.75rem; }
       .doc-tipo-fila {
         grid-template-columns: 44px 1fr auto auto auto;
         grid-template-areas: "emoji campos n ok del"
@@ -26863,14 +26881,17 @@ function boot(vistaInicial) {
       if (anos >= 2 || !tM) return tA || tM;
       return tA ? `${tA} y ${tM}` : tM;
     }
-    /** Texto de la pastilla de estado. */
-    function docsTextoEstado(doc) {
+    /** Pastilla de estado en dos partes, para que en movil (dos tarjetas por
+        fila) se pueda mostrar solo una sin que la pastilla se parta. */
+    function docsHtmlEstado(doc) {
       const d = docsDiasParaCaducar(doc);
       if (d === null) return "";
-      if (d < 0) return `Caducado hace ${docsTiempo(d)}`;
-      if (d === 0) return "Caduca hoy";
-      if (d <= DOCS_DIAS_AVISO) return `Renovar · ${docsTiempo(d)}`;
-      return `Vigente · ${docsTiempo(d)}`;
+      const [et, t] = d < 0 ? ["Caducado", `hace ${docsTiempo(d)}`]
+        : d === 0 ? ["Caduca hoy", ""]
+        : d <= DOCS_DIAS_AVISO ? ["Renovar", docsTiempo(d)]
+        : ["Vigente", docsTiempo(d)];
+      return `<span class="doc-estado-et">${esc(et)}</span>${t
+        ? `<span class="doc-estado-sep"> · </span><span class="doc-estado-t">${esc(t)}</span>` : ""}`;
     }
     /** Fraccion de vida que le queda (0..1), o null sin expedicion. */
     function docsVidaRestante(doc) {
@@ -26991,7 +27012,7 @@ function boot(vistaInicial) {
                 <div class="doc-cad-fila">
                   <span><span class="doc-cad-et">${estado === "caducado" ? "Caducó" : "Caduca"}</span>
                     <span class="doc-cad-fecha">${esc(fecha)}</span></span>
-                  <span class="doc-estado">${esc(docsTextoEstado(d))}</span>
+                  <span class="doc-estado">${docsHtmlEstado(d)}</span>
                 </div>
                 ${vida !== null ? `<div class="doc-vida" role="img" aria-label="Le queda el ${Math.round(vida * 100)} % de su vigencia"><span style="width:${(vida * 100).toFixed(1)}%"></span></div>` : ""}`
                 : `<span class="doc-cad-sin">Sin fecha de caducidad</span>`}
