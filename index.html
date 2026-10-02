@@ -339,10 +339,6 @@
     }
 
     /* ---- Documentos ------------------------------------------------------ */
-    .doc-barra {
-      display: flex; gap: var(--gap-2); justify-content: flex-end;
-      flex-wrap: wrap; margin: var(--gap-4) 0 var(--gap-5);
-    }
     .doc-grupo { margin-bottom: var(--gap-6); }
     .doc-grupo-tit {
       display: flex; align-items: baseline; gap: var(--gap-2);
@@ -486,6 +482,25 @@
     .doc-alerta li { margin-top: 2px; }
     .doc-fechas { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-3); }
     @media (max-width: 480px) { .doc-fechas { grid-template-columns: 1fr; } }
+    /* Cabecera: titulo a la izquierda, acciones a la derecha, en una fila. */
+    .doc-cab {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--gap-3); margin-bottom: var(--gap-2);
+    }
+    .doc-cab .vista-titulo { margin: 0; }
+    .doc-cab-acciones { display: flex; align-items: center; gap: var(--gap-2); flex: none; }
+    .doc-btn-tipos, .doc-btn-nuevo {
+      display: inline-flex; align-items: center; gap: 6px; height: 40px;
+      padding: 0 16px; border-radius: var(--r-pill);
+      font-size: 0.875rem; font-weight: 600; white-space: nowrap;
+      transition: background .15s, transform .12s;
+    }
+    .doc-btn-tipos { background: var(--bg-soft); color: var(--text); }
+    .doc-btn-tipos:hover { background: var(--line); }
+    .doc-btn-nuevo { background: var(--btn-bg, var(--text)); color: var(--btn-fg, var(--bg)); }
+    .doc-btn-nuevo:hover { transform: translateY(-1px); }
+    .doc-btn-nuevo > span[aria-hidden] { font-size: 1.125rem; line-height: 1; }
+    .doc-vista-movil { display: none; }
     /* Controles de vista: mismo segmentado en pastilla que el planificador. */
     .doc-vista {
       display: flex; flex-wrap: wrap; gap: var(--gap-3) var(--gap-5);
@@ -563,8 +578,38 @@
         width: 100%; max-height: 92vh; overflow-y: auto;
         border-radius: var(--r-lg) var(--r-lg) 0 0;
       }
-      .doc-barra { justify-content: stretch; }
-      .doc-barra button { flex: 1; white-space: nowrap; }
+      /* Cabecera compacta: sin subtitulo, botones pequeños, y los dos
+         segmentados se cambian por dos desplegables en una sola fila. */
+      .doc-cab { margin-bottom: var(--gap-3); }
+      .doc-cab .vista-titulo { font-size: 1.625rem; }
+      .doc-subtitulo { display: none; }
+      .doc-btn-tipos, .doc-btn-nuevo { height: 36px; padding: 0 12px; font-size: 0.8125rem; }
+      .doc-btn-tipos { width: 36px; padding: 0; justify-content: center; }
+      .doc-btn-tipos-txt, .doc-btn-nuevo-largo { display: none; }
+      .doc-alerta { padding: var(--gap-2) var(--gap-3); margin-bottom: var(--gap-3); font-size: 0.8125rem; }
+      .doc-vista { display: none; }
+      .doc-vista-movil { display: flex; gap: var(--gap-2); margin-bottom: var(--gap-4); }
+      .doc-sel {
+        position: relative; flex: 1; min-width: 0;
+        display: flex; align-items: center; gap: 6px;
+        height: 38px; padding: 0 28px 0 12px; border-radius: var(--r-pill);
+        background: var(--bg-soft);
+      }
+      .doc-sel::after {
+        content: ""; position: absolute; right: 12px; top: 50%;
+        width: 6px; height: 6px; margin-top: -5px; pointer-events: none;
+        border-right: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted);
+        transform: rotate(45deg);
+      }
+      .doc-sel > svg { flex: none; color: var(--text-muted); }
+      .doc-sel select {
+        flex: 1; min-width: 0; appearance: none; -webkit-appearance: none;
+        border: 0; background: transparent; color: var(--text);
+        font: inherit; font-size: 16px; font-weight: 600; padding: 0; cursor: pointer;   /* 16px: iOS hace zoom si es menor */
+      }
+      .doc-sel select:focus-visible { outline: none; }
+      .doc-sel:focus-within { outline: 2px solid var(--focus); outline-offset: 1px; }
+      .doc-grupo-tit { margin-bottom: var(--gap-2); }
       /* Tarjetas compactas: en movil cabian dos por pantalla. Banda mas baja,
          menos aire y la caducidad en una sola linea. */
       .doc-lista { gap: var(--gap-3); }
@@ -26569,7 +26614,7 @@ function boot(vistaInicial) {
       nav.innerHTML = "";
       sub.innerHTML = "";
       sub.hidden = true;
-      if (!areaActiva) return;   // en el hub no hay chips de seccion
+      if (!areaActiva) { nav.hidden = false; return; }   // en el hub no hay chips de seccion
       const padre = seccionPadre(vistaActiva);
 
       const crear = (v, clase, activo) => {
@@ -26582,9 +26627,13 @@ function boot(vistaInicial) {
         return b;
       };
 
+      nav.hidden = false;
       if (!permitidas.has(areaActiva)) return;
-      VISTAS.filter(v => v.area === areaActiva && !v.sub)
-            .forEach(v => nav.appendChild(crear(v, "chip", v.id === padre)));
+      const secciones = VISTAS.filter(v => v.area === areaActiva && !v.sub);
+      // Un area con una sola seccion (Documentos) no necesita chips: un chip
+      // solo no lleva a ningun sitio y en movil se comia una franja entera.
+      if (secciones.length <= 1 && !VISTAS.some(v => v.sub === padre)) { nav.hidden = true; return; }
+      secciones.forEach(v => nav.appendChild(crear(v, "chip", v.id === padre)));
 
       const hijas = VISTAS.filter(v => v.sub === padre);
       if (hijas.length) {
@@ -26890,8 +26939,10 @@ function boot(vistaInicial) {
         : d === 0 ? ["Caduca hoy", ""]
         : d <= DOCS_DIAS_AVISO ? ["Renovar", docsTiempo(d)]
         : ["Vigente", docsTiempo(d)];
-      return `<span class="doc-estado-et">${esc(et)}</span>${t
-        ? `<span class="doc-estado-sep"> · </span><span class="doc-estado-t">${esc(t)}</span>` : ""}`;
+      // Un solo hijo de texto: si cada parte fuera hijo del flex, el gap de
+      // la pastilla separaria tambien el " · ".
+      return `<span><span class="doc-estado-et">${esc(et)}</span>${t
+        ? `<span class="doc-estado-sep"> · </span><span class="doc-estado-t">${esc(t)}</span>` : ""}</span>`;
     }
     /** Fraccion de vida que le queda (0..1), o null sin expedicion. */
     function docsVidaRestante(doc) {
@@ -27038,13 +27089,20 @@ function boot(vistaInicial) {
             `<li><b>${esc(d.title)}</b> · ${esc(docsTextoCaducidad(d))}</li>`).join("")}</ul>
         </div>` : "";
       return `
-        <h1 class="vista-titulo">Documentos</h1>
-        <p class="vista-subtitulo">Enlaces a la documentación de casa, por tipo o por persona.</p>
-        ${aviso}
-        <div class="doc-barra">
-          <button type="button" class="btn-plano" onclick="DOCSUI.tipos()">Gestionar tipos</button>
-          <button type="button" class="btn-primario" onclick="DOCSUI.nuevo()">+ Nuevo documento</button>
+        <div class="doc-cab">
+          <h1 class="vista-titulo">Documentos</h1>
+          <div class="doc-cab-acciones">
+            <button type="button" class="doc-btn-tipos" onclick="DOCSUI.tipos()" title="Gestionar tipos" aria-label="Gestionar tipos">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg>
+              <span class="doc-btn-tipos-txt">Tipos</span>
+            </button>
+            <button type="button" class="doc-btn-nuevo" onclick="DOCSUI.nuevo()">
+              <span aria-hidden="true">+</span><span>Nuevo<span class="doc-btn-nuevo-largo"> documento</span></span>
+            </button>
+          </div>
         </div>
+        <p class="vista-subtitulo doc-subtitulo">Enlaces a la documentación de casa, por tipo o por persona.</p>
+        ${aviso}
         ${DOCS.documentos.length ? docsControlesVista() : ""}`;
     }
 
@@ -27057,7 +27115,19 @@ function boot(vistaInicial) {
       const agrupar = DOCS.sinAsignado
         ? [["tipo", "Tipo"], ["nada", "Nada"]]
         : [["tipo", "Tipo"], ["persona", "Persona"], ["nada", "Nada"]];
+      const opcion = (campo, valor, txt) =>
+        `<option value="${valor}"${actual[campo] === valor ? " selected" : ""}>${txt}</option>`;
       return `
+        <div class="doc-vista-movil">
+          <label class="doc-sel">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            <select aria-label="Agrupar por" onchange="DOCSUI.vista('agrupar', this.value)">${agrupar.map(([v, t]) => opcion("agrupar", v, { tipo: "Por tipo", persona: "Por persona", nada: "Sin agrupar" }[v] || t)).join("")}</select>
+          </label>
+          <label class="doc-sel">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg>
+            <select aria-label="Ordenar por" onchange="DOCSUI.vista('orden', this.value)">${opcion("orden", "titulo", "A–Z")}${opcion("orden", "caducidad", "Caduca antes")}</select>
+          </label>
+        </div>
         <div class="doc-vista">
           <span class="doc-vista-grupo">
             <span class="doc-vista-et">Agrupar</span>
