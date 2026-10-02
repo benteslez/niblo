@@ -496,6 +496,225 @@ pre.formato {
 .toast.error { background:var(--danger); color:#fff; }
 @keyframes toastIn { from { transform:translateY(20px); opacity:0; } to { transform:none; opacity:1; } }
 
+/* Editor del tema */
+.ed-cab { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:6px 0 16px; }
+.ed-tit { margin:2px 0 0; font-size:22px; font-weight:700; letter-spacing:-.02em; line-height:1.25; }
+.ed-acc { display:flex; align-items:center; gap:10px; }
+.ed-ayuda { font-size:13px; margin:0 0 12px; line-height:1.5; }
+.ed-item { display:flex; flex-direction:column; gap:8px; padding:14px 16px; }
+.card.ed-item + .card.ed-item { margin-top:10px; }
+.ed-item.sub { margin-left:22px; border-left:3px solid var(--accent-bg); }
+.ed-item-cab { display:flex; align-items:center; gap:8px; }
+.ed-num { font-size:11.5px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--accent); }
+.ed-fila { display:flex; gap:8px; flex-wrap:wrap; }
+.ed-fila > .input { flex:1 1 220px; }
+.ed-fila > .input.peq, .input.peq { flex:0 1 180px; }
+select.input { padding:10px 12px; }
+textarea.input { resize:vertical; line-height:1.5; font-family:var(--font-ui); }
+.ed-ops { display:flex; flex-direction:column; gap:6px; }
+.ed-op { display:flex; align-items:center; gap:8px; }
+.ed-op input[type=radio] { width:20px; height:20px; accent-color:var(--ok); flex-shrink:0; }
+.ed-op .l { font-weight:800; font-size:13px; width:16px; color:var(--text-muted); }
+.ed-op .input { flex:1; }
+.icon-mini {
+  width:30px; height:30px; border-radius:var(--r-sm); border:1px solid var(--line); background:var(--bg-elev);
+  cursor:pointer; font-size:13px; color:var(--text-muted);
+}
+.icon-mini:disabled { opacity:.35; cursor:default; }
+.icon-mini.peligro { color:var(--danger); }
+details.importar { margin-top:14px; }
+details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-muted); font-weight:600; margin-bottom:10px; text-align:center; }
+
+/* Lectura */
+.lectura { max-width:760px; }
+.lectura h2 { font-size:22px; letter-spacing:-.02em; margin:30px 0 8px; scroll-margin-top:80px; }
+.lectura h3 { font-size:18px; margin:22px 0 6px; color:var(--accent); }
+.lectura section { scroll-margin-top:80px; }
+.lectura p, .lectura li { font-size:16px; line-height:1.7; }
+.lectura ul, .lectura ol { padding-left:22px; }
+.lectura-indice { margin-bottom:8px; }
+.gl-linea { margin:0 0 8px; font-size:14.5px; line-height:1.55; }
+
+/* ===== Página de estudio del tema ===== */
+.hero-tema {
+  position:relative; overflow:hidden; color:#fff; border-radius:var(--r-lg); padding:28px 24px 24px; margin:8px 0 20px;
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent-2) 55%, transparent) 0%, transparent 55%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 88%, #0b1220) 0%, color-mix(in srgb, var(--accent) 45%, #0b1220) 100%);
+  box-shadow:0 18px 40px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+:root[data-tema="oscuro"] .hero-tema {
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 35%, transparent) 0%, transparent 55%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 42%, #0b1220) 0%, color-mix(in srgb, var(--accent) 18%, #0b1220) 100%);
+  box-shadow:0 18px 40px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema]) .hero-tema {
+    background:
+      radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 35%, transparent) 0%, transparent 55%),
+      linear-gradient(135deg, color-mix(in srgb, var(--accent) 42%, #0b1220) 0%, color-mix(in srgb, var(--accent) 18%, #0b1220) 100%);
+  }
+}
+.hero-sup { font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.85; }
+.hero-num { font-size:13px; font-weight:600; opacity:.9; margin-top:6px; }
+.hero-tema h1 { font-size:28px; line-height:1.15; letter-spacing:-.03em; margin:6px 0 8px; font-weight:800; }
+@media (min-width:720px) { .hero-tema { padding:36px 34px 30px; } .hero-tema h1 { font-size:38px; } }
+.hero-sub { margin:0 0 12px; font-size:15px; line-height:1.55; opacity:.92; font-style:italic; max-width:760px; }
+.hero-chips { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+.hero-chips span { font-size:12.5px; font-weight:600; padding:5px 12px; border-radius:var(--r-pill); background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(4px); }
+.hero-acc { display:flex; flex-wrap:wrap; gap:8px; }
+.hero-btn { background:rgba(255,255,255,.14); color:#fff; border-color:rgba(255,255,255,.3); }
+.hero-btn:hover { background:rgba(255,255,255,.24); }
+
+.estudio { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; align-items:start; }
+@media (min-width:1000px) { .estudio { grid-template-columns:minmax(0,1fr) 290px; } }
+.estudio-lateral { display:none; position:sticky; top:76px; max-height:calc(100dvh - 92px); overflow:auto; padding:18px; }
+@media (min-width:1000px) { .estudio-lateral { display:block; } .fab-herr { display:none !important; } }
+.lat-cab { padding-bottom:10px; border-bottom:2px solid var(--accent); margin-bottom:6px; }
+.lat-sup { font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); font-weight:700; }
+.lat-tit { font-size:20px; font-weight:800; color:var(--accent); letter-spacing:-.02em; }
+.lat-k { display:block; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); margin:16px 0 8px; }
+.lat-pct { display:flex; justify-content:space-between; font-size:12px; margin-top:6px; }
+.lat-pct b { color:var(--accent); }
+.buscar-tema .input { padding:9px 12px; font-size:15px; }
+.buscar-nav { display:flex; align-items:center; gap:6px; margin-top:6px; font-size:12px; }
+.herr-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.herr {
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-height:68px;
+  border:1px solid var(--line); background:var(--bg-soft); border-radius:var(--r-md); cursor:pointer;
+  font-size:12.5px; font-weight:600; color:var(--text); padding:8px 6px; text-align:center;
+  transition:transform .15s var(--ease), box-shadow .15s, border-color .15s, background .15s;
+}
+.herr:hover { transform:translateY(-1px); box-shadow:var(--sh-2); border-color:var(--accent); background:var(--bg-elev); }
+.herr-ico { font-size:20px; line-height:1; }
+.practica { grid-column:1 / -1; border:1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background:color-mix(in srgb, var(--accent-bg) 45%, var(--bg-elev)); border-radius:var(--r-md); padding:10px; }
+.practica-k { font-size:10.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+.practica .herr { background:var(--bg-elev); }
+.lat-indice { list-style:none; margin:0; padding:0; font-size:13.5px; }
+.lat-indice ul { list-style:none; padding-left:16px; margin:0; }
+.lat-indice button { border:none; background:none; cursor:pointer; text-align:left; width:100%; padding:6px 6px; border-radius:var(--r-sm); color:var(--text); font-size:13.5px; line-height:1.35; }
+.lat-indice ul button { color:var(--text-muted); font-size:12.5px; }
+.lat-indice button:hover { background:var(--bg-soft); }
+.lat-indice .n { color:var(--accent); font-weight:700; margin-right:2px; }
+.ok-mini { color:var(--ok); font-weight:800; }
+
+.indice-tema { padding:20px 22px; margin-bottom:14px; }
+.indice-tema .ficha-k { color:var(--accent); }
+.indice-tema ol { list-style:none; margin:0; padding:0; columns:2 260px; column-gap:28px; }
+.indice-tema li { break-inside:avoid; }
+.indice-tema ul { list-style:none; padding-left:22px; margin:0 0 4px; }
+.indice-tema button { border:none; background:none; cursor:pointer; text-align:left; padding:5px 0; font-size:15px; color:var(--text); line-height:1.4; }
+.indice-tema ul button { font-size:13.5px; color:var(--text-muted); padding:3px 0; }
+.indice-tema button:hover { color:var(--accent); }
+.indice-tema .n { color:var(--accent); font-weight:800; font-feature-settings:"tnum"; margin-right:4px; }
+.estudio-barra { display:flex; gap:8px; justify-content:flex-end; margin:0 0 10px; }
+
+.card.ap { padding:0; overflow:hidden; transition:box-shadow .2s, border-color .2s; }
+.card.ap + .card.ap { margin-top:12px; }
+.ap-cab { display:flex; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; }
+.ap-num { font-size:13px; font-weight:800; color:var(--text-muted); font-feature-settings:"tnum"; min-width:20px; }
+.ap-tit { flex:1; min-width:0; margin:0; font-size:18px; font-weight:700; letter-spacing:-.015em; line-height:1.3; color:var(--accent); }
+@media (min-width:720px) { .ap-tit { font-size:20px; } }
+.ap-rep {
+  flex-shrink:0; border:1px solid var(--line); background:var(--bg-soft); color:var(--text-muted);
+  font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:var(--r-pill); cursor:pointer; white-space:nowrap;
+}
+.ap-rep:hover { border-color:var(--ok); color:var(--ok); }
+.ap-tog {
+  flex-shrink:0; width:34px; height:34px; border-radius:50%; border:none; cursor:pointer; color:#fff; font-size:12px;
+  background:linear-gradient(135deg, var(--accent), var(--accent-2)); transition:transform .2s var(--ease);
+  box-shadow:0 4px 12px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.ap.abierto .ap-tog { transform:rotate(90deg); }
+.ap-cuerpo { display:none; padding:4px 22px 22px 50px; border-top:2px solid var(--accent); margin:0 18px; padding-left:32px; }
+.ap.abierto .ap-cuerpo { display:block; }
+.ap-cuerpo p, .ap-cuerpo li { font-size:16px; line-height:1.75; color:var(--text); }
+.ap-cuerpo p { text-align:justify; hyphens:auto; }
+.ap-cuerpo ul, .ap-cuerpo ol { padding-left:22px; }
+.ap-sub { scroll-margin-top:84px; }
+.ap-sub h3 { font-size:17px; color:var(--accent); margin:22px 0 4px; }
+.card.ap { scroll-margin-top:76px; }
+.ap.repasada { border-color:color-mix(in srgb, var(--ok) 45%, var(--line)); }
+.ap.repasada .ap-num { color:var(--ok); }
+.ap.repasada .ap-rep { background:var(--ok-bg); color:var(--ok); border-color:color-mix(in srgb, var(--ok) 40%, transparent); }
+.ap.leyendo { box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent), var(--sh-2); }
+.destello { animation:destello 1.4s var(--ease); }
+@keyframes destello { 0%,40% { background:color-mix(in srgb, var(--accent-bg) 70%, transparent); } 100% { background:transparent; } }
+@media (max-width:600px) {
+  .ap-cab { flex-wrap:wrap; padding:14px; gap:8px 10px; }
+  .ap-tit { flex-basis:calc(100% - 80px); }
+  .ap-rep { order:3; margin-left:30px; }
+  .ap-cuerpo { margin:0 12px; padding:2px 4px 18px; }
+}
+button.card.ap-extra { display:flex; align-items:center; gap:12px; width:100%; padding:16px 18px; cursor:pointer; text-align:left; font:inherit; margin-top:12px; }
+.ap-extra .ap-tog { display:inline-flex; align-items:center; justify-content:center; }
+
+mark.busq { background:color-mix(in srgb, #facc15 50%, transparent); border-radius:3px; }
+mark.busq.actual { background:#f59e0b; color:#111; box-shadow:0 0 0 2px #f59e0b; }
+mark.res { background:color-mix(in srgb, #fb7185 30%, transparent); border-bottom:2px solid #fb7185; border-radius:2px; cursor:pointer; padding:0 1px; color:inherit; }
+.btn-resaltar {
+  position:fixed; z-index:60; border:none; border-radius:var(--r-pill); padding:9px 14px; font-weight:700; font-size:13px; cursor:pointer;
+  background:var(--text); color:var(--text-inv); box-shadow:var(--sh-3);
+}
+.fab-herr {
+  position:fixed; right:16px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:35;
+  display:inline-flex; align-items:center; gap:8px; height:52px; padding:0 18px; border:none; border-radius:var(--r-pill); cursor:pointer;
+  background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#fff; font-weight:800; font-size:15px;
+  box-shadow:0 12px 28px color-mix(in srgb, var(--accent) 38%, transparent);
+}
+.fab-herr span:first-child { font-size:20px; }
+
+/* Panel lateral / hoja inferior */
+.panel-fondo { position:fixed; inset:0; z-index:70; background:rgba(2,6,23,.45); opacity:0; transition:opacity .2s; }
+.panel-fondo.on { opacity:1; }
+.panel {
+  position:fixed; z-index:71; background:var(--bg); display:flex; flex-direction:column; box-shadow:var(--sh-3);
+  left:0; right:0; bottom:0; max-height:88dvh; border-radius:22px 22px 0 0; transform:translateY(100%); transition:transform .22s var(--ease);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.panel.on { transform:none; }
+@media (min-width:1000px) {
+  .panel { left:auto; top:0; bottom:0; width:min(520px, 92vw); max-height:none; border-radius:22px 0 0 22px; transform:translateX(100%); }
+  .panel-asa { display:none; }
+}
+.panel-asa { width:42px; height:5px; border-radius:99px; background:var(--line); margin:8px auto 0; }
+.panel-cab { display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--line-soft); }
+.panel-cab h3 { flex:1; margin:0; font-size:17px; font-weight:800; letter-spacing:-.02em; }
+.panel-cuerpo { overflow:auto; padding:16px; flex:1; -webkit-overflow-scrolling:touch; }
+.lateral-movil .lat-cab { display:none; }
+.lateral-movil .lat-k:first-of-type { margin-top:0; }
+.res-item { display:flex; gap:8px; align-items:flex-start; margin-bottom:10px; }
+.res-ir { flex:1; display:flex; flex-direction:column; gap:4px; text-align:left; border:1px solid var(--line); background:var(--bg-elev); border-radius:var(--r-md); padding:10px 12px; cursor:pointer; font-size:14px; line-height:1.5; }
+.res-ir .muted { font-size:12px; }
+.anillos { display:flex; justify-content:space-around; gap:10px; margin:4px 0 16px; }
+.anillo {
+  --p:0; width:96px; height:96px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:radial-gradient(closest-side, var(--bg) 78%, transparent 79% 100%), conic-gradient(var(--accent) calc(var(--p) * 1%), var(--bg-soft) 0);
+}
+.anillo span { font-size:20px; font-weight:800; font-feature-settings:"tnum"; }
+.anillo small { font-size:11px; color:var(--text-muted); font-weight:600; }
+.lista-check { list-style:none; padding:0; margin:0; }
+.lista-check button { border:none; background:none; cursor:pointer; text-align:left; padding:6px 0; font-size:14px; color:var(--text-muted); }
+.lista-check .ok button { color:var(--ok); font-weight:600; }
+.hist { display:flex; flex-direction:column; gap:8px; }
+.hist-fila { display:grid; grid-template-columns:56px 1fr 44px 70px; align-items:center; gap:8px; font-size:12.5px; }
+.hist-bar { height:8px; border-radius:99px; background:var(--bg-soft); overflow:hidden; }
+.hist-bar div { height:100%; background:linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius:99px; }
+.hist-bar div.mejor { background:linear-gradient(90deg, var(--ok), #34d399); }
+.mapa { overflow-x:auto; }
+.mapa-raiz { display:inline-block; font-weight:800; padding:10px 16px; border-radius:var(--r-md); color:#fff; background:linear-gradient(135deg, var(--accent), var(--accent-2)); margin-bottom:12px; }
+.mapa ul { list-style:none; margin:0; padding-left:22px; position:relative; }
+.mapa ul::before { content:""; position:absolute; left:8px; top:0; bottom:14px; width:2px; background:var(--line); }
+.mapa li { position:relative; padding:5px 0; }
+.mapa li::before { content:""; position:absolute; left:-14px; top:20px; width:12px; height:2px; background:var(--line); }
+.mapa-nodo { display:inline-flex; align-items:center; gap:8px; border:1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background:var(--bg-elev); border-radius:var(--r-md); padding:7px 12px; font-weight:700; font-size:14px; cursor:pointer; color:var(--text); text-align:left; }
+.mapa-nodo .n { width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:var(--accent-bg); color:var(--accent); font-size:12px; }
+.mapa-nodo.sub { font-weight:600; font-size:13px; color:var(--text-muted); }
+.mapa-nodo.neutro { cursor:default; }
+.mapa-conceptos { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; }
+.mapa-conceptos span { font-size:12px; font-weight:600; padding:3px 10px; border-radius:var(--r-pill); background:var(--accent-bg); color:var(--accent); cursor:help; }
+
 /* Estado de sincronización (como la píldora de Viajes) */
 .sync-pill {
   display:inline-flex; align-items:center; gap:7px; height:32px; padding:0 12px; flex-shrink:0;
@@ -547,6 +766,22 @@ pre.formato {
 
 <main id="vista" tabindex="-1"></main>
 <div class="toast-box" id="toast-box" role="status" aria-live="polite"></div>
+
+<!-- Panel de herramientas del tema: lateral en escritorio, hoja inferior en el móvil -->
+<div class="panel-fondo" id="panel-fondo" hidden></div>
+<aside class="panel" id="panel" hidden role="dialog" aria-modal="true" aria-labelledby="panel-tit">
+  <div class="panel-asa" aria-hidden="true"></div>
+  <div class="panel-cab">
+    <button class="icon-btn" id="panel-volver" aria-label="Volver a las herramientas" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <h3 id="panel-tit">Herramientas</h3>
+    <button class="icon-btn" id="panel-cerrar" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="panel-cuerpo" id="panel-cuerpo"></div>
+</aside>
 
 <!-- Contenido desarrollado embebido. Vacío de momento: cuando haya temas
      terminados se puede pegar aquí una copia guardada con el botón de
@@ -1043,8 +1278,50 @@ function hashCorto(txt) {
 }
 function claveFc(id, f) { return id + ":" + hashCorto(f && f.q); }
 function sabida(k) { const v = prog.mapa[k]; return !!(v && v.s); }
-function sabidasDe(t) { return t.flashcards.filter(f => sabida(claveFc(t.id, f))).length; }
+function sabidasDe(t) { return fcs(t).filter(f => sabida(claveFc(t.id, f))).length; }
 function guardarProg() { escribirJSON(KEY_PROG + prog.duenno, prog.mapa); }
+/* El progreso de cada persona es un mapa de claves con { s, m, d? }:
+     "B4T11:<hash>"          flashcard dominada
+     "B4T11:sec:<apartado>"  apartado marcado como repasado
+     "B4T11:res:<hash>"      texto resaltado        d: { sec, x }
+     "B4T11:q:<hash>"        última respuesta a una pregunta (s: acertada) d: { a, f }
+     "T:<ámbito>:<marca>"    resultado de un test   d: { a, f, b, n, amb }
+   Todo se sincroniza igual, clave a clave (gana la marca más reciente). */
+function progreso(k) { return prog.mapa[k] || null; }
+function marcarProg(k, valor, datos) {
+  prog.mapa[k] = datos === undefined ? { s:!!valor, m:Date.now() } : { s:!!valor, m:Date.now(), d:datos };
+  guardarProg();
+  pend.prog[prog.duenno + "|" + k] = 1; guardarPend();
+  programarSync();
+}
+const repasada = (id, sec) => sabida(id + ":sec:" + sec);
+function resaltadosDe(id) {
+  return Object.keys(prog.mapa).filter(k => k.startsWith(id + ":res:") && prog.mapa[k].s && prog.mapa[k].d)
+    .map(k => Object.assign({ k }, prog.mapa[k].d)).sort((a, b) => (prog.mapa[a.k].m) - (prog.mapa[b.k].m));
+}
+function registrarRespuesta(id, q, acierto) {
+  const k = id + ":q:" + hashCorto(q.q), v = progreso(k), d = (v && v.d) || { a:0, f:0 };
+  marcarProg(k, acierto, { a:d.a + (acierto ? 1 : 0), f:d.f + (acierto ? 0 : 1) });
+}
+const fallada = (id, q) => { const v = progreso(id + ":q:" + hashCorto(q.q)); return !!(v && !v.s); };
+function resultadosTest(filtro) {
+  return Object.keys(prog.mapa).filter(k => k.startsWith("T:") && prog.mapa[k].d && (!filtro || filtro(prog.mapa[k].d)))
+    .map(k => Object.assign({ m:prog.mapa[k].m }, prog.mapa[k].d)).sort((a, b) => b.m - a.m);
+}
+/** Apartados principales (los subapartados van dentro de su apartado). */
+function apartados(t) {
+  const out = [];
+  t.sections.forEach(x => {
+    if (!(lleno(x.title) || lleno(x.body))) return;
+    if (x.nivel === 2 && out.length) out[out.length - 1].subs.push(x);
+    else out.push({ s:x, subs:[] });
+  });
+  return out;
+}
+function repasoDe(t) {
+  const a = apartados(t);
+  return { n:a.length, hechos:a.filter(x => repasada(t.id, x.s.id)).length };
+}
 function marcarFc(k, valor) {
   prog.mapa[k] = { s:!!valor, m:Date.now() };
   guardarProg();
@@ -1130,9 +1407,39 @@ function olvidarBlob(id) { if (blobs[id]) { URL.revokeObjectURL(blobs[id]); dele
 
 /** Guarda un tema. Si viene de una acción tuya (no de la bajada) se sella con
     la hora y entra en la cola de subida. */
-async function guardarTema(t, deServidor, marca) {
+/* Cada tema se sincroniza por PARTES, cada una con su propia fecha: si en un
+   dispositivo editas el glosario y en otro los apuntes, se combinan en vez de
+   ganar el tema entero del último. El servidor hace la misma mezcla (010). */
+const PARTES = ["meta", "sections", "glossary", "timeline", "flashcards", "questions"];
+const CAMPOS_META = ["title", "subtitle", "etiquetas", "fileName", "html", "cargado"];
+function modParte(t, k) { return (t.mod && t.mod[k]) || t.modificado || 0; }
+function copiarParte(dst, src, k) {
+  if (k === "meta") CAMPOS_META.forEach(f => { dst[f] = src[f] == null ? null : src[f]; });
+  else dst[k] = JSON.parse(JSON.stringify(src[k] || []));
+}
+/** Mezcla dos versiones parte a parte (gana la más reciente de cada parte). */
+function mezclarTema(local, remoto) {
+  const out = JSON.parse(JSON.stringify(remoto));
+  out.mod = {};
+  let deLocal = false, deRemoto = false;
+  PARTES.forEach(k => {
+    const ml = modParte(local, k), mr = modParte(remoto, k);
+    if (ml > mr) { deLocal = true; copiarParte(out, local, k); out.mod[k] = ml; }
+    else { if (mr > ml) deRemoto = true; out.mod[k] = mr; }
+  });
+  out.modificado = Math.max(local.modificado || 0, remoto.modificado || 0);
+  return { t:out, deLocal, deRemoto };
+}
+
+/** partes: las que has cambiado (por defecto, todas). Solo esas se sellan. */
+async function guardarTema(t, deServidor, marca, partes) {
   if (!deServidor) {
-    t.modificado = marca || Date.now();
+    const ahora = marca || Date.now();
+    const antes = t.modificado || 0;
+    t.mod = Object.assign({}, t.mod);
+    PARTES.forEach(k => { if (!t.mod[k]) t.mod[k] = antes; });
+    (partes || PARTES).forEach(k => { t.mod[k] = ahora; });
+    t.modificado = Math.max(ahora, ...PARTES.map(k => t.mod[k] || 0));
     pend.temas[t.id] = 1; delete borrados[t.id]; guardarPend();
   }
   estado.temas[t.id] = t;
@@ -1281,31 +1588,47 @@ async function bajar() {
     const id = r.tema_id;
     if (!TEMA_POR_ID[id]) continue;
     const tm = ms(r.modificado);
-    const lm = estado.temas[id] ? (estado.temas[id].modificado || 0) : (borrados[id] || 0);
-    if (tm > lm) {
-      if (r.borrado) { if (estado.temas[id]) { await quitarTema(id, true); cambios++; } delete borrados[id]; }
-      else if (r.datos) {
-        const rec = normalizarTema(id, r.datos, r.datos.fileName, r.datos.html);
-        rec.modificado = tm; rec.cargado = r.datos.cargado || rec.cargado;
-        await guardarTema(rec, true); cambios++;
+    const loc = estado.temas[id];
+    const lm = loc ? (loc.modificado || 0) : (borrados[id] || 0);
+    if (r.borrado || !r.datos) {
+      // Borrado: decide la fecha del tema entero (si lo editaste después, se queda).
+      if (tm > lm) { if (loc) { await quitarTema(id, true); cambios++; S.cambioTemas = true; } delete borrados[id]; delete pend.temas[id]; }
+    } else {
+      const rem = normalizarTema(id, r.datos, r.datos.fileName, r.datos.html);
+      rem.modificado = tm; rem.cargado = r.datos.cargado || rem.cargado;
+      rem.mod = Object.assign({}, r.datos.mod);
+      if (!loc) {
+        if (tm > lm) { await guardarTema(rem, true); delete borrados[id]; delete pend.temas[id]; cambios++; S.cambioTemas = true; }
+      } else {
+        const { t, deLocal, deRemoto } = mezclarTema(loc, rem);
+        if (deRemoto && !deLocal) { await guardarTema(rem, true); delete pend.temas[id]; cambios++; S.cambioTemas = true; }
+        else if (deRemoto && deLocal) {
+          // Cada lado tiene algo más nuevo: se guarda la mezcla y se sube.
+          await guardarTema(t, false, null, []); cambios++; S.cambioTemas = true;
+        }
+        // Solo lo local es más nuevo (o son iguales): ya está en la cola o no hay nada que hacer.
       }
-      delete pend.temas[id];
     }
     if (!SYNC.cT || ms(r.actualizado) > ms(SYNC.cT)) SYNC.cT = r.actualizado;
   }
   // Progreso propio
-  const fp = await bajarTabla(`/rest/v1/oposicion_progreso?select=tarjeta,sabida,modificado,actualizado&user_id=eq.${SUPA.uid}`, SYNC.cP);
+  const fp = await bajarTabla(`/rest/v1/oposicion_progreso?select=tarjeta,sabida,datos,modificado,actualizado&user_id=eq.${SUPA.uid}`, SYNC.cP);
   let cambioProg = false;
   for (const r of fp) {
     const tm = ms(r.modificado), a = prog.mapa[r.tarjeta];
     if (!a || tm > a.m) {
-      prog.mapa[r.tarjeta] = { s:!!r.sabida, m:tm };
+      S.cambioProg = true;
+      prog.mapa[r.tarjeta] = r.datos == null ? { s:!!r.sabida, m:tm } : { s:!!r.sabida, m:tm, d:r.datos };
       delete pend.prog[SUPA.uid + "|" + r.tarjeta];
       cambioProg = true; cambios++;
     }
     if (!SYNC.cP || ms(r.actualizado) > ms(SYNC.cP)) SYNC.cP = r.actualizado;
   }
-  if (cambioProg) { guardarProg(); olvidarMazos(); }
+  if (cambioProg) {
+    guardarProg();
+    // Las tarjetas que ya sabes (aunque lo marcaras en otro dispositivo) salen del mazo en curso.
+    Object.values(hubLocal).forEach(h => { if (h.mazo) { h.mazo = h.mazo.filter(f => !sabida(f._k)); if (h.idx >= h.mazo.length) h.idx = 0; } });
+  }
   guardarPend(); guardarSyncMeta();
   return cambios;
 }
@@ -1333,7 +1656,7 @@ async function subir() {
   const mias = Object.keys(pend.prog).filter(pk => pk.startsWith(SUPA.uid + "|"));
   for (let i = 0; i < mias.length; i += 500) {
     const lote = mias.slice(i, i + 500);
-    const filas = lote.map(pk => { const k = pk.slice(SUPA.uid.length + 1); const v = prog.mapa[k]; return v ? { user_id:SUPA.uid, tarjeta:k, sabida:!!v.s, modificado:iso(v.m) } : null; }).filter(Boolean);
+    const filas = lote.map(pk => { const k = pk.slice(SUPA.uid.length + 1); const v = prog.mapa[k]; return v ? { user_id:SUPA.uid, tarjeta:k, sabida:!!v.s, datos:v.d === undefined ? null : v.d, modificado:iso(v.m) } : null; }).filter(Boolean);
     const marcas = lote.map(pk => { const v = prog.mapa[pk.slice(SUPA.uid.length + 1)]; return v ? v.m : null; });
     if (filas.length) {
       await supa("/rest/v1/oposicion_progreso?on_conflict=user_id,tarjeta", {
@@ -1358,13 +1681,14 @@ function sincronizar() {
       await subir();
       S.ultimaOk = new Date();
       ponerSync("ok");
-      if (cambios) render();
+      if (cambios) repintar();
       rtConectar();
     } catch (e) {
       const m = e.message || String(e);
       if (e.sesion) ponerSync("sesion", "La sesión de Niblo ha caducado: vuelve a entrar en Niblo.");
       else if (e.sinHogar) ponerSync("error", "Tu cuenta no tiene hogar en Niblo.");
       else if (/42P01|does not exist|Could not find the table|PGRST205/i.test(m)) ponerSync("error", "Falta ejecutar la migración 009_oposicion_sync.sql en Supabase.");
+      else if (/PGRST204|datos.{0,40}column|column.{0,40}datos/i.test(m)) ponerSync("error", "Falta ejecutar la migración 010_oposicion_mezcla_partes.sql en Supabase.");
       else if (!navigator.onLine || /Failed to fetch|NetworkError|aborted|Load failed/i.test(m)) ponerSync("offline");
       else ponerSync("error", m.slice(0, 220));
       console.warn("Sync oposición:", e);
@@ -1544,6 +1868,24 @@ function temasDeAmbito(ambito) {
 }
 function codigoDe(id) { return TEMA_POR_ID[id] ? TEMA_POR_ID[id].c : id; }
 
+/* Lo que se usa para estudiar: solo lo completo. El editor guarda también lo
+   que esté a medias para no perderlo, pero no entra en mazos ni tests. */
+const lleno = x => String(x == null ? "" : x).trim() !== "";
+const fcValida = f => !!(f && lleno(f.q) && lleno(f.a));
+function fcs(t) { return t.flashcards.filter(fcValida); }
+/** Preguntas completas, sin opciones vacías (la correcta se reindexa). */
+function qs(t) {
+  const out = [];
+  t.questions.forEach(q => {
+    if (!q || !lleno(q.q) || !Array.isArray(q.o)) return;
+    const o = []; let c = -1;
+    q.o.forEach((x, i) => { if (lleno(x)) { if (i === q.c) c = o.length; o.push(x); } });
+    if (o.length >= 2 && c >= 0) out.push(Object.assign({}, q, { o, c }));
+  });
+  return out;
+}
+const tieneApuntes = t => !!(t && t.sections.some(x => lleno(x.body)));
+
 /* ---- Abrir el tema desarrollado ---------------------------------------- */
 const blobs = {};
 function urlTema(t, ancla) {
@@ -1556,9 +1898,13 @@ function urlTema(t, ancla) {
   }
   return base + (ancla ? "#" + encodeURIComponent(ancla) : "");
 }
+/** Lleva al contenido: a tus apuntes si los hay; si el tema se importó como
+    archivo y no tiene apuntes escritos aquí, abre el archivo original. */
+let anclaPendiente = null;
 function abrirTema(id, ancla) {
   const t = estado.temas[id];
   if (!t) { ir("#/tema/" + id); return; }
+  if (tieneApuntes(t) || !t.html) { anclaPendiente = ancla || null; ir("#/tema/" + id + "/leer"); return; }
   window.open(urlTema(t, ancla), "_blank", "noopener");
 }
 
@@ -1591,10 +1937,14 @@ function normalizarTema(id, v, fileName, html) {
     title: v.title || p.e, subtitle: v.subtitle || "",
     fileName: fileName || v.fileName || v.url || "",
     timeline: arr(v.timeline), glossary: arr(v.glossary), flashcards: arr(v.flashcards),
-    questions: arr(v.questions).filter(q => q && Array.isArray(q.o) && q.o.length >= 2 && Number.isInteger(q.c) && q.c >= 0 && q.c < q.o.length),
+    // Se guardan también las preguntas a medio escribir (editor); las que no
+    // están completas no entran en el test (ver qs()).
+    questions: arr(v.questions).filter(q => q && typeof q === "object").map(q => Object.assign({}, q, { o:Array.isArray(q.o) ? q.o : [] })),
     sections: arr(v.sections),
+    etiquetas: arr(v.etiquetas || v.tags).map(String).filter(x => x.trim()),
+    mod: (v.mod && typeof v.mod === "object") ? Object.assign({}, v.mod) : {},
     html: html || v.html || null,
-    cargado: new Date().toISOString()
+    cargado: v.cargado || new Date().toISOString()
   };
 }
 function datosATemas(datos, fileName, html) {
@@ -1717,7 +2067,7 @@ async function importarCopia(j, silencioso) {
   // Progreso: se suma al tuyo tarjeta a tarjeta (gana la marca más reciente).
   const pr = j.ajustes && j.ajustes.progreso;
   if (pr && typeof pr === "object") {
-    for (const k in pr) { const v = pr[k], a = prog.mapa[k]; if (v && typeof v.m === "number" && (!a || v.m > a.m)) { prog.mapa[k] = { s:!!v.s, m:v.m }; pend.prog[prog.duenno + "|" + k] = 1; } }
+    for (const k in pr) { const v = pr[k], a = prog.mapa[k]; if (v && typeof v.m === "number" && (!a || v.m > a.m)) { prog.mapa[k] = v.d === undefined ? { s:!!v.s, m:v.m } : { s:!!v.s, m:v.m, d:v.d }; pend.prog[prog.duenno + "|" + k] = 1; } }
     guardarProg(); guardarPend(); programarSync();
   }
   // Copias de la primera versión: claves por posición.
@@ -1768,58 +2118,6 @@ async function buscarEnServidor() {
   if (hallados) render();
 }
 
-/** Plantilla de un tema para completarla: mismo formato que reconoce el hub. */
-function descargarPlantilla(id) {
-  const t = TEMA_POR_ID[id];
-  const datos = {
-    [id]: { id, group:t.b, number:t.num, codigo:t.c, title:t.e, subtitle:"",
-      sections:[], glossary:[], timeline:[], flashcards:[], questions:[] }
-  };
-  const html = `<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(t.c)} · ${esc(t.e)}</title>
-<style>
-  body{font-family:system-ui,-apple-system,sans-serif;max-width:780px;margin:0 auto;padding:24px 16px 64px;line-height:1.6;color:#0f172a}
-  h1{font-size:28px;letter-spacing:-.02em;line-height:1.2}
-  h2{margin-top:32px;font-size:21px}
-  .ref{color:#64748b;font-size:14px}
-</style>
-<!--
-  CÓMO COMPLETAR ESTE TEMA
-  1. Escribe el desarrollo dentro de <main>, una <section id="s1">, <section id="s2">…
-     por epígrafe (los id sirven de ancla desde el hub).
-  2. Rellena window.TEMARIO_DATA:
-     sections   [{ "id":"s1", "title":"1. Título" }]
-     glossary   [{ "t":"Término", "d":"Definición", "cat":"categoría", "section":"s1" }]
-     timeline   [{ "y":"2015", "txt":"Hecho", "cons":"Consecuencia", "cat":"normativo", "target":"s1" }]
-     flashcards [{ "cat":"Conceptos", "q":"Pregunta", "a":"Respuesta" }]
-     questions  [{ "q":"Enunciado", "o":["A","B","C","D"], "c":0, "e":"Explicación (artículo)" }]
-        "c" es el índice (desde 0) de la opción correcta.
-  3. Arrástralo al hub (o publícalo como ${CARPETA_TEMAS}${id}_estudio.html).
--->
-<script>
-window.TEMARIO_DATA = ${JSON.stringify(datos, null, 2)};
-<\/script>
-</head>
-<body>
-<main>
-  <p class="ref">Gestión AGE (A2) · Bloque ${esc(BLOQUE_POR_CODE[t.b].rom)} · ${esc(BLOQUE_POR_CODE[t.b].nombre)}</p>
-  <h1>Tema ${esc(t.c)}. ${esc(t.e)}</h1>
-  <p class="ref">Epígrafe resumido. Texto íntegro: anexo VII de la convocatoria (${PROGRAMA_REF}).</p>
-</main>
-</body>
-</html>
-`;
-  const url = URL.createObjectURL(new Blob([html], { type:"text/html" }));
-  const a = document.createElement("a");
-  a.href = url; a.download = id + "_estudio.html";
-  document.body.appendChild(a); a.click();
-  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 300);
-}
-
 /* ========================================================================
    (d) RENDER
    Rutas: #/  ·  #/bloque/B4[/hub]  ·  #/tema/B4T11  ·  #/global  ·  #/guia
@@ -1830,14 +2128,18 @@ function ruta() {
   const h = location.hash.replace(/^#\/?/, "");
   const p = h.split("/").filter(Boolean);
   if (p[0] === "bloque" && BLOQUE_POR_CODE[p[1]]) return { v:"bloque", b:p[1], hub:p[2] === "hub" };
-  if (p[0] === "tema" && TEMA_POR_ID[p[1]]) return { v:"tema", id:p[1] };
+  if (p[0] === "tema" && TEMA_POR_ID[p[1]]) return { v:p[2] === "editar" ? "editar" : p[2] === "leer" ? "leer" : "tema", id:p[1] };
   if (p[0] === "global") return { v:"global" };
   if (p[0] === "guia") return { v:"guia" };
   return { v:"inicio" };
 }
 let rutaPrevia = "";
 function render() {
+  edGuardarYa();                  // lo tecleado en el editor no se pierde al navegar
+  S.renderPendiente = false;
   const r = ruta();
+  cerrarPanel(true);
+  if (r.v !== "leer") vozParar();
   const clave = JSON.stringify(r);
   const atras = document.getElementById("btn-atras");
   const titulo = document.getElementById("topbar-title");
@@ -1847,10 +2149,12 @@ function render() {
     titulo.textContent = "Oposición";
     renderInicio();
   } else {
-    const destino = r.v === "tema" ? "#/bloque/" + TEMA_POR_ID[r.id].b : "#/";
+    const destino = r.v === "tema" ? "#/bloque/" + TEMA_POR_ID[r.id].b : (r.v === "editar" || r.v === "leer") ? "#/tema/" + r.id : "#/";
     atras.href = destino; atras.setAttribute("aria-label", "Volver"); atras.title = "Volver";
     if (r.v === "bloque") { document.body.dataset.b = r.b; titulo.textContent = "Bloque " + BLOQUE_POR_CODE[r.b].rom; renderBloque(r.b, r.hub); }
     else if (r.v === "tema") { document.body.dataset.b = TEMA_POR_ID[r.id].b; titulo.textContent = "Tema " + TEMA_POR_ID[r.id].c; renderTema(r.id); }
+    else if (r.v === "editar") { document.body.dataset.b = TEMA_POR_ID[r.id].b; titulo.textContent = "Editar " + TEMA_POR_ID[r.id].c; renderEditor(r.id); }
+    else if (r.v === "leer") { document.body.dataset.b = TEMA_POR_ID[r.id].b; titulo.textContent = "Tema " + TEMA_POR_ID[r.id].c; renderLeer(r.id); }
     else if (r.v === "global") { titulo.textContent = "Hub global"; renderGlobal(); }
     else if (r.v === "guia") { titulo.textContent = "Guía de fuentes"; renderGuia(); }
   }
@@ -1864,7 +2168,7 @@ function renderInicio() {
   const nVerde = TEMAS.filter(t => semaforo(t) === "verde").length;
   const nAmbar = TEMAS.filter(t => semaforo(t) === "ambar").length;
   const nAct = TEMAS.filter(t => t.v[0] === "ACTUALIZAR").length;
-  const totalFc = Object.values(estado.temas).reduce((s, t) => s + t.flashcards.length, 0);
+  const totalFc = Object.values(estado.temas).reduce((s, t) => s + fcs(t).length, 0);
   const sabidasFc = Object.values(estado.temas).reduce((s, t) => s + sabidasDe(t), 0);
   vista().innerHTML = `
     <h1 class="titulo-grande">Gestión AGE (A2)</h1>
@@ -1909,7 +2213,7 @@ function tarjetaBloque(b) {
   const a = b.temas.filter(t => semaforo(t) === "ambar").length;
   const act = b.temas.filter(t => t.v[0] === "ACTUALIZAR").length;
   const conceptos = cargados.reduce((s, t) => s + t.glossary.length, 0);
-  const fc = cargados.reduce((s, t) => s + t.flashcards.length, 0);
+  const fc = cargados.reduce((s, t) => s + fcs(t).length, 0);
   const w = n => (n / b.total * 100).toFixed(2) + "%";
   return `
     <a class="card interactive bloque-card" data-b="${b.code}" href="#/bloque/${b.code}" style="color:inherit;text-decoration:none">
@@ -1996,13 +2300,15 @@ function tarjetaTema(p) {
   const t = estado.temas[p.id];
   let cuerpo;
   if (t) {
-    const fcT = t.flashcards.length;
+    const fcT = fcs(t).length;
     const fcK = sabidasDe(t);
     const pct = fcT ? Math.round(fcK / fcT * 100) : 0;
+    const rp = repasoDe(t);
     cuerpo = `
       <div class="tema-stats">
+        ${rp.n ? `<span><b>${rp.hechos}/${rp.n}</b> repasados</span>` : ""}
         <span><b>${t.glossary.length}</b> conceptos</span><span><b>${t.timeline.length}</b> hitos</span>
-        <span><b>${fcT}</b> flashcards</span><span><b>${t.questions.length}</b> preguntas</span>
+        <span><b>${fcT}</b> flashcards</span><span><b>${qs(t).length}</b> preguntas</span>
       </div>
       ${fcT ? `<div class="prog-mini"><span>Flashcards dominadas</span><span>${pct}%</span></div><div class="bar" style="flex:none;min-width:0"><div style="width:${pct}%"></div></div>` : ""}`;
   } else {
@@ -2070,16 +2376,19 @@ function renderTema(id) {
         <div class="empty" style="padding:16px 8px 20px">
           <div class="ico">✍️</div>
           <h3>Tema pendiente de desarrollar</h3>
-          <p>Descarga la plantilla, complétala y súbela aquí. Conserva el id <code>${id}</code> para que se asigne a este tema.</p>
+          <p>Escribe aquí mismo los apuntes por apartados y añade glosario, cronología, flashcards y preguntas tipo test. Se guarda solo y se sincroniza.</p>
         </div>
-        <div class="btn-row" style="justify-content:center;margin-bottom:14px">
-          <button class="btn btn-primary" id="btn-plantilla">Descargar plantilla</button>
+        <div class="btn-row" style="justify-content:center;margin-bottom:6px">
+          <a class="btn btn-primary" href="#/tema/${id}/editar">✍️ Empezar a desarrollar</a>
         </div>
-        <div class="drop" tabindex="0" role="button" aria-label="Cargar el tema ${esc(p.c)}">
-          <div class="ico" aria-hidden="true">📥</div>
-          <div class="t">Suelta aquí <code>${id}_estudio.html</code></div>
-          <div class="s">o pulsa para elegir el archivo</div>
-        </div>
+        <details class="importar">
+          <summary>¿Ya lo tienes en un archivo? Importarlo</summary>
+          <div class="drop" tabindex="0" role="button" aria-label="Importar el tema ${esc(p.c)}">
+            <div class="ico" aria-hidden="true">📥</div>
+            <div class="t">Suelta aquí un tema de estudio (<code>.html</code> con <code>TEMARIO_DATA</code>) o una copia <code>.json</code></div>
+            <div class="s">o pulsa para elegir el archivo</div>
+          </div>
+        </details>
       </div>`}
 
     <div class="btn-row" style="justify-content:space-between;margin-top:24px">
@@ -2087,13 +2396,10 @@ function renderTema(id) {
       ${sig ? `<button class="btn" data-ir="#/tema/${sig}">${esc(TEMA_POR_ID[sig].c)} →</button>` : "<span></span>"}
     </div>`;
   vista().querySelectorAll("[data-ir]").forEach(x => x.addEventListener("click", () => ir(x.dataset.ir)));
-  const pl = document.getElementById("btn-plantilla");
-  if (pl) pl.addEventListener("click", () => descargarPlantilla(id));
   const drop = vista().querySelector(".drop");
   if (drop) activarDrop(drop);
   vista().querySelectorAll("[data-ancla]").forEach(x => x.addEventListener("click", () => abrirTema(id, x.dataset.ancla)));
-  const ab = document.getElementById("btn-abrir"); if (ab) ab.addEventListener("click", () => abrirTema(id));
-  const re = document.getElementById("btn-reemplazar"); if (re) re.addEventListener("click", elegirArchivos);
+  const ab = document.getElementById("btn-original"); if (ab) ab.addEventListener("click", () => window.open(urlTema(estado.temas[id]), "_blank", "noopener"));
   const qu = document.getElementById("btn-quitar");
   if (qu) qu.addEventListener("click", async () => {
     if (!confirm(`¿Quitar el contenido del tema ${p.c}?`)) return;
@@ -2101,7 +2407,7 @@ function renderTema(id) {
   });
 }
 function bloqueContenido(t) {
-  const fcT = t.flashcards.length;
+  const fcT = fcs(t).length;
   const fcK = sabidasDe(t);
   return `
     <div class="card">
@@ -2110,24 +2416,769 @@ function bloqueContenido(t) {
         <div class="kpi"><div class="k">Conceptos</div><div class="v">${t.glossary.length}</div></div>
         <div class="kpi"><div class="k">Hitos</div><div class="v">${t.timeline.length}</div></div>
         <div class="kpi"><div class="k">Flashcards</div><div class="v">${fcK}/${fcT}</div><div class="s">dominadas</div></div>
-        <div class="kpi"><div class="k">Preguntas</div><div class="v">${t.questions.length}</div></div>
+        <div class="kpi"><div class="k">Preguntas</div><div class="v">${qs(t).length}</div></div>
       </div>
       <div class="btn-row" style="margin-top:16px">
-        <button class="btn btn-primary" id="btn-abrir">Abrir tema ↗</button>
+        ${tieneApuntes(t) ? `<a class="btn btn-primary" href="#/tema/${t.id}/leer">📖 Leer apuntes</a>` : ""}
+        <a class="btn ${tieneApuntes(t) ? "" : "btn-primary"}" href="#/tema/${t.id}/editar">✏️ Editar</a>
         <a class="btn" href="#/bloque/${t.group}/hub">Repasar en el hub del bloque</a>
-        <button class="btn" id="btn-reemplazar">Reemplazar</button>
+        ${t.html ? `<button class="btn" id="btn-original">Abrir archivo original ↗</button>` : ""}
         <button class="btn" id="btn-quitar" style="color:var(--danger)">Quitar</button>
       </div>
-      <p class="muted" style="font-size:12px;margin:12px 0 0">${t.fileName ? "Archivo: " + esc(t.fileName) + " · " : ""}cargado el ${new Date(t.cargado || Date.now()).toLocaleDateString("es-ES")}</p>
+      <p class="muted" style="font-size:12px;margin:12px 0 0">${t.fileName ? "Archivo: " + esc(t.fileName) + " · " : ""}${t.modificado ? "última modificación: " + new Date(t.modificado).toLocaleString("es-ES", { dateStyle:"short", timeStyle:"short" }) : ""}</p>
     </div>
     ${t.sections.length ? `
       <section class="card">
         <h3 class="card-title">Índice del tema</h3>
         <ul class="secciones">
-          ${t.sections.map(s => `<li><button class="${/-/.test(s.id || "") ? "sub" : ""}" data-ancla="${esc(s.id || "")}">${esc(s.title)}</button></li>`).join("")}
+          ${t.sections.map(s => `<li><button class="${s.nivel === 2 || /-/.test(s.id || "") ? "sub" : ""}" data-ancla="${esc(s.id || "")}">${esc(s.title || "(sin título)")}</button></li>`).join("")}
         </ul>
       </section>` : ""}`;
 }
+
+/* ---- Editor del tema ----------------------------------------------------
+   Se escribe directamente en el hub. Cada cambio se guarda solo (600 ms
+   después de dejar de teclear) y entra en la cola de sincronización. Lo que
+   esté a medias también se guarda; solo lo completo pasa a mazos y tests. */
+const ED_TABS = [
+  { id:"apuntes",  txt:"📝 Apuntes",     arr:"sections"   },
+  { id:"glosario", txt:"📖 Glosario",    arr:"glossary"   },
+  { id:"crono",    txt:"📅 Cronología",  arr:"timeline"   },
+  { id:"fc",       txt:"🎴 Flashcards",  arr:"flashcards" },
+  { id:"test",     txt:"❓ Test",        arr:"questions"  }
+];
+const ED = { id:null, t:null, tab:"apuntes", timer:null, tocado:new Set() };
+const idApartado = () => "s" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+const NUEVO = {
+  apuntes:  () => ({ id:idApartado(), title:"", body:"", nivel:1 }),
+  glosario: () => ({ t:"", d:"", cat:"" }),
+  crono:    () => ({ y:"", txt:"", cons:"", cat:"" }),
+  fc:       () => ({ q:"", a:"", cat:"" }),
+  test:     () => ({ q:"", o:["", "", "", ""], c:0, e:"" })
+};
+function temaVacio(t) {
+  return !t.sections.some(x => lleno(x.title) || lleno(x.body)) && !lleno(t.subtitle) && !(t.etiquetas || []).length && !t.glossary.length && !t.timeline.length && !t.flashcards.length && !t.questions.length;
+}
+function edGuardarLuego() {
+  clearTimeout(ED.timer);
+  ED.timer = setTimeout(edGuardarYa, 600);
+  const e = document.getElementById("ed-estado"); if (e) e.textContent = "Guardando…";
+}
+/** Guarda ya lo pendiente del editor (al salir, al cambiar de pestaña…). */
+function edGuardarYa() {
+  if (!ED.timer) return;
+  clearTimeout(ED.timer); ED.timer = null;
+  if (!ED.t) return;
+  // Un tema que solo se ha abierto en el editor, sin escribir nada, no se crea.
+  if (!estado.temas[ED.id] && temaVacio(ED.t)) return;
+  /* Si mientras escribías llegó otra versión del tema (de otro dispositivo),
+     se guardan solo las partes que has tocado aquí encima de esa versión:
+     glosario en un móvil y apuntes en otro se combinan en vez de pisarse. */
+  const actual = estado.temas[ED.id];
+  if (actual && (actual.modificado || 0) > (ED.base || 0)) {
+    const mezcla = JSON.parse(JSON.stringify(actual));
+    ED.tocado.forEach(k => { mezcla[k] = ED.t[k]; });
+    ED.t = mezcla;
+  }
+  const partes = [...ED.tocado];
+  ED.tocado.clear();
+  const t = ED.t;
+  const guardado = guardarTema(t, false, null, partes);
+  ED.base = t.modificado;         // guardarTema la sella antes de su primer await
+  guardado.then(() => {
+    const e = document.getElementById("ed-estado");
+    if (e) e.textContent = "Guardado ✓";
+  });
+}
+/** Repinta salvo que estés escribiendo en el editor: entonces espera. */
+/** Llega algo de otro dispositivo. Nunca interrumpe: si estás escribiendo,
+    en un test o con un panel abierto, se actualiza lo justo (barras, marcas,
+    resaltados) y el repintado completo espera a que termines. */
+const panelAbierto = () => { const p = document.getElementById("panel"); return !!(p && !p.hidden); };
+function repintar() {
+  const r = ruta(), a = document.activeElement;
+  const escribiendo = !!(a && a.closest && a.closest("#vista, #panel") && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName));
+  const cambioTemas = S.cambioTemas; S.cambioTemas = false;
+  if (r.v === "leer") {
+    refrescarLectura(); pintarResaltados(ESTUDIO.id);
+    if (cambioTemas) { if (panelAbierto() || escribiendo) S.renderPendiente = true; else render(); }
+    return;
+  }
+  const enTest = Object.values(hubLocal).some(h => h.test);
+  if (escribiendo || panelAbierto() || enTest) { S.renderPendiente = true; return; }
+  render();
+}
+document.addEventListener("focusout", () => setTimeout(() => {
+  const a = document.activeElement;
+  if (S.renderPendiente && !panelAbierto() && !(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))) render();
+}, 0));
+window.addEventListener("pagehide", edGuardarYa);
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") edGuardarYa(); });
+
+function renderEditor(id) {
+  const p = TEMA_POR_ID[id];
+  if (ED.id !== id) ED.tab = "apuntes";
+  ED.id = id;
+  ED.t = estado.temas[id] ? JSON.parse(JSON.stringify(estado.temas[id])) : normalizarTema(id, {}, "", null);
+  ED.base = estado.temas[id] ? estado.temas[id].modificado || 0 : 0;
+  ED.tocado.clear();
+  const t = ED.t;
+  const n = { apuntes:t.sections.length, glosario:t.glossary.length, crono:t.timeline.length, fc:t.flashcards.length, test:t.questions.length };
+  vista().innerHTML = `
+    <div class="ed-cab">
+      <div>
+        <div class="bloque-sub">Tema ${esc(p.c)} · editor</div>
+        <h1 class="ed-tit">${esc(p.e)}</h1>
+      </div>
+      <div class="ed-acc">
+        <span class="muted" id="ed-estado" style="font-size:12.5px">${estado.temas[id] ? "Guardado ✓" : "Se guarda solo"}</span>
+        <a class="btn btn-sm" href="#/tema/${id}">Listo</a>
+      </div>
+    </div>
+    <div class="chip-row" role="tablist">
+      ${ED_TABS.map(x => `<button class="chip ${x.id === ED.tab ? "active" : ""}" data-edtab="${x.id}" role="tab">${x.txt}<span class="badge">${n[x.id]}</span></button>`).join("")}
+    </div>
+    <div id="ed-panel"></div>`;
+  vista().querySelectorAll("[data-edtab]").forEach(b => b.addEventListener("click", () => { edGuardarYa(); ED.tab = b.dataset.edtab; renderEditor(id); }));
+  pintarPanelEditor();
+}
+function selApartado(valor) {
+  const ops = ED.t.sections.filter(x => lleno(x.title));
+  return `<select class="input peq" data-k="${ED.tab === "glosario" ? "section" : "target"}">
+    <option value="">— Apartado (opcional) —</option>
+    ${ops.map(x => `<option value="${esc(x.id)}" ${x.id === valor ? "selected" : ""}>${esc(x.title)}</option>`).join("")}
+  </select>`;
+}
+function campo(k, valor, ph, area, extra) {
+  return area
+    ? `<textarea class="input" data-k="${k}" placeholder="${esc(ph)}" rows="${extra || 2}">${esc(valor || "")}</textarea>`
+    : `<input class="input" data-k="${k}" placeholder="${esc(ph)}" value="${esc(valor || "")}">`;
+}
+function itemEditor(tab, x, i, total) {
+  let cuerpo = "";
+  if (tab === "apuntes") cuerpo = `
+      <div class="ed-fila">
+        ${campo("title", x.title, x.nivel === 2 ? "Título del subapartado (p. ej. 3.1 Elementos)" : "Título del apartado (p. ej. 3. La costumbre)")}
+        <select class="input peq" data-k="nivel" aria-label="Nivel"><option value="1" ${x.nivel !== 2 ? "selected" : ""}>Apartado</option><option value="2" ${x.nivel === 2 ? "selected" : ""}>Subapartado</option></select>
+      </div>
+      ${campo("body", x.body, "Desarrollo del apartado…", true, 8)}`;
+  if (tab === "glosario") cuerpo = `
+      <div class="ed-fila">${campo("t", x.t, "Término")}${campo("cat", x.cat, "Categoría (opcional)")}</div>
+      ${campo("d", x.d, "Definición", true, 3)}
+      ${selApartado(x.section)}`;
+  if (tab === "crono") cuerpo = `
+      <div class="ed-fila">${campo("y", x.y, "Año o fecha")}${campo("cat", x.cat, "Categoría (opcional)")}</div>
+      ${campo("txt", x.txt, "Hecho (p. ej. Ley 39/2015)")}
+      ${campo("cons", x.cons, "Consecuencia o importancia (opcional)")}
+      ${selApartado(x.target)}`;
+  if (tab === "fc") cuerpo = `
+      ${campo("q", x.q, "Pregunta (anverso)", true, 2)}
+      ${campo("a", x.a, "Respuesta (reverso)", true, 3)}
+      ${campo("cat", x.cat, "Categoría (opcional)")}`;
+  if (tab === "test") cuerpo = `
+      ${campo("q", x.q, "Enunciado de la pregunta", true, 2)}
+      <div class="ed-ops">
+        ${x.o.map((o, j) => `<label class="ed-op"><input type="radio" name="c-${i}" data-k="c" value="${j}" ${x.c === j ? "checked" : ""} aria-label="Correcta: ${"ABCDEF"[j]}"><span class="l">${"ABCDEF"[j]}</span><input class="input" data-k="o.${j}" placeholder="Opción ${"ABCDEF"[j]}" value="${esc(o || "")}"></label>`).join("")}
+      </div>
+      <div class="muted" style="font-size:12px;margin:-2px 0 8px">Marca con el círculo la opción correcta.</div>
+      ${campo("e", x.e, "Explicación o artículo (opcional; sale al corregir)", true, 2)}`;
+  const incompleto =
+    (tab === "fc" && (lleno(x.q) || lleno(x.a)) && !fcValida(x)) ||
+    (tab === "test" && (lleno(x.q) || x.o.some(lleno)) && !qs({ questions:[x] }).length);
+  return `
+    <div class="card ed-item ${tab === "apuntes" && x.nivel === 2 ? "sub" : ""}" data-i="${i}">
+      <div class="ed-item-cab">
+        <span class="ed-num">${tab === "apuntes" ? (x.nivel === 2 ? "Subapartado" : "Apartado") : "#" + (i + 1)}</span>
+        ${incompleto ? `<span class="tag warn" title="No entra en el estudio hasta que esté completo">Incompleta</span>` : ""}
+        <span style="flex:1"></span>
+        <button class="icon-mini" data-acc="subir" ${i === 0 ? "disabled" : ""} aria-label="Subir">↑</button>
+        <button class="icon-mini" data-acc="bajar" ${i === total - 1 ? "disabled" : ""} aria-label="Bajar">↓</button>
+        <button class="icon-mini peligro" data-acc="borrar" aria-label="Borrar">✕</button>
+      </div>
+      ${cuerpo}
+    </div>`;
+}
+const AYUDA_ED = {
+  apuntes:  "Un apartado por epígrafe. En el texto: <b>**negrita**</b>, <i>*cursiva*</i>; las líneas que empiezan por «- » o «1. » se ven como listas; los identificadores BOE-A-… se convierten en enlaces.",
+  glosario: "Conceptos definidos con precisión. Salen en el glosario del bloque y en la búsqueda.",
+  crono:    "Fechas clave (leyes, reformas, sentencias…). Se ordenan solas por año.",
+  fc:       "Pregunta corta → respuesta precisa. Si cambias el texto de una pregunta, cuenta como tarjeta nueva.",
+  test:     "Cuatro opciones y una correcta, como en el examen. Las opciones vacías se ignoran."
+};
+const PEGAR = {
+  glosario: { ph:"Un término por línea:\nSilencio administrativo: ficción legal ante la falta de resolución expresa\nActo firme: el que no admite recurso ordinario", sep:/\s*[:—–]\s+|\s+-\s+/, f:(a, b) => ({ t:a, d:b, cat:"" }) },
+  fc:       { ph:"Una tarjeta por línea, pregunta | respuesta:\nPlazo máximo general para resolver | 3 meses (art. 21.3 LPAC)", sep:/\s*\|\s*/, f:(a, b) => ({ q:a, a:b, cat:"" }) },
+  crono:    { ph:"Un hito por línea, año | hecho | consecuencia:\n2015 | Ley 39/2015 (LPAC) | Sustituye a la Ley 30/1992", sep:/\s*\|\s*/, f:(a, b, c) => ({ y:a, txt:b, cons:c || "", cat:"" }) }
+};
+function pintarPanelEditor() {
+  const tab = ED.tab, def = ED_TABS.find(x => x.id === tab), lista = ED.t[def.arr];
+  // Los manejadores leen la lista en cada evento: tras una mezcla ED.t cambia.
+  const L = () => { ED.tocado.add(def.arr); return ED.t[def.arr]; };
+  const panel = document.getElementById("ed-panel");
+  panel.innerHTML = `
+    ${tab === "apuntes" ? `<div class="card ed-item ed-meta">
+      <div class="ed-item-cab"><span class="ed-num">Cabecera del tema</span></div>
+      <textarea class="input" data-meta="subtitle" rows="2" placeholder="Resumen en una línea (sale bajo el título)">${esc(ED.t.subtitle || "")}</textarea>
+      <input class="input" data-meta="etiquetas" placeholder="Conceptos clave separados por comas (p. ej. Silencio, Plazos, Art. 21 LPAC)" value="${esc((ED.t.etiquetas || []).join(", "))}">
+    </div>` : ""}
+    <p class="muted ed-ayuda">${AYUDA_ED[tab]}</p>
+    ${lista.length ? lista.map((x, i) => itemEditor(tab, x, i, lista.length)).join("") : `<div class="card"><div class="empty" style="padding:20px 8px"><h3>Todavía no hay nada aquí</h3><p>Pulsa «Añadir» para empezar.</p></div></div>`}
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn btn-primary" data-acc="anadir">＋ Añadir ${{ apuntes:"apartado", glosario:"término", crono:"hito", fc:"flashcard", test:"pregunta" }[tab]}</button>
+      ${tab === "apuntes" ? `<button class="btn" data-acc="anadir-sub">＋ Subapartado</button>` : ""}
+      ${PEGAR[tab] ? `<button class="btn" data-acc="pegar">📋 Pegar varios</button>` : ""}
+    </div>
+    ${PEGAR[tab] ? `<div class="card" id="ed-pegar" hidden style="margin-top:12px">
+      <textarea class="input" rows="6" id="ed-pegar-txt" placeholder="${esc(PEGAR[tab].ph)}"></textarea>
+      <div class="btn-row" style="margin-top:10px"><button class="btn btn-primary btn-sm" data-acc="pegar-ok">Añadir líneas</button><button class="btn btn-sm" data-acc="pegar-no">Cancelar</button></div>
+    </div>` : ""}`;
+  // Textareas que crecen con el texto.
+  const crecer = ta => { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 2) + "px"; };
+  panel.querySelectorAll("textarea[data-k]").forEach(crecer);
+  panel.oninput = e => {
+    const el = e.target;
+    if (el.dataset.meta) {
+      ED.tocado.add("meta");
+      if (el.dataset.meta === "etiquetas") ED.t.etiquetas = el.value.split(",").map(x => x.trim()).filter(Boolean);
+      else ED.t.subtitle = el.value;
+      if (el.tagName === "TEXTAREA") crecer(el);
+      edGuardarLuego(); return;
+    }
+    const k = el.dataset.k, item = el.closest(".ed-item");
+    if (!k || !item) return;
+    const x = L()[+item.dataset.i];
+    if (k.startsWith("o.")) x.o[+k.slice(2)] = el.value;
+    else if (k === "c") x.c = +el.value;
+    else if (k === "nivel") { x.nivel = +el.value; edGuardarLuego(); pintarPanelEditor(); return; }
+    else x[k] = el.value;
+    if (el.tagName === "TEXTAREA") crecer(el);
+    edGuardarLuego();
+  };
+  panel.onchange = panel.oninput;
+  panel.onclick = e => {
+    const b = e.target.closest("[data-acc]"); if (!b) return;
+    const acc = b.dataset.acc, item = b.closest(".ed-item"), i = item ? +item.dataset.i : -1;
+    const lista = L();
+    if (acc === "anadir" || acc === "anadir-sub") {
+      const x = NUEVO[tab](); if (acc === "anadir-sub") x.nivel = 2;
+      lista.push(x); edGuardarLuego(); pintarPanelEditor(); actualizarContadores();
+      const ult = panel.querySelectorAll(".ed-item"); const f = ult[ult.length - 1] && ult[ult.length - 1].querySelector("input,textarea");
+      if (f) { f.focus(); f.scrollIntoView({ block:"center", behavior:"smooth" }); }
+      return;
+    }
+    if (acc === "subir" && i > 0) { [lista[i - 1], lista[i]] = [lista[i], lista[i - 1]]; }
+    else if (acc === "bajar" && i < lista.length - 1) { [lista[i + 1], lista[i]] = [lista[i], lista[i + 1]]; }
+    else if (acc === "borrar") {
+      const x = lista[i];
+      const conTexto = Object.values(x).some(v => Array.isArray(v) ? v.some(lleno) : (typeof v === "string" && lleno(v) && v !== x.id));
+      if (conTexto && !confirm("¿Borrar este elemento?")) return;
+      lista.splice(i, 1);
+    }
+    else if (acc === "pegar") { const c = document.getElementById("ed-pegar"); c.hidden = false; document.getElementById("ed-pegar-txt").focus(); return; }
+    else if (acc === "pegar-no") { document.getElementById("ed-pegar").hidden = true; return; }
+    else if (acc === "pegar-ok") {
+      const def2 = PEGAR[tab]; let nuevos = 0, malas = 0;
+      document.getElementById("ed-pegar-txt").value.split("\n").map(l => l.trim()).filter(Boolean).forEach(l => {
+        const partes = l.split(def2.sep);
+        if (partes.length < 2 || !lleno(partes[0]) || !lleno(partes[1])) { malas++; return; }
+        lista.push(def2.f(partes[0].trim(), partes.slice(1, tab === "crono" ? 2 : undefined).join(tab === "glosario" ? ": " : " | ").trim(), tab === "crono" ? (partes.slice(2).join(" | ") || "").trim() : ""));
+        nuevos++;
+      });
+      toast(`${plural(nuevos, "línea añadida", "líneas añadidas")}${malas ? ` · ${malas} sin el separador, ignoradas` : ""}`, malas && !nuevos ? "error" : "");
+    }
+    else return;
+    edGuardarLuego(); pintarPanelEditor(); actualizarContadores();
+  };
+}
+function actualizarContadores() {
+  const t = ED.t, n = { apuntes:t.sections.length, glosario:t.glossary.length, crono:t.timeline.length, fc:t.flashcards.length, test:t.questions.length };
+  vista().querySelectorAll("[data-edtab]").forEach(b => { const bd = b.querySelector(".badge"); if (bd) bd.textContent = n[b.dataset.edtab]; });
+}
+
+/* ---- Lectura de los apuntes -------------------------------------------- */
+/** Texto con un formato mínimo: párrafos, listas, **negrita**, *cursiva* y
+    enlaces a los identificadores BOE. Todo escapado antes. */
+function formatear(txt) {
+  const enLinea = x => esc(x)
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^*\w])\*(?!\s)([^*]+?)\*(?!\w)/g, "$1<em>$2</em>")
+    .replace(/BOE-A-\d{4}-\d+/g, id => `<a href="https://www.boe.es/buscar/act.php?id=${id}" target="_blank" rel="noopener">${id}</a>`);
+  let html = "", lista = null, parr = [];
+  const cerrarP = () => { if (parr.length) { html += "<p>" + parr.map(enLinea).join("<br>") + "</p>"; parr = []; } };
+  const cerrarL = () => { if (lista) { html += "</" + lista + ">"; lista = null; } };
+  String(txt || "").replace(/\r/g, "").split("\n").forEach(l => {
+    const t = l.trim();
+    if (!t) { cerrarP(); cerrarL(); return; }
+    let m = t.match(/^[-•*]\s+(.*)$/), tipo = "ul";
+    if (!m) { m = t.match(/^(?:\d{1,2}|[a-z])[.)]\s+(.*)$/); tipo = "ol"; }
+    if (m) { cerrarP(); if (lista !== tipo) { cerrarL(); html += "<" + tipo + ">"; lista = tipo; } html += "<li>" + enLinea(m[1]) + "</li>"; return; }
+    cerrarL(); parr.push(t);
+  });
+  cerrarP(); cerrarL();
+  return html;
+}
+/* ---- Página de estudio del tema -----------------------------------------
+   La misma estructura que las páginas de tema de estudio: cabecera, índice,
+   apartados plegables con «Marcar como repasada» y, al lado, buscador,
+   progreso de lectura y herramientas (glosario, resaltados, práctica activa,
+   progreso, mapa conceptual, cronología y lectura en voz). Lo que es tuyo
+   (repasados, resaltados, respuestas) se sincroniza entre tus dispositivos. */
+const HERRAMIENTAS = [
+  { id:"glosario",   ico:"📖", txt:"Glosario" },
+  { id:"resaltados", ico:"🖍️", txt:"Resaltados" },
+  { id:"test",       ico:"📝", txt:"Test",       practica:true },
+  { id:"fc",         ico:"🎴", txt:"Flashcards", practica:true },
+  { id:"aleatorio",  ico:"🎲", txt:"Aleatorio",  practica:true },
+  { id:"progreso",   ico:"📊", txt:"Progreso" },
+  { id:"mapa",       ico:"🗺️", txt:"Mapa conceptual" },
+  { id:"crono",      ico:"📅", txt:"Cronología" },
+  { id:"voz",        ico:"🔊", txt:"Lectura en voz" }
+];
+const ESTUDIO = { id:null, abiertos:{}, busq:{ q:"", marcas:[], i:-1 } };
+function abiertosDe(id) {
+  if (!ESTUDIO.abiertos[id]) { try { ESTUDIO.abiertos[id] = new Set(JSON.parse(sessionStorage.getItem("gestion_abiertos_" + id) || "[]")); } catch (_) { ESTUDIO.abiertos[id] = new Set(); } }
+  return ESTUDIO.abiertos[id];
+}
+function guardarAbiertos(id) { try { sessionStorage.setItem("gestion_abiertos_" + id, JSON.stringify([...abiertosDe(id)])); } catch (_) {} }
+
+function htmlLateral(id) {
+  const t = estado.temas[id], p = TEMA_POR_ID[id], r = repasoDe(t);
+  const pct = r.n ? Math.round(r.hechos / r.n * 100) : 0;
+  const boton = h => `<button class="herr ${h.practica ? "prac" : ""}" data-herr="${h.id}"><span class="herr-ico" aria-hidden="true">${h.ico}</span><span>${h.txt}</span></button>`;
+  return `
+    <div class="lat-cab"><div class="lat-sup">Bloque ${BLOQUE_POR_CODE[p.b].rom} · ${esc(BLOQUE_POR_CODE[p.b].nombre)}</div><div class="lat-tit">Tema ${esc(p.c)}</div></div>
+    <div class="lat-k">Buscar</div>
+    <div class="buscar-tema">
+      <input class="input" type="search" data-buscar placeholder="Buscar en el tema…" value="${esc(ESTUDIO.busq.q)}" aria-label="Buscar en el tema">
+      <div class="buscar-nav"><button class="icon-mini" data-busq="-1" aria-label="Anterior">←</button><button class="icon-mini" data-busq="1" aria-label="Siguiente">→</button><span class="muted" data-busq-n></span></div>
+    </div>
+    <div class="lat-k">Progreso de lectura</div>
+    <div class="bar" style="flex:none;min-width:0"><div data-lectura-bar style="width:${pct}%"></div></div>
+    <div class="lat-pct muted"><span data-lectura-txt>${r.hechos}/${r.n} apartados repasados</span><b data-lectura-pct>${pct}%</b></div>
+    <div class="lat-k">Herramientas</div>
+    <div class="herr-grid">
+      ${HERRAMIENTAS.filter(h => !h.practica).slice(0, 2).map(boton).join("")}
+      <div class="practica"><div class="practica-k">Práctica activa</div><div class="herr-grid">${HERRAMIENTAS.filter(h => h.practica).map(boton).join("")}</div></div>
+      ${HERRAMIENTAS.filter(h => !h.practica).slice(2).map(boton).join("")}
+    </div>
+    <div class="lat-k">Índice</div>
+    <ul class="lat-indice">
+      ${apartados(t).map((a, i) => `<li><button data-ir-sec="${esc(a.s.id)}">${repasada(id, a.s.id) ? '<span class="ok-mini">✓</span>' : `<span class="n">${i + 1}.</span>`} ${esc(a.s.title || "(sin título)")}</button>${a.subs.length ? `<ul>${a.subs.map(x => `<li><button data-ir-sec="${esc(x.id)}">${esc(x.title || "(sin título)")}</button></li>`).join("")}</ul>` : ""}</li>`).join("")}
+      ${t.timeline.length ? `<li><button data-herr="crono">⏳ Cronología</button></li>` : ""}
+    </ul>`;
+}
+
+function renderLeer(id) {
+  const p = TEMA_POR_ID[id], t = estado.temas[id], b = BLOQUE_POR_CODE[p.b];
+  if (!t) { ir("#/tema/" + id); return; }
+  if (ESTUDIO.id !== id) { ESTUDIO.busq = { q:"", marcas:[], i:-1 }; vozParar(); }
+  ESTUDIO.id = id;
+  const aps = apartados(t), abiertos = abiertosDe(id);
+  const chips = (t.etiquetas || []).length ? t.etiquetas : [];
+  vista().innerHTML = `
+    <header class="hero-tema">
+      <div class="hero-sup">Bloque ${b.rom} · ${esc(b.nombre)}</div>
+      <div class="hero-num">Tema ${esc(p.c)}</div>
+      <h1>${esc(p.e)}</h1>
+      ${lleno(t.subtitle) ? `<p class="hero-sub">${esc(t.subtitle)}</p>` : ""}
+      ${chips.length ? `<div class="hero-chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
+      <div class="hero-acc">
+        <a class="btn btn-sm hero-btn" href="#/tema/${id}/editar">✏️ Editar</a>
+        <a class="btn btn-sm hero-btn" href="#/tema/${id}">Ficha y fuentes</a>
+        ${t.html ? `<button class="btn btn-sm hero-btn" id="btn-original">Archivo original ↗</button>` : ""}
+      </div>
+    </header>
+    <div class="estudio">
+      <div class="estudio-main">
+        ${aps.length ? `
+        <nav class="card indice-tema" aria-label="Índice del tema">
+          <div class="ficha-k">Índice del tema</div>
+          <ol>${aps.map((a, i) => `<li><button data-ir-sec="${esc(a.s.id)}"><span class="n">${String(i + 1).padStart(2, "0")}.</span> ${esc(a.s.title || "(sin título)")}${repasada(id, a.s.id) ? ' <span class="ok-mini">✓</span>' : ""}</button>${a.subs.length ? `<ul>${a.subs.map(x => `<li><button data-ir-sec="${esc(x.id)}">${esc(x.title || "(sin título)")}</button></li>`).join("")}</ul>` : ""}</li>`).join("")}
+            ${t.timeline.length ? `<li><button data-herr="crono"><span class="n">⏳</span> Cronología interactiva</button></li>` : ""}</ol>
+        </nav>
+        <div class="estudio-barra">
+          <button class="btn btn-sm" data-todo="1">Desplegar todo</button>
+          <button class="btn btn-sm" data-todo="0">Plegar todo</button>
+        </div>
+        ${aps.map((a, i) => tarjetaApartado(id, a, i, abiertos.has(a.s.id))).join("")}
+        ${t.timeline.length ? `<button class="card ap ap-extra" data-herr="crono"><span class="ap-num">⏳</span><span class="ap-tit">Cronología interactiva</span><span class="ap-tog" aria-hidden="true">▸</span></button>` : ""}`
+        : `<div class="card"><div class="empty"><div class="ico">✍️</div><h3>Sin apuntes todavía</h3><p>Escribe el desarrollo en la pestaña «Apuntes» del editor. Mientras tanto puedes usar las herramientas con el glosario, las flashcards y el test que ya tengas.</p><p style="margin-top:12px"><a class="btn btn-primary" href="#/tema/${id}/editar">✍️ Escribir apuntes</a></p></div></div>`}
+      </div>
+      <aside class="estudio-lateral card" aria-label="Herramientas de estudio">${htmlLateral(id)}</aside>
+    </div>
+    <button class="fab-herr" id="fab-herr" aria-label="Buscar y herramientas"><span aria-hidden="true">🧰</span><span class="fab-pct" data-lectura-pct>${aps.length ? Math.round(repasoDe(t).hechos / aps.length * 100) : 0}%</span></button>
+    <button class="btn-resaltar" id="btn-resaltar" hidden>🖍️ Resaltar</button>`;
+
+  pintarResaltados(id);
+  if (ESTUDIO.busq.q) buscarEnTema(ESTUDIO.busq.q, true);
+  const ab = document.getElementById("btn-original"); if (ab) ab.addEventListener("click", () => window.open(urlTema(t), "_blank", "noopener"));
+  document.getElementById("fab-herr").addEventListener("click", () => abrirPanel("menu"));
+  if (anclaPendiente) { const a = anclaPendiente; anclaPendiente = null; setTimeout(() => irASeccion(a, true), 30); }
+}
+function tarjetaApartado(id, a, i, abierto) {
+  const rep = repasada(id, a.s.id);
+  return `
+    <section class="card ap ${abierto ? "abierto" : ""} ${rep ? "repasada" : ""}" id="sec-${esc(a.s.id)}" data-ap="${esc(a.s.id)}">
+      <div class="ap-cab" data-toggle>
+        <span class="ap-num">${String(i + 1).padStart(2, "0")}</span>
+        <h2 class="ap-tit">${esc(a.s.title || "(sin título)")}</h2>
+        <button class="ap-rep" data-rep aria-pressed="${rep}">${rep ? "✓ Repasada" : "Marcar como repasada"}</button>
+        <button class="ap-tog" data-toggle-btn aria-expanded="${abierto}" aria-label="${abierto ? "Plegar" : "Desplegar"}">▸</button>
+      </div>
+      <div class="ap-cuerpo" data-cuerpo="${esc(a.s.id)}">
+        ${formatear(a.s.body)}
+        ${a.subs.map(x => `<div class="ap-sub" id="sec-${esc(x.id)}" data-cuerpo="${esc(x.id)}"><h3>${esc(x.title || "")}</h3>${formatear(x.body)}</div>`).join("")}
+      </div>
+    </section>`;
+}
+/** Abre el apartado que contiene una sección (o subapartado) y va a él. */
+function irASeccion(secId, suave) {
+  const el = document.getElementById("sec-" + secId);
+  if (!el) return;
+  const ap = el.closest(".ap");
+  if (ap && !ap.classList.contains("abierto")) alternarApartado(ap, true);
+  el.scrollIntoView({ behavior:suave ? "smooth" : "auto", block:"start" });
+  el.classList.add("destello"); setTimeout(() => el.classList.remove("destello"), 1400);
+}
+function alternarApartado(ap, abrir) {
+  const id = ESTUDIO.id, sec = ap.dataset.ap, set = abiertosDe(id);
+  const ab = abrir == null ? !ap.classList.contains("abierto") : abrir;
+  ap.classList.toggle("abierto", ab);
+  const b = ap.querySelector("[data-toggle-btn]"); if (b) { b.setAttribute("aria-expanded", ab); b.setAttribute("aria-label", ab ? "Plegar" : "Desplegar"); }
+  if (ab) set.add(sec); else set.delete(sec);
+  guardarAbiertos(id);
+}
+/** Refresca lo que depende de los repasados sin repintar la página. */
+function refrescarLectura() {
+  const id = ESTUDIO.id, t = estado.temas[id]; if (!t) return;
+  const r = repasoDe(t), pct = r.n ? Math.round(r.hechos / r.n * 100) : 0;
+  document.querySelectorAll("[data-lectura-bar]").forEach(x => x.style.width = pct + "%");
+  document.querySelectorAll("[data-lectura-pct]").forEach(x => x.textContent = pct + "%");
+  document.querySelectorAll("[data-lectura-txt]").forEach(x => x.textContent = `${r.hechos}/${r.n} apartados repasados`);
+  document.querySelectorAll(".ap[data-ap]").forEach(ap => {
+    const rep = repasada(id, ap.dataset.ap), b = ap.querySelector("[data-rep]");
+    ap.classList.toggle("repasada", rep);
+    if (b) { b.textContent = rep ? "✓ Repasada" : "Marcar como repasada"; b.setAttribute("aria-pressed", rep); }
+  });
+  const lat = document.querySelector(".estudio-lateral");
+  if (lat) { const q = lat.querySelector("[data-buscar]"); const foco = document.activeElement === q; if (!foco) { lat.innerHTML = htmlLateral(id); actualizarContadorBusq(); } }
+}
+
+/* ---- Envolver texto (búsqueda y resaltados) ----------------------------
+   Busca sin distinguir mayúsculas ni tildes, también a través de negritas o
+   enlaces, y envuelve cada trozo en su propia marca. */
+function envolver(root, aguja, crear, todas) {
+  const nodos = [];
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode:n => n.parentNode.closest("button") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+  let total = "";
+  while (w.nextNode()) { nodos.push({ n:w.currentNode, ini:total.length, len:w.currentNode.nodeValue.length }); total += w.currentNode.nodeValue; }
+  const T = norm(total), A = norm(String(aguja).trim());
+  if (!A || T.length !== total.length) return [];
+  const rangos = [];
+  for (let i = T.indexOf(A); i >= 0; i = T.indexOf(A, i + A.length)) { rangos.push([i, i + A.length]); if (!todas) break; }
+  const grupos = rangos.map(() => []);
+  for (let r = rangos.length - 1; r >= 0; r--) {
+    const [a, b] = rangos[r];
+    for (let j = nodos.length - 1; j >= 0; j--) {
+      const { n, ini, len } = nodos[j];
+      if (ini >= b || ini + len <= a) continue;
+      const s0 = Math.max(a, ini) - ini, e0 = Math.min(b, ini + len) - ini;
+      if (e0 < n.nodeValue.length) n.splitText(e0);
+      const trozo = s0 > 0 ? n.splitText(s0) : n;
+      const m = crear(); trozo.parentNode.insertBefore(m, trozo); m.appendChild(trozo);
+      grupos[r].unshift(m);
+    }
+  }
+  return grupos;
+}
+function desenvolver(root, sel) {
+  root.querySelectorAll(sel).forEach(m => { const p = m.parentNode; while (m.firstChild) p.insertBefore(m.firstChild, m); p.removeChild(m); p.normalize(); });
+}
+function pintarResaltados(id) {
+  const main = document.querySelector(".estudio-main"); if (!main) return;
+  desenvolver(main, "mark.res");
+  resaltadosDe(id).forEach(r => {
+    const cont = main.querySelector(`[data-cuerpo="${CSS.escape(r.sec)}"]`); if (!cont) return;
+    envolver(cont, r.x, () => { const m = document.createElement("mark"); m.className = "res"; m.dataset.k = r.k; m.title = "Resaltado · pulsa para quitarlo"; return m; }, false);
+  });
+}
+
+/* ---- Buscar en el tema ------------------------------------------------- */
+function buscarEnTema(q, sinSalto) {
+  ESTUDIO.busq.q = q;
+  const main = document.querySelector(".estudio-main"); if (!main) return;
+  desenvolver(main, "mark.busq");
+  ESTUDIO.busq.marcas = []; ESTUDIO.busq.i = -1;
+  if (q.trim().length >= 2) {
+    main.querySelectorAll(".ap-tit, [data-cuerpo]").forEach(el => {
+      // Los subapartados ya se recorren dentro de su apartado.
+      if (el.matches(".ap-sub") ) return;
+      envolver(el, q, () => { const m = document.createElement("mark"); m.className = "busq"; return m; }, true)
+        .forEach(g => { if (g.length) ESTUDIO.busq.marcas.push(g[0]); });
+    });
+    if (ESTUDIO.busq.marcas.length && !sinSalto) moverBusq(1);
+  }
+  actualizarContadorBusq();
+}
+function moverBusq(d) {
+  const B = ESTUDIO.busq; if (!B.marcas.length) return;
+  if (B.i >= 0 && B.marcas[B.i]) B.marcas[B.i].classList.remove("actual");
+  B.i = (B.i + d + B.marcas.length) % B.marcas.length;
+  const m = B.marcas[B.i]; m.classList.add("actual");
+  const ap = m.closest(".ap"); if (ap && !ap.classList.contains("abierto")) alternarApartado(ap, true);
+  m.scrollIntoView({ behavior:"smooth", block:"center" });
+  actualizarContadorBusq();
+}
+function actualizarContadorBusq() {
+  const B = ESTUDIO.busq;
+  document.querySelectorAll("[data-busq-n]").forEach(x => x.textContent = B.q.trim().length < 2 ? "" : B.marcas.length ? `${B.i + 1}/${B.marcas.length}` : "0 resultados");
+}
+
+/* ---- Panel de herramientas (lateral en escritorio, hoja en el móvil) --- */
+function abrirPanel(herr) {
+  const id = ESTUDIO.id, t = estado.temas[id]; if (!t) return;
+  const fondo = document.getElementById("panel-fondo"), panel = document.getElementById("panel");
+  const h = HERRAMIENTAS.find(x => x.id === herr);
+  document.getElementById("panel-tit").textContent = herr === "menu" ? "Buscar y herramientas" : h.ico + " " + h.txt;
+  document.getElementById("panel-volver").hidden = herr === "menu" || matchMedia("(min-width:1000px)").matches;
+  const c = document.getElementById("panel-cuerpo");
+  panel.dataset.b = TEMA_POR_ID[id].b; panel.dataset.herramienta = herr;
+  fondo.hidden = false; panel.hidden = false;
+  requestAnimationFrame(() => { fondo.classList.add("on"); panel.classList.add("on"); });
+  c.scrollTop = 0;
+  const amb = "t:" + id;
+  if (herr === "menu") { c.innerHTML = `<div class="lateral-movil">${htmlLateral(id)}</div>`; actualizarContadorBusq(); return; }
+  if (herr === "glosario") return t.glossary.some(g => lleno(g.t)) ? hubGlosario(c, amb, [t]) : vacioHerr(c, "📖", "Sin glosario", "Añade términos en la pestaña «Glosario» del editor.");
+  if (herr === "crono") return t.timeline.length ? hubCrono(c, amb, [t]) : vacioHerr(c, "📅", "Sin cronología", "Añade hitos en la pestaña «Cronología» del editor.");
+  if (herr === "fc") return hubFc(c, amb, [t]);
+  if (herr === "test") return hubTest(c, amb, [t]);
+  if (herr === "resaltados") return panelResaltados(c, id);
+  if (herr === "aleatorio") return panelAleatorio(c, id);
+  if (herr === "progreso") return panelProgreso(c, id);
+  if (herr === "mapa") return panelMapa(c, id);
+  if (herr === "voz") return panelVoz(c, id);
+}
+function cerrarPanel(desdeRender) {
+  const fondo = document.getElementById("panel-fondo"), panel = document.getElementById("panel");
+  if (!panel || panel.hidden) return;
+  fondo.classList.remove("on"); panel.classList.remove("on");
+  // Un test a medias en el panel no se pierde: se retoma al volver a abrirlo.
+  setTimeout(() => { fondo.hidden = true; panel.hidden = true; document.getElementById("panel-cuerpo").innerHTML = ""; }, desdeRender ? 0 : 220);
+  if (!desdeRender && S.renderPendiente) setTimeout(render, 230);
+  else if (!desdeRender) refrescarLectura();
+}
+function vacioHerr(c, ico, tit, txt) { c.innerHTML = `<div class="empty"><div class="ico">${ico}</div><h3>${tit}</h3><p>${txt}</p><p style="margin-top:12px"><a class="btn btn-sm" href="#/tema/${ESTUDIO.id}/editar">✏️ Abrir el editor</a></p></div>`; }
+
+function panelResaltados(c, id) {
+  const lista = resaltadosDe(id), t = estado.temas[id];
+  const tituloSec = sec => { const x = t.sections.find(y => y.id === sec); return x ? x.title : ""; };
+  c.innerHTML = lista.length ? `
+    <p class="muted" style="font-size:13px;margin:0 0 12px">Selecciona texto en los apuntes y pulsa «Resaltar». Tus resaltados se sincronizan en tus dispositivos.</p>
+    ${lista.map(r => `<div class="res-item"><button class="res-ir" data-ir-sec="${esc(r.sec)}"><mark class="res">${esc(r.x.length > 220 ? r.x.slice(0, 220) + "…" : r.x)}</mark><span class="muted">${esc(tituloSec(r.sec))}</span></button><button class="icon-mini peligro" data-quitar-res="${esc(r.k)}" aria-label="Quitar">✕</button></div>`).join("")}`
+    : `<div class="empty"><div class="ico">🖍️</div><h3>Sin resaltados</h3><p>Selecciona un texto de los apuntes y pulsa el botón «Resaltar» que aparece.</p></div>`;
+  c.querySelectorAll("[data-quitar-res]").forEach(b => b.addEventListener("click", () => {
+    marcarProg(b.dataset.quitarRes, false, null); pintarResaltados(id); panelResaltados(c, id);
+  }));
+}
+function panelAleatorio(c, id) {
+  const t = estado.temas[id];
+  const pool = [...fcs(t).map(f => ({ tipo:"fc", x:f })), ...qs(t).map(q => ({ tipo:"q", x:q }))];
+  if (!pool.length) return vacioHerr(c, "🎲", "Nada que preguntar todavía", "Añade flashcards o preguntas tipo test en el editor.");
+  const e = pool[Math.floor(Math.random() * pool.length)];
+  if (e.tipo === "fc") {
+    const k = claveFc(id, e.x);
+    c.innerHTML = `
+      <div class="tags" style="margin-bottom:8px"><span class="tag acc">Flashcard</span>${e.x.cat ? `<span class="tag">${esc(e.x.cat)}</span>` : ""}${sabida(k) ? '<span class="tag ok">Dominada</span>' : ""}</div>
+      <div class="fc" id="al-fc" role="button" tabindex="0"><div class="fc-in"><div class="fc-cara"><div class="fc-q">${esc(e.x.q)}</div><div class="fc-hint">Pulsa para ver la respuesta</div></div><div class="fc-cara atras"><div class="fc-a">${esc(e.x.a)}</div></div></div></div>
+      <div class="fc-btns" id="al-btns" hidden><button class="btn btn-no" data-al="0">✗ No la sabía</button><button class="btn btn-si" data-al="1">✓ La sabía</button></div>
+      <div class="btn-row" style="justify-content:flex-end;margin-top:12px"><button class="btn btn-sm" id="al-otra">Otra 🎲</button></div>`;
+    const carta = document.getElementById("al-fc");
+    carta.addEventListener("click", () => { carta.classList.toggle("volteada"); document.getElementById("al-btns").hidden = !carta.classList.contains("volteada"); });
+    c.querySelectorAll("[data-al]").forEach(b => b.addEventListener("click", () => { marcarFc(k, b.dataset.al === "1"); olvidarMazos(); panelAleatorio(c, id); }));
+  } else {
+    const q = e.x, orden = barajar(q.o.map((_, i) => i)), o = orden.map(i => q.o[i]), correcta = orden.indexOf(q.c);
+    c.innerHTML = `
+      <div class="tags" style="margin-bottom:8px"><span class="tag acc">Pregunta de test</span>${fallada(id, q) ? '<span class="tag hot">La fallaste</span>' : ""}</div>
+      <div class="q-txt">${esc(q.q)}</div>
+      <div class="q-opts">${o.map((x, i) => `<button class="q-opt" data-i="${i}"><span class="l">${"ABCDEF"[i]}</span><span>${esc(x)}</span></button>`).join("")}</div>
+      <div id="al-fb"></div>
+      <div class="btn-row" style="justify-content:flex-end;margin-top:12px"><button class="btn btn-sm" id="al-otra">Otra 🎲</button></div>`;
+    c.querySelectorAll(".q-opt").forEach(b => b.addEventListener("click", () => {
+      const i = +b.dataset.i, ok = i === correcta;
+      c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === correcta) x.classList.add("bien"); if (j === i && !ok) x.classList.add("mal"); });
+      registrarRespuesta(id, q, ok);
+      document.getElementById("al-fb").innerHTML = `<div class="q-fb ${ok ? "bien" : "mal"}">${ok ? "✓ Correcto." : "✗ Era la " + "ABCDEF"[correcta] + "."} ${esc(q.e || "")}</div>`;
+    }));
+  }
+  document.getElementById("al-otra").addEventListener("click", () => panelAleatorio(c, id));
+}
+function panelProgreso(c, id) {
+  const t = estado.temas[id], r = repasoDe(t), F = fcs(t), Q = qs(t);
+  const resp = Q.map(q => progreso(id + ":q:" + hashCorto(q.q))).filter(Boolean);
+  const tests = resultadosTest(d => d.amb === "t:" + id);
+  const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+  const anillo = (v, txt) => `<div class="anillo" style="--p:${v}"><span>${v}%</span><small>${txt}</small></div>`;
+  c.innerHTML = `
+    <div class="anillos">
+      ${anillo(pct(r.hechos, r.n), "lectura")}
+      ${anillo(pct(sabidasDe(t), F.length), "flashcards")}
+      ${anillo(pct(resp.filter(x => x.s).length, Q.length), "test")}
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="k">Repasados</div><div class="v">${r.hechos}/${r.n}</div><div class="s">apartados</div></div>
+      <div class="kpi"><div class="k">Flashcards</div><div class="v">${sabidasDe(t)}/${F.length}</div><div class="s">dominadas</div></div>
+      <div class="kpi"><div class="k">Preguntas</div><div class="v">${resp.filter(x => x.s).length}/${Q.length}</div><div class="s">acertadas la última vez</div></div>
+      <div class="kpi"><div class="k">Falladas</div><div class="v">${resp.filter(x => !x.s).length}</div><div class="s">para repasar</div></div>
+    </div>
+    <h3 class="card-title" style="margin-top:18px">Apartados</h3>
+    <ul class="lista-check">${apartados(t).map(a => `<li class="${repasada(id, a.s.id) ? "ok" : ""}"><button data-ir-sec="${esc(a.s.id)}">${repasada(id, a.s.id) ? "✓" : "○"} ${esc(a.s.title || "(sin título)")}</button></li>`).join("") || '<li class="muted">Sin apartados.</li>'}</ul>
+    <h3 class="card-title" style="margin-top:18px">Tests de este tema</h3>
+    ${historialTests(tests)}`;
+}
+function historialTests(tests) {
+  if (!tests.length) return `<p class="muted" style="font-size:13px;margin:0">Todavía no has hecho ningún test aquí.</p>`;
+  const max = Math.max(...tests.map(x => x.n ? x.a / x.n : 0));
+  return `<div class="hist">${tests.slice(0, 12).map(x => {
+    const v = x.n ? Math.round(x.a / x.n * 100) : 0, neta = x.n ? Math.max(0, x.a - x.f / 3) / x.n * 100 : 0;
+    return `<div class="hist-fila"><span class="muted">${new Date(x.m).toLocaleDateString("es-ES", { day:"numeric", month:"short" })}</span><div class="hist-bar"><div style="width:${v}%" class="${x.n && x.a / x.n === max ? "mejor" : ""}"></div></div><b>${v}%</b><span class="muted" title="Con −1/3 por error">${neta.toFixed(0)}% neto</span></div>`;
+  }).join("")}</div>`;
+}
+/** Mapa conceptual generado con la estructura del propio tema: apartados,
+    subapartados y los conceptos del glosario asociados a cada apartado. */
+function panelMapa(c, id) {
+  const t = estado.temas[id], p = TEMA_POR_ID[id], aps = apartados(t);
+  if (!aps.length && !t.glossary.length) return vacioHerr(c, "🗺️", "Sin estructura todavía", "El mapa se construye con los apartados de tus apuntes y los términos del glosario (asígnales un apartado).");
+  const conceptosDe = sec => t.glossary.filter(g => lleno(g.t) && g.section === sec);
+  const sueltos = t.glossary.filter(g => lleno(g.t) && !t.sections.some(x => x.id === g.section));
+  c.innerHTML = `
+    <div class="mapa">
+      <div class="mapa-raiz">${esc(p.c)} · ${esc(p.e)}</div>
+      <ul class="mapa-ramas">
+        ${aps.map((a, i) => `<li><button class="mapa-nodo" data-ir-sec="${esc(a.s.id)}"><span class="n">${i + 1}</span>${esc(a.s.title || "(sin título)")}</button>
+          ${(a.subs.length || conceptosDe(a.s.id).length || a.subs.some(x => conceptosDe(x.id).length)) ? `<ul>
+            ${a.subs.map(x => `<li><button class="mapa-nodo sub" data-ir-sec="${esc(x.id)}">${esc(x.title || "")}</button>${conceptosDe(x.id).length ? `<div class="mapa-conceptos">${conceptosDe(x.id).map(g => `<span title="${esc(g.d || "")}">${esc(g.t)}</span>`).join("")}</div>` : ""}</li>`).join("")}
+            ${conceptosDe(a.s.id).length ? `<li><div class="mapa-conceptos">${conceptosDe(a.s.id).map(g => `<span title="${esc(g.d || "")}">${esc(g.t)}</span>`).join("")}</div></li>` : ""}
+          </ul>` : ""}</li>`).join("")}
+        ${sueltos.length ? `<li><span class="mapa-nodo neutro">Otros conceptos</span><div class="mapa-conceptos">${sueltos.map(g => `<span title="${esc(g.d || "")}">${esc(g.t)}</span>`).join("")}</div></li>` : ""}
+      </ul>
+    </div>
+    <p class="muted" style="font-size:12.5px;margin-top:12px">Pasa el ratón (o mantén pulsado) sobre un concepto para ver su definición. Para que un concepto cuelgue de su apartado, asígnaselo en el glosario del editor.</p>`;
+}
+
+/* ---- Lectura en voz (Web Speech API) ----------------------------------- */
+const VOZ = { cola:[], i:0, activo:false, pausa:false, vel:1 };
+function textoPlano(md) { return String(md || "").replace(/\*\*|\*/g, "").replace(/^\s*[-•]\s+/gm, "").replace(/BOE-A-(\d{4})-(\d+)/g, "BOE $1 $2"); }
+function vozParar() {
+  VOZ.activo = false; VOZ.pausa = false; VOZ.cola = [];
+  try { speechSynthesis.cancel(); } catch (_) {}
+  document.querySelectorAll(".ap.leyendo").forEach(x => x.classList.remove("leyendo"));
+}
+function vozDecir() {
+  if (!VOZ.activo || VOZ.i >= VOZ.cola.length) { vozParar(); pintarVoz(); return; }
+  const item = VOZ.cola[VOZ.i];
+  document.querySelectorAll(".ap.leyendo").forEach(x => x.classList.remove("leyendo"));
+  const ap = document.querySelector(`.ap[data-ap="${CSS.escape(item.ap)}"]`);
+  if (ap) { ap.classList.add("leyendo"); if (!ap.classList.contains("abierto")) alternarApartado(ap, true); ap.scrollIntoView({ behavior:"smooth", block:"start" }); }
+  const u = new SpeechSynthesisUtterance(item.txt);
+  u.lang = "es-ES"; u.rate = VOZ.vel;
+  const v = speechSynthesis.getVoices().find(x => /^es(-|_)ES/i.test(x.lang)) || speechSynthesis.getVoices().find(x => /^es/i.test(x.lang));
+  if (v) u.voice = v;
+  u.onend = () => { if (VOZ.activo && !VOZ.pausa) { VOZ.i++; vozDecir(); pintarVoz(); } };
+  speechSynthesis.speak(u);
+}
+function panelVoz(c, id) {
+  if (!("speechSynthesis" in window)) { c.innerHTML = `<div class="empty"><div class="ico">🔇</div><h3>Este navegador no puede leer en voz alta</h3></div>`; return; }
+  const aps = apartados(estado.temas[id]);
+  if (!aps.length) return vacioHerr(c, "🔊", "Nada que leer", "Escribe primero los apuntes del tema.");
+  c.innerHTML = `
+    <label class="lat-k" for="voz-desde">Leer desde</label>
+    <select class="input" id="voz-desde">${aps.map((a, i) => `<option value="${i}">${i + 1}. ${esc(a.s.title || "(sin título)")}</option>`).join("")}</select>
+    <label class="lat-k" for="voz-vel">Velocidad <span id="voz-vel-txt">${VOZ.vel.toFixed(1)}×</span></label>
+    <input type="range" id="voz-vel" min="0.7" max="1.6" step="0.1" value="${VOZ.vel}" style="width:100%">
+    <div class="btn-row" style="margin-top:14px" id="voz-botones"></div>
+    <p class="muted" style="font-size:12.5px;margin-top:12px">Lee el apartado y sus subapartados, y continúa con los siguientes. Se para al cambiar de tema.</p>`;
+  document.getElementById("voz-vel").addEventListener("input", e => { VOZ.vel = +e.target.value; document.getElementById("voz-vel-txt").textContent = VOZ.vel.toFixed(1) + "×"; });
+  pintarVoz();
+}
+function pintarVoz() {
+  const caja = document.getElementById("voz-botones"); if (!caja) return;
+  caja.innerHTML = !VOZ.activo
+    ? `<button class="btn btn-primary" data-voz="play">▶ Leer</button>`
+    : `<button class="btn btn-primary" data-voz="${VOZ.pausa ? "seguir" : "pausa"}">${VOZ.pausa ? "▶ Seguir" : "⏸ Pausa"}</button><button class="btn" data-voz="stop">■ Parar</button><span class="muted" style="align-self:center;font-size:13px">${VOZ.i + 1}/${VOZ.cola.length}</span>`;
+  caja.querySelectorAll("[data-voz]").forEach(b => b.addEventListener("click", () => {
+    const acc = b.dataset.voz;
+    if (acc === "play") {
+      const aps = apartados(estado.temas[ESTUDIO.id]), desde = +document.getElementById("voz-desde").value;
+      VOZ.cola = aps.slice(desde).map(a => ({ ap:a.s.id, txt:[a.s.title, textoPlano(a.s.body), ...a.subs.map(x => x.title + ". " + textoPlano(x.body))].filter(lleno).join(". ") }));
+      VOZ.i = 0; VOZ.activo = true; VOZ.pausa = false; speechSynthesis.cancel(); vozDecir();
+    }
+    if (acc === "pausa") { VOZ.pausa = true; speechSynthesis.pause(); }
+    if (acc === "seguir") { VOZ.pausa = false; speechSynthesis.resume(); }
+    if (acc === "stop") vozParar();
+    pintarVoz();
+  }));
+}
+
+/* ---- Eventos de la página de estudio (delegados) ----------------------- */
+document.addEventListener("click", e => {
+  if (ruta().v !== "leer") return;
+  const el = e.target;
+  const herr = el.closest("[data-herr]"); if (herr) { e.preventDefault(); abrirPanel(herr.dataset.herr); return; }
+  const irSec = el.closest("[data-ir-sec]"); if (irSec) { e.preventDefault(); if (!matchMedia("(min-width:1000px)").matches || irSec.closest("#panel")) cerrarPanel(); irASeccion(irSec.dataset.irSec, true); return; }
+  const rep = el.closest("[data-rep]");
+  if (rep) { const ap = rep.closest(".ap"); marcarProg(ESTUDIO.id + ":sec:" + ap.dataset.ap, !repasada(ESTUDIO.id, ap.dataset.ap)); refrescarLectura(); return; }
+  const tog = el.closest("[data-toggle]");
+  if (tog && !el.closest("[data-rep]")) { alternarApartado(tog.closest(".ap")); return; }
+  const todo = el.closest("[data-todo]");
+  if (todo) { document.querySelectorAll(".ap[data-ap]").forEach(ap => alternarApartado(ap, todo.dataset.todo === "1")); return; }
+  const bq = el.closest("[data-busq]"); if (bq) { moverBusq(+bq.dataset.busq); return; }
+  const res = el.closest("mark.res");
+  if (res && !el.closest("#panel")) { if (confirm("¿Quitar este resaltado?")) { marcarProg(res.dataset.k, false, null); pintarResaltados(ESTUDIO.id); } return; }
+});
+document.addEventListener("input", e => {
+  if (e.target.matches && e.target.matches("[data-buscar]")) {
+    document.querySelectorAll("[data-buscar]").forEach(x => { if (x !== e.target) x.value = e.target.value; });
+    clearTimeout(ESTUDIO.tb); ESTUDIO.tb = setTimeout(() => buscarEnTema(e.target.value), 250);
+  }
+});
+document.addEventListener("keydown", e => {
+  if (e.target.matches && e.target.matches("[data-buscar]") && e.key === "Enter") { e.preventDefault(); moverBusq(e.shiftKey ? -1 : 1); }
+  if (e.key === "Escape") cerrarPanel();
+});
+/* Resaltar: aparece un botón al seleccionar texto dentro de los apuntes. */
+function seleccionEnApuntes() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+  const r = sel.getRangeAt(0);
+  const nodo = r.commonAncestorContainer.nodeType === 1 ? r.commonAncestorContainer : r.commonAncestorContainer.parentNode;
+  const cuerpo = nodo.closest && nodo.closest("[data-cuerpo]");
+  if (!cuerpo || !cuerpo.closest(".estudio-main")) return null;
+  const txt = sel.toString().replace(/\s+/g, " ").trim();
+  if (txt.length < 2) return null;
+  return { r, cuerpo, txt:txt.slice(0, 400) };
+}
+document.addEventListener("selectionchange", () => {
+  const b = document.getElementById("btn-resaltar"); if (!b) return;
+  const s = seleccionEnApuntes();
+  if (!s) { b.hidden = true; return; }
+  const rc = s.r.getBoundingClientRect();
+  b.hidden = false;
+  b.style.top = Math.max(70, rc.top - 46) + "px";
+  b.style.left = Math.min(window.innerWidth - 130, Math.max(10, rc.left + rc.width / 2 - 55)) + "px";
+});
+document.addEventListener("mousedown", e => { if (e.target.id === "btn-resaltar") e.preventDefault(); });
+document.addEventListener("click", e => {
+  if (e.target.id !== "btn-resaltar") return;
+  const s = seleccionEnApuntes(); if (!s) return;
+  // El texto se asocia al bloque concreto (apartado o subapartado) donde está.
+  const cuerpo = s.cuerpo.closest(".ap-sub") || s.cuerpo;
+  const sec = cuerpo.dataset.cuerpo;
+  marcarProg(ESTUDIO.id + ":res:" + hashCorto(sec + "|" + s.txt), true, { sec, x:s.txt });
+  window.getSelection().removeAllRanges();
+  e.target.hidden = true;
+  pintarResaltados(ESTUDIO.id);
+  toast("🖍️ Resaltado");
+});
 
 /* ---- Hub: el mismo para un bloque y para el conjunto ------------------- */
 const HUB_TABS = [
@@ -2196,9 +3247,9 @@ function hubBuscar(c, ambito, temas) {
     temas.forEach(t => {
       t.glossary.forEach(g => pool.push({ tipo:"glosario", t, tit:g.t || g.term || "", txt:g.d || g.def || "", ancla:g.section || "" }));
       t.timeline.forEach(i => pool.push({ tipo:"crono", t, tit:i.y, txt:(i.txt || "") + (i.cons ? " — " + i.cons : ""), ancla:i.target || "" }));
-      t.flashcards.forEach(f => pool.push({ tipo:"fc", t, tit:f.q, txt:f.a, ancla:"" }));
-      t.questions.forEach(q => pool.push({ tipo:"test", t, tit:q.q, txt:q.o.join(" / ") + (q.e ? " · " + q.e : ""), ancla:"" }));
-      t.sections.forEach(x => pool.push({ tipo:"seccion", t, tit:x.title, txt:"", ancla:x.id }));
+      fcs(t).forEach(f => pool.push({ tipo:"fc", t, tit:f.q, txt:f.a, ancla:"" }));
+      qs(t).forEach(q => pool.push({ tipo:"test", t, tit:q.q, txt:q.o.join(" / ") + (q.e ? " · " + q.e : ""), ancla:"" }));
+      t.sections.forEach(x => pool.push({ tipo:"seccion", t, tit:x.title || "(sin título)", txt:x.body || "", ancla:x.id }));
     });
     if (s.tipo !== "todo") pool = pool.filter(p => p.tipo === s.tipo);
     const q = s.q.trim();
@@ -2299,11 +3350,11 @@ function hubFc(c, ambito, temas) {
   const enFiltro = temas.filter(t => s.fcTema === "todos" || t.id === s.fcTema);
   const rehacer = () => {
     const pool = [];
-    enFiltro.forEach(t => t.flashcards.forEach(f => { const k = claveFc(t.id, f); if (!sabida(k)) pool.push(Object.assign({ _id:t.id, _k:k }, f)); }));
+    enFiltro.forEach(t => fcs(t).forEach(f => { const k = claveFc(t.id, f); if (!sabida(k)) pool.push(Object.assign({ _id:t.id, _k:k }, f)); }));
     s.mazo = barajar(pool); s.idx = 0; s.volteada = false;
   };
   if (!s.mazo) rehacer();
-  const total = enFiltro.reduce((n, t) => n + t.flashcards.length, 0);
+  const total = enFiltro.reduce((n, t) => n + fcs(t).length, 0);
   const sabidas = enFiltro.reduce((n, t) => n + sabidasDe(t), 0);
   const f = s.mazo[s.idx];
   c.innerHTML = `
@@ -2331,7 +3382,7 @@ function hubFc(c, ambito, temas) {
   document.getElementById("fc-mezclar").addEventListener("click", () => { s.mazo = barajar(s.mazo); s.idx = 0; s.volteada = false; rep(); });
   document.getElementById("fc-reiniciar").addEventListener("click", () => {
     if (!confirm("¿Reiniciar el progreso de flashcards de este ámbito?")) return;
-    enFiltro.forEach(t => t.flashcards.forEach(f => { const k = claveFc(t.id, f); if (sabida(k)) marcarFc(k, false); }));
+    enFiltro.forEach(t => fcs(t).forEach(f => { const k = claveFc(t.id, f); if (sabida(k)) marcarFc(k, false); }));
     rehacer(); rep();
   });
   c.querySelectorAll("[data-ft]").forEach(x => x.addEventListener("click", () => { s.fcTema = x.dataset.ft; s.mazo = null; rep(); }));
@@ -2355,7 +3406,9 @@ function hubTest(c, ambito, temas) {
   const s = hl(ambito);
   [...s.testSel].forEach(id => { if (!temas.some(t => t.id === id)) s.testSel.delete(id); });
   if (s.test) return pintarPregunta(c, ambito, temas);
-  const disp = temas.filter(t => !s.testSel.size || s.testSel.has(t.id)).reduce((n, t) => n + t.questions.length, 0);
+  const filtroQ = (t, q) => !s.soloFalladas || fallada(t.id, q);
+  const disp = temas.filter(t => !s.testSel.size || s.testSel.has(t.id)).reduce((n, t) => n + qs(t).filter(q => filtroQ(t, q)).length, 0);
+  const nFalladas = temas.reduce((n, t) => n + qs(t).filter(q => fallada(t.id, q)).length, 0);
   c.innerHTML = `
     <div class="card">
       <div class="test-cfg">
@@ -2363,11 +3416,16 @@ function hubTest(c, ambito, temas) {
         <button class="btn btn-primary" id="t-go" ${disp ? "" : "disabled"}>🚀 Empezar</button>
         <span class="muted" style="font-size:13px">${plural(disp, "pregunta disponible", "preguntas disponibles")}</span>
       </div>
+      <div class="chip-row" style="margin-bottom:8px">
+        <button class="chip peq ${!s.soloFalladas ? "active" : ""}" data-modo="todas">Todas</button>
+        <button class="chip peq ${s.soloFalladas ? "active" : ""}" data-modo="falladas" ${nFalladas ? "" : "disabled"}>🔁 Solo las que fallé<span class="badge">${nFalladas}</span></button>
+      </div>
       ${temas.length > 1 ? `<div class="chip-row wrap" style="margin-bottom:0"><button class="chip peq ${!s.testSel.size ? "active" : ""}" data-tt="todos">Todos</button>${temas.map(t =>
-        `<button class="chip peq ${s.testSel.has(t.id) ? "active" : ""}" data-tt="${t.id}">${esc(codigoDe(t.id))}<span class="badge">${t.questions.length}</span></button>`).join("")}</div>` : ""}
+        `<button class="chip peq ${s.testSel.has(t.id) ? "active" : ""}" data-tt="${t.id}">${esc(codigoDe(t.id))}<span class="badge">${qs(t).length}</span></button>`).join("")}</div>` : ""}
       <p class="muted" style="font-size:13px;margin:12px 0 0">El examen real descuenta 1/3 por error: practica también a dejar en blanco.</p>
     </div>`;
   document.getElementById("tn").addEventListener("change", e => { s.testN = parseInt(e.target.value, 10); });
+  c.querySelectorAll("[data-modo]").forEach(x => x.addEventListener("click", () => { s.soloFalladas = x.dataset.modo === "falladas"; hubTest(c, ambito, temas); }));
   c.querySelectorAll("[data-tt]").forEach(x => x.addEventListener("click", () => {
     const id = x.dataset.tt;
     if (id === "todos") s.testSel.clear(); else if (s.testSel.has(id)) s.testSel.delete(id); else s.testSel.add(id);
@@ -2375,7 +3433,7 @@ function hubTest(c, ambito, temas) {
   }));
   document.getElementById("t-go").addEventListener("click", () => {
     const pool = [];
-    temas.forEach(t => { if (s.testSel.size && !s.testSel.has(t.id)) return; t.questions.forEach(q => pool.push(Object.assign({ _id:t.id }, q))); });
+    temas.forEach(t => { if (s.testSel.size && !s.testSel.has(t.id)) return; qs(t).forEach(q => { if (filtroQ(t, q)) pool.push(Object.assign({ _id:t.id }, q)); }); });
     if (!pool.length) { toast("Sin preguntas en este filtro", "error"); return; }
     const elegidas = barajar(pool).slice(0, Math.min(s.testN, pool.length)).map(q => {
       const orden = barajar(q.o.map((_, i) => i));
@@ -2390,6 +3448,8 @@ function pintarPregunta(c, ambito, temas) {
   if (r.i >= r.qs.length) {
     const n = r.qs.length;
     const neta = Math.max(0, r.bien - r.mal / 3);
+    // El resultado se guarda una vez (es tu progreso y se sincroniza).
+    if (!r.guardado && (r.bien + r.mal) > 0) { r.guardado = true; marcarProg("T:" + ambito + ":" + Date.now().toString(36), true, { a:r.bien, f:r.mal, b:n - r.bien - r.mal, n, amb:ambito }); }
     const seg = Math.round((Date.now() - r.inicio) / 1000);
     c.innerHTML = `
       <div class="card resultado">
@@ -2421,6 +3481,7 @@ function pintarPregunta(c, ambito, temas) {
     const i = parseInt(b.dataset.i, 10);
     const ok = i === q._c;
     if (ok) r.bien++; else r.mal++;
+    registrarRespuesta(q._id, q, ok);
     c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === q._c) x.classList.add("bien"); if (j === i && !ok) x.classList.add("mal"); });
     document.getElementById("t-blanco").hidden = true;
     document.getElementById("fb").innerHTML = `
@@ -2432,7 +3493,8 @@ function pintarPregunta(c, ambito, temas) {
 
 /* 6 · Progreso */
 function hubProgreso(c, ambito, temas) {
-  const sum = k => temas.reduce((n, t) => n + t[k].length, 0);
+  const G = { glossary:t => t.glossary, timeline:t => t.timeline, flashcards:fcs, questions:qs };
+  const sum = k => temas.reduce((n, t) => n + G[k](t).length, 0);
   const fcT = sum("flashcards");
   const fcK = temas.reduce((n, t) => n + sabidasDe(t), 0);
   const total = ambito === "global" ? TEMAS.length : BLOQUE_POR_CODE[ambito].total;
@@ -2447,12 +3509,14 @@ function hubProgreso(c, ambito, temas) {
     ${ambito === "global" ? `
       <h2 class="section-title">Por bloque</h2>
       <div class="card tabla-wrap"><table class="tabla"><thead><tr><th>Bloque</th><th class="n">Temas</th><th class="n">Gl.</th><th class="n">Hitos</th><th class="n">FC</th><th class="n">Preg.</th></tr></thead><tbody>
-        ${BLOQUES.map(b => { const ts = temas.filter(t => t.group === b.code); const s2 = k => ts.reduce((n, t) => n + t[k].length, 0);
+        ${BLOQUES.map(b => { const ts = temas.filter(t => t.group === b.code); const s2 = k => ts.reduce((n, t) => n + G[k](t).length, 0);
           return `<tr class="clic" data-ir="#/bloque/${b.code}"><td><b>${b.rom}</b> · ${esc(b.nombre)}</td><td class="n">${ts.length}/${b.total}</td><td class="n">${s2("glossary")}</td><td class="n">${s2("timeline")}</td><td class="n">${s2("flashcards")}</td><td class="n">${s2("questions")}</td></tr>`; }).join("")}
       </tbody></table></div>` : ""}
+    <h2 class="section-title">Tests realizados</h2>
+    <div class="card">${historialTests(resultadosTest(d => ambito === "global" || d.amb === ambito || (String(d.amb).startsWith("t:" + ambito + "T"))))}</div>
     <h2 class="section-title">Por tema</h2>
-    <div class="card tabla-wrap"><table class="tabla"><thead><tr><th>Tema</th><th class="n">Gl.</th><th class="n">Hitos</th><th class="n">FC</th><th class="n">Preg.</th></tr></thead><tbody>
-      ${temas.map(t => `<tr class="clic" data-ir="#/tema/${t.id}"><td><b style="color:var(--accent)">${esc(codigoDe(t.id))}</b> · ${esc(TEMA_POR_ID[t.id].e)}</td><td class="n">${t.glossary.length}</td><td class="n">${t.timeline.length}</td><td class="n">${sabidasDe(t)}/${t.flashcards.length}</td><td class="n">${t.questions.length}</td></tr>`).join("")}
+    <div class="card tabla-wrap"><table class="tabla"><thead><tr><th>Tema</th><th class="n">Gl.</th><th class="n">Hitos</th><th class="n">Rep.</th><th class="n">FC</th><th class="n">Preg.</th></tr></thead><tbody>
+      ${temas.map(t => `<tr class="clic" data-ir="#/tema/${t.id}"><td><b style="color:var(--accent)">${esc(codigoDe(t.id))}</b> · ${esc(TEMA_POR_ID[t.id].e)}</td><td class="n">${t.glossary.length}</td><td class="n">${t.timeline.length}</td><td class="n">${repasoDe(t).hechos}/${repasoDe(t).n}</td><td class="n">${sabidasDe(t)}/${fcs(t).length}</td><td class="n">${qs(t).length}</td></tr>`).join("")}
     </tbody></table></div>`;
   c.querySelectorAll("[data-ir]").forEach(x => x.addEventListener("click", () => ir(x.dataset.ir)));
 }
@@ -2567,7 +3631,8 @@ function renderGuia() {
     <section class="card">
       <h3 class="card-title">Cómo añadir el contenido de un tema</h3>
       <ul>
-        <li>Desde la ficha de cada tema: <b>Descargar plantilla</b> → completar → arrastrarla al hub. Se guarda también en este dispositivo, así que se puede abrir sin conexión.</li>
+        <li>Desde la ficha de cada tema: <b>Empezar a desarrollar</b> (o <b>Editar</b>). Los apuntes se escriben por apartados y en pestañas aparte el glosario, la cronología, las flashcards y las preguntas tipo test. Se guarda solo mientras escribes y también funciona sin conexión.</li>
+        <li>Si ya tienes un tema en un archivo de estudio (<code>.html</code> con <code>TEMARIO_DATA</code>), se puede importar desde la ficha del tema.</li>
         <li><b>Sincronización:</b> con la sesión de Niblo iniciada, el contenido de los temas se comparte con tu hogar y tu progreso de flashcards (solo tuyo) se sincroniza entre tus dispositivos al momento. Sin conexión se guarda aquí y se sube solo al volver la red. El indicador de la cabecera dice en qué estado está.</li>
         <li>Copia de seguridad: el botón de descarga de la cabecera guarda todos los temas y tu progreso en un <code>.json</code> que se puede volver a importar.</li>
         <li>También se pueden publicar junto a esta página en <code>${CARPETA_TEMAS}B4T11_estudio.html</code> (etc.) y cargarlos con el botón de recargar de la cabecera.</li>
@@ -2601,6 +3666,9 @@ document.getElementById("btn-tema").addEventListener("click", () => {
   try { localStorage.setItem(KEY_TEMA, nuevo); } catch (_) {}
 });
 document.getElementById("btn-guardar").addEventListener("click", exportarCopia);
+document.getElementById("panel-cerrar").addEventListener("click", () => cerrarPanel());
+document.getElementById("panel-fondo").addEventListener("click", () => cerrarPanel());
+document.getElementById("panel-volver").addEventListener("click", () => abrirPanel("menu"));
 document.getElementById("btn-servidor").addEventListener("click", buscarEnServidor);
 document.getElementById("sync-pill").addEventListener("click", () => {
   if (!haySesion()) { toast("Entra en Niblo con tu cuenta para sincronizar el hub entre dispositivos"); return; }
