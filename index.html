@@ -361,34 +361,36 @@
       grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
     }
     .doc-card {
-      --c1: hsl(var(--h, 220) 66% 50%);
-      --c2: hsl(calc(var(--h, 220) + 32) 72% 34%);
       position: relative; isolation: isolate;
       display: flex; flex-direction: column; gap: var(--gap-3);
       min-height: 176px; padding: 18px;
       border-radius: 22px; overflow: hidden; color: #fff;
-      box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 14px 28px -16px hsl(var(--h, 220) 70% 30% / .75);
+      box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 16px 30px -18px color-mix(in srgb, var(--c2) 80%, transparent);
       transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s;
     }
-    /* El fondo va en una capa propia para poder apagarlo (caducado) sin
-       apagar el texto ni la pastilla roja. */
+    /* Degradado en malla: luz arriba a la izquierda, el color en el centro y
+       profundidad abajo a la derecha, con un velo oscuro abajo para que el
+       texto blanco se lea igual en los tonos claros (ambar, cian). El fondo va
+       en su propia capa para poder apagarlo (caducado) sin apagar el texto. */
     .doc-card::before {
       content: ""; position: absolute; inset: 0; z-index: -1;
       background:
-        radial-gradient(120% 90% at 100% 0%, rgba(255,255,255,.30), transparent 55%),
-        repeating-radial-gradient(circle at 115% 120%, rgba(255,255,255,.075) 0 1px, transparent 1.5px 10px),
-        linear-gradient(140deg, var(--c1), var(--c2));
+        radial-gradient(90% 80% at 0% 0%, color-mix(in srgb, var(--c1) 90%, transparent), transparent 70%),
+        radial-gradient(80% 90% at 100% 100%, var(--c3), transparent 70%),
+        radial-gradient(60% 50% at 85% 10%, rgba(255,255,255,.22), transparent 70%),
+        linear-gradient(to top, rgba(0,0,0,.18), transparent 55%),
+        linear-gradient(145deg, var(--c1), var(--c2) 55%, var(--c3));
       transition: filter .2s;
     }
     /* Brillo que cruza la tarjeta al pasar el raton. */
     .doc-card::after {
       content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-      background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.18) 50%, transparent 65%);
+      background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.2) 50%, transparent 65%);
       transform: translateX(-100%); transition: transform .6s ease;
     }
-    .doc-card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(0,0,0,.08), 0 22px 36px -18px hsl(var(--h, 220) 70% 30% / .85); }
+    .doc-card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 24px 40px -20px color-mix(in srgb, var(--c2) 90%, transparent); }
     .doc-card:hover::after { transform: translateX(100%); }
-    .doc-card.est-caducado::before { filter: grayscale(.85) brightness(.85); }
+    .doc-card.est-caducado::before { filter: grayscale(.85) brightness(.8); }
     .doc-card-cab { display: flex; align-items: center; gap: 10px; padding-right: 40px; min-height: 40px; }
     .doc-card-emoji {
       flex: none; width: 40px; height: 40px; display: grid; place-items: center;
@@ -480,18 +482,26 @@
     .doc-card.est-pronto .doc-estado::before { background: #b45309; box-shadow: 0 0 0 3px rgba(180,83,9,.2); }
     .doc-card.est-caducado .doc-estado { color: #fff; background: #dc2626; box-shadow: none; }
     .doc-card.est-caducado .doc-estado::before { background: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.3); }
-    .doc-vida {
-      height: 5px; margin-top: 10px; border-radius: var(--r-pill);
-      background: rgba(255,255,255,.22); overflow: hidden;
+    .doc-card.est-pronto { box-shadow: 0 0 0 2px #fcd34d, 0 16px 30px -18px color-mix(in srgb, var(--c2) 80%, transparent); }
+    .doc-card.est-caducado { box-shadow: 0 0 0 2px #ef4444, 0 16px 30px -18px rgba(0,0,0,.5); }
+    /* Simbolo de alerta (menos de 3 meses o caducado), al lado del lapiz. */
+    .doc-alerta-ico {
+      position: absolute; top: 14px; right: 54px; z-index: 2;
+      width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%;
+      color: #451a03; background: #fcd34d;
+      box-shadow: 0 0 0 0 rgba(252,211,77,.7), 0 4px 10px -4px rgba(0,0,0,.35);
+      animation: doc-latido 2.2s ease-out infinite;
     }
-    .doc-vida > span { display: block; height: 100%; border-radius: inherit; background: #fff; }
-    .doc-card.est-pronto .doc-vida > span { background: #fcd34d; }
-    .doc-card.est-caducado .doc-vida > span { background: #fca5a5; }
-    /* Aviso pulsante para lo que hay que renovar ya. */
-    .doc-card.est-pronto { box-shadow: 0 0 0 2px #fcd34d, 0 14px 28px -16px hsl(var(--h, 220) 70% 30% / .75); }
-    .doc-card.est-caducado { box-shadow: 0 0 0 2px #ef4444, 0 14px 28px -16px rgba(0,0,0,.5); }
+    .doc-alerta-ico.alerta-caducado { color: #fff; background: #ef4444; box-shadow: 0 0 0 0 rgba(239,68,68,.6); }
+    @keyframes doc-latido {
+      0%   { box-shadow: 0 0 0 0 rgba(252,211,77,.65), 0 4px 10px -4px rgba(0,0,0,.35); }
+      70%  { box-shadow: 0 0 0 10px rgba(252,211,77,0), 0 4px 10px -4px rgba(0,0,0,.35); }
+      100% { box-shadow: 0 0 0 0 rgba(252,211,77,0), 0 4px 10px -4px rgba(0,0,0,.35); }
+    }
+    .doc-card.con-alerta .doc-card-cab { padding-right: 80px; }
     @media (prefers-reduced-motion: reduce) {
       .doc-card, .doc-card::after, .doc-editar { transition: none; }
+      .doc-alerta-ico { animation: none; }
       .doc-card:hover { transform: none; }
     }
     .doc-alerta {
@@ -655,7 +665,9 @@
       .doc-cad-fecha { font-size: 0.8125rem; }
       .doc-estado { font-size: 0.6875rem; padding: 3px 8px 3px 6px; }
       .doc-estado::before { width: 6px; height: 6px; }
-      .doc-vida { height: 4px; margin-top: 8px; }
+      .doc-alerta-ico { top: 10px; right: 44px; width: 28px; height: 28px; }
+      .doc-alerta-ico svg { width: 14px; height: 14px; }
+      .doc-card.con-alerta .doc-card-cab { padding-right: 66px; }
       .doc-cad-sin { font-size: 0.75rem; }
       .doc-card.est-ok .doc-estado-et, .doc-card.est-ok .doc-estado-sep,
       .doc-card.est-pronto .doc-estado-et:not(:only-child), .doc-card.est-pronto .doc-estado-sep,
@@ -26844,9 +26856,9 @@ function boot(vistaInicial) {
       }).then(r => { DOCS.tipos = r || []; });
     }
 
-    /* Aviso 60 dias antes: margen suficiente para renovar un pasaporte o un
-       permiso sin agobios, que es lo que tarda una cita en muchos consulados. */
-    const DOCS_DIAS_AVISO = 60;
+    /* Aviso 3 meses antes (ver docsAlerta): margen para pedir cita y renovar
+       un pasaporte o un permiso sin agobios. El aviso de arriba, la
+       notificacion, la pastilla y el simbolo de la tarjeta usan el mismo. */
 
     /** Dias que faltan para que caduque, o null si no tiene fecha. */
     function docsDiasParaCaducar(doc) {
@@ -26859,7 +26871,7 @@ function boot(vistaInicial) {
     function docsEstadoCaducidad(doc) {
       const d = docsDiasParaCaducar(doc);
       if (d === null) return null;
-      return d < 0 ? "caducado" : d <= DOCS_DIAS_AVISO ? "pronto" : "ok";
+      return d < 0 ? "caducado" : docsAlerta(doc) === "pronto" ? "pronto" : "ok";
     }
     function docsTextoCaducidad(doc) {
       const d = docsDiasParaCaducar(doc);
@@ -26868,7 +26880,7 @@ function boot(vistaInicial) {
         .toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
       if (d < 0) return `Caducó el ${fecha}`;
       if (d === 0) return `Caduca hoy`;
-      if (d <= DOCS_DIAS_AVISO) return `Caduca en ${d} ${d === 1 ? "día" : "días"} · ${fecha}`;
+      if (docsAlerta(doc) === "pronto") return `Caduca en ${docsTiempo(d)} · ${fecha}`;
       return `Caduca el ${fecha}`;
     }
     /** Los que caducan dentro del margen o ya caducaron, primero los urgentes. */
@@ -26880,7 +26892,7 @@ function boot(vistaInicial) {
 
     /* Notificacion del sistema al abrir la app, como mucho una al dia. No hay
        servidor detras: una PWA solo puede avisar cuando se la abre. Para un
-       margen de 60 dias sobra, pero por eso conviene el correo (ver README). */
+       margen de 3 meses sobra, pero por eso conviene el correo (ver README). */
     function docsNotificarCaducidades() {
       if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
       if (localStorage.getItem("niblo.avisos.on") !== "1") return;
@@ -26906,20 +26918,27 @@ function boot(vistaInicial) {
       return p ? p.nombre : "";
     }
 
-    /* Color de la banda de cada tipo (tono HSL). Los tipos de serie tienen el
-       suyo; uno creado a mano lo saca de su nombre, siempre el mismo. */
-    const DOCS_TONOS = {
-      "dni": 212, "pasaporte": 350, "visa": 262, "cedula": 188,
-      "permiso de conducir": 22, "certificado": 40, "libro de familia": 145,
-      "seguros": 168, "titulacion": 285, "otros": 220,
+    /* Degradado de cada tipo: tres paradas (luz, color, profundidad). Los
+       tipos de serie tienen el suyo; uno creado a mano lo saca de su nombre,
+       siempre el mismo. */
+    const DOCS_COLORES = {
+      "dni":                 ["#60a5fa", "#4f46e5", "#3730a3"],   // azul → indigo
+      "pasaporte":           ["#fb7185", "#e11d48", "#9f1239"],   // rosa → carmin
+      "visa":                ["#c084fc", "#9333ea", "#6b21a8"],   // lila → violeta
+      "cedula":              ["#22d3ee", "#0891b2", "#155e75"],   // cian
+      "permiso de conducir": ["#fdba74", "#f97316", "#c2410c"],   // naranja
+      "certificado":         ["#fcd34d", "#f59e0b", "#b45309"],   // ambar
+      "libro de familia":    ["#6ee7b7", "#10b981", "#047857"],   // esmeralda
+      "seguros":             ["#5eead4", "#14b8a6", "#0f766e"],   // turquesa
+      "titulacion":          ["#a5b4fc", "#6366f1", "#4338ca"],   // indigo claro
+      "otros":               ["#94a3b8", "#475569", "#1e293b"],   // pizarra
     };
-    function docsTono(tipo) {
-      if (!tipo) return 220;
-      const k = tipo.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-      if (k in DOCS_TONOS) return DOCS_TONOS[k];
+    function docsColores(tipo) {
+      const k = tipo ? tipo.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : "otros";
+      if (k in DOCS_COLORES) return DOCS_COLORES[k];
       let h = 0;
       for (const c of k) h = (h * 31 + c.charCodeAt(0)) % 360;
-      return h;
+      return [`hsl(${h} 90% 72%)`, `hsl(${(h + 15) % 360} 75% 52%)`, `hsl(${(h + 30) % 360} 70% 32%)`];
     }
     /* Color del avatar de cada persona. */
     const DOCS_TONOS_PERSONA = { ruben: 205, sergio: 150, pablo: 30, lima: 325, otros: 255 };
@@ -26947,20 +26966,22 @@ function boot(vistaInicial) {
       if (d === null) return "";
       const [et, t] = d < 0 ? ["Caducado", `hace ${docsTiempo(d)}`]
         : d === 0 ? ["Caduca hoy", ""]
-        : d <= DOCS_DIAS_AVISO ? ["Renovar", docsTiempo(d)]
+        : docsAlerta(doc) === "pronto" ? ["Renovar", docsTiempo(d)]
         : ["Vigente", docsTiempo(d)];
       // Un solo hijo de texto: si cada parte fuera hijo del flex, el gap de
       // la pastilla separaria tambien el " · ".
       return `<span><span class="doc-estado-et">${esc(et)}</span>${t
         ? `<span class="doc-estado-sep"> · </span><span class="doc-estado-t">${esc(t)}</span>` : ""}</span>`;
     }
-    /** Fraccion de vida que le queda (0..1), o null sin expedicion. */
-    function docsVidaRestante(doc) {
-      if (!doc.issued_on || !doc.expires_on) return null;
-      const ini = new Date(doc.issued_on + "T00:00:00"), fin = new Date(doc.expires_on + "T00:00:00");
+    /** Alerta: caduca antes de 3 meses (de calendario) o ya caducado. */
+    const DOCS_MESES_ALERTA = 3;
+    function docsAlerta(doc) {
+      if (!doc || !doc.expires_on) return null;
+      const cad = new Date(doc.expires_on + "T00:00:00");
       const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
-      if (!(fin > ini)) return null;
-      return Math.min(1, Math.max(0, (fin - hoy) / (fin - ini)));
+      if (cad < hoy) return "caducado";
+      const limite = new Date(hoy); limite.setMonth(limite.getMonth() + DOCS_MESES_ALERTA);
+      return cad < limite ? "pronto" : null;
     }
 
     /** Orden dentro de un grupo: por titulo, o primero lo que antes caduca
@@ -27054,11 +27075,12 @@ function boot(vistaInicial) {
             const tipo = docsTipo(d.type_id);
             const quien = verPersona ? docsNombreAsignado(d) : "";
             const estado = docsEstadoCaducidad(d);
-            const vida = docsVidaRestante(d);
+            const alerta = docsAlerta(d);
+            const [c1, c2, c3] = docsColores(tipo);
             const fecha = d.expires_on ? new Date(d.expires_on + "T00:00:00")
               .toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }) : "";
             return `
-            <li class="doc-card est-${estado || "sin"}" style="--h:${docsTono(tipo)}">
+            <li class="doc-card est-${estado || "sin"}${alerta ? " con-alerta" : ""}" style="--c1:${c1};--c2:${c2};--c3:${c3}">
               <div class="doc-card-cab">
                 <span class="doc-card-emoji" aria-hidden="true">${tipo ? esc(tipo.emoji) : "\u{1F4C4}"}</span>
                 <span class="doc-card-tipo">${tipo ? esc(tipo.name) : "Documento"}</span>
@@ -27075,9 +27097,12 @@ function boot(vistaInicial) {
                   <span class="doc-cad-bloque"><span class="doc-cad-et">${estado === "caducado" ? "Caducó" : "Caduca"}</span>
                     <span class="doc-cad-fecha">${esc(fecha)}</span></span>
                 </div>
-                ${vida !== null ? `<div class="doc-vida" role="img" aria-label="Le queda el ${Math.round(vida * 100)} % de su vigencia"><span style="width:${(vida * 100).toFixed(1)}%"></span></div>` : ""}`
+`
                 : `<span class="doc-cad-sin">Sin fecha de caducidad</span>`}
               </div>
+              ${alerta ? `<span class="doc-alerta-ico alerta-${alerta}" role="img"
+                title="${alerta === "caducado" ? "Caducado" : `Caduca en menos de ${DOCS_MESES_ALERTA} meses`}"
+                aria-label="${alerta === "caducado" ? "Caducado" : `Caduca en menos de ${DOCS_MESES_ALERTA} meses`}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>` : ""}
               <button type="button" class="doc-editar" title="Editar o borrar" aria-label="Editar ${esc(d.title)}"
                 onclick="DOCSUI.editar('${d.id}')">&#9998;</button>
             </li>`; }).join("")}</ul>
@@ -27218,7 +27243,7 @@ function boot(vistaInicial) {
           <div class="campo"><label for="doc-caducidad">Caducidad <span class="faint">(opcional)</span></label>
             <input type="date" id="doc-caducidad" value="${esc(doc && doc.expires_on ? doc.expires_on : "")}"></div>
         </div>
-        <p class="faint" style="margin:-4px 0 0">Con fecha de caducidad, Niblo avisa ${DOCS_DIAS_AVISO} días antes.</p>
+        <p class="faint" style="margin:-4px 0 0">Con fecha de caducidad, Niblo avisa ${DOCS_MESES_ALERTA} meses antes.</p>
         <div class="campo"><label for="doc-notas">Notas <span class="faint">(opcional)</span></label>
           <input type="text" id="doc-notas" value="${esc(doc && doc.notes ? doc.notes : "")}" autocomplete="off"></div>
         <div id="doc-aviso" class="doc-aviso" hidden></div>`,
