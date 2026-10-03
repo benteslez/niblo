@@ -50,3 +50,9 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   - Casilla sin contenido: «—». Nunca se cambia el orden de las casillas.
 - Al final: «Cierre 1» (preguntas de exámenes oficiales) y «Cierre 2» (repaso
   por bloques).
+- **Preguntas de exámenes oficiales, siempre con el mismo formato** (en el
+  apartado del artículo y en «Cierre 1»): enunciado y las cuatro opciones
+  **literales** del cuestionario, la correcta marcada con ✅, «Respuesta
+  correcta: x) (plantilla …)» y «Por qué:» con **una explicación por opción**
+  (✅ la correcta, ✗ cada distractor y qué dato cambia), con citas literales.
+  La corrección del test de esas preguntas lleva la misma explicación.
