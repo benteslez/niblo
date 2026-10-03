@@ -51,8 +51,15 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
 - Al final: «Cierre 1» (preguntas de exámenes oficiales) y «Cierre 2» (repaso
   por bloques).
 - **Preguntas de exámenes oficiales, siempre con el mismo formato** (en el
-  apartado del artículo y en «Cierre 1»): enunciado y las cuatro opciones
-  **literales** del cuestionario, la correcta marcada con ✅, «Respuesta
-  correcta: x) (plantilla …)» y «Por qué:» con **una explicación por opción**
-  (✅ la correcta, ✗ cada distractor y qué dato cambia), con citas literales.
-  La corrección del test de esas preguntas lleva la misma explicación.
+  apartado del artículo y en «Cierre 1»): recuadro **interactivo** (`%>`) con
+  el enunciado y las cuatro opciones **literales** del cuestionario. La
+  correcta **no se ve** hasta pulsar una opción: entonces la elegida sale en
+  verde o rojo, la correcta en verde, y aparece el porqué de **cada** opción
+  (qué dato cambia cada distractor), con citas literales. La corrección del
+  test de esas preguntas lleva la misma explicación.
+- **Coherencia plantilla ↔ ley, siempre:** la respuesta de la plantilla se
+  comprueba contra el texto legal (`examen(..., apoyo=[...])`): los datos que
+  la hacen correcta tienen que estar literales en la norma y en esa opción, y
+  ningún distractor puede tenerlos todos. Si no casa, el generador se detiene
+  y se avisa al usuario (posible error de la plantilla o impugnación); nunca
+  se publica una respuesta que contradiga la ley.
