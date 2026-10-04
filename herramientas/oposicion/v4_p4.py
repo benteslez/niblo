@@ -19,7 +19,7 @@ Reconocer un derecho no basta: hacen falta **mecanismos que aseguren su respeto*
 |---|---|---|---|
 | **Normativas** | Protegen los derechos **frente al legislador** | Arts. 53.1, 81, 86.1, 161.1 a), 167-169 | → II.2 |
 | **Jurisdiccionales** | Permiten acudir a un **tribunal** | Arts. 53.2, 17.4, 161.1 b) y 162.1 b) | → II.3 a II.5 |
-| **Institucionales** | Encargan su defensa a una **institución** | Art. 54 (Defensor del Pueblo) y art. 124 (Ministerio Fiscal) | → IV |
+| **Institucionales** | Encargan su defensa a una **institución** | Art. 54 (Defensor del Pueblo) y art. 124 (Ministerio Fiscal) | → IV y II.1.3 |
 
 {unidad("1.2 Las garantías de las libertades y derechos (art. 53)",
   lit("CE", 53, ["vinculan a todos los poderes públicos", "Sólo por ley, que en todo caso deberá respetar su contenido esencial", "artículo 161, 1, a)", "preferencia y sumariedad", "recurso de amparo ante el Tribunal Constitucional", "objeción de conciencia reconocida en el artículo 30", "informarán la legislación positiva, la práctica judicial y la actuación de los poderes públicos"]),
@@ -48,7 +48,7 @@ Las garantías normativas limitan al **legislador**: quién puede regular los de
          "Las Cortes; la mayoría la exige al **Congreso**",
          "Aprobación, modificación o derogación en una **votación final sobre el conjunto del proyecto**",
          "**Mayoría absoluta del Congreso**",
-         ["«Derechos fundamentales y libertades públicas» es la rúbrica de la **Sección 1.ª**. Que no alcance al art. 14 ni a la Sección 2.ª es **doctrina del TC** (STC 76/1983 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/204]]; para la objeción de conciencia, STC 160/1987 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/892]]), no texto literal", "Mayoría **absoluta**, no tres quintos"]))}
+         ["«De los derechos fundamentales y de las libertades públicas» es la rúbrica de la **Sección 1.ª**. Que no alcance al art. 14 ni a la Sección 2.ª es **doctrina del TC** (STC 76/1983 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/204]]; para la objeción de conciencia, STC 160/1987 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/892]]), no texto literal", "Mayoría **absoluta**, no tres quintos"]))}
 
 {unidad("2.2 Prohibición del decreto-ley (art. 86.1)",
   lit("CE", 86, ["extraordinaria y urgente necesidad", "a los derechos, deberes y libertades de los ciudadanos regulados en el Título I"], solo=[0], titulo="Artículo 86.1"),
@@ -237,6 +237,6 @@ Con todo el bloque II visto, el art. 53 se resume así:
 {resumen(["El **art. 53** reparte las garantías: 53.1 para todo el Capítulo segundo, 53.2 para el art. 14 y la Sección 1.ª (y el amparo, también para la objeción de conciencia), 53.3 para el Capítulo tercero.",
           "**Normativas** (frente al legislador): ley orgánica (81), prohibición del decreto-ley (86.1), recurso de inconstitucionalidad (161-162) y rigidez (167-169).",
           "**Jurisdiccionales**: procedimiento preferente y sumario (LJCA, 10 días), *habeas corpus* (LO 6/1984, 24 horas) y amparo constitucional (LOTC: 3 meses, 20 días o 30 días).",
-          "El **Defensor del Pueblo** aparece en todas: inconstitucionalidad, amparo y *habeas corpus*."],
+          "El **Defensor del Pueblo** está legitimado en tres de ellas: inconstitucionalidad, amparo y *habeas corpus*."],
          "Siguiente: bloque III. Los derechos están protegidos, pero en situaciones extraordinarias algunos pueden **suspenderse**: cuáles, cuándo y con qué controles.")}
 """, 2)

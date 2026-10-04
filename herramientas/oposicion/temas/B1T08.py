@@ -31,7 +31,7 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 |---|---|---|---|
 | **I** | ¿Qué es la AGE y con qué principios se organiza y funciona? | Arts. 3.1, 54, 55.1 y 2 y 56 | — |
 | **II** | ¿Cómo se organizan los órganos centrales? (los Ministerios) | Arts. 57 a 60 | — |
-| **III** | ¿Quiénes son los órganos superiores y directivos, cómo se crean, nombran y cesan, y qué funciones tienen? | Arts. 55.3, 6, 9, 10 y 11, 55 bis y 61 a 67 | Ley 50/1997, art. 15.1 |
+| **III** | ¿Quiénes son los órganos superiores y directivos, cómo se crean, nombran y cesan, y qué funciones tienen? | Arts. 55.3, 6, 7, 9, 10 y 11, 55 bis y 61 a 67 | Ley 50/1997, art. 15.1 |
 | **IV** | ¿Qué son los servicios comunes de los Ministerios? | Art. 68 (y 58.2, 63 y 65) | — |
 | **V** | ¿Cómo se organiza la AGE en el territorio? (órganos territoriales) | Arts. 55.4 y 69 a 79 | — |
 | **VI** | ¿Cómo se organiza la AGE en el exterior? | Arts. 55.5 y 80 | Ley 2/2014, arts. 1, 6, 41, 42, 44, 45, 47 y 48 |

@@ -477,7 +477,7 @@ T.ap("s16", "IV.2 Sociedades mercantiles estatales (arts. 111 a 117)", f"""
          "Participación de la AGE o de entidades del sector público institucional estatal (incluidas otras sociedades estatales)",
          ["Control por participación directa en el capital **superior al 50 %** (se suman las de todas las entidades estatales)", "O control según el art. 4 de la Ley del Mercado de Valores"],
          "Más del **50 %** del capital",
-         "«Superior al 50 por 100» (no «igual o superior»); se **suman** las participaciones de todas las entidades estatales."))}
+         f"Es {c('L40', 'a111', 'superior al 50 por 100')} (no «igual o superior»); se **suman** las participaciones de todas las entidades estatales."))}
 
 {unidad("2.2 Principios rectores (art. 112)",
   lit("L40", "a112", ["perseguirán la eficiencia, transparencia y buen gobierno"]),
@@ -577,7 +577,7 @@ El Capítulo VI (consorcios) es **básico** también para Comunidades Autónomas
          "—",
          "Pueden prever la **suspensión temporal del derecho de voto** de quien incumpla manifiestamente sus obligaciones, en especial de financiación."))}
 
-{unidad("3.8 Derecho de separación y sus efectos (arts. 125.1 y 126.1)",
+{unidad("3.8 Derecho de separación y sus efectos (arts. 125 y 126.1)",
   lit("L40", "a125", ["podrán separarse del mismo en cualquier momento siempre que no se haya señalado término para la duración del consorcio"], solo=[1, 2, 4]),
   lit("L40", "a126", ["al menos, dos Administraciones"], solo=[1]),
   fichab("Salida de un miembro del consorcio",
@@ -586,7 +586,7 @@ El Capítulo VI (consorcios) es **básico** también para Comunidades Autónomas
          "—",
          "La separación **disuelve** el consorcio, salvo que los demás acuerden continuar y permanezcan **al menos dos Administraciones** (o entidades de más de una Administración)."))}
 
-{unidad("3.9 Disolución (art. 127.1 y 2)",
+{unidad("3.9 Disolución (art. 127.1, 2 y 5)",
   lit("L40", "a127", ["En todo caso será causa de disolución que los fines para los que fue creado el consorcio hayan sido cumplidos", "nombrará un liquidador"], solo=[1, 2, 7]),
   fichab("Fin del consorcio",
          "El **máximo órgano de gobierno** acuerda la disolución y nombra liquidador (órgano o entidad de la Administración de adscripción)",

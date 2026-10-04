@@ -108,7 +108,7 @@ El Capítulo primero responde a **quién** es titular de los derechos: los espa�
          "11.3, doble nacionalidad por tratado con los países iberoamericanos o con los que tengan particular vinculación con España; en ellos, naturalización sin perder la nacionalidad de origen, aunque no haya reciprocidad"],
         "La ley fija cómo se adquiere y se pierde. Quien no es español de origen (por ejemplo, por residencia) puede perderla en los casos legales",
         P_C1,
-        f"{c('CE', 11, 'Ningún español de origen')}: sin «de origen», es falso. «**Particular** vinculación», no «especial». Naturalización {c('CE', 11, 'aun cuando no reconozcan a sus ciudadanos un derecho recíproco')}."))}
+        f"{c('CE', 11, 'Ningún español de origen')}: sin «de origen», es falso. «**particular** vinculación», no «especial». Naturalización {c('CE', 11, 'aun cuando no reconozcan a sus ciudadanos un derecho recíproco')}."))}
 
 {unidad("2.2 La mayoría de edad (art. 12 y disposición adicional segunda)",
   lit("CE", 12, ["dieciocho años"]),
@@ -148,7 +148,7 @@ El Capítulo segundo, «Derechos y libertades», es el núcleo del Título I. Se
         [f"::{P_14}",
          f"Lo nombra el art. 53.2: {c('CE', 53, 'el artículo 14 y la Sección primera del Capítulo segundo')}",
          "**Sin** reforma agravada: el art. 168 solo nombra la Sección primera",
-         "Ley orgánica: el art. 81 habla de «derechos fundamentales y libertades públicas»; que no alcance al art. 14 es **doctrina del TC** (STC 76/1983, FJ 2: «Existe, pues, una exclusión expresa del art. 14 en el art. 81. 1 de la Constitución») [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/204]], no texto literal",
+         "Ley orgánica: el art. 81 habla de " + c('CE', 81, 'derechos fundamentales y de las libertades públicas') + "; que no alcance al art. 14 es **doctrina del TC** (STC 76/1983, FJ 2: «Existe, pues, una exclusión expresa del art. 14 en el art. 81. 1 de la Constitución») [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/204]], no texto literal",
          NO_SUSP],
         "No aparecen expresamente «ideología», «edad», «nacionalidad» ni «discapacidad»: caben en «cualquier otra condición o circunstancia personal o social». El art. 14 **no** pertenece a la Sección 1.ª."))}
 """, 2)
