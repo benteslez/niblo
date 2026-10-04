@@ -12,7 +12,7 @@ from plantilla import *
 CORTO.update({"LGD": "RDLeg 1/2013", "RD2271": "RD 2271/2004", "RDL6": "RDL 6/2023", "OPJC804": "Orden PJC/804/2025"})
 
 T = Tema("B5T10",
-  "Cuatro preguntas: I. Quién es persona con discapacidad y qué principios rigen su acceso (RDLeg 1/2013; RD 2271/2004; RDL 6/2023) · II. Cuántas plazas se reservan (TREBEP, art. 59; RDL 6/2023, art. 108; RD 2271/2004) · III. Cómo se adapta el proceso selectivo (Orden PJC/804/2025) · IV. Qué pasa después del ingreso: destino, adaptación del puesto y formación. Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Quién es persona con discapacidad y qué principios rigen su acceso (RDLeg 1/2013; RD 2271/2004; RDL 6/2023) · II. Cuántas plazas se reservan (TREBEP, art. 59; RDL 6/2023, arts. 108 y 113; RD 2271/2004) · III. Cómo se adapta el proceso selectivo (TREBEP, art. 59; RDL 6/2023, arts. 113 y 115; RD 2271/2004; Orden PJC/804/2025) · IV. Qué pasa después del ingreso: destino, adaptación del puesto y formación (RD 2271/2004; RDL 6/2023). Cada artículo: texto literal del BOE y ficha.",
   ["Discapacidad", "33 por ciento", "Cupo de reserva", "7 % (TREBEP)", "10 % (AGE)", "Discapacidad intelectual", "Ajustes razonables", "Adaptación de tiempos", "Adaptación de medios", "Orden PJC/804/2025", "Alteración del orden de prelación", "Adaptación del puesto", "Unidades de inclusión"])
 
 T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
@@ -207,7 +207,7 @@ T.ap("s8", "III.3 Los criterios de la Orden PJC/804/2025", f"""
          "—", "Tres tipos: **medios**, **tiempos** y **otros ajustes**."))}
 
 {unidad("3.2 Personas beneficiarias (art. 4)",
-  lit("OPJC804", "a4", ["igual o superior al 33 por ciento", "aun sin contar con un reconocimiento oficial del grado de discapacidad", "solo las adaptaciones de medios y otros ajustes razonables"], titulo="Artículo 4. Personas beneficiarias (Orden PJC/804/2025)"),
+  lit("OPJC804", "a4", ["igual o superior al 33 por ciento", "aun sin contar con un reconocimiento oficial del grado de discapacidad", "solo las adaptaciones de medios y otros ajustes razonables"], titulo="Artículo 4. Personas beneficiarias de las medidas de adaptación de medios y tiempos, y de otros ajustes razonables en los procesos selectivos (Orden PJC/804/2025)"),
   fichab("Quién puede pedir adaptaciones",
          ["Personas con grado **igual o superior al 33 %** (art. 4.2 RDLeg 1/2013)", "Personas **sin reconocimiento oficial** que acrediten su necesidad de apoyo por cualquier medio admitido en Derecho"],
          "Sin grado reconocido: **solo** adaptaciones de **medios** y otros ajustes (no de **tiempos**)", "—",
@@ -224,7 +224,7 @@ T.ap("s8", "III.3 Los criterios de la Orden PJC/804/2025", f"""
 
 {unidad("3.4 Petición y concesión (arts. 7 y 8)",
   lit("OPJC804", "a7", ["formular petición concreta en la solicitud de participación", "Dictamen Técnico Facultativo"], titulo="Artículo 7. Petición de adaptación de medios y tiempos y ajustes razonables (Orden PJC/804/2025)"),
-  lit("OPJC804", "a8", ["guarde relación con la prueba a realizar", "Corresponde a los órganos de selección resolver", "Criterios generales para las adaptaciones de tiempos en pruebas orales y escritas según deficiencias y grados de discapacidad", "en el plazo de diez días hábiles", "del modo más favorable a la garantía de la igualdad de oportunidades"], titulo="Artículo 8. Criterios y procesos aplicables para la concesión (Orden PJC/804/2025)"),
+  lit("OPJC804", "a8", ["guarde relación con la prueba a realizar", "Corresponde a los órganos de selección resolver", "Criterios generales para las adaptaciones de tiempos en pruebas orales y escritas según deficiencias y grados de discapacidad", "en el plazo de diez días hábiles", "del modo más favorable a la garantía de la igualdad de oportunidades"], titulo="Artículo 8. Criterios y procesos aplicables para la concesión de adaptación de medios y tiempos y otros ajustes razonables (Orden PJC/804/2025)"),
   fichab("Procedimiento de las adaptaciones",
          ["La persona aspirante lo pide **en la solicitud**, con el **Dictamen Técnico Facultativo**", "Resuelven los **órganos de selección**", "Pueden pedir informes a órganos técnicos, a las **unidades de inclusión** (→ IV.2.2) y a organizaciones de la discapacidad"],
          ["Solo si la discapacidad **guarda relación** con la prueba (8.2)", "Baremo de **tiempos** en los anexos (8.3)", "Casos no previstos: del modo **más favorable** a la igualdad de oportunidades (8.7)"],

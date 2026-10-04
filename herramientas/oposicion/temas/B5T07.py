@@ -15,7 +15,7 @@ from plantilla import *
 CORTO.update({"CONV": "IV Convenio Único", "ET": "Estatuto de los Trabajadores", "L30": "Ley 30/1984", "RDL6": "RDL 6/2023"})
 
 T = Tema("B5T07",
-  "Cuatro preguntas: I. Quién es personal laboral y qué normas lo rigen (TREBEP, arts. 1, 2, 7, 8 y 11; Estatuto de los Trabajadores, arts. 1 y 3) · II. Qué puestos ocupa y qué preceptos del TREBEP le alcanzan (TREBEP, arts. 9.2, 11, 19, 27, 51, 77, 83, 92 y 93; Ley 30/1984, art. 15; RDL 6/2023, art. 109) · III. A quién se aplica el IV Convenio Único (arts. 1 a 4 y 124) · IV. Cómo clasifica al personal (Estatuto de los Trabajadores, art. 22; Convenio, arts. 7 a 19 y anexo II). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Quién es personal laboral y qué normas lo rigen (TREBEP, arts. 1, 2, 7, 8 y 11; Estatuto de los Trabajadores, arts. 1 y 3) · II. Qué puestos ocupa y qué preceptos del TREBEP le alcanzan (TREBEP, arts. 9.2, 11, 19, 27, 51, 77, 83, 92 y 93; Ley 30/1984, art. 15; RDL 6/2023, art. 109) · III. A quién se aplica el IV Convenio Único (arts. 1 a 4 y 124; disposición adicional duodécima) · IV. Cómo clasifica al personal (Estatuto de los Trabajadores, art. 22; Convenio, arts. 7 a 12, 15, 16 y 19, disposiciones adicional primera y transitoria primera y anexo II). Cada artículo: texto literal del BOE y ficha.",
   ["Personal laboral", "TREBEP art. 7", "TREBEP art. 11", "Fijo, indefinido o temporal", "Art. 9.2 TREBEP", "Ley 30/1984 art. 15", "Relación de puestos de trabajo", "IV Convenio Único", "Ámbito de aplicación", "Personal excluido", "Grupos profesionales", "M3 a E0", "Familias profesionales", "Especialidades", "Comisión Paritaria", "Comisión Negociadora"])
 
 # =============================================================================
@@ -236,7 +236,7 @@ Son los preceptos «que así lo dispongan» del art. 7 (→ I.2.2). En cada mate
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿A quién se aplica el IV Convenio Único? Ámbito de aplicación (arts. 1 a 4 y 124)", donde(
+T.ap("bIII", "III. ¿A quién se aplica el IV Convenio Único? Ámbito de aplicación (arts. 1 a 4 y 124; DA 12.ª)", donde(
   "Tercera pregunta. En la AGE, la norma convencional del art. 7 TREBEP es el **IV Convenio colectivo único para el personal laboral de la Administración General del Estado** (registrado y publicado por Resolución de 13 de mayo de 2019, de la Dirección General de Trabajo). Su título I regula el **ámbito de aplicación y vigencia**.",
   ["1 Personal incluido (art. 1)", "2 Personal excluido (art. 2)", "3 Vigencia, carácter unitario y derecho supletorio (arts. 3, 4 y 124; disposición adicional duodécima)"]))
 
@@ -303,7 +303,7 @@ T.ap("s7", "III.3 Vigencia, carácter unitario y derecho supletorio (arts. 3, 4 
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se clasifica al personal? El sistema de clasificación (ET, art. 22; Convenio, arts. 7 a 19 y anexo II)", donde(
+T.ap("bIV", "IV. ¿Cómo se clasifica al personal? El sistema de clasificación (ET, art. 22; Convenio, arts. 7 a 12, 15, 16 y 19, DA 1.ª, DT 1.ª y anexo II)", donde(
   "Cuarta pregunta. El art. 77 TREBEP remite la clasificación del personal laboral a la **legislación laboral** (→ II.2.5): el Estatuto de los Trabajadores exige **grupos profesionales** fijados por la negociación colectiva, y el título III del IV Convenio Único los define.",
   ["1 La base legal: grupos profesionales (ET, art. 22)", "2 El sistema del Convenio: grupos, familias y especialidades (arts. 7, 8 y 9)", "3 Las especialidades (art. 10)", "4 Quién decide sobre la clasificación (arts. 11, 12, 15, 16 y 19)", "5 Encuadramiento y colectivos del anexo II (DA 1.ª, DT 1.ª y anexo II)"]))
 

@@ -34,7 +34,7 @@ def aviso_tc(bid, frag):
 
 
 T = Tema("B5T08",
-  "Cuatro preguntas: I. Qué derechos colectivos tienen los empleados públicos y en qué se apoyan (CE, arts. 7, 28.1 y 103.3; TREBEP, arts. 15, 31 y 32; LO 11/1985) · II. Cómo se negocian sus condiciones de trabajo (TREBEP, arts. 33 a 38 y 45) · III. Quién los representa (TREBEP, arts. 39 a 44 y 46; IV Convenio Único, art. 85) · IV. Cómo se ejerce el derecho de huelga (CE, art. 28.2; RDL 17/1977; TREBEP, arts. 30.2 y 95.2). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué derechos colectivos tienen los empleados públicos y en qué se apoyan (CE, arts. 7, 28.1 y 103.3; TREBEP, arts. 15, 31 y 32; LO 11/1985) · II. Cómo se negocian sus condiciones de trabajo (CE, art. 37.1; TREBEP, arts. 33 a 38 y 45 y disposición adicional duodécima) · III. Quién los representa (TREBEP, arts. 39 a 44 y 46 y disposición transitoria quinta; Estatuto de los Trabajadores, arts. 62 y 63; IV Convenio Único, art. 85) · IV. Cómo se ejerce el derecho de huelga (CE, arts. 28.2 y 37.2; RDL 17/1977; TREBEP, arts. 30.2 y 95.2). Cada artículo: texto literal del BOE y ficha.",
   ["Negociación colectiva", "Representación", "Participación institucional", "Libertad sindical", "Sindicatos más representativos", "Mesas de Negociación", "Art. 37 TREBEP", "Pactos y Acuerdos", "Delegados de Personal", "Juntas de Personal", "Cuatro años", "Derecho de reunión", "Huelga", "RDL 17/1977", "STC 11/1981", "Servicios esenciales"])
 
 # =============================================================================
@@ -178,7 +178,7 @@ La Ley Orgánica 11/1985, de Libertad Sindical, desarrolla el art. 28.1 CE. El T
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo se negocian las condiciones de trabajo? La negociación colectiva (TREBEP, arts. 33 a 38 y 45)", donde(
+T.ap("bII", "II. ¿Cómo se negocian las condiciones de trabajo? La negociación colectiva (CE, art. 37.1; TREBEP, arts. 33 a 38 y 45 y DA 12.ª)", donde(
   "Segunda pregunta. La Constitución garantiza la negociación colectiva **laboral** (art. 37.1); para los funcionarios, el TREBEP regula **principios**, **Mesas de Negociación**, **materias** y el resultado: **Pactos y Acuerdos**.",
   ["1 Fundamento y principios: quién negocia (CE, art. 37.1; TREBEP, art. 33)", "2 Las Mesas de Negociación (arts. 34 a 36 y disposición adicional duodécima)", "3 Materias negociables y excluidas (art. 37)", "4 Pactos y Acuerdos (art. 38)", "5 Solución extrajudicial de conflictos (art. 45)"]))
 
@@ -291,7 +291,7 @@ T.ap("s9", "II.5 Solución extrajudicial de conflictos colectivos (art. 45)", f"
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Quién representa a los empleados públicos? Representación unitaria y reunión (TREBEP, arts. 39 a 44 y 46)", donde(
+T.ap("bIII", "III. ¿Quién representa a los empleados públicos? Representación unitaria y reunión (TREBEP, arts. 39 a 44 y 46 y DT 5.ª; ET, arts. 62 y 63; IV Convenio Único, art. 85)", donde(
   "Tercera pregunta. La **representación** es la facultad de elegir representantes y constituir **órganos unitarios** (art. 31.3, → I.3.1). Para los funcionarios son los **Delegados** y las **Juntas de Personal**; para el personal laboral, los **Delegados de personal** y los **Comités de empresa**.",
   ["1 Órganos de representación (TREBEP, art. 39; ET, arts. 62 y 63; IV Convenio Único, art. 85)", "2 Funciones, legitimación y garantías (arts. 40 y 41)", "3 Mandato, promoción de elecciones y procedimiento electoral (arts. 42 a 44 y disposición transitoria quinta)", "4 Derecho de reunión (art. 46)"]))
 
