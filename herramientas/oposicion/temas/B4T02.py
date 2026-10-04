@@ -22,7 +22,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 
 | Bloque | Pregunta | Constitución | Otras normas |
 |---|---|---|---|
-| **I** | ¿Qué es la ley y qué tipos hay? | Arts. 66.2, 75.3, 91, 81, 82.1 y 150 | — |
+| **I** | ¿Qué es la ley y qué tipos hay? | Arts. 66.2, 75.2, 75.3, 91, 81, 82.1 y 150 | — |
 | **II** | ¿Qué materias exigen ley? (reserva de ley) | Arts. 53.1, 81.1, 30.2, 31.3, 103.3 y 133 | — |
 | **III** | ¿Cómo legisla el Gobierno por delegación? (decreto legislativo) | Arts. 82 a 85 | Ley 50/1997, art. 24.1 a); LJCA, art. 1.1; LOTC, art. 27.2 |
 | **IV** | ¿Cómo legisla el Gobierno por urgencia? (decreto-ley) | Art. 86 | Reglamento del Congreso, art. 151 |
