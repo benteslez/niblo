@@ -15,7 +15,7 @@ CORTO.update({"RD365": "RD 365/1995", "RD598": "RD 598/1985", "L53": "Ley 53/198
 R598 = lambda n: f"Artículo {n} (RD 598/1985)"
 
 T = Tema("B5T05",
-  "Cuatro preguntas: I. En qué situaciones puede estar el personal (TREBEP, arts. 85 y 92; RD 365/1995, arts. 1 y 2) · II. Cuándo se está en servicio activo, en servicios especiales o en servicio en otras Administraciones (TREBEP, arts. 86 a 88; RD 365/1995) · III. Excedencias, suspensión de funciones y reingreso (TREBEP, arts. 89 a 91; RD 365/1995) · IV. Incompatibilidades: actividades públicas y privadas (Ley 53/1984; RD 598/1985). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. En qué situaciones puede estar el personal (TREBEP, arts. 85 y 92 y disposición final cuarta.2; RD 365/1995, arts. 1 y 2) · II. Cuándo se está en servicio activo, en servicios especiales o en servicio en otras Administraciones (TREBEP, arts. 86 a 88; RD 365/1995) · III. Excedencias, suspensión de funciones y reingreso (TREBEP, arts. 89 a 91; RD 365/1995) · IV. Incompatibilidades: actividades públicas y privadas (Ley 53/1984; RD 598/1985). Cada artículo: texto literal del BOE y ficha.",
   ["Situaciones administrativas", "Art. 85 TREBEP", "Servicio activo", "Servicios especiales", "Servicio en otras AA. PP.", "Excedencia", "Interés particular", "Cuidado de familiares", "Suspensión de funciones", "RD 365/1995", "Incompatibilidades", "Ley 53/1984", "Segundo puesto", "Actividades privadas", "RD 598/1985"])
 
 # =============================================================================
@@ -32,7 +32,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 | **I** | ¿En qué situaciones puede hallarse el personal? | Arts. 85 y 92; disposición final cuarta.2 | RD 365/1995, arts. 1 y 2 |
 | **II** | ¿Cuándo se está en servicio activo, en servicios especiales o en servicio en otras Administraciones? | Arts. 86, 87 y 88 | RD 365/1995, arts. 3, 6, 9 y 11 |
 | **III** | ¿Cuándo se deja de prestar servicio? Excedencias, suspensión y reingreso | Arts. 89, 90 y 91 | RD 365/1995, arts. 12, 13, 15, 18, 19, 21, 22 y 23 |
-| **IV** | ¿Qué otras actividades puede ejercer el personal? Incompatibilidades | — | Ley 53/1984, arts. 1 a 20; RD 598/1985, arts. 5, 6, 8, 9, 11, 14 y 17 |
+| **IV** | ¿Qué otras actividades puede ejercer el personal? Incompatibilidades | — | Ley 53/1984, arts. 1 a 16 y 18 a 20; RD 598/1985, arts. 5, 6, 8, 9, 11, 14 y 17 |
 
 !> **La idea que une los cuatro bloques:** el funcionario de carrera está siempre en **una** situación administrativa (I). Mientras presta servicios, está en **servicio activo**, en **servicios especiales** o en **servicio en otras Administraciones** (II). Si deja de prestarlos, está en **excedencia** o en **suspensión de funciones**, y vuelve por el **reingreso** (III). Y, esté donde esté, la regla general es la **incompatibilidad**: un solo puesto en el sector público y actividades privadas solo con reconocimiento previo (IV).
 
@@ -46,7 +46,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿En qué situaciones puede hallarse el personal? (TREBEP, arts. 85 y 92; RD 365/1995, arts. 1 y 2)", donde(
+T.ap("bI", "I. ¿En qué situaciones puede hallarse el personal? (TREBEP, arts. 85 y 92 y disposición final cuarta.2; RD 365/1995, arts. 1 y 2)", donde(
   "Primera pregunta del tema. Antes de estudiar cada situación hay que saber **cuáles hay**: las cinco del TREBEP para los funcionarios de carrera, la remisión del personal laboral al Estatuto de los Trabajadores y la lista del reglamento de la Administración General del Estado.",
   ["1 Las situaciones de los funcionarios de carrera (art. 85)", "2 Situaciones del personal laboral (art. 92)", "3 El Reglamento de situaciones de la AGE (RD 365/1995) y su vigencia"]))
 
@@ -65,7 +65,7 @@ T.ap("s1", "I.1 Las situaciones de los funcionarios de carrera (TREBEP, art. 85)
          f"{c('TREBEP', 'a85', 'Las leyes de Función Pública que se dicten en desarrollo de este Estatuto')}",
          ["::Cuando concurra, entre otras, alguna de estas circunstancias:", "Razones organizativas, de reestructuración interna o exceso de personal (imposibilidad transitoria de asignar puesto o conveniencia de incentivar el cese en el servicio activo)", "Acceso a otros cuerpos o escalas sin situación prevista, o paso a organismos o entidades del sector público en régimen distinto al de funcionario de carrera"],
          "—",
-         "La lista del 85.1 **no es cerrada**: las leyes «**podrán** regular otras situaciones». Es la base de las situaciones propias del reglamento de la AGE (→ III.5)."))}
+         "La lista del 85.1 **no es cerrada**: las leyes «**podrán** regular otras situaciones». Las situaciones propias del reglamento de la AGE (→ III.5) son anteriores al TREBEP y siguen vigentes en tanto no se opongan a él (→ I.3.3)."))}
 """, 2)
 
 T.ap("s2", "I.2 Situaciones del personal laboral (TREBEP, art. 92)", f"""
@@ -212,7 +212,7 @@ T.ap("s6", "II.3 Servicio en otras Administraciones Públicas (TREBEP, art. 88; 
 # =============================================================================
 T.ap("bIII", "III. ¿Cuándo se deja de prestar servicio? Excedencias, suspensión de funciones y reingreso (TREBEP, arts. 89 a 91)", donde(
   "Tercera pregunta. El funcionario puede dejar de prestar servicios sin perder su condición: por **excedencia** (voluntaria o por razones protegidas) o por **suspensión de funciones** (sanción o medida cautelar). La vuelta se llama **reingreso**.",
-  ["1 Modalidades de excedencia y excedencia por interés particular (art. 89.1 y 2)", "2 Agrupación familiar (art. 89.3)", "3 Cuidado de familiares (art. 89.4)", "4 Violencia de género o sexual y violencia terrorista (art. 89.5 y 6)", "5 Situaciones propias del reglamento de la AGE (RD 365/1995, arts. 12 a 19)", "6 Suspensión de funciones (art. 90; RD 365/1995, arts. 21 y 22)", "7 Reingreso (art. 91; RD 365/1995, art. 23)", "8 Cuadro de efectos de las situaciones"]))
+  ["1 Modalidades de excedencia y excedencia por interés particular (art. 89.1 y 2)", "2 Agrupación familiar (art. 89.3)", "3 Cuidado de familiares (art. 89.4)", "4 Violencia de género o sexual y violencia terrorista (art. 89.5 y 6)", "5 Situaciones propias del reglamento de la AGE (RD 365/1995, arts. 12, 13, 15, 18 y 19)", "6 Suspensión de funciones (art. 90; RD 365/1995, arts. 21 y 22)", "7 Reingreso (art. 91; RD 365/1995, art. 23)", "8 Cuadro de efectos de las situaciones"]))
 
 T.ap("s7", "III.1 Modalidades de excedencia y excedencia voluntaria por interés particular (TREBEP, art. 89.1 y 2)", f"""
 {unidad("1.1 Las cinco modalidades (art. 89.1)",
@@ -271,7 +271,7 @@ T.ap("s10", "III.4 Excedencia por violencia de género o sexual y por violencia 
 """, 2)
 
 T.ap("s11", "III.5 Situaciones propias del reglamento de la AGE (RD 365/1995, arts. 12, 13, 15, 18 y 19)", f"""
-Son situaciones del reglamento de la AGE que el art. 85.2 TREBEP permite mantener (→ I.1.2 y → I.3.3).
+Son situaciones del reglamento de la AGE (de 1995) que siguen vigentes en tanto no se opongan al TREBEP (disposición final cuarta.2: → I.3.3); el art. 85.2 TREBEP, por su parte, permite que las leyes de Función Pública regulen otras (→ I.1.2).
 
 {unidad("5.1 Expectativa de destino (art. 12)",
   lit("RD365", "a12", ["un período máximo de un año", "el 50 por 100 del complemento específico", "esta situación se equipara a la de servicio activo"], solo=[1, 2, 7, 8]),
@@ -384,7 +384,7 @@ T.ap("s14", "III.8 Cuadro de efectos de las situaciones (esquema)", f"""
 # =============================================================================
 T.ap("bIV", "IV. ¿Qué otras actividades puede ejercer el personal? Incompatibilidades (Ley 53/1984; RD 598/1985)", donde(
   "Cuarta pregunta. Esté en la situación que esté, el empleado público tiene limitado lo que puede hacer **además** de su puesto. La Ley 53/1984 parte de la **incompatibilidad** y enumera las excepciones; el RD 598/1985 la desarrolla para la Administración del Estado.",
-  ["1 Principios y ámbito (Ley 53/1984, arts. 1 y 2)", "2 Actividades públicas: el segundo puesto (arts. 3 a 10; RD 598/1985, arts. 5, 6 y 14)", "3 Actividades privadas (arts. 11 a 15; RD 598/1985, arts. 8, 9 y 11)", "4 Disposiciones comunes (arts. 16 a 20; RD 598/1985, art. 17)", "5 Cuadro de las incompatibilidades"]))
+  ["1 Principios y ámbito (Ley 53/1984, arts. 1 y 2)", "2 Actividades públicas: el segundo puesto (arts. 3 a 10; RD 598/1985, arts. 5, 6 y 14)", "3 Actividades privadas (arts. 11 a 15; RD 598/1985, arts. 8, 9 y 11)", "4 Disposiciones comunes (arts. 16 y 18 a 20; RD 598/1985, art. 17)", "5 Cuadro de las incompatibilidades"]))
 
 T.ap("s15", "IV.1 Principios y ámbito de aplicación (Ley 53/1984, arts. 1 y 2)", f"""
 {unidad("1.1 Los tres principios (art. 1)",
@@ -525,14 +525,14 @@ T.ap("s17", "IV.3 Actividades privadas (Ley 53/1984, arts. 11 a 15; RD 598/1985,
          "La lista completa tiene ocho apartados (letrados, arquitectos e ingenieros, personal sanitario…)."))}
 """, 2)
 
-T.ap("s18", "IV.4 Disposiciones comunes (Ley 53/1984, arts. 16 a 20; RD 598/1985, art. 17)", f"""
+T.ap("s18", "IV.4 Disposiciones comunes (Ley 53/1984, arts. 16 y 18 a 20; RD 598/1985, art. 17)", f"""
 {unidad("4.1 Complemento específico y actividades privadas (art. 16)",
   lit("L53", "adieciseis", ["No podrá autorizarse o reconocerse compatibilidad", "Se exceptúan de la prohibición enunciada en el apartado 1", "cuya cuantía no supere el 30 por 100 de su retribución básica"]),
   fichab("Prohibición ligada a la retribución del puesto y su excepción",
          "Personal funcionario, eventual y laboral; retribuido por arancel; personal directivo",
          ["Excepciones (16.3): profesor universitario **asociado** e investigación o asesoramiento del art. 6", "Excepción para actividades privadas (16.4): complemento específico **no superior al 30 %** de la retribución básica, sin contar la antigüedad"],
          "—",
-         f"La redacción del apartado 1 procede del TREBEP (disposición final tercera), que {c('TREBEP', 'dfcuaa', 'producirá efectos en cada Administración Pública a partir de la entrada en vigor del capítulo III del título III')} con las leyes de Función Pública; {c('TREBEP', 'dfcuaa', 'Hasta que se hagan efectivos esos supuestos la autorización o denegación de compatibilidades continuará rigiéndose por la actual normativa')}. El **30 %** del 16.4 es el dato que más cae."))}
+         f"La redacción del apartado 1 procede del TREBEP (disposición final tercera), que, según su disposición final cuarta.1, {c('TREBEP', 'dfcuaa', 'producirá efectos en cada Administración Pública a partir de la entrada en vigor del capítulo III del título III')} con las leyes de Función Pública; {c('TREBEP', 'dfcuaa', 'Hasta que se hagan efectivos esos supuestos la autorización o denegación de compatibilidades continuará rigiéndose por la actual normativa')}. El **30 %** del 16.4 es el dato que más cae."))}
 
 {unidad("4.2 Inscripción en los Registros de Personal (art. 18)",
   lit("L53", "adieciocho", ["se inscribirán en los Registros de Personal correspondientes"]),

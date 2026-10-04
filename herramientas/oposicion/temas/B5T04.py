@@ -32,7 +32,7 @@ def tabla(k, bloque):
 
 
 T = Tema("B5T04",
-  "Cuatro preguntas: I. Qué normas rigen y cuáles son las formas de provisión (TREBEP, art. 78 y disposición final cuarta; RD 364/1995, arts. 1, 26, 36 y 38) · II. Cómo se provee con carácter definitivo: concurso y libre designación (TREBEP, arts. 79 y 80; RD 364/1995, arts. 39 a 58; RDL 6/2023, arts. 111, 123 y 127) · III. Qué otras formas de provisión y movilidad hay (TREBEP, arts. 81 a 84; RD 364/1995, arts. 59 a 69) · IV. Cómo se progresa: carrera profesional y promoción interna (TREBEP, arts. 16 a 19; RDL 6/2023, arts. 108 y 122; RD 364/1995, arts. 70 a 80). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué normas rigen y cuáles son las formas de provisión (TREBEP, art. 78 y disposiciones derogatoria única y final cuarta; RD 364/1995, arts. 1, 26, 36 y 38) · II. Cómo se provee con carácter definitivo: concurso y libre designación (TREBEP, arts. 79 y 80; RD 364/1995, arts. 39 a 58; Ley 30/1984, art. 20.1 b) y f); RDL 6/2023, arts. 111, 123 y 127) · III. Qué otras formas de provisión y movilidad hay (TREBEP, arts. 81 a 84 y disposición transitoria octava; RD 364/1995, arts. 59 a 69 y 72) · IV. Cómo se progresa: carrera profesional y promoción interna (TREBEP, arts. 16 a 19; RDL 6/2023, arts. 105.3, 108 y 122 y disposición transitoria sexta; RD 364/1995, arts. 70 y 73 a 80). Cada artículo: texto literal del BOE y ficha.",
   ["Provisión de puestos", "Concurso", "Concurso específico", "Concurso unitario", "Libre designación", "Personal directivo público", "Redistribución de efectivos", "Reasignación de efectivos", "Comisión de servicios", "Adscripción provisional", "Movilidad", "Carrera profesional", "Carrera horizontal", "Grado personal", "Promoción interna"])
 
 # =============================================================================
@@ -49,7 +49,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 | **I** | ¿Qué normas rigen y cuáles son las formas de provisión? | Art. 78; disposición derogatoria única y disposición final cuarta | RD 364/1995, arts. 1, 26, 36 y 38 |
 | **II** | ¿Cómo se provee con carácter definitivo? (concurso y libre designación) | Arts. 79 y 80 | RD 364/1995, arts. 39 a 58; Ley 30/1984, art. 20.1 b) y f); RDL 6/2023, arts. 111, 123 y 127 |
 | **III** | ¿Qué otras formas de provisión y movilidad hay? | Arts. 81 a 84; disposición transitoria octava | RD 364/1995, arts. 59 a 69 y 72 |
-| **IV** | ¿Cómo se progresa? (carrera profesional y promoción interna) | Arts. 16 a 19 | RDL 6/2023, arts. 108 y 122 y disposición transitoria sexta; RD 364/1995, arts. 70 y 73 a 80 |
+| **IV** | ¿Cómo se progresa? (carrera profesional y promoción interna) | Arts. 16 a 19 | RDL 6/2023, arts. 105.3, 108 y 122 y disposición transitoria sexta; RD 364/1995, arts. 70 y 73 a 80 |
 
 !> **La idea que une los cuatro bloques:** el funcionario ocupa un **puesto de trabajo**. Lo obtiene con carácter **definitivo** por **concurso** (el sistema normal) o por **libre designación** (II); puede cambiar de puesto por otras vías, algunas **definitivas** (redistribución, reasignación) y otras **temporales** (comisión de servicios, adscripción provisional) (III); y progresa **sin cambiar de cuerpo** (carrera: grado, tramos, puestos de más nivel) o **cambiando de cuerpo** (promoción interna) (IV).
 
@@ -66,7 +66,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 # =============================================================================
 T.ap("bI", "I. ¿Qué normas rigen y cuáles son las formas de provisión?", donde(
   "Primera pregunta del tema. Antes de estudiar cada procedimiento hay que saber **qué norma se aplica** en la Administración del Estado (el TREBEP tiene efectos diferidos en esta materia) y **cuál es el catálogo** de formas de provisión.",
-  ["1 Principios y procedimientos en el TREBEP y sus efectos diferidos (art. 78; disposición final cuarta)", "2 Las formas de provisión en la Administración General del Estado (RD 364/1995, arts. 1, 36, 38 y 26)"]))
+  ["1 Principios y procedimientos en el TREBEP y sus efectos diferidos (art. 78; disposiciones derogatoria y final cuarta)", "2 Las formas de provisión en la Administración General del Estado (RD 364/1995, arts. 1, 26, 36 y 38)"]))
 
 T.ap("s1", "I.1 Principios y procedimientos en el TREBEP y sus efectos diferidos (art. 78; disposiciones derogatoria y final cuarta)", f"""
 {unidad("1.1 Principios y procedimientos de provisión (TREBEP, art. 78)",
@@ -77,9 +77,9 @@ T.ap("s1", "I.1 Principios y procedimientos en el TREBEP y sus efectos diferidos
          "—",
          "**Cuatro** principios: igualdad, mérito, capacidad **y publicidad**. La libre designación es **con convocatoria pública**."))}
 
-{unidad("1.2 Efectos diferidos del TREBEP y derogación de la Ley 30/1984 (disposición final cuarta y derogatoria única)",
-  lit("TREBEP", "dfcuaa", ["en el capítulo III del título V producirá efectos a partir de la entrada en vigor de las leyes de Función Pública", "se mantendrán en vigor en cada Administración Pública las normas vigentes sobre ordenación, planificación y gestión de recursos humanos"], solo=[1, 3], titulo="Disposición final cuarta. Entrada en vigor (TREBEP)"),
+{unidad("1.2 Derogación de la Ley 30/1984 y efectos diferidos del TREBEP (disposición derogatoria única y disposición final cuarta)",
   lit("TREBEP", "ddunica-2", ["con el alcance establecido en el apartado 2 de la disposición final cuarta", "20.1.a), b) párrafo primero, c), e) y g) en sus párrafos primero a cuarto, e i), 2 y 3; 21; 22.1 a excepción de los dos últimos párrafos"], solo=[1, 3], titulo="Disposición derogatoria única (TREBEP)"),
+  lit("TREBEP", "dfcuaa", ["en el capítulo III del título V producirá efectos a partir de la entrada en vigor de las leyes de Función Pública", "se mantendrán en vigor en cada Administración Pública las normas vigentes sobre ordenación, planificación y gestión de recursos humanos"], solo=[1, 3], titulo="Disposición final cuarta. Entrada en vigor (TREBEP)"),
   fichab("Cuándo se aplican los artículos del TREBEP de este tema y qué queda de la Ley 30/1984",
          "Cada Administración, con sus **leyes de Función Pública**",
          ["Carrera y promoción (cap. II del título III) y provisión y movilidad (cap. III del título V): efectos **a partir de las leyes de Función Pública** de desarrollo", "Mientras tanto, siguen en vigor las normas vigentes sobre gestión de recursos humanos **en tanto no se opongan** al TREBEP", "La Ley 30/1984 se deroga **con el alcance** de ese apartado 2; de su art. 20, la lista **no incluye** el **20.1 b) párrafo segundo**, la **f)**, la **h)** ni la **g)** desde su párrafo quinto"],
@@ -87,7 +87,7 @@ T.ap("s1", "I.1 Principios y procedimientos en el TREBEP y sus efectos diferidos
          "La excepción del art. **25.2** (trienios de los interinos) no es de este tema. De la Ley 30/1984 se citan en estos apuntes solo párrafos **no incluidos** en la lista de la derogatoria (→ II.2.3 y → II.5.2)."))}
 """, 2)
 
-T.ap("s2", "I.2 Las formas de provisión en la Administración General del Estado (RD 364/1995, arts. 1, 36, 38 y 26)", f"""
+T.ap("s2", "I.2 Las formas de provisión en la Administración General del Estado (RD 364/1995, arts. 1, 26, 36 y 38)", f"""
 {unidad("2.1 Ámbito del Reglamento (RD 364/1995, art. 1.1 y 3)",
   lit("RD364", "Artículo 1", ["a la provisión de puestos de trabajo, la promoción interna y la carrera profesional", "carácter supletorio"], solo=[1, 7]),
   fichab("A quién se aplica el Reglamento de ingreso, provisión, promoción y carrera",
@@ -96,7 +96,15 @@ T.ap("s2", "I.2 Las formas de provisión en la Administración General del Estad
          "—",
          "Un solo reglamento para **cuatro** materias: ingreso (tema V.3), provisión, promoción interna y carrera (este tema)."))}
 
-{unidad("2.2 Formas de provisión (RD 364/1995, art. 36)",
+{unidad("2.2 El primer destino de los funcionarios de nuevo ingreso (RD 364/1995, art. 26.1)",
+  lit("RD364", "Artículo 26", ["según el orden obtenido en el proceso selectivo", "Estos destinos tendrán carácter definitivo"], solo=[1, 2]),
+  fichab("Adjudicación del primer puesto tras el proceso selectivo",
+         "Los funcionarios de nuevo ingreso",
+         "Eligen entre los puestos ofertados **por el orden** obtenido en el proceso selectivo, si reúnen los requisitos de la relación de puestos de trabajo",
+         "—",
+         "Ese primer destino es **definitivo**, «equivalente a todos los efectos a los obtenidos por concurso»."))}
+
+{unidad("2.3 Formas de provisión (RD 364/1995, art. 36)",
   lit("RD364", "Artículo 36", ["que es el sistema normal de provisión", "redistribución de efectivos o por reasignación de efectivos", "Temporalmente podrán ser cubiertos mediante comisión de servicios y adscripción provisional"]),
   fichab("Catálogo de formas de provisión en la Administración General del Estado",
          "La Administración, según lo que determinen las **relaciones de puestos de trabajo**",
@@ -104,21 +112,13 @@ T.ap("s2", "I.2 Las formas de provisión en la Administración General del Estad
          "—",
          "**Temporales**: solo la **comisión de servicios** y la **adscripción provisional**. Cayó en 2025 (→ Cierre 1): el puesto obtenido en comisión de servicios **no** es definitivo."))}
 
-{unidad("2.3 Publicidad de las convocatorias (RD 364/1995, art. 38)",
+{unidad("2.4 Publicidad de las convocatorias (RD 364/1995, art. 38)",
   lit("RD364", "Artículo 38", ["se publicarán en el «Boletín Oficial del Estado»"]),
   fichab("Régimen de las convocatorias de concurso y libre designación",
          "El órgano convocante",
          "Cada procedimiento se rige por su **convocatoria**, ajustada al Reglamento y a las normas específicas",
          "—",
          "Se publican en el **BOE** las convocatorias **y sus resoluciones**, de concurso y de libre designación; otros diarios oficiales, solo si se estima necesario."))}
-
-{unidad("2.4 El primer destino de los funcionarios de nuevo ingreso (RD 364/1995, art. 26.1)",
-  lit("RD364", "Artículo 26", ["según el orden obtenido en el proceso selectivo", "Estos destinos tendrán carácter definitivo"], solo=[1, 2]),
-  fichab("Adjudicación del primer puesto tras el proceso selectivo",
-         "Los funcionarios de nuevo ingreso",
-         "Eligen entre los puestos ofertados **por el orden** obtenido en el proceso selectivo, si reúnen los requisitos de la relación de puestos de trabajo",
-         "—",
-         "Ese primer destino es **definitivo**, «equivalente a todos los efectos a los obtenidos por concurso»."))}
 
 {resumen([
   "TREBEP: provisión con **igualdad, mérito, capacidad y publicidad**, por **concurso** y **libre designación con convocatoria pública** (art. 78).",
@@ -131,7 +131,7 @@ T.ap("s2", "I.2 Las formas de provisión en la Administración General del Estad
 # =============================================================================
 T.ap("bII", "II. ¿Cómo se provee con carácter definitivo? Concurso y libre designación", donde(
   "Segunda pregunta. Los dos procedimientos ordinarios: el **concurso**, que valora méritos y es el sistema normal, y la **libre designación**, que aprecia discrecionalmente la idoneidad. El RDL 6/2023 añade el **concurso unitario abierto y permanente** y reglas propias para el **personal directivo público profesional**.",
-  ["1 El concurso en el TREBEP (art. 79)", "2 Convocatoria y participación en el concurso (RD 364/1995, arts. 39 a 42; RDL 6/2023, art. 111)", "3 Méritos, concurso específico y Comisiones de Valoración (arts. 44 a 46)", "4 Resolución, toma de posesión, destinos y remoción (arts. 47 a 50)", "5 La libre designación (TREBEP, art. 80; RD 364/1995, arts. 51 a 58)", "6 El personal directivo público profesional (RDL 6/2023, arts. 123 y 127)"]))
+  ["1 El concurso en el TREBEP (art. 79)", "2 Convocatoria y participación en el concurso (RD 364/1995, arts. 39 a 42; Ley 30/1984, art. 20.1 f; RDL 6/2023, art. 111)", "3 Méritos, concurso específico y Comisiones de Valoración (arts. 44 a 46)", "4 Resolución, toma de posesión, destinos y remoción (arts. 47 a 50)", "5 La libre designación (TREBEP, art. 80; RD 364/1995, arts. 51 a 58; Ley 30/1984, art. 20.1 b)", "6 El personal directivo público profesional (RDL 6/2023, arts. 123 y 127)"]))
 
 T.ap("s3", "II.1 El concurso en el TREBEP (art. 79)", f"""
 {unidad("1.1 Concepto, órganos y garantías del concurso (TREBEP, art. 79)",
@@ -143,7 +143,7 @@ T.ap("s3", "II.1 El concurso en el TREBEP (art. 79)", f"""
          "Es el procedimiento **normal**. Los órganos son **colegiados** y **técnicos** (no unipersonales ni políticos)."))}
 """, 2)
 
-T.ap("s4", "II.2 Convocatoria y participación en el concurso (RD 364/1995, arts. 39 a 42; RDL 6/2023, art. 111)", f"""
+T.ap("s4", "II.2 Convocatoria y participación en el concurso (RD 364/1995, arts. 39 a 42; Ley 30/1984, art. 20.1 f; RDL 6/2023, art. 111)", f"""
 {unidad("2.1 Quién convoca y qué contiene la convocatoria (RD 364/1995, arts. 39 y 40)",
   lit("RD364", "Artículo 39", ["autorizará las convocatorias de los concursos", "el baremo con arreglo al cual se puntuarán"]),
   lit("RD364", "Artículo 40", ["Cada Ministerio procederá a la convocatoria y a la resolución de los concursos", "podrá convocar concursos unitarios"]),
@@ -469,7 +469,7 @@ T.ap("s14", "III.6 Cuadro: provisión definitiva o temporal (esquema)", f"""
 # =============================================================================
 T.ap("bIV", "IV. ¿Cómo se progresa? Carrera profesional y promoción interna", donde(
   "Cuarta pregunta. El funcionario progresa **sin cambiar de cuerpo** (carrera horizontal o vertical) o **cambiando de cuerpo o escala** (promoción interna). El TREBEP da el marco; en la Administración del Estado, el RDL 6/2023 regula la **carrera horizontal por tramos** y el RD 364/1995 el **grado personal** y la **promoción interna**.",
-  ["1 La carrera profesional en el TREBEP (arts. 16, 17 y 19)", "2 La carrera horizontal en la Administración del Estado (RDL 6/2023, art. 122)", "3 El grado personal (RD 364/1995, art. 70; RDL 6/2023, disposición transitoria sexta)", "4 La promoción interna (TREBEP, art. 18; RD 364/1995, arts. 73 a 80; RDL 6/2023, art. 108.3)"]))
+  ["1 La carrera profesional en el TREBEP (arts. 16, 17 y 19)", "2 La carrera horizontal en la Administración del Estado (RDL 6/2023, arts. 105.3 y 122)", "3 El grado personal (RD 364/1995, art. 70; RDL 6/2023, disposición transitoria sexta)", "4 La promoción interna (TREBEP, art. 18; RD 364/1995, arts. 73 a 80; RDL 6/2023, art. 108.3)"]))
 
 T.ap("s15", "IV.1 La carrera profesional en el TREBEP (arts. 16, 17 y 19)", f"""
 {unidad("1.1 Concepto y modalidades de la carrera (TREBEP, art. 16)",
@@ -661,7 +661,7 @@ T.ap("s19", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-L 2025 extraordinario, pregunta 71 · Cobertura provisional del personal directivo (→ II.6.2)", EX_X71,
   "### GACE-L 2025 extraordinario, pregunta 76 · Plazo de solicitudes del personal directivo (→ II.6.2)", EX_X76,
   "### GACE-L 2025 extraordinario, pregunta 73 · Cese en libre designación (→ II.5.4)", EX_X73,
-  "### GACE-L 2025 extraordinario, pregunta 66 · Destinos definitivos y temporales (→ I.2.2 y → III.3.3)", EX_X66,
+  "### GACE-L 2025 extraordinario, pregunta 66 · Destinos definitivos y temporales (→ I.2.3 y → III.3.3)", EX_X66,
   "### GACE-L 2025 extraordinario, pregunta 74 · Comisión de servicios y grado (→ IV.3.1)", EX_X74,
   "### GACE-L 2025 extraordinario, pregunta 75 · Plazas de promoción interna (relacionada; → IV.4.5)", EX_X75,
   "### Cómo se pregunta",
