@@ -18,7 +18,7 @@ CORTO["L30"] = "Ley 30/1984"
 CORTO["RD2169"] = "RD 2169/1984"
 
 T = Tema("B5T03",
-  "Cuatro preguntas: I. Cómo planifica la Administración sus recursos humanos (TREBEP, arts. 69 y 71; RDL 6/2023, arts. 106 a 110) · II. Qué es la oferta de empleo público y en qué plazos se ejecuta (TREBEP, art. 70; RDL 6/2023, art. 108; RD 364/1995, arts. 7 a 9) · III. Cómo se selecciona al personal (TREBEP, arts. 55 a 61; RDL 6/2023, arts. 112, 114 y 115; RD 364/1995) · IV. Quién tiene las competencias en materia de personal (TREBEP, art. 100; Ley 30/1984; RD 2169/1984). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Cómo planifica la Administración sus recursos humanos (TREBEP, arts. 69 y 71; RDL 6/2023, arts. 106, 107, 109 y 110; Ley 30/1984, art. 13) · II. Qué es la oferta de empleo público y en qué plazos se ejecuta (TREBEP, art. 70; RDL 6/2023, art. 108; RD 364/1995, arts. 7 a 9) · III. Cómo se selecciona al personal (TREBEP, arts. 10.2, 11.3 y 55 a 61; RDL 6/2023, arts. 112, 114 y 115; RD 364/1995) · IV. Quién tiene las competencias en materia de personal (TREBEP, art. 100; Ley 30/1984; RD 2169/1984). Cada artículo: texto literal del BOE y ficha.",
   ["Planificación", "RDL 6/2023", "Oferta de empleo público", "Tres años", "Promoción interna 30 %", "Selección", "Art. 55 TREBEP", "Órganos de selección", "Oposición", "Concurso-oposición", "RD 364/1995", "Personal laboral fijo", "Competencias en materia de personal", "RD 2169/1984"])
 
 AVISO_364 = "?> **Aviso de vigencia (RD 364/1995).** El Reglamento General de Ingreso es de **1995**: anterior al TREBEP (2015) y al Real Decreto-ley 6/2023. Se cita literal, tal como figura en el texto consolidado del BOE, y las denominaciones de órganos son las de su texto («Ministro para las Administraciones Públicas», «Secretario de Estado para la Administración Pública»…). Cuando la norma con rango de ley regula lo mismo de otra forma, la ficha lo señala."
@@ -36,8 +36,8 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 |---|---|---|---|
 | **I** | ¿Cómo planifica la Administración sus recursos humanos? | Arts. 69 y 71 | RDL 6/2023, arts. 106, 107, 109 y 110; Ley 30/1984, art. 13 |
 | **II** | ¿Qué es la oferta de empleo público y en qué plazos se ejecuta? | Art. 70 | RDL 6/2023, art. 108; RD 364/1995, arts. 7 a 9 |
-| **III** | ¿Cómo se selecciona al personal? | Arts. 10.2, 11.3, 55 a 61 | RDL 6/2023, arts. 112, 114 y 115; RD 364/1995, arts. 3 a 33 |
-| **IV** | ¿Quién tiene las competencias en materia de personal? | Art. 100 | Ley 30/1984, arts. 3, 4, 5 y 9; RD 2169/1984, arts. 3 a 13 |
+| **III** | ¿Cómo se selecciona al personal? | Arts. 10.2, 11.3, 55 a 61 | RDL 6/2023, arts. 112, 114 y 115; RD 364/1995, arts. 3 a 5, 10 a 13 y 15 a 33 |
+| **IV** | ¿Quién tiene las competencias en materia de personal? | Art. 100 | Ley 30/1984, arts. 3, 4, 5 y 9; RD 2169/1984, arts. 3 y 5 a 13 |
 
 !> **La idea que une los cuatro bloques:** la Administración **planifica** cuánto personal necesita (I); las plazas de nuevo ingreso con dotación se recogen en la **oferta de empleo público**, que obliga a convocar y fija plazos (II); las plazas se cubren con procesos **selectivos** abiertos, con publicidad, órganos de selección imparciales y sistemas tasados (III); y cada paso lo decide un **órgano** concreto: el Gobierno aprueba la oferta, los Departamentos convocan, el Secretario de Estado nombra (IV).
 
@@ -59,7 +59,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Cómo planifica la Administración sus recursos humanos? (TREBEP, arts. 69 y 71; RDL 6/2023, arts. 106 a 110)", donde(
+T.ap("bI", "I. ¿Cómo planifica la Administración sus recursos humanos? (TREBEP, arts. 69 y 71; RDL 6/2023, arts. 106, 107, 109 y 110; Ley 30/1984, art. 13)", donde(
   "Primera pregunta del tema. Antes de ofertar plazas o seleccionar a nadie, la Administración tiene que saber **cuánto personal necesita, con qué perfil y dónde**. El TREBEP fija los objetivos e instrumentos de la planificación para todas las Administraciones; el Real Decreto-ley 6/2023 la convierte en **planificación estratégica** para la Administración del Estado.",
   ["1 Objetivos, planes y registros de personal (TREBEP, arts. 69 y 71; Ley 30/1984, art. 13)", "2 La planificación estratégica en la Administración del Estado (RDL 6/2023, arts. 106, 107, 109 y 110)"]))
 

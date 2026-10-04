@@ -17,7 +17,7 @@ CORTO["RD707"] = "RD 707/1979"
 TB = "TREBEP"
 
 T = Tema("B5T01",
-  "Tres preguntas: I. Quién es empleado público y qué clases hay (TREBEP, arts. 8 a 13) · II. Cómo se adquiere y cómo se pierde la condición de funcionario (TREBEP, arts. 62 a 68) · III. Qué normas rigen al personal: el régimen jurídico (CE, arts. 23.2, 103.3 y 149.1.18.ª; TREBEP, arts. 1 a 7; Ley 30/1984 en la AGE). Cada artículo: texto literal del BOE y ficha.",
+  "Tres preguntas: I. Quién es empleado público y qué clases hay (TREBEP, arts. 8 a 13 y disposición adicional decimoséptima; Ley 30/1984, art. 15.1 c) · II. Cómo se adquiere y cómo se pierde la condición de funcionario (TREBEP, arts. 62 a 68; RD 364/1995, art. 25; RD 707/1979, art. 1) · III. Qué normas rigen al personal: el régimen jurídico (CE, arts. 23.2, 103.3 y 149.1.18.ª; TREBEP, arts. 1 a 7, disposición derogatoria única y disposiciones finales primera y cuarta; Ley 30/1984, art. 1). Cada artículo: texto literal del BOE y ficha.",
   ["TREBEP", "Empleados públicos", "Art. 8", "Funcionarios de carrera", "Funcionarios interinos", "Art. 10", "Personal laboral", "Personal eventual", "Personal directivo", "Adquisición", "Art. 62", "Pérdida", "Renuncia", "Jubilación", "Rehabilitación", "Ámbito de aplicación", "Art. 7"])
 
 # =============================================================================
@@ -47,7 +47,7 @@ El epígrafe se lee como **tres preguntas encadenadas**. Cada una es un bloque d
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Quién es empleado público y qué clases hay? (TREBEP, arts. 8 a 13)", donde(
+T.ap("bI", "I. ¿Quién es empleado público y qué clases hay? (TREBEP, arts. 8 a 13 y disposición adicional decimoséptima; Ley 30/1984, art. 15.1 c)", donde(
   "Primera pregunta del tema. Antes de ver cómo se entra y se sale de la función pública, hay que saber **quién** es empleado público y **qué clases** distingue el TREBEP, porque cada clase tiene un vínculo distinto con la Administración.",
   ["1 Concepto y clases de empleados públicos (art. 8)", "2 Funcionarios de carrera (art. 9)", "3 Funcionarios interinos (art. 10 y disposición adicional decimoséptima)", "4 Personal laboral (art. 11; Ley 30/1984, art. 15.1 c)", "5 Personal eventual (art. 12)", "6 Personal directivo profesional (art. 13)", "7 Cuadro de las clases de personal"]))
 
@@ -191,7 +191,7 @@ T.ap("s7", "I.7 Cuadro de las clases de personal (esquema)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo se adquiere y cómo se pierde la condición de funcionario? (TREBEP, arts. 62 a 68)", donde(
+T.ap("bII", "II. ¿Cómo se adquiere y cómo se pierde la condición de funcionario? (TREBEP, arts. 62 a 68; RD 364/1995, art. 25; RD 707/1979, art. 1)", donde(
   "Segunda pregunta. Ya sabemos qué es un funcionario de carrera; ahora, **cómo nace** su relación de servicio (cuatro requisitos sucesivos), **cómo se extingue** (cinco causas) y **cuándo puede recuperarse** (rehabilitación).",
   ["1 Adquisición: cuatro requisitos sucesivos (art. 62; RD 364/1995, art. 25; RD 707/1979)", "2 Las cinco causas de pérdida (art. 63)", "3 Cada causa: renuncia, nacionalidad, inhabilitación y jubilación (arts. 64 a 67)", "4 Rehabilitación (art. 68) y cuadro"]))
 
@@ -293,7 +293,7 @@ T.ap("s11", "II.4 Rehabilitación (art. 68) y cuadro de la relación de servicio
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Qué normas rigen al personal? Régimen jurídico (CE; TREBEP, arts. 1 a 7; Ley 30/1984)", donde(
+T.ap("bIII", "III. ¿Qué normas rigen al personal? Régimen jurídico (CE, arts. 23.2, 103.3 y 149.1.18.ª; TREBEP, arts. 1 a 7, disposición derogatoria única y disposiciones finales primera y cuarta; Ley 30/1984, art. 1)", donde(
   "Tercera pregunta. El personal ya está definido y sabemos cómo entra y sale; falta saber **qué normas** le rigen: la Constitución, el TREBEP como norma **básica**, las leyes de Función Pública y, en la AGE, la Ley 30/1984 en lo que sigue vigente.",
   ["1 Fundamento constitucional (CE, arts. 23.2, 103.3 y 149.1.18.ª)", "2 Objeto y fundamentos de actuación del TREBEP (art. 1)", "3 Ámbito de aplicación (arts. 2 a 5)", "4 Leyes de Función Pública y régimen del personal laboral (arts. 6 y 7)", "5 Título competencial, derogación y entrada en vigor; la Ley 30/1984 en la AGE"]))
 

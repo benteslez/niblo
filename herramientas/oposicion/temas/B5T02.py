@@ -14,7 +14,7 @@ CORTO["RD33"] = "RD 33/1986"
 TB = "TREBEP"
 
 T = Tema("B5T02",
-  "Cuatro preguntas: I. Qué derechos tiene el personal (TREBEP, arts. 14 a 20) · II. Cuánto trabaja y qué permisos y vacaciones tiene (arts. 47 a 51) · III. Qué deberes tiene: el Código de Conducta (arts. 52 a 54) · IV. Qué pasa si los incumple: el régimen disciplinario (arts. 93 a 98 y Real Decreto 33/1986 en la AGE). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué derechos tiene el personal (TREBEP, arts. 14, 15, 16.1, 19.1 y 20) · II. Cuánto trabaja y qué permisos y vacaciones tiene (arts. 47 a 51) · III. Qué deberes tiene: el Código de Conducta (arts. 52 a 54) · IV. Qué pasa si los incumple: el régimen disciplinario (arts. 93 a 98, disposición derogatoria única y disposición final cuarta; Real Decreto 33/1986 en la AGE). Cada artículo: texto literal del BOE y ficha.",
   ["TREBEP", "Derechos individuales", "Art. 15", "Evaluación del desempeño", "Jornada", "Teletrabajo", "Permisos", "Art. 48", "Art. 49", "Vacaciones", "Código de Conducta", "Principios éticos", "Régimen disciplinario", "Faltas", "Sanciones", "Prescripción", "Suspensión provisional", "RD 33/1986"])
 
 # =============================================================================
@@ -48,7 +48,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué derechos tiene el personal? (TREBEP, arts. 14 a 20)", donde(
+T.ap("bI", "I. ¿Qué derechos tiene el personal? (TREBEP, arts. 14, 15, 16.1, 19.1 y 20)", donde(
   "Primera pregunta del tema. El título III del TREBEP abre con los **derechos** de los empleados públicos. Distingue los derechos **individuales** (art. 14) de los derechos **individuales que se ejercen de forma colectiva** (art. 15), y dedica un capítulo a la carrera y a la evaluación del desempeño.",
   ["1 Derechos individuales (art. 14)", "2 Derechos individuales ejercidos colectivamente (art. 15)", "3 Promoción profesional y evaluación del desempeño (arts. 16.1, 19.1 y 20)"]))
 
@@ -192,7 +192,7 @@ El art. 49 fija **condiciones mínimas** ({c(TB, 'Artículo 49', 'En todo caso s
   ficha("La **madre biológica** (incluye a las personas trans gestantes)",
         ["**Diecinueve semanas**; **treinta y dos** en monoparentalidad", "Seis semanas **obligatorias**, ininterrumpidas y a jornada completa, tras el parto", "Once semanas (veintidós si monoparentalidad) a disfrutar hasta que el hijo cumpla **doce meses**", "Dos semanas (cuatro si monoparentalidad) hasta que cumpla **ocho años**"],
         "Parto prematuro u hospitalización del neonato: se amplía en los días de hospitalización, con un máximo de **trece semanas** adicionales; discapacidad del hijo o parto múltiple: **dos semanas más** / una por cada hijo a partir del segundo",
-        "Se computa como **servicio efectivo** a todos los efectos, con plenitud de derechos económicos (párrafo final de la letra c)",
+        "Se computa como **servicio efectivo** a todos los efectos, con plenitud de derechos económicos (párrafo de la letra c común a las letras a, b y c)",
         "**19** semanas (no 16 ni 17); **32** si monoparental. Derecho **individual** e **intransferible**. Disfrute interrumpido: preaviso de **quince días** y por **semanas completas**. Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("3.2 Permiso por adopción, guarda con fines de adopción o acogimiento (art. 49 b)",
@@ -347,11 +347,11 @@ T.ap("s10", "III.3 Principios de conducta (art. 54)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Qué pasa si los incumple? El régimen disciplinario (TREBEP, arts. 93 a 98; RD 33/1986)", donde(
+T.ap("bIV", "IV. ¿Qué pasa si los incumple? El régimen disciplinario (TREBEP, arts. 93 a 98, disposición derogatoria única y disposición final cuarta; RD 33/1986)", donde(
   "Cuarta pregunta. El incumplimiento de los deberes puede ser **falta disciplinaria**. El título VII del TREBEP fija las bases (responsabilidad, principios, faltas muy graves, sanciones, prescripción y procedimiento). En la Administración General del Estado se aplica además el **Real Decreto 33/1986**, en lo que no se oponga al TREBEP.",
-  ["1 Responsabilidad, potestad disciplinaria y normas aplicables (arts. 93 y 94; RD 33/1986, arts. 1 a 3)", "2 Faltas (art. 95; RD 33/1986, arts. 7 y 8)", "3 Sanciones (art. 96; RD 33/1986, arts. 14 a 18)", "4 Prescripción y extinción (art. 97; RD 33/1986, art. 19)", "5 Procedimiento y medidas provisionales (art. 98)", "6 El procedimiento en la AGE (RD 33/1986)", "7 Cuadro del régimen disciplinario"]))
+  ["1 Responsabilidad, potestad disciplinaria y normas aplicables (arts. 93 y 94; RD 33/1986, arts. 1 a 3; TREBEP, disposición derogatoria única y disposición final cuarta)", "2 Faltas (art. 95; RD 33/1986, arts. 7 y 8)", "3 Sanciones (art. 96; RD 33/1986, arts. 14 a 18)", "4 Prescripción y extinción (art. 97; RD 33/1986, art. 19)", "5 Procedimiento y medidas provisionales (art. 98)", "6 El procedimiento en la AGE (RD 33/1986)", "7 Cuadro del régimen disciplinario"]))
 
-T.ap("s11", "IV.1 Responsabilidad, potestad disciplinaria y normas aplicables (arts. 93 y 94; RD 33/1986, arts. 1 a 3)", f"""
+T.ap("s11", "IV.1 Responsabilidad, potestad disciplinaria y normas aplicables (arts. 93 y 94; RD 33/1986, arts. 1 a 3; TREBEP, disposición derogatoria única y disposición final cuarta)", f"""
 {unidad("1.1 Responsabilidad disciplinaria (art. 93)",
   lit(TB, "Artículo 93", ["Los funcionarios públicos y el personal laboral quedan sujetos al régimen disciplinario", "incurrirán en la misma responsabilidad que éstos", "encubrieren las faltas consumadas muy graves o graves", "por la legislación laboral"]),
   fichab("Sujeción al régimen disciplinario",
