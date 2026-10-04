@@ -175,17 +175,8 @@ T.ap("s5", "II.1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 
          "**55 % de Estados** (mínimo **quince**) + **65 % de población**. Minoría de bloqueo: **cuatro** miembros como mínimo. Regla general del **Consejo** = mayoría **cualificada**; del **Consejo Europeo** = **consenso** (→ I.2.2)."))}
 """, 2)
 
-T.ap("s6", "II.2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9)", f"""
-{unidad("2.1 Formaciones del Consejo (art. 16.6)",
-  U(16, ["El Consejo se reunirá en diferentes formaciones", "El Consejo de Asuntos Generales velará por la coherencia de los trabajos de las diferentes formaciones del Consejo", "Preparará las reuniones del Consejo Europeo", "El Consejo de Asuntos Exteriores elaborará la acción exterior de la Unión"], solo=[8, 9, 10], titulo=frag("Artículo 16 (TUE)")),
-  fichab("El Consejo se reúne por materias",
-         "Los ministros competentes en cada materia; la lista de formaciones la adopta el **Consejo Europeo** (TFUE 236 a, → I.4.2)",
-         ["**Asuntos Generales**: coherencia entre formaciones; **prepara** las reuniones del Consejo Europeo y garantiza su actuación subsiguiente", "**Asuntos Exteriores**: elabora la **acción exterior** según las líneas del Consejo Europeo"],
-         "—",
-         "Quien **prepara** las reuniones del **Consejo Europeo** es el Consejo de **Asuntos Generales** (no el COREPER)."))}
-
-> [[DOUE|{D2009}]]
-> **Decisión 2009/878/UE del Consejo (Asuntos Generales), de 1 de diciembre de 2009, por la que se establece la lista de formaciones del Consejo (DOUE L 315 de 2.12.2009) · anexo (texto de EUR-Lex, sin las notas al pie)**
+FORM_2009 = f"""> [[DOUE|{D2009}]]
+> **Decisión 2009/878/UE del Consejo (Asuntos Generales), de 1 de diciembre de 2009, por la que se establece la lista de formaciones del Consejo, además de las contempladas en los párrafos segundo y tercero del apartado 6 del artículo 16 del Tratado de la Unión Europea (DOUE L 315 de 2.12.2009) · anexo (texto de EUR-Lex, sin las notas al pie)**
 > ANEXO LISTA DE FORMACIONES DEL CONSEJO
 > 1. Asuntos Generales
 > 2. Asuntos Exteriores
@@ -196,14 +187,23 @@ T.ap("s6", "II.2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, ar
 > 7. Transporte, Telecomunicaciones y Energía
 > 8. Agricultura y Pesca
 > 9. Medio Ambiente
-> 10. Educación, Juventud y Cultura
-
-> [[DOUE|{D2010}]]
+> 10. Educación, Juventud y Cultura"""
+FORM_2010 = f"""> [[DOUE|{D2010}]]
 > **Decisión 2010/594/UE del Consejo Europeo, de 16 de septiembre de 2010, por la que se modifica la lista de formaciones del Consejo (DOUE L 263 de 6.10.2010) · artículo 1 (texto de EUR-Lex)**
 > 1) El punto 6 «Competitividad (Mercado Interior, Industria e Investigación)» se sustituye por el texto siguiente: «6. Competitividad (Mercado Interior, Industria, Investigación y Espacio)».
-> 2) El punto 10 «Educación, Juventud y Cultura» se sustituye por el texto siguiente: «10. Educación, Juventud, Cultura y Deporte».
+> 2) El punto 10 «Educación, Juventud y Cultura» se sustituye por el texto siguiente: «10. Educación, Juventud, Cultura y Deporte»."""
 
-?> **Diez formaciones.** Leídas las dos decisiones juntas, la lista tiene **diez** formaciones; la 6 es «Competitividad (Mercado Interior, Industria, Investigación y Espacio)» y la 10, «Educación, Juventud, Cultura y Deporte». La ficha de EUR-Lex de la Decisión 2009/878/UE no recoge más modificaciones que la de 2010.
+T.ap("s6", "II.2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9)", f"""
+{unidad("2.1 Formaciones del Consejo (art. 16.6)",
+  U(16, ["El Consejo se reunirá en diferentes formaciones", "El Consejo de Asuntos Generales velará por la coherencia de los trabajos de las diferentes formaciones del Consejo", "Preparará las reuniones del Consejo Europeo", "El Consejo de Asuntos Exteriores elaborará la acción exterior de la Unión"], solo=[8, 9, 10], titulo=frag("Artículo 16 (TUE)")),
+  FORM_2009, FORM_2010,
+  fichab("El Consejo se reúne por materias",
+         "Los ministros competentes en cada materia; la lista de formaciones la adopta el **Consejo Europeo** (TFUE 236 a, → I.4.2)",
+         ["**Asuntos Generales**: coherencia entre formaciones; **prepara** las reuniones del Consejo Europeo y garantiza su actuación subsiguiente", "**Asuntos Exteriores**: elabora la **acción exterior** según las líneas del Consejo Europeo"],
+         "—",
+         "Quien **prepara** las reuniones del **Consejo Europeo** es el Consejo de **Asuntos Generales** (no el COREPER)."))}
+
+?> **Diez formaciones.** Leídas las dos decisiones juntas, la lista tiene **diez** formaciones; la 6 es «Competitividad (Mercado Interior, Industria, Investigación y Espacio)» y la 10, «Educación, Juventud, Cultura y Deporte». La lista de 2009 la adoptó el **Consejo (Asuntos Generales)** con la base transitoria que cita su considerando 1 (art. 4 del Protocolo sobre las disposiciones transitorias); la de 2010 ya es del **Consejo Europeo** (TUE 16.6 y TFUE 236 a). La ficha de EUR-Lex de la Decisión 2009/878/UE no recoge más modificaciones que la de 2010 ni fecha de fin de validez [[DOUE|https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=CELEX:32009D0878]].
 
 {unidad("2.2 COREPER, sesiones públicas y presidencia (art. 16.7 a 9)",
   U(16, ["Un Comité de Representantes Permanentes de los Gobiernos de los Estados miembros se encargará de preparar los trabajos del Consejo", "El Consejo se reunirá en público cuando delibere y vote sobre un proyecto de acto legislativo", "con excepción de la de Asuntos Exteriores", "sistema de rotación igual"], solo=[11, 12, 13], titulo=frag("Artículo 16 (TUE)")),
@@ -307,7 +307,7 @@ T.ap("s9", "III.2 Mandato, composición e independencia (TUE, art. 17.3 a 5; Dec
   fichab("Cuántos comisarios hay",
          "El **Consejo Europeo**, **por unanimidad**, puede modificar el número (17.5)",
          ["Regla del Tratado desde el 1-11-2014: **dos tercios** del número de Estados, con rotación **estrictamente igual** (17.5)", "Decisión 2013/272/UE: un número **igual al número de Estados miembros**, incluidos el Presidente y el Alto Representante"],
-         "Unanimidad del Consejo Europeo; revisión antes de la primera Comisión tras la adhesión del **trigésimo** Estado (art. 2 de la Decisión)",
+         "Unanimidad del Consejo Europeo; revisión con antelación suficiente al nombramiento de la primera Comisión tras la adhesión del **trigésimo** Estado o de la Comisión siguiente a la que debía asumir sus funciones el **1-11-2014**, si este fuera antes (art. 2 de la Decisión)",
          "El Tratado dice «**dos tercios**», pero el Consejo Europeo lo ha **modificado por unanimidad**: hoy, **un miembro por Estado** (Decisión 2013/272/UE, aplicable desde el **1-11-2014**)."))}
 
 {unidad("2.3 El sistema de rotación (TFUE, art. 244)",
