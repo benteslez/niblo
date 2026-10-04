@@ -714,7 +714,7 @@ T.ap("s20", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-X 2025, pregunta 34 · Principio de atribución (relacionada; → II.3.2)", EX_X34,
   "### GACE-X 2025, pregunta 36 · Principios del ejercicio de las competencias (relacionada; → II.3.2)", EX_X36,
   "### Pregunta oficial no incluida",
-  f"?> **GACE-X 2025, pregunta 31** («Las Comunidades Europeas pasaron a tener una única Comisión en virtud del:»). La plantilla da como correcta la a) «Tratado de Fusión del 1 de julio de 1967», pero la fuente oficial consultada fecha el Tratado de Fusión el **8 de abril de 1965** ({cw(PE2, 'el Tratado de Fusión, de 8 de abril de 1965, que fusionó los órganos ejecutivos de las tres comunidades. Entró en vigor en 1967')}), que es lo que dice la opción d). No se publica hasta que se revise (→ III.2.1).",
+  f"?> **GACE-X 2025, pregunta 31** («Las Comunidades Europeas pasaron a tener una única Comisión en virtud del:»). La plantilla da como correcta la a) «Tratado de Fusión del 1 de julio de 1967», pero la fuente oficial consultada fecha el Tratado de Fusión el **8 de abril de 1965** ({cw(PE2, 'el Tratado de Fusión, de 8 de abril de 1965, que fusionó los órganos ejecutivos de las tres comunidades. Entró en vigor en 1967')}), que es lo que dice la opción d). No se incluye en estos apuntes; en el test real se mantiene la respuesta de la plantilla con la marca **Discrepancia** (→ III.2.1).",
   "### Cómo se pregunta",
   "!> En cooperaciones reforzadas se cambian **órganos** (Comisión ↔ Consejo ↔ Consejo Europeo; Parlamento ↔ Alto Representante) y **números** (nueve Estados, cuatro meses). En adhesión y revisión, **quién inicia** y **quién decide** (Consejo por unanimidad; Gobierno, Parlamento o Comisión).",
 ]))

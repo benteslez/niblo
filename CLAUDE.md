@@ -92,10 +92,15 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   (extraordinaria), copiados de su convocatoria.
 - Antes de publicar: enunciado y opciones copiados literales del cuestionario,
   respuesta de la plantilla comprobada contra la ley (como en los apuntes) y
-  avisar al usuario de cualquier respuesta que no case. Esa pregunta se publica
-  **retenida** (`retenida: "motivo"`, `RETENIDA` en `boe/leyes25X.py`): se ve con
-  su texto legal, pero queda fuera del repaso y del examen (como una anulada)
-  hasta que el usuario decida.
+  avisar al usuario de cualquier respuesta que no case. Mientras el usuario no
+  decide, la pregunta se publica **retenida** (`retenida: "motivo"`, `RETENIDA` en
+  `boe/leyes25X.py`): se ve con su texto legal, pero queda fuera del repaso y del
+  examen (como una anulada).
+- **Discrepancias** (decisión del usuario, 4-10-2026): cuando la plantilla no casa
+  del todo con la norma o la fuente oficial, se **mantiene la respuesta de la
+  plantilla** y la pregunta lleva la etiqueta **«⚠ Discrepancia»** y, debajo, la
+  explicación (como el texto legal), con citas literales comprobadas
+  (`boe/discrepancias.py` → campo `disc: {t, p}`). Hoy: X31, X44, X60, X96 y P91.
 - Modo **Repaso (SRS para test)**: SM-2 adaptado a preguntas de cuatro
   opciones (pedido por el usuario): fallada → vuelve en la misma sesión con
   las opciones rebarajadas hasta acertarla y después mañana; dudada → mañana
