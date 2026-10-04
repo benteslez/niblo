@@ -53,7 +53,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 
 !> **La idea que une los cuatro bloques:** el funcionario ocupa un **puesto de trabajo**. Lo obtiene con carácter **definitivo** por **concurso** (el sistema normal) o por **libre designación** (II); puede cambiar de puesto por otras vías, algunas **definitivas** (redistribución, reasignación) y otras **temporales** (comisión de servicios, adscripción provisional) (III); y progresa **sin cambiar de cuerpo** (carrera: grado, tramos, puestos de más nivel) o **cambiando de cuerpo** (promoción interna) (IV).
 
-?> **Aviso de vigencia.** El TREBEP es la norma básica, pero su disposición final cuarta dice que lo establecido en el capítulo II del título III (carrera y promoción, arts. 16 a 20) y en el capítulo III del título V (provisión y movilidad, arts. 78 a 84) **producirá efectos a partir de la entrada en vigor de las leyes de Función Pública** que lo desarrollen (→ I.1.2). Por eso, en la Administración del Estado, el detalle está en el **RD 364/1995**, en los párrafos de la **Ley 30/1984** que no figuran en la derogatoria del TREBEP y en el **libro segundo del RDL 6/2023**. Se citan todos literalmente, como están en el BOE (con las denominaciones de órganos que figuran en su texto: «Ministerio para las Administraciones Públicas», «Gobernador civil»…).
+?> **Aviso de vigencia.** El TREBEP es la norma básica, pero su disposición final cuarta dice que lo establecido en los capítulos II y III del título III, excepto el artículo 25.2 (entre ellos, carrera y promoción, arts. 16 a 20), y en el capítulo III del título V (provisión y movilidad, arts. 78 a 84) **producirá efectos a partir de la entrada en vigor de las leyes de Función Pública** que lo desarrollen (→ I.1.2). Por eso, en la Administración del Estado, el detalle está en el **RD 364/1995**, en los párrafos de la **Ley 30/1984** que no figuran en la derogatoria del TREBEP y en el **libro segundo del RDL 6/2023**. Se citan todos literalmente, como están en el BOE (con las denominaciones de órganos que figuran en su texto: «Ministerio para las Administraciones Públicas», «Gobernador civil»…).
 
 ### Cómo está escrito
 
@@ -73,7 +73,7 @@ T.ap("s1", "I.1 Principios y procedimientos en el TREBEP y sus efectos diferidos
   lit("TREBEP", "Artículo 78", ["igualdad, mérito, capacidad y publicidad", "concurso y de libre designación con convocatoria pública", "otros procedimientos de provisión"]),
   fichab("Reglas básicas de la provisión de puestos del personal funcionario de carrera",
          c("TREBEP", "Artículo 78", "Las Administraciones Públicas"),
-         ["::Dos procedimientos ordinarios (78.2):", "Concurso", "Libre designación con convocatoria pública", "::Otros que pueden prever las leyes de Función Pública (78.3):", "Movilidad del art. 81.2 (traslado por necesidades del servicio)", "Permutas entre puestos", "Movilidad por motivos de salud o rehabilitación", "Reingreso al servicio activo", "Cese o remoción y supresión de puestos"],
+         ["::Dos procedimientos ordinarios (78.2):", "Concurso", "Libre designación con convocatoria pública", "**Otros que pueden prever las leyes de Función Pública (78.3):**", "Movilidad del art. 81.2 (traslado por necesidades del servicio)", "Permutas entre puestos", "Movilidad por motivos de salud o rehabilitación", "Reingreso al servicio activo", "Cese o remoción y supresión de puestos"],
          "—",
          "**Cuatro** principios: igualdad, mérito, capacidad **y publicidad**. La libre designación es **con convocatoria pública**."))}
 
@@ -100,7 +100,7 @@ T.ap("s2", "I.2 Las formas de provisión en la Administración General del Estad
   lit("RD364", "Artículo 36", ["que es el sistema normal de provisión", "redistribución de efectivos o por reasignación de efectivos", "Temporalmente podrán ser cubiertos mediante comisión de servicios y adscripción provisional"]),
   fichab("Catálogo de formas de provisión en la Administración General del Estado",
          "La Administración, según lo que determinen las **relaciones de puestos de trabajo**",
-         ["::Ordinarias (36.1):", "**Concurso** (sistema normal) → II.1 a II.4", "**Libre designación** → II.5", "::Por necesidades del servicio (36.2):", "Redistribución de efectivos y reasignación de efectivos (Plan de Empleo) → III.2", "::Temporales (36.3):", "Comisión de servicios y adscripción provisional → III.3"],
+         ["::Ordinarias (36.1):", "**Concurso** (sistema normal) → II.1 a II.4", "**Libre designación** → II.5", "**Por necesidades del servicio (36.2):**", "Redistribución de efectivos y reasignación de efectivos (Plan de Empleo) → III.2", "**Temporales (36.3):**", "Comisión de servicios y adscripción provisional → III.3"],
          "—",
          "**Temporales**: solo la **comisión de servicios** y la **adscripción provisional**. Cayó en 2025 (→ Cierre 1): el puesto obtenido en comisión de servicios **no** es definitivo."))}
 
@@ -184,7 +184,7 @@ T.ap("s5", "II.3 Méritos, concurso específico y Comisiones de Valoración (RD 
   lit("RD364", "Artículo 44", ["la posesión de un determinado grado personal, la valoración del trabajo desarrollado, los cursos de formación y perfeccionamiento superados y la antigüedad", "hasta que el hijo cumpla doce años", "hasta el segundo grado inclusive", "del 40 por 100 de la puntuación máxima total ni ser inferior al 10 por 100", "fecha del cierre del plazo de presentación de instancias", "una puntuación mínima para la adjudicación de destino"]),
   fichab("Qué se valora en el concurso",
          "La Comisión de Valoración (→ II.3.3), con el baremo de la convocatoria",
-         ["::Méritos generales (44.1):", "Méritos **específicos** adecuados al puesto (solo los de la convocatoria)", "**Grado personal** consolidado (siempre en sentido positivo)", "**Trabajo desarrollado**", "**Cursos** de formación y perfeccionamiento (solo los incluidos en la convocatoria)", "**Antigüedad** (por años de servicios)", "::Puntuación por conciliación (44.2), como máximo la de la antigüedad:", "Destino previo del **cónyuge** funcionario en el municipio", "Cuidado de **hijos** hasta que cumplan **doce** años", "Cuidado de un **familiar** hasta el **segundo grado**"],
+         ["::Méritos generales (44.1):", "Méritos **específicos** adecuados al puesto (solo los de la convocatoria)", "**Grado personal** consolidado (siempre en sentido positivo)", "**Trabajo desarrollado**", "**Cursos** de formación y perfeccionamiento (solo los incluidos en la convocatoria)", "**Antigüedad** (por años de servicios)", "**Puntuación por conciliación (44.2), como máximo la de la antigüedad:**", "Destino previo del **cónyuge** funcionario en el municipio", "Cuidado de **hijos** hasta que cumplan **doce** años", "Cuidado de un **familiar** hasta el **segundo grado**"],
          "Cada concepto: **ni más del 40 %** de la puntuación máxima total **ni menos del 10 %**; méritos referidos al **cierre del plazo** de instancias; **puntuación mínima** obligatoria para adjudicar",
          "Empate: méritos del 44.1 **por su orden**; después, fecha de **ingreso** en el Cuerpo o Escala; por último, número obtenido en el proceso selectivo. Cuidado de familiar e hijos: **incompatibles** entre sí."))}
 
@@ -278,12 +278,6 @@ T.ap("s7", "II.5 La libre designación (TREBEP, art. 80; RD 364/1995, arts. 51 a
          "—",
          "Puesto **no inferior en más de dos niveles a su grado personal** y en el **mismo municipio**, salvo cese de destinados **en el exterior**. Cayó en 2025 (→ Cierre 1)."))}
 
-{resumen([
-  "Concurso: procedimiento **normal**; órganos colegiados técnicos; méritos generales y, en el **específico**, segunda fase con **memoria o entrevista**.",
-  "Requisitos: cualquier situación salvo **suspensos en firme**; **dos años** en el puesto definitivo (salvo en la misma Secretaría de Estado o Departamento); solicitudes en **15 días hábiles**.",
-  "Cada concepto del baremo entre el **10 y el 40 %**; resolución en **dos meses**; toma de posesión en **3 días hábiles** o **un mes**.",
-  "Libre designación: idoneidad apreciada **discrecionalmente**; lista cerrada de puestos; nombramiento en **un mes** (+ uno); cese discrecional y puesto provisional no inferior en más de **dos niveles** al grado, en el mismo municipio."],
-  "Siguiente: II.6 El personal directivo público profesional")}
 """, 2)
 
 T.ap("s8", "II.6 El personal directivo público profesional (RDL 6/2023, arts. 123.3 y 127)", f"""
@@ -299,11 +293,15 @@ T.ap("s8", "II.6 El personal directivo público profesional (RDL 6/2023, arts. 1
   lit("RDL6", "Artículo 127", ["en todo caso por el procedimiento de libre designación", "sin que quepa la cobertura de carácter provisional", "diez días naturales desde la publicación de la convocatoria", "una justificación por escrito de la idoneidad", "duración máxima de cinco años", "De forma excepcional, por pérdida de la confianza"], solo=[1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]),
   fichab("Provisión de los puestos de personal directivo público profesional",
          "Nombra y cesa el **mismo órgano** competente",
-         ["**Libre designación**, en todo caso, **sin cobertura provisional**", "Convocatoria con requisitos y competencias a valorar; solicitud con **justificación escrita de la idoneidad**", "Sin los informes del art. 20 de la Ley 30/1984", "::Causas de cese, motivadas (127.3):", "Fin del plazo", "Petición propia", "Evaluación negativa", "Supresión o modificación del puesto por reorganización", "Separación del servicio o despido disciplinario", "Pérdida de requisitos", "**Excepcionalmente**, pérdida de la confianza"],
+         ["**Libre designación**, en todo caso, **sin cobertura provisional**", "Convocatoria con requisitos y competencias a valorar; solicitud con **justificación escrita de la idoneidad**", "Sin los informes del art. 20 de la Ley 30/1984", "**Causas de cese, motivadas (127.3):**", "Fin del plazo", "Petición propia", "Evaluación negativa", "Supresión o modificación del puesto por reorganización", "Separación del servicio o despido disciplinario", "Pérdida de requisitos", "**Excepcionalmente**, pérdida de la confianza"],
          ["Solicitudes: **10 días naturales** desde la publicación de la convocatoria", "Nombramiento: **máximo cinco años**, renovable por períodos idénticos"],
          "Dos preguntas de 2025 (→ Cierre 1): **no cabe** cobertura provisional y el plazo de solicitudes es de **diez días naturales** (no quince hábiles, como en la libre designación general)."))}
 
 {resumen([
+  "Concurso: procedimiento **normal**; órganos colegiados técnicos; méritos generales y, en el **específico**, segunda fase con **memoria o entrevista**.",
+  "Requisitos: cualquier situación salvo **suspensos en firme**; **dos años** en el puesto definitivo (salvo en la misma Secretaría de Estado o Departamento); solicitudes en **15 días hábiles**.",
+  "Cada concepto del baremo entre el **10 y el 40 %**; resolución en **dos meses**; toma de posesión en **3 días hábiles** o **un mes**.",
+  "Libre designación: idoneidad apreciada **discrecionalmente**; lista cerrada de puestos; nombramiento en **un mes** (+ uno); cese discrecional y puesto provisional no inferior en más de **dos niveles** al grado, en el mismo municipio.",
   "Los titulares de **subdirecciones generales** son personal directivo público profesional (art. 123.3).",
   "Se nombran **siempre** por **libre designación**, **sin cobertura provisional**, con solicitudes en **10 días naturales** y por **cinco años** como máximo, renovables (art. 127).",
   "La pérdida de la confianza es causa de cese solo **de forma excepcional**."],
@@ -352,7 +350,7 @@ T.ap("s10", "III.2 Redistribución, reasignación y cambio de adscripción (RD 3
 {unidad("2.1 Redistribución de efectivos (RD 364/1995, art. 59)",
   lit("RD364", "Artículo 59", ["puestos no singularizados", "misma naturaleza, nivel de complemento de destino y complemento específico", "sin que ello suponga cambio de municipio", "tendrá asimismo carácter definitivo"]),
   fichab("Adscripción por necesidades del servicio a otro puesto equivalente",
-         ["Funcionarios que ocupan **con carácter definitivo** puestos **no singularizados**", "::Acuerdan:", "**Secretaría de Estado para la Administración Pública**: entre servicios centrales de distintos Departamentos (previo informe)", "**Subsecretarios**: en su Departamento y con sus Organismos autónomos y Entidades Gestoras", "**Presidentes o Directores** de Organismos autónomos y Entidades Gestoras y Servicios Comunes", "**Delegados del Gobierno** y Gobernadores civiles: entre servicios de distintos Departamentos (previo informe favorable)"],
+         ["Funcionarios que ocupan **con carácter definitivo** puestos **no singularizados**", "**Acuerdan:**", "**Secretaría de Estado para la Administración Pública**: entre servicios centrales de distintos Departamentos (previo informe)", "**Subsecretarios**: en su Departamento y con sus Organismos autónomos y Entidades Gestoras", "**Presidentes o Directores** de Organismos autónomos y Entidades Gestoras y Servicios Comunes", "**Delegados del Gobierno** y Gobernadores civiles: entre servicios de distintos Departamentos (previo informe favorable)"],
          "A otro puesto de la **misma naturaleza, nivel de complemento de destino y específico** y mismo procedimiento de provisión, **sin cambio de municipio**",
          "Los **dos años** para concursar se cuentan desde que se accedió al puesto anterior",
          "Puesto no singularizado: el que **no se individualiza** en la relación de puestos. El destino por redistribución es **definitivo** (→ Cierre 1)."))}

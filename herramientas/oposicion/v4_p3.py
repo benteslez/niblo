@@ -184,7 +184,7 @@ Segunda parte del Capítulo tercero: patrimonio, vivienda, juventud y colectivos
         ["49.1, ejercen los derechos del Título I en condiciones de libertad e igualdad reales y efectivas", "49.2, políticas de plena autonomía personal e inclusión social, en entornos universalmente accesibles; participación de sus organizaciones; atención a las necesidades específicas de mujeres y menores con discapacidad"],
         "—",
         P_C3,
-        "Redacción de la **reforma constitucional de 2024** (dato, no texto legal: la redacción anterior hablaba de los disminuidos físicos, sensoriales y psíquicos)."))}
+        "Redacción de la **reforma constitucional de 2024** (Reforma del artículo 49 de la Constitución Española, de 15 de febrero de 2024, BOE-A-2024-3099 [[BOE]]; dato, no texto legal: la redacción anterior hablaba de los disminuidos físicos, sensoriales y psíquicos)."))}
 
 {unidad("11.5 Tercera edad (art. 50)",
   lit("CE", 50, ["pensiones adecuadas y periódicamente actualizadas", "con independencia de las obligaciones familiares"]),

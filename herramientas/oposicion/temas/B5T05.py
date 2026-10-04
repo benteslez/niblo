@@ -276,7 +276,7 @@ Son situaciones del reglamento de la AGE que el art. 85.2 TREBEP permite mantene
 {unidad("5.1 Expectativa de destino (art. 12)",
   lit("RD365", "a12", ["un período máximo de un año", "el 50 por 100 del complemento específico", "esta situación se equipara a la de servicio activo"], solo=[1, 2, 7, 8]),
   fichab("Situación de quien no obtiene puesto en las dos primeras fases de la reasignación de efectivos",
-         "Funcionarios afectados por un procedimiento de reasignación de efectivos; los adscribe el Ministerio para las Administraciones Públicas",
+         f"Funcionarios afectados por un procedimiento de reasignación de efectivos que no obtienen puesto en sus dos primeras fases; {c('RD365', 'a12', 'se adscribirán al Ministerio para las Administraciones Públicas')}. Declara la situación la Secretaría de Estado para la Administración Pública (art. 12.4)",
          "Deben aceptar puestos similares en su provincia, concursar y hacer cursos de capacitación (art. 12.3)",
          "Máximo **un año**; después, **excedencia forzosa**",
          "Cobran retribuciones básicas, complemento de destino y el **50 %** del complemento específico; a los demás efectos (incluidas las incompatibilidades) se equipara al **servicio activo**."))}

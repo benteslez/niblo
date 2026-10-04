@@ -14,7 +14,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 | Bloque | Pregunta | Constitución | Leyes de desarrollo |
 |---|---|---|---|
 | **I** | ¿Qué derechos y deberes hay? | Título I, arts. 10 a 52 | — |
-| **II** | ¿Cómo se protegen? | Arts. 53 y 54; 81, 86, 161, 162, 167-169 | LJCA (114-122), LO 6/1984 (*habeas corpus*), LOTC (41-58) |
+| **II** | ¿Cómo se protegen? | Art. 53; 17.4, 81, 86, 161, 162 y 167-169 | LJCA (114-122), LO 6/1984 (*habeas corpus*), LOTC (32.1 y 41-58) |
 | **III** | ¿Cuándo pueden suspenderse? | Arts. 55 y 116 | LO 4/1981 y LECrim |
 | **IV** | ¿Quién vela por ellos? | Art. 54 | LO 3/1981 y Ley 36/1985 |
 
@@ -122,7 +122,7 @@ El Capítulo primero responde a **quién** es titular de los derechos: los espa�
 {unidad("2.3 Los extranjeros (art. 13)",
   lit("CE", 13, ["en los términos que establezcan los tratados y la ley", "Solamente los españoles serán titulares de los derechos reconocidos en el artículo 23", "sufragio activo y pasivo en las elecciones municipales", "no considerándose como tales los actos de terrorismo", "los apátridas"]),
   ficha(["::Los extranjeros (13.1 a 13.3); en el asilo, también los apátridas (13.4)",
-         "*Doctrina del TC (STC 107/1984), no texto legal:* tres grupos de derechos: los que tienen **igual que los españoles** por ser inherentes a la dignidad (vida, integridad, libertad ideológica, tutela judicial…); los que **no** tienen (art. 23, salvo el 13.2); y los que tienen **según tratados y ley**"],
+         "*Doctrina del TC (STC 107/1984) [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/360]], no texto legal:* tres grupos de derechos: los que tienen **igual que los españoles** por ser inherentes a la dignidad (vida, integridad, libertad ideológica, tutela judicial…); los que **no** tienen (art. 23, salvo el 13.2); y los que tienen **según tratados y ley**"],
         ["13.1, libertades públicas del Título I en los términos de los tratados y la ley",
          "13.2, derechos del art. 23 solo para españoles; excepción: sufragio activo y pasivo en las **municipales**, por tratado o ley y con reciprocidad",
          "13.3, extradición solo por tratado o ley, con reciprocidad; excluidos los delitos políticos, pero el terrorismo **no** es delito político",
@@ -130,7 +130,7 @@ El Capítulo primero responde a **quién** es titular de los derechos: los espa�
         "Tratados y ley (13.1); reciprocidad (13.2 y 13.3)",
         P_C1,
         [f"Solo elecciones **municipales** (no autonómicas, generales ni europeas), {c('CE', 13, 'atendiendo a criterios de reciprocidad')}",
-         "«y pasivo» se añadió en la **reforma de 1992** (Tratado de Maastricht), dato histórico, no texto legal",
+         "«y pasivo» se añadió en la **reforma de 1992** (Reforma del artículo 13, apartado 2, de 27 de agosto de 1992, BOE-A-1992-20403 [[BOE]]), dato histórico, no texto legal",
          "Asilo: ciudadanos de otros países **y apátridas**"]))}
 """, 2)
 
@@ -148,7 +148,7 @@ El Capítulo segundo, «Derechos y libertades», es el núcleo del Título I. Se
         [f"::{P_14}",
          f"Lo nombra el art. 53.2: {c('CE', 53, 'el artículo 14 y la Sección primera del Capítulo segundo')}",
          "**Sin** reforma agravada: el art. 168 solo nombra la Sección primera",
-         "Ley orgánica: el art. 81 habla de «derechos fundamentales y libertades públicas»; que no alcance al art. 14 es **doctrina del TC**, no texto literal",
+         "Ley orgánica: el art. 81 habla de «derechos fundamentales y libertades públicas»; que no alcance al art. 14 es **doctrina del TC** (STC 76/1983, FJ 2: «Existe, pues, una exclusión expresa del art. 14 en el art. 81. 1 de la Constitución») [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/204]], no texto literal",
          NO_SUSP],
         "No aparecen expresamente «ideología», «edad», «nacionalidad» ni «discapacidad»: caben en «cualquier otra condición o circunstancia personal o social». El art. 14 **no** pertenece a la Sección 1.ª."))}
 """, 2)

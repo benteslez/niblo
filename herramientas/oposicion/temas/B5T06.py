@@ -414,7 +414,7 @@ T.ap("s14", "V.3 Dietas, residencia eventual y gastos de viaje (RD 462/2002, art
          "Lavado y planchado: si la comisión dura **más de cuatro días** y lo autoriza quien la ordena",
          "Las llamadas **oficiales** se pagan por su **importe exacto**, cualquiera que sea la duración de la comisión."))}
 
-*Cuantías del anexo II del Real Decreto 462/2002 (dietas en territorio nacional, en euros), copiadas del texto consolidado del BOE y comprobadas por programa:*
+*Cuantías del anexo II del Real Decreto 462/2002 (dietas en territorio nacional, en euros), copiadas del texto consolidado del BOE y comprobadas por programa; son las de la última redacción del anexo II que recoge el texto consolidado (BOE-A-2005-19988, publicada el 3-12-2005), vigente hoy:*
 
 | Grupo (anexo I) | Por alojamiento | Por manutención | Dieta entera |
 |---|---|---|---|

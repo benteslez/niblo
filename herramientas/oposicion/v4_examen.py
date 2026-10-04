@@ -22,10 +22,10 @@ EX2 = examen(2, {
           ("mayoría absoluta en el Senado", "LO3", "segundo", "al alcanzarse la mayoría absoluta del Senado")])
 
 EX10 = examen(10, {
-    "a": f"Demasiado amplia: la jurisdicción militar no alcanza a todo asunto con militares implicados. La Constitución la ciñe {c('CE', 117, 'en el ámbito estrictamente castrense y en los supuestos de estado de sitio')} (art. 117.5 CE).",
-    "b": f"Coincide con el criterio del art. 117.5 CE (ámbito estrictamente castrense y estado de sitio) y conecta con el art. 35 LO 4/1981: el Congreso puede determinar {c('LO4', 'treinta y cinco', 'los delitos que durante su vigencia quedan sometidos a la Jurisdicción Militar')}.",
-    "c": "Demasiado estrecha: no se limita a lo disciplinario ni excluye lo penal; el art. 35 LO 4/1981 le atribuye precisamente **delitos** durante el estado de sitio.",
-    "d": "Olvida el ámbito **estrictamente castrense**, que es el principal; el estado de sitio es solo el supuesto añadido («en su caso»).",
-}, apoyo=[("estrictamente castrense", "CE", 117, "en el ámbito estrictamente castrense"),
-          ("estado de sitio", "CE", 117, "en los supuestos de estado de sitio")])
-EX10_NOTA = "*Pendiente:* no tengo aportado el texto literal del art. 3.2 LOPJ, así que la explicación se apoya en el art. 117.5 CE y en el art. 35 LO 4/1981. Si me pasas la LOPJ (BOE-A-1985-12666), cito el artículo exacto."
+    "a": f"Demasiado amplia: el art. 3.2 LOPJ no la extiende a todo asunto con militares implicados; la ciñe {c('LOPJ', 3, 'en el ámbito estrictamente castrense y, en su caso, en las materias que establezca la declaración del estado de sitio')}.",
+    "b": f"Reproduce el art. 3.2 LOPJ: los órganos de la jurisdicción militar {c('LOPJ', 3, 'administran Justicia en el ámbito estrictamente castrense y, en su caso, en las materias que establezca la declaración del estado de sitio')}. Conecta con el art. 35 LO 4/1981: en la declaración del sitio el Congreso puede determinar {c('LO4', 'treinta y cinco', 'los delitos que durante su vigencia quedan sometidos a la Jurisdicción Militar')}.",
+    "c": f"Demasiado estrecha: el art. 3.2 LOPJ no la reduce a lo disciplinario; cita {c('LOPJ', 3, 'las leyes penales, procesales y disciplinarias militares')}, y el art. 35 LO 4/1981 le atribuye precisamente **delitos** durante el estado de sitio.",
+    "d": f"Olvida el ámbito **estrictamente castrense**, que es el principal; el estado de sitio es el supuesto añadido: {c('LOPJ', 3, 'y, en su caso, en las materias que establezca la declaración del estado de sitio')}.",
+}, apoyo=[("estrictamente castrense", "LOPJ", 3, "administran Justicia en el ámbito estrictamente castrense"),
+          ("en las materias que establezca la declaración del estado de sitio", "LOPJ", 3, "en su caso, en las materias que establezca la declaración del estado de sitio")])
+EX10_NOTA = lit("LOPJ", 3, solo=[1], titulo="Artículo 3.2 (LOPJ)", resaltar=["en el ámbito estrictamente castrense y, en su caso, en las materias que establezca la declaración del estado de sitio"])

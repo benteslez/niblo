@@ -12,7 +12,7 @@ ap("bIV", "IV. ¿Quién vela por ellos? El Defensor del Pueblo (art. 54, LO 3/19
 
 # ---------------------------------------------------------------------------
 ap("s7", "IV.1 El art. 54 y la naturaleza del Defensor del Pueblo", f"""
-Sigue el modelo del *ombudsman* escandinavo: una institución independiente que recibe quejas y **supervisa a la Administración** (dato doctrinal, no texto legal).
+La garantía **institucional** de los derechos: una institución que recibe quejas y **supervisa a la Administración**, primero en la Constitución (art. 54) y después en su ley orgánica (art. 1 LO 3/1981).
 
 {unidad("1.1 El Defensor del Pueblo en la Constitución (art. 54)",
   lit("CE", 54, ["Una ley orgánica", "alto comisionado de las Cortes Generales", "los derechos comprendidos en este Título", "supervisar la actividad de la Administración", "dando cuenta a las Cortes Generales"]),
@@ -159,7 +159,7 @@ ap("s7-7", "IV.5 La investigación y el deber de colaboración (arts. 18 a 27)",
   lit("LO3", "veintidós", ["deberá ser acordada por el Consejo de Ministros", "la más absoluta reserva"]),
   fichab("Acceso a documentos, incluidos los secretos",
          "El Defensor pide; el **Consejo de Ministros** puede denegar los secretos",
-         ["Puede pedir todos los documentos necesarios, también los **secretos** (22.1)", "La no remisión la acuerda el **Consejo de Ministros**, con certificación del acuerdo (22.2)", "Investigaciones con la **más absoluta reserva** (22.3)", "Si un secreto no remitido puede afectar decisivamente a la investigación, lo comunica a la **Comisión Mixta** (22.4)"],
+         ["Puede pedir todos los documentos necesarios, también los **secretos** (22.1)", "La no remisión la acuerda el **Consejo de Ministros**, con certificación del acuerdo (22.1)", "Investigaciones con la **más absoluta reserva** (22.2)", "Si un secreto no remitido puede afectar decisivamente a la investigación, lo comunica a la **Comisión Mixta** (22.3)"],
          "—",
          "Documentos secretos: decide el **Consejo de Ministros** (no un ministro)."))}
 
