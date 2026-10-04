@@ -42,9 +42,9 @@ Bloque III: - [x] III.8
 ## 3. Temas «BOE + temario» y bloque II
 
 - [x] I.7 - [x] II.1 - [x] II.2 - [x] II.3 - [x] II.4 - [x] II.5 - [x] II.6
-- [ ] III.4 - [ ] III.5 - [ ] III.6 - [ ] III.7 - [ ] III.9
+- [x] III.4 - [x] III.5 - [x] III.6 - [x] III.7 - [ ] III.9
 - [x] IV.1 - [x] IV.3 - [x] IV.7 - [x] IV.9 - [x] V.9
-- [ ] VI.1 - [ ] VI.2 - [ ] VI.4 - [ ] VI.5 - [ ] VI.8
+- [x] VI.1 - [x] VI.2 - [x] VI.4 - [x] VI.5 - [x] VI.8
 
 ## Notas
 
