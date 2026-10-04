@@ -19,6 +19,17 @@ Regla del usuario para **todos los temas, siempre**: prima la **literalidad**.
 - Lo que no sea texto legal (doctrina del TC, datos de la institución,
   esquemas) se marca como tal y lleva su fuente. No inventar: si falta la
   fuente, se deja «pendiente» y se pide al usuario.
+- **Etiqueta de fuente** en todo lo que salga de una fuente oficial (pedido por
+  el usuario): `[[COD]]` o `[[COD|https://…]]` en línea, y `> [[COD]]` como
+  primera línea de un bloque literal que no sea del BOE (por defecto, BOE). Los
+  códigos están en `FUENTES` (`oposicion.html`): BOE, DOUE, PE, CONSEJO_UE,
+  COMISION, TJUE, TC, CONGRESO, SENADO, CGPJ, SEGSOCIAL, SEPE, MUFACE, HACIENDA,
+  IGAE, TCU, AIREF, DEFENSOR, TRANSPARENCIA, CTBG, GOBES. Fuente nueva → código nuevo.
+- **Dónde viven los temas:** cada tema desarrollado es `temas/<id>.json`
+  (formato `gestion_hub_config`, un tema, con `_exportedAt`) y se apunta en
+  `temas/indice.json` con ese mismo sello. Cambiar un tema = nuevo sello. No se
+  incrustan en `oposicion.html`. Herramientas y estado del trabajo:
+  `herramientas/oposicion/` y `PROGRESO_TEMAS.md`.
 - Cada pregunta de test cita su artículo (`cat`) y se apoya en un fragmento
   literal; los distractores cambian un plazo, una mayoría, un órgano o una
   palabra, como en el examen real (GACE-L).

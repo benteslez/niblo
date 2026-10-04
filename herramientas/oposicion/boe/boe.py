@@ -1,0 +1,70 @@
+# -*- coding: utf-8 -*-
+"""Texto consolidado del BOE (API de datos abiertos): {bloque: (título, [párrafos])}.
+Se usa la ÚLTIMA versión de cada bloque (la vigente) y se excluyen las notas."""
+import xml.etree.ElementTree as ET, re, os
+AQUI = os.path.dirname(os.path.abspath(__file__))
+IDS = dict(l.split() for l in open(os.path.join(AQUI, "ids.txt")) if l.strip())
+_cache = {}
+def ley(k):
+    if k in _cache: return _cache[k]
+    if os.path.exists(os.path.join(AQUI, k + ".json")):
+        # Texto de EUR-Lex (Diario Oficial de la UE), extraído con eurext.js: solo el
+        # documento principal (no los protocolos ni los anexos).
+        import json
+        A = json.load(open(os.path.join(AQUI, k + ".json"), encoding="utf-8"))
+        out = {}
+        for a in A:
+            if a["doc"] != A[0]["doc"]: continue
+            assert a["art"] not in out, (k, a["art"])
+            out[a["art"]] = (a["art"], [("articulo", a["art"])] + [("parrafo", p) for p in a["ps"]])
+        _cache[k] = out
+        return out
+    raiz = ET.parse(os.path.join(AQUI, k + ".xml")).getroot()
+    out = {}
+    if raiz.find("data") is None and raiz.find("texto") is not None:
+        # Disposición sin texto consolidado: XML del diario (texto original publicado).
+        # El BOE parte en dos los párrafos que cruzan de página: se unen si el siguiente
+        # empieza en minúscula. Los artículos se agrupan por su encabezado «Artículo N.».
+        ps = []
+        for p in raiz.find("texto").iter("p"):
+            t = " ".join("".join(p.itertext()).split())
+            if not t: continue
+            if ps and t[0].islower() and not re.match(r"^[a-zñ]\) ", t): ps[-1] = ps[-1] + " " + t
+            else: ps.append(t)
+        actual = "preambulo"; out[actual] = ("", [])
+        for t in ps:
+            m = re.match(r"^(Artículo \d+)\.", t)
+            if m:
+                actual = "a" + m.group(1).split()[1]; out[actual] = (m.group(1), [])
+            out[actual][1].append(("parrafo", t))
+        _cache[k] = out
+        return out
+    for b in raiz.iter("bloque"):
+        vs = b.findall("version")
+        if not vs: continue
+        v = vs[-1]
+        ps = []
+        def ps_de(nodo):
+            for h in nodo:
+                if h.tag == "blockquote" and (h.get("class") or "") != "sangrado": continue   # notas del BOE (no son texto legal)
+                if h.tag == "p": yield h
+                else: yield from ps_de(h)
+        for p in ps_de(v):
+            cl = p.get("class") or ""
+            if cl.startswith("nota"): continue
+            t = " ".join("".join(p.itertext()).split())
+            if t: ps.append((cl, t))
+        out[b.get("id")] = (b.get("titulo") or "", ps)
+    _cache[k] = out
+    return out
+def parrafos(k, bid):
+    return [t for cl, t in ley(k)[bid][1]]
+def buscar(k, frag):
+    n = lambda s: " ".join(s.split()).lower()
+    return [(bid, tit) for bid, (tit, ps) in ley(k).items() if n(frag) in n(" ".join(t for _, t in ps))]
+def bloque(k, titulo):
+    """Id del bloque por su título («Artículo 55 bis», «Artículo séptimo»…)."""
+    n = lambda s: " ".join(s.replace("\xa0", " ").split()).lower()
+    r = [bid for bid, (tit, _) in ley(k).items() if n(tit) == n(titulo)]
+    assert len(r) == 1, (k, titulo, r)
+    return r[0]
