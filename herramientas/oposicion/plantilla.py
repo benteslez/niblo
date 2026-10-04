@@ -162,6 +162,11 @@ class Tema:
         sello = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
         data = dict(self.meta, sections=self.S, glossary=self.G, timeline=self.H, flashcards=self.FC, questions=self.Q, cargado=sello)
         out = {"_format": "gestion_hub_config", "_version": 2, "_exportedAt": sello, "ajustes": None, "temas": {self.id: data}}
+        # NIBLO_SALIDA=<carpeta>: prueba sin tocar temas/ ni el índice (auditorías en paralelo).
+        if os.environ.get("NIBLO_SALIDA"):
+            os.makedirs(os.environ["NIBLO_SALIDA"], exist_ok=True)
+            open(os.path.join(os.environ["NIBLO_SALIDA"], self.id + ".json"), "w", encoding="utf-8").write(json.dumps(out, ensure_ascii=False, separators=(",", ":")))
+            print(self.id, "· generado en", os.environ["NIBLO_SALIDA"], file=sys.stderr); return
         d = os.path.join(RAIZ, "temas")
         open(os.path.join(d, self.id + ".json"), "w", encoding="utf-8").write(json.dumps(out, ensure_ascii=False, separators=(",", ":")))
         ip = os.path.join(d, "indice.json"); idx = json.load(open(ip, encoding="utf-8"))
