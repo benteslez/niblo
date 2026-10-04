@@ -18,7 +18,7 @@ EM21 = "Ley 21/2021, de 28 de diciembre · preámbulo, apartado {} (exposición 
 EM23 = "Real Decreto-ley 2/2023, de 16 de marzo · preámbulo, apartado I (exposición de motivos publicada en el BOE; explica la norma, no es parte dispositiva)"
 
 T = Tema("B3T04",
-  "Seis preguntas: I. Cómo se organiza la Seguridad Social (CE, arts. 41, 50, 129.1 y 149.1.17.ª; LGSS, arts. 1, 2, 4, 66, 68, 73, 74, 74 bis, 79 y 80) · II. Cómo se financia (LGSS, arts. 18, 109, 110, 117, 118, 121, 125 y 127 bis) · III. Qué problemas tiene y qué líneas de actuación sigue (Ley 21/2021 y RDL 2/2023; LGSS, art. 58) · IV. Qué regímenes la forman (LGSS, arts. 7, 9, 10, 11, 136, 137 y 305) · V. Qué protege (LGSS, arts. 42, 43, 63, 64, 155 a 158 y 314) · VI. Qué prestaciones da y cómo son (LGSS, arts. 44, 53, 165 y siguientes). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Cómo se organiza la Seguridad Social (CE, arts. 41, 50, 129.1 y 149.1.17.ª; LGSS, arts. 1, 2, 4, 66, 68, 73, 74, 74 bis, 79 y 80) · II. Cómo se financia (LGSS, arts. 18, 109, 110, 117, 118, 121, 125 y 127 bis) · III. Qué problemas tiene y qué líneas de actuación sigue (Ley 21/2021 y RDL 2/2023; LGSS, art. 58) · IV. Qué regímenes la forman (LGSS, arts. 7, 9, 10, 11, 136, 137 y 305) · V. Qué protege (LGSS, arts. 42, 43, 63, 64, 155 a 158 y 314) · VI. Qué prestaciones da y cómo son (LGSS, arts. 44, 53, 165, 169, 172, 177, 193, 194, 204, 205, 216, 351, 363 y 369; disp. trans. 7.ª y 26.ª). Cada artículo: texto literal del BOE y ficha.",
   ["Seguridad Social", "Art. 41 CE", "Art. 149.1.17.ª", "LGSS", "Entidades gestoras", "INSS", "Tesorería General", "Mutuas colaboradoras", "Reparto", "Fondo de Reserva", "MEI", "Pacto de Toledo", "Revalorización", "Régimen General", "Regímenes especiales", "RETA", "Acción protectora", "Accidente de trabajo", "Prestaciones no contributivas", "Jubilación"])
 
 # =============================================================================
@@ -393,7 +393,7 @@ T.ap("s15", "IV.3 El Régimen General (LGSS, arts. 136 y 137)", f"""
   fichab("Campo de aplicación del Régimen General",
          ["**Trabajadores por cuenta ajena** y asimilados (art. 7.1 a)", "Incluidos los sistemas especiales de **empleados de hogar** y **agrarios por cuenta ajena**", "Personal civil no funcionario de las Administraciones", "Funcionarios, salvo Clases Pasivas u otro régimen por ley especial", "Altos cargos que no sean funcionarios", "(y los demás asimilados de las letras b a q)"],
          "Inclusión **obligatoria**, salvo que por su actividad deban ir a un régimen especial", "—",
-         "El **personal funcionario** que no esté en el Régimen de Clases Pasivas (ni en otro régimen por ley especial) cotizan al **Régimen General** (letra l). Empleados de hogar y agrarios por cuenta ajena son **sistemas especiales del Régimen General**, no regímenes especiales."))}
+         "El **personal funcionario** que no esté en el Régimen de Clases Pasivas (ni en otro régimen por ley especial) cotiza al **Régimen General** (letra l). Empleados de hogar y agrarios por cuenta ajena son **sistemas especiales del Régimen General**, no regímenes especiales."))}
 
 {unidad("3.2 Quién queda fuera (art. 137)",
   lit("LGSS", "a137", ["servicios amistosos, benévolos o de buena vecindad", "profesores universitarios eméritos"]),
@@ -505,7 +505,7 @@ T.ap("s20", "V.4 Las contingencias (LGSS, arts. 156, 157 y 158)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bVI", "VI. ¿Qué prestaciones da y cómo son? Tipos y características (LGSS, arts. 44, 53, 165 y siguientes)", donde(
+T.ap("bVI", "VI. ¿Qué prestaciones da y cómo son? Tipos y características (LGSS, arts. 44, 53, 165, 169, 172, 177, 193, 194, 204, 205, 216, 351, 363 y 369; disp. trans. 7.ª y 26.ª)", donde(
   "Sexta y última pregunta. Las **características** comunes de todas las prestaciones, las **condiciones** generales para tener derecho y los **tipos**: las principales contributivas del Régimen General y las no contributivas.",
   ["1 Caracteres y prescripción (arts. 44 y 53)", "2 Condiciones generales del derecho (art. 165)", "3 Incapacidad temporal y nacimiento y cuidado de menor (arts. 169, 172 y 177)", "4 Incapacidad permanente y jubilación (arts. 193, 194, 204 y 205; disp. trans. 7.ª y 26.ª)", "5 Muerte y supervivencia (art. 216)", "6 Prestaciones no contributivas (arts. 351, 363 y 369)", "7 Cuadro de las prestaciones"]))
 
@@ -537,7 +537,7 @@ T.ap("s22", "VI.2 Condiciones generales del derecho a las prestaciones (LGSS, ar
 
 T.ap("s23", "VI.3 Incapacidad temporal y nacimiento y cuidado de menor (LGSS, arts. 169, 172 y 177)", f"""
 {unidad("3.1 Incapacidad temporal: concepto y duración (art. 169.1 a)",
-  lit("LGSS", "a169", ["con una duración máxima de trescientos sesenta y cinco días, prorrogables por otros ciento ochenta días", "gestación de la mujer trabajadora desde el día primero de la semana trigésima novena"], solo=[1, 2, 3, 4]),
+  lit("LGSS", "a169", ["con una duración máxima de trescientos sesenta y cinco días, prorrogables por otros ciento ochenta días", "gestación de la mujer trabajadora desde el día primero de la semana trigésima novena"], solo=[1, 2, 3, 4, 5]),
   ficha("Trabajadores impedidos para el trabajo que reciben asistencia sanitaria",
         ["Enfermedad común o profesional y accidente, sea o no de trabajo", "Situaciones especiales por contingencias comunes: menstruación incapacitante secundaria, interrupción del embarazo, gestación desde la semana 39 (y donación de órganos)"],
         "Máximo **365 días**, prorrogables **180** si se presume el alta por curación",

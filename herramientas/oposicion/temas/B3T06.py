@@ -249,7 +249,7 @@ La LO 4/2000 distingue derechos de **todos** los extranjeros, de los que **se ha
         "La Seguridad Social es para **residentes**; los servicios sociales **básicos**, para todos, **cualquiera que sea su situación administrativa**."))}
 
 {unidad("1.6 Familiares reagrupables (art. 17.1)",
-  lit("LOEX", "a17", ["En ningún caso podrá reagruparse a más de un cónyuge", "menores de dieciocho años", "mayores de sesenta y cinco años"], solo=[1, 2, 3, 5]),
+  lit("LOEX", "a17", ["En ningún caso podrá reagruparse a más de un cónyuge", "menores de dieciocho años", "mayores de sesenta y cinco años"], solo=[1, 2, 3, 4, 5]),
   ficha("El extranjero **residente** (reagrupante)",
         ["Cónyuge no separado y sin fraude de ley", "Hijos del residente y del cónyuge (incluidos adoptados) menores de 18 o con discapacidad", "Representados legales menores de 18", "Ascendientes en primer grado a cargo, mayores de 65 años y con razones que lo justifiquen"],
         "Nunca más de un cónyuge, aunque la ley personal admita la poligamia",
@@ -330,7 +330,7 @@ T.ap("s7", "II.3 Situaciones: estancia y residencia; el arraigo (LO 4/2000, arts
   lit("REX", "Artículo 126", ["no tener la condición de solicitante de protección internacional", "durante, al menos, los dos años anteriores", "El arraigo familiar no requerirá ninguna permanencia mínima"], solo=[1, 2, 3, 4, 5, 6], titulo="Artículo 126. Requisitos generales (Reglamento, RD 1155/2024)"),
   fichab("Requisitos comunes a todos los arraigos",
          "La persona extranjera solicitante",
-         ["No ser solicitante de protección internacional (al pedirlo ni durante la tramitación)", "Permanencia continuada de dos años (no cuenta el tiempo como solicitante de protección internacional)", "No ser amenaza para el orden público, la seguridad o la salud pública", "Sin antecedentes penales en España ni en los países de residencia de los cinco años anteriores a la entrada", "Además: no rechazable, sin compromiso de no retorno vigente, tasa abonada, sin otra autorización ni procedimiento en curso"],
+         ["No ser solicitante de protección internacional (al pedirlo ni durante la tramitación)", "Permanencia continuada de dos años (no cuenta el tiempo como solicitante de protección internacional)", "No ser amenaza para el orden público, la seguridad o la salud pública", "Sin antecedentes penales en España ni en los países de residencia de los cinco años anteriores a la entrada", "Además (letras e a h): no rechazable, sin compromiso de no retorno vigente, tasa abonada, sin otra autorización ni procedimiento en curso"],
          "Permanencia mínima de **dos años**; el **familiar**, ninguna",
          "Los requisitos son **acumulativos**. El tiempo como **solicitante de protección internacional** no computa para los dos años."))}
 """, 2)
@@ -404,13 +404,13 @@ T.ap("s10", "II.6 Infracciones, sanciones, expulsión, devolución e internamien
          f"{c('LOEX', 'a55', 'al Subdelegado del Gobierno o al Delegado del Gobierno en las Comunidades Autónomas uniprovinciales')}",
          ["Leves: hasta 500 €", "Graves: de 501 a 10.000 €", "Muy graves: de 10.001 a 100.000 €"],
          "Graduación por proporcionalidad y capacidad económica del infractor (55.3 y 4)",
-         "Sanciona el **Subdelegado** (o el **Delegado** en las uniprovinciales). Las muy graves de seguridad nacional (54.1 a), el **Secretario de Estado de Seguridad**."))}
+         "Sanciona el **Subdelegado** (o el **Delegado** en las uniprovinciales). Las muy graves de seguridad nacional (54.1 a), el **Secretario de Estado de Seguridad** (55.2)."))}
 
 {unidad("6.4 La expulsión (art. 57)",
   lit("LOEX", "a57", ["en lugar de la sanción de multa", "pena privativa de libertad superior a un año", "En ningún caso podrán imponerse conjuntamente las sanciones de expulsión y multa", "Los residentes de larga duración"], solo=[1, 2, 3, 6, 7, 8, 9, 10]),
   fichab("Sanción de expulsión del territorio",
          "Extranjeros que cometan infracciones muy graves o ciertas graves del 53.1 (a, b, c, d y f), o condenados por delito doloso con pena de más de un año",
-         ["En lugar de la multa, por proporcionalidad, con expediente y resolución motivada", "Nunca expulsión y multa a la vez", "Extingue cualquier autorización para permanecer en España"],
+         ["En lugar de la multa, por proporcionalidad, con expediente y resolución motivada", "Nunca expulsión y multa a la vez", "Extingue cualquier autorización para permanecer en España (57.4)"],
          "Delito doloso con pena privativa de libertad **superior a un año** (salvo antecedentes cancelados)",
          "Protegidos (salvo seguridad nacional o reincidencia): nacidos en España con cinco años de residencia legal, **residentes de larga duración**, antiguos españoles de origen y perceptores de ciertas prestaciones (57.5)."))}
 
@@ -423,7 +423,7 @@ T.ap("s10", "II.6 Infracciones, sanciones, expulsión, devolución e internamien
          "La **devolución** no necesita expediente de expulsión. No se devuelve a **embarazadas** si hay riesgo para la gestación o la salud de la madre."))}
 
 {unidad("6.6 Internamiento (art. 62.1, 2 y 4)",
-  lit("LOEX", "a62", ["Juez de Instrucción competente", "siendo su duración máxima de 60 días", "No podrá acordarse el ingreso de menores en los centros de internamiento"], solo=[1, 3, 5]),
+  lit("LOEX", "a62", ["Juez de Instrucción competente", "siendo su duración máxima de 60 días", "No podrá acordarse el ingreso de menores en los centros de internamiento"], solo=[1, 2, 3, 5]),
   fichab("Ingreso en un centro de internamiento durante el expediente de expulsión",
          "Lo solicita el **instructor**; lo acuerda el **Juez de Instrucción** (previa audiencia del interesado y del Fiscal), por auto motivado",
          "Por el tiempo imprescindible para los fines del expediente; no cabe un nuevo internamiento por las mismas causas en el mismo expediente",
@@ -450,7 +450,7 @@ T.ap("s11", "II.7 El Reglamento de 2024 y las Oficinas de Extranjería (RD 1155/
          "El Reglamento de 2011 está **derogado**: no citarlo como vigente."))}
 
 {unidad("7.3 Oficinas de Extranjería (Reglamento, arts. 258 y 259)",
-  lit("REX", "Artículo 258", ["en el ámbito provincial", "en la capital de las provincias"], solo=[1, 3], titulo="Artículo 258. Creación (Reglamento, RD 1155/2024)"),
+  lit("REX", "Artículo 258", ["en el ámbito provincial", "en la capital de las provincias"], solo=[1, 3, 4], titulo="Artículo 258. Creación (Reglamento, RD 1155/2024)"),
   lit("REX", "Artículo 259", ["dependerán orgánicamente de la correspondiente Delegación o Subdelegación del Gobierno", "dependerán funcionalmente del Ministerio de Inclusión, Seguridad Social y Migraciones"], solo=[1], titulo="Artículo 259. Dependencia (Reglamento, RD 1155/2024)"),
   fichab("Unidades provinciales de extranjería",
          "Integran los servicios de la AGE competentes en extranjería e inmigración en cada provincia",
@@ -596,9 +596,9 @@ T.ap("s15", "III.4 El procedimiento de protección internacional (Ley 12/2009, a
          "OAR **tramita**, CIAR **propone**, el **Ministro del Interior** **resuelve**. En el procedimiento ordinario el silencio de seis meses es **negativo** (a diferencia de la inadmisión, → III.4.3)."))}
 
 {unidad("4.5 Tramitación de urgencia (art. 25.1 y 4)",
-  lit("ASILO", "a25", ["que parezcan manifiestamente fundadas", "especialmente, por menores no acompañados", "salvo en materia de plazos que se verán reducidos a la mitad"], solo=[1, 2, 3, 6, 10]),
+  lit("ASILO", "a25", ["que parezcan manifiestamente fundadas", "especialmente, por menores no acompañados", "salvo en materia de plazos que se verán reducidos a la mitad"], solo=[1, 2, 3, 4, 5, 6, 7, 10]),
   fichab("Procedimiento acelerado",
-         "El Ministerio del Interior, de oficio o a petición del interesado; se informa a la CIAR",
+         "El Ministerio del Interior, de oficio o a petición del interesado; se informa a la CIAR (25.3)",
          ["Solicitudes manifiestamente fundadas", "Solicitantes con necesidades específicas, especialmente menores no acompañados", "Solicitudes fuera del plazo de un mes sin motivo", "Otros: cuestiones ajenas a la protección, país de origen seguro, causas de exclusión o denegación"],
          "Plazos del procedimiento ordinario **reducidos a la mitad**",
          "La urgencia sirve tanto para lo **manifiestamente fundado** como para lo dudoso; plazos a la **mitad**."))}
@@ -614,7 +614,7 @@ T.ap("s15", "III.4 El procedimiento de protección internacional (Ley 12/2009, a
 
 T.ap("s16", "III.5 Contenido de la protección, familia, cese y revocación (Ley 12/2009, arts. 36, 40, 42 y 44)", f"""
 {unidad("5.1 Efectos de la concesión (art. 36.1)",
-  lit("ASILO", "a36", ["la protección contra la devolución", "la autorización de residencia y trabajo permanente", "en las mismas condiciones que los españoles"], solo=[1, 2, 4, 5, 6, 7, 9]),
+  lit("ASILO", "a36", ["la protección contra la devolución", "la autorización de residencia y trabajo permanente", "en las mismas condiciones que los españoles"], solo=[1, 2, 4, 5, 6, 7, 9, 10, 11, 12]),
   ficha("Refugiados y beneficiarios de protección subsidiaria",
         ["No devolución", "Autorización de residencia y trabajo **permanente**", "Documentos de identidad y viaje (para el refugiado; para la subsidiaria, cuando sea necesario)", "Servicios públicos de empleo; educación, sanidad, vivienda, asistencia social y Seguridad Social en las mismas condiciones que los españoles", "Libertad de circulación, integración, retorno voluntario y unidad familiar"],
         "—",
@@ -622,7 +622,7 @@ T.ap("s16", "III.5 Contenido de la protección, familia, cese y revocación (Ley
         "La autorización de residencia y trabajo es **permanente**. Los **documentos de viaje** son para el **refugiado**; al subsidiario, solo «cuando sea necesario»."))}
 
 {unidad("5.2 Extensión familiar (art. 40.1 y 2)",
-  lit("ASILO", "a40", ["Los ascendientes en primer grado que acreditasen la dependencia y sus descendientes en primer grado que fueran menores de edad", "El cónyuge o persona ligada por análoga relación de afectividad y convivencia"], solo=[1, 2, 4, 5, 7]),
+  lit("ASILO", "a40", ["Los ascendientes en primer grado que acreditasen la dependencia y sus descendientes en primer grado que fueran menores de edad", "El cónyuge o persona ligada por análoga relación de afectividad y convivencia"], solo=[1, 2, 4, 5, 6, 7]),
   fichab("Asilo o protección subsidiaria por extensión familiar",
          "Tramita la OAR; estudia la CIAR; resuelve el Ministro del Interior",
          ["Ascendientes en primer grado dependientes y descendientes en primer grado menores", "Cónyuge o pareja de hecho con convivencia", "Otro adulto responsable si el beneficiario es un menor no casado", "Otros familiares con dependencia y convivencia previa en el país de origen"],
@@ -630,7 +630,7 @@ T.ap("s16", "III.5 Contenido de la protección, familia, cese y revocación (Ley
          "Exclusiones: **distinta nacionalidad**, divorcio o separación, y la pareja que es la **persecutora** en el asilo por violencia de género."))}
 
 {unidad("5.3 Cese del estatuto de refugiado (art. 42)",
-  lit("ASILO", "a42", ["expresamente así lo soliciten", "hayan abandonado el territorio español y fijado su residencia en otro país", "no impedirá la continuación de la residencia en España"], solo=[1, 2, 3, 7, 10]),
+  lit("ASILO", "a42", ["expresamente así lo soliciten", "hayan abandonado el territorio español y fijado su residencia en otro país", "no impedirá la continuación de la residencia en España"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
   fichab("Fin de la condición de refugiado",
          "Inicia la OAR; si procede, propone la CIAR y resuelve el Ministro del Interior (art. 45)",
          ["Petición expresa", "Volver a acogerse a la protección de su país, recobrar la nacionalidad o adquirir otra con protección", "Establecerse de nuevo en su país", "Fijar la residencia en otro país", "Desaparición de las circunstancias que motivaron el reconocimiento"],
