@@ -48,7 +48,7 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 |---|---|---|---|
 | **I** | ¿Qué se protege y con qué normas? (régimen jurídico) | Arts. 1, 2 y 4 | CE, art. 18.4; LO 3/2018, arts. 1 y 2 |
 | **II** | ¿Con qué principios se tratan los datos? | Arts. 5 a 9 | LO 3/2018, arts. 4 a 9 |
-| **III** | ¿Qué derechos tiene el interesado? | Arts. 12, 15 a 18, 20 a 22, 77, 78 y 82 | LO 3/2018, arts. 11 a 18 |
+| **III** | ¿Qué derechos tiene el interesado? | Arts. 12 a 18, 20 a 22, 77, 78 y 82 | LO 3/2018, arts. 11 a 18 |
 | **IV** | ¿Quién responde del tratamiento? (responsable y encargado) | Arts. 24 a 26, 28, 30 y 32 a 35 | LO 3/2018, arts. 28, 29 y 31 a 33 |
 | **V** | ¿Quién vigila? (delegado y autoridades de protección de datos) | Arts. 37 a 39, 51, 52 y 68 | LO 3/2018, arts. 34 a 37, 44, 47, 48, 55 y 57; RD 389/2021, art. 6 |
 | **VI** | ¿Qué derechos digitales reconoce la ley? | — | LO 3/2018, título X (arts. 79 a 97) |
@@ -120,7 +120,7 @@ T.ap("s2", "I.2 Ámbito de aplicación y definiciones (RGPD, arts. 2 y 4; LO 3/2
          "—",
          ["Mismo criterio que el RGPD: tratamiento total o parcialmente **automatizado** y el **no automatizado** en fichero (2.1)", "**No** se aplica: tratamientos excluidos por el art. 2.2 RGPD; datos de **personas fallecidas** (salvo el art. 3); **materias clasificadas** (2.2)", "Actividades ajenas al Derecho de la UE (régimen **electoral**, instituciones **penitenciarias**, **Registro Civil** y Registros de la Propiedad y Mercantiles): su legislación **específica** y, **supletoriamente**, el RGPD y esta ley (2.3)"],
          "—",
-         "Fallecidos y materias **clasificadas**: **fuera** de la LO 3/2018. Electoral, penitenciario y registros: legislación **específica** + RGPD y LO **supletorios**."))}
+         "Fallecidos y materias **clasificadas**: **fuera** de la LO 3/2018. Electoral, penitenciario y registros: legislación **específica** + RGPD y LO **supletorios**. El art. 2 delimita el ámbito de los **títulos I a IX** y de los **arts. 89 a 94**."))}
 
 {resumen([
   "Art. 18.4 CE: la ley **limitará el uso de la informática** para garantizar el honor, la intimidad y el pleno ejercicio de los derechos.",
@@ -238,10 +238,10 @@ T.ap("s5", "II.3 Categorías especiales de datos (RGPD, art. 9; LO 3/2018, art. 
 
 # =============================================================================
 T.ap("bIII", "III. ¿Qué derechos tiene el interesado? (RGPD, arts. 12 a 22, 77, 78 y 82; LO 3/2018, arts. 11 a 18)", donde(
-  "Tercera pregunta. El interesado tiene derecho a ser **informado** y a ejercer los derechos de **acceso, rectificación, supresión, limitación, portabilidad y oposición**, además de no ser objeto de **decisiones automatizadas**. Si no se le atiende, puede **reclamar** ante la autoridad de control o acudir a los **tribunales**.",
-  ["1 Transparencia y reglas comunes de ejercicio (RGPD, art. 12; LO 3/2018, arts. 11 y 12)", "2 Acceso, rectificación y supresión (RGPD, arts. 15 a 17; LO 3/2018, arts. 13 a 15)", "3 Limitación, portabilidad, oposición y decisiones automatizadas (RGPD, arts. 18, 20 a 22; LO 3/2018, arts. 16 a 18)", "4 Reclamación, tutela judicial e indemnización (RGPD, arts. 77, 78 y 82)"]))
+  "Tercera pregunta. El interesado tiene derecho a ser **informado** (arts. 13 y 14) y a ejercer los derechos de **acceso, rectificación, supresión, limitación, portabilidad y oposición**, además de no ser objeto de **decisiones automatizadas**. Si no se le atiende, puede **reclamar** ante la autoridad de control o acudir a los **tribunales**.",
+  ["1 Transparencia, información y reglas comunes de ejercicio (RGPD, arts. 12 a 14; LO 3/2018, arts. 11 y 12)", "2 Acceso, rectificación y supresión (RGPD, arts. 15 a 17; LO 3/2018, arts. 13 a 15)", "3 Limitación, portabilidad, oposición y decisiones automatizadas (RGPD, arts. 18, 20 a 22; LO 3/2018, arts. 16 a 18)", "4 Reclamación, tutela judicial e indemnización (RGPD, arts. 77, 78 y 82)"]))
 
-T.ap("s6", "III.1 Transparencia y reglas comunes de ejercicio (RGPD, art. 12; LO 3/2018, arts. 11 y 12)", f"""
+T.ap("s6", "III.1 Transparencia, información y reglas comunes de ejercicio (RGPD, arts. 12 a 14; LO 3/2018, arts. 11 y 12)", f"""
 {unidad("1.1 Plazo, forma y gratuidad (RGPD, art. 12)",
   R(12, ["en el plazo de un mes a partir de la recepción de la solicitud", "Dicho plazo podrá prorrogarse otros dos meses en caso necesario", "serán a título gratuito", "cobrar un canon razonable", "negarse a actuar respecto de la solicitud"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9]),
   fichab("Reglas comunes a todos los derechos",
@@ -250,7 +250,16 @@ T.ap("s6", "III.1 Transparencia y reglas comunes de ejercicio (RGPD, art. 12; LO
          "Responder: **1 mes** desde la recepción, prorrogable **2 meses más** (informando de la prórroga dentro del primer mes)",
          "**Un mes + dos** de prórroga (en total, hasta tres). No confundir con los **diez días** de la comunicación del delegado (→ V.1.1) ni con las **72 horas** de la violación de seguridad (→ IV.3.4)."))}
 
-{unidad("1.2 Información por capas (LO 3/2018, art. 11)",
+{unidad("1.2 Información al interesado (RGPD, arts. 13 y 14)",
+  R(13, ["en el momento en que estos se obtengan", "la identidad y los datos de contacto del responsable", "los fines del tratamiento a que se destinan los datos personales y la base jurídica del tratamiento", "el derecho a presentar una reclamación ante una autoridad de control"], solo=[1, 2, 3, 4, 8, 9, 10, 12, 16]),
+  R(14, ["a más tardar dentro de un mes", "a más tardar en el momento de la primera comunicación", "en el momento en que los datos personales sean comunicados por primera vez"], solo=[1, 16, 17, 18, 19]),
+  fichab("El deber de informar al interesado",
+         "El **responsable** del tratamiento",
+         ["Datos obtenidos **del interesado** (art. 13): identidad y contacto del responsable, contacto del **delegado**, **fines** y **base jurídica**, destinatarios… y, para un tratamiento leal y transparente, **plazo de conservación**, **derechos**, retirada del consentimiento, **reclamación** ante la autoridad de control, etc. (13.1 y 2)", "Datos **no** obtenidos del interesado (art. 14): lo mismo, más las **categorías** de datos y la **fuente** de la que proceden (14.1 d y 14.2 f)", "No hay que informar de lo que el interesado **ya sepa** (13.4 y 14.5 a)"],
+         ["Art. 13: **en el momento** en que se obtienen los datos (13.1)", "Art. 14: en un plazo razonable y **a más tardar dentro de un mes**; si se usan para comunicarse con él, **en la primera comunicación**; si se van a comunicar a otro destinatario, **la primera vez** que se comuniquen (14.3)"],
+         "Recogida **directa**: información **en el momento**. Recogida **indirecta**: como máximo **un mes**, y se añaden **categorías** y **fuente**. En España puede darse **por capas** (→ III.1.3)."))}
+
+{unidad("1.3 Información por capas (LO 3/2018, art. 11)",
   L(11, ["facilitando al afectado la información básica", "La identidad del responsable del tratamiento", "La finalidad del tratamiento", "Las fuentes de las que procedieran los datos"]),
   fichab("Cómo se cumple el deber de informar",
          "El **responsable**",
@@ -258,7 +267,7 @@ T.ap("s6", "III.1 Transparencia y reglas comunes de ejercicio (RGPD, art. 12; LO
          "—",
          "Información **básica** + acceso al **resto**. Si los datos no proceden del afectado, se añaden **categorías** y **fuentes**."))}
 
-{unidad("1.3 Ejercicio de los derechos (LO 3/2018, art. 12)",
+{unidad("1.4 Ejercicio de los derechos (LO 3/2018, art. 12)",
   L(12, ["directamente o por medio de representante legal o voluntario", "El ejercicio del derecho no podrá ser denegado por el solo motivo de optar el afectado por otro medio", "recaerá sobre el responsable", "menores de catorce años", "Serán gratuitas"]),
   ficha("El **afectado**, directamente o por **representante legal o voluntario**; por los **menores de 14 años**, los titulares de la **patria potestad** (12.6)",
         ["Medios **fácilmente accesibles**; no se puede denegar el derecho por usar **otro medio** (12.2)", "El **encargado** puede tramitar las solicitudes si así lo prevé el contrato (12.3)", "Actuaciones **gratuitas** (12.7)"],
@@ -573,7 +582,7 @@ T.ap("s15", "VI.1 Derechos en la era digital (arts. 79 a 83)", f"""
   L(79, ["son plenamente aplicables en Internet"]),
   fichab("Cláusula general del título X",
          "Los **prestadores de servicios de la sociedad de la información** y los **proveedores de servicios de Internet** contribuyen a garantizarlos",
-         "Los derechos y libertades de la **Constitución** y de los **Tratados** en que España sea parte son **plenamente aplicables en Internet**",
+         "Los derechos y libertades de la **Constitución** y de los **Tratados y Convenios Internacionales** en que España sea parte son **plenamente aplicables en Internet**",
          "—",
          "No crea derechos nuevos: proclama que los existentes valen **también en Internet**."))}
 
@@ -590,7 +599,7 @@ T.ap("s15", "VI.1 Derechos en la era digital (arts. 79 a 83)", f"""
 {unidad("1.3 Derecho a la educación digital (art. 83)",
   L(83, ["El sistema educativo garantizará la plena inserción del alumnado en la sociedad digital", "incorporarán a los temarios de las pruebas de acceso a los cuerpos superiores"]),
   ficha("El **alumnado**; también el **profesorado** (formación) y los **estudiantes universitarios**",
-        ["El sistema educativo garantiza la **plena inserción** del alumnado en la sociedad digital y un uso **responsable, crítico y seguro** de los medios digitales (83.1)", "El profesorado recibe las **competencias digitales** necesarias (83.2); los planes de estudio universitarios garantizan formación en seguridad digital y derechos en Internet (83.3)"],
+        ["El sistema educativo garantiza la **plena inserción** del alumnado en la sociedad digital y el aprendizaje de un **consumo responsable** y un **uso crítico y seguro** de los medios digitales (83.1)", "El profesorado recibe las **competencias digitales** necesarias (83.2); los planes de estudio universitarios garantizan formación en seguridad digital y derechos en Internet (83.3)"],
         "—",
         "—",
         "Art. 83.4: las Administraciones incorporan a los **temarios** de acceso a los **cuerpos superiores** (y a los que acceden a datos personales) la garantía de los **derechos digitales** y la **protección de datos**."))}
@@ -803,6 +812,8 @@ Q = [
   ["Los datos de localización.", "La afiliación sindical.", "Los datos genéticos.", "Los datos relativos a la salud."], "Art. 9.1 RGPD (los datos de localización aparecen en la definición de dato personal, art. 4.1).", "o la afiliación sindical, y el tratamiento de datos genéticos, datos biométricos dirigidos a identificar de manera unívoca a una persona física, datos relativos a la salud"),
  ("RGPD", "Artículo 12", "Derechos", "Según el artículo 12.3 del Reglamento (UE) 2016/679, el responsable facilitará al interesado información relativa a sus actuaciones sobre una solicitud de ejercicio de derechos en el plazo de:",
   ["Un mes a partir de la recepción de la solicitud, prorrogable otros dos meses en caso necesario.", "Diez días, prorrogables otros diez.", "Dos meses, prorrogables otro mes.", "Tres meses, sin posibilidad de prórroga."], "Art. 12.3 RGPD.", "en el plazo de un mes a partir de la recepción de la solicitud. Dicho plazo podrá prorrogarse otros dos meses en caso necesario"),
+ ("RGPD", "Artículo 14", "Derechos", "Según el artículo 14.3 a) del Reglamento (UE) 2016/679, cuando los datos personales no se hayan obtenido del interesado, el responsable le facilitará la información dentro de un plazo razonable, una vez obtenidos los datos, y a más tardar:",
+  ["Dentro de un mes.", "Dentro de diez días.", "Dentro de tres meses.", "Dentro de seis meses."], "Art. 14.3 a) RGPD. Si los datos se obtienen del propio interesado, la información se da en el momento de obtenerlos (art. 13.1).", "y a más tardar dentro de un mes"),
  ("LOPD", "Artículo 13", "Derechos", "Según el artículo 13.3 de la Ley Orgánica 3/2018, a efectos del artículo 12.5 del RGPD se podrá considerar repetitivo el ejercicio del derecho de acceso en más de una ocasión durante el plazo de:",
   ["Seis meses, a menos que exista causa legítima para ello.", "Un mes.", "Tres meses, en todo caso.", "Un año, en todo caso."], "Art. 13.3 LO 3/2018.", "en más de una ocasión durante el plazo de seis meses, a menos que exista causa legítima para ello"),
  ("RGPD", "Artículo 17", "Derechos", "Según el artículo 17.3 del Reglamento (UE) 2016/679, el derecho de supresión no se aplicará cuando el tratamiento sea necesario:",
@@ -834,7 +845,7 @@ Q = [
  ("RGPD", "Artículo 37", "Delegado y autoridades", "Según el artículo 37.1 a) del Reglamento (UE) 2016/679, el responsable y el encargado designarán un delegado de protección de datos siempre que el tratamiento lo lleve a cabo una autoridad u organismo público, excepto:",
   ["Los tribunales que actúen en ejercicio de su función judicial.", "Las entidades locales.", "Los organismos autónomos.", "Las universidades públicas."], "Art. 37.1 a) RGPD.", "excepto los tribunales que actúen en ejercicio de su función judicial"),
  ("LOPD", "Artículo 34", "Delegado y autoridades", "Según el artículo 34.1 de la Ley Orgánica 3/2018, deberán designar en todo caso un delegado de protección de datos:",
-  ["Los centros docentes que ofrezcan enseñanzas regladas y las Universidades públicas y privadas.", "Los profesionales de la salud que ejerzan su actividad a título individual.", "Las federaciones deportivas, aunque no traten datos de menores de edad.", "Las personas físicas que traten datos en actividades exclusivamente domésticas."], "Art. 34.1 b) LO 3/2018 (los profesionales sanitarios individuales están exceptuados en la letra l; las federaciones, solo con datos de menores, letra o).", "así como las Universidades públicas y privadas"),
+  ["Los centros docentes que ofrezcan enseñanzas en cualquiera de los niveles establecidos en la legislación reguladora del derecho a la educación, así como las Universidades públicas y privadas.", "Los profesionales de la salud que ejerzan su actividad a título individual.", "Las federaciones deportivas, aunque no traten datos de menores de edad.", "Las personas físicas que traten datos en actividades exclusivamente domésticas."], "Art. 34.1 b) LO 3/2018 (los profesionales sanitarios individuales están exceptuados en la letra l; las federaciones, solo con datos de menores, letra o).", "así como las Universidades públicas y privadas"),
  ("LOPD", "Artículo 36", "Delegado y autoridades", "Según el artículo 36.2 de la Ley Orgánica 3/2018, el delegado de protección de datos persona física integrada en la organización del responsable no podrá ser removido ni sancionado por desempeñar sus funciones:",
   ["Salvo que incurriera en dolo o negligencia grave en su ejercicio.", "Salvo que lo autorice la Agencia Española de Protección de Datos.", "En ningún caso, ni siquiera por dolo.", "Salvo pérdida de confianza del responsable."], "Art. 36.2 LO 3/2018.", "salvo que incurriera en dolo o negligencia grave en su ejercicio"),
  ("LOPD", "Artículo 37", "Delegado y autoridades", "Según el artículo 37.1 de la Ley Orgánica 3/2018, si el afectado se dirige al delegado de protección de datos antes de reclamar ante la autoridad de protección de datos, el delegado le comunicará la decisión adoptada en el plazo máximo de:",
@@ -873,6 +884,7 @@ for q_, a_, cat in [
   ("Bases de licitud (art. 6.1 RGPD)", "Consentimiento; contrato; obligación legal; intereses vitales; interés público o poderes públicos; interés legítimo (no para autoridades públicas en sus funciones).", "Principios"),
   ("Edad del consentimiento", "RGPD: 16 años (los Estados pueden bajarla, no por debajo de 13). España: mayores de 14 años (art. 7 LO 3/2018).", "Principios"),
   ("Categorías especiales (art. 9 LO 3/2018)", "El solo consentimiento no basta si la finalidad principal es identificar ideología, afiliación sindical, religión, orientación sexual, creencias u origen racial o étnico.", "Principios"),
+  ("Información al interesado (arts. 13 y 14 RGPD)", "Datos recogidos del interesado: en el momento de obtenerlos. Datos no recogidos de él: en un plazo razonable y a más tardar dentro de un mes (o en la primera comunicación, o al comunicarlos por primera vez a otro destinatario), añadiendo categorías de datos y fuente.", "Derechos"),
   ("Plazo de respuesta a los derechos (art. 12.3 RGPD)", "Un mes desde la recepción, prorrogable otros dos meses.", "Derechos"),
   ("Acceso repetitivo (art. 13.3 LO 3/2018)", "Más de una vez en seis meses, salvo causa legítima.", "Derechos"),
   ("Portabilidad (art. 20 RGPD)", "Datos facilitados por el interesado, en formato estructurado, de uso común y lectura mecánica; si el tratamiento se basa en consentimiento o contrato y es automatizado; no en misiones de interés público.", "Derechos"),

@@ -64,7 +64,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 
 | Bloque | Pregunta | Normas | Otras fuentes oficiales |
 |---|---|---|---|
-| **I** | ¿Qué es el Gobierno Abierto y qué principios lo informan? | RD 371/2026 (preámbulo y arts. 2, 3, 6, 12, 17 y 19); Ley 19/2013 (preámbulo) | Portal de la Transparencia: «¿Qué es y cómo se organiza el Gobierno Abierto?» |
+| **I** | ¿Qué es el Gobierno Abierto y qué principios lo informan? | RD 371/2026 (preámbulo y arts. 2, 3, 5, 6, 12, 17 y 19); Ley 19/2013 (preámbulo) | Portal de la Transparencia: «¿Qué es y cómo se organiza el Gobierno Abierto?» |
 | **II** | ¿Qué planes de acción ha tenido España? | RD 371/2026 (preámbulo) | Portal de la Transparencia: planes de acción; documento del V Plan 2025-2029 |
 | **III** | ¿Cómo se garantiza la transparencia? Publicidad activa y derecho de acceso | Ley 19/2013, arts. 1 a 24 y disp. adic. 4.ª; CE, art. 105 b) | — |
 | **IV** | ¿Qué exige el buen gobierno? | Ley 19/2013, arts. 25 a 32 | — |
@@ -256,7 +256,7 @@ T.ap("s6", "III.1 Objeto y ámbito subjetivo de la Ley 19/2013 (arts. 1 a 4)", f
 {unidad("1.2 Sujetos del título I (art. 2)",
   lit(L, "Artículo 2", ["superior al 50 por 100", "en relación con sus actividades sujetas a Derecho Administrativo", "letras a) a d)"]),
   fichab("A quién se aplican la publicidad activa y el derecho de acceso",
-         ["Administraciones territoriales, Seguridad Social y mutuas, organismos y entidades de Derecho Público, universidades públicas", "Casa del Rey, Congreso, Senado, TC, CGPJ, Banco de España, Consejo de Estado, Defensor del Pueblo, Tribunal de Cuentas, CES (en su actividad administrativa)", "Sociedades mercantiles con participación **superior al 50 %**, fundaciones del sector público y asociaciones de Administraciones"],
+         ["Administraciones territoriales, Seguridad Social y mutuas, organismos y entidades de Derecho Público, universidades públicas, corporaciones de Derecho Público (en sus actividades sujetas a Derecho Administrativo)", "Casa del Rey, Congreso, Senado, TC, CGPJ, Banco de España, Consejo de Estado, Defensor del Pueblo, Tribunal de Cuentas, CES (en su actividad administrativa)", "Sociedades mercantiles con participación **superior al 50 %**, fundaciones del sector público y asociaciones de Administraciones"],
          "—", "—",
          "Para la ley, «Administraciones Públicas» son solo las letras **a) a d)** (art. 2.2). Los órganos de la letra f), solo **en sus actividades sujetas a Derecho Administrativo**."))}
 
@@ -457,7 +457,7 @@ T.ap("s11", "IV.1 Ámbito y principios de buen gobierno (arts. 25 y 26)", f"""
          "Las personas del art. 25",
          ["::Dos grupos:", "**Generales** (7): transparencia, dedicación al servicio público, imparcialidad, igualdad de trato, diligencia, conducta digna, responsabilidad", "**De actuación** (9): plena dedicación e incompatibilidades, reserva, denuncia de irregularidades, uso de poderes para su fin, abstención, regalos, transparencia, gestión de recursos públicos, no obtener ventajas"],
          "—",
-         "Los principios **informan la interpretación y aplicación** del régimen sancionador (26.3). Su incumplimiento puede ser infracción **leve** (art. 29.3 b)."))}
+         "Los principios **informan la interpretación y aplicación** del régimen sancionador (26.3). El incumplimiento de los principios **de actuación** (26.2 b) puede ser infracción **leve** (art. 29.3 b), si no es grave o muy grave ni está tipificado en otra norma."))}
 """, 2)
 
 T.ap("s12", "IV.2 Infracciones (arts. 27 a 29)", f"""
@@ -579,7 +579,7 @@ T.ap("s16", "V.3 Funciones, régimen jurídico y relaciones con las Cortes (arts
          "Memoria anual presentada ante las Cortes Generales",
          "Las reclamaciones las conoce el **Presidente** (38.2 c). Si insta un sancionador y no se incoa, la decisión debe **motivarse**."))}
 
-{unidad("3.2 Régimen jurídico y Estatuto (art. 39.1 y 39.2)",
+{unidad("3.2 Régimen jurídico y Estatuto (art. 39.2)",
   lit(L, "Artículo 39", ["mediante Real Decreto el Estatuto del Consejo de Transparencia y Buen Gobierno"], solo=[7]),
   fichab("Habilitación para aprobar el Estatuto", "El **Consejo de Ministros**, mediante Real Decreto",
          "Organización, estructura, funcionamiento y demás aspectos necesarios", "—",
@@ -798,7 +798,7 @@ T.q(L, "Artículo 35", "CTBG", "Según el artículo 35 de la Ley 19/2013, el Con
     "Art. 35. Pleno, Comisión Permanente y grupos de trabajo son del Foro de Gobierno Abierto (RD 371/2026, art. 4).", "El Presidente del Consejo de Transparencia y Buen Gobierno que lo será también de su Comisión")
 T.q(L, "Artículo 36", "CTBG", "Según el artículo 36.2 de la Ley 19/2013, ¿cuál de los siguientes forma parte de la Comisión de Transparencia y Buen Gobierno?",
     ["Un representante de la Autoridad Independiente de Responsabilidad Fiscal.", "Un representante del Consejo General del Poder Judicial.", "Un representante del Consejo de Estado.", "Un representante de la Federación Española de Municipios y Provincias."],
-    "Art. 36.2 h). La FEMP solo puede ser convocada a la reunión anual con los órganos autonómicos (36.4).", "Un representante de la Autoridad Independiente de Responsabilidad Fiscal")
+    "Art. 36.2 h). A la reunión anual con los órganos autonómicos (36.4) solo «podrá ser convocado» un representante de la Administración Local propuesto por la FEMP; no es miembro de la Comisión.", "Un representante de la Autoridad Independiente de Responsabilidad Fiscal")
 T.q(L, "Artículo 37", "CTBG", "Según el artículo 37.1 de la Ley 19/2013, el Presidente del Consejo de Transparencia y Buen Gobierno será nombrado:",
     ["Por un período no renovable de cinco años mediante Real Decreto.", "Por un período de cinco años, renovable por una sola vez, mediante Real Decreto.", "Por un período no renovable de seis años por las Cortes Generales.", "Por un período de cuatro años mediante Orden ministerial."],
     "Art. 37.1.", "será nombrado por un período no renovable de cinco años mediante Real Decreto")

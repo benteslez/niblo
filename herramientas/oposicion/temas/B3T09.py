@@ -812,7 +812,7 @@ EX_L42 = examen("L", 42, POR_SAD, [("De 38 a 64 horas mensuales", "RD1051", "ani
 EX_P43 = examen("P", 43, POR_SAD, [("De 38 a 64 horas mensuales", "RD1051", "anii", "Grado II: De 38 a 64 horas mensuales")])
 
 T.ap("s24", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join([
-  "En los primeros ejercicios de **2025** cayeron **ocho** preguntas de este tema (una de ellas de reserva) y **dos** relacionadas (dependencia, sin tema asignado). Aquí están **literales**. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal (o, en el Pacto de Estado, contra la publicación oficial).",
+  "En los primeros ejercicios de **2025** cayeron **siete** preguntas de este tema (una de ellas de reserva) y **dos** relacionadas (dependencia, sin tema asignado). Aquí están **literales**. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal (o, en el Pacto de Estado, contra la publicación oficial).",
   "### GACE-L 2025, pregunta 43 · Acoso discriminatorio en la Ley 4/2023 (→ III.3.2)", EX_L43,
   "### GACE-P 2025, pregunta 42 · Acoso discriminatorio en la Ley 4/2023 (→ III.3.2)", EX_P42,
   "### GACE-X 2025, pregunta 52 · Empresas obligadas a las medidas LGTBI (→ III.3.4)", EX_X52,
