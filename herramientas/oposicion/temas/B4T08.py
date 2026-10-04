@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B4T08",
-  "Cuatro preguntas: I. Qué es la expropiación y quiénes intervienen (art. 33.3 CE; LEF, arts. 1 a 8) · II. Cómo se expropia: el procedimiento general (LEF, arts. 9 a 58) · III. Otros procedimientos y la ocupación temporal (arts. 59, 108 y 109) · IV. Cómo se defiende el expropiado: garantías jurisdiccionales (arts. 125 y 126). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué es la expropiación y quiénes intervienen (art. 33.3 CE; LEF, arts. 1 a 5, 7 y 8) · II. Cómo se expropia: el procedimiento general (LEF, arts. 9 a 13, 15, 17 a 26, 29, 30, 32 a 36, 43 y 47 a 58) · III. Otros procedimientos y la ocupación temporal (arts. 59, 108 y 109) · IV. Cómo se defiende el expropiado: garantías jurisdiccionales (arts. 35.2, 125 y 126). Cada artículo: texto literal del BOE y ficha.",
   ["Art. 33.3 CE", "LEF", "Beneficiario", "Utilidad pública", "Necesidad de ocupación", "Justo precio", "Jurado de expropiación", "Premio de afección", "Urgente ocupación", "Reversión", "Retasación", "Interdictos", "Recurso contencioso"])
 
 T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
@@ -21,8 +21,8 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 
 | Bloque | Pregunta | Normas |
 |---|---|---|
-| **I** | ¿Qué es la expropiación y quiénes intervienen? (concepto y elementos) | CE, art. 33.3; LEF, arts. 1 a 8 |
-| **II** | ¿Cómo se expropia? (procedimiento general) | LEF, arts. 9 a 58 |
+| **I** | ¿Qué es la expropiación y quiénes intervienen? (concepto y elementos) | CE, art. 33.3; LEF, arts. 1 a 5, 7 y 8 |
+| **II** | ¿Cómo se expropia? (procedimiento general) | LEF, arts. 9 a 13, 15, 17 a 26, 29, 30, 32 a 36, 43 y 47 a 58 |
 | **III** | ¿Hay otros procedimientos? (especiales y ocupación temporal) | LEF, arts. 59, 108 y 109 |
 | **IV** | ¿Cómo se defiende el expropiado? (garantías jurisdiccionales) | LEF, arts. 22.3, 35, 125 y 126 |
 
@@ -32,9 +32,9 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué es la expropiación y quiénes intervienen? (art. 33.3 CE; LEF, arts. 1 a 8)", donde(
+T.ap("bI", "I. ¿Qué es la expropiación y quiénes intervienen? (art. 33.3 CE; LEF, arts. 1 a 5, 7 y 8)", donde(
   "Primera pregunta del tema: **qué es** la expropiación forzosa, **quién** puede acordarla y **con quién** se tramita.",
-  ["1 Garantía constitucional y concepto (art. 33.3 CE; LEF, art. 1)", "2 Sujetos: expropiante, beneficiario, expropiado e interesados (arts. 2 a 6)", "3 Transmisiones y cargas (arts. 7 y 8)"]))
+  ["1 Garantía constitucional y concepto (art. 33.3 CE; LEF, art. 1)", "2 Sujetos: expropiante, beneficiario, expropiado e interesados (arts. 2 a 5)", "3 Transmisiones y cargas (arts. 7 y 8)"]))
 
 T.ap("s1", "I.1 Garantía constitucional y concepto (art. 33.3 CE; LEF, art. 1)", f"""
 {unidad("1.1 Las tres garantías de la Constitución (art. 33.3)",
@@ -54,7 +54,7 @@ T.ap("s1", "I.1 Garantía constitucional y concepto (art. 33.3 CE; LEF, art. 1)"
          "Comprende no solo la venta: también **permuta, censo, arrendamiento, ocupación temporal o mera cesación** del ejercicio. Excluidas las **ventas forzosas** de abastecimientos, comercio exterior y divisas."))}
 """, 2)
 
-T.ap("s2", "I.2 Sujetos: expropiante, beneficiario, expropiado e interesados (arts. 2 a 6)", f"""
+T.ap("s2", "I.2 Sujetos: expropiante, beneficiario, expropiado e interesados (arts. 2 a 5)", f"""
 {unidad("2.1 Quién expropia y quién se beneficia (art. 2)",
   lit("LEF", "asegundo", ["sólo podrá ser acordada por el Estado, la Provincia o el Municipio", "las entidades y concesionarios a los que se reconozca legalmente esta condición", "cualquier persona natural o jurídica"]),
   fichab("Titulares de la potestad expropiatoria y beneficiarios",
@@ -63,7 +63,7 @@ T.ap("s2", "I.2 Sujetos: expropiante, beneficiario, expropiado e interesados (ar
          "—",
          "Solo **tres** pueden **acordar** la expropiación: Estado, Provincia y Municipio (pregunta oficial P 67, → Cierre 1). Expropiante ≠ beneficiario."))}
 
-{unidad("2.2 Con quién se entiende el expediente (arts. 3 a 6)",
+{unidad("2.2 Con quién se entiende el expediente (arts. 3 a 5)",
   lit("LEF", "atercero", ["en primer lugar, con el propietario de la cosa o titular del derecho objeto de la expropiación", "que sólo puede ser destruida judicialmente"]),
   lit("LEF", "aquinto", ["con el Ministerio Fiscal"], solo=[1]),
   fichab("Interesados en el expediente",
@@ -93,9 +93,9 @@ T.ap("s3", "I.3 Transmisiones y cargas (arts. 7 y 8)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo se expropia? El procedimiento general (LEF, arts. 9 a 58)", donde(
+T.ap("bII", "II. ¿Cómo se expropia? El procedimiento general (LEF, arts. 9 a 13, 15, 17 a 26, 29, 30, 32 a 36, 43 y 47 a 58)", donde(
   "Segunda pregunta. El procedimiento general sigue el orden de las garantías del art. 33.3: primero la **causa**, después **qué bienes** hacen falta, luego **cuánto** se paga y, por último, el **pago** y la **ocupación**.",
-  ["1 Causa: declaración de utilidad pública o interés social (arts. 9 a 13)", "2 Necesidad de ocupación (arts. 15 a 23)", "3 Justo precio: acuerdo, hojas de aprecio y Jurado (arts. 24 a 36, 43 y 47)", "4 Pago y ocupación; ocupación urgente (arts. 48 a 53)", "5 Reversión, demora y retasación (arts. 54 a 58)"]))
+  ["1 Causa: declaración de utilidad pública o interés social (arts. 9 a 13)", "2 Necesidad de ocupación (arts. 15 y 17 a 23)", "3 Justo precio: acuerdo, hojas de aprecio y Jurado (arts. 24 a 26, 29, 30, 32 a 36, 43 y 47)", "4 Pago y ocupación; ocupación urgente (arts. 48 a 53)", "5 Reversión, demora y retasación (arts. 54 a 58)"]))
 
 T.ap("s4", "II.1 La causa: declaración de utilidad pública o interés social (arts. 9 a 13)", f"""
 {unidad("1.1 Requisito previo (art. 9)",
@@ -114,7 +114,7 @@ T.ap("s4", "II.1 La causa: declaración de utilidad pública o interés social (
          "Para **inmuebles** de planes de obras y servicios, la utilidad pública es **implícita**; para **muebles**, por **ley** en cada caso (salvo categoría autorizada)."))}
 """, 2)
 
-T.ap("s5", "II.2 La necesidad de ocupación (arts. 15 a 23)", f"""
+T.ap("s5", "II.2 La necesidad de ocupación (arts. 15 y 17 a 23)", f"""
 {unidad("2.1 Qué es y quién la promueve (arts. 15 y 17)",
   lit("LEF", "aquince", ["que sean estrictamente indispensables para el fin de la expropiación", "previsibles ampliaciones"]),
   lit("LEF", "adiecisiete", ["relación concreta e individualizada", "se entenderá implícita en la aprobación del proyecto"]),
@@ -143,7 +143,7 @@ T.ap("s5", "II.2 La necesidad de ocupación (arts. 15 a 23)", f"""
          "Alzada ante el **Ministerio** (pregunta oficial L 54, → Cierre 1). El art. 22.3 excluye literalmente la vía contencioso-administrativa contra la orden ministerial; el art. 126.1 lo repite como excepción (→ IV.2)."))}
 """, 2)
 
-T.ap("s6", "II.3 El justo precio: acuerdo, hojas de aprecio y Jurado (arts. 24 a 36, 43 y 47)", f"""
+T.ap("s6", "II.3 El justo precio: acuerdo, hojas de aprecio y Jurado (arts. 24 a 26, 29, 30, 32 a 36, 43 y 47)", f"""
 {unidad("3.1 Mutuo acuerdo (art. 24) y pieza separada (arts. 25 y 26)",
   lit("LEF", "aveinticuatro", ["libremente y por mutuo acuerdo", "en el plazo de quince días"]),
   lit("LEF", "aveinticinco", ["Una vez firme el acuerdo por el que se declara la necesidad de ocupación"]),
@@ -159,7 +159,7 @@ T.ap("s6", "II.3 El justo precio: acuerdo, hojas de aprecio y Jurado (arts. 24 a
          "Propietario **20 días**; Administración **20 días**; respuesta del propietario **10 días**",
          "Plazos 20 / 20 / 10. Si la Administración **acepta** la hoja del propietario, el justo precio queda **fijado definitivamente**."))}
 
-{unidad("3.3 El Jurado provincial de expropiación (arts. 31 a 35)",
+{unidad("3.3 El Jurado provincial de expropiación (arts. 32 a 35)",
   lit("LEF", "atreintaydos", ["el Magistrado que designe el Presidente de la audiencia correspondiente", "cuatro vocales"], solo=[1, 2, 3, 4, 5, 6]),
   lit("LEF", "atreintaycuatro", ["decidirá ejecutoriamente sobre el justo precio"]),
   lit("LEF", "atreintaycinco", ["necesariamente motivada", "ultimará la vía gubernativa", "tan sólo el recurso contencioso-administrativo"], solo=[1, 2]),
@@ -194,7 +194,7 @@ T.ap("s7", "II.4 Pago y ocupación; la ocupación urgente (arts. 48 a 53)", f"""
   lit("LEF", "acincuentaydos", ["Excepcionalmente y mediante acuerdo del Consejo de Ministros", "retención de crédito", "dará derecho a su ocupación inmediata", "con una antelación mínima de ocho días"], solo=[1, 2, 3]),
   fichab("Procedimiento excepcional: ocupar antes de fijar y pagar el justo precio",
          "El **Consejo de Ministros** la declara",
-         ["Se entiende cumplida la necesidad de ocupación y da derecho a ocupar de inmediato", "Acta previa a la ocupación, notificada con **8 días** de antelación mínima", "Depósito previo e indemnización por rapidez de la ocupación; después, justiprecio y pago por la vía general"],
+         ["Se entiende cumplida la necesidad de ocupación y da derecho a ocupar de inmediato", "Acta previa a la ocupación, notificada con **8 días** de antelación mínima", "Depósito previo e indemnización por rapidez de la ocupación (52.4 y 52.5); después, justiprecio y pago por la vía general (52.7)"],
          "Notificación del acta previa: al menos **8 días** antes",
          "Es **excepcional** y la acuerda el **Consejo de Ministros**, con **retención de crédito** en el expediente."))}
 """, 2)
@@ -255,7 +255,7 @@ T.ap("s9b", "III.2 La ocupación temporal (arts. 108 y 109)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se defiende el expropiado? Garantías jurisdiccionales (arts. 125 y 126)", donde(
+T.ap("bIV", "IV. ¿Cómo se defiende el expropiado? Garantías jurisdiccionales (arts. 35.2, 125 y 126)", donde(
   "Cuarta pregunta. Si la Administración ocupa **sin respetar** las garantías, o si el expropiado no está de acuerdo con el resultado, la LEF le abre la vía judicial (Título V, «Garantías jurisdiccionales»).",
   ["1 Frente a la vía de hecho: los interdictos (art. 125)", "2 El recurso contencioso-administrativo (arts. 35.2 y 126)"]))
 

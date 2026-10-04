@@ -313,7 +313,7 @@ T.ap("s12", "V.1 Las ayudas de Estado (TFUE, arts. 107 y 108.3)", f"""
          f"Ayudas {c('TFUE', 'Artículo 107', 'otorgadas por los Estados o mediante fondos estatales, bajo cualquier forma')}",
          ["::Incompatibles (107.1), si:", "Afectan a los intercambios entre Estados miembros", "Falsean o amenazan falsear la competencia", "Favorecen a determinadas empresas o producciones", "::Compatibles de pleno derecho (107.2): sociales a consumidores individuales; desastres naturales o acontecimientos excepcionales; división de Alemania", "::Pueden considerarse compatibles (107.3): regiones con nivel de vida anormalmente bajo o grave subempleo, proyectos de interés común europeo, desarrollo de actividades o regiones, cultura y patrimonio, y otras que determine el Consejo"],
          "—",
-         "Distingue **«serán compatibles»** (107.2, automáticas) de **«podrán considerarse compatibles»** (107.3, valoración). Ayudas a **desastres naturales**: 107.2 (compatibles), no 107.3."))}
+         "Distingue **«Serán compatibles»** (107.2, automáticas) de **«Podrán considerarse compatibles»** (107.3, valoración). Ayudas a **desastres naturales**: 107.2 (compatibles), no 107.3."))}
 
 {unidad("1.2 Notificación previa y cláusula de suspensión (TFUE, art. 108.3)",
   lit("TFUE", "Artículo 108", ["con la suficiente antelación para poder presentar sus observaciones", "no podrá ejecutar las medidas proyectadas"], solo=[6]),
@@ -334,7 +334,7 @@ T.ap("s13", "V.2 Concepto de subvención y exclusiones (Ley 38/2003, arts. 1, 2 
          "Los tres requisitos son **acumulativos**",
          "Sin contraprestación **directa** (no basta cualquier ausencia de contraprestación). La finalidad de **fomento** es requisito del concepto."))}
 
-{unidad("2.2 Lo que no es subvención o queda fuera de la ley (arts. 2.2 a 2.4 y 4)",
+{unidad("2.2 Lo que no es subvención o queda fuera de la ley (arts. 2.2, 2.4 y 4)",
   lit("LGS", "Artículo 2", ["para financiar globalmente la actividad de la Administración a la que vayan destinadas", "Las prestaciones contributivas y no contributivas del Sistema de la Seguridad Social", "Los beneficios fiscales y beneficios en la cotización a la Seguridad Social", "El crédito oficial"], solo=[5, 7, 8, 12, 13, 14, 15]),
   lit("LGS", "Artículo 4", ["Los premios que se otorguen sin la previa solicitud del beneficiario", "Financiación de los Partidos Políticos"]),
   fichab("Exclusiones del concepto y del ámbito",
@@ -433,7 +433,7 @@ T.ap("s16", "V.5 Beneficiarios y entidades colaboradoras (Ley 38/2003, arts. 11 
 
 T.ap("s17", "V.6 Bases reguladoras y Base de Datos Nacional de Subvenciones (Ley 38/2003, arts. 17 y 20)", f"""
 {unidad("6.1 Bases reguladoras (art. 17.1 a 3)",
-  lit("LGS", "Artículo 17", ["los ministros correspondientes establecerán las oportunas bases reguladoras", "se aprobarán por orden ministerial", "previo informe de los servicios jurídicos y de la Intervención Delegada correspondiente", "a través de una ordenanza general de subvenciones o mediante una ordenanza específica"], solo=[1, 2, 3, 4, 5, 6, 9, 10, 14, 19]),
+  lit("LGS", "Artículo 17", ["los ministros correspondientes establecerán las oportunas bases reguladoras", "se aprobarán por orden ministerial", "previo informe de los servicios jurídicos y de la Intervención Delegada correspondiente", "a través de una ordenanza general de subvenciones o mediante una ordenanza específica"], solo=[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 14, 19]),
   fichab("Norma que fija las reglas de cada subvención",
          ["AGE: los **ministros** correspondientes, por **orden ministerial**", "Corporaciones locales: en el marco de las bases de ejecución del presupuesto, por **ordenanza general** o **específica**"],
          ["Procedimiento del art. 24 de la Ley 50/1997, con informe de los **servicios jurídicos** y de la **Intervención Delegada**", "Publicación en el **BOE**", "Contenido mínimo (17.3): objeto, requisitos de los beneficiarios, procedimiento, criterios objetivos, cuantía, órganos, justificación, criterios de graduación de incumplimientos, entre otros"],
@@ -441,7 +441,7 @@ T.ap("s17", "V.6 Bases reguladoras y Base de Datos Nacional de Subvenciones (Ley
          "En la AGE, **orden ministerial** (no real decreto); no hace falta si las normas sectoriales ya incluyen las bases con el alcance del 17.3."))}
 
 {unidad("6.2 La Base de Datos Nacional de Subvenciones (art. 20.1, 3 y 8)",
-  lit("LGS", "Artículo 20", ["promover la transparencia", "La Intervención General de la Administración del Estado es el órgano responsable de la administración y custodia de la BDNS", "Sistema Nacional de Publicidad de Subvenciones y Ayudas Públicas"], solo=[1, 5, 27]),
+  lit("LGS", "Artículo 20", ["promover la transparencia", "La Intervención General de la Administración del Estado es el órgano responsable de la administración y custodia de la BDNS", "Sistema Nacional de Publicidad de Subvenciones y Ayudas Públicas"], solo=[1, 5, 27, 28, 29, 30, 31]),
   fichab("Registro y sistema de publicidad de las subvenciones",
          "Administra y custodia la **Intervención General de la Administración del Estado** (IGAE)",
          ["Finalidades: **transparencia**, planificación, mejora de la gestión y lucha contra el **fraude**", "Opera como **Sistema Nacional de Publicidad de Subvenciones y Ayudas Públicas**", "La IGAE publica en su web convocatorias y subvenciones concedidas"],
@@ -472,7 +472,7 @@ T.ap("s18", "VI.1 Procedimientos de concesión (Ley 38/2003, arts. 22 y 23; RD 8
          "Las **nominativas** se conceden de forma **directa** (pregunta oficial P 61, → Cierre 1). Nominativa = al menos **dotación** y **beneficiario** determinados en los estados de gasto."))}
 
 {unidad("1.2 Iniciación de oficio y convocatoria (art. 23.1 y 2)",
-  lit("LGS", "Artículo 23", ["se inicia siempre de oficio", "mediante convocatoria aprobada por el órgano competente", "La convocatoria deberá publicarse en la BDNS"], solo=[1, 2]),
+  lit("LGS", "Artículo 23", ["se inicia siempre de oficio", "mediante convocatoria aprobada por el órgano competente", "La convocatoria deberá publicarse en la BDNS"], solo=list(range(1, 16))),
   fichab("Cómo empieza el procedimiento de concurrencia competitiva",
          "El **órgano competente** aprueba la convocatoria",
          ["Siempre **de oficio**, mediante **convocatoria**", "Publicación en la **BDNS** y extracto en el **BOE** (art. 20.8)", "Contenido mínimo: bases, créditos y cuantía máxima, objeto, requisitos, órganos, plazos, criterios de valoración, etc. (23.2 a a m)"],
@@ -659,7 +659,7 @@ T.ap("s23", "Cierre 2. Repaso en 10 minutos (por bloques)", f"""
 | III. Arbitral | Sustitución de la alzada por arbitraje, por **ley** (Ley 39/2015, art. 112.2); Sistema Arbitral del Consumo (TRLGDCU, arts. 57 y 58) | Excluidos **intoxicación, lesión o muerte** e indicios de delito |
 | IV. Servicio público | Reserva **mediante ley** (128.2 CE); servicios reservados a los entes locales (LRBRL, art. 86); gestión directa e indirecta (art. 85); concesión de servicios (LCSP) | EPE y sociedad mercantil solo con **memoria justificativa** |
 | V. Fomento y subvenciones | Ayudas de Estado (107 y 108 TFUE); concepto (art. 2); régimen (arts. 5 y 6); requisitos (arts. 8 a 10); beneficiarios (arts. 11 a 14); bases y BDNS (arts. 17 y 20) | BDNS: la **IGAE**; fondos UE: la ley es **supletoria** |
-| VI. Concesión, reintegro y sanciones | Concurrencia competitiva y directa (art. 22); justificación (art. 30); reintegro (arts. 37 a 42); infracciones (arts. 52 a 59) | Nominativas: **directa**; no justificar: **grave**; exime la **fuerza mayor** |
+| VI. Concesión, reintegro y sanciones | Concurrencia competitiva y directa (art. 22); justificación (art. 30); invalidez y reintegro (arts. 36 a 39 y 42); infracciones y sanciones (arts. 52, 54, 56 a 59 y 65) | Nominativas: **directa**; no justificar: **grave**; exime la **fuerza mayor** |
 
 ?> **Trampas frecuentes:** «las declaraciones responsables producen efectos **desde que la Administración las comprueba**» (desde la **presentación**); «los servicios reservados a los entes locales pueden ampliarse **por ordenanza**» (por **Ley** del Estado o de las CC. AA.); «la concesión de servicios puede incluir el **ejercicio de autoridad**» (nunca); «la subvención **nominativa** se concede en **concurrencia competitiva**» (es **directa**); «la presentación **fuera de plazo** de la cuenta justificativa es **grave**» (es **leve**; lo grave es **no justificar**); «el interés de demora es el **legal**» (es el legal **incrementado en un 25 %**); «el reintegro prescribe a los **cinco** años» (son **cuatro**).
 """)
