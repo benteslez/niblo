@@ -785,7 +785,7 @@ Q("TUE", "Artículo 5", "Principios", "Según el artículo 5.3 del Tratado de la
   "Art. 5.3 TUE, párrafo segundo.", "Los Parlamentos nacionales velarán por el respeto del principio de subsidiariedad")
 Q("TUE", "Artículo 5", "Principios", "Según el artículo 5.4 del Tratado de la Unión Europea, en virtud del principio de proporcionalidad:",
   ["El contenido y la forma de la acción de la Unión no excederán de lo necesario para alcanzar los objetivos de los Tratados.", "La Unión solo actuará en los ámbitos de su competencia exclusiva.", "Toda competencia no atribuida a la Unión corresponde a los Estados miembros.", "La Unión intervendrá solo si los Estados miembros no pueden alcanzar los objetivos de manera suficiente."],
-  "Art. 5.4 TUE. La c) es la atribución (5.2) y la d), la subsidiariedad (5.3).", "el contenido y la forma de la acción de la Unión no excederán de lo necesario para alcanzar los objetivos de los Tratados")
+  "Art. 5.4 TUE. Que toda competencia no atribuida corresponde a los Estados es la atribución (5.2); que la Unión intervenga solo si los Estados no pueden alcanzar los objetivos, la subsidiariedad (5.3).", "el contenido y la forma de la acción de la Unión no excederán de lo necesario para alcanzar los objetivos de los Tratados")
 Q("TUE", "Artículo 6", "Derechos fundamentales", "Según el artículo 6.1 del Tratado de la Unión Europea, la Carta de los Derechos Fundamentales de la Unión Europea tendrá:",
   ["El mismo valor jurídico que los Tratados.", "Un valor meramente declarativo.", "Un valor inferior a los Tratados y superior al Derecho derivado.", "El valor que le atribuya cada Estado miembro."],
   "Art. 6.1 TUE.", "la cual tendrá el mismo valor jurídico que los Tratados")
