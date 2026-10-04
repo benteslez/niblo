@@ -261,7 +261,7 @@ Además, la justicia {c("CE", "Artículo 117", "se administra en nombre del Rey"
 
 # =============================================================================
 T.ap("bIII", "III. ¿Quién sucede al Rey y quién lo suple? Sucesión, regencia y tutela (arts. 57 a 61; LO 3/2014)", donde(
-  "Tercera pregunta. La Corona es **hereditaria**: la Constitución fija el **orden de sucesión** y qué pasa si se agotan las líneas, si hay abdicación o dudas. Si el Rey es **menor de edad** o queda **inhabilitado**, ejerce sus funciones la **Regencia**; el Rey menor tiene además un **tutor**. Todos juran ante las Cortes.",
+  "Tercera pregunta. La Corona es **hereditaria**: la Constitución fija el **orden de sucesión** y qué pasa si se agotan las líneas, si hay abdicación o dudas. Si el Rey es **menor de edad** o queda **inhabilitado**, ejerce sus funciones la **Regencia**; el Rey menor tiene además un **tutor**. Prestan juramento el Rey, el Príncipe heredero y el Regente o Regentes (art. 61); el tutor, no.",
   ["1 La sucesión en la Corona (art. 57 y LO 3/2014)", "2 El consorte (art. 58)", "3 La Regencia (art. 59)", "4 La tutela del Rey menor (art. 60)", "5 El juramento (art. 61)", "6 Cuadro: Regencia y tutela"]))
 
 T.ap("s9", "III.1 La sucesión en la Corona (art. 57 y LO 3/2014)", f"""
