@@ -28,7 +28,7 @@ _norm = lambda x: _n(x).lower().replace("«", "").replace("»", "").replace('"',
 # Nombre corto de cada norma en las cabeceras de los bloques literales (la CE va sin él).
 CORTO = {"CE": "", "L39": "Ley 39/2015", "L40": "Ley 40/2015", "LGOB": "Ley 50/1997, del Gobierno", "LOTC": "LOTC",
          "LJCA": "LJCA", "RCD": "Reglamento del Congreso", "TREBEP": "TREBEP", "LCSP": "LCSP", "LGP": "LGP",
-         "LGS": "Ley 38/2003", "LEF": "LEF", "LPAP": "Ley 33/2003", "LOEP": "LO 2/2012", "LGT": "LGT", "CC": "Código Civil"}
+         "LGS": "Ley 38/2003", "LEF": "LEF", "LPAP": "Ley 33/2003", "LOEP": "LO 2/2012", "LGT": "LGT", "CC": "Código Civil", "LO3_1980": "LO 3/1980, del Consejo de Estado", "LOPJ": "LOPJ"}
 # Fuente (etiqueta) de cada norma: BOE salvo las de EUR-Lex.
 def fuente(k): return "DOUE" if boe.IDS[k].startswith("CELEX:") else "BOE"
 
