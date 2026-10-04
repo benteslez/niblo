@@ -160,8 +160,8 @@ T.ap("s6", "II.3 Juzgados y Juzgados Centrales (arts. 8 y 9)", f"""
   lit("LJCA", "Artículo 8", ["frente a los actos de las entidades locales", "excluidas las impugnaciones de cualquier clase de instrumentos de planeamiento urbanístico", "salvo cuando procedan del respectivo Consejo de Gobierno", "multas no superiores a 60.000 euros", "cuya cuantía no exceda de 30.050 euros", "en materia de extranjería", "Juntas Electorales de Zona", "las autorizaciones para la entrada en domicilios"], solo=list(range(1, 11))),
   fichab("Qué conocen los Juzgados (hoy, Secciones de los Tribunales de Instancia)",
          "Juzgados de lo Contencioso-administrativo, en **única o primera instancia**",
-         ["Actos de las **entidades locales** (salvo planeamiento urbanístico) (8.1)", "Actos de las **CCAA** (no del Consejo de Gobierno) sobre **personal** (salvo nacimiento o extinción de la relación de funcionarios de carrera), **sanciones** (multas hasta **60.000 €**, ceses o privaciones hasta **6 meses**) y **responsabilidad patrimonial** hasta **30.050 €** (8.2)", "Administración **periférica** del Estado y de las CCAA, salvo actos de más de **60.000 €** o sobre dominio público, obras públicas, expropiación y propiedades especiales (8.3)", "**Extranjería** de la periférica del Estado y de las CCAA (8.4)", "Juntas Electorales de **Zona** (8.5)", "**Autorizaciones** de entrada en domicilio y ratificación de medidas sanitarias (8.6)"],
-         "Cuantías: **60.000 €** (multas y periférica) · **30.050 €** (responsabilidad patrimonial) · **6 meses** (ceses)",
+         ["Actos de las **entidades locales** (salvo planeamiento urbanístico) (8.1)", "Actos de las **CCAA** (no del Consejo de Gobierno) sobre **personal** (salvo nacimiento o extinción de la relación de funcionarios de carrera), **sanciones** (multas hasta **60.000 €**, ceses o privaciones hasta **6 meses**) y **responsabilidad patrimonial** hasta **30.050 €** (8.2)", "Administración **periférica** del Estado y de las CCAA (8.3); se exceptúan los actos de la periférica **del Estado** y de los organismos públicos estatales de cuantía superior a **60.000 €** o sobre dominio público, obras públicas del Estado, expropiación forzosa y propiedades especiales", "**Extranjería** de la periférica del Estado y de las CCAA (8.4)", "Juntas Electorales de **Zona** (8.5)", "**Autorizaciones** de entrada en domicilio y ratificación de medidas sanitarias (8.6)"],
+         "Cuantías: **60.000 €** (multas; excepción de la periférica del Estado) · **30.050 €** (responsabilidad patrimonial) · **6 meses** (ceses)",
          "**Extranjería** de las CCAA → **Juzgado** (no TSJ; pregunta oficial P 76, → Cierre 1). Planeamiento urbanístico local → **TSJ**."))}
 
 {unidad("3.2 Juzgados Centrales de lo Contencioso-administrativo (art. 9)",
@@ -270,7 +270,7 @@ T.ap("s10", "III.2 Inactividad y vía de hecho (arts. 29 y 30)", f"""
 
 T.ap("s11", "III.3 Interposición y plazos (arts. 45 y 46)", f"""
 {unidad("3.1 El escrito de interposición (art. 45)",
-  lit("LJCA", "Artículo 45", ["por un escrito reducido a citar la disposición, acto, inactividad o actuación constitutiva de vía de hecho", "El recurso de lesividad se iniciará por demanda", "podrá iniciarse también mediante demanda"], solo=[1, 2, 3, 4, 5, 6, 9, 10]),
+  lit("LJCA", "Artículo 45", ["por un escrito reducido a citar la disposición, acto, inactividad o actuación constitutiva de vía de hecho", "El recurso de lesividad se iniciará por demanda", "podrá iniciarse también mediante demanda"]),
   fichab("Cómo empieza el proceso",
          "El recurrente; el **Secretario judicial** (hoy, Letrado de la Administración de Justicia) examina la comparecencia (45.3)",
          ["Regla: **escrito de interposición** que cita lo impugnado y pide que se tenga por interpuesto (45.1), con los documentos del 45.2 (representación, legitimación, copia del acto, requisitos de personas jurídicas, autorización de afiliados)", "**Lesividad**: por **demanda**, con la declaración de lesividad y el expediente (45.4)", "Sin terceros interesados: puede iniciarse **por demanda** (45.5)"],
@@ -314,7 +314,7 @@ T.ap("s12", "IV.1 Capacidad procesal (art. 18)", f"""
 
 T.ap("s13", "IV.2 Legitimación activa y pasiva (arts. 19 a 22)", f"""
 {unidad("2.1 Legitimación activa (art. 19)",
-  lit("LJCA", "Artículo 19", ["Las personas físicas o jurídicas que ostenten un derecho o interés legítimo", "intereses legítimos colectivos", "El Ministerio Fiscal para intervenir en los procesos que determine la Ley", "en ejercicio de la acción popular, en los casos expresamente previstos por las Leyes", "previa su declaración de lesividad para el interés público"], solo=list(range(1, 10)) + [16, 17, 18]),
+  lit("LJCA", "Artículo 19", ["Las personas físicas o jurídicas que ostenten un derecho o interés legítimo", "intereses legítimos colectivos", "El Ministerio Fiscal para intervenir en los procesos que determine la Ley", "en ejercicio de la acción popular, en los casos expresamente previstos por las Leyes", "previa su declaración de lesividad para el interés público"], solo=list(range(1, 19))),
   fichab("Quién puede recurrir",
          ["Personas físicas o jurídicas con **derecho o interés legítimo** (a)", "Corporaciones, asociaciones, sindicatos y grupos, por **intereses colectivos** (b)", "AGE, CCAA, entidades locales y entidades de Derecho público, en defensa de su ámbito (c, d, e, g)", "**Ministerio Fiscal**, en los procesos que determine la ley (f)", "**Cualquier ciudadano**, por **acción popular**, solo en los casos **previstos por las leyes** (h)", "Igualdad de trato y discriminación; sindicatos por sus afiliados (i, j, k)"],
          ["La **Administración autora** de un acto lo impugna **previa declaración de lesividad** (19.2)", "Vecinos en nombre de las entidades locales: legislación de régimen local (19.3)"],
@@ -501,7 +501,7 @@ for q_, a_, cat in [
   ("Cuestiones prejudiciales (art. 4)", "Las conoce, salvo las constitucionales y penales; sin efectos fuera del proceso.", "Funciones"),
   ("Órganos del orden contencioso (art. 6)", "Juzgados, Juzgados Centrales, Salas de los TSJ, de la AN y del TS.", "Órganos"),
   ("Juzgados tras la LO 1/2025", "Secciones de lo Contencioso-Administrativo de los Tribunales de Instancia (Centrales: del Tribunal Central de Instancia).", "Órganos"),
-  ("Cuantías de los Juzgados (art. 8)", "Multas hasta 60.000 €; responsabilidad patrimonial hasta 30.050 €; periférica: hasta 60.000 €.", "Competencias"),
+  ("Cuantías de los Juzgados (art. 8)", "Multas hasta 60.000 €; responsabilidad patrimonial hasta 30.050 €; periférica del Estado: actos de hasta 60.000 €.", "Competencias"),
   ("Reglamentos autonómicos y locales", "TSJ en única instancia (art. 10.1 b).", "Competencias"),
   ("Ministros y Secretarios de Estado", "Audiencia Nacional en única instancia (art. 11.1 a); personal y responsabilidad hasta 30.050 €: Juzgados Centrales (art. 9).", "Competencias"),
   ("Consejo de Ministros, CGPJ y Fiscal General", "Tribunal Supremo en única instancia (art. 12.1).", "Competencias"),

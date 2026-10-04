@@ -226,7 +226,7 @@ T.ap("s10", "IV.2 Declaración de lesividad de actos anulables (art. 107; Ley 7/
          "Actos **favorables** y **anulables** (art. 48). **Cuatro años** desde que **se dictó** el acto (no desde la notificación). En los entes locales, el **Pleno**."))}
 
 {unidad("2.2 En el municipio, el Pleno (Ley 7/1985, art. 22.2 k)",
-  lit("LRBRL", "Artículo 22", ["al Pleno municipal en los Ayuntamientos, y a la Asamblea vecinal en el régimen de Concejo Abierto", "La declaración de lesividad de los actos del Ayuntamiento"], solo=[2, 13], titulo="Artículo 22.2 (Ley 7/1985, Reguladora de las Bases del Régimen Local)"),
+  lit("LRBRL", "Artículo 22", ["al Pleno municipal en los Ayuntamientos, y a la Asamblea vecinal en el régimen de Concejo Abierto", "La declaración de lesividad de los actos del Ayuntamiento"], solo=list(range(2, 21)), titulo="Artículo 22.2 (Ley 7/1985, Reguladora de las Bases del Régimen Local)"),
   fichab("Órgano municipal competente para declarar la lesividad",
          "El **Pleno** municipal; en régimen de Concejo Abierto, la **Asamblea vecinal**",
          "Es atribución que les corresponde «en todo caso» (art. 22.2)",

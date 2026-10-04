@@ -162,7 +162,7 @@ T.ap("s7", "III.1 Reglas generales: silencio y motivación (LPAC, arts. 24 y 35)
          "En responsabilidad patrimonial el silencio es **negativo**, igual que en el derecho de petición y en las facultades sobre dominio o servicio público."))}
 
 {unidad("1.2 Motivación (art. 35.1 h)",
-  lit("L39", "Artículo 35", ["o de responsabilidad patrimonial"], solo=[1, 9]),
+  lit("L39", "Artículo 35", ["o de responsabilidad patrimonial"], solo=list(range(1, 11))),
   fichab("Actos que deben motivarse", "El órgano que resuelve", "Se motivan, con sucinta referencia de hechos y fundamentos de derecho, los actos que resuelvan procedimientos de responsabilidad patrimonial", "—",
          "Motivación **obligatoria** de la resolución de responsabilidad patrimonial (letra **h**)."))}
 """, 2)
@@ -240,7 +240,7 @@ T.ap("s11", "III.5 Tramitación simplificada (LPAC, art. 96)", f"""
 
 T.ap("s12", "III.6 Fin de la vía administrativa y control judicial (LPAC, art. 114; LO 3/1980, art. 22; LJCA, art. 2)", f"""
 {unidad("6.1 La resolución pone fin a la vía administrativa (art. 114.1 e)",
-  lit("L39", "Artículo 114", ["cualquiera que fuese el tipo de relación, pública o privada, de que derive"], solo=[1, 6]),
+  lit("L39", "Artículo 114", ["cualquiera que fuese el tipo de relación, pública o privada, de que derive"], solo=list(range(1, 9))),
   fichab("Recursos contra la resolución", "El reclamante", "La resolución **pone fin a la vía administrativa**: cabe reposición potestativa (→ tema IV.12) o, directamente, el contencioso", "—",
          "**Toda** resolución de responsabilidad patrimonial agota la vía, sea **pública o privada** la relación de la que derive."))}
 
@@ -251,7 +251,7 @@ T.ap("s12", "III.6 Fin de la vía administrativa y control judicial (LPAC, art. 
          "Es la remisión del art. 81.2 LPAC: el dictamen es preceptivo desde **50.000 euros**."))}
 
 {unidad("6.3 Jurisdicción competente (LJCA, art. 2 e)",
-  lit("LJCA", "Artículo 2", ["cualquiera que sea la naturaleza de la actividad o el tipo de relación de que derive", "no pudiendo ser demandadas aquellas por este motivo ante los órdenes jurisdiccionales civil o social", "cuenten con un seguro de responsabilidad"], solo=[1, 6]),
+  lit("LJCA", "Artículo 2", ["cualquiera que sea la naturaleza de la actividad o el tipo de relación de que derive", "no pudiendo ser demandadas aquellas por este motivo ante los órdenes jurisdiccionales civil o social", "cuenten con un seguro de responsabilidad"], solo=list(range(1, 8))),
   fichab("Unidad jurisdiccional", "Orden **contencioso-administrativo**",
          "Conoce de la responsabilidad patrimonial de las AAPP **cualquiera que sea** la actividad o la relación; las AAPP **no** pueden ser demandadas por ello en los órdenes civil o social",
          "—", "Aunque concurran **particulares** en el daño o haya un **seguro** de responsabilidad: siempre el **contencioso** (→ II.3.1)."))}
