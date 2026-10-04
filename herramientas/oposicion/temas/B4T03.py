@@ -287,7 +287,7 @@ T.ap("s8", "III.3 Elaboración de los reglamentos del Gobierno (Ley 50/1997, art
          "Si se tramita una norma **no incluida** en el Plan, hay que justificarlo en la **Memoria del Análisis de Impacto Normativo** (art. 25.3)."))}
 
 {unidad("3.3 Procedimiento de elaboración (Ley 50/1997, art. 26, extracto)",
-  lit("LGOB", "a26", ["que en ningún caso será inferior a quince días naturales", "deberán ser informados por la Secretaría General Técnica", "El plazo mínimo de esta audiencia e información públicas será de 15 días hábiles", "Se recabará el dictamen del Consejo de Estado u órgano consultivo equivalente cuando fuera preceptivo o se considere conveniente"], solo=[1, 3, 9, 16, 17, 30, 32, 36, 38, 39]),
+  lit("LGOB", "a26", ["que en ningún caso será inferior a quince días naturales", "deberán ser informados por la Secretaría General Técnica", "El plazo mínimo de esta audiencia e información públicas será de 15 días hábiles", "Se recabará el dictamen del Consejo de Estado u órgano consultivo equivalente cuando fuera preceptivo o se considere conveniente"], solo=[1, 3, 4, 5, 6, 7, 8, 9, 16, 17, 29, 30, 32, 35, 36, 38, 39]),
   fichab("Pasos para aprobar un reglamento del Gobierno",
          ["El **centro directivo competente** (Memoria, informes, audiencia)", "**Secretaría General Técnica** del Ministerio proponente (informe preceptivo)", "**Consejo de Estado** (cuando sea preceptivo o conveniente)", "**Comisión General de Secretarios de Estado y Subsecretarios** y **Consejo de Ministros**"],
          ["Consulta pública previa en el portal web (26.2)", "**Memoria del Análisis de Impacto Normativo**, preceptiva (26.3)", "Informes y dictámenes (26.5)", "Audiencia e información públicas (26.6)", "Dictamen del Consejo de Estado (26.7)", "Comisión General y Consejo de Ministros (26.8)"],
@@ -398,7 +398,7 @@ T.ap("s11", "IV.2 Principios que garantiza la Constitución (art. 9.3) y la juri
 # =============================================================================
 T.ap("bV", "V. ¿Cómo se celebra un tratado y cómo entra en el ordenamiento? (arts. 93 a 96 CE; Ley 25/2014)", donde(
   "Quinta pregunta. La Constitución regula **qué tratados necesitan autorización de las Cortes** (arts. 93 y 94), su **control previo** (art. 95) y su **eficacia interna** (art. 96). La Ley 25/2014 desarrolla la celebración, la publicación y la aplicación.",
-  ["1 Qué es un tratado y qué otros acuerdos hay (Ley 25/2014, arts. 2 y 43)", "2 Quién se obliga y cuándo hace falta autorización de las Cortes (arts. 63.2, 74.2, 93 y 94 CE; Ley 25/2014, arts. 15 y 17)", "3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, arts. 27.2 y 78; Ley 25/2014, art. 19)", "4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civil, art. 1.5; Ley 25/2014, arts. 23, 30 y 31)", "5 Denuncia (art. 96.2 CE; Ley 25/2014, art. 37)"]))
+  ["1 Qué es un tratado y qué otros acuerdos hay (Ley 25/2014, arts. 2 y 43)", "2 Quién se obliga y cuándo hace falta autorización de las Cortes (arts. 63.2, 74.2, 93 y 94 CE; Ley 25/2014, arts. 15 y 17)", "3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, arts. 27.2 y 78; Ley 25/2014, arts. 19 y 32)", "4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civil, art. 1.5; Ley 25/2014, arts. 23, 30 y 31)", "5 Denuncia (art. 96.2 CE; Ley 25/2014, art. 37)"]))
 
 T.ap("s12", "V.1 Qué es un tratado y qué otros acuerdos hay (Ley 25/2014, arts. 2 y 43)", f"""
 {unidad("1.1 Tratado, acuerdo internacional administrativo y acuerdo no normativo (Ley 25/2014, art. 2 a) a c)",
@@ -453,7 +453,7 @@ T.ap("s13", "V.2 Quién se obliga y cuándo hace falta autorización de las Cort
          "**No** cabe aplicación provisional de los tratados del **art. 93**. La consulta sobre la necesidad de autorización va a la **Comisión Permanente** del Consejo de Estado (LO 3/1980, art. 22.Uno)."))}
 """, 2)
 
-T.ap("s14", "V.3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, arts. 27.2 y 78; Ley 25/2014, art. 19)", f"""
+T.ap("s14", "V.3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, arts. 27.2 y 78; Ley 25/2014, arts. 19 y 32)", f"""
 {unidad("3.1 Tratado contrario a la Constitución: revisión previa (art. 95)",
   lit("CE", "Artículo 95", ["exigirá la previa revisión constitucional", "El Gobierno o cualquiera de las Cámaras"]),
   fichab("Control previo de constitucionalidad",
@@ -471,7 +471,7 @@ T.ap("s14", "V.3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, ar
          ["Opiniones de los órganos legitimados: **un mes**", "Declaración del TC: **dentro del mes siguiente**", "Ampliación por aclaraciones: hasta **treinta días**"],
          "La declaración del TC es **vinculante**. El control es **previo** al consentimiento."))}
 
-{unidad("3.3 Control posterior: el tratado como objeto de declaración de inconstitucionalidad (LOTC, art. 27.2 c)",
+{unidad("3.3 Control posterior: el tratado como objeto de declaración de inconstitucionalidad (LOTC, art. 27.2 c; Ley 25/2014, art. 32)",
   lit("LOTC", "aveintisiete", ["Los Tratados Internacionales"], solo=[2, 5], titulo="Artículo veintisiete, apartado Dos c) (LOTC)"),
   lit("L25_2014", "a32", ["título II de la Ley Orgánica 2/1979"]),
   fichab("Control de constitucionalidad del tratado ya celebrado",
@@ -546,7 +546,7 @@ EX_P50 = examen("P", 50, {
   "a": f"La adopción solo expresa el acuerdo sobre el **texto** (Ley 25/2014, art. 2 h: {c('L25_2014', 'a2', 'acto por el que España expresa su acuerdo sobre el texto de un tratado internacional')}); no lo incorpora al ordenamiento.",
   "b": f"Literal del art. 1.5 CC: no son de aplicación directa {c('CC', 'a1', 'en tanto no hayan pasado a formar parte del ordenamiento interno mediante su publicación íntegra en el «Boletín Oficial del Estado»')}.",
   "c": f"Cambia el acto y el órgano: el Congreso no ratifica; las Cortes **autorizan** en los casos del art. 94.1 CE ({c('CE', 'Artículo 94', 'requerirá la previa autorización de las Cortes Generales')}), y lo que integra el tratado es su **publicación**.",
-  "d": f"Cambia el diario: es el {c('CC', 'a1', '«Boletín Oficial del Estado»')}, no el Boletín Oficial de las Cortes Generales."},
+  "d": f"Cambia el diario: es el {c('CC', 'a1', 'Boletín Oficial del Estado')}, no el Boletín Oficial de las Cortes Generales."},
   [("Oficial del Estado", "CC", "a1", "mediante su publicación íntegra en el «Boletín Oficial del Estado»"),
    ("publicado", "L25_2014", "a23", "Los tratados internacionales formarán parte del ordenamiento jurídico interno una vez publicados en el «Boletín Oficial del Estado»")])
 EX_L46 = examen("L", 46, {
