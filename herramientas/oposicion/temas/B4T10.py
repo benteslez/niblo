@@ -38,7 +38,7 @@ T.ap("s1", "I.1 Fundamento constitucional (arts. 106.2 y 121 CE)", f"""
 {unidad("1.1 El derecho a ser indemnizado (art. 106.2)",
   lit("CE", "Artículo 106", ["toda lesión que sufran en cualquiera de sus bienes y derechos", "salvo en los casos de fuerza mayor", "consecuencia del funcionamiento de los servicios públicos"], solo=[2]),
   ficha(c("CE", "Artículo 106", "Los particulares"),
-        ["::Derecho a ser indemnizados por toda lesión en sus bienes y derechos:", "Que sea **consecuencia del funcionamiento de los servicios públicos**", "«En los **términos establecidos por la ley**» (hoy, Leyes 40/2015 y 39/2015)"],
+        ["::Derecho a ser indemnizados por toda lesión en sus bienes y derechos:", "Que sea **consecuencia del funcionamiento de los servicios públicos**", f"{c('CE', 'Artículo 106', 'en los **términos establecidos por la ley**')} (hoy, Leyes 40/2015 y 39/2015)"],
         "**Fuerza mayor**: excluye la indemnización",
         "Control de los Tribunales sobre la actuación administrativa (106.1); reclamación ante la Administración y, después, contencioso (→ III.6)",
         "El art. 106.2 está en el **Título IV** (Gobierno y Administración), **no** en el Título I: no es un derecho fundamental susceptible de amparo. Única exclusión constitucional: la **fuerza mayor**."))}
@@ -60,7 +60,7 @@ T.ap("s2", "I.2 Principios y requisitos de la responsabilidad (LRJSP, art. 32)",
         ["::Indemnización por toda lesión en sus bienes y derechos si:", "Es consecuencia del funcionamiento **normal o anormal** de los servicios públicos (responsabilidad **objetiva**)", "El daño es **efectivo**, **evaluable económicamente** e **individualizado** con relación a una persona o grupo de personas (32.2)"],
         ["::No se indemniza:", "**Fuerza mayor**", "Daños que el particular tenga el **deber jurídico de soportar** de acuerdo con la Ley", "La **anulación** de un acto o disposición **no presupone, por sí misma**, el derecho a indemnización (32.1, párrafo 2.º)"],
         "Reclamación en el procedimiento de la Ley 39/2015 (→ III) y, después, el contencioso-administrativo",
-        "«Funcionamiento **normal o anormal**»: también responde por el funcionamiento **normal**. La anulación **no** da derecho automático a indemnización (pregunta oficial X 61, → Cierre 1). Tres notas del daño: **efectivo, evaluable, individualizado**."))}
+        f"{c('L40', 'Artículo 32', 'funcionamiento **normal o anormal**')}: también responde por el funcionamiento **normal**. La anulación **no** da derecho automático a indemnización (pregunta oficial X 61, → Cierre 1). Tres notas del daño: **efectivo, evaluable, individualizado**."))}
 
 {unidad("2.2 La responsabilidad del Estado legislador (art. 32.3 a 6)",
   lit("L40", "Artículo 32", ["actos legislativos de naturaleza no expropiatoria", "cuando así se establezca en los propios actos legislativos", "norma con rango de ley declarada inconstitucional", "norma contraria al Derecho de la Unión Europea", "sentencia firme desestimatoria", "suficientemente caracterizado", "relación de causalidad directa", "desde la fecha de su publicación"], solo=list(range(4, 14))),
@@ -411,7 +411,7 @@ T.glos("Acción de regreso", "Exigencia de oficio, por la Administración que in
 T.glos("Índice de Garantía de la Competitividad", "Índice del INE con el que se actualiza la indemnización (LRJSP, art. 34.3).", "s5", "Indemnización")
 T.glos("Procedimiento simplificado de responsabilidad patrimonial", "El que acuerda de oficio el órgano cuando la causalidad, la valoración y la cuantía son inequívocas; se resuelve en 30 días (LPAC, art. 96.4 y 6).", "s11", "Procedimiento")
 
-T.hito("1954", "Ley de 16 de diciembre de 1954 sobre expropiación forzosa, art. 121", "Primera regulación general de la indemnización por el funcionamiento normal o anormal de los servicios públicos (artículo que sigue en el texto consolidado)", "normativo", "s1")
+T.hito("1954", "Ley de 16 de diciembre de 1954 sobre expropiación forzosa, art. 121", f"Ya preveía indemnizar la lesión consecuencia del {c('LEF', 'acientoveintiuno', 'funcionamiento normal o anormal de los servicios públicos')}, limitada a los bienes y derechos objeto de esa Ley (art. 121.1 y exposición de motivos; artículo que sigue en el texto consolidado)", "normativo", "s1")
 T.hito("1978", "Constitución Española, arts. 106.2 y 121", "Garantía constitucional de la responsabilidad patrimonial, salvo fuerza mayor", "normativo", "s1")
 T.hito("2015", "Leyes 39/2015 y 40/2015, de 1 de octubre (BOE de 2-10-2015)", "Separan el procedimiento (Ley 39) y el régimen sustantivo (Ley 40) de la responsabilidad patrimonial; entraron en vigor al año de su publicación", "normativo", "s2")
 

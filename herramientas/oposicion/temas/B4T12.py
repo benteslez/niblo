@@ -434,7 +434,7 @@ T.ap("s18", "V.6 Cuadro comparativo de los tres recursos (esquema)", f"""
 | Plazo para interponer | **1 mes** (expreso); acto no expreso, en cualquier momento | **1 mes** (expreso); acto no expreso, en cualquier momento | **4 años** (error de hecho); **3 meses** (demás causas) |
 | Plazo para resolver | **3 meses** | **1 mes** | **3 meses** |
 | Silencio | Desestimatorio (salvo art. 24.1, tercer párrafo) | Desestimación presunta (123.2) | Desestimatorio (126.3) |
-| Después | Solo el extraordinario de revisión (122.3) | No cabe nueva reposición (124.3) | Vía contencioso-administrativa |
+| Después | Ningún otro recurso administrativo, salvo el extraordinario de revisión (122.3); vía contencioso-administrativa | No cabe nueva reposición (124.3) | Vía contencioso-administrativa |
 
 {resumen([
   "Se recurren las **resoluciones** y los actos de trámite **cualificados**; motivos: los de los arts. **47 y 48**; contra **disposiciones generales**, no hay recurso administrativo (112).",
@@ -616,7 +616,7 @@ for q_, a_, cat in [
   ("¿Pone fin a la vía administrativa el Director general? (art. 114.2 c)", "Solo en relación con sus competencias en materia de personal.", "Recursos"),
   ("¿Suspende el recurso la ejecución del acto? (art. 117)", "No, salvo disposición en contrario; cabe suspensión por perjuicios de imposible o difícil reparación o nulidad de pleno derecho; un mes sin resolver la solicitud = suspendido.", "Recursos"),
   ("Alzada presentada ante el autor del acto (art. 121.2)", "Debe remitirla al competente en diez días, con su informe y copia completa y ordenada del expediente.", "Recursos"),
-  ("Alzada: plazos (art. 122)", "Un mes para interponer (acto expreso); tres meses para resolver; después, solo el extraordinario de revisión.", "Recursos"),
+  ("Alzada: plazos (art. 122)", "Un mes para interponer (acto expreso); tres meses para resolver; después, ningún otro recurso administrativo salvo el extraordinario de revisión (122.3).", "Recursos"),
   ("Reposición: plazos (art. 124)", "Un mes para interponer (acto expreso) y un mes para resolver; no cabe nueva reposición.", "Recursos"),
   ("Extraordinario de revisión: plazos (arts. 125 y 126)", "Error de hecho: cuatro años desde la notificación; demás causas: tres meses; tres meses para resolver o desestimado.", "Recursos"),
 ]: T.fc(q_, a_, cat)
@@ -640,7 +640,7 @@ T.glos("Recurso extraordinario de revisión", "Recurso contra actos firmes en v�
 T.hito("1985", "Ley 7/1985, de 2 de abril, Reguladora de las Bases del Régimen Local (BOE de 3-4-1985)", "Art. 22.2 k): el Pleno declara la lesividad de los actos del Ayuntamiento", "normativo", "s10")
 T.hito("2015", "Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas (BOE de 2-10-2015)", "Derechos de las personas e interesados (arts. 3 a 14 y 53); revisión de oficio y recursos (Título V, arts. 106 a 126)", "normativo", "s3")
 T.hito("2015", "Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público (BOE de 2-10-2015)", "Arts. 23 y 24: abstención y recusación", "normativo", "s8")
-T.hito("2016", "Entrada en vigor de la Ley 39/2015 (2-10-2016)", "Disposición final séptima: «al año de su publicación en el Boletín Oficial del Estado»", "normativo", "s13")
+T.hito("2016", "Entrada en vigor de la Ley 39/2015 (2-10-2016)", f"Disposición final séptima: {c('L39', 'Disposición final séptima', 'al año de su publicación en el “Boletín Oficial del Estado”')}", "normativo", "s13")
 T.hito("2021", "Efectos de las previsiones sobre registro electrónico de apoderamientos y Punto de Acceso General electrónico de la Ley 39/2015 (2-4-2021)", "Disposición final séptima: afecta a la acreditación de la representación (art. 5.4) y al derecho del art. 13 a)", "normativo", "s2")
 
 T.publicar()
