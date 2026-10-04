@@ -14,7 +14,7 @@ CORTO["RS"] = "Reglamento del Senado"
 CORTO["LOREG"] = "LOREG"
 
 T = Tema("B1T05",
-  "Seis preguntas: I. Qué son las Cortes Generales (arts. 66 y 67 CE) · II. Cómo se compone el Congreso (art. 68; LOREG, art. 162; Reglamento del Congreso, arts. 1 a 5) · III. Cómo se compone el Senado (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5) · IV. Qué estatuto tienen Diputados y Senadores (arts. 70 y 71) · V. Cómo se organizan y funcionan las Cámaras (arts. 72 a 80 y Reglamentos) · VI. Qué atribuciones tienen (arts. 66.2 y 87 a 94). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué son las Cortes Generales (arts. 66 y 67 CE) · II. Cómo se compone el Congreso (art. 68; LOREG, art. 162; Reglamento del Congreso, arts. 1 a 5) · III. Cómo se compone el Senado (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5) · IV. Qué estatuto tienen Diputados y Senadores (arts. 70 y 71) · V. Cómo se organizan y funcionan las Cámaras (arts. 72 a 80 y Reglamentos) · VI. Qué atribuciones tienen (arts. 66.2, 87 a 90 y 92 a 94). Cada artículo: texto literal del BOE y ficha.",
   ["Cortes Generales", "Art. 66", "Bicameralismo", "Congreso: art. 68", "LOREG art. 162", "Senado: art. 69", "LOREG art. 165", "Inelegibilidad: art. 70", "Inviolabilidad e inmunidad", "Reglamentos de las Cámaras", "Mesa", "Grupos parlamentarios", "Junta de Portavoces", "Diputación Permanente", "Comisiones", "Iniciativa legislativa", "Veto del Senado", "Tratados: art. 94"])
 
 # =============================================================================

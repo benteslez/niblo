@@ -243,7 +243,7 @@ T.ap("s7", "II.1 La investidura del Presidente del Gobierno (art. 99; Reglamento
          "El plazo corre desde la **primera votación**, no desde las elecciones ni desde la constitución de las Cámaras. Refrenda el **Presidente del Congreso**, no el del Gobierno. Esta disolución es la excepción al plazo de un año del art. 115.3 (→ III.6.1)."))}
 """, 2)
 
-T.ap("s8", "II.2 Los demás miembros: nombramiento, requisitos, suplencia e incompatibilidades (art. 100; Ley 50/1997, arts. 11 a 14)", f"""
+T.ap("s8", "II.2 Los demás miembros: nombramiento, requisitos, suplencia e incompatibilidades (art. 100 y 98.3 y 4; Ley 50/1997, arts. 11 a 14)", f"""
 {unidad("2.1 Nombramiento y separación (art. 100)",
   lit("CE", "Artículo 100", ["a propuesta de su Presidente"]),
   fichab("Nombramiento de Vicepresidentes y Ministros",
@@ -383,7 +383,7 @@ T.ap("s12", "III.2 Información, presencia, interpelaciones y preguntas (arts. 1
          "Sin indicación, la respuesta es **por escrito**; si se pide oral sin especificar, es **en Comisión**. Las interpelaciones las pueden formular también los **grupos**; las preguntas, solo los **diputados**."))}
 """, 2)
 
-T.ap("s13", "III.3 La cuestión de confianza (art. 112; Reglamento del Congreso, arts. 173 y 174)", f"""
+T.ap("s13", "III.3 La cuestión de confianza (art. 112; Reglamento del Congreso, art. 174)", f"""
 {unidad("3.1 Planteamiento y votación (art. 112; Reglamento del Congreso, art. 174)",
   lit("CE", "Artículo 112", ["previa deliberación del Consejo de Ministros", "sobre su programa o sobre una declaración de política general", "la mayoría simple de los Diputados"]),
   lit("RCD", "art174", ["escrito motivado", "veinticuatro horas desde su presentación", "la mayoría simple de los miembros de la Cámara"], solo=[1, 4, 5]),
