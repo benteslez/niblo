@@ -18,7 +18,7 @@ EM21 = "Ley 21/2021, de 28 de diciembre · preámbulo, apartado {} (exposición 
 EM23 = "Real Decreto-ley 2/2023, de 16 de marzo · preámbulo, apartado I (exposición de motivos publicada en el BOE; explica la norma, no es parte dispositiva)"
 
 T = Tema("B3T04",
-  "Seis preguntas: I. Cómo se organiza la Seguridad Social (CE, arts. 41, 50, 129 y 149.1.17.ª; LGSS, arts. 1 a 4 y 66 a 80) · II. Cómo se financia (LGSS, arts. 18, 109, 110, 117 a 127 bis) · III. Qué problemas tiene y qué líneas de actuación sigue (Ley 21/2021 y RDL 2/2023; LGSS, art. 58) · IV. Qué regímenes la forman (LGSS, arts. 7 a 11, 136, 137 y 305) · V. Qué protege (LGSS, arts. 42, 43, 63, 64 y 155 a 158) · VI. Qué prestaciones da y cómo son (LGSS, arts. 44, 53, 165 y siguientes). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Cómo se organiza la Seguridad Social (CE, arts. 41, 50, 129 y 149.1.17.ª; LGSS, arts. 1 a 4 y 66 a 80) · II. Cómo se financia (LGSS, arts. 18, 109, 110, 117 a 127 bis) · III. Qué problemas tiene y qué líneas de actuación sigue (Ley 21/2021 y RDL 2/2023; LGSS, art. 58) · IV. Qué regímenes la forman (LGSS, arts. 7 a 11, 136, 137 y 305) · V. Qué protege (LGSS, arts. 42, 43, 63, 64, 155 a 158 y 314) · VI. Qué prestaciones da y cómo son (LGSS, arts. 44, 53, 165 y siguientes). Cada artículo: texto literal del BOE y ficha.",
   ["Seguridad Social", "Art. 41 CE", "Art. 149.1.17.ª", "LGSS", "Entidades gestoras", "INSS", "Tesorería General", "Mutuas colaboradoras", "Reparto", "Fondo de Reserva", "MEI", "Pacto de Toledo", "Revalorización", "Régimen General", "Regímenes especiales", "RETA", "Acción protectora", "Accidente de trabajo", "Prestaciones no contributivas", "Jubilación"])
 
 # =============================================================================
@@ -37,7 +37,7 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 | **III** | ¿Qué problemas tiene y qué líneas de actuación sigue? | — | Preámbulos de la Ley 21/2021 y del RDL 2/2023; art. 58 |
 | **IV** | ¿Qué regímenes la forman? (Régimen General y especiales) | — | Arts. 7, 9, 10, 11, 136, 137 y 305 |
 | **V** | ¿Qué protege? (acción protectora) | — | Arts. 42, 43, 63, 64, 155 a 158 y 314 |
-| **VI** | ¿Qué prestaciones da y cómo son? (tipos y características) | — | Arts. 44, 53, 165, 169, 172, 177, 193, 194, 204, 205, 216, 351, 363 y 369; disp. trans. 7.ª |
+| **VI** | ¿Qué prestaciones da y cómo son? (tipos y características) | — | Arts. 44, 53, 165, 169, 172, 177, 193, 194, 204, 205, 216, 351, 363 y 369; disp. trans. 7.ª y 26.ª |
 
 !> **La idea que une los seis bloques:** la Constitución manda mantener un **régimen público** de Seguridad Social (art. 41) y reserva al Estado su **legislación básica y régimen económico** (art. 149.1.17.ª). La LGSS lo organiza en **entidades gestoras, servicios comunes y entidades colaboradoras** (I), lo financia con **cuotas y aportaciones del Estado** en un sistema de **reparto** (II), lo reforma para hacer frente al **reto demográfico** (III), lo divide en **Régimen General y regímenes especiales** (IV) y define una **acción protectora** común (V) que se concreta en **prestaciones contributivas y no contributivas** (VI).
 
@@ -428,7 +428,7 @@ T.ap("s16", "IV.4 El Régimen Especial de Trabajadores Autónomos (LGSS, art. 30
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Qué protege? La acción protectora (LGSS, arts. 42, 43, 63, 64 y 155 a 158)", donde(
+T.ap("bV", "V. ¿Qué protege? La acción protectora (LGSS, arts. 42, 43, 63, 64, 155 a 158 y 314)", donde(
   "Quinta pregunta. La **acción protectora** es la lista de **lo que cubre** el sistema. La fija el art. 42 para todo el sistema; cada régimen la recorta, y las **contingencias** (accidente de trabajo, enfermedad profesional, accidente no laboral, enfermedad común) deciden qué reglas se aplican.",
   ["1 Contenido de la acción protectora (arts. 42 y 43)", "2 Servicios sociales y asistencia social (arts. 63 y 64)", "3 Alcance en el Régimen General y en el RETA (arts. 155 y 314)", "4 Las contingencias (arts. 156, 157 y 158)"]))
 
@@ -507,7 +507,7 @@ T.ap("s20", "V.4 Las contingencias (LGSS, arts. 156, 157 y 158)", f"""
 # =============================================================================
 T.ap("bVI", "VI. ¿Qué prestaciones da y cómo son? Tipos y características (LGSS, arts. 44, 53, 165 y siguientes)", donde(
   "Sexta y última pregunta. Las **características** comunes de todas las prestaciones, las **condiciones** generales para tener derecho y los **tipos**: las principales contributivas del Régimen General y las no contributivas.",
-  ["1 Caracteres y prescripción (arts. 44 y 53)", "2 Condiciones generales del derecho (art. 165)", "3 Incapacidad temporal y nacimiento y cuidado de menor (arts. 169, 172 y 177)", "4 Incapacidad permanente y jubilación (arts. 193, 194, 204 y 205; disp. trans. 7.ª)", "5 Muerte y supervivencia (art. 216)", "6 Prestaciones no contributivas (arts. 351, 363 y 369)", "7 Cuadro de las prestaciones"]))
+  ["1 Caracteres y prescripción (arts. 44 y 53)", "2 Condiciones generales del derecho (art. 165)", "3 Incapacidad temporal y nacimiento y cuidado de menor (arts. 169, 172 y 177)", "4 Incapacidad permanente y jubilación (arts. 193, 194, 204 y 205; disp. trans. 7.ª y 26.ª)", "5 Muerte y supervivencia (art. 216)", "6 Prestaciones no contributivas (arts. 351, 363 y 369)", "7 Cuadro de las prestaciones"]))
 
 T.ap("s21", "VI.1 Caracteres de las prestaciones y prescripción (LGSS, arts. 44 y 53)", f"""
 {unidad("1.1 Caracteres (art. 44)",
@@ -558,7 +558,7 @@ T.ap("s23", "VI.3 Incapacidad temporal y nacimiento y cuidado de menor (LGSS, ar
         "Cuatro situaciones: **nacimiento, adopción, guarda con fines de adopción y acogimiento familiar**."))}
 """, 2)
 
-T.ap("s24", "VI.4 Incapacidad permanente y jubilación (LGSS, arts. 193, 194, 204 y 205; disp. trans. 7.ª)", f"""
+T.ap("s24", "VI.4 Incapacidad permanente y jubilación (LGSS, arts. 193, 194, 204 y 205; disp. trans. 7.ª y 26.ª)", f"""
 {unidad("4.1 Incapacidad permanente: concepto (art. 193.1)",
   lit("LGSS", "a193", ["reducciones anatómicas o funcionales graves, susceptibles de determinación objetiva y previsiblemente definitivas"], solo=[1]),
   ficha("La persona trabajadora que, tras el tratamiento prescrito, tiene reducciones graves y previsiblemente definitivas",
@@ -566,11 +566,12 @@ T.ap("s24", "VI.4 Incapacidad permanente y jubilación (LGSS, arts. 193, 194, 20
         "No impide la calificación que la recuperación sea **incierta o a largo plazo**", "—",
         "Reducciones **graves**, **objetivables** y **previsiblemente definitivas** que disminuyan o anulen la capacidad laboral."))}
 
-{unidad("4.2 Grados (art. 194.1)",
+{unidad("4.2 Grados (art. 194.1 y disposición transitoria vigésima sexta)",
   lit("LGSS", "a194", ["Incapacidad permanente parcial", "Incapacidad permanente total", "Incapacidad permanente absoluta", "Gran incapacidad"], solo=[1, 2, 3, 4, 5]),
+  lit("LGSS", "dtvigesimasexta", ["únicamente será de aplicación a partir de la fecha en que entren en vigor las disposiciones reglamentarias", "Incapacidad permanente parcial para la profesión habitual", "Incapacidad permanente total para la profesión habitual", "Incapacidad permanente absoluta para todo trabajo"], solo=[1, 2, 3, 4, 5, 6, 7], titulo="Disposición transitoria vigésima sexta. Calificación de la incapacidad permanente (LGSS)"),
   fichab("Clasificación de la incapacidad permanente", "—",
-         "En función del **porcentaje de reducción** de la capacidad de trabajo, según la lista de enfermedades reglamentaria",
-         "—", "**Cuatro** grados: parcial, total, absoluta y **gran incapacidad**."))}
+         ["Art. 194.1: en función del **porcentaje de reducción** de la capacidad de trabajo, según la lista de enfermedades reglamentaria", "Mientras no se desarrolle reglamentariamente el art. 194, se aplica la redacción de la disp. trans. 26.ª: parcial **para la profesión habitual**, total **para la profesión habitual**, absoluta **para todo trabajo** y gran incapacidad"],
+         "—", f"**Cuatro** grados: parcial, total, absoluta y **gran incapacidad**. El art. 194 {c('LGSS', 'dtvigesimasexta', 'únicamente será de aplicación a partir de la fecha en que entren en vigor las disposiciones reglamentarias')} de su apartado 3 (disp. trans. 26.ª)."))}
 
 {unidad("4.3 Jubilación: concepto (art. 204)",
   lit("LGSS", "a204", ["será única para cada beneficiario y consistirá en una pensión vitalicia"]),
