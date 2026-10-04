@@ -99,6 +99,11 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   incrustarlo, volver a comparar las respuestas del HTML publicado con ella.
   Códigos de archivo: L = turno libre, P = promoción interna,
   X = extraordinaria, ST = estabilización.
+- **Texto legal de cada pregunta** (campo `ley`: bloques `{t, f, p}`): el
+  artículo o apartado LITERAL del texto consolidado del BOE que la resuelve,
+  con el dato decisivo en `**negrita**`. Se abre solo al fallar (al acertar,
+  plegado). Solo con la norma en las fuentes; si falta, la pregunta va sin
+  texto legal y se pide la norma al usuario (nunca de memoria).
 - Modo **Examen oficial**: condiciones vigentes del primer ejercicio
   (BOE-A-2025-26262): turno libre, 100 preguntas, 90 minutos y −1/3 (anexo VII,
   2.1.1); promoción interna, 100, 90 y −1/4 (anexo VIII, 3.1.1). Los blancos no
