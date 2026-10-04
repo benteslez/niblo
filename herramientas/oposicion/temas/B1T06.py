@@ -370,13 +370,13 @@ T.ap("s12", "III.2 Información, presencia, interpelaciones y preguntas (arts. 1
          "En el Congreso: los **diputados y diputadas** y los **grupos parlamentarios**; se dirige al Gobierno y a cada uno de sus miembros",
          ["Por escrito ante la Mesa, sobre los motivos o propósitos de la conducta del Ejecutivo en **política general**", "Puede dar lugar a una **moción** en que la Cámara manifieste su posición"],
          "Tiempo mínimo **semanal** (lo fijan los Reglamentos); moción: el día siguiente al de la sustanciación ante el Pleno",
-         "La interpelación puede acabar en **moción** (art. 111.2); la pregunta no. Si el escrito no es propio de una interpelación, la Mesa lo convierte en pregunta (RCD 181.2)."))}
+         f"La interpelación puede acabar en **moción** (art. 111.2); la pregunta no. Si el escrito no es propio de una interpelación, la Mesa lo comunica a su autor {c('RCD', 'art181', 'para su conversión en pregunta con respuesta oral o por escrito')} (RCD 181.2)."))}
 
 {unidad("2.4 Preguntas (Reglamento del Congreso, arts. 185 a 187)",
   lit("RCD", "art185", ["Las diputadas y los diputados"]),
   lit("RCD", "art186", ["ni la que suponga consulta de índole estrictamente jurídica"], solo=[1, 2]),
   lit("RCD", "art187", ["se entenderá que quien formula la pregunta solicita respuesta por escrito"]),
-  fichab("Pregunta: control sobre un hecho, situación o información",
+  fichab(f"Pregunta al Gobierno o a sus miembros (con respuesta oral en Pleno: {c('RCD', 'art188', 'interrogando sobre un hecho, una situación o una información')}, entre otros contenidos, RCD 188.1)",
          "Las diputadas y los diputados (no los grupos), al Gobierno y a sus miembros",
          ["Por escrito ante la Mesa", "No se admite la de exclusivo interés personal ni la consulta de índole estrictamente jurídica"],
          "—",

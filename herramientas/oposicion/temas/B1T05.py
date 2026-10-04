@@ -354,7 +354,7 @@ La Constitución solo prevé que cada Cámara elija su Presidente y su Mesa (art
          f"Diputados {c('RCD', 'art23', 'en número no inferior a quince')} (art. 23.1)",
          ["Escrito a la **Mesa** dentro de los **cinco días** siguientes a la sesión constitutiva (art. 24.1)", "Quien no se integre en un grupo pasa al **Grupo Mixto** (art. 25.1)", "Nadie puede estar en más de un grupo (art. 25.2)"],
          "Mínimo general: **15** Diputados; plazo: **5 días**",
-         f"{c('RCD', 'art23', 'En ningún caso pueden constituir Grupo Parlamentario separado quienes pertenezcan a un mismo partido')} (art. 23.2). Congreso **15**; Senado **10** (→ V.2.4)."))}
+         f"{c('RCD', 'art23', 'En ningún caso pueden constituir grupo parlamentario separado quienes pertenezcan a un mismo partido')} (art. 23.2). Congreso **15**; Senado **10** (→ V.2.4)."))}
 
 {unidad("2.2 La Mesa del Congreso y la elección de su Presidencia (Reglamento del Congreso, arts. 30 y 37)",
   lit("RCD", "art30", ["órgano rector de la Cámara", "cuatro Vicepresidencias y cuatro Secretarías"]),
@@ -434,7 +434,7 @@ T.ap("s13", "V.4 Pleno, Comisiones y peticiones (arts. 75 a 77; Reglamentos)", f
   lit("RS", "a49", ["Permanentes y de Investigación o Especiales", "la Comisión General de las Comunidades Autónomas, la Comisión General de las Entidades Locales"], solo=[1, 2, 12]),
   fichab("Clases de Comisiones",
          "Las forman los miembros que designen los grupos, en proporción a su importancia numérica (art. 40.1 RCD; art. 51.1 RS)",
-         ["Congreso: Comisiones Permanentes Legislativas (lista del art. 46.1) y no legislativas, entre ellas **Reglamento, Estatuto y Peticiones**; se constituyen en **diez días** desde la sesión constitutiva", "Senado: Permanentes (Legislativas y no Legislativas) y de Investigación o Especiales; son Legislativas la **Comisión General de las Comunidades Autónomas**, la **Comisión General de las Entidades Locales** y las que apruebe el Pleno"],
+         ["Congreso: Comisiones Permanentes Legislativas (lista del art. 46.1) y otras Comisiones Permanentes (art. 46.2), entre ellas **Reglamento, Estatuto y Peticiones**; se constituyen en **diez días** desde la sesión constitutiva", "Senado: Permanentes (Legislativas y no Legislativas) y de Investigación o Especiales; son Legislativas la **Comisión General de las Comunidades Autónomas**, la **Comisión General de las Entidades Locales** y las que apruebe el Pleno"],
          "Senado: el acuerdo del Pleno sobre las Comisiones Legislativas requiere **mayoría absoluta**",
          "La **Comisión General de las Comunidades Autónomas** es propia del **Senado** (Cámara territorial)."))}
 
@@ -593,7 +593,7 @@ T.ap("s20", "VI.5 Cuadro de atribuciones de cada Cámara (esquema)", f"""
 | **Congreso** | Moción de censura (art. 113.1; tema I.6) | {c('CE', 'Artículo 113', 'mediante la adopción por mayoría absoluta de la moción de censura')} |
 | **Congreso** | Convalidación o derogación de decretos-leyes (art. 86.2; tema IV.2) | {c('CE', 'Artículo 86', 'El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación')} |
 | **Congreso** | Autorizar el referéndum consultivo (art. 92.2 → VI.4.1) | {c('CE', 'Artículo 92', 'previamente autorizada por el Congreso de los Diputados')} |
-| **Congreso** | Estados de alarma (prórroga), excepción y sitio (art. 116; tema I.2) | {c('CE', 'Artículo 116', 'sin cuya autorización no podrá ser prorrogado dicho plazo')}; {c('CE', 'Artículo 116', 'previa autorización del Congreso de los Diputados')}; {c('CE', 'Artículo 116', 'El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados')} |
+| **Congreso** | Estados de alarma (prórroga), excepción y sitio (art. 116; temas I.2 y I.6) | {c('CE', 'Artículo 116', 'sin cuya autorización no podrá ser prorrogado dicho plazo')}; {c('CE', 'Artículo 116', 'previa autorización del Congreso de los Diputados')}; {c('CE', 'Artículo 116', 'El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados')} |
 | **Congreso** | Recibir los Presupuestos (art. 134.3) | {c('CE', 'Artículo 134', 'El Gobierno deberá presentar ante el Congreso de los Diputados los Presupuestos Generales del Estado')} |
 | **Senado** | Aprobar las medidas del art. 155 (organización territorial: temas I.10 y I.11) | {c('CE', 'Artículo 155', 'con la aprobación por mayoría absoluta del Senado')} |
 | **Senado** | Iniciar el procedimiento de los arts. 145.2 y 158.2 (→ V.3.3) | {c('CE', 'Artículo 74', 'y en los otros dos, por el Senado')} |
