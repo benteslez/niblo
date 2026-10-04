@@ -33,11 +33,11 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 | Bloque | Pregunta | Constitución | LGSS (RDLeg 8/2015) y otras normas |
 |---|---|---|---|
 | **I** | ¿Cómo se organiza? (estructura: gestión y colaboración) | Arts. 41, 50, 129.1 y 149.1.17.ª | Arts. 1, 2, 4, 66, 68, 73, 74, 74 bis, 79 y 80; disp. adic. 9.ª |
-| **II** | ¿Cómo se financia? | — | Arts. 18, 109, 110, 117, 118, 121, 125 y 127 bis |
+| **II** | ¿Cómo se financia? | — | Arts. 18, 109, 110, 117, 118, 121, 125 y 127 bis; disp. trans. 43.ª |
 | **III** | ¿Qué problemas tiene y qué líneas de actuación sigue? | — | Preámbulos de la Ley 21/2021 y del RDL 2/2023; art. 58 |
 | **IV** | ¿Qué regímenes la forman? (Régimen General y especiales) | — | Arts. 7, 9, 10, 11, 136, 137 y 305 |
 | **V** | ¿Qué protege? (acción protectora) | — | Arts. 42, 43, 63, 64, 155 a 158 y 314 |
-| **VI** | ¿Qué prestaciones da y cómo son? (tipos y características) | — | Arts. 44, 53, 165, 169, 172, 177, 193, 194, 204, 205, 216, 351, 363 y 369 |
+| **VI** | ¿Qué prestaciones da y cómo son? (tipos y características) | — | Arts. 44, 53, 165, 169, 172, 177, 193, 194, 204, 205, 216, 351, 363 y 369; disp. trans. 7.ª |
 
 !> **La idea que une los seis bloques:** la Constitución manda mantener un **régimen público** de Seguridad Social (art. 41) y reserva al Estado su **legislación básica y régimen económico** (art. 149.1.17.ª). La LGSS lo organiza en **entidades gestoras, servicios comunes y entidades colaboradoras** (I), lo financia con **cuotas y aportaciones del Estado** en un sistema de **reparto** (II), lo reforma para hacer frente al **reto demográfico** (III), lo divide en **Régimen General y regímenes especiales** (IV) y define una **acción protectora** común (V) que se concreta en **prestaciones contributivas y no contributivas** (VI).
 
@@ -188,7 +188,7 @@ T.ap("s5", "I.5 Colaboración en la gestión: mutuas y empresas (LGSS, arts. 79 
 # =============================================================================
 T.ap("bII", "II. ¿Cómo se financia? (LGSS, arts. 18, 109, 110 y 117 a 127 bis)", donde(
   "Segunda pregunta. Ya sabemos quién gestiona; ahora, **con qué dinero**: cuotas, aportaciones del Estado y otros recursos, en un sistema de **reparto** con dos colchones: el fondo de estabilización y el **Fondo de Reserva**.",
-  ["1 Cotización obligatoria y recursos (arts. 18 y 109)", "2 Sistema financiero de reparto (art. 110)", "3 Fondo de Reserva (arts. 117, 118, 121 y 125)", "4 Mecanismo de Equidad Intergeneracional (art. 127 bis)"]))
+  ["1 Cotización obligatoria y recursos (arts. 18 y 109)", "2 Sistema financiero de reparto (art. 110)", "3 Fondo de Reserva (arts. 117, 118, 121 y 125)", "4 Mecanismo de Equidad Intergeneracional (art. 127 bis y disp. trans. 43.ª)"]))
 
 T.ap("s6", "II.1 Cotización obligatoria y recursos (LGSS, arts. 18 y 109)", f"""
 {unidad("1.1 La cotización es obligatoria (art. 18.1 y 2)",
@@ -215,7 +215,7 @@ T.ap("s6", "II.1 Cotización obligatoria y recursos (LGSS, arts. 18 y 109)", f""
 {unidad("1.4 Naturaleza de cada prestación (art. 109.3)",
   lit("LGSS", "a109", ["Tienen naturaleza contributiva", "Tienen naturaleza no contributiva", "Los complementos por mínimos de las pensiones de la Seguridad Social", "El ingreso mínimo vital"], solo=[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
   fichab("Qué prestaciones son contributivas y cuáles no", "—",
-         ["::Contributivas:", "Las prestaciones económicas (salvo las no contributivas de la lista)", "Todas las de accidentes de trabajo y enfermedades profesionales", "::No contributivas:", "Asistencia sanitaria y servicios sociales (salvo AT y EP)", "Pensiones no contributivas de invalidez y jubilación", "Subsidio por maternidad de los arts. 181 y 182", "Complementos por mínimos", "Prestaciones familiares del capítulo I del título VI", "Ingreso mínimo vital"],
+         ["::Contributivas:", "Las prestaciones económicas (salvo las no contributivas de la lista)", "Todas las de accidentes de trabajo y enfermedades profesionales", "**No contributivas:**", "Asistencia sanitaria y servicios sociales (salvo AT y EP)", "Pensiones no contributivas de invalidez y jubilación", "Subsidio por maternidad de los arts. 181 y 182", "Complementos por mínimos", "Prestaciones familiares del capítulo I del título VI", "Ingreso mínimo vital"],
          "—",
          "Los **complementos por mínimos** y la **asistencia sanitaria** son **no contributivos** (los paga el Estado), aunque complementen o atiendan a pensionistas contributivos. **Todo** lo de AT y EP es contributivo."))}
 """, 2)
@@ -260,25 +260,33 @@ T.ap("s8", "II.3 El Fondo de Reserva de la Seguridad Social (LGSS, arts. 117, 11
          "**Semestralmente** (no anual ni trimestral). Cayó dos veces en 2025 (→ Cierre 1)."))}
 """, 2)
 
-T.ap("s9", "II.4 El Mecanismo de Equidad Intergeneracional (LGSS, art. 127 bis)", f"""
+T.ap("s9", "II.4 El Mecanismo de Equidad Intergeneracional (LGSS, art. 127 bis y disp. trans. 43.ª)", f"""
 {unidad("4.1 Una cotización finalista que nutre el Fondo de Reserva (art. 127 bis)",
   lit("LGSS", "a1-5", ["cotización finalista", "que no será computable a efectos de prestaciones", "La cotización será de 1,2 puntos porcentuales", "un punto porcentual corresponderá a la empresa y 0,2 puntos porcentuales al trabajador", "no podrá ser objeto de bonificación, reducción, exención o deducción alguna"], solo=[1, 2, 3]),
   fichab("Mecanismo de Equidad Intergeneracional (MEI)",
          "Todos los regímenes, en todos los supuestos en que se cotice por **jubilación**; en cuenta ajena, empresa y trabajador",
          ["Cotización **finalista**: nutre el **Fondo de Reserva**", "**No** computa a efectos de prestaciones", "Sin bonificaciones, reducciones, exenciones ni deducciones"],
          "**1,2** puntos: **1** la empresa y **0,2** el trabajador",
-         "1,2 = 1 + 0,2. El MEI **no** genera derecho a prestaciones: va al **Fondo de Reserva**."))}
+         "1,2 = 1 + 0,2. El MEI **no** genera derecho a prestaciones: va al **Fondo de Reserva**. El 1,2 se alcanza en **2029**: hasta entonces rige la escala de la disp. trans. 43.ª (→ II.4.2)."))}
+
+{unidad("4.2 Aplicación gradual del MEI (disposición transitoria cuadragésima tercera)",
+  lit("LGSS", "dt-14", ["desde el 1 de enero de 2023 hasta el 31 de diciembre de 2050", "En el año 2026, será de 0,90 puntos porcentuales", "En el año 2029, será de 1,2 puntos porcentuales"]),
+  fichab("Escala transitoria de la cotización del MEI",
+         "Empresa y trabajador (cuenta ajena), con el reparto que fija cada año",
+         "Sube 0,10 puntos al año: de **0,60** (2023) a **1,2** (2029); de 2030 a 2050 se mantiene el 1,2",
+         f"Efectos {c('LGSS', 'dt-14', 'desde el 1 de enero de 2023 hasta el 31 de diciembre de 2050')}",
+         "El art. 127 bis dice **1,2**, pero ese tipo solo se aplica **desde 2029**; en **2026** es **0,90** (0,75 empresa + 0,15 trabajador). El MEI tiene fecha de fin: **2050**."))}
 
 {resumen([
   "Cotizar es **obligatorio en todos los regímenes**, desde el inicio de la actividad (18).",
   "Recursos: aportaciones **progresivas** del Estado, **cuotas**, recargos y sanciones, rentas del patrimonio y otros (109.1). **No contributivo → Estado; contributivo → cotizaciones** (109.2).",
   "Sistema de **reparto**, con **fondo de estabilización** en la Tesorería y capitalización de pensiones por AT y EP a cargo de mutuas o empresas (110).",
-  "**Fondo de Reserva**: solo para pensiones **contributivas** (121); su Comisión de Seguimiento lo conoce **semestralmente** (125); lo nutre el **MEI**: **1,2 puntos** (1 empresa + 0,2 trabajador) (127 bis)."],
+  "**Fondo de Reserva**: solo para pensiones **contributivas** (121); su Comisión de Seguimiento lo conoce **semestralmente** (125); lo nutre el **MEI**: **1,2 puntos** (1 empresa + 0,2 trabajador) (127 bis), con escala transitoria hasta 2029 (disp. trans. 43.ª)."],
   "Siguiente: III. ¿Qué problemas tiene y qué líneas de actuación sigue?")}
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. Problemas actuales y líneas de actuación (Ley 21/2021 y RDL 2/2023)", donde(
+T.ap("bIII", "III. ¿Qué problemas tiene y qué líneas de actuación sigue? (Ley 21/2021 y RDL 2/2023; LGSS, art. 58)", donde(
   "Tercera pregunta. El epígrafe pide los **problemas actuales** y las **líneas de actuación**. No son materia de un artículo: se toman de lo que el propio legislador dice en las **exposiciones de motivos** de las dos últimas reformas de pensiones (BOE) y de los artículos de la LGSS que las aplican.",
   ["1 El diagnóstico: Pacto de Toledo y reto demográfico (Ley 21/2021, preámbulo)", "2 Las líneas de actuación ya en vigor (LGSS, art. 58; RDL 2/2023, preámbulo)", "3 Pendiente (temario): datos y documentos que no son del BOE"]))
 
@@ -337,7 +345,7 @@ T.ap("s12", "III.3 Pendiente (temario): datos y documentos que no son del BOE", 
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Qué regímenes forman el sistema? Régimen General y regímenes especiales (LGSS, arts. 7 a 11, 136, 137 y 305)", donde(
+T.ap("bIV", "IV. ¿Qué regímenes la forman? Régimen General y regímenes especiales (LGSS, arts. 7 a 11, 136, 137 y 305)", donde(
   "Cuarta pregunta. ¿A **quién** protege el sistema y **en qué régimen** se encuadra cada uno? El sistema se divide en el **Régimen General** y los **regímenes especiales**, con **sistemas especiales** dentro de ellos.",
   ["1 Campo de aplicación del sistema (art. 7)", "2 Estructura: regímenes y sistemas especiales (arts. 9, 10 y 11)", "3 El Régimen General (arts. 136 y 137)", "4 El Régimen Especial de Trabajadores Autónomos (art. 305)"]))
 
@@ -345,7 +353,7 @@ T.ap("s13", "IV.1 Campo de aplicación del sistema (LGSS, art. 7)", f"""
 {unidad("1.1 Quién está comprendido (art. 7.1 y 2)",
   lit("LGSS", "a7", ["a efectos de las prestaciones contributivas", "los españoles que residan en España y los extranjeros que residan o se encuentren legalmente en España", "mayores de dieciocho años", "Funcionarios públicos, civiles y militares", "a efectos de las prestaciones no contributivas, todos los españoles residentes en territorio español"], solo=[1, 2, 3, 4, 5, 6, 7, 8]),
   fichab("Personas incluidas en el sistema",
-         ["::Nivel contributivo (ejercen su actividad en territorio nacional):", "a) Trabajadores por cuenta ajena", "b) Autónomos mayores de dieciocho años", "c) Socios trabajadores de cooperativas de trabajo asociado", "d) Estudiantes", "e) Funcionarios públicos, civiles y militares", "::Nivel no contributivo:", "Españoles residentes y extranjeros residentes legalmente"],
+         ["::Nivel contributivo (ejercen su actividad en territorio nacional):", "a) Trabajadores por cuenta ajena", "b) Autónomos mayores de dieciocho años", "c) Socios trabajadores de cooperativas de trabajo asociado", "d) Estudiantes", "e) Funcionarios públicos, civiles y militares", "**Nivel no contributivo:**", "Españoles residentes y extranjeros residentes legalmente"],
          "—", "—",
          "Contributivo: españoles **residentes** y extranjeros que **residan o se encuentren legalmente**, con actividad **en territorio nacional**. No contributivo: **residentes**. Autónomos: **mayores de dieciocho años**."))}
 
@@ -367,7 +375,7 @@ T.ap("s14", "IV.2 Estructura del sistema: regímenes y sistemas especiales (LGSS
   lit("LGSS", "a10", ["por su naturaleza, sus peculiares condiciones de tiempo y lugar o por la índole de sus procesos productivos", "Trabajadores por cuenta propia o autónomos", "Trabajadores del mar", "Funcionarios públicos, civiles y militares", "Estudiantes", "se regirán por las leyes específicas", "máxima homogeneidad con el Régimen General", "tendencia a la unidad"]),
   fichab("Regímenes especiales",
          "Los crea la ley o el Ministerio (letra e); el **Gobierno** puede integrarlos en el Régimen General",
-         ["::Grupos (10.2):", "a) Autónomos", "b) Trabajadores del mar", "c) Funcionarios públicos, civiles y militares", "d) Estudiantes", "e) Los que determine el Ministerio", "::Regulación:", "Mar y funcionarios: **leyes específicas** (10.3)", "Los demás: normas reglamentarias, con máxima homogeneidad con el Régimen General (10.4)"],
+         ["::Grupos (10.2):", "a) Autónomos", "b) Trabajadores del mar", "c) Funcionarios públicos, civiles y militares", "d) Estudiantes", "e) Los que determine el Ministerio", "**Regulación:**", "Mar y funcionarios: **leyes específicas** (10.3)", "Los demás: normas reglamentarias, con máxima homogeneidad con el Régimen General (10.4)"],
          "—",
          "**Mar** y **funcionarios** se rigen por **leyes específicas** y **no** pueden integrarse en el Régimen General por el art. 10.5. La integración responde a la **tendencia a la unidad**. Funcionarios: tema V.9."))}
 
@@ -385,10 +393,10 @@ T.ap("s15", "IV.3 El Régimen General (LGSS, arts. 136 y 137)", f"""
   fichab("Campo de aplicación del Régimen General",
          ["**Trabajadores por cuenta ajena** y asimilados (art. 7.1 a)", "Incluidos los sistemas especiales de **empleados de hogar** y **agrarios por cuenta ajena**", "Personal civil no funcionario de las Administraciones", "Funcionarios, salvo Clases Pasivas u otro régimen por ley especial", "Altos cargos que no sean funcionarios", "(y los demás asimilados de las letras b a q)"],
          "Inclusión **obligatoria**, salvo que por su actividad deban ir a un régimen especial", "—",
-         "Los **funcionarios de nuevo ingreso** que no estén en Clases Pasivas cotizan al **Régimen General** (letra l). Empleados de hogar y agrarios por cuenta ajena son **sistemas especiales del Régimen General**, no regímenes especiales."))}
+         "El **personal funcionario** que no esté en el Régimen de Clases Pasivas (ni en otro régimen por ley especial) cotizan al **Régimen General** (letra l). Empleados de hogar y agrarios por cuenta ajena son **sistemas especiales del Régimen General**, no regímenes especiales."))}
 
 {unidad("3.2 Quién queda fuera (art. 137)",
-  lit("LGSS", "a137", ["servicios amistosos, benévolos o de buena vecindad"], solo=[1, 2, 3]),
+  lit("LGSS", "a137", ["servicios amistosos, benévolos o de buena vecindad", "profesores universitarios eméritos"]),
   fichab("Exclusiones del Régimen General", "—",
          ["Trabajos ocasionales amistosos, benévolos o de buena vecindad", "Los que den lugar a inclusión en un régimen especial", "Profesores universitarios eméritos y personal licenciado sanitario emérito"], "—",
          "La **buena vecindad** ocasional no da lugar a alta."))}
@@ -400,7 +408,7 @@ T.ap("s16", "IV.4 El Régimen Especial de Trabajadores Autónomos (LGSS, art. 30
   fichab("Campo de aplicación del RETA",
          "Personas físicas **mayores de dieciocho años** que trabajan por cuenta propia; entre otros, agrarios por cuenta propia (sistema especial), consejeros con **control efectivo**, TRADE",
          "Actividad **habitual, personal, directa**, por cuenta propia y fuera de la dirección de otro, **a título lucrativo**", "Control efectivo: en todo caso, con **al menos la mitad** del capital social",
-         "Los consejeros o administradores **con control** de la sociedad van al **RETA**; **sin control**, al Régimen General como asimilados (→ IV.3.1)."))}
+         "Los consejeros o administradores **con control** de la sociedad van al **RETA**; **sin control**, al Régimen General como asimilados (art. 136.2 c); → IV.3.1)."))}
 
 *Esquema de elaboración propia: resume los artículos citados; no es texto legal.*
 
@@ -497,9 +505,9 @@ T.ap("s20", "V.4 Las contingencias (LGSS, arts. 156, 157 y 158)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bVI", "VI. Tipos y características de las prestaciones (LGSS, arts. 44, 53, 165 y siguientes)", donde(
+T.ap("bVI", "VI. ¿Qué prestaciones da y cómo son? Tipos y características (LGSS, arts. 44, 53, 165 y siguientes)", donde(
   "Sexta y última pregunta. Las **características** comunes de todas las prestaciones, las **condiciones** generales para tener derecho y los **tipos**: las principales contributivas del Régimen General y las no contributivas.",
-  ["1 Caracteres y prescripción (arts. 44 y 53)", "2 Condiciones generales del derecho (art. 165)", "3 Incapacidad temporal y nacimiento y cuidado de menor (arts. 169, 172 y 177)", "4 Incapacidad permanente y jubilación (arts. 193, 194, 204 y 205)", "5 Muerte y supervivencia (art. 216)", "6 Prestaciones no contributivas (arts. 351, 363 y 369)", "7 Cuadro de las prestaciones"]))
+  ["1 Caracteres y prescripción (arts. 44 y 53)", "2 Condiciones generales del derecho (art. 165)", "3 Incapacidad temporal y nacimiento y cuidado de menor (arts. 169, 172 y 177)", "4 Incapacidad permanente y jubilación (arts. 193, 194, 204 y 205; disp. trans. 7.ª)", "5 Muerte y supervivencia (art. 216)", "6 Prestaciones no contributivas (arts. 351, 363 y 369)", "7 Cuadro de las prestaciones"]))
 
 T.ap("s21", "VI.1 Caracteres de las prestaciones y prescripción (LGSS, arts. 44 y 53)", f"""
 {unidad("1.1 Caracteres (art. 44)",
@@ -550,7 +558,7 @@ T.ap("s23", "VI.3 Incapacidad temporal y nacimiento y cuidado de menor (LGSS, ar
         "Cuatro situaciones: **nacimiento, adopción, guarda con fines de adopción y acogimiento familiar**."))}
 """, 2)
 
-T.ap("s24", "VI.4 Incapacidad permanente y jubilación (LGSS, arts. 193, 194, 204 y 205)", f"""
+T.ap("s24", "VI.4 Incapacidad permanente y jubilación (LGSS, arts. 193, 194, 204 y 205; disp. trans. 7.ª)", f"""
 {unidad("4.1 Incapacidad permanente: concepto (art. 193.1)",
   lit("LGSS", "a193", ["reducciones anatómicas o funcionales graves, susceptibles de determinación objetiva y previsiblemente definitivas"], solo=[1]),
   ficha("La persona trabajadora que, tras el tratamiento prescrito, tiene reducciones graves y previsiblemente definitivas",
@@ -576,7 +584,15 @@ T.ap("s24", "VI.4 Incapacidad permanente y jubilación (LGSS, arts. 193, 194, 20
         "Pensión de jubilación contributiva",
         ["Edad: **67** años, o **65** con **38 años y 6 meses** cotizados", "Carencia: **15 años**, de ellos **2** en los **15** anteriores"],
         "—",
-        "No cuentan las **pagas extraordinarias** para la edad ni para la carencia. La edad de 67 se aplica de forma paulatina (disp. trans. 7.ª)."))}
+        "No cuentan las **pagas extraordinarias** para la edad ni para la carencia. La edad de 67 se aplica de forma gradual (disp. trans. 7.ª, abajo)."))}
+
+{unidad("4.5 Jubilación: aplicación gradual de la edad (disposición transitoria séptima)",
+  lit("LGSS", "dtseptima", ["se aplicarán de forma gradual"], solo=[1]),
+  fichab("Calendario transitorio de la edad de jubilación y de la cotización exigida (art. 205.1 a)",
+         "Quienes se jubilan desde 2013 (escala anual hasta 2027)",
+         ["::Cuadro de la disposición (año · periodo cotizado · edad):", f"2026: {c('LGSS', 'dtseptima', '38 años y 3 meses o más')} → 65 años; menos → {c('LGSS', 'dtseptima', '66 años y 10 meses')}", f"{c('LGSS', 'dtseptima', 'A partir del año 2027')}: {c('LGSS', 'dtseptima', '38 años y 6 meses o más')} → 65 años; menos → 67 años"],
+         "La escala sube cada año desde 2013 (65 años y 1 mes) hasta 2027",
+         "Las cifras «**67** años / **65** con **38 años y 6 meses**» del art. 205.1 a) rigen **plenamente desde 2027**; en **2026** la edad ordinaria es **66 años y 10 meses** (o 65 con **38 años y 3 meses**)."))}
 """, 2)
 
 T.ap("s25", "VI.5 Muerte y supervivencia (LGSS, art. 216)", f"""
@@ -600,7 +616,7 @@ T.ap("s26", "VI.6 Prestaciones no contributivas (LGSS, arts. 351, 363 y 369)", f
 {unidad("6.2 Pensión de invalidez no contributiva (art. 363.1)",
   lit("LGSS", "a363", ["Ser mayor de dieciocho y menor de sesenta y cinco años de edad", "durante cinco años, de los cuales dos deberán ser inmediatamente anteriores", "en un grado igual o superior al 65 por ciento", "Carecer de rentas o ingresos suficientes"], solo=[1, 2, 3, 4, 5]),
   ficha("Personas de **18 a 64 años** con discapacidad o enfermedad crónica ≥ **65 %**",
-        "Pensión no contributiva (la gestiona el IMSERSO o el órgano autonómico: → I.3.1)",
+        "Pensión no contributiva (la gestiona el IMSERSO o, si tiene transferidos sus servicios, la comunidad autónoma: art. 373; → I.3.1)",
         ["Residencia legal: **5 años**, **2** inmediatamente anteriores a la solicitud", "Carencia de rentas"],
         "—",
         "**65 %** de discapacidad; residencia **5 años** (2 inmediatos)."))}
@@ -660,7 +676,7 @@ EX_L35 = examen("L", 35, POR125, AP125)
 EX_P30 = examen("P", 30, POR125, AP125)
 
 T.ap("s28", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join([
-  "En los primeros ejercicios de **2025** cayeron **cinco** preguntas de este tema. Aquí están **cuatro**, **literales** (la del Fondo de Reserva se repitió en el turno libre y en promoción interna). Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal.",
+  "En los primeros ejercicios de **2025** cayeron **cinco** preguntas de este tema. Aquí están **cuatro**, **literales** (la de la Comisión de Seguimiento del Fondo de Reserva cayó igual en el turno libre y en promoción interna); la quinta (GACE-X, n.º 44) va al final, aparte, porque su respuesta no se puede comprobar contra la ley. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal.",
   "### GACE-P 2025, pregunta 28 · Competencia del Estado (→ I.1.4)", EX_P28,
   "### GACE-P 2025, pregunta 29 · Destino del Fondo de Reserva (→ II.3.3)", EX_P29,
   "### GACE-L 2025, pregunta 35 · Comisión de Seguimiento del Fondo de Reserva (→ II.3.4)", EX_L35,
@@ -727,7 +743,7 @@ Q("LGSS", "a110", "Financiación", "Según el artículo 110.2 de la LGSS, el fon
 Q("LGSS", "a117", "Financiación", "Según el artículo 117 de la LGSS, el Fondo de Reserva de la Seguridad Social tiene la finalidad de atender las necesidades financieras en materia de:",
   ["Prestaciones contributivas.", "Prestaciones no contributivas.", "Asistencia sanitaria.", "Servicios sociales."], "Art. 117 LGSS.", "atender las necesidades financieras en materia de prestaciones contributivas")
 Q("LGSS", "a1-5", "Financiación", "Según el artículo 127 bis de la LGSS, la cotización del Mecanismo de Equidad Intergeneracional será de:",
-  ["1,2 puntos porcentuales.", "0,6 puntos porcentuales.", "2 puntos porcentuales.", "1 punto porcentual."], "Art. 127 bis.1 LGSS.", "La cotización será de 1,2 puntos porcentuales")
+  ["1,2 puntos porcentuales.", "0,6 puntos porcentuales.", "2 puntos porcentuales.", "1 punto porcentual."], "Art. 127 bis.1 LGSS. Ese 1,2 rige desde 2029; antes se aplica la escala de la disp. trans. 43.ª (0,60 en 2023; 0,90 en 2026).", "La cotización será de 1,2 puntos porcentuales")
 Q("LGSS", "a1-5", "Financiación", "Según el artículo 127 bis de la LGSS, en el caso de trabajadores por cuenta ajena, la cotización del Mecanismo de Equidad Intergeneracional se distribuye así:",
   ["Un punto porcentual la empresa y 0,2 puntos porcentuales el trabajador.", "0,6 puntos porcentuales cada uno.", "0,2 puntos porcentuales la empresa y un punto porcentual el trabajador.", "La totalidad corresponde a la empresa."], "Art. 127 bis.1 LGSS.", "un punto porcentual corresponderá a la empresa y 0,2 puntos porcentuales al trabajador")
 Q("LGSS", "a1-5", "Financiación", "Según el artículo 127 bis de la LGSS, la cotización finalista del Mecanismo de Equidad Intergeneracional:",
@@ -795,7 +811,7 @@ for q_, a_, cat in [
   ("Sistema financiero (LGSS, art. 110)", "Reparto, con fondo de estabilización en la Tesorería; capitalización de pensiones de IP o muerte por AT/EP a cargo de mutuas o empresas.", "Financiación"),
   ("Destino del Fondo de Reserva (art. 121.1)", "Con carácter exclusivo, la financiación de las pensiones de carácter contributivo.", "Financiación"),
   ("¿Cada cuánto conoce la Comisión de Seguimiento la evolución del Fondo de Reserva? (art. 125.3)", "Semestralmente.", "Financiación"),
-  ("MEI (art. 127 bis)", "Cotización finalista de 1,2 puntos (1 empresa, 0,2 trabajador) que no computa para prestaciones y nutre el Fondo de Reserva.", "Financiación"),
+  ("MEI (art. 127 bis)", "Cotización finalista de 1,2 puntos (1 empresa, 0,2 trabajador) que no computa para prestaciones y nutre el Fondo de Reserva. Escala transitoria (disp. trans. 43.ª): 0,60 en 2023 … 0,90 en 2026 … 1,2 desde 2029 hasta 2050.", "Financiación"),
   ("Revalorización de las pensiones contributivas (art. 58)", "Al comienzo de cada año, con el valor medio del IPC interanual de los doce meses previos a diciembre; si es negativo, no varían.", "Problemas y líneas de actuación"),
   ("Tres actuaciones de sostenibilidad del RDL 2/2023 (preámbulo)", "Subida gradual de la base máxima, cotización de solidaridad y MEI (que sustituye al factor de sostenibilidad).", "Problemas y líneas de actuación"),
   ("Regímenes especiales (LGSS, art. 10.2)", "Autónomos, trabajadores del mar, funcionarios públicos civiles y militares, estudiantes y los que determine el Ministerio.", "Regímenes"),
@@ -804,7 +820,7 @@ for q_, a_, cat in [
   ("¿Qué no es accidente de trabajo? (art. 156.4)", "El debido a fuerza mayor extraña al trabajo y el debido a dolo o imprudencia temeraria del trabajador.", "Acción protectora"),
   ("Excepciones a la intangibilidad de las prestaciones (art. 44.1)", "Obligaciones alimenticias a favor del cónyuge e hijos y obligaciones contraídas dentro de la Seguridad Social.", "Prestaciones"),
   ("Prescripción del derecho a las prestaciones (art. 53.1)", "Cinco años desde el día siguiente al hecho causante; efectos desde tres meses antes de la solicitud.", "Prestaciones"),
-  ("Edad y carencia de la jubilación contributiva (art. 205.1)", "67 años (65 con 38 años y 6 meses cotizados); 15 años cotizados, 2 en los últimos 15.", "Prestaciones"),
+  ("Edad y carencia de la jubilación contributiva (art. 205.1)", "67 años (65 con 38 años y 6 meses cotizados), plenamente desde 2027 (en 2026: 66 años y 10 meses, o 65 con 38 años y 3 meses; disp. trans. 7.ª); 15 años cotizados, 2 en los últimos 15.", "Prestaciones"),
   ("Pensiones no contributivas (arts. 363 y 369)", "Invalidez: 18 a 64 años, ≥ 65 %, 5 años de residencia. Jubilación: 65 años, 10 años de residencia entre los 16 y el devengo.", "Prestaciones"),
 ]: T.fc(q_, a_, cat)
 
@@ -815,7 +831,7 @@ T.glos("Mutua colaboradora con la Seguridad Social", "Asociación privada de emp
 T.glos("Caja única", "Principio por el que la Tesorería General unifica todos los recursos financieros del sistema (LGSS, art. 74).", "s4", "Estructura")
 T.glos("Reparto", "Sistema financiero de todos los regímenes de la Seguridad Social (LGSS, art. 110.1).", "s7", "Financiación")
 T.glos("Fondo de Reserva de la Seguridad Social", "Fondo constituido en la Tesorería General para las necesidades financieras de las prestaciones contributivas; sus activos se destinan en exclusiva a las pensiones contributivas (LGSS, arts. 117 y 121).", "s8", "Financiación")
-T.glos("Mecanismo de Equidad Intergeneracional", "Cotización finalista de 1,2 puntos, no computable para prestaciones, que nutre el Fondo de Reserva (LGSS, art. 127 bis).", "s9", "Financiación")
+T.glos("Mecanismo de Equidad Intergeneracional", "Cotización finalista de 1,2 puntos (desde 2029; antes, escala de la disp. trans. 43.ª), no computable para prestaciones, que nutre el Fondo de Reserva (LGSS, art. 127 bis).", "s9", "Financiación")
 T.glos("Revalorización", "Actualización anual de las pensiones contributivas con el valor medio del IPC de los doce meses previos a diciembre del año anterior (LGSS, art. 58).", "s11", "Problemas y líneas de actuación")
 T.glos("Régimen especial", "Régimen para actividades cuyas peculiaridades lo exigen: autónomos, mar, funcionarios, estudiantes y los que determine el Ministerio (LGSS, art. 10).", "s14", "Regímenes")
 T.glos("Sistema especial", "Especialidad dentro de un régimen limitada a encuadramiento, afiliación, forma de cotización o recaudación (LGSS, art. 11).", "s14", "Regímenes")

@@ -124,7 +124,7 @@ T.ap("s3", "I.3 Órganos de coordinación, consulta y estudio (LO 4/2000, arts. 
          c("LOEX", "a67", "El Gobierno"),
          ["Observa el fenómeno inmigratorio para dar información objetiva y evitar corrientes xenófobas o racistas", "Unifica en **Oficinas provinciales** los servicios estatales con competencia en inmigración"],
          "—",
-         "Las Oficinas provinciales del art. 67.2 son hoy las **Oficinas de Extranjería** del Reglamento (→ II.7.3)."))}
+         f"Su desarrollo en el Reglamento de 2024 son las **Oficinas de Extranjería**: {c('REX', 'Artículo 258', 'integran los diferentes servicios de la Administración General del Estado competentes en materia de extranjería e inmigración en el ámbito provincial')} (art. 258; → II.7.3)."))}
 
 {unidad("3.2 La Conferencia Sectorial de Inmigración (art. 68)",
   lit("LOEX", "a68", ["La Conferencia Sectorial de Inmigración es el órgano a través del cual se asegurará la adecuada coordinación", "Con carácter previo a la concesión de autorizaciones por arraigo"], solo=[1, 2, 3]),
@@ -177,10 +177,6 @@ T.ap("s3", "I.3 Órganos de coordinación, consulta y estudio (LO 4/2000, arts. 
          "—",
          "**Dieciséis** vocales (cayó dos veces en 2025, → Cierre 1). El Secretario tiene **voz pero no voto**."),
   EX_L101)}
-""", 2)
-
-T.ap("s4", "I.4 Datos y evolución de la inmigración (pendiente)", f"""
-**Pendiente (temario).** El epígrafe «Política de inmigración» suele estudiarse también con **datos**: evolución de la población extranjera, llegadas, balances del Sistema de Acogida… Esos datos **no están en ninguna norma** y no se han podido descargar de una fuente oficial (la web del Ministerio de Inclusión, Seguridad Social y Migraciones no es accesible desde este entorno). Se completará con el **temario** o con la fuente oficial que aporte el usuario. En 2025 cayó una pregunta de este tipo (GACE-X 2025, n.º 39, sobre el balance del Sistema de Acogida Estatal de 2025) que, por eso, **no** se resuelve aquí.
 
 *Esquema de elaboración propia: resume los artículos citados; no es texto legal.*
 
@@ -191,6 +187,10 @@ T.ap("s4", "I.4 Datos y evolución de la inmigración (pendiente)", f"""
 | Observatorio Español del Racismo y la Xenofobia | LOEX, art. 71 | Estudio y análisis; propuestas | Racismo y xenofobia |
 | Comisión Laboral Tripartita de Inmigración | LOEX, art. 72 | Diálogo con sindicatos y empresarios | Consultada sobre el Catálogo de ocupaciones de difícil cobertura |
 | Observatorio Permanente de la Inmigración | RD 345/2001 | Datos, análisis y estudio | **16 vocales** |
+""", 2)
+
+T.ap("s4", "I.4 Datos y evolución de la inmigración (pendiente)", f"""
+?> **Pendiente (temario).** El epígrafe «Política de inmigración» suele estudiarse también con **datos**: evolución de la población extranjera, llegadas, balances del Sistema de Acogida… Esos datos **no están en ninguna norma** y no se han podido descargar de una fuente oficial (la web del Ministerio de Inclusión, Seguridad Social y Migraciones no es accesible desde este entorno). Se completará con el **temario** o con la fuente oficial que aporte el usuario. En 2025 cayó una pregunta de este tipo (GACE-X 2025, n.º 39, sobre el balance del Sistema de Acogida Estatal de 2025) que, por eso, **no** se resuelve aquí.
 
 {resumen([
   "Los extranjeros gozan de las libertades del Título I **en los términos de los tratados y la ley**; el art. 23 es solo de españoles, salvo el sufragio **municipal** por **reciprocidad** (art. 13 CE).",
@@ -363,7 +363,7 @@ T.ap("s8", "II.4 Menores extranjeros no acompañados (LO 4/2000, arts. 35, 35 bi
   fichab("Contenido del Modelo de gestión",
          "El órgano competente de la Administración General del Estado aplica los criterios",
          ["a) Criterios objetivos de ubicación de los menores en las comunidades o ciudades autónomas", "b) Mecanismo de derivación", "c) Criterios para el número de plazas por comunidad o ciudad autónoma"],
-         "A falta de acuerdo unánime, criterios legales de reparto (35 ter.2): 50 % población, 13 % renta, 15 % paro (inversa), 6 % esfuerzo, 10 % dimensionamiento, y 2 % frontera, insularidad y dispersión",
+         "A falta de acuerdo unánime, criterios legales de reparto (35 ter.2): 50 % población, 13 % renta, 15 % paro (inversa), 6 % esfuerzo, 10 % dimensionamiento (inversa) y 2 % por cada uno de estos tres: ciudad fronteriza, insularidad y dispersión de la población (total, 100 %)",
          "Son **tres** contenidos. Cayó en 2025 en negativo: el «análisis de la situación de las familias» **no** está (→ Cierre 1)."),
   EX_L38)}
 """, 2)
@@ -547,9 +547,10 @@ T.ap("s14", "III.3 Exclusión y denegación (Ley 12/2009, arts. 8, 9, 11 y 12)",
          "—",
          "También se excluye (8.1) a quien ya recibe protección de otro organismo de la ONU distinto del **ACNUR** y a quien tiene derechos equivalentes a la nacionalidad del país donde reside."))}
 
-{unidad("3.2 Denegación del asilo y de la protección subsidiaria (arts. 9 y 12)",
+{unidad("3.2 Denegación del asilo y de la protección subsidiaria (arts. 9, 11.1 d y 12)",
   lit("ASILO", "a9", ["un peligro para la seguridad de España", "condena firme por delito grave constituyan una amenaza para la comunidad"]),
-  lit("ASILO", "a11", ["constituyen un peligro para la seguridad interior o exterior de España o para el orden público"], solo=[5]),
+  lit("ASILO", "a11", ["constituyen un peligro para la seguridad interior o exterior de España o para el orden público"], solo=[1, 5]),
+  lit("ASILO", "a12", ["la protección subsidiaria se denegará"]),
   fichab("Causas por las que se deniega «en todo caso»",
          "Ministro del Interior, en la resolución (→ III.4.4)",
          ["Peligro, por razones fundadas, para la seguridad de España", "Condena firme por delito grave y amenaza para la comunidad"],

@@ -102,7 +102,7 @@ T.ap("s2", "I.2 Situación actual, retos y metas a 2028 (Estrategia, caps. II y 
          "Datos de Eurostat citados por la Estrategia",
          ["Una de las **menores tasas de vacantes** de Europa, pero dificultades para cubrir ciertos puestos", "Retos: transformación **digital**, transición **ecológica**, **envejecimiento** y falta de **relevo generacional**"],
          "Vacantes (4.º trimestre de 2024): España 0,9 %; UE-27 2,3 %; eurozona 2,5 %",
-         "Tres transiciones que la Estrategia nombra: **digital**, **ecológica** y **demográfica** (envejecimiento)."))}
+         f"Los «tres grandes retos» que nombra la Estrategia (cap. II): {c(RD, DIAG, 'la transformación digital, la transición ecológica y energética y el reto demográfico')}."))}
 
 {unidad("2.3 Meta a 2028: tasa de paro del 8,5 % (cap. III.3)",
   lit(RD, OBJ, ["para situarse en el 8,5 % a su finalización", "la intermediación debería alcanzar el 42 % en jóvenes"], solo=[56, 57, 61], titulo="Estrategia 2025-2028, capítulo III, 3. Metas a 2028 (RD 633/2025) · texto oficial, no es texto legal"),
@@ -293,7 +293,7 @@ T.ap("s8", "III.1 Objeto, niveles, personas protegidas y acción protectora (LGS
 {unidad("1.4 Acción protectora (art. 265.1)",
   lit(SS, "Artículo 265", ["Prestación por desempleo total o parcial", "Subsidio por desempleo"], solo=[1, 2, 3, 4, 5, 6, 7, 8]),
   ficha("Personas protegidas (art. 264)",
-        ["::Contributivo:", "Prestación por desempleo **total o parcial**", "Abono de la **aportación de la empresa** a la Seguridad Social", "::Asistencial:", "**Subsidio** por desempleo", "Cotización por **jubilación** (supuestos del art. 280)", "Asistencia sanitaria y, en su caso, prestaciones familiares"],
+        ["::Contributivo:", "Prestación por desempleo **total o parcial**", "Abono de la **aportación de la empresa** a la Seguridad Social", "**Asistencial:**", "**Subsidio** por desempleo", "Cotización por **jubilación** (supuestos del art. 280)", "Asistencia sanitaria y, en su caso, prestaciones familiares"],
         "—",
         "Además: acciones de formación, orientación, reconversión e inserción (265.2)",
         "Contributivo = **prestación**; asistencial = **subsidio**."))}
@@ -466,7 +466,7 @@ T.ap("s14", "IV.1 Concepto de políticas activas e instrumentos de planificació
   lit(L3, "Artículo 11", ["Informe Conjunto sobre el empleo", "La Estrategia Española de Apoyo Activo al Empleo", "El Plan Anual para el Fomento del Empleo Digno", "El Sistema Público Integrado de Información de los Servicios de Empleo"], solo=[2, 4, 5, 6, 7]),
   fichab("Cómo se planifica y coordina la política de empleo",
          "Seguimiento y evaluación en la **Conferencia Sectorial** y el **Consejo General** (Informe Conjunto sobre el empleo)",
-         ["Tres instrumentos: **Estrategia** (→ IV.2), **Plan Anual** (→ IV.3) y **Sistema Público Integrado de Información** (SISPE)"],
+         ["Tres instrumentos: **Estrategia** (→ IV.2), **Plan Anual** (→ IV.3) y **Sistema Público Integrado de Información de los Servicios de Empleo**"],
          "—",
          "Son **tres** instrumentos. El **Informe Conjunto** es el resultado del seguimiento, no un instrumento del art. 11.4."))}
 
@@ -565,7 +565,7 @@ T.ap("s19", "IV.6 Servicios garantizados, compromisos y cartera común (Ley 3/20
   lit(L3, "Artículo 56", ["Elaboración de un perfil individualizado de usuario", "Tutorización individual", "Un itinerario o plan personalizado adecuado a su perfil que exigirá la formalización de un acuerdo de actividad", "en el plazo máximo de un mes, a contar desde la elaboración de su perfil de usuario", "Un expediente laboral personalizado único"], solo=[1, 2, 5, 8, 15, 17, 18, 19, 20, 22, 25, 26]),
   ficha("Personas demandantes de servicios de empleo",
         ["Perfil individualizado (a)", "Tutorización individual (b)", "Itinerario o plan personalizado con **acuerdo de actividad** (c)", "Formación en el trabajo (d)", "Asesoramiento para el autoempleo (e)", "Intermediación eficiente (f)", "Canal presencial o digital (g)", "Acceso a trabajos en todo el Estado (h)", "Búsqueda de protección social (i)", "**Expediente laboral personalizado único** (j)"],
-        "Los garantizan la Agencia y los servicios autonómicos en **todo el territorio**",
+        "Se implementan a través de la **Cartera Común de Servicios** del Sistema Nacional de Empleo (56.2; → IV.6.3)",
         "Itinerario: en el plazo máximo de **un mes** desde el perfil",
         "**Un mes** desde la elaboración del **perfil** para disponer del **itinerario**."))}
 
@@ -622,7 +622,7 @@ T.ap("s21", "Cierre 2. Repaso en 10 minutos (por bloques)", """
 | I. Evolución del empleo | Paro en descenso desde 2015 (salvo 2020); más indefinidos tras la reforma de 2021 | Menores de 25: **46,24 % → 24,90 %**; meta 2028: **8,5 %** |
 | II. Servicios públicos de empleo | Sistema Nacional de Empleo: Agencia Española de Empleo (SEPE hasta su funcionamiento efectivo) + servicios autonómicos | Conferencia Sectorial (preside el **Ministro**); Consejo General (**tripartito**, preside el **director de la Agencia**) |
 | III. Prestaciones | Contributivo y asistencial; requisitos; duración y cuantía; subsidio | **360** días → **120**; tope **720**; **70/60 %**; subsidio **75 % SMI**, **95/90/80 %** IPREM |
-| IV. Políticas activas | Estrategia, Plan Anual, SISPE; intermediación; servicios garantizados | Estrategia **7 ejes**, Plan Anual **6 ejes**; agencias por **declaración responsable** |
+| IV. Políticas activas | Estrategia, Plan Anual, Sistema Público Integrado de Información; intermediación; servicios garantizados | Estrategia **7 ejes**, Plan Anual **6 ejes**; agencias por **declaración responsable** |
 
 ?> **Trampas frecuentes:** «la Estrategia la aprueba el Consejo de Ministros por acuerdo» (por **real decreto** del Gobierno; el que aprueba el Consejo de Ministros es el **Plan Anual**); «el Plan Anual tiene siete ejes» (tiene **seis**; siete la Estrategia); «la Conferencia Sectorial es tripartita» (es el **Consejo General**); «las CC. AA. gestionan las prestaciones por desempleo» (gestión **estatal**); «la prestación es el 70 % durante un año» (el 70 % son los **180 primeros días**); «el subsidio exige rentas inferiores al 75 % del IPREM» (es del **SMI**); «las agencias de colocación necesitan autorización» (basta **declaración responsable**).
 """)
