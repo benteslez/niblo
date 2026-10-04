@@ -66,3 +66,13 @@ Bloque III: - [x] III.8
 - Quedan para el usuario: «Pendiente (temario)» de II.5, II.6, III.4, III.6 y VI.8;
   naturaleza de la expropiación (IV.8); P55 (¿Discrepancia?); RD 466/2026 en I.9;
   [sic] en «Diposición» (I.1, errata del BOE).
+
+## Auditoría en rondas (4-10-2026, petición del usuario: «hasta que esté 100 % correcta, máx. 10 rondas»)
+
+- [x] Ronda 1: revisión completa de los 54 temas (≈150 correcciones).
+- [x] Ronda 2: ≈115 correcciones (citas con mayúsculas, extractos, títulos).
+- [x] Ronda 3: ≈250 correcciones (criterios fijos de orden, rangos y extractos `solo=[…]`).
+- [x] Ronda 4: 56 correcciones; limpios IV.7-9, bloque V entero y VI.5-8.
+- [ ] Ronda 5: parada por el usuario al empezar (publicado lo hecho hasta la ronda 4).
+- Criterios y herramientas de la auditoría: scratchpad de la sesión (RONDA.md, autochk, citas, solochk, mapachk).
+- Pendiente de decisión del usuario: P55 y P66 (¿Discrepancia?), RD 466/2026 en I.9, [sic] en I.1.

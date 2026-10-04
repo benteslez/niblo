@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v236";  // auditoría completa de los 54 temas (ley vigente, letra y estructura)
+const CACHE_NAME = "niblo-v237";  // auditoría de los temas, rondas 1 a 4
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manrope.woff2",
