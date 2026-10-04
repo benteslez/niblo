@@ -423,7 +423,7 @@ T.ap("s12", "III.2 Enajenación, cesión gratuita y permuta (arts. 131, 137, 145
 # =============================================================================
 T.ap("bIV", "IV. ¿Qué es el Patrimonio Nacional? (Ley 23/1982)", donde(
   "Cuarta pregunta. El art. 132.3 CE distingue el **Patrimonio del Estado** del **Patrimonio Nacional**. Este último lo forman bienes del Estado afectados al **uso y servicio del Rey** y de la Real Familia, y tiene ley propia.",
-  ["1 El Consejo de Administración y los bienes que lo integran (Ley 23/1982, arts. 1, 2, 4 y 5)", "2 Régimen jurídico y funciones del Consejo (art. 6 y 8; Ley 33/2003, disposición adicional cuarta)"]))
+  ["1 El Consejo de Administración y los bienes que lo integran (Ley 23/1982, arts. 1, 2, 4 y 5)", "2 Régimen jurídico y funciones del Consejo (arts. 6 y 8; Ley 33/2003, disposición adicional cuarta)"]))
 
 T.ap("s13", "IV.1 El Consejo de Administración y los bienes del Patrimonio Nacional (Ley 23/1982, arts. 1, 2, 4 y 5)", f"""
 {unidad("1.1 El Consejo de Administración del Patrimonio Nacional (art. 1)",

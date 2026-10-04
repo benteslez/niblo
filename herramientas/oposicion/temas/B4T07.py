@@ -37,7 +37,7 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 | **II** | ¿Cómo interviene en la actividad de los particulares? (actividad de intervención) | Ley 40/2015, art. 4; Ley 17/2009, arts. 3 y 5; Ley 39/2015, art. 69; LRBRL, arts. 84 y 84 bis |
 | **III** | ¿Cuándo resuelve conflictos como árbitro? (actividad arbitral) | Ley 39/2015, art. 112.2; TRLGDCU (RDLeg 1/2007), arts. 57 y 58 |
 | **IV** | ¿Cómo presta servicios públicos y de qué formas los gestiona? | CE, art. 128.2; LRBRL, arts. 85 y 86; LCSP, arts. 15 y 284 y disp. adic. 34.ª |
-| **V** | ¿Cómo fomenta? Ayudas de Estado y régimen jurídico de las subvenciones | TFUE, arts. 107 y 108; Ley 38/2003, arts. 2 a 6, 8 a 14, 17 y 20; RD 887/2006, art. 3 |
+| **V** | ¿Cómo fomenta? Ayudas de Estado y régimen jurídico de las subvenciones | TFUE, arts. 107 y 108; Ley 38/2003, arts. 1 a 6, 8 a 14, 17 y 20; RD 887/2006, art. 3 |
 | **VI** | ¿Cómo se conceden, justifican, reintegran y sancionan las subvenciones? | Ley 38/2003, arts. 22, 23, 30, 34, 36 a 39, 42, 52, 54, 56 a 59 y 65; RD 887/2006, arts. 65 y 69 |
 
 !> **La idea que une los seis bloques:** la Administración actúa siempre con **sometimiento pleno a la ley y al Derecho** y por medio de **actos, procedimientos, acuerdos y convenios** (I). Con esos instrumentos **limita** la actividad privada, con proporcionalidad y prefiriendo la declaración responsable a la licencia (II); en ocasiones **arbitra** conflictos (III); **presta** servicios de su titularidad, directamente o por concesión (IV), y **fomenta** actividades de interés público con dinero público sin contraprestación: la **subvención** (V y VI).
@@ -253,7 +253,7 @@ T.ap("s10", "IV.2 Formas de gestión de los servicios públicos locales (LRBRL, 
   lit("LRBRL", "Artículo 85", ["de la forma más sostenible y eficiente", "Gestión directa", "Gestión por la propia Entidad Local", "Organismo autónomo local", "Entidad pública empresarial local", "Sociedad mercantil local, cuyo capital social sea de titularidad pública", "memoria justificativa", "informe del interventor local", "Gestión indirecta"]),
   fichab("Cómo se gestionan los servicios públicos locales",
          "La Entidad local; la memoria justificativa se eleva al **Pleno**; informa el **interventor** local",
-         ["::A) Gestión directa:", "a) Por la propia Entidad Local", "b) Organismo autónomo local", "c) Entidad pública empresarial local", "d) Sociedad mercantil local de capital **íntegramente público**", "::B) Gestión indirecta: las formas del contrato de gestión de servicios públicos (hoy, concesión de servicios, → IV.3.3)"],
+         ["::A) Gestión directa:", "a) Por la propia Entidad Local", "b) Organismo autónomo local", "c) Entidad pública empresarial local", "d) Sociedad mercantil local, cuyo capital social sea de **titularidad pública**", "::B) Gestión indirecta: las formas del contrato de gestión de servicios públicos (hoy, concesión de servicios, → IV.3.3)"],
          "Las formas c) y d), solo si una **memoria justificativa** acredita que son más sostenibles y eficientes que a) y b)",
          "Criterio legal: la forma **más sostenible y eficiente**. EPE y sociedad mercantil son **subsidiarias** de la gestión por la propia entidad y del organismo autónomo. Hay que respetar las funciones reservadas a **funcionarios** (art. 9 EBEP)."))}
 """, 2)

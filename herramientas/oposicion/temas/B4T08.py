@@ -102,13 +102,14 @@ T.ap("s4", "II.1 La causa: declaración de utilidad pública o interés social (
   lit("LEF", "anoveno", ["será indispensable la previa declaración de utilidad pública o interés social"]),
   fichab("Primer requisito del procedimiento: declarar la causa", "—", "Declaración **previa** de utilidad pública o interés social del fin", "—", "Sin declaración previa, la ocupación es una vía de hecho (→ IV.1)."))}
 
-{unidad("1.2 Cómo se declara la utilidad pública (arts. 10 a 12)",
+{unidad("1.2 Cómo se declara la utilidad pública o el interés social (arts. 10 a 13)",
   lit("LEF", "adiez", ["se entiende implícita", "por acuerdo del Consejo de Ministros"]),
   lit("LEF", "aonce", ["mediante Ley aprobada en Cortes"]),
   lit("LEF", "adoce", ["expresa y singularmente mediante Ley en cada caso", "bastará el acuerdo del Consejo de Ministros"]),
-  fichab("Formas de declarar la utilidad pública",
+  lit("LEF", "atrece", ["al mismo procedimiento previsto en el artículo anterior"]),
+  fichab("Formas de declarar la utilidad pública o el interés social",
          "Las Cortes (por ley) o el Consejo de Ministros, según el caso",
-         ["Inmuebles: **implícita** en los planes de obras y servicios del Estado, Provincia y Municipio (art. 10)", "Utilidad pública declarada genéricamente por ley: reconocimiento en cada caso por **Consejo de Ministros** (art. 10)", "Resto de inmuebles: **ley** aprobada en Cortes (art. 11)", "Muebles: **ley** expresa y singular en cada caso, o Consejo de Ministros si una ley autorizó la categoría (art. 12)"],
+         ["Inmuebles: **implícita** en los planes de obras y servicios del Estado, Provincia y Municipio (art. 10)", "Utilidad pública declarada genéricamente por ley: reconocimiento en cada caso por **Consejo de Ministros** (art. 10)", "Resto de inmuebles: **ley** aprobada en Cortes (art. 11)", "Muebles: **ley** expresa y singular en cada caso, o Consejo de Ministros si una ley autorizó la categoría (art. 12)", f"Interés social (art. 13): {c('LEF', 'atrece', 'se sujetará, en cuanto a su declaración, al mismo procedimiento previsto en el artículo anterior')}, es decir, el del art. 12"],
          "—",
          "Para **inmuebles** de planes de obras y servicios, la utilidad pública es **implícita**; para **muebles**, por **ley** en cada caso (salvo categoría autorizada)."))}
 """, 2)
@@ -231,13 +232,15 @@ T.ap("bIII", "III. ¿Hay otros procedimientos? Especiales y ocupación temporal 
   "Tercera pregunta. Además del procedimiento general, la LEF regula **procedimientos especiales** (Título III) y la **ocupación temporal** de terrenos (Título IV).",
   ["1 Los procedimientos especiales: el ejemplo de la expropiación por zonas (art. 59)", "2 La ocupación temporal (arts. 108 y 109)"]))
 
-T.ap("s9", "III.1 Procedimientos especiales y ocupación temporal (arts. 59, 108 y 109)", f"""
+T.ap("s9", "III.1 Los procedimientos especiales: el ejemplo de la expropiación por zonas (art. 59)", f"""
 *Esquema de elaboración propia (rúbricas del Título III de la LEF, texto consolidado del BOE): expropiación por zonas o grupos de bienes; por incumplimiento de la función social de la propiedad; de bienes de valor artístico, histórico y arqueológico; por Entidades locales o por razón de urbanismo; con traslado de poblaciones; por causa de colonización o de obras públicas; en materia de propiedad industrial; y por razones de defensa nacional y seguridad del Estado.*
 
 {unidad("1.1 Expropiación por zonas o grupos de bienes (art. 59)",
   lit("LEF", "acincuentaynueve", ["grandes zonas territoriales o series de bienes susceptibles de una consideración de conjunto", "el Consejo de Ministros podrá acordar, mediante Decreto"]),
   fichab("Procedimiento especial para expropiaciones de conjunto", "El **Consejo de Ministros**, mediante **Decreto**", "Aplica el procedimiento especial del capítulo", "—", "Lo decide el **Consejo de Ministros por Decreto**."))}
+""", 2)
 
+T.ap("s9b", "III.2 La ocupación temporal (arts. 108 y 109)", f"""
 {unidad("2.1 Ocupación temporal (arts. 108 y 109)",
   lit("LEF", "acientoocho", ["podrán ocupar temporalmente los terrenos propiedad del particular"], solo=[1, 2, 3, 4, 5]),
   lit("LEF", "acientonueve", ["Las viviendas quedan exceptuadas de la ocupación temporal e imposición de servidumbres", "permiso expreso de su morador"]),
@@ -297,7 +300,7 @@ T.ap("s11", "IV.2 El recurso contencioso-administrativo (arts. 126 y 35.2)", f""
   "Ocupación sin causa, sin necesidad de ocupación o sin previo pago o depósito: **interdictos de retener y recobrar** ante los Jueces (art. 125).",
   "Contencioso contra la resolución final o las piezas separadas, **salvo el art. 22.3**; contra el justo precio, por **lesión** de más de **una sexta parte** (art. 126).",
   "Contra la resolución del Jurado, **solo** el contencioso (art. 35.2)."],
-  "Fin del tema. Para fijarlo: Cierre 1 (preguntas oficiales de 2025) y Cierre 2 (repaso por bloques); después, el test.")}""")
+  "Fin del tema. Para fijarlo: Cierre 1 (preguntas oficiales de 2025) y Cierre 2 (repaso por bloques); después, el test.")}""", 2)
 
 # =============================================================================
 EX = [
