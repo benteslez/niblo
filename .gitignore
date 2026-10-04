@@ -4,3 +4,5 @@ herramientas/oposicion/boe/*.xml
 herramientas/oposicion/boe/*.html
 __pycache__/
 herramientas/oposicion/tests_reales.json
+# Copias de trabajo temporales de los agentes
+.claude/worktrees/
