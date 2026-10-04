@@ -142,7 +142,7 @@ T.ap("s3", "II.1 Principios del tratamiento (RGPD, art. 5; LO 3/2018, arts. 4 y 
          "El **responsable** del tratamiento: cumple y debe poder **demostrarlo** (5.2)",
          ["**Licitud, lealtad y transparencia** (a)", "**Limitación de la finalidad**: fines determinados, explícitos y legítimos (b)", "**Minimización**: adecuados, pertinentes y limitados a lo necesario (c)", "**Exactitud** (d)", "**Limitación del plazo de conservación** (e)", "**Integridad y confidencialidad** (f)", "**Responsabilidad proactiva** (5.2)"],
          "Conservación: no más tiempo **del necesario**; más tiempo solo con fines de **archivo en interés público**, **investigación** o **estadística** (e)",
-         "Cada principio lleva su **nombre entre comillas** en el texto: es lo que pregunta el examen. «Adecuados, pertinentes y limitados» = **minimización** (no limitación de la finalidad). «Capaz de demostrarlo» = **responsabilidad proactiva**."))}
+         f"Cada principio lleva su **nombre entre comillas** en el texto: es lo que pregunta el examen. {cR(5, 'adecuados, pertinentes y limitados')} = **minimización** (no limitación de la finalidad). {cR(5, 'capaz de demostrarlo')} = **responsabilidad proactiva**."))}
 
 {unidad("1.2 Exactitud de los datos (LO 3/2018, art. 4)",
   L(4, ["no será imputable al responsable del tratamiento", "directamente del afectado", "de un registro público"]),
@@ -226,7 +226,7 @@ T.ap("s5", "II.3 Categorías especiales de datos (RGPD, art. 9; LO 3/2018, art. 
          "—",
          ["Datos cuya **finalidad principal** sea identificar **ideología, afiliación sindical, religión, orientación sexual, creencias u origen racial o étnico**: el **solo consentimiento no basta** para levantar la prohibición (9.1)", "Tratamientos de las letras **g), h) e i)** del art. 9.2 RGPD fundados en Derecho español: necesitan **norma con rango de ley** (9.2)"],
          "—",
-         "«El **solo** consentimiento **no bastará**» (para evitar situaciones discriminatorias), aunque pueden valer los demás supuestos del art. 9.2 RGPD."))}
+         f"{cL(9, 'el **solo** consentimiento del afectado **no bastará**')} (para evitar situaciones discriminatorias), aunque pueden valer los demás supuestos del art. 9.2 RGPD."))}
 
 {resumen([
   "Siete principios (art. 5 RGPD): licitud, lealtad y transparencia; limitación de la finalidad; **minimización**; exactitud; limitación del plazo de conservación; integridad y confidencialidad; **responsabilidad proactiva**.",
@@ -545,7 +545,7 @@ T.ap("s14", "V.2 Las autoridades de protección de datos (RGPD, arts. 51, 52 y 6
          ["**Presidencia**: dirige la Agencia, la representa y dicta sus **resoluciones, circulares y directrices** (48.1)", "**Adjunto**: auxilia y sustituye; la Presidencia puede delegarle funciones **salvo** las de los procedimientos del **título VIII** (48.2)"],
          ["Propuesta del **Gobierno** (a propuesta del **Ministerio de Justicia**) tras **convocatoria pública** en el BOE; **audiencia** de los candidatos y **ratificación** por la **Comisión de Justicia** del Congreso (48.3)", "Nombramiento: **Consejo de Ministros**, por **real decreto** (48.4)", "Cese anticipado: a petición propia o separación por el Consejo de Ministros por incumplimiento grave, incapacidad, incompatibilidad o **condena firme por delito doloso**; en los tres primeros casos, con **ratificación parlamentaria** (48.5)", "Sus actos y disposiciones **ponen fin a la vía administrativa** (48.6)"],
          ["Ratificación: **3/5** de los miembros de la Comisión en primera votación o **mayoría absoluta** en segunda (con votos de al menos **dos grupos**) (48.3)", "Convocatoria: **dos meses** antes de expirar el mandato (48.3)", "Mandato: **5 años**, renovable **una vez** por igual período (48.5)"],
-         "Recurso: directamente ante la **Sala de lo Contencioso-administrativo de la Audiencia Nacional** (48.6). Mandato de **cinco** años (el RGPD exige una duración {cR(54, 'no inferior a cuatro años')}: art. 54.1 d)."))}
+         f"Recurso: directamente ante la **Sala de lo Contencioso-administrativo de la Audiencia Nacional** (48.6). Mandato de **cinco** años (el RGPD exige una duración {cR(54, 'no inferior a cuatro años')}: art. 54.1 d)."))}
 
 {unidad("2.5 Las circulares de la AEPD (LO 3/2018, art. 55; RD 389/2021, art. 6)",
   L(55, ["«Circulares de la Agencia Española de Protección de Datos»", "Las circulares serán obligatorias una vez publicadas en el Boletín Oficial del Estado"]),

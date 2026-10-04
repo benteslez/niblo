@@ -571,7 +571,7 @@ T.ap("s17", "IV.2 LGD: objeto, definiciones, principios y titulares (arts. 1 a 4
         "A efectos de la ley, además, quienes tengan reconocido un grado de discapacidad **igual o superior al 33 %**",
         "Se asimilan, para ciertos capítulos, los pensionistas de incapacidad permanente total, absoluta o gran invalidez y los de clases pasivas por incapacidad",
         "Reconocimiento por el órgano competente; validez en todo el territorio nacional",
-        "**33 %** o más. La asimilación de los pensionistas **no** es general: solo a efectos de la sección 1.ª del capítulo V, el capítulo VIII del título I y el título II."))}
+        "**33 %** o más. La asimilación de los pensionistas **no** es general: el art. 4.2 la limita a la sección 1.ª del capítulo V, el capítulo VIII del título I y el título II, y el art. 35.1 la extiende al capítulo VI (derecho al trabajo, → IV.3.1)."))}
 """, 2)
 
 T.ap("s18", "IV.3 Derecho al trabajo y cuota de reserva (arts. 35, 37 y 42)", f"""
