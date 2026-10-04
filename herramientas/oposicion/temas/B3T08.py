@@ -32,7 +32,7 @@ def cL(n, frag): return c("LOPD", f"Artículo {n}", frag)
 ESQ = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
 
 T = Tema("B3T08",
-  "Seis preguntas: I. Qué se protege y con qué normas (art. 18.4 CE; RGPD, arts. 1, 2 y 4; LO 3/2018, arts. 1 y 2) · II. Con qué principios se tratan los datos (RGPD, arts. 5 a 9; LO 3/2018, arts. 4 a 9) · III. Qué derechos tiene el interesado (RGPD, arts. 12 a 22, 77, 78 y 82; LO 3/2018, arts. 11 a 18) · IV. Quién responde del tratamiento: responsable y encargado (RGPD, arts. 24 a 35; LO 3/2018, arts. 28 a 33) · V. Quién vigila: delegado y autoridades (RGPD, arts. 37 a 39, 51, 52 y 68; LO 3/2018, arts. 34 a 37, 44, 47, 48, 55 y 57; RD 389/2021, art. 6) · VI. Qué derechos digitales reconoce la ley (LO 3/2018, arts. 79 a 97). Cada artículo: texto literal (BOE o DOUE) y ficha.",
+  "Seis preguntas: I. Qué se protege y con qué normas (art. 18.4 CE; RGPD, arts. 1, 2 y 4; LO 3/2018, arts. 1 y 2) · II. Con qué principios se tratan los datos (RGPD, arts. 5 a 9; LO 3/2018, arts. 4 a 9) · III. Qué derechos tiene el interesado (RGPD, arts. 12 a 18, 20 a 22, 77, 78 y 82; LO 3/2018, arts. 11 a 18) · IV. Quién responde del tratamiento: responsable y encargado (RGPD, arts. 24 a 26, 28, 30 y 32 a 35; LO 3/2018, arts. 28, 29 y 31 a 33) · V. Quién vigila: delegado y autoridades (RGPD, arts. 37 a 39, 51, 52 y 68; LO 3/2018, arts. 34 a 37, 44, 47, 48, 55 y 57; RD 389/2021, art. 6) · VI. Qué derechos digitales reconoce la ley (LO 3/2018, arts. 79 a 97). Cada artículo: texto literal (BOE o DOUE) y ficha.",
   ["Art. 18.4 CE", "RGPD", "LO 3/2018", "Principios", "Responsabilidad proactiva", "Consentimiento", "Catorce años", "Categorías especiales", "Derechos ARSOPL", "Portabilidad", "Responsable", "Encargado", "Violación de seguridad: 72 horas", "Delegado de protección de datos", "Diez días", "AEPD", "Circulares", "Derechos digitales", "Desconexión digital", "Derecho al olvido"])
 
 # =============================================================================
@@ -237,7 +237,7 @@ T.ap("s5", "II.3 Categorías especiales de datos (RGPD, art. 9; LO 3/2018, art. 
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Qué derechos tiene el interesado? (RGPD, arts. 12 a 22, 77, 78 y 82; LO 3/2018, arts. 11 a 18)", donde(
+T.ap("bIII", "III. ¿Qué derechos tiene el interesado? (RGPD, arts. 12 a 18, 20 a 22, 77, 78 y 82; LO 3/2018, arts. 11 a 18)", donde(
   "Tercera pregunta. El interesado tiene derecho a ser **informado** (arts. 13 y 14) y a ejercer los derechos de **acceso, rectificación, supresión, limitación, portabilidad y oposición**, además de no ser objeto de **decisiones automatizadas**. Si no se le atiende, puede **reclamar** ante la autoridad de control o acudir a los **tribunales**.",
   ["1 Transparencia, información y reglas comunes de ejercicio (RGPD, arts. 12 a 14; LO 3/2018, arts. 11 y 12)", "2 Acceso, rectificación y supresión (RGPD, arts. 15 a 17; LO 3/2018, arts. 13 a 15)", "3 Limitación, portabilidad, oposición y decisiones automatizadas (RGPD, arts. 18, 20 a 22; LO 3/2018, arts. 16 a 18)", "4 Reclamación, tutela judicial e indemnización (RGPD, arts. 77, 78 y 82)"]))
 
@@ -251,8 +251,8 @@ T.ap("s6", "III.1 Transparencia, información y reglas comunes de ejercicio (RGP
          "**Un mes + dos** de prórroga (en total, hasta tres). No confundir con los **diez días** de la comunicación del delegado (→ V.1.1) ni con las **72 horas** de la violación de seguridad (→ IV.3.4)."))}
 
 {unidad("1.2 Información al interesado (RGPD, arts. 13 y 14)",
-  R(13, ["en el momento en que estos se obtengan", "la identidad y los datos de contacto del responsable", "los fines del tratamiento a que se destinan los datos personales y la base jurídica del tratamiento", "el derecho a presentar una reclamación ante una autoridad de control"], solo=[1, 2, 3, 4, 8, 9, 10, 12, 16]),
-  R(14, ["a más tardar dentro de un mes", "a más tardar en el momento de la primera comunicación", "en el momento en que los datos personales sean comunicados por primera vez"], solo=[1, 16, 17, 18, 19]),
+  R(13, ["en el momento en que estos se obtengan", "la identidad y los datos de contacto del responsable", "los fines del tratamiento a que se destinan los datos personales y la base jurídica del tratamiento", "el derecho a presentar una reclamación ante una autoridad de control"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16]),
+  R(14, ["a más tardar dentro de un mes", "a más tardar en el momento de la primera comunicación", "en el momento en que los datos personales sean comunicados por primera vez"], solo=list(range(1, 20)) + [21, 22]),
   fichab("El deber de informar al interesado",
          "El **responsable** del tratamiento",
          ["Datos obtenidos **del interesado** (art. 13): identidad y contacto del responsable, contacto del **delegado**, **fines** y **base jurídica**, destinatarios… y, para un tratamiento leal y transparente, **plazo de conservación**, **derechos**, retirada del consentimiento, **reclamación** ante la autoridad de control, etc. (13.1 y 2)", "Datos **no** obtenidos del interesado (art. 14): lo mismo, más las **categorías** de datos y la **fuente** de la que proceden (14.1 d y 14.2 f)", "No hay que informar de lo que el interesado **ya sepa** (13.4 y 14.5 a)"],
@@ -369,7 +369,7 @@ T.ap("s9", "III.4 Reclamación, tutela judicial e indemnización (RGPD, arts. 77
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Quién responde del tratamiento? Responsable y encargado (RGPD, arts. 24 a 35; LO 3/2018, arts. 28 a 33)", donde(
+T.ap("bIV", "IV. ¿Quién responde del tratamiento? Responsable y encargado (RGPD, arts. 24 a 26, 28, 30 y 32 a 35; LO 3/2018, arts. 28, 29 y 31 a 33)", donde(
   "Cuarta pregunta. El **responsable** decide los fines y medios y debe **demostrar** que cumple; el **encargado** trata los datos **por su cuenta** y bajo sus **instrucciones**. Los dos llevan un **registro**, aplican medidas de **seguridad** y responden ante las **violaciones de seguridad**.",
   ["1 El responsable y los corresponsables (RGPD, arts. 24 a 26; LO 3/2018, arts. 28 y 29)", "2 El encargado del tratamiento (RGPD, art. 28; LO 3/2018, art. 33)", "3 Registro, bloqueo, seguridad, violaciones y evaluación de impacto (RGPD, arts. 30 y 32 a 35; LO 3/2018, arts. 31 y 32)"]))
 
@@ -421,7 +421,7 @@ T.ap("s11", "IV.2 El encargado del tratamiento (RGPD, art. 28; LO 3/2018, art. 3
 
 T.ap("s12", "IV.3 Registro, bloqueo, seguridad, violaciones y evaluación de impacto (RGPD, arts. 30 y 32 a 35; LO 3/2018, arts. 31 y 32)", f"""
 {unidad("3.1 Registro de las actividades de tratamiento (RGPD, art. 30; LO 3/2018, art. 31)",
-  R(30, ["llevarán un registro de las actividades de tratamiento", "constarán por escrito, inclusive en formato electrónico", "a menos de 250 personas"], solo=[1, 9, 14, 15, 16]),
+  R(30, ["llevarán un registro de las actividades de tratamiento", "constarán por escrito, inclusive en formato electrónico", "a menos de 250 personas"]),
   L(31, ["harán público un inventario de sus actividades de tratamiento accesible por medios electrónicos"]),
   fichab("El registro",
          ["Cada **responsable** y cada **encargado** (y, en su caso, sus representantes) (30.1 y 2)", "Los sujetos del **art. 77.1** LO 3/2018 (sector público): además, un **inventario público** (31.2)"],

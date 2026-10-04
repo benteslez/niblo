@@ -55,7 +55,7 @@ def cs(k, frag): return c(k, T_, frag)
 NOLEGAL = "*Esquema de elaboración propia: resume los artículos y documentos citados; no es texto legal.*"
 
 T = Tema("B2T04",
-  "Cuatro preguntas: I. Qué son las fuentes y qué es el Derecho originario (TUE, arts. 6 y 51; Carta, arts. 51 a 53) · II. Qué es el Derecho derivado: reglamentos, directivas y decisiones (TFUE, arts. 288 a 292) · III. Qué otras fuentes hay (TUE, art. 6.3; TFUE, art. 216) · IV. Cómo se relaciona el Derecho de la Unión con el de los Estados miembros: primacía, efecto directo, cuestión prejudicial (TFUE, art. 267) y CE, arts. 93 a 96. Cada artículo: texto literal (EUR-Lex o BOE) y ficha.",
+  "Cuatro preguntas: I. Qué son las fuentes y qué es el Derecho originario (TUE, arts. 6 y 51; Carta, arts. 51 a 53) · II. Qué es el Derecho derivado: reglamentos, directivas y decisiones (TFUE, arts. 288 a 292) · III. Qué otras fuentes hay (TUE, art. 6.3; TFUE, art. 216) · IV. Cómo se relaciona el Derecho de la Unión con el de los Estados miembros: primacía, efecto directo, cuestión prejudicial (TFUE, art. 267; LOPJ, art. 4 bis) y CE, arts. 93 a 96. Cada artículo: texto literal (EUR-Lex o BOE) y ficha.",
   ["Fuentes del Derecho de la UE", "Derecho originario", "Carta de los Derechos Fundamentales", "Art. 288 TFUE", "Reglamento", "Directiva", "Decisión", "Actos delegados", "Actos de ejecución", "Principios generales", "Acuerdos internacionales", "Primacía", "Efecto directo", "Cuestión prejudicial", "Arts. 93-96 CE"])
 
 # =============================================================================
@@ -80,7 +80,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 
 - Cada artículo: primero el **texto literal** (EUR-Lex, etiqueta DOUE; o BOE) y debajo su **ficha** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen).
 - La primacía y el efecto directo **no están escritos en los Tratados**: se citan **literalmente** la Declaración n.º 17 y las sentencias del TJUE (etiqueta TJUE), y como orientación las síntesis oficiales de EUR-Lex. Todo lo que no es texto legal lo dice en su cabecera.
-- Fronteras con otros temas: Tratados originarios y modificativos, arts. 1 a 8 TUE y competencias (tema II.1); instituciones y procedimiento legislativo, arts. 293 a 299 TFUE (tema II.2); Tribunal de Justicia y recursos (tema II.3).
+- Fronteras con otros temas: Tratados originarios y modificativos, arts. 1 a 8 TUE y competencias (tema II.1); instituciones y procedimiento legislativo, arts. 293 a 297 TFUE (tema II.2); Tribunal de Justicia y recursos (tema II.3).
 - Al final: **Cierre 1** (las preguntas oficiales de 2025 sobre este tema) y **Cierre 2** (repaso por bloques).
 """)
 
@@ -187,7 +187,7 @@ T.ap("s4", "I.4 La adhesión al Convenio Europeo de Derechos Humanos (art. 6.2 T
   lit("TUE", "Artículo 6", ["La Unión se adherirá", "no modificará las competencias de la Unión"], solo=[4]),
   fichab("Mandato de adhesión de la Unión al Convenio Europeo para la Protección de los Derechos Humanos",
          "La Unión",
-         "Mediante un acuerdo de adhesión (su celebración: art. 218 TFUE, tema II.2)",
+         "Mediante un acuerdo de adhesión (su celebración: art. 218 TFUE)",
          f"En el Consejo, {c('TFUE', 'Artículo 218', 'El Consejo se pronunciará también por unanimidad sobre el acuerdo de adhesión de la Unión al Convenio Europeo')} (art. 218.8 TFUE); además, {c('TFUE', 'Artículo 218', 'previa aprobación del Parlamento Europeo')} (art. 218.6 a)",
          "«Se **adherirá**» (futuro: es un mandato). La adhesión **no modifica** las competencias de la Unión."))}
 
@@ -338,7 +338,7 @@ T.ap("s9", "III.2 Los acuerdos internacionales de la Unión (art. 216 TFUE)", f"
   "De acuerdo con la sentencia del TJUE en el asunto Demirel contra Stadt Schwäbisch Gmünd, los acuerdos internacionales pueden tener efecto directo y su fuerza jurídica es superior a la del Derecho derivado, que, por lo tanto, debe cumplirlas."],
   ["sui generis", "superior a la del Derecho derivado"]),
   fichab("Acuerdos de la Unión con terceros países u organizaciones internacionales",
-         "La Unión (procedimiento de negociación y celebración: art. 218 TFUE, tema II.2)",
+         "La Unión (procedimiento de negociación y celebración: art. 218 TFUE)",
          ["Cuando lo prevean los Tratados", "Cuando sea necesario para alcanzar, en el contexto de las políticas de la Unión, un objetivo de los Tratados", "Cuando esté previsto en un acto jurídicamente vinculante de la Unión", "Cuando pueda afectar a normas comunes o alterar su alcance"],
          "—",
          "Vinculan **a las instituciones de la Unión y a los Estados miembros** (216.2)."))}

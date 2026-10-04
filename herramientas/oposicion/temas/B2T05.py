@@ -25,7 +25,7 @@ CORTO.update({
   "FEMPA": "Reglamento (UE) 2021/1139, del FEMPA"})
 
 T = Tema("B2T05",
-  "Seis preguntas: I. Qué es el presupuesto de la Unión y qué reglas lo rigen (TFUE, arts. 310, 313, 316 y 320) · II. Con qué se financia: los recursos propios (art. 311 y Decisión 2020/2053) · III. Qué es el marco financiero plurianual (art. 312 y Reglamento 2020/2093) · IV. Cómo se aprueba, ejecuta y controla (arts. 314 a 325) · V. Qué son los fondos europeos (FSE+, FEDER, Fondo de Cohesión, FEAGA, Feader, FEMPA, MRR) · VI. Qué es la cohesión económica, social y territorial (arts. 174 a 178). Cada artículo: texto literal (EUR-Lex) y ficha.",
+  "Seis preguntas: I. Qué es el presupuesto de la Unión y qué reglas lo rigen (TFUE, arts. 310, 313, 316 y 320) · II. Con qué se financia: los recursos propios (art. 311 y Decisión 2020/2053) · III. Qué es el marco financiero plurianual (art. 312 y Reglamento 2020/2093) · IV. Cómo se aprueba, ejecuta y controla (arts. 314, 315, 317 a 319, 322, 324 y 325) · V. Qué son los fondos europeos (FSE+, FEDER, Fondo de Cohesión, FEAGA, Feader, FEMPA, MRR y Horizonte Europa) · VI. Qué es la cohesión económica, social y territorial (TUE, art. 3.3; TFUE, arts. 4.2 c) y 174 a 178; Reglamento 2021/1060). Cada artículo: texto literal (EUR-Lex) y ficha.",
   ["Presupuesto de la UE", "Arts. 310-325 TFUE", "Recursos propios", "Decisión 2020/2053", "Marco financiero plurianual", "MFP 2021-2027", "Procedimiento presupuestario", "Comité de Conciliación", "Aprobación de la gestión", "Fondos europeos", "FEDER", "Fondo de Cohesión", "FSE+", "Feader", "FEMPA", "MRR", "Cohesión", "Arts. 174-178 TFUE"])
 
 # =============================================================================
@@ -141,7 +141,7 @@ La Decisión vigente es la **2020/2053**, adoptada conforme al art. 311 TFUE (�
          ["Hasta **750 000 millones EUR** (precios de 2018)", "Para préstamos: hasta **360 000 millones**", "Para gastos: hasta **390 000 millones**", "Sin endeudamiento neto nuevo **después de 2026**"],
          f"Los pasivos deben reembolsarse {c('DRP', 'Artículo 5', 'a más tardar el 31 de diciembre de 2058')}. La excepción es **única y temporal** y está ligada a la COVID-19 (financia, entre otros, el MRR → V.5)."))}
 
-{unidad("2.4 Universalidad y gastos de recaudación (arts. 7 y 9.2)",
+{unidad("2.4 Universalidad y gastos de recaudación (art. 7 y art. 9.1 y 2)",
   lit("DRP", "Artículo 7", ["se utilizarán indistintamente"], titulo="Artículo 7 (Decisión (UE, Euratom) 2020/2053) · Principio de universalidad"),
   lit("DRP", "Artículo 9", ["serán recaudados por los Estados miembros", "el 25 %"], solo=[1, 3], titulo="Artículo 9.1 y 2 (Decisión (UE, Euratom) 2020/2053) · Recaudación de los recursos propios"),
   fichab("Destino de los ingresos y quién los recauda",
@@ -200,7 +200,7 @@ T.ap("s6", "III.2 El MFP 2021-2027 (Reglamento (UE, Euratom) 2020/2093)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se aprueba, se ejecuta y se controla el presupuesto? (TFUE, arts. 314 a 325)", donde(
+T.ap("bIV", "IV. ¿Cómo se aprueba, se ejecuta y se controla el presupuesto? (TFUE, arts. 314, 315, 317 a 319, 322, 324 y 325)", donde(
   "Cuarta pregunta. Ya sabemos qué es el presupuesto, cómo se financia y qué marco respeta. Ahora, el **ciclo**: quién lo **aprueba** y con qué plazos, quién lo **ejecuta** y quién **controla** esa ejecución.",
   ["1 Aprobación: el procedimiento presupuestario y las doceavas partes (arts. 314 y 315)", "2 Ejecución, cuentas y aprobación de la gestión (arts. 317 a 319)", "3 Normas financieras, concertación y lucha contra el fraude (arts. 322, 324 y 325)"]))
 
@@ -397,7 +397,7 @@ T.ap("s15", "V.6 Cuadro de los fondos (esquema)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bVI", "VI. ¿Qué es la cohesión económica, social y territorial? (TUE, art. 3.3; TFUE, arts. 4 y 174 a 178)", donde(
+T.ap("bVI", "VI. ¿Qué es la cohesión económica, social y territorial? (TUE, art. 3.3; TFUE, arts. 4.2 c) y 174 a 178; Reglamento 2021/1060)", donde(
   "Sexta y última pregunta. La cohesión es un **objetivo** de la Unión y una **competencia compartida**. El Título XVIII del TFUE (arts. 174 a 178) dice qué persigue y con qué instrumentos (los fondos del bloque V).",
   ["1 La cohesión como objetivo y como competencia (TUE, art. 3.3; TFUE, arts. 4.2 c) y 174)", "2 Los instrumentos: fondos estructurales, FEDER y Fondo de Cohesión (TFUE, arts. 175 a 178)", "3 Las categorías de regiones (Reglamento (UE) 2021/1060, arts. 5.2 y 108)"]))
 

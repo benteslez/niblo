@@ -23,7 +23,7 @@ TF = "TFUE"
 def tf(n): return f"Artículo {n}"
 
 T = Tema("B2T06",
-  "Seis preguntas: I. Qué es el mercado interior y sus cuatro libertades (TFUE, arts. 26 a 66) · II. Cómo se coordina la política económica y quién hace la monetaria (TFUE, arts. 119 a 140; Protocolos n.º 12, 13 y 16; TECG) · III. Cómo funciona la PESC (TUE, arts. 21 a 46) · IV. Qué es el espacio de libertad, seguridad y justicia (TFUE, arts. 67 a 89) · V. Qué prohíben las normas de competencia (TFUE, arts. 101 a 108) · VI. Qué persiguen la política agrícola y la pesquera (TFUE, arts. 38 a 43; FEMPA). Cada artículo: texto literal (EUR-Lex o BOE) y ficha.",
+  "Seis preguntas: I. Qué es el mercado interior y sus cuatro libertades (TFUE, arts. 3.1 a), 4.2 a), 26, 28, 30, 34 a 36, 45, 49, 51, 56, 57, 59, 63, 65 y 66) · II. Cómo se coordina la política económica y quién hace la monetaria (TFUE, arts. 3.1 c), 119, 121, 123 a 128, 130, 136, 139 y 140; Protocolos n.º 12, 13 y 16; TECG) · III. Cómo funciona la PESC (TUE, arts. 21, 24, 26, 27, 31, 42 y 46) · IV. Qué es el espacio de libertad, seguridad y justicia (TFUE, arts. 4.2 j), 67, 68, 76 a 79, 81 a 83 y 85 a 88) · V. Qué prohíben las normas de competencia (TFUE, arts. 3.1 b), 101, 102 y 105 a 108) · VI. Qué persiguen la política agrícola y la pesquera (TFUE, arts. 3.1 d), 4.2 d), 38 a 40, 42 y 43; FEMPA). Cada artículo: texto literal (EUR-Lex o BOE) y ficha.",
   ["Mercado interior", "Art. 26 TFUE", "Cuatro libertades", "Unión aduanera", "Art. 45.4", "UEM", "Euro", "BCE y SEBC", "Déficit excesivo", "Criterios de convergencia", "TECG", "PESC", "Alto Representante", "Abstención con declaración formal", "Art. 42.7 TUE", "ELSJ", "Reconocimiento mutuo", "Eurojust y Fiscalía Europea", "Arts. 101 y 102", "Ayudas de Estado", "PAC", "Pesca", "FEMPA"])
 
 # =============================================================================
@@ -56,9 +56,9 @@ El epígrafe enumera **seis políticas**. Cada una es un bloque de los apuntes, 
 
 # =============================================================================
 # BLOQUE I. MERCADO INTERIOR
-T.ap("bI", "I. ¿Qué es el mercado interior y cómo se garantizan las cuatro libertades? (TFUE, arts. 26 a 66)", donde(
+T.ap("bI", "I. ¿Qué es el mercado interior y cómo se garantizan las cuatro libertades? (TFUE, arts. 3.1 a), 4.2 a), 26, 28, 30, 34 a 36, 45, 49, 51, 56, 57, 59, 63, 65 y 66)", donde(
   "Primera política del epígrafe y base de las demás. El TFUE define el mercado interior como un **espacio sin fronteras interiores** y lo construye con **cuatro libertades**: mercancías, personas, servicios y capitales.",
-  ["1 Competencia y concepto (arts. 3, 4 y 26)", "2 Mercancías: unión aduanera y restricciones cuantitativas (arts. 28 a 36)", "3 Personas: trabajadores y establecimiento (arts. 45, 49 y 51)", "4 Servicios (arts. 56, 57 y 59)", "5 Capitales y pagos (arts. 63, 65 y 66)"]))
+  ["1 Competencia y concepto (arts. 3, 4 y 26)", "2 Mercancías: unión aduanera y restricciones cuantitativas (arts. 28, 30 y 34 a 36)", "3 Personas: trabajadores y establecimiento (arts. 45, 49 y 51)", "4 Servicios (arts. 56, 57 y 59)", "5 Capitales y pagos (arts. 63, 65 y 66)"]))
 
 T.ap("s1", "I.1 Competencia de la Unión y concepto de mercado interior (TFUE, arts. 3, 4 y 26)", f"""
 {unidad("1.1 Unión aduanera, exclusiva; mercado interior, compartida (arts. 3.1 a y 4.2 a)",
@@ -79,7 +79,7 @@ T.ap("s1", "I.1 Competencia de la Unión y concepto de mercado interior (TFUE, a
          "Cayó en 2025 (→ Cierre 1): el mercado interior implica **un espacio sin fronteras interiores**; no armonización fiscal plena ni unificación presupuestaria."))}
 """, 2)
 
-T.ap("s2", "I.2 Libre circulación de mercancías (TFUE, arts. 28 a 36)", f"""
+T.ap("s2", "I.2 Libre circulación de mercancías (TFUE, arts. 28, 30 y 34 a 36)", f"""
 {unidad("2.1 La unión aduanera (art. 28)",
   lit(TF, tf(28), ["la totalidad de los intercambios de mercancías", "la prohibición, entre los Estados miembros, de los derechos de aduana de importación y exportación y de cualesquiera exacciones de efecto equivalente", "un arancel aduanero común"]),
   fichab("Unión aduanera: libre comercio interior + arancel común frente a terceros",
@@ -197,7 +197,7 @@ T.ap("s5", "I.5 Libre circulación de capitales y pagos (TFUE, arts. 63, 65 y 66
 
 # =============================================================================
 # BLOQUE II. POLÍTICA ECONÓMICA Y MONETARIA
-T.ap("bII", "II. ¿Cómo se coordina la política económica y quién decide la monetaria? (TFUE, arts. 119 a 140; Protocolos n.º 12, 13 y 16; TECG)", donde(
+T.ap("bII", "II. ¿Cómo se coordina la política económica y quién decide la monetaria? (TFUE, arts. 3.1 c), 119, 121, 123 a 128, 130, 136, 139 y 140; Protocolos n.º 12, 13 y 16; TECG)", donde(
   "Segunda política del epígrafe. La unión económica y monetaria tiene dos piezas **asimétricas**: la política **económica** sigue en manos de los Estados, que la **coordinan** en el Consejo; la política **monetaria** de los Estados del euro es **exclusiva** de la Unión y la conduce el **SEBC**.",
   ["1 Principios (arts. 3.1 c y 119)", "2 Coordinación de las políticas económicas (art. 121)", "3 Prohibiciones de financiación y de rescate (arts. 123 a 125)", "4 Déficit excesivo (art. 126 y Protocolo n.º 12)", "5 La política monetaria: SEBC, BCE y euro (arts. 127, 128 y 130)", "6 Estados del euro y Estados acogidos a una excepción (arts. 136, 139 y 140; Protocolos n.º 13 y 16)", "7 El Tratado de Estabilidad, Coordinación y Gobernanza"]))
 
@@ -269,7 +269,7 @@ T.ap("s9", "II.4 El procedimiento de déficit excesivo (TFUE, art. 126 y Protoco
          "Son valores del **Protocolo n.º 12**, no del art. 126. **3 %** = déficit; **60 %** = deuda."))}
 
 {unidad("4.3 Del dictamen a las multas (art. 126.3 a 11)",
-  lit(TF, tf(126), ["El Comité Económico y Financiero emitirá un dictamen", "decidirá si existe un déficit excesivo", "no se harán públicas", "no podrá ejercerse el derecho de recurso previsto en los artículos 258 y 259", "imponer multas de una magnitud apropiada"], solo=[8, 10, 11, 12, 13, 15, 17, 18, 19, 20, 21, 22]),
+  lit(TF, tf(126), ["El Comité Económico y Financiero emitirá un dictamen", "decidirá si existe un déficit excesivo", "no se harán públicas", "no podrá ejercerse el derecho de recurso previsto en los artículos 258 y 259", "imponer multas de una magnitud apropiada"], solo=[8, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22]),
   fichab("Procedimiento de déficit excesivo",
          "**Comisión** (informe y dictamen) · **Comité Económico y Financiero** (dictamen sobre el informe) · **Consejo** (decide y sanciona)",
          ["Informe de la Comisión → dictamen del CEF → dictamen de la Comisión al Estado", "El Consejo decide si **existe** déficit excesivo y dirige **recomendaciones** (no públicas salvo incumplimiento)", "Si persiste: **advertencia**; si incumple: información adicional, revisión de préstamos del BEI, **depósito sin intereses**, **multas**"],
@@ -356,7 +356,7 @@ Tratado internacional entre Estados miembros, **fuera** de los Tratados de la Un
          f"No figuran en la lista de firmantes la **República Checa** ni el **Reino Unido**. El Tratado {c('TECG', 'preambulo', 'estará abierto a la adhesión de los Estados Miembros de la Unión Europea que no sean Partes Contratantes')} (art. 15). Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("7.2 Objeto y regla de equilibrio presupuestario (arts. 1 y 3.1 a y b)",
-  lit("TECG", "preambulo", ["reforzar el pilar económico de la unión económica y monetaria", "será de equilibrio o de superávit", "0,5 % del producto interior bruto"], solo=[42, 43, 52, 53, 54], titulo="Artículos 1 y 3.1 a) y b) (Tratado de Estabilidad, Coordinación y Gobernanza)"),
+  lit("TECG", "preambulo", ["reforzar el pilar económico de la unión económica y monetaria", "será de equilibrio o de superávit", "0,5 % del producto interior bruto"], solo=[41, 42, 43, 51, 52, 53, 54], titulo="Artículos 1 y 3.1 a) y b) (Tratado de Estabilidad, Coordinación y Gobernanza)"),
   fichab("El «pacto presupuestario»", "Las Partes Contratantes; se aplica **íntegramente** a las del euro",
          ["Situación presupuestaria de **equilibrio o superávit**", "Límite inferior de déficit estructural del **0,5 %** del PIB"], "—",
          "Se aplica **íntegramente** a los Estados **cuya moneda es el euro**; a los demás, en la medida del art. 14."))}
@@ -379,13 +379,13 @@ Tratado internacional entre Estados miembros, **fuera** de los Tratados de la Un
 
 # =============================================================================
 # BLOQUE III. PESC
-T.ap("bIII", "III. ¿Cómo funciona la política exterior y de seguridad común? (TUE, arts. 21 a 46)", donde(
+T.ap("bIII", "III. ¿Cómo funciona la política exterior y de seguridad común? (TUE, arts. 21, 24, 26, 27, 31, 42 y 46)", donde(
   "Tercera política del epígrafe. La PESC está en el **TUE**, no en el TFUE, y se rige por **reglas propias**: unanimidad como regla, sin actos legislativos y con un control muy limitado del Tribunal de Justicia.",
   ["1 Principios y objetivos de la acción exterior (art. 21)", "2 Competencia y reglas específicas (arts. 24 y 26)", "3 El Alto Representante y el Servicio Europeo de Acción Exterior (art. 27)", "4 Cómo se decide (art. 31)", "5 La política común de seguridad y defensa (arts. 42 y 46)"]))
 
 T.ap("s13", "III.1 Principios y objetivos de la acción exterior (TUE, art. 21)", f"""
 {unidad("1.1 Principios y objetivos (art. 21.1 y 2)",
-  lit("TUE", tf(21), ["la democracia, el Estado de Derecho, la universalidad e indivisibilidad de los derechos humanos", "mantener la paz, prevenir los conflictos y fortalecer la seguridad internacional"], solo=[1, 3, 4, 5, 6, 7, 8, 9, 10, 11]),
+  lit("TUE", tf(21), ["la democracia, el Estado de Derecho, la universalidad e indivisibilidad de los derechos humanos", "mantener la paz, prevenir los conflictos y fortalecer la seguridad internacional"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]),
   fichab("Lo que inspira toda la acción exterior de la Unión", "La Unión",
          ["::Principios (21.1): los que han inspirado su creación, desarrollo y ampliación:", "Democracia y Estado de Derecho", "Universalidad e indivisibilidad de los derechos humanos", "Dignidad humana, igualdad y solidaridad", "Carta de las Naciones Unidas y Derecho internacional"],
          "—",
@@ -468,7 +468,7 @@ T.ap("s17", "III.5 La política común de seguridad y defensa (TUE, arts. 42 y 4
 
 # =============================================================================
 # BLOQUE IV. ELSJ
-T.ap("bIV", "IV. ¿Qué es el espacio de libertad, seguridad y justicia? (TFUE, arts. 67 a 89)", donde(
+T.ap("bIV", "IV. ¿Qué es el espacio de libertad, seguridad y justicia? (TFUE, arts. 4.2 j), 67, 68, 76 a 79, 81 a 83 y 85 a 88)", donde(
   "Cuarta política del epígrafe (el programa la llama «espacio de seguridad, libertad y justicia»; el TFUE, **espacio de libertad, seguridad y justicia**). Es una competencia **compartida** (art. 4.2 j) con cuatro piezas: fronteras, asilo e inmigración; cooperación judicial civil; cooperación judicial penal; y cooperación policial.",
   ["1 Objetivos, orientaciones e iniciativa (arts. 67, 68 y 76)", "2 Fronteras, asilo e inmigración (arts. 77 a 79)", "3 Cooperación judicial civil y penal (arts. 81 a 83)", "4 Eurojust, Fiscalía Europea, cooperación policial y Europol (arts. 85 a 88)"]))
 
@@ -521,7 +521,7 @@ T.ap("s20", "IV.3 Cooperación judicial civil y penal (TFUE, arts. 81 a 83)", f"
          "En lo civil se reconocen también las resoluciones **extrajudiciales**; el Derecho de familia exige **unanimidad**."))}
 
 {unidad("3.2 Cooperación judicial penal (art. 82.1 y 2)",
-  lit(TF, tf(82), ["se basará en el principio de reconocimiento mutuo de las sentencias y resoluciones judiciales", "normas mínimas mediante directivas"], solo=[1, 2, 3, 4, 5, 6, 7]),
+  lit(TF, tf(82), ["se basará en el principio de reconocimiento mutuo de las sentencias y resoluciones judiciales", "normas mínimas mediante directivas"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]),
   fichab("Cooperación judicial en materia penal", "Parlamento Europeo y Consejo (procedimiento legislativo **ordinario**)",
          ["Principio: **reconocimiento mutuo** de sentencias y resoluciones judiciales", "Incluye la **aproximación** de legislaciones", "**Normas mínimas** por **directivas** (pruebas, derechos de las personas y de las víctimas)"],
          "Si un Estado considera que una directiva afecta a aspectos fundamentales de su sistema penal, puede remitir el asunto al Consejo Europeo; sin acuerdo en **cuatro meses**, cooperación reforzada con **al menos nueve** Estados (82.3)",
@@ -537,7 +537,7 @@ T.ap("s20", "IV.3 Cooperación judicial civil y penal (TFUE, arts. 81 a 83)", f"
 
 T.ap("s21", "IV.4 Eurojust, Fiscalía Europea, cooperación policial y Europol (TFUE, arts. 85 a 88)", f"""
 {unidad("4.1 Eurojust (art. 85.1)",
-  lit(TF, tf(85), ["apoyar y reforzar la coordinación y la cooperación entre las autoridades nacionales encargadas de investigar y perseguir la delincuencia grave"], solo=[1, 2]),
+  lit(TF, tf(85), ["apoyar y reforzar la coordinación y la cooperación entre las autoridades nacionales encargadas de investigar y perseguir la delincuencia grave"], solo=[1, 2, 3, 4, 5, 6]),
   fichab("Eurojust: coordinación judicial penal", "Eurojust; su estructura y competencias, por **reglamentos** (ordinario)",
          "Apoya la coordinación de las autoridades nacionales frente a la delincuencia grave que afecte a **dos o más** Estados", "—",
          "Los actos procesales formales los realizan los **funcionarios nacionales** (85.2)."))}
@@ -573,7 +573,7 @@ T.ap("s21", "IV.4 Eurojust, Fiscalía Europea, cooperación policial y Europol (
 
 # =============================================================================
 # BLOQUE V. COMPETENCIA
-T.ap("bV", "V. ¿Qué prohíben las normas de competencia y quién las aplica? (TFUE, arts. 101 a 108)", donde(
+T.ap("bV", "V. ¿Qué prohíben las normas de competencia y quién las aplica? (TFUE, arts. 3.1 b), 101, 102 y 105 a 108)", donde(
   "Quinta política del epígrafe: la **defensa de la competencia**. El TFUE prohíbe a las **empresas** los acuerdos colusorios y el abuso de posición dominante, y a los **Estados** las ayudas que falseen la competencia. La **Comisión** vela por su aplicación.",
   ["1 Normas aplicables a las empresas (arts. 3.1 b, 101 y 102)", "2 Aplicación por la Comisión y empresas públicas (arts. 105 y 106)", "3 Ayudas otorgadas por los Estados (arts. 107 y 108)"]))
 
@@ -656,7 +656,7 @@ T.ap("s24", "V.3 Ayudas otorgadas por los Estados (TFUE, arts. 107 y 108)", f"""
 
 # =============================================================================
 # BLOQUE VI. AGRICULTURA Y PESCA
-T.ap("bVI", "VI. ¿Qué persiguen la política agrícola común y la pesquera? (TFUE, arts. 38 a 43; Reglamento FEMPA)", donde(
+T.ap("bVI", "VI. ¿Qué persiguen la política agrícola común y la pesquera? (TFUE, arts. 3.1 d), 4.2 d), 38 a 40, 42 y 43; Reglamento FEMPA)", donde(
   "Sexta y última política del epígrafe. El TFUE trata **juntas** la agricultura y la pesca: el mercado interior abarca los productos agrícolas y de la pesca, y la Unión define una **política común de agricultura y pesca**. Su financiación general es del tema II.5; aquí, solo el FEMPA por la pregunta de 2025.",
   ["1 Competencia y ámbito (arts. 3.1 d, 4.2 d y 38)", "2 Objetivos de la PAC (art. 39)", "3 Organización común de mercados y procedimiento (arts. 40, 42 y 43)", "4 El Fondo Europeo Marítimo, de Pesca y de Acuicultura (Reglamento (UE) 2021/1139)"]))
 

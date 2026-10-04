@@ -181,7 +181,7 @@ T.ap("s4", "I.4 Planes de igualdad de las empresas (arts. 45 y 46)", f"""
          "**Cincuenta o más** (≥ 50). En la Ley 4/2023 el umbral de las medidas LGTBI es **más de cincuenta** (> 50, → III.3.4)."))}
 
 {unidad("4.2 Concepto, contenido y registro (art. 46)",
-  lit("LO3_2007", "Artículo 46", ["conjunto ordenado de medidas, adoptadas después de realizar un diagnóstico de situación", "Registro de Planes de Igualdad de las Empresas", "obligadas a inscribir"], solo=[1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16]),
+  lit("LO3_2007", "Artículo 46", ["conjunto ordenado de medidas, adoptadas después de realizar un diagnóstico de situación", "Registro de Planes de Igualdad de las Empresas", "obligadas a inscribir"], solo=[1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]),
   fichab("Plan de igualdad: medidas ordenadas tras un diagnóstico",
          "Comisión Negociadora del Plan de Igualdad (diagnóstico); la empresa lo inscribe",
          ["Diagnóstico previo negociado con al menos nueve materias (selección, clasificación, formación, promoción, condiciones de trabajo con auditoría salarial, corresponsabilidad, infrarrepresentación, retribuciones, acoso)", "Abarca la totalidad de la empresa", "Inscripción obligatoria en el Registro de Planes de Igualdad"],
@@ -275,7 +275,7 @@ T.ap("s6", "I.6 Órganos y composición equilibrada (arts. 76 a 78 y disposició
 # =============================================================================
 T.ap("bII", "II. ¿Cómo se combate la violencia de género? (LO 1/2004 y normas conexas)", donde(
   "Segunda pregunta. La violencia de género es la manifestación más grave de la desigualdad. La **Ley Orgánica 1/2004**, de 28 de diciembre, de Medidas de Protección Integral contra la Violencia de Género, define qué es, reconoce derechos a las víctimas y crea órganos especializados.",
-  ["1 Objeto, principios y planes de sensibilización (arts. 1 a 3)", "2 Derechos de las mujeres víctimas (arts. 17 a 27)", "3 Tutela institucional: Delegación del Gobierno y Observatorio (arts. 29 y 30; RD 246/2024)", "4 Pacto de Estado y plan conjunto plurianual"]))
+  ["1 Objeto, principios y planes de sensibilización (arts. 1 a 3)", "2 Derechos de las mujeres víctimas (arts. 17 a 21 y 23 a 27)", "3 Tutela institucional: Delegación del Gobierno y Observatorio (arts. 29 y 30; RD 246/2024)", "4 Pacto de Estado y plan conjunto plurianual"]))
 
 T.ap("s7", "II.1 Objeto, principios y sensibilización (arts. 1 a 3)", f"""
 {unidad("1.1 Qué es violencia de género para la ley (art. 1)",
@@ -287,14 +287,14 @@ T.ap("s7", "II.1 Objeto, principios y sensibilización (arts. 1 a 3)", f"""
          "Basta una relación de afectividad **presente o pasada**, **aun sin convivencia**. Finalidad: **prevenir, sancionar y erradicar** y **prestar asistencia**."))}
 
 {unidad("1.2 Principios rectores (art. 2)",
-  lit("LO1_2004", "Artículo 2", ["Delegación Especial del Gobierno contra la Violencia sobre la Mujer", "Observatorio Estatal de la Violencia sobre la Mujer", "principio de transversalidad"], solo=[1, 2, 3, 5, 7, 12]),
+  lit("LO1_2004", "Artículo 2", ["Delegación Especial del Gobierno contra la Violencia sobre la Mujer", "Observatorio Estatal de la Violencia sobre la Mujer", "principio de transversalidad"]),
   fichab("Fines del conjunto integral de medidas", "Los poderes públicos",
          ["Sensibilización y prevención", "Derechos de las víctimas exigibles ante las Administraciones", "Derechos laborales, funcionariales y económicos", "Tutela institucional (Delegación y Observatorio)", "Marco penal y procesal", "Transversalidad"],
          "—",
          "El art. 2 f) conserva el nombre antiguo («Delegación **Especial** del Gobierno contra la Violencia **sobre la Mujer**»); el órgano se llama hoy **Delegación del Gobierno contra la Violencia de Género** (art. 29 → II.3.1)."))}
 
 {unidad("1.3 Plan Estatal de Sensibilización y Prevención (art. 3)",
-  lit("LO1_2004", "Artículo 3", ["Plan Estatal de Sensibilización y Prevención de la Violencia de Género con carácter permanente", "en un plazo máximo de un mes", "Informe anual de evaluación"], solo=[1, 5, 6]),
+  lit("LO1_2004", "Artículo 3", ["Plan Estatal de Sensibilización y Prevención de la Violencia de Género con carácter permanente", "en un plazo máximo de un mes", "Informe anual de evaluación"], solo=[1, 2, 3, 4, 5, 6]),
   fichab("Plan permanente de sensibilización y prevención",
          "Responsabilidad del Gobierno; lo controla una Comisión de amplia participación; la Delegación del Gobierno elabora el informe anual",
          "Con escalas de valores basadas en la igualdad, dirigido a hombres y mujeres, con formación de profesionales",
@@ -302,7 +302,7 @@ T.ap("s7", "II.1 Objeto, principios y sensibilización (arts. 1 a 3)", f"""
          "Plan **permanente**; el informe anual lo hace la **Delegación del Gobierno** y va a las **Cortes**."))}
 """, 2)
 
-T.ap("s8", "II.2 Derechos de las mujeres víctimas (arts. 17 a 27)", f"""
+T.ap("s8", "II.2 Derechos de las mujeres víctimas (arts. 17 a 21 y 23 a 27)", f"""
 {unidad("2.1 Garantía de los derechos y derecho a la información (arts. 17 y 18)",
   lit("LO1_2004", "Artículo 17", ["sin que pueda existir discriminación en el acceso a los mismos", "carácter de servicios esenciales"], solo=[1, 3]),
   lit("LO1_2004", "Artículo 18", ["plena información y asesoramiento adecuado a su situación personal"], solo=[1]),
@@ -351,7 +351,7 @@ T.ap("s8", "II.2 Derechos de las mujeres víctimas (arts. 17 a 27)", f"""
         "Para la funcionaria, la ley habla de **excedencia**; para la trabajadora, de **suspensión** y **extinción** (art. 21)."))}
 
 {unidad("2.7 Ayuda social de pago único (art. 27)",
-  lit("LO1_2004", "Artículo 27", ["75 por 100 del salario mínimo interprofesional", "seis meses de subsidio por desempleo", "doce meses", "18 meses", "24 meses"], solo=[1, 2, 5]),
+  lit("LO1_2004", "Artículo 27", ["75 por 100 del salario mínimo interprofesional", "seis meses de subsidio por desempleo", "doce meses", "18 meses", "24 meses"], solo=[1, 2, 3, 4, 5]),
   ficha("Víctimas con rentas no superiores al 75 % del SMI y especiales dificultades para obtener empleo",
         "Ayuda de pago único financiada por los Presupuestos Generales del Estado",
         "Que por su edad, preparación o circunstancias sociales no participe en los programas de empleo",
@@ -400,7 +400,7 @@ T.ap("s10", "II.4 Pacto de Estado y plan conjunto plurianual", f"""
 
 {resumen([
   "Violencia de género (LO 1/2004): la ejercida sobre las mujeres por quien sea o haya sido su cónyuge o pareja, **aun sin convivencia**; incluye la ejercida sobre menores para dañarlas (art. 1).",
-  "Derechos: información, asistencia social integral, asistencia jurídica gratuita, derechos laborales y de funcionarias, ayuda de pago único (arts. 17 a 27); se acreditan con sentencia, orden de protección, informe del Fiscal o de los servicios sociales (art. 23).",
+  "Derechos: información, asistencia social integral, asistencia jurídica gratuita, derechos laborales y de funcionarias, ayuda de pago único (arts. 17 a 21 y 23 a 27); se acreditan con sentencia, orden de protección, informe del Fiscal o de los servicios sociales (art. 23).",
   "Delegación del Gobierno contra la Violencia de Género: **rango de dirección general** (RD 246/2024); Observatorio Estatal: órgano **colegiado** con informe **anual**.",
   "Pacto de Estado renovado el **26-2-2025**: de **290 a 461** medidas; plan conjunto plurianual **2023-2027** (Conferencia Sectorial de Igualdad)."],
   "Siguiente: III. ¿Cómo se garantiza la igualdad de trato y la de las personas LGTBI?")}
@@ -434,7 +434,7 @@ T.ap("s11", "III.1 Ley 15/2022: objeto, ámbito, derecho y definiciones (arts. 1
         "Vulneraciones: discriminación directa o indirecta, **por asociación**, **por error**, **múltiple o interseccional**, denegación de ajustes razonables, acoso, inducción, represalias, inacción…"))}
 
 {unidad("1.4 Definiciones (art. 6)",
-  lit("L15_2022", "Artículo 6", ["debido a su relación con otra", "apreciación incorrecta", "de manera simultánea o consecutiva por dos o más causas", "concurren o interactúan diversas causas", "entorno intimidatorio, hostil, degradante, humillante u ofensivo", "en su dimensión colectiva o social"], solo=[1, 2, 4, 5, 6, 7, 8, 9, 10, 13, 14, 21, 22]),
+  lit("L15_2022", "Artículo 6", ["debido a su relación con otra", "apreciación incorrecta", "de manera simultánea o consecutiva por dos o más causas", "concurren o interactúan diversas causas", "entorno intimidatorio, hostil, degradante, humillante u ofensivo", "en su dimensión colectiva o social"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 21, 22]),
   fichab("Conceptos legales de discriminación", "—",
          ["Por **asociación**: por la relación con otra persona en quien concurre la causa", "Por **error**: apreciación incorrecta de las características", "**Múltiple**: dos o más causas, simultánea o consecutivamente", "**Interseccional**: las causas concurren o interactúan y generan una forma específica", "**Acoso** y **acción positiva**: definiciones que repite literalmente la Ley 4/2023 (→ III.3.2)"],
          "—",
@@ -443,7 +443,7 @@ T.ap("s11", "III.1 Ley 15/2022: objeto, ámbito, derecho y definiciones (arts. 1
 
 T.ap("s12", "III.2 Autoridad Independiente para la Igualdad de Trato y la No Discriminación (arts. 40 y 41)", f"""
 {unidad("2.1 Creación y funciones (art. 40)",
-  lit("L15_2022", "Artículo 40", ["como autoridad independiente", "con el consentimiento expreso de las partes", "sustituirá al recurso de alzada", "tendrán carácter vinculante para las partes", "que remitirá al Congreso de los Diputados, al Gobierno y al Defensor del Pueblo"], solo=[1, 3, 4, 5, 18]),
+  lit("L15_2022", "Artículo 40", ["como autoridad independiente", "con el consentimiento expreso de las partes", "sustituirá al recurso de alzada", "tendrán carácter vinculante para las partes", "que remitirá al Congreso de los Diputados, al Gobierno y al Defensor del Pueblo"], solo=[1, 2, 3, 4, 5, 6, 7, 12, 13, 18]),
   fichab("Autoridad independiente que protege y promueve la igualdad de trato en los ámbitos de competencia del Estado",
          "La Autoridad Independiente (sector público y privado)",
          ["Asistencia y orientación a las víctimas", "Mediación o conciliación (con consentimiento expreso; no en asuntos penales o laborales)", "Investigaciones de oficio o a instancia de terceros", "Acciones judiciales", "Dictamen sobre proyectos normativos e informe preceptivo de la Estrategia Estatal"],
@@ -500,7 +500,7 @@ T.ap("s14", "III.4 Medidas LGTBI en las empresas (RD 1026/2024)", f"""
          "Obligatorio con **más de 50**; voluntario con **50 o menos**."))}
 
 {unidad("4.2 Contenido mínimo de las medidas planificadas (anexo I)",
-  lit("RD1026", "ai", ["contexto favorable a la diversidad", "erradicar estereotipos", "heterogeneidad de las plantillas", "garantizando el acceso"], solo=[3, 4, 5, 6, 17, 18, 19, 20], titulo="Anexo I. Medidas planificadas (RD 1026/2024) · fragmentos"),
+  lit("RD1026", "ai", ["contexto favorable a la diversidad", "erradicar estereotipos", "heterogeneidad de las plantillas", "garantizando el acceso"], solo=[3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 23], titulo="Anexo I. Medidas planificadas (RD 1026/2024) · fragmentos"),
   fichab("Contenidos que deben desarrollar las medidas planificadas", "Convenios colectivos o acuerdos de empresa",
          ["Cláusulas de igualdad de trato y no discriminación", "Acceso al empleo sin estereotipos", "Clasificación y promoción", "Formación, sensibilización y lenguaje", "Entornos laborales diversos", "Permisos y beneficios sociales", "Régimen disciplinario"],
          "—",
@@ -566,7 +566,7 @@ T.ap("s17", "IV.2 LGD: objeto, definiciones, principios y titulares (arts. 1 a 4
          "Son **trece** (letras a a m)."))}
 
 {unidad("2.4 Titulares: quién es persona con discapacidad (art. 4)",
-  lit("LGD", "a4", ["previsiblemente permanentes", "igual o superior al 33 por ciento", "validez en todo el territorio nacional"], solo=[1, 3, 4, 6]),
+  lit("LGD", "a4", ["previsiblemente permanentes", "igual o superior al 33 por ciento", "validez en todo el territorio nacional"], solo=[1, 3, 4, 5, 6]),
   ficha("Las personas con deficiencias físicas, mentales, intelectuales o sensoriales previsiblemente permanentes que, con barreras, ven limitada su participación",
         "A efectos de la ley, además, quienes tengan reconocido un grado de discapacidad **igual o superior al 33 %**",
         "Se asimilan, para ciertos capítulos, los pensionistas de incapacidad permanente total, absoluta o gran invalidez y los de clases pasivas por incapacidad",
@@ -576,7 +576,7 @@ T.ap("s17", "IV.2 LGD: objeto, definiciones, principios y titulares (arts. 1 a 4
 
 T.ap("s18", "IV.3 Derecho al trabajo y cuota de reserva (arts. 35, 37 y 42)", f"""
 {unidad("3.1 Garantías del derecho al trabajo (art. 35)",
-  lit("LGD", "a35", ["tienen derecho al trabajo", "se considera en todo caso acto discriminatorio"], solo=[1, 3, 7]),
+  lit("LGD", "a35", ["tienen derecho al trabajo", "se considera en todo caso acto discriminatorio"], solo=[1, 2, 3, 7]),
   ficha("Las personas con discapacidad (y, a efectos del capítulo VI, los pensionistas de incapacidad permanente total, absoluta o gran invalidez)",
         "Derecho al trabajo con igualdad de trato y no discriminación",
         "—", "Nulidad de las cláusulas y decisiones discriminatorias (35.5)",
@@ -648,13 +648,13 @@ T.ap("s20", "V.1 Objeto, definiciones, principios y titulares (arts. 1, 2, 3 y 5
          "Es un **derecho subjetivo de ciudadanía**."))}
 
 {unidad("1.2 Definiciones (art. 2)",
-  lit("L39_2006", "Artículo 2", ["el estado de carácter permanente", "las tareas más elementales de la persona", "no vinculadas a un servicio de atención profesionalizada"], solo=[1, 3, 4, 6]),
+  lit("L39_2006", "Artículo 2", ["el estado de carácter permanente", "las tareas más elementales de la persona", "no vinculadas a un servicio de atención profesionalizada"], solo=[1, 2, 3, 4, 6]),
   fichab("Conceptos legales", "—",
          ["Dependencia: estado **permanente** por edad, enfermedad o discapacidad que exige atención de otra persona o ayudas importantes para las ABVD", "ABVD: cuidado personal, actividades domésticas básicas, movilidad esencial, reconocer personas y objetos, orientarse, entender y ejecutar órdenes", "Cuidados no profesionales: familia o entorno"],
          "—", "La dependencia es un estado de carácter **permanente**."))}
 
 {unidad("1.3 Principios (art. 3)",
-  lit("L39_2006", "Artículo 3", ["El carácter público de las prestaciones", "La universalidad en el acceso", "La permanencia de las personas en situación de dependencia, siempre que sea posible, en el entorno", "serán atendidas de manera preferente"], solo=[1, 2, 3, 10, 19]),
+  lit("L39_2006", "Artículo 3", ["El carácter público de las prestaciones", "La universalidad en el acceso", "La permanencia de las personas en situación de dependencia, siempre que sea posible, en el entorno", "serán atendidas de manera preferente"], solo=[1, 2, 3, 4, 10, 18, 19]),
   fichab("Principios inspiradores de la ley", "—",
          ["Carácter **público** de las prestaciones", "**Universalidad** en el acceso", "Atención integral e integrada", "Permanencia en el entorno", "Perspectiva de género", "Gran dependencia: atención **preferente**"],
          "—", "Las personas en **gran dependencia** se atienden **de manera preferente**."))}
@@ -676,7 +676,7 @@ T.ap("s21", "V.2 El Sistema y sus niveles (arts. 6, 8 y 9)", f"""
          "Red de **utilización pública** que integra centros **públicos y privados**, sin alterar su titularidad."))}
 
 {unidad("2.2 Consejo Territorial (art. 8)",
-  lit("L39_2006", "Artículo 8", ["instrumento de cooperación", "que ostentará su presidencia", "tendrán mayoría los representantes de las comunidades autónomas", "Acordar el baremo"], solo=[1, 2, 8]),
+  lit("L39_2006", "Artículo 8", ["instrumento de cooperación", "que ostentará su presidencia", "tendrán mayoría los representantes de las comunidades autónomas", "Acordar el baremo"], solo=[1, 2, 3, 4, 5, 6, 7, 8]),
   fichab("Consejo Territorial de Servicios Sociales y del Sistema para la Autonomía y Atención a la Dependencia",
          "Preside el titular del Ministerio; lo integran los Consejeros de las CC. AA. (una de ellas, vicepresidencia)",
          "Acuerda el marco de cooperación, los criterios de intensidad, las prestaciones económicas, la participación en el coste y el **baremo**",
@@ -699,7 +699,7 @@ T.ap("s22", "V.3 Prestaciones y servicios (arts. 14, 15, 17 a 19 y 23; RD 1051/2
          "Los **servicios** son prioritarios; los cuidados familiares, **excepcionales**. Las prestaciones económicas son **inembargables**."))}
 
 {unidad("3.2 Catálogo de servicios (art. 15)",
-  lit("L39_2006", "Artículo 15", ["Servicio de Teleasistencia", "Servicio de Ayuda a domicilio", "Servicio de Centro de Día y de Noche", "Servicio de Atención Residencial"], solo=[1, 2, 3, 4, 7, 12]),
+  lit("L39_2006", "Artículo 15", ["Servicio de Teleasistencia", "Servicio de Ayuda a domicilio", "Servicio de Centro de Día y de Noche", "Servicio de Atención Residencial"], solo=list(range(1, 15))),
   fichab("Servicios sociales de promoción de la autonomía y atención a la dependencia", "—",
          ["Prevención y promoción de la autonomía personal", "Teleasistencia", "Ayuda a domicilio", "Centro de Día y de Noche", "Atención Residencial"],
          "—", "Cinco servicios (letras a a e)."))}
@@ -736,7 +736,7 @@ T.ap("s23", "V.4 Grados, valoración y procedimiento (arts. 26 a 29 y 33)", f"""
          "Solo vale el **baremo**: no puede determinarse el grado por otros procedimientos."))}
 
 {unidad("4.3 Procedimiento de reconocimiento (art. 28)",
-  lit("L39_2006", "Artículo 28", ["a instancia de la persona", "Administración Autonómica correspondiente a la residencia del solicitante", "no pudiendo ser objeto de delegación, contratación o concierto"], solo=[1, 2, 6]),
+  lit("L39_2006", "Artículo 28", ["a instancia de la persona", "Administración Autonómica correspondiente a la residencia del solicitante", "no pudiendo ser objeto de delegación, contratación o concierto"], solo=[1, 2, 3, 6]),
   fichab("Reconocimiento de la situación de dependencia y del derecho a las prestaciones",
          "Se inicia a instancia del interesado o su representante; resuelve la **Administración autonómica** de su residencia",
          "Resolución con los servicios o prestaciones según el grado; validez en todo el Estado", "—",
@@ -750,7 +750,7 @@ T.ap("s23", "V.4 Grados, valoración y procedimiento (arts. 26 a 29 y 33)", f"""
          "Tres causas de revisión: **a instancia**, **de oficio** y **cambio de residencia** a otra CC. AA."))}
 
 {unidad("4.5 Participación en el coste (art. 33)",
-  lit("L39_2006", "Artículo 33", ["según el tipo y coste del servicio y su capacidad económica personal", "Ningún ciudadano quedará fuera de la cobertura del Sistema"], solo=[1, 5]),
+  lit("L39_2006", "Artículo 33", ["según el tipo y coste del servicio y su capacidad económica personal", "Ningún ciudadano quedará fuera de la cobertura del Sistema"], solo=[1, 3, 4, 5]),
   ficha("Los beneficiarios", "Participan en la financiación según el tipo y coste del servicio y su capacidad económica",
         "Criterios fijados por el Consejo Territorial", "Nadie queda fuera del Sistema por falta de recursos",
         "Copago según **capacidad económica**; garantía: **ningún ciudadano** queda fuera por no tener recursos."))}
@@ -829,8 +829,8 @@ T.ap("s24", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
 T.ap("s25", "Cierre 2. Repaso en 10 minutos (por bloques)", f"""
 | Bloque | Lo esencial | Dato que más cae |
 |---|---|---|
-| I. Igualdad de mujeres y hombres | CE 9.2 y 14; LO 3/2007: conceptos (6-8), acción positiva (11), planes (45-46), AGE (51-64), órganos (76-78) | **60/40**; plan de igualdad en empresas de **50 o más**; Plan AGE al **inicio de cada legislatura** |
-| II. Violencia de género | LO 1/2004: concepto (1), derechos (17-27), acreditación (23), Delegación y Observatorio (29-30) | Delegación con **rango de dirección general**; Pacto **290 → 461**; plan conjunto **2023-2027** |
+| I. Igualdad de mujeres y hombres | CE 9.2 y 14; LO 3/2007: conceptos (6-8), acción positiva (11), planes (45-46), AGE (51-53, 55 y 64), órganos (76-78) | **60/40**; plan de igualdad en empresas de **50 o más**; Plan AGE al **inicio de cada legislatura** |
+| II. Violencia de género | LO 1/2004: concepto (1), derechos (17-21 y 23-27), acreditación (23), Delegación y Observatorio (29-30) | Delegación con **rango de dirección general**; Pacto **290 → 461**; plan conjunto **2023-2027** |
 | III. Igualdad de trato y LGTBI | Ley 15/2022 (causas, definiciones, Autoridad Independiente); Ley 4/2023 (definiciones, Consejo, empresas, rectificación) | Empresas de **más de cincuenta**; acoso discriminatorio = art. 3 d); Autoridad: **5 años no renovable** |
 | IV. Discapacidad | CE 49; LGD: definiciones, titulares, empleo, órganos | **33 %**; cuota **2 %** en empresas de **50 o más** |
 | V. Dependencia | Ley 39/2006: SAAD, Consejo Territorial, prestaciones, grados, procedimiento | Residencia **5 años (2 inmediatos)**; Grado II = **severa**; ayuda a domicilio Grado II **38-64 h** |

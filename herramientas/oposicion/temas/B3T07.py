@@ -229,7 +229,7 @@ T.ap("s5", "II.2 Los planes de Gobierno Abierto de España: del I al V", f"""
   lit("RD371", "pr", ["IX Cumbre Global de la Alianza para el Gobierno Abierto", "Compromiso 1"], solo=[5, 6], titulo="Preámbulo (Real Decreto 371/2026)"),
   fichab("Plan vigente de Gobierno Abierto de España (2025-2029)",
          "Aprobado por el **pleno del Foro de Gobierno Abierto**; iniciativas de la AGE, las comunidades autónomas y las entidades locales (a través de la FEMP)",
-         "**10 compromisos** y **218 iniciativas** (123 AGE, 82 autonómicas y 13 locales); el compromiso 10, «Estado Abierto», agrupa las autonómicas y locales",
+         f"**10 compromisos** y **218 iniciativas** (123 AGE, 82 autonómicas y 13 locales); el compromiso 10, {cs('GA_VPLAN', 'ESTADO ABIERTO')}, agrupa las autonómicas y locales",
          "Aprobado el **6 de octubre de 2025**; período **2025-2029**",
          "Cayeron en 2025 (→ Cierre 1): **diez** compromisos y **218** iniciativas. El compromiso 1 es **participación y espacio cívico**; el 9, el **Observatorio**."))}
 
@@ -301,7 +301,7 @@ T.ap("s7", "III.2 Publicidad activa (arts. 5 a 11)", f"""
          "Publicar un proyecto de reglamento **no supone necesariamente** abrir audiencia pública."))}
 
 {unidad("2.4 Información económica, presupuestaria y estadística (art. 8)",
-  lit(L, "Artículo 8", ["podrá realizarse trimestralmente", "Las subvenciones y ayudas públicas concedidas", "Las retribuciones percibidas anualmente por los altos cargos", "relación de los bienes inmuebles"], solo=[1, 2, 6, 7, 9, 13, 14]),
+  lit(L, "Artículo 8", ["podrá realizarse trimestralmente", "Las subvenciones y ayudas públicas concedidas", "Las retribuciones percibidas anualmente por los altos cargos", "relación de los bienes inmuebles"], solo=[1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]),
   fichab("Qué se publica, como mínimo, de la gestión económica", "Los sujetos del título I; los del art. 3, en lo que reciben de una Administración (8.2)",
          ["Contratos (los **menores**, trimestralmente)", "Convenios y encomiendas", "Subvenciones y ayudas", "Presupuestos y su ejecución", "Cuentas anuales e informes de auditoría y fiscalización", "Retribuciones de altos cargos e indemnizaciones por cese", "Compatibilidades", "Declaraciones de bienes de representantes locales", "Bienes inmuebles de las Administraciones (8.3)"],
          "Contratos menores: publicación que **podrá** ser trimestral",
@@ -394,7 +394,7 @@ T.ap("s9", "III.4 Ejercicio del derecho de acceso (arts. 17 a 22)", f"""
          "El silencio es **negativo** (desestimación). El plazo cuenta desde la recepción **por el órgano competente para resolver**."))}
 
 {unidad("4.5 Unidades de información (art. 21)",
-  lit(L, "Artículo 21", ["unidades especializadas", "Llevar un registro de las solicitudes de acceso a la información"], solo=[1, 2, 3, 4, 7]),
+  lit(L, "Artículo 21", ["unidades especializadas", "Llevar un registro de las solicitudes de acceso a la información"], solo=[1, 2, 3, 4, 7, 9, 11]),
   fichab("Unidades especializadas que gestionan la transparencia en la AGE", "En la **Administración General del Estado**; el resto de entidades identifican el órgano competente (21.3)",
          ["Recabar y difundir la información de publicidad activa", "Recibir y tramitar las solicitudes", "Llevar un registro de solicitudes", "Mantener un mapa de contenidos"],
          "—", "Sus responsables forman el **Grupo Interministerial de Gobierno Abierto** (→ I.3.4)."))}
@@ -468,14 +468,14 @@ T.ap("s12", "IV.2 Infracciones (arts. 27 a 29)", f"""
          "La Ley 19/2013 **no tipifica** estas infracciones: **remite**."))}
 
 {unidad("2.2 Gestión económico-presupuestaria (art. 28)",
-  lit(L, "Artículo 28", ["infracciones muy graves", "cuando sean culpables", "La incursión en alcance", "sin crédito suficiente", "La omisión del trámite de intervención previa"], solo=[1, 2, 4, 5, 18]),
+  lit(L, "Artículo 28", ["infracciones muy graves", "cuando sean culpables", "La incursión en alcance", "sin crédito suficiente", "La omisión del trámite de intervención previa"], solo=[1, 2, 4, 5, 7, 18]),
   fichab("Infracciones muy graves en la gestión de fondos públicos", "Los altos cargos del art. 25",
          ["Todas son **muy graves**", "Exigen culpa («cuando sean culpables»)", "Ej.: alcance, gastos sin crédito, omisión de la intervención previa, incumplimientos de la LO 2/2012, no rendir cuentas"],
          "—",
          "Todas las del art. 28 son **muy graves** y conllevan restituir e indemnizar a la Hacienda Pública (art. 30.8)."))}
 
 {unidad("2.3 Infracciones disciplinarias (art. 29)",
-  lit(L, "Artículo 29", ["Son infracciones muy graves:", "El acoso laboral.", "Son infracciones graves:", "El abuso de autoridad en el ejercicio del cargo.", "Son infracciones leves:"], solo=[1, 2, 12, 14, 15, 21, 22, 23]),
+  lit(L, "Artículo 29", ["Son infracciones muy graves:", "El acoso laboral.", "Son infracciones graves:", "El abuso de autoridad en el ejercicio del cargo.", "Son infracciones leves:"], solo=[1, 2, 3, 12, 13, 14, 15, 16, 20, 21, 22, 23]),
   fichab("Infracciones disciplinarias de los altos cargos", "Los altos cargos del art. 25",
          ["Muy graves: p. ej., incumplir el deber de respeto a la Constitución, discriminación y acoso, acoso laboral", "Graves: p. ej., abuso de autoridad, intervenir habiendo causa de abstención", "Leves: incorrección con superiores, compañeros o subordinados; descuido o negligencia"],
          "Reincidencia: dos infracciones graves (o leves) sancionadas en el año anterior elevan la siguiente",
@@ -484,7 +484,7 @@ T.ap("s12", "IV.2 Infracciones (arts. 27 a 29)", f"""
 
 T.ap("s13", "IV.3 Sanciones, procedimiento y prescripción (arts. 30 a 32)", f"""
 {unidad("3.1 Sanciones (art. 30)",
-  lit(L, "Artículo 30", ["amonestación", "su publicación en el «Boletín Oficial del Estado»", "durante un periodo de entre cinco y diez años", "Fiscal General del Estado"], solo=[1, 2, 3, 4, 5, 6, 15]),
+  lit(L, "Artículo 30", ["amonestación", "su publicación en el «Boletín Oficial del Estado»", "durante un periodo de entre cinco y diez años", "Fiscal General del Estado"], solo=[1, 2, 3, 4, 5, 6, 15, 17, 18, 19]),
   fichab("Qué sanción corresponde a cada infracción", "El órgano del art. 31.4",
          ["Leves: **amonestación**", "Graves: declaración del incumplimiento y su publicación en el BOE o diario oficial; no percepción de la indemnización por cese", "Muy graves: las de las graves + **destitución** + prohibición de ser alto cargo de **5 a 10 años**"],
          "Inhabilitación para alto cargo: **entre cinco y diez años**",
