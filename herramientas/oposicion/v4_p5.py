@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Tema I.2 (v4) · Parte 5: bloque III, la suspensión.
 from v4_util import *
-from v4_examen import EX10, EX10_NOTA
+from v4_examen import EX10, EX10_NOTA, EX_X4
 
 ap("bIII", "III. ¿Cuándo pueden suspenderse? (arts. 55 y 116 y su desarrollo)", f"""
 {donde("Los derechos están reconocidos (I) y protegidos (II). Pero la Constitución admite que, en situaciones extraordinarias, **algunos** queden temporalmente sin efecto. Este bloque responde a **cuáles**, **cuándo**, **quién lo decide** y **con qué controles**.",
@@ -53,6 +53,10 @@ Es la consecuencia de la casilla «Protección» de las fichas del bloque I. Sol
 **La excepción del 17.3.** {c("CE", 55, "Se exceptúa de lo establecido anteriormente el apartado 3 del artículo 17 para el supuesto de declaración de estado de excepción")}. Las garantías del detenido (información inmediata, no declarar, abogado) se mantienen en la excepción y **solo** se suspenden en el **sitio**, como confirma el art. 32.3 LO 4/1981 (→ III.6).
 
 **Lo que nunca se suspende** (los distractores habituales): igualdad (14), vida (15), libertad ideológica (16), honor e intimidad (18.1), creación (20.1 b), cátedra (20.1 c), **asociación (22)**, participación (23), tutela judicial (24), legalidad penal (25), educación (27), **libertad sindical (28.1)** y petición (29).
+
+Cayó en el extraordinario de 2025: pregunta real justo debajo.
+
+{EX_X4}
 """, 2)
 
 # ---------------------------------------------------------------------------
@@ -173,7 +177,7 @@ El estado de las **crisis de orden público**. Aquí sí se suspenden derechos, 
 """, 2)
 
 # ---------------------------------------------------------------------------
-ap("s6-6", "III.6 El estado de sitio (LO 4/1981, arts. 32 a 36)", f"""
+ap("s6-6", "III.6 El estado de sitio (LO 4/1981, arts. 32 a 36; art. 3.2 LOPJ)", f"""
 El estado de las **crisis que amenazan la existencia del Estado**. Suspende los derechos del 55.1, **incluido el 17.3**.
 
 {unidad("6.1 Supuesto, declaración y medidas (art. 32)",
