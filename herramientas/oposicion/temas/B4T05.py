@@ -184,7 +184,7 @@ ap("s5", "I.5 Duración, contenido, perfección y forma (arts. 29 y 35 a 37)", [
     L(36, ["se perfeccionan con su formalización", "se perfeccionan con su adjudicación"]),
     fichab("Momento en que nace el contrato",
            "Poderes adjudicadores",
-           ["Regla: con la **formalización** (36.1)", "Excepciones: contratos menores, y contratos **basados en un acuerdo marco** y específicos de un sistema dinámico de adquisición, que se perfeccionan con la **adjudicación** (36.3)", "Subvencionados armonizados: según su propia legislación (36.2)"],
+           ["Regla: con la **formalización** (36.1)", "Excepciones (36.1): los contratos menores; y los contratos **basados en un acuerdo marco** y específicos de un sistema dinámico de adquisición, que se perfeccionan con su **adjudicación** (36.3)", "Subvencionados armonizados: según su propia legislación (36.2)"],
            "—",
            "Cayó en 2025: los basados en un acuerdo marco se perfeccionan con su **adjudicación** (→ Cierre 1). Lugar de celebración: la **sede del órgano de contratación** (36.4).")),
   unidad("5.4 Forma escrita (art. 37)",
@@ -961,7 +961,7 @@ q(K, A(29), "Elementos", "Según el artículo 29.4 de la LCSP, los contratos de 
   "Art. 29.4 LCSP.", "tendrán un plazo máximo de duración de cinco años, incluyendo las posibles prórrogas")
 q(K, A(36), "Elementos", "Según el artículo 36.1 de la LCSP, con carácter general los contratos que celebren los poderes adjudicadores se perfeccionan:",
   ["Con su formalización.", "Con su adjudicación.", "Con la aprobación del expediente.", "Con el inicio de su ejecución."],
-  "Art. 36.1 LCSP (excepciones: menores y basados en acuerdo marco o en sistema dinámico, 36.3).", "se perfeccionan con su formalización")
+  "Art. 36.1 LCSP (exceptúa los menores y los basados en un acuerdo marco o en un sistema dinámico; estos se perfeccionan con su adjudicación, 36.3).", "se perfeccionan con su formalización")
 q(K, A(37), "Elementos", "Según el artículo 37.1 de la LCSP, las entidades del sector público no podrán contratar verbalmente, salvo que el contrato tenga carácter:",
   ["De emergencia.", "De contrato menor.", "Urgente.", "Privado."],
   "Art. 37.1 LCSP.", "salvo que el contrato tenga, conforme a lo señalado en el artículo 120.1, carácter de emergencia")
