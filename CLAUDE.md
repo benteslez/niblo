@@ -138,6 +138,8 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   bloques llevan `f: "CELEX:…"` y se muestran con la etiqueta **DOUE** (no BOE).
 - Modo **Examen oficial**: condiciones vigentes del primer ejercicio
   (BOE-A-2025-26262): turno libre, 100 preguntas, 90 minutos y −1/3 (anexo VII,
-  2.1.1); promoción interna, 100, 90 y −1/4 (anexo VIII, 3.1.1). Los blancos no
+  2.1.1); promoción interna, 100, 90 y −1/4 (anexo VIII, 3.1.1); extraordinaria,
+  las del turno libre, porque es su «llamamiento extraordinario» (base 8.7) y no
+  tiene condiciones propias (decisión del usuario, 4-10-2026). Los blancos no
   penalizan. La calificación oficial (0-50) depende del mínimo que fije la
   Comisión: no se inventa una conversión.

@@ -3736,7 +3736,8 @@ function renderGlobal() {
      entra siempre si se marca; 💤 pausadas, nunca.
    · Examen oficial: condiciones vigentes del primer ejercicio según el acceso
      (BOE-A-2025-26262): 100 preguntas, 90 minutos y penalización de 1/3
-     (turno libre, anexo VII) o de 1/4 (promoción interna, anexo VIII).
+     (turno libre, anexo VII, y su llamamiento extraordinario, base 8.7) o de
+     1/4 (promoción interna, anexo VIII).
    Todo se guarda en tu progreso (se sincroniza): «R:<examen>:<n>» por pregunta
    y «RS:global» para las sesiones. */
 const ACCESOS = [
@@ -3747,7 +3748,9 @@ const ACCESOS = [
 ];
 const CONDICIONES = {
   libre:     { n:100, min:90, penal:1 / 3, txtPenal:"1/3", fuente:"anexo VII, apartados 2.1.1 y 2.2.1" },
-  promocion: { n:100, min:90, penal:1 / 4, txtPenal:"1/4", fuente:"anexo VIII, apartados 3.1.1 y 3.2.1" }
+  promocion: { n:100, min:90, penal:1 / 4, txtPenal:"1/4", fuente:"anexo VIII, apartados 3.1.1 y 3.2.1" },
+  /* Extraordinaria: «llamamiento extraordinario» del turno libre (base 8.7); no tiene condiciones propias. */
+  extraordinaria: { n:100, min:90, penal:1 / 3, txtPenal:"1/3", fuente:"base 8.7 (llamamiento extraordinario del turno libre) y anexo VII, apartados 2.1.1 y 2.2.1" }
 };
 const KEY_REAL_CFG = "gestion_hub_real_cfg_v1";
 const claveReal = (x, q) => "R:" + x.id + ":" + q.n;
@@ -3928,7 +3931,7 @@ function renderReal() {
       <button class="card interactive real-modo" data-modo="examen" ${vacio ? "disabled" : ""}>
         <span class="real-modo-ico">📝</span>
         <span class="real-modo-t">Examen oficial</span>
-        <span class="real-modo-d">Condiciones vigentes: 100 preguntas en 90 minutos; cada error descuenta 1/3 (turno libre) o 1/4 (promoción interna). Los blancos no penalizan.</span>
+        <span class="real-modo-d">Condiciones vigentes: 100 preguntas en 90 minutos; cada error descuenta 1/3 (turno libre y su llamamiento extraordinario) o 1/4 (promoción interna). Los blancos no penalizan.</span>
       </button>
     </div>
     ${vacio ? `<div class="card"><div class="empty"><div class="ico">📋</div><h3>Todavía no hay preguntas reales</h3>
@@ -4009,7 +4012,7 @@ function abrirSeleccionReal(modo) {
         <div class="real-pills"><span class="big">Total: <b>${cola.length}</b></span><span>🆕 Nuevas: <b>${nNuevas}</b></span><span>🔄 A repasar: <b>${cola.length - nNuevas}</b></span>${nReb ? `<span>🔥 Rebeldes: <b>${nReb}</b></span>` : ""}<span>⏱ ~${minutos} min</span></div>
         ` : `
         <h3>Condiciones</h3>
-        ${condE ? `<p class="real-cond"><b>${condE.n} preguntas · ${condE.min} minutos · cada error descuenta ${condE.txtPenal}</b>; los blancos no penalizan. <span class="muted">Fuente: ${PROGRAMA_REF}, ${condE.fuente}.</span></p>` : `<p class="real-cond aviso">Elige un solo acceso (turno libre o promoción interna) para aplicar sus condiciones oficiales.${c.accesos.some(a => a === "extraordinaria" || a === "estabilizacion") ? " Para un examen extraordinario o de estabilización hacen falta las condiciones de su convocatoria." : ""}</p>`}
+        ${condE ? `<p class="real-cond"><b>${condE.n} preguntas · ${condE.min} minutos · cada error descuenta ${condE.txtPenal}</b>; los blancos no penalizan. <span class="muted">Fuente: ${PROGRAMA_REF}, ${condE.fuente}.</span></p>` : `<p class="real-cond aviso">Elige un solo acceso (turno libre, promoción interna o extraordinaria) para aplicar sus condiciones oficiales.${c.accesos.some(a => a === "estabilizacion") ? " Para un examen de estabilización hacen falta las condiciones de su convocatoria." : ""}</p>`}
         ${sust.length ? `<p class="muted real-paus">Como en la corrección oficial, ${sust.length === 1 ? "la pregunta anulada se sustituye por la primera de reserva" : `las ${sust.length} anuladas se sustituyen por las primeras de reserva, por su orden`} (${sust.map(it => "reserva " + it.q.nr).join(", ")}).${exs.some(x => x.preguntas.some(q => q.retenida)) ? ` <b>⚠ Incluye ${exs.reduce((n, x) => n + x.preguntas.filter(q => q.retenida).length, 0) === 1 ? "una pregunta retenida" : "preguntas retenidas"}</b> (su respuesta oficial no casa con el texto legal y está en revisión): se trata como anulada.` : ""}</p>` : ""}
         <label class="real-tog"><input type="checkbox" data-op="actualizar" ${c.actualizar ? "checked" : ""}> 🧠 Llevar el resultado al repaso (las falladas y en blanco vuelven mañana)</label>
         <div class="real-pills"><span class="big">${unoEntero ? `Examen completo: <b>${cola.length}</b> preguntas en su orden` : `Disponibles: <b>${cola.length}</b> · se sacarán <b>${Math.min(cola.length, condE ? condE.n : 100)}</b> al azar`}</span>${condE ? `<span>⏱ ${Math.max(1, Math.round(condE.min * Math.min(cola.length, condE.n) / condE.n))} min</span>` : ""}<span>🔀 opciones barajadas</span></div>
