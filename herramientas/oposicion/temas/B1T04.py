@@ -549,8 +549,8 @@ T.q("CE", "Artículo 168", "La Corona", "Según el artículo 168.1 de la Constit
     ["Mayoría de dos tercios de cada Cámara, y la disolución inmediata de las Cortes.", "Mayoría de tres quintos de cada Cámara.", "Mayoría absoluta del Congreso y del Senado.", "Mayoría de dos tercios del Congreso, sin disolución de las Cortes."],
     "Art. 168.1 CE.", "se procederá a la aprobación del principio por mayoría de dos tercios de cada Cámara, y a la disolución inmediata de las Cortes")
 T.q("CE", "Artículo 62", "Funciones del Rey", "Según el artículo 62 de la Constitución, corresponde al Rey:",
-    ["El mando supremo de las Fuerzas Armadas.", "El Alto Patronazgo de las Fuerzas Armadas.", "La dirección de la política de defensa.", "La jefatura del Estado Mayor de la Defensa."],
-    "Art. 62 h) CE. La dirección de la política de defensa es del Gobierno (art. 97, tema I.6).", "El mando supremo de las Fuerzas Armadas")
+    ["El mando supremo de las Fuerzas Armadas.", "El Alto Patronazgo de las Fuerzas Armadas.", "La dirección de la defensa del Estado.", "La jefatura del Estado Mayor de la Defensa."],
+    "Art. 62 h) CE. La defensa del Estado la dirige el Gobierno: «El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado» (art. 97, tema I.6).", "El mando supremo de las Fuerzas Armadas")
 T.q("CE", "Artículo 62", "Funciones del Rey", "Según el artículo 62 j) de la Constitución, corresponde al Rey el Alto Patronazgo de:",
     ["Las Reales Academias.", "Las Fuerzas Armadas.", "Las Universidades públicas.", "El Patrimonio Nacional."],
     "Art. 62 j) CE.", "El Alto Patronazgo de las Reales Academias")

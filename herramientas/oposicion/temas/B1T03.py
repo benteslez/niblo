@@ -291,7 +291,7 @@ T.ap("s10", "III.1 Pleno, Salas y Secciones (LOTC, arts. 6 a 8)", f"""
   ll(8, ["el respectivo Presidente o quien le sustituya y dos Magistrados", "asuntos de amparo"]),
   fichab("Las Secciones", "El Presidente del Pleno o de la Sala (o quien le sustituya) y dos Magistrados",
          ["Despacho ordinario y admisibilidad de los procesos", "Asuntos de amparo que les defiera la Sala"], "—",
-         "Las Secciones son de **tres** (Presidente y **dos** Magistrados). Deciden sobre la **admisión**; del Pleno se da cuenta de las propuestas de admisión de sus asuntos."))}
+         "Las Secciones son de **tres** (Presidente y **dos** Magistrados). Deciden o proponen sobre la **admisión**; de las propuestas de admisión o inadmisión de asuntos del Pleno se da cuenta al **Pleno** (art. 8.2)."))}
 """, 2)
 
 T.ap("s11", "III.2 Qué conoce el Pleno y qué las Salas (LOTC, arts. 10 a 13)", f"""
@@ -587,12 +587,12 @@ T.ap("s22", "IV.9 Tratados internacionales y recurso previo contra Estatutos (ar
          "La declaración es **vinculante**. Es control **previo**: antes del consentimiento del Estado."))}
 
 {unidad("9.3 Recurso previo contra Estatutos de Autonomía (LOTC, art. 79)",
-  ll(79, ["con carácter previo", "una vez aprobado por las Cortes Generales", "tres días desde la publicación del texto aprobado", "suspenderá automáticamente todos los trámites subsiguientes", "en el plazo improrrogable de seis meses"], solo=[1, 2, 3, 4, 6]),
+  ll(79, ["con carácter previo", "una vez aprobado por las Cortes Generales", "tres días desde la publicación del texto aprobado", "suspenderá automáticamente todos los trámites subsiguientes", "no podrá convocarse hasta que haya resuelto el Tribunal Constitucional", "en el plazo improrrogable de seis meses"], solo=[1, 2, 3, 4, 5, 6]),
   fichab("Control previo de Estatutos",
          "Los legitimados para recurrir Estatutos de Autonomía (→ IV.2.3)",
          "Contra el texto definitivo del Proyecto o Propuesta de reforma de Estatuto aprobado por las Cortes Generales; suspende automáticamente los trámites siguientes",
          ["Interposición: **3 días** desde la publicación en el «Boletín Oficial de las Cortes Generales»", "Resolución: **6 meses** improrrogables"],
-         "**Tres días** para recurrir y **seis meses** para resolver. Si el Estatuto va a referéndum, no se convoca hasta que resuelva el Tribunal."))}
+         "**Tres días** para recurrir y **seis meses** para resolver. Si el Estatuto va a referéndum, este «no podrá convocarse hasta que haya resuelto el Tribunal Constitucional» (79.5)."))}
 """, 2)
 
 T.ap("s23", "IV.10 Resoluciones y su cumplimiento (LOTC, arts. 86, 87, 92 y 93)", f"""
@@ -808,7 +808,7 @@ for q_, a_, cat in [
   ("Legitimados para el recurso de inconstitucionalidad (art. 162.1 a)", "Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores, órganos colegiados ejecutivos de las CC. AA. y, en su caso, sus Asambleas.", "Recurso de inconstitucionalidad"),
   ("Plazo del recurso de inconstitucionalidad (LOTC, art. 33)", "Tres meses desde la publicación; nueve meses (Presidente del Gobierno y ejecutivos autonómicos) con acuerdo de la Comisión Bilateral.", "Recurso de inconstitucionalidad"),
   ("¿Cuándo plantea el juez la cuestión de inconstitucionalidad? (LOTC, art. 35.2)", "Concluso el procedimiento y dentro del plazo para dictar sentencia, tras oír 10 días a las partes y al Fiscal.", "Cuestión de inconstitucionalidad"),
-  ("Valor de las sentencias del TC (art. 164.1 CE)", "Cosa juzgada desde el día siguiente a su publicación en el BOE; sin recurso; plenos efectos frente a todos las de inconstitucionalidad.", "Sentencias"),
+  ("Valor de las sentencias del TC (art. 164.1 CE)", "Cosa juzgada desde el día siguiente a su publicación en el BOE; sin recurso; plenos efectos frente a todos las que declaren la inconstitucionalidad de una ley o norma con fuerza de ley y todas las que no se limiten a la estimación subjetiva de un derecho.", "Sentencias"),
   ("Plazos del amparo (LOTC, arts. 42, 43 y 44)", "Actos parlamentarios: 3 meses; Gobierno o Administración: 20 días; órganos judiciales: 30 días.", "Amparo"),
   ("Impugnación del art. 161.2 CE", "El Gobierno impugna disposiciones y resoluciones autonómicas (2 meses, LOTC 76); suspensión automática que el TC ratifica o levanta en no más de 5 meses.", "Art. 161.2"),
   ("Recurso previo contra Estatutos (LOTC, art. 79)", "3 días desde la publicación en el BOCG; suspende los trámites; se resuelve en 6 meses improrrogables.", "Tratados y recurso previo"),

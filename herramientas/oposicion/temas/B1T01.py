@@ -60,6 +60,9 @@ DONDE = {"TÍTULO PRELIMINAR": "Este tema (→ II.1 a → II.4)", "TÍTULO I": "
 def _rub(t): return c("CE", t["b"], t["rub"]) if t["rub"] else "(sin rúbrica)"
 TABLA_TITULOS = "\n".join(["| Título | Rúbrica (literal) | Artículos | Capítulos | Se estudia en |", "|---|---|---|---|---|"] + [
     f"| **{t['num'].replace('TÍTULO ', '')}** | {_rub(t)} | {rango(t['arts'])} | {len(t['caps']) or '—'} | {DONDE[t['num']]} |" for t in TITS])
+# I.2.1 (estructura) sin la columna «Se estudia en», que es la de II.5 (contenido): evita el cuadro duplicado
+TABLA_ESTRUCTURA = "\n".join(["| Título | Rúbrica (literal) | Artículos | Capítulos |", "|---|---|---|---|"] + [
+    f"| **{t['num'].replace('TÍTULO ', '')}** | {_rub(t)} | {rango(t['arts'])} | {len(t['caps']) or '—'} |" for t in TITS])
 def _filas_caps(t):
     out = []
     for cp in t["caps"]:
@@ -127,8 +130,8 @@ La Constitución se abre con dos textos sin número de artículo: la **fórmula 
 
 T.ap("s2", "I.2 El articulado: once títulos y 169 artículos", f"""
 {unidad("2.1 Los títulos (rúbricas literales)",
-  "*Cuadro de elaboración propia: las rúbricas están copiadas literalmente del BOE; los artículos de cada título se han contado sobre el texto consolidado. No es texto legal.*",
-  TABLA_TITULOS,
+  "*Cuadro de elaboración propia: las rúbricas están copiadas literalmente del BOE; los artículos de cada título se han contado sobre el texto consolidado. No es texto legal. Dónde se estudia cada título: → II.5.*",
+  TABLA_ESTRUCTURA,
   fichab("División del articulado de la Constitución",
          "—",
          [f"::Un **Título preliminar** (sin rúbrica) y **diez títulos** numerados (I a X): {len(TODOS)} artículos correlativos", "Título I: el más largo (arts. 10 a 55)", "Título X: el último (arts. 166 a 169), la reforma"],
@@ -498,7 +501,7 @@ Las cuatro empiezan con la misma fórmula ({c('REF2024', 'preambulo', 'Sabed: Qu
          "Origen: el **Tratado de la Unión Europea** y el requerimiento del Gobierno al TC por la vía del **art. 95.2** (lo cuenta su exposición de motivos). Artículo reformado: **13.2** (Título I)."))}
 
 {unidad("2.2 Reforma de 2011: art. 135 (estabilidad presupuestaria)",
-  lit("REF2011", "preambulo", ["principio de estabilidad presupuestaria", "antes del 30 de junio de 2012", "a partir de 2020"], solo=[3, 10, 11, 12, 24, 25, 26, 27, 28, 29], titulo="Reforma del artículo 135 de la Constitución Española, de 27 de septiembre de 2011"),
+  lit("REF2011", "preambulo", ["principio de estabilidad presupuestaria", "antes del 30 de junio de 2012", "a partir de 2020"], solo=[3] + list(range(10, 30)), titulo="Reforma del artículo 135 de la Constitución Española, de 27 de septiembre de 2011"),
   fichab("Segunda reforma: nueva redacción del art. 135 (Título VII)",
          "Las **Cortes Generales** aprueban; el **Rey** sanciona",
          "Artículo único (nuevo art. 135, cuyo texto vigente se estudia en el tema VI.1) y **disposición adicional única**",
@@ -506,7 +509,7 @@ Las cuatro empiezan con la misma fórmula ({c('REF2024', 'preambulo', 'Sabed: Qu
          "Es la única de las cuatro con **disposición adicional**. El art. 135 está en el **Título VII**, que no es parte protegida del art. 168."))}
 
 {unidad("2.3 Reforma de 2024: art. 49 (personas con discapacidad)",
-  lit("REF2024", "preambulo", ["Las personas con discapacidad ejercen los derechos previstos en este Título"], solo=[3, 12, 13, 15, 16, 17, 18], titulo="Reforma del artículo 49 de la Constitución Española, de 15 de febrero de 2024"),
+  lit("REF2024", "preambulo", ["Las personas con discapacidad ejercen los derechos previstos en este Título"], solo=[3, 12, 13, 14, 15, 16, 17, 18], titulo="Reforma del artículo 49 de la Constitución Española, de 15 de febrero de 2024"),
   fichab("Tercera reforma: nueva redacción del art. 49 (Capítulo tercero del Título I)",
          "Las **Cortes Generales** aprueban; el **Rey** sanciona",
          "Artículo único: nuevo art. 49, en dos apartados",
@@ -705,7 +708,7 @@ Q = [
  ("CE", "Artículo 75", "Reforma", "Según el artículo 75.3 de la Constitución Española, la aprobación de la reforma constitucional:",
   ["No puede delegarse en las Comisiones Legislativas Permanentes.", "Puede delegarse en la Comisión Constitucional de cada Cámara.", "Puede delegarse en las Comisiones si el Pleno no la recaba.", "Corresponde a la Diputación Permanente entre legislaturas."],
   "Art. 75.3 CE: quedan exceptuados de la delegación en Comisiones «la reforma constitucional»…", "Quedan exceptuados de lo dispuesto en el apartado anterior la reforma constitucional"),
- ("RCD", "art146", "Reforma", "Según el artículo 146.1 del Reglamento del Congreso de los Diputados, las proposiciones de reforma constitucional deberán ir suscritas por:",
+ ("RCD", "art146", "Reforma", "Según el artículo 146.1 del Reglamento del Congreso, las proposiciones de reforma constitucional deberán ir suscritas por:",
   ["Dos grupos parlamentarios o una quinta parte de los miembros de la Cámara.", "Un grupo parlamentario o quince Diputados.", "Tres grupos parlamentarios o una décima parte de los miembros de la Cámara.", "La mayoría absoluta de los miembros de la Cámara."],
   "Art. 146.1 RCD.", "deberán ir suscritas por dos grupos parlamentarios o por una quinta parte de los miembros de la Cámara"),
  ("RS", "Artículo 152", "Reforma", "Según el artículo 152 del Reglamento del Senado, podrán presentar proposiciones articuladas de reforma constitucional:",
@@ -776,7 +779,7 @@ T.glos("Previa revisión constitucional", "Reforma de la Constitución exigida a
 # Cronología (fechas de los metadatos del BOE)
 T.hito("1978", "Constitución Española (27-12-1978; BOE de 29-12-1978)", "Entra en vigor el día de su publicación (disposición final)", "normativo", "s3")
 T.hito("1980", "Ley Orgánica 2/1980, de 18 de enero, sobre regulación de las distintas modalidades de referéndum (BOE de 23-1-1980)", "Arts. 4 y 7: referéndum de reforma constitucional", "normativo", "s11")
-T.hito("1982", "Reglamento del Congreso de los Diputados (publicado por Resolución de 24-2-1982; BOE de 5-3-1982)", "Arts. 146 y 147: reforma constitucional", "normativo", "s11")
+T.hito("1982", "Reglamento del Congreso de 10 de febrero de 1982 (así denominado desde su reforma de 22-7-2025; BOE de 5-3-1982)", "Arts. 146 y 147: reforma constitucional", "normativo", "s11")
 T.hito("1992", "Reforma del artículo 13, apartado 2, de la Constitución (27-8-1992; BOE de 28-8-1992)", "Primera reforma: sufragio activo y pasivo en elecciones municipales", "normativo", "s16")
 T.hito("1994", "Texto refundido del Reglamento del Senado (3-5-1994; BOE de 13-5-1994)", "Arts. 152 a 159: revisión constitucional", "normativo", "s12")
 T.hito("2011", "Reforma del artículo 135 de la Constitución (27-9-2011; BOE de 27-9-2011)", "Estabilidad presupuestaria", "normativo", "s16")
