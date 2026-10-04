@@ -1,0 +1,6 @@
+
+# Copias descargadas de las normas (se regeneran con herramientas/oposicion/boe/descargar.py)
+herramientas/oposicion/boe/*.xml
+herramientas/oposicion/boe/*.html
+__pycache__/
+herramientas/oposicion/tests_reales.json

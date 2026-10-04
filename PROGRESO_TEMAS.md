@@ -1,0 +1,52 @@
+# Progreso: desarrollo de temas y tests reales
+
+Encargo del usuario (4-10-2026): desarrollar todos los temas «Solo BOE», los
+«BOE + temario» (al menos la parte legal) y los del bloque II con la legislación
+de la UE, con el método del tema I.2 (ver `CLAUDE.md`). Orden acordado: primero
+los «Solo BOE» empezando por el bloque IV; después V, I, VI, II y III.
+Si la sesión se para, una rutina la reanuda cada 4 h: retomar aquí el primer
+punto pendiente.
+
+Herramientas: `herramientas/oposicion/` (ver su `LEEME.md`). Cada tema se
+publica en `temas/<id>.json` y se apunta en `temas/indice.json`.
+
+## 0. Infraestructura
+
+- [x] Temas en archivos aparte (`temas/`), etiquetas de fuente (`[[COD]]`),
+      herramientas en el repo.
+
+## 1. Tests reales (petición intercalada del usuario)
+
+- [ ] GACE-P 2025 (promoción interna): cuestionario + plantilla, comprobación
+      plantilla ↔ ley y texto legal por pregunta.
+- [ ] GACE-X 2025 (extraordinaria): ídem.
+
+## 2. Temas «Solo BOE»
+
+Bloque IV: - [ ] IV.2 - [ ] IV.4 - [ ] IV.5 - [ ] IV.6 - [ ] IV.8 - [ ] IV.10
+- [ ] IV.11 - [ ] IV.12 - [ ] IV.13
+
+Bloque V: - [ ] V.1 - [ ] V.2 - [ ] V.3 - [ ] V.4 - [ ] V.5 - [ ] V.6 - [ ] V.7
+- [ ] V.8 - [ ] V.10
+
+Bloque I: - [x] I.2 - [ ] I.1 - [ ] I.3 - [ ] I.4 - [ ] I.5 - [ ] I.6 - [ ] I.8
+- [ ] I.9 - [ ] I.10 - [ ] I.11
+
+Bloque VI: - [ ] VI.3 - [ ] VI.6 - [ ] VI.7
+
+Bloque III: - [ ] III.8
+
+## 3. Temas «BOE + temario» y bloque II
+
+- [ ] I.7 - [ ] II.1 - [ ] II.2 - [ ] II.3 - [ ] II.4 - [ ] II.5 - [ ] II.6
+- [ ] III.4 - [ ] III.5 - [ ] III.6 - [ ] III.7 - [ ] III.9
+- [ ] IV.1 - [ ] IV.3 - [ ] IV.7 - [ ] IV.9 - [ ] V.9
+- [ ] VI.1 - [ ] VI.2 - [ ] VI.4 - [ ] VI.5 - [ ] VI.8
+
+## Notas
+
+- Fuentes con acceso en el entorno: boe.es (API de datos abiertos), EUR-Lex
+  (con navegador), *.europa.eu, *.gob.es, *.congreso.es,
+  *.tribunalconstitucional.es, *.poderjudicial.es, *.seg-social.es, *.sepe.es,
+  *.muface.es, *.tcu.es, *.airef.es, *.defensordelpueblo.es,
+  *.consejodetransparencia.es, *.senado.es.
