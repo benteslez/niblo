@@ -55,7 +55,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 
 !> **La idea que une los cuatro bloques:** los empleados públicos tienen derechos individuales que **se ejercen de forma colectiva** (TREBEP, art. 15): libertad sindical, negociación colectiva, huelga, conflictos colectivos y reunión (I). Los sindicatos **negocian** en Mesas y firman **Pactos y Acuerdos** (II); los empleados **eligen** a sus representantes unitarios: Delegados y Juntas de Personal, o Delegados de personal y Comités de empresa si son laborales (III); y el último recurso es la **huelga**, con la garantía de los **servicios esenciales** (IV).
 
-?> **Aviso de vigencia (huelga).** El Real Decreto-ley 17/1977 sigue vigente, pero la STC 11/1981 declaró inconstitucionales algunos incisos de sus artículos 3, 5, 6, 10 y 11. Aquí se cita **solo lo vigente** y, donde hay inciso anulado, se reproduce la **nota del BOE** (→ IV.2).
+?> **Aviso de vigencia (huelga)** [[BOE|{URL_RDL17}]]. El Real Decreto-ley 17/1977 sigue vigente, pero, según las notas de su texto consolidado, la STC 11/1981 declaró inconstitucionales algunos incisos de sus artículos 3, 5, 6, 10 y 11. Aquí se cita **solo lo vigente** y, donde hay inciso anulado, se reproduce la **nota del BOE** (→ IV.2).
 
 ### Cómo está escrito
 
@@ -159,7 +159,7 @@ La Ley Orgánica 11/1985, de Libertad Sindical, desarrolla el art. 28.1 CE. El T
          ["::Más representativos a nivel estatal (6.2):", "Los que obtengan en ese ámbito el **10 por 100 o más** del total de delegados de personal, miembros de comités de empresa y órganos correspondientes de las Administraciones públicas", "Los afiliados, federados o confederados a una organización estatal más representativa"],
          ["::Capacidad representativa a todos los niveles (6.3), entre otras:", "a) **Representación institucional** ante las Administraciones públicas", "c) Interlocución en la determinación de las condiciones de trabajo en las Administraciones públicas", "d) Sistemas no jurisdiccionales de solución de conflictos", "e) Promover elecciones"],
          "Estatal: **10 por 100**",
-         "La mayor representatividad da una posición singular **tanto de participación institucional como de acción sindical** (6.1). La **participación institucional** del art. 31.4 TREBEP se ejerce a través de estos sindicatos (6.3 a)."))}
+         "La mayor representatividad da una posición singular **tanto de participación institucional como de acción sindical** (6.1). La **participación institucional** del art. 31.4 TREBEP se ejerce **a través de las organizaciones sindicales**; ostentar **representación institucional** ante las Administraciones públicas es una facultad de los más representativos (6.3 a y 7.1)."))}
 
 {unidad("4.4 Más representativos de Comunidad Autónoma y sindicatos con el 10 por 100 en un ámbito (art. 7)",
   lit("LOLS", "Artículo séptimo", ["al menos, el 15 por 100 de los delegados de personal", "siempre que cuenten con un mínimo de 1.500 representantes", "el 10 por 100 o más de delegados de personal y miembros de comité de empresa"], titulo="Artículo 7 (LO 11/1985, de Libertad Sindical)"),
@@ -395,7 +395,7 @@ T.ap("s13", "III.4 Derecho de reunión (art. 46)", f"""
 # =============================================================================
 T.ap("bIV", "IV. ¿Cómo se ejerce el derecho de huelga? (CE, arts. 28.2 y 37.2; RDL 17/1977; TREBEP, arts. 30.2 y 95.2)", donde(
   "Cuarta pregunta. La huelga es un **derecho fundamental** de los trabajadores (art. 28.2 CE) y el TREBEP la reconoce a los empleados públicos con la garantía de los **servicios esenciales** (art. 15 c, → I.2.1). Su ejercicio se regula en el título I del **Real Decreto-ley 17/1977**, en lo que dejó vigente la **STC 11/1981**.",
-  ["1 Reconocimiento constitucional (arts. 28.2 y 37.2)", "2 El ejercicio del derecho de huelga (RDL 17/1977, arts. 1 a 11)", "3 Consecuencias para el empleado público (TREBEP, arts. 30.2 y 95.2 l y m)", "4 Cuadro: lo vigente y lo anulado del RDL 17/1977"]))
+  ["1 Reconocimiento constitucional (arts. 28.2 y 37.2)", "2 El ejercicio del derecho de huelga (RDL 17/1977, arts. 1 a 11)", "3 Consecuencias para el empleado público (TREBEP, arts. 30.2 y 95.2 k, l y m)", "4 Cuadro: lo vigente y lo anulado del RDL 17/1977"]))
 
 T.ap("s14", "IV.1 Reconocimiento constitucional (arts. 28.2 y 37.2)", f"""
 {unidad("1.1 El derecho de huelga (art. 28.2)",
@@ -484,7 +484,7 @@ El título I («El derecho de huelga») del Real Decreto-ley 17/1977, sobre rela
          "Cuatro supuestos: **políticos**, **solidaridad** (salvo interés profesional), **alterar un convenio vigente** y **contravenir** el RDL o el convenio."))}
 """, 2)
 
-T.ap("s16", "IV.3 Consecuencias para el empleado público (TREBEP, arts. 30.2 y 95.2 l y m)", f"""
+T.ap("s16", "IV.3 Consecuencias para el empleado público (TREBEP, arts. 30.2 y 95.2 k, l y m)", f"""
 Las retribuciones se estudian en el tema V.6 y el régimen disciplinario en el tema V.2; aquí, solo lo que el TREBEP dice de la huelga.
 
 {unidad("3.1 Deducción de retribuciones (art. 30.2)",

@@ -116,7 +116,7 @@ T.ap("s3", "II.1 Composición y elección del Congreso (art. 68; LOREG, art. 162
 
 {unidad("1.2 Circunscripción, reparto y proporcionalidad (art. 68.2 y 3; LOREG, art. 162.2 y 3)",
   lit("CE", "Artículo 68", ["La circunscripción electoral es la provincia", "estarán representadas cada una de ellas por un Diputado", "asignando una representación mínima inicial a cada circunscripción"], solo=[2, 3]),
-  lit("LOREG", "acientosesentaydos", ["un mínimo inicial de dos Diputados", "en proporción a su población"], solo=[2, 3], titulo="Artículo 162.2 y 3 (LO 5/1985, del Régimen Electoral General)"),
+  lit("LOREG", "acientosesentaydos", ["un mínimo inicial de dos Diputados", "en proporción a su población"], solo=[2, 3, 4, 5, 6], titulo="Artículo 162.2 y 3 (LO 5/1985, del Régimen Electoral General)"),
   fichab("Cómo se reparten los escaños del Congreso entre circunscripciones",
          "La ley (LOREG) distribuye; el Decreto de convocatoria especifica los Diputados de cada circunscripción (art. 162.4 LOREG)",
          ["Circunscripción: la **provincia**", "Ceuta y Melilla: **un** Diputado cada una", "Mínimo inicial de **dos** por provincia; los **248** restantes, en proporción a la población", "Elección con criterios de **representación proporcional**"],

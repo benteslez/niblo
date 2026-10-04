@@ -257,7 +257,7 @@ T.ap("s9b", "III.2 La ocupación temporal (arts. 108 y 109)", f"""
 # =============================================================================
 T.ap("bIV", "IV. ¿Cómo se defiende el expropiado? Garantías jurisdiccionales (arts. 125 y 126)", donde(
   "Cuarta pregunta. Si la Administración ocupa **sin respetar** las garantías, o si el expropiado no está de acuerdo con el resultado, la LEF le abre la vía judicial (Título V, «Garantías jurisdiccionales»).",
-  ["1 Frente a la vía de hecho: los interdictos (art. 125)", "2 El recurso contencioso-administrativo (arts. 126 y 35.2)"]))
+  ["1 Frente a la vía de hecho: los interdictos (art. 125)", "2 El recurso contencioso-administrativo (arts. 35.2 y 126)"]))
 
 T.ap("s10", "IV.1 Frente a la vía de hecho: los interdictos (art. 125)", f"""
 {unidad("1.1 Ocupación sin los requisitos sustanciales (art. 125)",
@@ -267,18 +267,18 @@ T.ap("s10", "IV.1 Frente a la vía de hecho: los interdictos (art. 125)", f"""
          "—", "Son **interdictos de retener y recobrar** (protección de la posesión), «aparte de los demás medios legales procedentes»."))}
 """, 2)
 
-T.ap("s11", "IV.2 El recurso contencioso-administrativo (arts. 126 y 35.2)", f"""
-{unidad("2.1 Contra la resolución final y el justo precio (art. 126)",
+T.ap("s11", "IV.2 El recurso contencioso-administrativo (arts. 35.2 y 126)", f"""
+{unidad("2.1 La resolución del Jurado agota la vía administrativa (art. 35.2)",
+  lit("LEF", "atreintaycinco", ["ultimará la vía gubernativa y contra la misma procederá tan sólo el recurso contencioso-administrativo"], solo=[2]),
+  fichab("Impugnación del justiprecio del Jurado", "Administración y propietario", "Directamente recurso contencioso-administrativo", "—", "Contra el Jurado **no** hay recurso administrativo: «tan sólo» el contencioso."))}
+
+{unidad("2.2 Contra la resolución final y el justo precio (art. 126)",
   lit("LEF", "acientoveintiseis", ["con excepción del caso previsto en el número tercero del artículo veintidós", "en más de una sexta parte", "vicio sustancial de forma", "de turno preferente"]),
   fichab("Recurso contencioso-administrativo en materia expropiatoria",
          "Ambas partes (expropiado y Administración o beneficiario)",
          ["Contra la resolución que pone fin al expediente o a cualquier pieza separada, salvo el art. 22.3", "Contra el justo precio: fundado en **lesión** si la diferencia supera **una sexta parte**", "Siempre: vicio sustancial de forma o infracción de la LEF", "Recursos de **turno preferente**"],
          "Lesión: diferencia de **más de una sexta parte**",
          "La **sexta parte** es el umbral de la lesión. La única excepción a la vía contenciosa es la del **art. 22.3** (necesidad de ocupación tras la alzada)."))}
-
-{unidad("2.2 La resolución del Jurado agota la vía administrativa (art. 35.2)",
-  lit("LEF", "atreintaycinco", ["ultimará la vía gubernativa y contra la misma procederá tan sólo el recurso contencioso-administrativo"], solo=[2]),
-  fichab("Impugnación del justiprecio del Jurado", "Administración y propietario", "Directamente recurso contencioso-administrativo", "—", "Contra el Jurado **no** hay recurso administrativo: «tan sólo» el contencioso."))}
 
 
 *Cuadro de plazos de la LEF (esquema de elaboración propia sobre los artículos citados; no es texto legal).*

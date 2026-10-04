@@ -21,6 +21,8 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 
 ### El hilo conductor
 
+El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque de los apuntes:
+
 | Bloque | Pregunta | Normas |
 |---|---|---|
 | **I** | ¿Quién es persona con discapacidad y qué principios rigen? | RDLeg 1/2013, arts. 2 m) y 4; RD 2271/2004, art. 1; RDL 6/2023, art. 113.1 y 2 |
@@ -31,6 +33,13 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 !> **La idea que une los cuatro bloques:** la persona con discapacidad (grado **igual o superior al 33 %**) accede al empleo público en **igualdad de condiciones**, con dos herramientas: un **cupo de reserva** de plazas y las **adaptaciones y ajustes razonables** de tiempos y medios. Una vez dentro, puede pedir **alterar el orden** para elegir destino y la **adaptación del puesto**.
 
 ?> **Aviso: tres porcentajes de reserva en tres normas vigentes.** El RD 2271/2004 dice «**no inferior al cinco por ciento**» (texto de 2004, no actualizado); el TREBEP, norma básica, «**no inferior al siete por ciento**» (art. 59.1); y el RDL 6/2023, para la **Administración del Estado**, «**no inferior al diez por ciento**» (art. 108.4). Se citan los tres literalmente (→ II.2). En el examen, fíjate en **qué norma** cita el enunciado.
+
+### Cómo está escrito
+
+- Cada artículo: primero el **texto literal del BOE** (con la etiqueta BOE) y debajo su **ficha**: de **institución o procedimiento** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen) o de **derecho** (Titulares · Contenido · Límites · Protección · ⚠ Ojo en el examen).
+- Los esquemas y cuadros **no son texto legal**: resumen los artículos citados.
+- El RD 2271/2004 conserva denominaciones antiguas («minusvalía», «Ministerio de Administraciones Públicas»): se copian **literales**, tal como están en el texto consolidado.
+- Al final: **Cierre 1** (las preguntas oficiales de 2025 sobre este tema) y **Cierre 2** (repaso por bloques).
 """)
 
 # =============================================================================
@@ -61,7 +70,7 @@ T.ap("s2", "I.2 Derecho de acceso y principios (RD 2271/2004, art. 1; RDL 6/2023
         "Derecho a **acceder al empleo público** en las condiciones del real decreto",
         "Ámbito: el personal del art. 1.1 de la Ley 30/1984 (Administración del Estado); **supletorio** para el resto del sector público (disposición adicional única)",
         "—",
-        "**Cuatro** principios: igualdad de oportunidades, no discriminación, accesibilidad universal y **compensación de desventajas**. Nota: el art. 1.1 remite aún a la Ley 51/2003 y habla de «minusvalía»; hoy rige el concepto del RDLeg 1/2013 (→ I.1.2), que usa «persona con discapacidad»."))}
+        f"**Cuatro** principios: igualdad de oportunidades, no discriminación, accesibilidad universal y **compensación de desventajas**. Nota: el art. 1.1 remite aún a la Ley 51/2003 y habla de «minusvalía»; esa ley está derogada e integrada en el RDLeg 1/2013 (disposición derogatoria única: {c('LGD', 'ddunica', 'La Ley 51/2003, de 2 de diciembre')}…), cuyo concepto rige hoy (→ I.1.2) y que usa «persona con discapacidad»."))}
 
 {unidad("2.2 Principios del RDL 6/2023 para la Administración del Estado (art. 113.1 y 2)",
   lit("RDL6", "a1-25", ["igualdad de oportunidades, no discriminación y accesibilidad universal", "en igualdad de condiciones que el resto de las personas aspirantes", "la compatibilidad con el desempeño de las funciones y tareas genéricas"], solo=[1, 2], titulo="Artículo 113. Acceso al empleo público de personas con discapacidad (RDL 6/2023)"),

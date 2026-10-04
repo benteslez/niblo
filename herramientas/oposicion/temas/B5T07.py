@@ -245,7 +245,7 @@ T.ap("s5", "III.1 Personal incluido (art. 1)", f"""
   lit("CONV", "Artículo 1", ["al personal laboral de la Administración General del Estado y sus organismos autónomos", "La Administración de Justicia no transferida", "El Consejo de Seguridad Nuclear", "La Agencia Española de Protección de Datos", "El Museo Nacional Centro de Arte Reina Sofía", "Trabajo Penitenciario y Formación para el Empleo"], solo=[1, 2, 3, 4, 5, 6, 7, 8]),
   fichab("Ámbito personal del IV Convenio Único",
          "Personal laboral",
-         ["::Regla (1.1): la **AGE y sus organismos autónomos**. Además (1.2):", "La **Administración de Justicia no transferida**", "La **Administración de la Seguridad Social** (en el INGESA, solo servicios centrales y direcciones territoriales y/o provinciales)", "El **Consejo de Seguridad Nuclear**", "La **Agencia Española de Protección de Datos**", "El **Museo Nacional Centro de Arte Reina Sofía**", "**Trabajo Penitenciario y Formación para el Empleo**"],
+         ["::Regla (1.1): la **AGE y sus organismos autónomos**. Además (1.2):", "La **Administración de Justicia no transferida**", "La **Administración de la Seguridad Social**, incluido, en el INGESA, el personal de los Servicios Centrales y de las Direcciones Territoriales y/o Provinciales", "El **Consejo de Seguridad Nuclear**", "La **Agencia Española de Protección de Datos**", "El **Museo Nacional Centro de Arte Reina Sofía**", "**Trabajo Penitenciario y Formación para el Empleo**"],
          "—",
          "Cayó en 2025 (→ Cierre 1): el **Reina Sofía**, la **AEPD** y el **CSN** están **incluidos**; el personal en el **exterior**, **excluido** (→ III.2)."))}
 
@@ -275,7 +275,7 @@ T.ap("s7", "III.3 Vigencia, carácter unitario y derecho supletorio (arts. 3, 4 
          "Cualquiera de las partes (denuncia); la Comisión Negociadora (se constituye tras la denuncia)",
          ["Entrada en vigor: el **día siguiente** de su publicación en el BOE; efectos económicos desde el **1 de enero de 2019**", "Vigencia hasta el **31 de diciembre de 2021**", "Sin denuncia expresa: **prórroga automática por períodos anuales**", "Denunciado: se mantiene **todo** su contenido hasta que otro lo sustituya"],
          "Denuncia: en los **dos meses** anteriores al fin de la vigencia; Comisión Negociadora: en **un mes** desde la recepción de la comunicación",
-         "La vigencia inicial terminaba el **31-12-2021**; desde entonces rige la **prórroga anual automática** del 3.3, salvo denuncia expresa. Denunciado, se mantiene la vigencia de **la totalidad** de su contenido (no solo de las cláusulas normativas)."))}
+         "La vigencia inicial terminaba el **31-12-2021**. Desde entonces, sin denuncia expresa, se **prorroga por períodos anuales**; denunciado, se mantiene la vigencia de **la totalidad** de su contenido (no solo de las cláusulas normativas) hasta que otro lo sustituya (3.3)."))}
 
 {unidad("3.2 Un todo orgánico e indivisible (art. 4.1 a 3)",
   lit("CONV", "Artículo 4", ["forma un todo orgánico e indivisible", "considerado globalmente", "compensan y sustituyen a todas las existentes en el III Convenio único"], solo=[1, 2, 3]),
@@ -381,7 +381,7 @@ T.ap("s11", "IV.4 Quién decide sobre la clasificación (arts. 11, 12, 15, 16 y 
 {unidad("4.4 Reuniones de la Comisión Paritaria (art. 16.2)",
   lit("CONV", "Artículo 16", ["al menos una vez al mes", "cuando lo soliciten al menos siete de las personas que componen la parte social o de la Administración", "por medios electrónicos"], solo=[3]),
   fichab("Funcionamiento de la Comisión Paritaria: reuniones",
-         "Pleno de la Comisión Paritaria (que funciona en Pleno y en Comisión Permanente: 16.1)",
+         "La Comisión Paritaria (que funciona en Pleno y en Comisión Permanente: 16.1)",
          ["Ordinarias: **al menos una vez al mes**", "Extraordinarias: a solicitud de **al menos siete** personas de la parte social o de la Administración", "Por medios electrónicos, si lo acuerdan las partes por circunstancias extraordinarias"],
          "Ordinaria mensual; extraordinaria con **siete** solicitantes",
          f"Cayó en 2025 como pregunta de reserva (→ Cierre 1): **siete**, no cinco ni seis. La Comisión se compone de {c('CONV', 'Artículo 14', 'quince personas en representación de cada una de las partes')} (art. 14.2)."))}

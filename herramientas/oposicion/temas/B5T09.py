@@ -33,7 +33,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 | **I** | ¿Qué es el régimen especial y a quién protege? | RDLeg 4/2000, arts. 1 a 3, 7 y 8; LGSS, disposición adicional tercera; RD 375/2003, art. 13 |
 | **II** | ¿Qué es MUFACE y cómo se financia? | RDLeg 4/2000, arts. 4, 5, 10, 34, 37 y disposición adicional sexta; RD 577/1997 (Estatuto de MUFACE), arts. 1, 4 y 6; RD 466/2026, art. tercero |
 | **III** | ¿Qué protege el mutualismo administrativo? (acción protectora, concepto y clases de prestaciones) | RDLeg 4/2000, arts. 11 a 31; RD 375/2003, arts. 50, 53, 54, 66, 129 y 137 |
-| **IV** | ¿Qué protegen las Clases Pasivas? (acción protectora y derechos pasivos) | RDLeg 670/1987, arts. 1, 2, 5 a 7, 11, 12, 14, 18, 19, 23, 28, 29, 31, 38, 39, 41, 44, 47 a 49 |
+| **IV** | ¿Qué protegen las Clases Pasivas? (acción protectora y derechos pasivos) | RDLeg 670/1987, arts. 1, 2, 5 a 7, 11, 12, 14, 18, 19, 23, 28 a 31, 34, 35, 38, 39, 41, 44, 47 a 49 |
 
 !> **La idea que une los cuatro bloques:** el régimen especial de los funcionarios civiles del Estado tiene **dos mecanismos de cobertura** (I): las **Clases Pasivas** (pensiones: jubilación y muerte y supervivencia) y el **mutualismo administrativo** que gestiona **MUFACE** (II). El mutualismo da asistencia sanitaria, subsidios y otras prestaciones (III); las Clases Pasivas, los **derechos pasivos** (IV). Desde el **1 de enero de 2011**, el personal de nuevo ingreso queda en el **Régimen General** a efectos de pensiones, no en Clases Pasivas (→ I.1).
 
@@ -481,7 +481,7 @@ TABLA31 = "*Valores del art. 31.1 (copiados de la tabla del BOE; selección):*\n
 T.ap("s17", "IV.5 Pensión ordinaria de jubilación (RDLeg 670/1987, arts. 28, 29 y 31)", f"""
 {unidad("5.1 Hecho causante y clases de jubilación (art. 28)",
   lit("RDL670", "a28", ["De carácter forzoso", "De carácter voluntario", "sesenta años de edad y reconocidos treinta años de servicios efectivos al Estado", "Por incapacidad permanente para el servicio o inutilidad", "dictamen preceptivo y vinculante"], solo=[1, 2, 3, 5, 6]),
-  ficha("El personal de la letra a) del art. 3.1: funcionarios de carrera del Estado",
+  ficha("El personal del art. 3.1 (entre otros, los funcionarios de carrera civiles del Estado)",
         ["**Forzosa**: automática al cumplir la edad legal", "**Voluntaria**: a instancia, con **60 años** de edad y **30** de servicios efectivos (o anticipada si una ley lo dispone)", "**Por incapacidad permanente para el servicio**: de oficio o a instancia, con dictamen preceptivo y vinculante del órgano médico"],
         "Prórroga para completar la carencia: quien llega a la edad forzosa con 12 años de servicios y sin los 15 puede pedirla (28.2 a)",
         "La declara el órgano de personal del art. 28.3 (p. ej., el Subsecretario del Departamento)",
