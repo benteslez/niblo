@@ -53,25 +53,54 @@ for d_, r_ in RUB1: assert (d_ + " " + r_) in CE_PLANO, (d_, r_)
 LEYES[1] = [{"t": "Constitución Española · rúbricas del Título I", "f": BOE_ID["CE"],
              "p": ["**TÍTULO I. De los derechos y deberes fundamentales**", "CAPÍTULO PRIMERO. De los españoles y los extranjeros",
                    "CAPÍTULO SEGUNDO. Derechos y libertades", "Sección 2.ª De los derechos y deberes de los ciudadanos"]}]
-# Normas descargadas de boe.es (API de datos abiertos): texto literal y coherencia plantilla ↔ ley.
+# Normas descargadas de boe.es / EUR-Lex: texto literal y coherencia plantilla ↔ ley (verif_examen).
+import os, importlib
 sys.path.insert(0, "boe")
-import verif_nuevas
-for n_, b_ in verif_nuevas.LEYES.items():
+import verif_examen
+import leyes25L
+for n_, b_ in verif_examen.verificar(leyes25L, Q25L).items():
     assert n_ not in LEYES, n_
     LEYES[n_] = b_
-pregs = []
-for q in Q25L:
-    p = {"n": q["n"], "q": q["q"], "o": [q["o"][k] for k in "abcd"], "c": q["c"]}
-    if TEMA25L[q["n"]]: p["tema"] = TEMA25L[q["n"]]
-    if q["reserva"]: p["reserva"] = True; p["nr"] = q["n"] - 100     # número dentro de la reserva
-    if q["anulada"]: p["anulada"] = True
-    if q["n"] in LEYES: p["ley"] = LEYES[q["n"]]
-    pregs.append(p)
-datos = {"_formato": "tests_reales_v1", "examenes": [{
+assert verif_examen.mutacion(leyes25L, Q25L)[0] == []
+
+def preguntas(qs, tema, leyes, n_anuladas, retenidas={}):
+    out = []
+    for q in qs:
+        p = {"n": q["n"], "q": q["q"], "o": [q["o"][k] for k in "abcd"], "c": q["c"]}
+        if tema[q["n"]]: p["tema"] = tema[q["n"]]
+        if q["reserva"]: p["reserva"] = True; p["nr"] = q["n"] - 100     # número dentro de la reserva
+        if q["anulada"]: p["anulada"] = True
+        if q["n"] in leyes: p["ley"] = leyes[q["n"]]
+        if q["n"] in retenidas: p["retenida"] = retenidas[q["n"]]
+        out.append(p)
+    assert sum(1 for p in out if p.get("anulada")) == n_anuladas and sum(1 for p in out if p.get("reserva")) == 5
+    return out
+
+examenes = [{
     "id": "GACE-L-2025-1", "titulo": "GACE-L 2025", "anio": 2025, "acceso": "libre",
     "ejercicio": "Primer ejercicio", "plantilla": "definitiva",
     "fuente": "Cuestionario oficial «2025 - GACE-L» y plantilla definitiva de respuestas del primer ejercicio (ingreso libre)",
-    "preguntas": pregs }]}
-assert sum(1 for p in pregs if p.get("anulada")) == 1 and sum(1 for p in pregs if p.get("reserva")) == 5
+    "preguntas": preguntas(Q25L, TEMA25L, LEYES, 1)}]
+
+# Otros exámenes: cuestionario (examen25X.py) + especificación (boe/leyes25X.py), si existen.
+OTROS = [
+  ("P", {"id": "GACE-P-2025-1", "titulo": "GACE-P 2025", "anio": 2025, "acceso": "promocion", "ejercicio": "Primer ejercicio", "plantilla": "definitiva",
+         "fuente": "Cuestionario oficial «2025 - GACE-P» y plantilla definitiva de respuestas del primer ejercicio (promoción interna)"}, 1),
+  ("X", {"id": "GACE-X-2025-1", "titulo": "GACE-L 2025 extraordinario", "anio": 2025, "acceso": "extraordinaria", "ejercicio": "Primer ejercicio extraordinario", "plantilla": "definitiva",
+         "fuente": "Cuestionario oficial «2025 - GACE-L EXTRAORDINARIO» y plantilla definitiva de respuestas del primer ejercicio extraordinario (ingreso libre)"}, 0),
+]
+for cod, meta, n_anul in OTROS:
+    if not os.path.exists(f"boe/leyes25{cod}.py"): continue
+    E_ = importlib.import_module("examen25" + cod); L_ = importlib.import_module("leyes25" + cod)
+    ley_ = verif_examen.verificar(L_, E_.qs)
+    assert verif_examen.mutacion(L_, E_.qs)[0] == []
+    sin = set(getattr(L_, "SIN_LEY", {})) | set(getattr(L_, "RETENIDA", {}))
+    falta = [q["n"] for q in E_.qs if not q["anulada"] and q["n"] not in ley_ and q["n"] not in sin]
+    assert not falta, (cod, "preguntas sin especificar", falta)
+    examenes.append(dict(meta, preguntas=preguntas(E_.qs, L_.TEMA, ley_, n_anul, getattr(L_, "RETENIDA", {}))))
+
+datos = {"_formato": "tests_reales_v1", "examenes": examenes}
 open("tests_reales.json", "w", encoding="utf-8").write(json.dumps(datos, ensure_ascii=False, separators=(",", ":")))
-print("tests reales:", len(pregs), "preguntas;", sum(1 for p in pregs if p.get("tema")), "con tema;", sum(1 for p in pregs if p.get("ley")), "con texto legal", file=sys.stderr)
+for x in examenes:
+    ps = x["preguntas"]
+    print("test real", x["id"], ":", len(ps), "preguntas;", sum(1 for p in ps if p.get("tema")), "con tema;", sum(1 for p in ps if p.get("ley")), "con texto legal", file=sys.stderr)

@@ -6,7 +6,8 @@ eurlex.js + eurext.js (navegador) y se guardan como <clave>.json.
 Uso: python3 descargar.py [CLAVE …]"""
 import os, sys, subprocess, urllib.request, urllib.error
 AQUI = os.path.dirname(os.path.abspath(__file__))
-IDS = dict(l.split() for l in open(os.path.join(AQUI, "ids.txt")) if l.strip())
+sys.path.insert(0, AQUI)
+from boe import IDS
 
 
 def baja(url, dest, accept="application/xml"):
