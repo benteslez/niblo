@@ -23,7 +23,10 @@ import boe
 
 RAIZ = os.path.dirname(os.path.dirname(AQUI))
 _n = lambda x: " ".join(str(x).replace("\xa0", " ").split())
-_norm = lambda x: _n(x).lower().replace("«", "").replace("»", "").replace('"', "").replace("“", "").replace("”", "")
+_lit = lambda x: _n(x).replace("«", "").replace("»", "").replace('"', "").replace("“", "").replace("”", "")
+_norm = lambda x: _lit(x).lower()
+# Citas y apoyos literales: se comparan CON mayúsculas (_lit); _norm (sin ellas) solo para
+# comparar opciones de examen entre sí.
 
 # Nombre corto de cada norma en las cabeceras de los bloques literales (la CE va sin él).
 CORTO = {"CE": "", "L39": "Ley 39/2015", "L40": "Ley 40/2015", "LGOB": "Ley 50/1997, del Gobierno", "LOTC": "LOTC",
@@ -40,9 +43,9 @@ def texto(k, art): return _n(" ".join(parrafos(k, art)))
 
 def c(k, art, frag):
     """Cita literal en línea, entre comillas latinas; «…» une trozos. Se comprueba."""
-    t = _norm(texto(k, art))
+    t = _lit(texto(k, art))
     for parte in frag.split("…"):
-        p = _norm(parte.replace("**", ""))
+        p = _lit(parte.replace("**", ""))
         if p: assert p in t, ("CITA NO LITERAL", k, art, p)
     return "«" + frag + "»"
 
@@ -111,7 +114,7 @@ def examen(cod, n, porque, apoyo):
     ok = "abcd"[q["c"]]; PORQUE[(cod, n)] = dict(porque)
     assert sorted(porque) == list("abcd") and apoyo, (cod, n)
     for dato, k, art, frag in apoyo:
-        assert _norm(frag) in _norm(texto(k, art)), ("APOYO NO LITERAL", cod, n, k, art, frag)
+        assert _lit(frag) in _lit(texto(k, art)), ("APOYO NO LITERAL", cod, n, k, art, frag)
         assert _norm(dato) in _norm(q["o"][ok]), ("LA PLANTILLA NO CASA CON LA LEY", cod, n, ok, dato)
     for x in "abcd":
         if x != ok: assert not all(_norm(d) in _norm(q["o"][x]) for d, *_ in apoyo), ("DISTRACTOR IGUAL DE APOYADO", cod, n, x)
@@ -137,7 +140,7 @@ class Tema:
         en que se apoya tienen que estar literales en el artículo."""
         assert len(opciones) == 4 and len(set(map(_norm, opciones))) == 4, enunciado
         for f in ([frags] if isinstance(frags, str) else frags):
-            assert _norm(f) in _norm(texto(k, art)), ("PREGUNTA SIN APOYO LITERAL", k, art, f)
+            assert _lit(f) in _lit(texto(k, art)), ("PREGUNTA SIN APOYO LITERAL", k, art, f)
         self.Q.append({"q": enunciado, "o": opciones, "c": 0, "e": explicacion, "cat": cat})
 
     def real(self, cod, n, cat):
