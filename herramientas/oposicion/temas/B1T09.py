@@ -14,7 +14,7 @@ from plantilla import *
 CORTO["L7_2025"] = "Ley 7/2025"
 
 T = Tema("B1T09",
-  "Cuatro preguntas: I. Qué es el sector público institucional y qué entidades lo integran (Ley 40/2015, arts. 2 y 84; Ley 47/2003, arts. 2 y 3) · II. Qué reglas comunes se aplican a todas (arts. 81 a 87) · III. Cómo son los organismos públicos: organismos autónomos, entidades públicas empresariales y agencias estatales (arts. 88 a 108 sexies) · IV. Cómo son las demás: autoridades administrativas independientes, sociedades mercantiles estatales, consorcios, fundaciones y fondos (arts. 109 a 139). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué es el sector público institucional y qué entidades lo integran (Ley 40/2015, arts. 2 y 84; Ley 47/2003, arts. 2 y 3) · II. Qué reglas comunes se aplican a todas (arts. 81 a 83 y 84 bis a 87) · III. Cómo son los organismos públicos: organismos autónomos, entidades públicas empresariales y agencias estatales (arts. 88 a 108 sexies) · IV. Cómo son las demás: autoridades administrativas independientes, sociedades mercantiles estatales, consorcios, fundaciones y fondos (arts. 109 a 114 y 116 a 139). Cada artículo: texto literal del BOE y ficha.",
   ["Ley 40/2015", "Sector público institucional", "Art. 84", "Inventario de Entidades", "Supervisión continua", "Medio propio", "Organismos públicos", "Organismo autónomo", "Entidad pública empresarial", "Agencia estatal", "Contrato de gestión", "Autoridad administrativa independiente", "Sociedad mercantil estatal", "Consorcio", "Fundación del sector público", "Fondos sin personalidad", "LGP art. 3"])
 
 # =============================================================================
@@ -31,7 +31,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 | **I** | ¿Qué es el sector público institucional y qué entidades lo integran? | Arts. 2 y 84 | Ley 47/2003, General Presupuestaria, arts. 2 y 3 |
 | **II** | ¿Qué reglas comunes se aplican a todas las entidades? | Arts. 81 a 83 y 84 bis a 87 | — |
 | **III** | ¿Cómo son los organismos públicos? (organismos autónomos, entidades públicas empresariales y agencias estatales) | Arts. 88 a 108 sexies | — |
-| **IV** | ¿Cómo son las demás entidades? (autoridades administrativas independientes, sociedades mercantiles estatales, consorcios, fundaciones y fondos sin personalidad) | Arts. 109 a 139 | — |
+| **IV** | ¿Cómo son las demás entidades? (autoridades administrativas independientes, sociedades mercantiles estatales, consorcios, fundaciones y fondos sin personalidad) | Arts. 109 a 114 y 116 a 139 | — |
 
 !> **La idea que une los cuatro bloques:** además de las Administraciones territoriales, el sector público tiene un **sector público institucional**: entidades creadas por ellas para fines concretos (I). Todas están sometidas a unas **reglas comunes**: principios, inventario, supervisión continua (II). En el Estado son una **lista cerrada** (art. 84): los **organismos públicos** (III), con régimen más o menos administrativo según el tipo, y otras entidades de derecho público o privado (IV). Para cada tipo hay que saber **qué es**, **cómo se crea**, **por qué derecho se rige** y **qué personal tiene**.
 
@@ -130,7 +130,7 @@ T.ap("s4", "I.4 Cuadro de las entidades y sus denominaciones (esquema)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Qué reglas comunes se aplican a todas las entidades? (arts. 81 a 87)", donde(
+T.ap("bII", "II. ¿Qué reglas comunes se aplican a todas las entidades? (arts. 81 a 83 y 84 bis a 87)", donde(
   "Segunda pregunta. Antes de los tipos, la Ley fija unas **reglas comunes**: principios de actuación, un **inventario** público de todas las entidades, la **supervisión continua**, la condición de **medio propio** y las **transformaciones**.",
   ["1 Principios y supervisión continua (art. 81)", "2 El Inventario de Entidades del Sector Público (arts. 82 y 83)", "3 Presencia equilibrada y control de eficacia (arts. 84 bis y 85)", "4 Medio propio y transformaciones (arts. 86 y 87)"]))
 
@@ -182,7 +182,7 @@ T.ap("s7", "II.3 Presencia equilibrada y control de eficacia y supervisión cont
 
 T.ap("s8", "II.4 Medio propio y servicio técnico; transformaciones (arts. 86 y 87)", f"""
 {unidad("4.1 Medio propio y servicio técnico (art. 86)",
-  lit("L40", "a86", ["Sea una opción más eficiente que la contratación pública", "Resulte necesario por razones de seguridad pública o de urgencia", "deberá ser informada por la Intervención General de la Administración del Estado"], solo=[1, 2, 3, 4, 5, 7]),
+  lit("L40", "a86", ["Sea una opción más eficiente que la contratación pública", "Resulte necesario por razones de seguridad pública o de urgencia", "deberá ser informada por la Intervención General de la Administración del Estado"], solo=[1, 2, 3, 4, 5, 6, 7]),
   fichab("Entidades a las que se puede encargar prestaciones sin licitar",
          "Entidades del sector público institucional que cumplan la Ley 9/2017, de Contratos del Sector Público",
          ["Medios suficientes e idóneos en su sector de actividad", "Y además: opción **más eficiente** que la contratación pública, o necesaria por **seguridad pública** o **urgencia**", "La comprobación de esos requisitos forma parte del control de eficacia"],
@@ -407,7 +407,7 @@ Las agencias estatales están en la Ley 40/2015 por la Ley 11/2020, de Presupues
          "El **director** lo nombra y separa el **Consejo Rector**, a propuesta del **Presidente**."))}
 
 {unidad("5.4 Financiación, endeudamiento y contratación (art. 108 quinquies)",
-  lit("L40", "a1-5", ["Las transferencias consignadas en los Presupuestos Generales del Estado", "El recurso al endeudamiento está prohibido a las agencias estatales, salvo que por Ley se disponga lo contrario", "siempre que el saldo vivo no supere el 5 % de su presupuesto"], solo=[1, 2, 3, 12, 13]),
+  lit("L40", "a1-5", ["Las transferencias consignadas en los Presupuestos Generales del Estado", "El recurso al endeudamiento está prohibido a las agencias estatales, salvo que por Ley se disponga lo contrario", "siempre que el saldo vivo no supere el 5 % de su presupuesto"], solo=list(range(1, 10)) + [12, 13]),
   fichab("Recursos de las agencias estatales",
          "—",
          ["Transferencias de los Presupuestos Generales del Estado, ingresos propios por contraprestación, patrimonio y sus rendimientos, aportaciones gratuitas, patrocinios y otros", "Contratación: normativa del sector público; sus sociedades y fundaciones, publicidad y concurrencia"],
@@ -415,7 +415,7 @@ Las agencias estatales están en la Ley 40/2015 por la Ley 11/2020, de Presupues
          "Endeudamiento **prohibido** salvo **ley**; pólizas hasta el **5 %** del presupuesto."))}
 
 {unidad("5.5 Presupuesto, cuentas y control (art. 108 sexies)",
-  lit("L40", "a1-6", ["El Consejo Rector elaborará y aprobará el anteproyecto de presupuesto", "en el plazo de tres meses desde el cierre del ejercicio económico", "antes del 30 de junio del año siguiente", "corresponde al Tribunal de Cuentas", "control financiero permanente y de auditoría pública"], solo=[1, 23, 24, 25, 26]),
+  lit("L40", "a1-6", ["El Consejo Rector elaborará y aprobará el anteproyecto de presupuesto", "en el plazo de tres meses desde el cierre del ejercicio económico", "antes del 30 de junio del año siguiente", "corresponde al Tribunal de Cuentas", "control financiero permanente y de auditoría pública"], solo=[1, 23, 24, 25, 26, 27]),
   fichab("Presupuesto y control de las agencias estatales",
          ["Anteproyecto de presupuesto: **Consejo Rector** (→ Ministerio de adscripción → Hacienda)", "Cuentas: las formula el **Director** y las aprueba el **Consejo Rector**", "Control externo: **Tribunal de Cuentas**; interno: **IGAE**"],
          "El presupuesto se integra en los Presupuestos Generales del Estado; control interno por control financiero permanente y auditoría pública",
@@ -448,9 +448,9 @@ Comunes a los tres (arts. 89 a 97): personalidad jurídica pública, potestades 
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo son las demás entidades? (arts. 109 a 139)", donde(
+T.ap("bIV", "IV. ¿Cómo son las demás entidades? (arts. 109 a 114 y 116 a 139)", donde(
   "Cuarta pregunta. Fuera de los organismos públicos, el art. 84.1 enumera otras entidades: unas de **derecho público** (autoridades administrativas independientes y consorcios), otras **privadas** en su forma (sociedades mercantiles estatales y fundaciones) y los **fondos sin personalidad**.",
-  ["1 Autoridades administrativas independientes (arts. 109 y 110)", "2 Sociedades mercantiles estatales (arts. 111 a 117)", "3 Consorcios (arts. 118 a 127)", "4 Fundaciones del sector público estatal (arts. 128 a 136)", "5 Fondos carentes de personalidad jurídica (arts. 137 a 139)", "6 Cuadro comparativo"]))
+  ["1 Autoridades administrativas independientes (arts. 109 y 110)", "2 Sociedades mercantiles estatales (arts. 111 a 114, 116 y 117)", "3 Consorcios (arts. 118 a 127)", "4 Fundaciones del sector público estatal (arts. 128 a 136)", "5 Fondos carentes de personalidad jurídica (arts. 137 a 139)", "6 Cuadro comparativo"]))
 
 T.ap("s15", "IV.1 Autoridades administrativas independientes de ámbito estatal (arts. 109 y 110)", f"""
 {unidad("1.1 Definición (art. 109)",
@@ -470,7 +470,7 @@ T.ap("s15", "IV.1 Autoridades administrativas independientes de ámbito estatal 
          "La Ley 40/2015 solo se les aplica **supletoriamente**. Están sujetas a la **sostenibilidad financiera** (LO 2/2012). El art. 85.1 somete a todas las entidades estatales al control de eficacia «sin perjuicio de lo establecido en el artículo 110»."))}
 """, 2)
 
-T.ap("s16", "IV.2 Sociedades mercantiles estatales (arts. 111 a 117)", f"""
+T.ap("s16", "IV.2 Sociedades mercantiles estatales (arts. 111 a 114, 116 y 117)", f"""
 {unidad("2.1 Definición (art. 111)",
   lit("L40", "a111", ["sea superior al 50 por 100", "«S.M.E.»"]),
   fichab("Sociedad mercantil bajo control estatal",

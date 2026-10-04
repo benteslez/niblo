@@ -15,7 +15,7 @@ from plantilla import *
 CORTO["L2_2014"] = "Ley 2/2014"
 
 T = Tema("B1T08",
-  "Seis preguntas: I. Qué es la AGE y con qué principios se organiza (Ley 40/2015, arts. 3, 54 a 56) · II. Cómo se organizan los órganos centrales: los Ministerios (arts. 57 a 60) · III. Quiénes son los órganos superiores y directivos y cómo se crean, nombran, cesan y qué hacen (arts. 55, 55 bis y 61 a 67; Ley 50/1997, art. 15) · IV. Qué son los servicios comunes (art. 68) · V. Cómo se organiza la AGE en el territorio: Delegados y Subdelegados del Gobierno (arts. 69 a 79) · VI. Cómo actúa en el exterior (art. 80; Ley 2/2014). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué es la AGE y con qué principios se organiza (Ley 40/2015, arts. 3.1, 54, 55.1 y 2 y 56) · II. Cómo se organizan los órganos centrales: los Ministerios (arts. 57 a 60) · III. Quiénes son los órganos superiores y directivos y cómo se crean, nombran, cesan y qué hacen (arts. 55, 55 bis y 61 a 67; Ley 50/1997, art. 15) · IV. Qué son los servicios comunes (art. 68) · V. Cómo se organiza la AGE en el territorio: Delegados y Subdelegados del Gobierno (arts. 69 a 79) · VI. Cómo actúa en el exterior (art. 80; Ley 2/2014). Cada artículo: texto literal del BOE y ficha.",
   ["Administración General del Estado", "Ley 40/2015", "Arts. 54-80", "Órganos superiores", "Órganos directivos", "Art. 55 bis", "Ministros", "Secretarios de Estado", "Subsecretarios", "Directores generales", "Servicios comunes", "Delegados del Gobierno", "Subdelegados del Gobierno", "Servicio Exterior", "Ley 2/2014", "Embajadores", "Oficinas Consulares"])
 
 # =============================================================================
@@ -49,7 +49,7 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué es la AGE y con qué principios se organiza y funciona? (Ley 40/2015, arts. 3, 54 a 56)", donde(
+T.ap("bI", "I. ¿Qué es la AGE y con qué principios se organiza y funciona? (Ley 40/2015, arts. 3.1, 54, 55.1 y 2 y 56)", donde(
   "Primera pregunta del tema. Antes de ver sus órganos, hay que saber **con qué principios** actúa y se organiza la Administración General del Estado (AGE) y **qué piezas** la forman.",
   ["1 Principios de organización y funcionamiento (arts. 3.1 y 54)", "2 Estructura de la AGE y elementos organizativos básicos (arts. 55.1 y 2 y 56)"]))
 
