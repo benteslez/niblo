@@ -22,7 +22,7 @@ OA1 = "Anexo I (Orden HAC/557/2026): clasificación por programas de gasto"
 DOC = "Anexo I (Orden de 1 de febrero de 1996, documentos contables): normas de cumplimentación"
 
 T = Tema("B6T02",
-  "Cinco preguntas: I. Qué es la Ley de Presupuestos y qué contiene (arts. 66.2, 75.3 y 134 CE; LGP, arts. 32 a 34 y 38) · II. Con qué principios se programa y se gestiona (LGP, arts. 26 a 31) · III. Cómo se elabora y se aprueba (LGP, arts. 36 y 37; LO 2/2012, art. 30; Orden HAC/557/2026; Reglamentos del Congreso y del Senado) · IV. Cómo se estructura (LGP, arts. 35 y 39 a 44; Orden HAC/557/2026, art. 6) · V. Cómo se lee y se desglosa una aplicación presupuestaria (documentos contables e Instrucción de operatoria contable). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué es la Ley de Presupuestos y qué contiene (arts. 66.2, 75.3 y 134 CE; LGP, arts. 32 a 34 y 38) · II. Con qué principios se programa y se gestiona (LGP, arts. 26 a 29 y 31) · III. Cómo se elabora y se aprueba (CE, arts. 79.2 y 134.3, 5 y 6; LGP, arts. 36 y 37; LO 2/2012, art. 30; Orden HAC/557/2026; Reglamentos del Congreso y del Senado) · IV. Cómo se estructura (LGP, arts. 35 y 39 a 44; Orden HAC/557/2026, art. 6) · V. Cómo se lee y se desglosa una aplicación presupuestaria (documentos contables, Instrucción de operatoria contable, Orden HAC/557/2026, anexo I, y Resolución de 20-1-2014). Cada artículo: texto literal del BOE y ficha.",
   ["Art. 134 CE", "Ley de Presupuestos", "Prórroga", "Beneficios fiscales", "Programación plurianual", "Escenarios presupuestarios", "Límite de gasto no financiero", "1 de octubre", "Comisión de Políticas de Gasto", "Clasificación orgánica", "Clasificación por programas", "Clasificación económica", "Programas finalistas", "Especificación", "Aplicación presupuestaria", "Desglose", "Reasignación"])
 
 # =============================================================================
@@ -37,10 +37,10 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 | Bloque | Pregunta | Constitución | Otras normas |
 |---|---|---|---|
 | **I** | ¿Qué es la Ley de Presupuestos y qué contiene? | Arts. 66.2, 75.3 y 134 | LGP, arts. 32, 33, 34 y 38 |
-| **II** | ¿Con qué principios se programa y se gestiona el presupuesto? | — | LGP, arts. 26 a 31 |
-| **III** | ¿Cómo se elabora y se aprueba? | Art. 134.1, 3, 5 y 6 | LGP, arts. 36 y 37; LO 2/2012, art. 30; Orden HAC/557/2026, arts. 4 y 5; Reglamento del Congreso, arts. 79.1 y 133 a 135; Reglamento del Senado, arts. 148 a 150 |
-| **IV** | ¿Cómo se estructura? (clasificaciones y especificación) | — | LGP, arts. 35 y 39 a 44; Orden HAC/557/2026, art. 6 y anexo I; Resolución de 20-1-2014 |
-| **V** | ¿Cómo se lee y se desglosa una aplicación presupuestaria? | — | Orden de 1-2-1996 de documentos contables (anexo I y apartado sexto); Orden de 1-2-1996 de operatoria contable (reglas 9 y 10) |
+| **II** | ¿Con qué principios se programa y se gestiona el presupuesto? | — | LGP, arts. 26 a 29 y 31 |
+| **III** | ¿Cómo se elabora y se aprueba? | Arts. 79.2 y 134.3, 5 y 6 | LGP, arts. 36 y 37; LO 2/2012, art. 30; Orden HAC/557/2026, arts. 4 y 5; Reglamento del Congreso, arts. 79.1 y 133 a 135; Reglamento del Senado, arts. 148 a 150 |
+| **IV** | ¿Cómo se estructura? (clasificaciones y especificación) | — | LGP, arts. 35 y 39 a 44; Orden HAC/557/2026, art. 6 y anexo I |
+| **V** | ¿Cómo se lee y se desglosa una aplicación presupuestaria? | — | Orden de 1-2-1996 de documentos contables (anexo I y apartado sexto); Orden de 1-2-1996 de operatoria contable (reglas 9 y 10); Orden HAC/557/2026, anexo I, y Resolución de 20-1-2014, anexo II (extractos) |
 
 !> **La idea que une los cinco bloques:** la Constitución reserva a una **ley anual** —que elabora el **Gobierno** y aprueban las **Cortes**— la totalidad de los gastos e ingresos del sector público estatal (I). Esa ley se **programa** en escenarios plurianuales y se **gestiona** con créditos de finalidad específica (II); se **elabora** por un procedimiento que fija la LGP y desarrolla cada año una orden del Ministro de Hacienda (III); se **estructura** en tres clasificaciones —orgánica, por programas y económica— (IV), y la combinación de las tres da la **aplicación presupuestaria**, que los gestores pueden **desglosar** al ejecutar (V).
 
@@ -56,9 +56,9 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 # =============================================================================
 T.ap("bI", "I. ¿Qué es la Ley de Presupuestos y qué contiene? (arts. 66.2, 75.3 y 134 CE; LGP, arts. 32 a 34 y 38)", donde(
   "Primera pregunta del tema. La Constitución dedica un artículo entero, el **134**, a los Presupuestos Generales del Estado: quién los hace, qué deben contener, qué no pueden hacer y qué pasa si no se aprueban a tiempo. La LGP lo completa.",
-  ["1 Quién los elabora y quién los aprueba (arts. 66.2, 134.1 y 75.3)", "2 Contenido constitucional: anualidad, totalidad, beneficios fiscales y tributos (art. 134.2 y 7)", "3 El presupuesto en la LGP: definición, contenido y ejercicio (arts. 32 a 34)", "4 La prórroga (art. 134.4 CE; LGP, art. 38)"]))
+  ["1 Quién los elabora y quién los aprueba (arts. 66.2, 75.3 y 134.1)", "2 Contenido constitucional: anualidad, totalidad, beneficios fiscales y tributos (art. 134.2 y 7)", "3 El presupuesto en la LGP: definición, contenido y ejercicio (arts. 32 a 34)", "4 La prórroga (art. 134.4 CE; LGP, art. 38)"]))
 
-T.ap("s1", "I.1 Quién elabora y quién aprueba los Presupuestos (arts. 66.2, 134.1 y 75.3)", f"""
+T.ap("s1", "I.1 Quién elabora y quién aprueba los Presupuestos (arts. 66.2, 75.3 y 134.1)", f"""
 La Ley de Presupuestos reparte el trabajo entre dos poderes: el **Gobierno** la elabora y las **Cortes** la examinan, enmiendan y aprueban.
 
 {unidad("1.1 Las Cortes aprueban los Presupuestos (art. 66.2)",
@@ -69,21 +69,21 @@ La Ley de Presupuestos reparte el trabajo entre dos poderes: el **Gobierno** la 
          "—",
          "La aprobación es de las **Cortes Generales** (Congreso y Senado), no del Gobierno ni solo del Congreso."))}
 
-{unidad("1.2 Reparto de papeles: Gobierno y Cortes (art. 134.1)",
-  lit("CE", "Artículo 134", ["Corresponde al Gobierno la elaboración", "a las Cortes Generales, su examen, enmienda y aprobación"], solo=[1]),
-  fichab("Distribución constitucional de funciones sobre los Presupuestos",
-         ["Gobierno: **elaboración**", "Cortes Generales: **examen, enmienda y aprobación**"],
-         "El Gobierno presenta el proyecto (→ III.3); las Cortes lo tramitan como ley (→ III.4)",
-         "—",
-         "La **enmienda** es de las **Cortes**, no del Consejo de Ministros. Cayó en 2025 (→ Cierre 1)."))}
-
-{unidad("1.3 No cabe delegarlos en Comisión (art. 75.3)",
+{unidad("1.2 No cabe delegarlos en Comisión (art. 75.3)",
   lit("CE", "Artículo 75", ["los Presupuestos Generales del Estado"], solo=[3]),
   fichab("Excepción a la delegación en las Comisiones Legislativas Permanentes",
          "Las Cámaras (en Pleno)",
          f"La aprobación de los Presupuestos no puede delegarse en las Comisiones (art. 75.2), como {c('CE', 'Artículo 75', 'la reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases')}",
          "—",
          "Los Presupuestos **siempre** pasan por el **Pleno**. Es otra pregunta clásica junto a leyes orgánicas y de bases (tema IV.2)."))}
+
+{unidad("1.3 Reparto de papeles: Gobierno y Cortes (art. 134.1)",
+  lit("CE", "Artículo 134", ["Corresponde al Gobierno la elaboración", "a las Cortes Generales, su examen, enmienda y aprobación"], solo=[1]),
+  fichab("Distribución constitucional de funciones sobre los Presupuestos",
+         ["Gobierno: **elaboración**", "Cortes Generales: **examen, enmienda y aprobación**"],
+         "El Gobierno presenta el proyecto (→ III.3); las Cortes lo tramitan como ley (→ III.4)",
+         "—",
+         "La **enmienda** es de las **Cortes**, no del Consejo de Ministros. Cayó en 2025 (→ Cierre 1)."))}
 """, 2)
 
 T.ap("s2", "I.2 Contenido constitucional: anualidad, totalidad, beneficios fiscales y tributos (art. 134.2 y 7)", f"""
@@ -160,9 +160,9 @@ T.ap("s4", "I.4 La prórroga de los Presupuestos (art. 134.4 CE; LGP, art. 38)",
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Con qué principios se programa y se gestiona el presupuesto? (LGP, arts. 26 a 31)", donde(
+T.ap("bII", "II. ¿Con qué principios se programa y se gestiona el presupuesto? (LGP, arts. 26 a 29 y 31)", donde(
   "Segunda pregunta. El epígrafe pide los «Principios de programación y de gestión». La LGP los recoge en el capítulo I de su título II (arts. 26 y 27); el capítulo II (arts. 28 a 31) regula los instrumentos de la programación plurianual.",
-  ["1 Principios de programación y de gestión (arts. 26 y 27)", "2 Escenarios y programas plurianuales; asignación y objetivos (arts. 28 a 31)"]))
+  ["1 Principios de programación y de gestión (arts. 26 y 27)", "2 Escenarios y programas plurianuales; asignación y objetivos (arts. 28, 29 y 31)"]))
 
 T.ap("s5", "II.1 Principios y reglas de programación y de gestión (LGP, arts. 26 y 27)", f"""
 {unidad("1.1 Principios de programación (art. 26)",
@@ -182,7 +182,7 @@ T.ap("s5", "II.1 Principios y reglas de programación y de gestión (LGP, arts. 
          f"La regla del 27.2 es la que el art. 42 rotula {c('LGP', 'Artículo 42', 'Especialidad de los créditos')} (→ IV.3.1). La **afectación** de recursos a fines determinados exige **ley** (27.3)."))}
 """, 2)
 
-T.ap("s6", "II.2 Escenarios y programas plurianuales; asignación y objetivos (LGP, arts. 28 a 31)", f"""
+T.ap("s6", "II.2 Escenarios y programas plurianuales; asignación y objetivos (LGP, arts. 28, 29 y 31)", f"""
 {unidad("2.1 Escenarios presupuestarios plurianuales (art. 28)",
   lit("LGP", "Artículo 28", ["referidos a los tres ejercicios siguientes", "serán confeccionados por el Ministerio de Hacienda", "un escenario de ingresos y un escenario de gastos"], solo=[1, 3, 4]),
   fichab("Programación plurianual del sector público estatal con presupuesto limitativo",
@@ -215,9 +215,9 @@ T.ap("s6", "II.2 Escenarios y programas plurianuales; asignación y objetivos (L
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se elabora y se aprueba? (LGP, arts. 36 y 37; LO 2/2012, art. 30; Orden HAC/557/2026; Reglamentos de las Cámaras)", donde(
+T.ap("bIII", "III. ¿Cómo se elabora y se aprueba? (CE, arts. 79.2 y 134.3, 5 y 6; LGP, arts. 36 y 37; LO 2/2012, art. 30; Orden HAC/557/2026; Reglamentos de las Cámaras)", donde(
   "Tercera pregunta. Del techo de gasto al Boletín Oficial: la fase **gubernamental** (límite de gasto, directrices, propuestas, anteproyecto) y la fase **parlamentaria** (remisión antes del 1 de octubre, tramitación en Congreso y Senado).",
-  ["1 El límite de gasto no financiero (LGP, art. 36.1; LO 2/2012, art. 30)", "2 El procedimiento de elaboración (LGP, art. 36.2 a 5; Orden HAC/557/2026, arts. 4 y 5)", "3 Presentación y documentación (art. 134.3 CE; LGP, art. 37)", "4 Tramitación parlamentaria y mayoría (art. 134.5 y 6 CE; Reglamentos del Congreso y del Senado)"]))
+  ["1 El límite de gasto no financiero (LGP, art. 36.1; LO 2/2012, art. 30)", "2 El procedimiento de elaboración (LGP, art. 36.2 a 5; Orden HAC/557/2026, arts. 4 y 5)", "3 Presentación y documentación (art. 134.3 CE; LGP, art. 37)", "4 Tramitación parlamentaria y mayoría (arts. 79.2 y 134.5 y 6 CE; Reglamentos del Congreso y del Senado)"]))
 
 T.ap("s7", "III.1 El límite de gasto no financiero (LGP, art. 36.1; LO 2/2012, art. 30)", f"""
 {unidad("1.1 El techo de gasto (LGP, art. 36.1; LO 2/2012, art. 30.1 y 2)",
@@ -274,16 +274,8 @@ T.ap("s9", "III.3 Presentación a las Cortes y documentación (art. 134.3 CE; LG
          "La LGP concreta el plazo: **1 de octubre** (coherente con los «tres meses» del 134.3 CE). La documentación **acompaña**: no forma parte del proyecto que se vota."))}
 """, 2)
 
-T.ap("s10", "III.4 Tramitación parlamentaria y mayoría (art. 134.5 y 6 CE; Reglamentos del Congreso y del Senado)", f"""
-{unidad("4.1 Leyes de gasto e iniciativas que alteran el presupuesto (art. 134.5 y 6)",
-  lit("CE", "Artículo 134", ["el Gobierno podrá presentar proyectos de ley que impliquen aumento del gasto público o disminución de los ingresos", "aumento de los créditos o disminución de los ingresos presupuestarios requerirá la conformidad del Gobierno"], solo=[5, 6]),
-  fichab("Protección del presupuesto aprobado frente a iniciativas que lo desequilibren",
-         ["**Gobierno**: puede presentar proyectos que aumenten el gasto o disminuyan los ingresos (134.5)", "Proposiciones y enmiendas: necesitan la **conformidad del Gobierno** si aumentan créditos o disminuyen ingresos (134.6)"],
-         "Veto presupuestario del Gobierno a la **tramitación**",
-         "En el Senado, la comunicación del Gobierno sobre proposiciones de ley: diez días (RS, art. 151.3)",
-         "La conformidad se exige para el **aumento** de créditos o la **disminución** de ingresos (no para «disminución de créditos»). Cayó en 2025 (→ Cierre 1)."))}
-
-{unidad("4.2 Mayoría: la regla general (art. 79.2 CE; Reglamento del Congreso, art. 79.1)",
+T.ap("s10", "III.4 Tramitación parlamentaria y mayoría (arts. 79.2 y 134.5 y 6 CE; Reglamentos del Congreso y del Senado)", f"""
+{unidad("4.1 Mayoría: la regla general (art. 79.2 CE; Reglamento del Congreso, art. 79.1)",
   lit("CE", "Artículo 79", ["la mayoría de los miembros presentes"], solo=[2]),
   lit("RCD", "art79", ["la mayoría simple de los miembros presentes"], solo=[1]),
   fichab("Mayoría para aprobar la Ley de Presupuestos",
@@ -291,6 +283,14 @@ T.ap("s10", "III.4 Tramitación parlamentaria y mayoría (art. 134.5 y 6 CE; Reg
          "Ninguna norma exige para los Presupuestos una mayoría especial: rige la regla general",
          f"{c('RCD', 'art79', 'mayoría simple de los miembros presentes')}",
          "**Mayoría simple**. La Ley de Presupuestos no es ley orgánica (la mayoría absoluta del Congreso es del art. 81.2). Cayó en 2025 (→ Cierre 1)."))}
+
+{unidad("4.2 Leyes de gasto e iniciativas que alteran el presupuesto (art. 134.5 y 6)",
+  lit("CE", "Artículo 134", ["el Gobierno podrá presentar proyectos de ley que impliquen aumento del gasto público o disminución de los ingresos", "aumento de los créditos o disminución de los ingresos presupuestarios requerirá la conformidad del Gobierno"], solo=[5, 6]),
+  fichab("Protección del presupuesto aprobado frente a iniciativas que lo desequilibren",
+         ["**Gobierno**: puede presentar proyectos que aumenten el gasto o disminuyan los ingresos (134.5)", "Proposiciones y enmiendas: necesitan la **conformidad del Gobierno** si aumentan créditos o disminuyen ingresos (134.6)"],
+         "Veto presupuestario del Gobierno a la **tramitación**",
+         "En el Senado, la comunicación del Gobierno sobre proposiciones de ley: diez días (RS, art. 151.3)",
+         "La conformidad se exige para el **aumento** de créditos o la **disminución** de ingresos (no para «disminución de créditos»). Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("4.3 Especialidades en el Congreso (Reglamento del Congreso, arts. 133 a 135)",
   lit("RCD", "art133", ["procedimiento legislativo común", "gozará de preferencia en la tramitación", "proponen una baja de igual cuantía en la misma Sección", "requerirán la conformidad del Gobierno"]),
@@ -411,7 +411,7 @@ T.ap("s13", "IV.3 Especialidad y especificación de los créditos (LGP, arts. 42
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Cómo se lee y se desglosa una aplicación presupuestaria? (Orden de 1-2-1996 de documentos contables; Instrucción de operatoria contable, reglas 9 y 10)", donde(
+T.ap("bV", "V. ¿Cómo se lee y se desglosa una aplicación presupuestaria? (Orden de 1-2-1996 de documentos contables; Instrucción de operatoria contable, reglas 9 y 10; Orden HAC/557/2026, anexo I; Resolución de 20-1-2014)", donde(
   "Quinta pregunta. La combinación de las tres clasificaciones identifica cada crédito: es la **aplicación presupuestaria** que figura en los documentos contables. El gestor puede **crear** aplicaciones y **desglosarlas** a más nivel que el aprobado, sin alterar la vinculación.",
   ["1 Cómo se lee una aplicación presupuestaria (documentos contables, anexo I; Orden HAC/557/2026, anexo I; Resolución de 20-1-2014)", "2 Creación y desglose de aplicaciones; reasignación (Instrucción de operatoria contable, reglas 9 y 10; documentos contables, apartado sexto)", "3 Cuadro para leer una aplicación (esquema)"]))
 
@@ -552,7 +552,7 @@ EX_X95 = examen("X", 95, {
 T.ap("s17", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join([
   "En los primeros ejercicios de **2025** cayeron **siete** preguntas de este tema (art. 134 CE, mayoría de aprobación, clasificaciones, programas finalistas, nivel de especificación y lectura de aplicaciones presupuestarias) y **cuatro** relacionadas (nivel de especificación de las inversiones, artículo 23 de la clasificación económica y documento de desglose). Aquí están **literales**. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal.",
   "### GACE-P 2025, pregunta 85 · Artículo 134 CE (→ I.2.2)", EX_P85,
-  "### GACE-L 2025 extraordinario, pregunta 89 · Mayoría de aprobación (→ III.4.2)", EX_X89,
+  "### GACE-L 2025 extraordinario, pregunta 89 · Mayoría de aprobación (→ III.4.1)", EX_X89,
   "### GACE-L 2025, pregunta 85 · Clasificación económica (→ IV.2.2)", EX_L85,
   "### GACE-L 2025 extraordinario, pregunta 91 · Programas finalistas (→ IV.2.3)", EX_X91,
   "### GACE-P 2025, pregunta 87 · Bienes y servicios: nivel de artículo (→ IV.3.2)", EX_P87,

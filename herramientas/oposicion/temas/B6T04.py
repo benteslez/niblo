@@ -14,7 +14,7 @@ CORTO.update({"LOTCu": "LO 2/1982", "LFTCu": "Ley 7/1988", "RD2188": "RD 2188/19
               "RD206_2024": "RD 206/2024", "L15_2014": "Ley 15/2014"})
 
 T = Tema("B6T04",
-  "Cinco preguntas: I. Cómo se controla el gasto público: control externo e interno (CE, art. 136; LGP, arts. 140 a 142) · II. Quién hace el control interno: la IGAE (LGP, arts. 143 a 147; RD 206/2024, arts. 8 y 11) · III. Cómo se controla antes de decidir: la función interventora (LGP, arts. 148 a 156; RD 2188/1995) · IV. Cómo se controla después: control financiero permanente y auditoría pública (LGP, arts. 157 a 170) · V. Quién hace el control externo: el Tribunal de Cuentas (CE, arts. 136 y 153; LO 2/1982; Ley 7/1988). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Cómo se controla el gasto público: control externo e interno (CE, art. 136; LGP, arts. 140 a 142) · II. Quién hace el control interno: la IGAE (LGP, arts. 143 a 147; RD 206/2024, arts. 8 y 11) · III. Cómo se controla antes de decidir: la función interventora (LGP, arts. 148 a 156; RD 2188/1995) · IV. Cómo se controla después: control financiero permanente y auditoría pública (LGP, arts. 157 a 159 y 161 a 170; RD 2188/1995, art. 35) · V. Quién hace el control externo: el Tribunal de Cuentas (CE, arts. 136 y 153; LO 2/1982; LGP, art. 131; Ley 7/1988). Cada artículo: texto literal del BOE y ficha.",
   ["Control externo", "Control interno", "IGAE", "Intervenciones Delegadas", "Función interventora", "Fiscalización previa", "Reparo", "Discrepancia", "Omisión de fiscalización", "Requisitos básicos", "Control financiero permanente", "Auditoría pública", "Plan de Acción", "Tribunal de Cuentas", "Cuenta General del Estado", "Responsabilidad contable", "Alcance"])
 
 # =============================================================================
@@ -28,10 +28,10 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 
 | Bloque | Pregunta | Normas |
 |---|---|---|
-| **I** | ¿Cómo se controla el gasto público? (control externo e interno) | LGP, arts. 140 a 142 |
+| **I** | ¿Cómo se controla el gasto público? (control externo e interno) | CE, art. 136.1; LGP, arts. 140 a 142 |
 | **II** | ¿Quién hace el control interno? (la IGAE) | LGP, arts. 143 a 147; RD 206/2024, arts. 8.6 y 11 |
 | **III** | ¿Cómo se controla antes de decidir? (función interventora) | LGP, arts. 148 a 156; RD 2188/1995, arts. 8, 13, 14 y 16 |
-| **IV** | ¿Cómo se controla después? (control financiero permanente y auditoría pública) | LGP, arts. 157 a 170; RD 2188/1995, art. 35 |
+| **IV** | ¿Cómo se controla después? (control financiero permanente y auditoría pública) | LGP, arts. 157 a 159 y 161 a 170; RD 2188/1995, art. 35 |
 | **V** | ¿Quién hace el control externo? (el Tribunal de Cuentas) | CE, arts. 136 y 153 d); LO 2/1982, del Tribunal de Cuentas; Ley 7/1988, de Funcionamiento; Ley 15/2014, art. 22; LGP, art. 131 |
 
 !> **La idea que une los cinco bloques:** el gasto del sector público estatal tiene **dos** controles. El **interno** lo hace la **IGAE** con plena autonomía, de tres formas: **función interventora** (antes de aprobar cada acto), **control financiero permanente** (de forma continua) y **auditoría pública** (después y de forma sistemática). El **externo** lo hace el **Tribunal de Cuentas**, que depende de las **Cortes Generales**, fiscaliza y, además, **juzga** la responsabilidad contable.
@@ -45,11 +45,11 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Cómo se controla el gasto público? Control externo e interno (LGP, arts. 140 a 142)", donde(
+T.ap("bI", "I. ¿Cómo se controla el gasto público? Control externo e interno (CE, art. 136.1; LGP, arts. 140 a 142)", donde(
   "Primera pregunta del tema. Antes de estudiar a cada controlador hay que saber **cuántos controles** hay sobre la gestión económica del sector público estatal, **quién** hace cada uno y **para qué** sirve.",
-  ["1 Control externo (Tribunal de Cuentas) y control interno (IGAE) (LGP, art. 140)", "2 Objetivos del control interno y sus tres formas (LGP, arts. 141 y 142)"]))
+  ["1 Control externo (Tribunal de Cuentas) y control interno (IGAE) (LGP, art. 140; CE, art. 136.1)", "2 Objetivos del control interno y sus tres formas (LGP, arts. 141 y 142)"]))
 
-T.ap("s1", "I.1 Control externo y control interno (LGP, art. 140)", f"""
+T.ap("s1", "I.1 Control externo y control interno (LGP, art. 140; CE, art. 136.1)", f"""
 {unidad("1.1 Los dos controles del sector público estatal (art. 140)",
   lit("LGP", "a140", ["corresponde al Tribunal de Cuentas el control externo del sector público estatal", "el control interno de la gestión económica y financiera del sector público estatal", "con plena autonomía respecto de las autoridades y demás entidades cuya gestión controle"]),
   fichab("Reparto del control de la gestión económico-financiera del sector público estatal",
@@ -103,7 +103,7 @@ T.ap("s2", "I.2 Objetivos del control interno y sus tres formas (LGP, arts. 141 
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Quién hace el control interno? La Intervención General de la Administración del Estado", donde(
+T.ap("bII", "II. ¿Quién hace el control interno? La Intervención General de la Administración del Estado (LGP, arts. 143 a 147; RD 206/2024, arts. 8.6 y 11)", donde(
   "Segunda pregunta. Ya sabemos que el control interno es de la **IGAE**; ahora, **qué es**, **dónde está** en la Administración, **cómo se organiza** y con qué **principios y prerrogativas** actúa.",
   ["1 Naturaleza, funciones y órganos (RD 206/2024, arts. 8.6 y 11)", "2 Ámbito, principios y prerrogativas del control (LGP, arts. 143 y 144)", "3 Deberes, colaboración e informes generales (LGP, arts. 145 a 147)"]))
 
@@ -187,7 +187,7 @@ T.ap("s5", "II.3 Deberes, colaboración e informes generales (LGP, arts. 145 a 1
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se controla antes de decidir? La función interventora (LGP, arts. 148 a 156)", donde(
+T.ap("bIII", "III. ¿Cómo se controla antes de decidir? La función interventora (LGP, arts. 148 a 156; RD 2188/1995, arts. 8, 13, 14 y 16)", donde(
   "Tercera pregunta. La primera forma de control interno actúa **antes** de que se aprueben los actos: es la **función interventora**. Aquí se ve qué es, a quién se aplica, qué fases tiene, qué gastos no se fiscalizan y qué pasa cuando el interventor no está de acuerdo o no se le ha consultado.",
   ["1 Definición, ámbito y modalidades (arts. 148 a 150)", "2 Competencias: Interventor General e interventores delegados (art. 150 bis; RD 2188/1995, art. 8)", "3 Gastos no sujetos y fiscalización de requisitos básicos (arts. 151 a 153)", "4 Plazos, reparos y discrepancias (arts. 154 y 155; RD 2188/1995, arts. 13, 14 y 16)", "5 Omisión de fiscalización (art. 156)"]))
 
@@ -305,7 +305,7 @@ T.ap("s10", "III.5 Omisión de fiscalización (LGP, art. 156)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se controla después? Control financiero permanente y auditoría pública (LGP, arts. 157 a 170)", donde(
+T.ap("bIV", "IV. ¿Cómo se controla después? Control financiero permanente y auditoría pública (LGP, arts. 157 a 159 y 161 a 170; RD 2188/1995, art. 35)", donde(
   "Cuarta pregunta. Las otras dos formas de control interno no examinan cada acto antes de aprobarlo: el **control financiero permanente** verifica de forma **continua** y la **auditoría pública**, **con posterioridad** y de forma sistemática.",
   ["1 Control financiero permanente: definición, ámbito y contenido (arts. 157 a 159; RD 2188/1995, art. 35)", "2 Planes de acción (art. 161)", "3 Auditoría pública: definición, ámbito y modalidades (arts. 162 a 164)", "4 Plan anual de auditorías e informes (arts. 165 y 166)", "5 Auditoría de cuentas anuales y auditorías específicas (arts. 167 a 170)"]))
 
@@ -432,11 +432,11 @@ T.ap("s15", "IV.5 Auditoría de cuentas anuales y auditorías específicas (LGP,
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Quién hace el control externo? El Tribunal de Cuentas (CE, arts. 136 y 153; LO 2/1982; Ley 7/1988)", donde(
+T.ap("bV", "V. ¿Quién hace el control externo? El Tribunal de Cuentas (CE, arts. 136 y 153; LO 2/1982; LGP, art. 131; Ley 7/1988)", donde(
   "Quinta pregunta. El control **externo** lo hace un órgano que **no** forma parte del Gobierno: el **Tribunal de Cuentas**, que depende de las **Cortes Generales**. Tiene dos funciones: **fiscalizar** y **enjuiciar** la responsabilidad contable.",
-  ["1 Posición constitucional y naturaleza (CE, arts. 136 y 153 d; LO 2/1982, arts. 1 a 8)", "2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; LGP, art. 131; Ley 7/1988, arts. 33 y 44 y disposición adicional undécima)", "3 Composición y organización (LO 2/1982, arts. 19 a 36)", "4 El enjuiciamiento contable y la responsabilidad contable (LO 2/1982, arts. 15 a 18 y 38 a 43; Ley 7/1988, arts. 49 y 72)"]))
+  ["1 Posición constitucional y naturaleza (CE, arts. 136 y 153 d; LO 2/1982, arts. 1, 2 y 4 a 8)", "2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; LGP, art. 131; Ley 7/1988, arts. 33 y 44 y disposición adicional undécima)", "3 Composición y organización (LO 2/1982, arts. 19, 21, 29, 30 y 36)", "4 El enjuiciamiento contable y la responsabilidad contable (LO 2/1982, arts. 15 a 18, 38, 39, 42 y 43; Ley 7/1988, arts. 49 y 72)"]))
 
-T.ap("s16", "V.1 Posición constitucional y naturaleza (CE, arts. 136 y 153 d; LO 2/1982, arts. 1 a 8)", f"""
+T.ap("s16", "V.1 Posición constitucional y naturaleza (CE, arts. 136 y 153 d; LO 2/1982, arts. 1, 2 y 4 a 8)", f"""
 {unidad("1.1 El artículo 136 de la Constitución",
   lit("CE", "Artículo 136", ["Dependerá directamente de las Cortes Generales", "por delegación de ellas en el examen y comprobación de la Cuenta General del Estado", "un informe anual", "la misma independencia e inamovilidad", "Una ley orgánica"]),
   fichab("El órgano constitucional de control externo",
@@ -519,7 +519,7 @@ T.ap("s17", "V.2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; LGP, art. 1
          "**30 / 15** días. Cayó en 2025 citando el art. 22 de la Ley 15/2014, que añadió esta disposición (→ Cierre 1)."))}
 """, 2)
 
-T.ap("s18", "V.3 Composición y organización (LO 2/1982, arts. 19 a 36)", f"""
+T.ap("s18", "V.3 Composición y organización (LO 2/1982, arts. 19, 21, 29, 30 y 36)", f"""
 {unidad("3.1 Órganos (art. 19)",
   lit("LOTCu", "adiecinueve", []),
   fichab("Lista de órganos del Tribunal de Cuentas", "—",
@@ -544,7 +544,7 @@ T.ap("s18", "V.3 Composición y organización (LO 2/1982, arts. 19 a 36)", f"""
          "Consejeros **9** años; Presidente **3** años. Solo cesan por las causas tasadas del art. 36 (mandato, renuncia aceptada por las Cortes, incapacidad, incompatibilidad o incumplimiento grave)."))}
 """, 2)
 
-T.ap("s19", "V.4 El enjuiciamiento contable y la responsabilidad contable (LO 2/1982, arts. 15 a 18 y 38 a 43; Ley 7/1988, arts. 49 y 72)", f"""
+T.ap("s19", "V.4 El enjuiciamiento contable y la responsabilidad contable (LO 2/1982, arts. 15 a 18, 38, 39, 42 y 43; Ley 7/1988, arts. 49 y 72)", f"""
 {unidad("4.1 La jurisdicción contable (LO 2/1982, arts. 15 a 18)",
   lit("LOTCu", "aquince", ["como jurisdicción propia del Tribunal de Cuentas", "a los alcances de caudales o efectos públicos"]),
   lit("LOTCu", "adieciseis", ["Los hechos constitutivos de delito o falta"]),
