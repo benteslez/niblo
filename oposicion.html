@@ -925,6 +925,13 @@ body.real-abierto .fab-herr { display:none; }
 .real-ex { display:inline-block; margin:2px 0; }
 .res-real { cursor:default; border-left:3px solid var(--hot); }
 .real-ley { margin-top:12px; }
+.q-etq { margin-left:auto; flex:none; align-self:center; font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:var(--r-pill); white-space:nowrap; }
+.q-etq.ok { background:var(--ok); color:#fff; } .q-etq.ko { background:var(--hot); color:#fff; }
+@media (max-width:520px) { .q-etq { font-size:10.5px; padding:2px 6px; } }
+.tag-boe { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.06em; padding:1px 6px; border-radius:5px; background:#b91c1c; color:#fff; vertical-align:1px; }
+blockquote.literal { position:relative; }
+.ap-cuerpo blockquote.literal { padding-right:52px; }
+.lit-boe { position:absolute; top:8px; right:10px; }
 .real-ley summary { cursor:pointer; font-weight:700; font-size:14px; color:var(--accent); }
 .ley-lit { margin:10px 0 0; padding:12px 16px; border-left:4px solid var(--accent); border-radius:var(--r-md); background:color-mix(in srgb, var(--accent-bg) 45%, var(--bg-elev)); }
 .ley-lit p { margin:0 0 8px; font-size:15px; line-height:1.65; }
@@ -3028,7 +3035,7 @@ function formatear(txt) {
      párrafo tal cual (sin convertir «1.» en lista, para no alterar la letra). */
   const cerrarC = () => {
     if (!cita.length) return;
-    html += `<blockquote class="literal">${cita.map(x => x ? `<p>${enLinea(x)}</p>` : "").join("")}</blockquote>`;
+    html += `<blockquote class="literal"><span class="tag-boe lit-boe" title="Texto literal del BOE consolidado (fuente oficial)">BOE</span>${cita.map(x => x ? `<p>${enLinea(x)}</p>` : "").join("")}</blockquote>`;
     cita = [];
   };
   /* Recuadros: líneas seguidas que empiezan por «!>» (idea clave), «?>» (trampa),
@@ -3955,12 +3962,19 @@ function chipsReal(it) {
   const s = srsDe(it.x, it.q);
   return `<span class="tag hot" title="${esc(it.x.fuente || "")}">📋 ${esc(it.x.titulo || it.x.id)} · ${esc(numReal(it.q))}</span>${it.q.tema ? `<span class="tag">${esc(it.q.tema)}</span>` : ""}${rebelde(it.x, it.q) ? `<span class="tag hot">🔥 Rebelde</span>` : ""}${it.reintento ? `<span class="tag">↻ otra vez</span>` : ""}${s ? `<span class="tag">${s.nx < hoyISO() ? "vencida desde " + s.nx : "repaso"}</span>` : `<span class="tag acc">🆕 Nueva</span>`}`;
 }
+/** Rótulo explícito en cada opción corregida (para no depender solo del color). */
+function etiquetarOpcion(el, correcta, elegida) {
+  if (!correcta && !elegida) return;
+  const t = correcta && elegida ? "✓ Tu respuesta · correcta" : correcta ? "✓ Correcta" : "✗ Tu respuesta";
+  el.insertAdjacentHTML("beforeend", `<span class="q-etq ${correcta ? "ok" : "ko"}">${t}</span>`);
+}
+const ETQ_BOE = `<span class="tag-boe" title="Texto literal del BOE consolidado (fuente oficial)">BOE</span>`;
 /** Texto legal LITERAL de la pregunta (si lo hay en las fuentes): abierto al fallar; plegado al acertar. */
 function leyHTML(q, abierto) {
   if (!q.ley || !q.ley.length) return "";
   const neg = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   return `<details class="real-ley" ${abierto ? "open" : ""}><summary>📖 Texto legal${abierto ? "" : " (para repasar)"}</summary>${q.ley.map(b => `
-    <blockquote class="literal ley-lit"><p class="ley-t"><strong>${esc(b.t)}</strong> · <a href="https://www.boe.es/buscar/act.php?id=${esc(b.f)}" target="_blank" rel="noopener">${esc(b.f)}</a></p>${b.p.map(x => `<p>${neg(x)}</p>`).join("")}</blockquote>`).join("")}</details>`;
+    <blockquote class="literal ley-lit"><p class="ley-t">${ETQ_BOE} <strong>${esc(b.t)}</strong> · <a href="https://www.boe.es/buscar/act.php?id=${esc(b.f)}" target="_blank" rel="noopener">${esc(b.f)}</a></p>${b.p.map(x => `<p>${neg(x)}</p>`).join("")}</blockquote>`).join("")}</details>`;
 }
 /** Opciones en el orden barajado de esta aparición. */
 const opcionesReal = it => it.ord.map(i => it.q.o[i]);
@@ -4006,7 +4020,7 @@ function pintarRepaso(c) {
     const elegida = j == null ? null : it.ord[j];
     const ok = elegida === q.c;
     const jc = it.ord.indexOf(q.c);
-    c.querySelectorAll(".q-opt").forEach((x, k) => { x.disabled = true; if (k === jc) x.classList.add("bien"); if (k === j && !ok) x.classList.add("mal"); });
+    c.querySelectorAll(".q-opt").forEach((x, k) => { x.disabled = true; if (k === jc) x.classList.add("bien"); if (k === j && !ok) x.classList.add("mal"); etiquetarOpcion(x, k === jc, k === j); });
     document.getElementById("srs-pre").hidden = true;
     const orig = `<span class="muted">(en el examen original, la ${LETRAS[q.c]})</span>`;
     const recuerdo = !ok && prev && prev.cf && elegida != null && q.o[elegida] === prev.cf ? `<div class="srs-cf">⚠ Es el mismo error que la última vez.</div>`
@@ -4146,7 +4160,7 @@ function pintarResultadoExamen(c) {
     ${revisar.map(o => `<div class="card real-rev">
         <div class="q-meta"><span>Pregunta ${o.k + 1}</span><span class="tags"><span class="tag hot">📋 ${esc(o.it.x.titulo || o.it.x.id)} · ${esc(numReal(o.it.q))}</span>${o.it.q.tema ? `<span class="tag">${esc(o.it.q.tema)}</span>` : ""}</span></div>
         <div class="q-txt">${esc(o.it.q.q)}</div>
-        <div class="q-opts">${o.it.ord.map((i, j) => `<div class="q-opt ${i === o.it.q.c ? "bien" : i === o.a ? "mal" : ""}"><span class="l">${LETRAS[j]})</span><span>${esc(o.it.q.o[i])}</span></div>`).join("")}</div>
+        <div class="q-opts">${o.it.ord.map((i, j) => `<div class="q-opt ${i === o.it.q.c ? "bien" : i === o.a ? "mal" : ""}"><span class="l">${LETRAS[j]})</span><span>${esc(o.it.q.o[i])}</span>${i === o.it.q.c ? `<span class="q-etq ok">✓ Correcta</span>` : i === o.a ? `<span class="q-etq ko">✗ Tu respuesta</span>` : ""}</div>`).join("")}</div>
         <p class="muted" style="font-size:13px;margin:8px 0 0">${o.a == null ? "La dejaste en blanco." : "Marcaste la " + letraMostrada(o.it, o.a) + ")."} Correcta: ${letraMostrada(o.it, o.it.q.c)}) (en el examen original, la ${LETRAS[o.it.q.c]}).${o.it.q.e ? " " + esc(o.it.q.e) : ""}</p>${leyHTML(o.it.q, true)}
       </div>`).join("")}` : ""}`;
   document.getElementById("r-fin").addEventListener("click", () => { real.ex = null; renderReal(); });
@@ -4462,7 +4476,7 @@ function pintarPregunta(c, ambito, temas) {
     const ok = i === q._c;
     if (ok) r.bien++; else r.mal++;
     registrarRespuesta(q._id, q, ok);
-    c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === q._c) x.classList.add("bien"); if (j === i && !ok) x.classList.add("mal"); });
+    c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === q._c) x.classList.add("bien"); if (j === i && !ok) x.classList.add("mal"); etiquetarOpcion(x, j === q._c, j === i); });
     document.getElementById("t-blanco").hidden = true;
     document.getElementById("fb").innerHTML = `
       <div class="q-fb ${ok ? "bien" : "mal"}">${ok ? "✓ Correcto." : "✗ Era la " + letras[q._c] + "."} ${esc(q.e || "")}${q.real ? `<div class="muted" style="font-size:12.5px;margin-top:6px">📋 ${esc(q.real)} · en el examen original, la correcta es la ${"abcdefgh"[q._cOrig]}); la explicación usa esas letras.</div>` : ""}</div>
