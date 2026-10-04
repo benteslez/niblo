@@ -74,7 +74,7 @@ El art. 14 enumera, de la a) a la q), los derechos **de carácter individual** d
 {unidad("1.3 Salud, descansos, jubilación, Seguridad Social y asociación (art. 14 l a q)",
   lit(TB, "Artículo 14", ["A las vacaciones, descansos, permisos y licencias", "A la libre asociación profesional"], solo=[14, 15, 16, 17, 18, 19], titulo="Artículo 14. Derechos individuales (TREBEP), letras l) a q)"),
   ficha("Los empleados públicos",
-        ["Protección eficaz en seguridad y salud en el trabajo (l)", "Vacaciones, descansos, permisos y licencias (m → II)", "Jubilación (n; tema V.5)", "Prestaciones de la Seguridad Social del régimen aplicable (o; tema V.9)", "Libre asociación profesional (p)", "Los demás reconocidos por el ordenamiento jurídico (q)"],
+        ["Protección eficaz en seguridad y salud en el trabajo (l)", "Vacaciones, descansos, permisos y licencias (m → II)", "Jubilación (n; tema V.1, art. 67)", "Prestaciones de la Seguridad Social del régimen aplicable (o; tema V.9)", "Libre asociación profesional (p)", "Los demás reconocidos por el ordenamiento jurídico (q)"],
         f"Jubilación {c(TB, 'Artículo 14', 'según los términos y condiciones establecidas en las normas aplicables')}",
         "—",
         "La **libre asociación profesional** es un derecho **individual** (art. 14 p); la **libertad sindical** es individual **ejercido colectivamente** (art. 15 a → I.2.1). Cayó en 2025 (→ Cierre 1). La lista no es cerrada: letra **q)**."))}

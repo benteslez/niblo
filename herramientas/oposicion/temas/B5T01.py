@@ -90,7 +90,7 @@ El art. 10 es el que **más se pregunta** del bloque: concepto, **cuatro supuest
          f"Nombrados {c(TB, 'Artículo 10', 'por razones expresamente justificadas de necesidad y urgencia')}",
          ["::Solo en cuatro supuestos (10.1):", "a) Plazas **vacantes** que no puedan cubrir funcionarios de carrera", "b) **Sustitución** transitoria de los titulares", "c) Ejecución de **programas** de carácter temporal", "d) **Exceso o acumulación** de tareas"],
          ["::Plazos máximos:", "a) Vacante: máximo **tres años** (→ I.3.4)", "b) Sustitución: el tiempo **estrictamente necesario**", "c) Programas: **tres años**, ampliable **doce meses** más por las leyes de Función Pública", "d) Acumulación de tareas: **nueve meses** dentro de un periodo de **dieciocho**"],
-         "Temporal + funciones **propias** de funcionarios de carrera (no «que no sean propias»). Necesidad **y** urgencia, **expresamente justificadas**. Cuadro de plazos: 3 años / tiempo estrictamente necesario / 3 años + 12 meses / 9 meses en 18. Cayó tres veces en 2025 (→ Cierre 1)."))}
+         "Temporal + funciones **propias** de funcionarios de carrera (no «que no sean propias»). Necesidad **y** urgencia, **expresamente justificadas**. Cuadro de plazos: 3 años / tiempo estrictamente necesario / 3 años + 12 meses / 9 meses en 18. Cayó dos veces en 2025 (→ Cierre 1)."))}
 
 {unidad("3.2 Selección (art. 10.2)",
   lit(TB, "Artículo 10", ["igualdad, mérito, capacidad, publicidad y celeridad", "cobertura inmediata del puesto", "en ningún caso dará lugar al reconocimiento de la condición de funcionario de carrera"], solo=[6]),
@@ -300,7 +300,7 @@ T.ap("bIII", "III. ¿Qué normas rigen al personal? Régimen jurídico (CE; TREB
 T.ap("s12", "III.1 Fundamento constitucional (CE, arts. 23.2, 103.3 y 149.1.18.ª)", f"""
 {unidad("1.1 Derecho de acceso a las funciones públicas (art. 23.2)",
   lit("CE", "Artículo 23", ["en condiciones de igualdad", "con los requisitos que señalen las leyes"], solo=[2]),
-  ficha(c("CE", "Artículo 23", "los ciudadanos"),
+  ficha(f"{c('CE', 'Artículo 23', 'Los ciudadanos')} (sujeto del art. 23.1; el 23.2 sigue con «Asimismo, tienen derecho…»)",
         f"Derecho {c('CE', 'Artículo 23', 'a acceder en condiciones de igualdad a las funciones y cargos públicos')}",
         c("CE", "Artículo 23", "con los requisitos que señalen las leyes"),
         f"Es un derecho de la Sección primera del Capítulo segundo del Título I; el art. 53.2 permite recabar la tutela de esos derechos {c('CE', 'Artículo 53', 'por un procedimiento basado en los principios de preferencia y sumariedad')} y por el recurso de amparo",
@@ -348,7 +348,7 @@ T.ap("s14", "III.3 Ámbito de aplicación (arts. 2 a 5)", f"""
          "Funcionarios de las entidades locales; Cuerpos de Policía Local",
          ["Funcionarios locales: legislación estatal aplicable (incluido el TREBEP) y legislación de las comunidades autónomas, con respeto a la autonomía local", "Policía Local: también el TREBEP y la legislación autonómica, salvo lo establecido para ellos en la Ley Orgánica 2/1986, de Fuerzas y Cuerpos de Seguridad"],
          "—",
-         "Concurren **tres** fuentes: legislación estatal, autonómica y el respeto a la **autonomía local**."))}
+         "Dos fuentes: la legislación **estatal** (de la que forma parte el TREBEP) y la **autonómica**, siempre **con respeto a la autonomía local**."))}
 
 {unidad("3.3 Personal con legislación específica propia (art. 4)",
   lit(TB, "Artículo 4", ["sólo se aplicarán directamente cuando así lo disponga su legislación específica", "Personal retribuido por arancel", "Personal del Centro Nacional de Inteligencia", "Personal del Banco de España"]),
