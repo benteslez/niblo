@@ -190,7 +190,7 @@ Tras el art. 169 vienen **{len(DISP['adicional'])} disposiciones adicionales**, 
          "—",
          [f"::Apartado 1: {c('CE', 'dd', 'Queda derogada la Ley 1/1977, de 4 de enero, para la Reforma Política')} y, en tanto no lo estuvieran ya:", "Ley de Principios del Movimiento Nacional (1958)", "Fuero de los Españoles (1945)", "Fuero del Trabajo (1938)", "Ley Constitutiva de las Cortes (1942)", "Ley de Sucesión en la Jefatura del Estado (1947)", "Ley Orgánica del Estado (1967) y Ley de Referéndum Nacional (1945)", "Apartado 2: Ley de 25 de octubre de 1839 (Álava, Guipúzcoa y Vizcaya)"],
          "—",
-         "Hay **una sola** disposición derogatoria, con **dos** apartados. La primera ley que cita es la **Ley para la Reforma Política** (1977)."))}
+         "Hay **una sola** disposición derogatoria, con **tres** apartados. La primera ley que cita es la **Ley para la Reforma Política** (1977)."))}
 
 {unidad("3.4 La disposición final y la fórmula de cierre",
   lit("CE", "df", ["entrará en vigor el mismo día de la publicación de su texto oficial"]),

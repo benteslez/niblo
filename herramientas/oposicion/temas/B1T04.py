@@ -618,7 +618,7 @@ T.q("CE", "Artículo 59", "Regencia", "Según el artículo 59.3 de la Constituci
     "Art. 59.3 CE.", "se compondrá de una, tres o cinco personas")
 T.q("CE", "Artículo 59", "Regencia", "Según el artículo 59.4 de la Constitución, para ejercer la Regencia es preciso:",
     ["Ser español y mayor de edad.", "Ser español de nacimiento y mayor de edad.", "Ser miembro de la Familia Real.", "Ser mayor de cuarenta años."],
-    "Art. 59.4 CE. «Español de nacimiento» se exige al tutor testamentario (art. 60.1).", "Para ejercer la Regencia es preciso ser español y mayor de edad")
+    "Art. 59.4 CE. Al tutor testamentario se le exige ser «español de nacimiento» (art. 60.1).", "Para ejercer la Regencia es preciso ser español y mayor de edad")
 T.q("CE", "Artículo 59", "Regencia", "Según el artículo 59.5 de la Constitución, la Regencia se ejercerá:",
     ["Por mandato constitucional y siempre en nombre del Rey.", "Por delegación de las Cortes Generales y en nombre propio.", "Por mandato del Rey y en su nombre.", "Por mandato constitucional y en nombre de las Cortes Generales."],
     "Art. 59.5 CE.", "La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey")
