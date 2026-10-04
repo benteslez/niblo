@@ -938,6 +938,7 @@ blockquote.literal { position:relative; }
 a.fuente-link { text-decoration:none; } a.fuente-link .tag-boe { cursor:pointer; }
 blockquote.literal > a.fuente-link { position:absolute; top:8px; right:10px; }
 blockquote.literal > a.fuente-link .lit-boe { position:static; }
+.ap-cuerpo blockquote.literal.lit-larga { padding-top:34px; }
 .real-ley summary { cursor:pointer; font-weight:700; font-size:14px; color:var(--accent); }
 .ley-lit { margin:10px 0 0; padding:12px 16px; border-left:4px solid var(--accent); border-radius:var(--r-md); background:color-mix(in srgb, var(--accent-bg) 45%, var(--bg-elev)); }
 .ley-lit p { margin:0 0 8px; font-size:15px; line-height:1.65; }
@@ -3110,7 +3111,8 @@ function formatear(txt) {
     if (!cita.length) return;
     const m = cita[0].match(/^\[\[([A-Z_]+)(?:\|(https?:[^\]\s]+))?\]\]$/);
     if (m) cita.shift();
-    html += `<blockquote class="literal">${pillFuente(m ? m[1] : "BOE", m && m[2] ? m[2] : "", "lit-boe")}${cita.map(x => x ? `<p>${enLinea(x)}</p>` : "").join("")}</blockquote>`;
+    const codF = m ? m[1] : "BOE", larga = codF !== "BOE";   // etiqueta más ancha que «BOE»: va encima del texto
+    html += `<blockquote class="literal${larga ? " lit-larga" : ""}">${pillFuente(m ? m[1] : "BOE", m && m[2] ? m[2] : "", "lit-boe")}${cita.map(x => x ? `<p>${enLinea(x)}</p>` : "").join("")}</blockquote>`;
     cita = [];
   };
   /* Recuadros: líneas seguidas que empiezan por «!>» (idea clave), «?>» (trampa),

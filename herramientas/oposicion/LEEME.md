@@ -11,6 +11,12 @@ LITERAL comprobado por programa. Se ejecutan desde esta carpeta.
     norma no lo tiene, el XML del diario (texto original).
   - EUR-Lex: con Chromium (`eurlex.js`, desafío antibots) y `eurext.js`
     (artículos a JSON). Se guardan `TUE.json`, `TFUE.json`…
+- EUR-Lex, textos consolidados (`CELEX:0…`): `eurextc.js` (lo elige `descargar.py`).
+- JSON que `descargar.py` NO regenera (se hicieron a mano desde el HTML oficial; no
+  borrarlos): `TUEPRE` (preámbulo del TUE), `PROT16`, `REG2024_2019`, `RIPE`
+  (Reglamento interno del PE), las síntesis y glosarios de EUR-Lex (`SINT_*`,
+  `GLOS_*`) y `DTC1_2004` (Declaración del TC); `boe/eurdoc.py` convierte una página
+  sin artículos (sentencia, síntesis) en un JSON de un solo bloque «Texto».
 - `boe/boe.py`: `ley(k)`, `parrafos(k, bloque)`, `bloque(k, "Artículo 55 bis")`,
   `buscar(k, fragmento)`. Última versión de cada bloque, sin las notas del BOE.
 - `boe/ver.py LEY "Artículo 24" ?fragmento`: ver un artículo o buscar.
