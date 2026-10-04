@@ -436,7 +436,7 @@ T.ap("s17", "VI.2 Los instrumentos: fondos estructurales, FEDER y Fondo de Cohes
   fichab("Fondo para los desequilibrios regionales", "Fondo Europeo de Desarrollo Regional",
          ["Corregir los **principales desequilibrios regionales**", "Desarrollo y ajuste estructural de las **regiones menos desarrolladas**", "**Reconversión** de las **regiones industriales en declive**"],
          "—",
-         "«Corrección de los principales desequilibrios regionales» es el **FEDER**, no el Fondo de Cohesión (pregunta oficial P 17, → Cierre 1)."))}
+         f"{c('TFUE', 'Artículo 176', 'corrección de los principales desequilibrios regionales')} es el **FEDER**, no el Fondo de Cohesión (pregunta oficial P 17, → Cierre 1)."))}
 
 {unidad("2.3 Fondos estructurales y Fondo de Cohesión (art. 177)",
   lit("TFUE", "Artículo 177", ["mediante reglamentos adoptados con arreglo al procedimiento legislativo ordinario", "Un Fondo de Cohesión", "proyectos en los sectores del medio ambiente y de las redes transeuropeas en materia de infraestructuras del transporte"]),

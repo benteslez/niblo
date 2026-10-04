@@ -591,7 +591,7 @@ T.ap("s22", "V.1 Normas aplicables a las empresas (TFUE, arts. 3.1 b, 101 y 102)
          "Consecuencia: **nulos de pleno derecho** (101.2). Basta el **objeto** o el **efecto**."))}
 
 {unidad("1.3 Exención (art. 101.3)",
-  lit(TF, tf(101), ["podrán ser declaradas inaplicables", "reserven al mismo tiempo a los usuarios una participación equitativa en el beneficio resultante"], solo=[8, 12, 13, 14]),
+  lit(TF, tf(101), ["podrán ser declaradas inaplicables", "reserven al mismo tiempo a los usuarios una participación equitativa en el beneficio resultante"], solo=[8, 9, 10, 11, 12, 13, 14]),
   fichab("Cuándo un acuerdo restrictivo puede quedar exento", "Acuerdos o categorías de acuerdos, decisiones y prácticas concertadas",
          ["::Requisitos acumulativos:", "Mejorar la producción o distribución, o fomentar el progreso técnico o económico", "Participación equitativa de los **usuarios** en el beneficio", "Restricciones **indispensables**", "Sin posibilidad de **eliminar la competencia** en una parte sustancial de los productos"],
          "—",
@@ -631,13 +631,13 @@ T.ap("s24", "V.3 Ayudas otorgadas por los Estados (TFUE, arts. 107 y 108)", f"""
   lit(TF, tf(107), ["Serán compatibles con el mercado interior", "las ayudas de carácter social concedidas a los consumidores individuales", "desastres naturales"], solo=[2, 3, 4, 5]),
   fichab("Ayudas que son compatibles", "—",
          ["Ayudas **sociales** a consumidores individuales, sin discriminar por el origen de los productos", "Ayudas para reparar **desastres naturales** o acontecimientos excepcionales", "Ayudas a regiones alemanas afectadas por la división"], "—",
-         "«**Serán** compatibles» (107.2) frente a «**podrán** considerarse compatibles» (107.3)."))}
+         f"{c(TF, tf(107), '**Serán** compatibles')} (107.2) frente a {c(TF, tf(107), '**Podrán** considerarse compatibles')} (107.3)."))}
 
 {unidad("3.3 Ayudas que pueden ser compatibles (art. 107.3)",
   lit(TF, tf(107), ["Podrán considerarse compatibles con el mercado interior", "nivel de vida sea anormalmente bajo", "proyecto importante de interés común europeo", "promover la cultura y la conservación del patrimonio"], solo=[6, 7, 8, 9, 10, 11]),
   fichab("Ayudas que pueden declararse compatibles", "La Comisión las valora; el **Consejo** puede añadir categorías, a propuesta de la Comisión (107.3 e)",
          ["Desarrollo de regiones con nivel de vida **anormalmente bajo** o grave subempleo, y regiones del art. 349", "**Proyecto importante de interés común europeo** o grave perturbación de la economía de un Estado", "Desarrollo de actividades o regiones", "**Cultura** y conservación del patrimonio"], "—",
-         "Aquí la compatibilidad **no es automática**: «podrán considerarse»."))}
+         f"Aquí la compatibilidad **no es automática**: {c(TF, tf(107), 'Podrán considerarse')}."))}
 
 {unidad("3.4 Control de la Comisión y papel del Consejo (art. 108.2 y 3)",
   lit(TF, tf(108), ["decidirá que el Estado interesado la suprima o modifique", "podrá recurrir directamente al Tribunal de Justicia de la Unión Europea", "por unanimidad", "dentro de los tres meses siguientes a la petición", "no podrá ejecutar las medidas proyectadas"], solo=[2, 3, 4, 5, 6]),
@@ -650,7 +650,7 @@ T.ap("s24", "V.3 Ayudas otorgadas por los Estados (TFUE, arts. 107 y 108)", f"""
   "Competencia: **exclusiva** de la Unión en lo necesario para el mercado interior (3.1 b).",
   "Empresas: prohibidos los acuerdos colusorios, **nulos de pleno derecho** (101.1 y 2), salvo exención con **cuatro** condiciones (101.3); y el **abuso** de posición dominante (102).",
   "La **Comisión** vela por su aplicación, **de oficio** o a instancia de un Estado (105).",
-  "Ayudas de Estado: incompatibles como regla (107.1); «**serán**» compatibles las del 107.2 y «**podrán**» serlo las del 107.3; la Comisión controla y el Estado **no ejecuta** la ayuda antes de la decisión (108.3)."],
+  "Ayudas de Estado: incompatibles como regla (107.1); «**Serán**» compatibles las del 107.2 y «**Podrán**» serlo las del 107.3; la Comisión controla y el Estado **no ejecuta** la ayuda antes de la decisión (108.3)."],
   "Siguiente: VI. ¿Qué persiguen la política agrícola común y la pesquera?")}
 """, 2)
 
@@ -813,7 +813,7 @@ T.ap("s31", "Cierre 2. Repaso en 10 minutos (por bloques)", """
 | II. UEM | Monetaria exclusiva (3.1 c); estabilidad de precios (119 y 127); arts. 123 a 126; criterios (140 y Protocolo n.º 13) | **3 %** y **60 %**; interés **2 puntos**; **Dinamarca** fuera del euro; TECG sin la **República Checa** |
 | III. PESC | Unanimidad, sin actos legislativos, TJUE sin competencia (24); Alto Representante (27); art. 31; PCSD (42 y 46) | **Abstención con declaración formal**; nada de mayoría cualificada en **defensa** |
 | IV. ELSJ | Compartida (4.2 j); fronteras, asilo e inmigración (77 a 79); cooperación civil y penal (81 a 83); Eurojust, Fiscalía Europea, Europol (85 a 88) | **Reconocimiento mutuo** (82.1); iniciativa de **un cuarto** de los Estados (76) |
-| V. Competencia | Acuerdos (101), abuso (102), Comisión (105), ayudas (107 y 108) | **Nulos de pleno derecho**; «serán» / «podrán» compatibles |
+| V. Competencia | Acuerdos (101), abuso (102), Comisión (105), ayudas (107 y 108) | **Nulos de pleno derecho**; «Serán» / «Podrán» compatibles |
 | VI. Agricultura y pesca | Conservación de recursos marinos exclusiva (3.1 d); cinco objetivos (39); art. 43; FEMPA | **Posibilidades de pesca**: el Consejo (43.3); «incluso en las aguas interiores» |
 
 ?> **Trampas frecuentes:** «el mercado interior es competencia **exclusiva**» (es **compartida**; exclusiva es la **unión aduanera**); «servicios liberalizados por **reglamentos**» (por **directivas**); «interés a largo plazo, **tres** puntos» (son **dos**); «la PESC se adopta por **mayoría cualificada**» (regla: **unanimidad**); «el Tribunal de Justicia controla la PESC» (no, salvo art. 40 TUE y art. 275 TFUE); «la cooperación penal se basa en la **subsidiariedad**» (en el **reconocimiento mutuo**); «Europol detiene» (las medidas coercitivas son **nacionales**); «el FEMPA, **salvo** en aguas interiores» (es **incluso**).
@@ -942,7 +942,7 @@ Q(TF, tf(105), "Competencia", "Según el artículo 105.1 del TFUE, la Comisión 
   "Art. 105.1 TFUE.", "A instancia de un Estado miembro o de oficio")
 Q(TF, tf(107), "Competencia", "Según el artículo 107.2 del TFUE, serán compatibles con el mercado interior:",
   ["Las ayudas destinadas a reparar los perjuicios causados por desastres naturales.", "Las ayudas destinadas a promover la cultura y la conservación del patrimonio.", "Las ayudas para fomentar un proyecto importante de interés común europeo.", "Las ayudas al desarrollo de regiones con un nivel de vida anormalmente bajo."],
-  "Art. 107.2 b) TFUE. Las otras tres son del 107.3 («podrán considerarse compatibles»).", "las ayudas destinadas a reparar los perjuicios causados por desastres naturales")
+  "Art. 107.2 b) TFUE. Las otras tres son del 107.3 («Podrán considerarse compatibles»).", "las ayudas destinadas a reparar los perjuicios causados por desastres naturales")
 Q(TF, tf(108), "Competencia", "Según el artículo 108.2 del TFUE, si el Consejo no se pronuncia sobre la petición de un Estado miembro relativa a una ayuda dentro de cierto plazo, decidirá la Comisión. Ese plazo es de:",
   ["Tres meses siguientes a la petición.", "Seis meses siguientes a la petición.", "Un mes siguiente a la petición.", "Dos meses siguientes a la petición."],
   "Art. 108.2 TFUE, párrafo cuarto.", "dentro de los tres meses siguientes a la petición")
@@ -982,7 +982,7 @@ for q_, a_, cat in [
   ("Base de la cooperación judicial penal (art. 82.1 TFUE)", "El principio de reconocimiento mutuo de las sentencias y resoluciones judiciales.", "ELSJ"),
   ("Fiscalía Europea (art. 86 TFUE)", "La crea el Consejo a partir de Eurojust, por unanimidad y con aprobación del Parlamento Europeo; persigue infracciones contra los intereses financieros de la Unión.", "ELSJ"),
   ("Arts. 101 y 102 TFUE", "101: acuerdos, decisiones y prácticas concertadas restrictivos, nulos de pleno derecho. 102: explotación abusiva de una posición dominante.", "Competencia"),
-  ("Ayudas de Estado: 107.2 y 107.3", "107.2: «serán» compatibles (sociales a consumidores, desastres naturales, división de Alemania). 107.3: «podrán considerarse» compatibles.", "Competencia"),
+  ("Ayudas de Estado: 107.2 y 107.3", "107.2: «Serán» compatibles (sociales a consumidores, desastres naturales, división de Alemania). 107.3: «Podrán considerarse» compatibles.", "Competencia"),
   ("Objetivos de la PAC (art. 39.1)", "Productividad; nivel de vida equitativo de la población agrícola; estabilizar mercados; seguridad de abastecimientos; precios razonables al consumidor.", "Agricultura y pesca"),
   ("¿Quién fija y reparte las posibilidades de pesca? (art. 43.3)", "El Consejo, a propuesta de la Comisión.", "Agricultura y pesca"),
 ]: T.fc(q_, a_, cat)

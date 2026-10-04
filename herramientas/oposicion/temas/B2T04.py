@@ -155,7 +155,7 @@ T.ap("s3", "I.3 La Carta de los Derechos Fundamentales (art. 6.1 TUE; arts. 51 a
          c("TUE", "Artículo 6", "La Unión reconoce los derechos, libertades y principios enunciados en la Carta"),
          ["Mismo valor jurídico que los Tratados: es Derecho originario", "Se interpreta con las disposiciones generales del **título VII** de la Carta y teniendo en cuenta las **explicaciones**"],
          "Fechas de la Carta: 7 de diciembre de 2000, adaptada el 12 de diciembre de 2007 en Estrasburgo",
-         "«El **mismo** valor jurídico que los Tratados» (no inferior ni superior). La Carta **no amplía** las competencias de la Unión."))}
+         f"{c('TUE', 'Artículo 6', 'el **mismo** valor jurídico que los Tratados')} (no inferior ni superior). La Carta **no amplía** las competencias de la Unión."))}
 
 {unidad("3.2 A quién obliga la Carta (art. 51 de la Carta)",
   lit("CDFUE", "Artículo 51", ["únicamente cuando apliquen el Derecho de la Unión", "ni crea ninguna competencia o misión nuevas para la Unión"]),
@@ -732,8 +732,8 @@ T.glos("Cuestión prejudicial", "Consulta de un órgano jurisdiccional nacional 
 # Cronología (fechas de las propias sentencias en EUR-Lex y de los metadatos del BOE y del DOUE)
 T.hito("1963", "Sentencia Van Gend & Loos, de 5 de febrero de 1963 (asunto 26/62)", "Efecto directo: el art. 12 del Tratado CEE «produce efectos directos»", "jurisprudencial", "s12")
 T.hito("1964", "Sentencia Costa/ENEL, de 15 de julio de 1964 (asunto 6/64)", "Primera sentencia sobre la primacía, según la Declaración n.º 17", "jurisprudencial", "s11")
-T.hito("1978", "Constitución Española (27-12-1978; BOE de 29-12-1978)", "Arts. 93 a 96: tratados internacionales y atribución del ejercicio de competencias", "normativo", "s14")
 T.hito("1978", "Sentencia Simmenthal, de 9 de marzo de 1978 (asunto 106/77)", "Inaplicación de la norma nacional contraria, aunque sea posterior", "jurisprudencial", "s11")
+T.hito("1978", "Constitución Española (27-12-1978; BOE de 29-12-1978)", "Arts. 93 a 96: tratados internacionales y atribución del ejercicio de competencias", "normativo", "s14")
 T.hito("1991", "Sentencia Francovich, de 19 de noviembre de 1991 (asuntos C-6/90 y C-9/90)", "Obligación del Estado de reparar los daños por no adaptar su Derecho a una directiva", "jurisprudencial", "s12")
 T.hito("2004", "Declaración del Tribunal Constitucional 1/2004, de 13 de diciembre (BOE de 4-1-2005)", "Primacía y supremacía; suficiencia del art. 93 CE", "jurisprudencial", "s14")
 T.hito("2008", "Ley Orgánica 1/2008, de 30 de julio (BOE de 31-7-2008), que autoriza la ratificación del Tratado de Lisboa (firmado el 13-12-2007)", "Art. 93 CE: autorización por ley orgánica", "normativo", "s14")
