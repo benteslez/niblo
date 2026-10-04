@@ -63,3 +63,20 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   ningún distractor puede tenerlos todos. Si no casa, el generador se detiene
   y se avisa al usuario (posible error de la plantilla o impugnación); nunca
   se publica una respuesta que contradiga la ley.
+
+### Test real global (`#/real`)
+
+- Solo preguntas **literales** de exámenes oficiales que aporte el usuario
+  (cuestionario + plantilla). **Nunca** se añade ninguna inventada ni se
+  rellena «de ejemplo»; hasta que las aporte, el test real está vacío.
+- Datos en `oposicion.html`, `<script type="application/json" id="tests-reales">`:
+  `{"_formato":"tests_reales_v1","examenes":[{ id, titulo, convocatoria,
+  ejercicio, fecha, plantilla:"provisional"|"definitiva", fuente, minutos,
+  penalizacion, preguntas:[{ n, q, o:[…], c, tema?, reserva?, anulada?, e? }] }]}`.
+  `c` es el índice (0 = a) de la respuesta de la plantilla; `tema` es el
+  código del programa (`"I.2"`) si se puede asignar con seguridad.
+- Antes de publicar: enunciado y opciones copiados literales del cuestionario,
+  respuesta de la plantilla comprobada contra la ley (como en los apuntes) y
+  avisar al usuario de cualquier respuesta que no case.
+- Condiciones por defecto (anexo VII, 2.1.1 de BOE-A-2025-26262): 90 minutos,
+  cada error descuenta 1/3 de un acierto y los blancos no penalizan.
