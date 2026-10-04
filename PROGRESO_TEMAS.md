@@ -33,7 +33,7 @@ Bloque V: - [x] V.1 - [x] V.2 - [x] V.3 - [x] V.4 - [x] V.5 - [x] V.6 - [x] V.7
 - [x] V.8 - [x] V.10
 
 Bloque I: - [x] I.2 - [x] I.1 - [x] I.3 - [x] I.4 - [x] I.5 - [x] I.6 - [x] I.8
-- [x] I.9 - [x] I.10 - [ ] I.11
+- [x] I.9 - [x] I.10 - [x] I.11
 
 Bloque VI: - [x] VI.3 - [x] VI.6 - [x] VI.7
 
