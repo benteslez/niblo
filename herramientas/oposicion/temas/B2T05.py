@@ -67,7 +67,7 @@ T.ap("s1", "I.1 Unidad, equilibrio, anualidad y legalidad del gasto (TFUE, arts.
   fichab("Reglas básicas del presupuesto de la Unión",
          f"{c('TFUE', 'Artículo 310', 'El Parlamento Europeo y el Consejo establecerán el presupuesto anual de la Unión')} (→ IV.1); la Unión y los Estados miembros cooperan en la buena gestión y en la lucha contra el fraude",
          ["Todos los ingresos y gastos, en el presupuesto de cada ejercicio (310.1)", "Presupuesto **equilibrado** en ingresos y gastos (310.1)", "Gastos autorizados para **todo el ejercicio anual** (310.2)", "Ejecutar un gasto exige **antes** un acto jurídicamente vinculante que le dé fundamento (310.3)", "**Disciplina**: no adoptar actos con incidencia considerable sin garantizar su financiación dentro de los recursos propios y del MFP (310.4)", "**Buena gestión financiera** (310.5) y lucha contra el **fraude** (310.6 → IV.3)"],
-         "Anual (→ 1.2)",
+         "Anual (→ I.1.2)",
          "Los gastos se autorizan **para todo el ejercicio presupuestario anual**, no por semestres ni por trimestres (pregunta oficial L 26, → Cierre 1). El presupuesto debe estar **equilibrado**."))}
 
 {unidad("1.2 El ejercicio presupuestario (art. 313)",
@@ -120,7 +120,7 @@ La Decisión vigente es la **2020/2053**, adoptada conforme al art. 311 TFUE (�
 {unidad("2.1 Categorías de recursos propios (art. 2.1)",
   lit("DRP", "Artículo 2", ["los recursos propios tradicionales", "del 0,30 %", "residuos de envases de plástico generados en cada Estado miembro que no se reciclen", "0,80 EUR por kilogramo", "a la suma de la RNB de todos los Estados miembros"], solo=[1, 2, 3, 4, 5], titulo="Artículo 2.1 (Decisión (UE, Euratom) 2020/2053) · Categorías de recursos propios"),
   fichab("Los cuatro ingresos que constituyen recursos propios",
-         "Los recaudan los Estados miembros (los tradicionales, → 2.4) y los ponen a disposición de la Comisión",
+         "Los recaudan los Estados miembros (los tradicionales, → II.2.4) y los ponen a disposición de la Comisión",
          ["a) **Tradicionales**: derechos de aduana y exacciones en los intercambios con terceros países, cotizaciones del azúcar", "b) **IVA**: tipo uniforme del **0,30 %** sobre la base armonizada (base limitada al **50 % de la RNB**)", "c) **Plástico**: **0,80 EUR por kilogramo** de residuos de envases de plástico no reciclados", "d) **RNB**: tipo uniforme sobre la suma de la RNB, fijado en el procedimiento presupuestario"],
          "—",
          "Cuatro categorías. Los tipos que se preguntan: **0,30 %** (IVA) y **0,80 EUR/kg** (plástico). El recurso RNB es el que **cierra** el presupuesto: su tipo se fija teniendo en cuenta **todos los demás ingresos**."))}
@@ -235,7 +235,7 @@ T.ap("s8", "IV.2 Ejecución, cuentas y aprobación de la gestión (TFUE, arts. 3
   lit("TFUE", "Artículo 318", ["las cuentas del ejercicio cerrado", "un balance financiero del activo y pasivo de la Unión", "un informe de evaluación de las finanzas de la Unión"]),
   fichab("Rendición de cuentas de la Comisión", "La **Comisión**, ante el Parlamento Europeo y el Consejo",
          ["Cuentas del ejercicio cerrado", "Balance financiero del activo y pasivo", "Informe de evaluación de las finanzas basado en los resultados"],
-         "Cada año", "Son los documentos que examina después el Parlamento para aprobar la gestión (→ 2.3)."))}
+         "Cada año", "Son los documentos que examina después el Parlamento para aprobar la gestión (→ IV.2.3)."))}
 
 {unidad("2.3 La aprobación de la gestión de la Comisión (art. 319)",
   lit("TFUE", "Artículo 319", ["El Parlamento Europeo, por recomendación del Consejo, aprobará la gestión de la Comisión en la ejecución del presupuesto", "después del Consejo", "el informe anual del Tribunal de Cuentas", "podrá solicitar explicaciones a la Comisión"]),
