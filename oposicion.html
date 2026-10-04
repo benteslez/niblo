@@ -835,17 +835,64 @@ mark.res { background:color-mix(in srgb, #fb7185 30%, transparent); border-botto
 .hub-busq h2 { margin:0 0 12px; font-size:19px; color:var(--accent); padding-bottom:10px; border-bottom:2px solid var(--accent); }
 
 /* ---- Test real global ------------------------------------------------------ */
-.real-h { margin:18px 0 6px; font-size:16px; }
+.real-modos { display:grid; gap:14px; grid-template-columns:repeat(2, minmax(0, 1fr)); margin-bottom:14px; }
+@media (max-width:620px) { .real-modos { grid-template-columns:minmax(0, 1fr); } }
+.real-modos > .card { margin-top:0; }
+.real-modo { display:flex; flex-direction:column; gap:6px; text-align:left; font:inherit; color:inherit; cursor:pointer; border-top:4px solid var(--accent); }
+.real-modo[data-modo="examen"] { border-top-color:var(--hot); }
+.real-modo:disabled { opacity:.55; cursor:not-allowed; }
+.real-modo-ico { font-size:28px; }
+.real-modo-t { display:flex; align-items:center; gap:8px; font-weight:700; font-size:18px; }
+.real-modo-d { font-size:13.5px; color:var(--text-muted); line-height:1.5; }
+.real-badge { font-size:12px; font-weight:700; padding:2px 8px; border-radius:var(--r-pill); background:var(--hot); color:#fff; }
+.real-prev { font-size:13.5px; line-height:1.9; margin-top:14px; }
+.real-ayuda summary { cursor:pointer; font-weight:700; }
+.real-ayuda .real-lista { margin-top:10px; }
 .real-lista { margin:0; padding-left:20px; font-size:14.5px; line-height:1.6; }
-.real-fila { display:flex; align-items:flex-start; gap:12px; margin-bottom:6px; }
-.real-k { flex:none; width:84px; padding-top:6px; font-size:12px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); }
-.real-fila .chip-row { margin-bottom:6px; }
-.real-seg { flex:1; max-width:320px; margin:0 0 10px; }
-.real-nota { font-size:13px; margin:2px 0 12px; }
-@media (max-width:620px) { .real-fila { flex-direction:column; gap:2px; } .real-k { width:auto; padding-top:0; } }
+.real-dlg { width:min(620px, calc(100vw - 24px)); max-height:calc(100vh - 32px); padding:0; border:1px solid var(--line); border-radius:var(--r-lg); background:var(--bg-elev); color:var(--text); box-shadow:var(--sh-2); }
+.real-dlg::backdrop { background:rgba(15, 23, 42, .45); }
+.real-dlg-in { padding:18px 20px 16px; }
+.real-dlg-cab { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.real-dlg h2 { margin:0; font-size:20px; }
+.real-dlg h3 { margin:16px 0 8px; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted); }
+.real-dlg .chip-row { margin-bottom:4px; }
+.real-checks { display:flex; flex-direction:column; gap:6px; }
+.real-check { display:flex; align-items:center; gap:10px; padding:8px 12px; border:1px solid var(--line); border-radius:var(--r-md); cursor:pointer; }
+.real-check:has(input:checked) { border-color:var(--accent); background:var(--accent-bg); }
+.real-check span { font-weight:700; }
+.real-check small { margin-left:auto; color:var(--text-muted); }
+.real-check.off { opacity:.6; }
+.real-mini { display:flex; gap:6px; margin-top:2px; }
+.real-tog { display:flex; align-items:center; gap:8px; font-size:14px; margin:6px 0; }
+.real-paus { font-size:13px; display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.real-pills { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 4px; font-size:13px; }
+.real-pills span { padding:5px 10px; border-radius:var(--r-pill); background:var(--bg-soft); }
+.real-pills .big { background:var(--accent-bg); color:var(--accent); }
+.real-cond { font-size:14px; line-height:1.5; margin:0 0 6px; }
+.real-cond.aviso { color:var(--warn); }
+.real-dlg-pie { display:flex; justify-content:flex-end; gap:8px; margin-top:16px; flex-wrap:wrap; }
+.real-veredicto { font-weight:700; margin:8px 0 0; }
+.real-veredicto.ok { color:var(--ok); } .real-veredicto.ko { color:var(--hot); }
 .q-opt.marcada { border-color:var(--accent); background:var(--accent-bg); }
-.sim-barra { display:flex; align-items:center; gap:14px; padding:12px 16px; margin-bottom:12px; position:sticky; top:70px; z-index:5; }
+.srs-barra, .sim-barra { display:flex; align-items:center; gap:12px; padding:12px 16px; margin-bottom:12px; position:sticky; top:70px; z-index:5; }
+.srs-barra .bar { flex:1; min-width:40px; }
+.srs-barra .muted, .srs-barra .btn { white-space:nowrap; }
+@media (max-width:620px) { .srs-barra { flex-wrap:wrap; } .srs-barra .muted { margin-right:auto; } .srs-barra .bar { order:5; flex-basis:100%; } }
 .sim-barra .btn { margin-left:auto; }
+#sim-reloj.poco { color:var(--hot); }
+.srs-q .q-meta { align-items:flex-start; }
+.srs-acc { display:flex; gap:4px; flex:none; }
+.srs-ico { width:34px; height:34px; border:1px solid var(--line); border-radius:50%; background:var(--bg-elev); color:var(--text-muted); font-size:16px; cursor:pointer; }
+.srs-ico.on { color:#d97706; border-color:#d97706; }
+.srs-rate { display:flex; gap:8px; margin-top:12px; }
+.srs-r { flex:1; height:auto; min-height:52px; flex-direction:column; gap:2px; border-radius:var(--r-md); }
+.srs-r small { font-size:11.5px; font-weight:500; opacity:.85; }
+.srs-r.no { background:var(--hot-bg); border-color:var(--hot); color:var(--hot); }
+.srs-r.mid { background:var(--warn-bg); border-color:var(--warn); color:var(--warn); }
+.srs-r.si { background:var(--ok-bg); border-color:var(--ok); color:var(--ok); }
+.srs-teclas { font-size:12px; text-align:center; }
+.srs-teclas kbd { font:inherit; font-size:11px; padding:1px 5px; border:1px solid var(--line); border-radius:4px; background:var(--bg-elev); }
+@media (max-width:620px) { .srs-teclas { display:none; } }
 .sim-mapa { display:grid; grid-template-columns:repeat(auto-fill, minmax(40px, 1fr)); gap:6px; margin-top:12px; }
 .sim-mapa button { height:36px; border:1px solid var(--line); border-radius:8px; background:var(--bg-elev); color:var(--text-muted); font:inherit; font-size:13px; cursor:pointer; }
 .sim-mapa button.resp { background:var(--accent-bg); color:var(--accent); border-color:var(--accent); font-weight:700; }
@@ -928,12 +975,12 @@ const PROGRAMA_REF = "BOE-A-2025-26262";
 /* ---- Test real global: datos --------------------------------------------
    Solo preguntas LITERALES de exámenes oficiales (cuestionario + plantilla)
    que aporta el usuario; nunca inventadas. Cada examen:
-     { id, titulo, convocatoria, ejercicio, fecha, plantilla:"provisional"|"definitiva",
-       fuente, minutos, penalizacion,
+     { id, titulo, anio, acceso:"libre"|"promocion"|"extraordinaria", convocatoria,
+       ejercicio, fecha, plantilla:"provisional"|"definitiva", fuente,
+       corte?: puntuación directa mínima publicada para ese examen,
+       minutos?, penalizacion? (solo si no hay condiciones vigentes: extraordinaria),
        preguntas:[{ n, q, o:[…], c:índice de la correcta, tema?:"I.2",
                     reserva?:true, anulada?:true, e?:"explicación" }] }
-   Por defecto, las condiciones del primer ejercicio GACE-L (anexo VII, 2.1.1
-   de BOE-A-2025-26262): 90 minutos y cada error descuenta 1/3 de un acierto.
    Lo que no cumpla el formato se descarta (y se avisa en la consola). */
 const TESTS_REALES = (() => {
   let d = {};
@@ -946,8 +993,8 @@ const TESTS_REALES = (() => {
       if (!ok) console.error("tests-reales: pregunta descartada", x.id, q && q.n);
       return ok;
     });
-    x.minutos = x.minutos || 90;
-    x.penal = typeof x.penalizacion === "number" ? x.penalizacion : 1 / 3;
+    x.anio = parseInt(x.anio, 10) || null;
+    if (!["libre", "promocion", "extraordinaria"].includes(x.acceso)) { console.error("tests-reales: acceso desconocido", x.id, x.acceso); x.acceso = "libre"; }
   });
   return { examenes:exs };
 })();
@@ -3522,207 +3569,460 @@ function renderGlobal() {
     <div id="panel"></div>`;
   montarHub(document.getElementById("panel"), "global");
 }
-/* ---- Test real global ----------------------------------------------------
-   Práctica: corrección al momento, con la explicación si la hay.
-   Simulacro: condiciones del examen (tiempo, sin corrección hasta entregar,
-   blancos que no penalizan, −1/3 por error). Cada respuesta queda en tu
-   progreso («R:<examen>:<n>», se sincroniza) para el filtro «Solo las que fallé». */
-const real = { sel:new Set(), bloque:"todos", modo:"practica", filtro:"todas", n:25, orden:"examen", run:null, reloj:null };
+/* ---- Test real global -----------------------------------------------------
+   Dos modos, con una ventana de selección común (años, acceso, bloque y filtros):
+   · Repaso (SRS): repetición espaciada con el MISMO algoritmo del SRS de
+     vocabulario (SM-2 estilo Anki, tres calidades):
+       ✗ Fallada o «No la sé» (0): vuelve mañana; facilidad −0,20; la racha se reinicia.
+       🤔 Acertada dudando    (3): nueva → 3 días; repaso → máx(intervalo+1, intervalo×1,2); −0,15.
+       ✓ La sabía             (5): nueva → 7 días; repaso → máx(intervalo+1, intervalo×facilidad×1,3); +0,15.
+     Facilidad entre 1,3 y 2,8; intervalo máximo, 1.825 días. Una pregunta que
+     se falla siempre vuelve cada día (intervalo 1 y facilidad mínima); una que
+     se falla y luego se acierta se recalcula desde 3 días con menos facilidad.
+     Cola: primero las vencidas (de la más antigua a la más reciente), después
+     las nuevas. ★ Importantes entra siempre; 💤 pausadas, nunca.
+   · Examen oficial: condiciones vigentes del primer ejercicio según el acceso
+     (BOE-A-2025-26262): 100 preguntas, 90 minutos y penalización de 1/3
+     (turno libre, anexo VII) o de 1/4 (promoción interna, anexo VIII).
+   Todo se guarda en tu progreso (se sincroniza): «R:<examen>:<n>» por pregunta
+   y «RS:global» para las sesiones. */
+const ACCESOS = [
+  { id:"libre", txt:"Turno libre" },
+  { id:"promocion", txt:"Promoción interna" },
+  { id:"extraordinaria", txt:"Extraordinaria" }
+];
+const CONDICIONES = {
+  libre:     { n:100, min:90, penal:1 / 3, txtPenal:"1/3", fuente:"anexo VII, apartados 2.1.1 y 2.2.1" },
+  promocion: { n:100, min:90, penal:1 / 4, txtPenal:"1/4", fuente:"anexo VIII, apartados 3.1.1 y 3.2.1" }
+};
+const KEY_REAL_CFG = "gestion_hub_real_cfg_v1";
 const claveReal = (x, q) => "R:" + x.id + ":" + q.n;
+const hoyISO = (d) => { const f = d ? new Date(d) : new Date(); return f.getFullYear() + "-" + String(f.getMonth() + 1).padStart(2, "0") + "-" + String(f.getDate()).padStart(2, "0"); };
+const masDias = n => { const f = new Date(); f.setDate(f.getDate() + n); return hoyISO(f); };
 function bloqueDeReal(q) { const id = q.tema && ID_POR_CODIGO[q.tema]; return id ? TEMA_POR_ID[id].b : "sin"; }
-function poolReal() {
+
+/* SM-2 (idéntico al del SRS de vocabulario) */
+function srsSiguiente(srs, q) {
+  const reps = srs ? srs.r : 0, iv = srs ? srs.i : 1, ease = srs ? srs.e : 2.5;
+  let r, i, e;
+  if (q === 0) { r = 0; i = 1; e = Math.max(1.3, ease - 0.20); }
+  else if (q <= 3) { r = reps + 1; i = reps === 0 ? 3 : Math.max(iv + 1, Math.round(iv * 1.2)); e = Math.max(1.3, ease - 0.15); }
+  else { r = reps + 1; i = reps === 0 ? 7 : Math.max(iv + 1, Math.round(iv * ease * 1.3)); e = Math.min(2.8, ease + 0.15); }
+  return { r, i:Math.min(i, 1825), e };
+}
+function fmtIntervalo(d) {
+  if (d <= 1) return "mañana";
+  if (d < 30) return "en " + d + " días";
+  if (d < 365) { const m = Math.round(d / 30); return "en " + m + (m === 1 ? " mes" : " meses"); }
+  return "en " + (d / 365).toFixed(1).replace(".", ",") + " años";
+}
+/** Estado guardado de una pregunta: { r, i, e, nx, lr, h:[[fecha, calidad]…], st:★, pa:💤 } */
+function srsDe(x, q) { const v = progreso(claveReal(x, q)); return v && v.d && v.d.nx ? v.d : null; }
+function marcasDe(x, q) { const v = progreso(claveReal(x, q)); return (v && v.d) || {}; }
+function guardarSrs(x, q, d, ok) { marcarProg(claveReal(x, q), ok, d); }
+function calificar(x, q, calidad) {
+  const prev = srsDe(x, q), m = marcasDe(x, q);
+  const n = srsSiguiente(prev, calidad);
+  const h = ((prev && prev.h) || []).concat([[hoyISO(), calidad]]).slice(-30);
+  const d = Object.assign({}, m, { r:n.r, i:n.i, e:n.e, lr:hoyISO(), nx:masDias(n.i), h });
+  guardarSrs(x, q, d, calidad >= 3);
+  return n.i;
+}
+function alternarMarca(x, q, campo) {
+  const v = progreso(claveReal(x, q));
+  const d = Object.assign({}, (v && v.d) || {});
+  d[campo] = !d[campo];
+  marcarProg(claveReal(x, q), !!(v && v.s), d);
+  return d[campo];
+}
+const esNueva = (x, q) => !srsDe(x, q);
+const vencida = (x, q) => { const s = srsDe(x, q); return !s || s.nx <= hoyISO(); };
+const ultimaCal = (x, q) => { const s = srsDe(x, q); return s && s.h && s.h.length ? s.h[s.h.length - 1][1] : null; };
+const fallosDe = (x, q) => { const s = srsDe(x, q); return s && s.h ? s.h.filter(h => h[1] === 0).length : 0; };
+const dominada = (x, q) => { const s = srsDe(x, q); return !!(s && s.i >= 21); };
+
+/* ---- Selección (ventana común) ------------------------------------------ */
+function aniosDisponibles() { return [...new Set(TESTS_REALES.examenes.map(x => x.anio).filter(Boolean))].sort((a, b) => b - a); }
+function cfgReal() {
+  const anios = aniosDisponibles();
+  const def = { anios:anios.length ? [anios[0]] : [], accesos:["libre"], bloque:"todos", filtro:"todas", importantes:false, azar:false, max:0, actualizar:true };
+  const g = leerJSON(KEY_REAL_CFG, null);
+  if (!g) return def;   // primera vez: turno libre y el último año
+  const c = Object.assign({}, def, g);
+  c.anios = (c.anios || []).filter(a => anios.includes(a));
+  if (!c.anios.length && anios.length) c.anios = [anios[0]];
+  if (!c.accesos || !c.accesos.length) c.accesos = ["libre"];
+  return c;
+}
+function guardarCfgReal(c) { escribirJSON(KEY_REAL_CFG, c); }
+/** Preguntas que cumplen la selección. modo: "repaso" | "examen" */
+function preguntasSel(c, modo, opt) {
+  opt = opt || {};
   const out = [];
   TESTS_REALES.examenes.forEach(x => {
-    if (real.sel.size && !real.sel.has(x.id)) return;
+    if (!opt.ignorarAnio && !c.anios.includes(x.anio)) return;
+    if (!opt.ignorarAcceso && !c.accesos.includes(x.acceso)) return;
     x.preguntas.forEach(q => {
       if (q.anulada) return;
-      if (real.modo === "simulacro" && q.reserva) return;
-      if (real.bloque !== "todos" && bloqueDeReal(q) !== real.bloque) return;
-      const pr = progreso(claveReal(x, q));
-      if (real.filtro === "falladas" && !(pr && !pr.s)) return;
-      if (real.filtro === "nuevas" && pr) return;
+      if (modo === "examen" && q.reserva) return;
+      const m = marcasDe(x, q);
+      if (modo === "repaso" && m.pa) return;                      // 💤 pausadas: nunca
+      if (c.bloque !== "todos" && bloqueDeReal(q) !== c.bloque) return;
+      const imp = !!m.st;
+      if (c.importantes && modo === "repaso" && imp) { out.push({ x, q, forzada:true }); return; }   // ★ entra siempre
+      if (c.filtro === "falladas" && ultimaCal(x, q) !== 0) return;
+      if (c.filtro === "dudadas" && ultimaCal(x, q) !== 3) return;
+      if (c.filtro === "dificiles" && fallosDe(x, q) < 2) return;
+      if (c.filtro === "nuevas" && !esNueva(x, q)) return;
+      if (c.filtro === "importantes" && !imp) return;
       out.push({ x, q });
     });
   });
   return out;
 }
+/** Cola del repaso: vencidas (más antiguas primero) y luego nuevas. */
+function colaRepaso(c) {
+  const sel = preguntasSel(c, "repaso").filter(it => it.forzada || c.filtro !== "todas" || vencida(it.x, it.q));
+  sel.sort((a, b) => {
+    const an = esNueva(a.x, a.q), bn = esNueva(b.x, b.q);
+    if (an !== bn) return an ? 1 : -1;
+    if (an) return 0;
+    return srsDe(a.x, a.q).nx.localeCompare(srsDe(b.x, b.q).nx);
+  });
+  let cola = c.azar ? barajar(sel) : sel;
+  if (c.max) cola = cola.slice(0, c.max);
+  return cola;
+}
+
+/* ---- Página ----------------------------------------------------------------- */
+const real = { ses:null, ex:null, reloj:null, tecla:null };
+function quitarTeclasReal() { if (real.tecla) { document.removeEventListener("keydown", real.tecla); real.tecla = null; } }
+function statsReal() {
+  let total = 0, pend = 0, nuevas = 0, dom = 0, pausadas = 0, imp = 0;
+  TESTS_REALES.examenes.forEach(x => x.preguntas.forEach(q => {
+    if (q.anulada) return;
+    total++;
+    const m = marcasDe(x, q);
+    if (m.pa) { pausadas++; return; }
+    if (m.st) imp++;
+    if (esNueva(x, q)) nuevas++; else if (vencida(x, q)) pend++;
+    if (dominada(x, q)) dom++;
+  }));
+  return { total, pend, nuevas, dom, pausadas, imp };
+}
+function rachaReal() {
+  const g = progreso("RS:global"), f = new Set(((g && g.d && g.d.fechas) || []));
+  let n = 0; const d = new Date();
+  if (!f.has(hoyISO(d))) d.setDate(d.getDate() - 1);
+  while (f.has(hoyISO(d))) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
 function renderReal() {
   if (real.reloj) { clearInterval(real.reloj); real.reloj = null; }
-  const total = TESTS_REALES.examenes.reduce((n, x) => n + x.preguntas.length, 0);
+  quitarTeclasReal();
   vista().innerHTML = `
     <h1 class="titulo-grande">📋 Test real global</h1>
     <p class="view-sub">Preguntas <b>literales</b> de exámenes oficiales, con la respuesta de su plantilla. Solo entran las que aportas tú: ninguna inventada.</p>
     <div id="real-cuerpo"></div>`;
   const c = document.getElementById("real-cuerpo");
-  if (!total) {
-    c.innerHTML = `
-      <div class="card">
-        <div class="empty"><div class="ico">📋</div><h3>Todavía no hay preguntas reales</h3>
-          <p>Se añadirán cuando aportes los cuestionarios oficiales y sus plantillas de respuestas. Cada pregunta se copia literal, con su convocatoria, ejercicio y número, y la respuesta de la plantilla.</p></div>
-        <h3 class="real-h">Qué podrás hacer aquí</h3>
-        <ul class="real-lista">
-          <li><b>Práctica:</b> corrección al momento, en verde o en rojo, con la explicación.</li>
-          <li><b>Simulacro:</b> en las condiciones del primer ejercicio (anexo VII, 2.1.1 de ${PROGRAMA_REF}): 90 minutos, sin corrección hasta entregar, cada error descuenta <b>1/3</b> de un acierto y los blancos no penalizan.</li>
-          <li><b>Filtros:</b> por examen, por bloque del programa (si la pregunta lleva su tema), solo las nuevas o solo las que fallaste.</li>
-          <li><b>Resultado:</b> aciertos, errores, blancos y nota directa, con la revisión de cada fallo.</li>
-        </ul>
-      </div>`;
-    return;
-  }
-  if (real.run) return real.run.sim ? pintarSimulacro(c) : pintarPractica(c);
-  const pool = poolReal();
-  const porBloque = {};
-  TESTS_REALES.examenes.forEach(x => { if (real.sel.size && !real.sel.has(x.id)) return; x.preguntas.forEach(q => { if (!q.anulada) { const b = bloqueDeReal(q); porBloque[b] = (porBloque[b] || 0) + 1; } }); });
-  const nFall = TESTS_REALES.examenes.reduce((n, x) => n + x.preguntas.filter(q => { const pr = progreso(claveReal(x, q)); return pr && !pr.s; }).length, 0);
+  if (real.ses) return pintarRepaso(c);
+  if (real.ex) return real.ex.entregado ? pintarResultadoExamen(c) : pintarExamen(c);
+  const st = statsReal();
+  const vacio = !st.total;
+  const prox = [1, 2, 3, 4, 5, 6, 7].map(n => { const dia = masDias(n); let k = 0; TESTS_REALES.examenes.forEach(x => x.preguntas.forEach(q => { const s = srsDe(x, q); if (s && !q.anulada && !marcasDe(x, q).pa && s.nx === dia) k++; })); return k; });
   c.innerHTML = `
-    <div class="card real-cfg">
-      <div class="real-fila"><span class="real-k">Exámenes</span><div class="chip-row wrap">
-        <button class="chip peq ${!real.sel.size ? "active" : ""}" data-ex="todos">Todos</button>
-        ${TESTS_REALES.examenes.map(x => `<button class="chip peq ${real.sel.has(x.id) ? "active" : ""}" data-ex="${esc(x.id)}" title="${esc(x.fuente || "")}">${esc(x.titulo || x.id)}<span class="badge">${x.preguntas.length}</span></button>`).join("")}
-      </div></div>
-      <div class="real-fila"><span class="real-k">Bloque</span><div class="chip-row wrap">
-        <button class="chip peq ${real.bloque === "todos" ? "active" : ""}" data-bq="todos">Todos</button>
-        ${BLOQUES.filter(b => porBloque[b.code]).map(b => `<button class="chip peq ${real.bloque === b.code ? "active" : ""}" data-bq="${b.code}" data-b="${b.code}">${b.rom}<span class="badge">${porBloque[b.code]}</span></button>`).join("")}
-        ${porBloque.sin ? `<button class="chip peq ${real.bloque === "sin" ? "active" : ""}" data-bq="sin">Sin clasificar<span class="badge">${porBloque.sin}</span></button>` : ""}
-      </div></div>
-      <div class="real-fila"><span class="real-k">Preguntas</span><div class="chip-row wrap">
-        <button class="chip peq ${real.filtro === "todas" ? "active" : ""}" data-fl="todas">Todas</button>
-        <button class="chip peq ${real.filtro === "nuevas" ? "active" : ""}" data-fl="nuevas">Solo las nuevas</button>
-        <button class="chip peq ${real.filtro === "falladas" ? "active" : ""}" data-fl="falladas" ${nFall ? "" : "disabled"}>🔁 Solo las que fallé<span class="badge">${nFall}</span></button>
-      </div></div>
-      <div class="real-fila"><span class="real-k">Modo</span><div class="seg real-seg">
-        <button class="${real.modo === "practica" ? "on" : ""}" data-md="practica">Práctica</button>
-        <button class="${real.modo === "simulacro" ? "on" : ""}" data-md="simulacro">Simulacro</button>
-      </div></div>
-      <p class="muted real-nota">${real.modo === "simulacro"
-        ? "Simulacro: sin corrección hasta entregar; cada error descuenta la fracción que fije el examen (en GACE-L, 1/3) y los blancos no penalizan. Tiempo proporcional al del examen. Las preguntas de reserva no entran."
-        : "Práctica: corrección al momento, con la explicación si la hay. Las opciones salen en el orden del examen."}</p>
-      <div class="test-cfg">
-        <label>Nº de preguntas <select id="rn">${[10, 25, 50, 100, 0].map(n => `<option value="${n}" ${n === real.n ? "selected" : ""}>${n || "Todas"}</option>`).join("")}</select></label>
-        <label>Orden <select id="ro"><option value="examen" ${real.orden === "examen" ? "selected" : ""}>El del examen</option><option value="azar" ${real.orden === "azar" ? "selected" : ""}>Aleatorio</option></select></label>
-        <button class="btn btn-primary" id="r-go" ${pool.length ? "" : "disabled"}>🚀 Empezar</button>
-        <span class="muted" style="font-size:13px">${plural(pool.length, "pregunta disponible", "preguntas disponibles")}</span>
-      </div>
-    </div>`;
-  c.querySelectorAll("[data-ex]").forEach(b => b.addEventListener("click", () => { const k = b.dataset.ex; if (k === "todos") real.sel.clear(); else if (real.sel.has(k)) real.sel.delete(k); else real.sel.add(k); renderReal(); }));
-  c.querySelectorAll("[data-bq]").forEach(b => b.addEventListener("click", () => { real.bloque = b.dataset.bq; renderReal(); }));
-  c.querySelectorAll("[data-fl]").forEach(b => b.addEventListener("click", () => { real.filtro = b.dataset.fl; renderReal(); }));
-  c.querySelectorAll("[data-md]").forEach(b => b.addEventListener("click", () => { real.modo = b.dataset.md; renderReal(); }));
-  document.getElementById("rn").addEventListener("change", e => { real.n = parseInt(e.target.value, 10); });
-  document.getElementById("ro").addEventListener("change", e => { real.orden = e.target.value; });
-  document.getElementById("r-go").addEventListener("click", () => {
-    let qsel = real.orden === "azar" ? barajar(pool) : pool;
-    if (real.n) qsel = qsel.slice(0, real.n);
-    const sim = real.modo === "simulacro";
-    // Tiempo proporcional: el del examen más largo de los elegidos, por pregunta.
-    const ref = qsel.reduce((m, it) => Math.max(m, it.x.minutos / Math.max(1, it.x.preguntas.filter(q => !q.reserva && !q.anulada).length)), 0);
-    real.run = { sim, qs:qsel, i:0, resp:qsel.map(() => null), bien:0, mal:0, inicio:Date.now(), fin:sim ? Date.now() + Math.round(ref * qsel.length * 60000) : 0 };
-    renderReal();
-  });
+    <div class="real-modos">
+      <button class="card interactive real-modo" data-modo="repaso" ${vacio ? "disabled" : ""}>
+        <span class="real-modo-ico">🧠</span>
+        <span class="real-modo-t">Repaso (SRS)${st.pend + st.nuevas ? `<span class="real-badge">${st.pend + st.nuevas}</span>` : ""}</span>
+        <span class="real-modo-d">Repetición espaciada: lo que aciertas sale cada vez más tarde; lo que fallas, mañana. Las que fallas siempre, siempre vuelven.</span>
+      </button>
+      <button class="card interactive real-modo" data-modo="examen" ${vacio ? "disabled" : ""}>
+        <span class="real-modo-ico">📝</span>
+        <span class="real-modo-t">Examen oficial</span>
+        <span class="real-modo-d">Condiciones vigentes: 100 preguntas en 90 minutos; cada error descuenta 1/3 (turno libre) o 1/4 (promoción interna). Los blancos no penalizan.</span>
+      </button>
+    </div>
+    ${vacio ? `<div class="card"><div class="empty"><div class="ico">📋</div><h3>Todavía no hay preguntas reales</h3>
+      <p>Se añadirán cuando aportes los cuestionarios oficiales y sus plantillas de respuestas. Cada pregunta se copia literal, con su año, acceso, ejercicio y número, y la respuesta de la plantilla.</p></div></div>` : `
+    <div class="kpis">
+      <div class="kpi"><div class="k">🔄 Para hoy</div><div class="v">${st.pend}</div><div class="s">repasos vencidos</div></div>
+      <div class="kpi"><div class="k">🆕 Nuevas</div><div class="v">${st.nuevas}</div><div class="s">sin ver aún</div></div>
+      <div class="kpi"><div class="k">🏁 Dominadas</div><div class="v">${st.dom}</div><div class="s">intervalo de 21 días o más</div></div>
+      <div class="kpi"><div class="k">🔥 Racha</div><div class="v">${rachaReal()}</div><div class="s">días seguidos repasando</div></div>
+    </div>
+    <div class="card real-prev"><b>Próximos 7 días:</b> ${prox.map((k, i) => `<span title="${masDias(i + 1)}">${i ? "+" + (i + 1) + " d" : "mañana"}: <b>${k}</b></span>`).join(" · ")}${st.pausadas ? ` · 💤 ${st.pausadas} pausadas` : ""}${st.imp ? ` · ★ ${st.imp} importantes` : ""}</div>`}
+    <details class="card real-ayuda"><summary>¿Cómo funciona el repaso?</summary>
+      <ul class="real-lista">
+        <li><b>✗ Fallada o «No la sé»</b> → vuelve <b>mañana</b> y su facilidad baja. Si la fallas siempre, sale siempre.</li>
+        <li><b>🤔 Acertada dudando</b> → la primera vez, en 3 días; después, el intervalo crece poco (×1,2).</li>
+        <li><b>✓ La sabía</b> → la primera vez, en 7 días; después, el intervalo se multiplica por la facilidad (hasta 5 años).</li>
+        <li>Si la fallas y luego la aciertas, se <b>recalcula</b> desde cero, con menos facilidad: tarda menos en volver que una que nunca fallaste.</li>
+        <li>Mismo algoritmo (SM-2) que el SRS de vocabulario. ★ Importantes entra siempre que la marques en el filtro; 💤 pausadas no salen hasta que las reactives.</li>
+      </ul>
+    </details>`;
+  c.querySelectorAll("[data-modo]").forEach(b => b.addEventListener("click", () => abrirSeleccionReal(b.dataset.modo)));
 }
-function cabReal(it, i, n) {
-  return `<div class="q-meta"><span>Pregunta ${i + 1} de ${n}</span><span class="tags"><span class="tag hot" title="${esc(it.x.fuente || "")}">📋 ${esc(it.x.titulo || it.x.id)} · n.º ${esc(String(it.q.n))}</span>${it.q.tema ? `<span class="tag">${esc(it.q.tema)}</span>` : ""}${it.q.reserva ? `<span class="tag">Reserva</span>` : ""}</span></div>`;
+
+/* ---- Ventana de selección ---------------------------------------------------- */
+function abrirSeleccionReal(modo) {
+  const c = cfgReal();
+  const dlg = document.createElement("dialog");
+  dlg.className = "real-dlg";
+  document.body.appendChild(dlg);
+  const cerrar = () => { dlg.close(); dlg.remove(); };
+  dlg.addEventListener("close", () => dlg.remove());
+  const pintar = () => {
+    const anios = aniosDisponibles();
+    const cuenta = (filtroC) => modo === "repaso" ? colaRepaso(Object.assign({}, c, filtroC, { max:0 })).length : preguntasSel(Object.assign({}, c, filtroC), "examen").length;
+    const nAnio = a => cuenta({ anios:[a] });
+    const nAcc = id => cuenta({ accesos:[id] });
+    const cola = modo === "repaso" ? colaRepaso(c) : preguntasSel(c, "examen");
+    const nNuevas = cola.filter(it => esNueva(it.x, it.q)).length;
+    const exs = TESTS_REALES.examenes.filter(x => c.anios.includes(x.anio) && c.accesos.includes(x.acceso));
+    const cond = c.accesos.length === 1 ? CONDICIONES[c.accesos[0]] : null;
+    const condExtra = !cond && c.accesos.length === 1 && exs.length === 1 && exs[0].minutos && typeof exs[0].penalizacion === "number"
+      ? { n:exs[0].preguntas.filter(q => !q.reserva && !q.anulada).length, min:exs[0].minutos, penal:exs[0].penalizacion, txtPenal:String(exs[0].penalizacion), fuente:"condiciones del propio examen" } : null;
+    const condE = cond || condExtra;
+    const pausadas = TESTS_REALES.examenes.reduce((n, x) => n + x.preguntas.filter(q => marcasDe(x, q).pa).length, 0);
+    const minutos = Math.max(1, Math.round(cola.length * 0.9));
+    const etqCuenta = modo === "repaso" ? "pendientes" : "preguntas";
+    dlg.innerHTML = `
+      <form method="dialog" class="real-dlg-in">
+        <div class="real-dlg-cab"><h2>${modo === "repaso" ? "🧠 Repaso (SRS)" : "📝 Examen oficial"}</h2><button class="btn btn-sm" value="cancel" aria-label="Cerrar">✕</button></div>
+        <p class="muted">${modo === "repaso" ? "Elige qué quieres repasar hoy." : "Elige el examen o la mezcla con la que quieres examinarte."}</p>
+
+        <h3>Año</h3>
+        <div class="real-checks">${anios.map(a => { const n = nAnio(a); return `<label class="real-check ${n ? "" : "off"}"><input type="checkbox" data-anio="${a}" ${c.anios.includes(a) ? "checked" : ""}><span>${a}</span><small>${n} ${etqCuenta}</small></label>`; }).join("") || `<p class="muted">Sin años.</p>`}
+          <div class="real-mini"><button type="button" class="chip peq" data-todos-anios>Todos</button><button type="button" class="chip peq" data-ultimo-anio>Solo el último</button></div></div>
+
+        <h3>Acceso</h3>
+        <div class="chip-row wrap">${ACCESOS.map(a => `<button type="button" class="chip ${c.accesos.includes(a.id) ? "active" : ""}" data-acc="${a.id}">${a.txt}<span class="badge">${nAcc(a.id)}</span></button>`).join("")}</div>
+
+        <h3>Bloque del programa</h3>
+        <div class="chip-row wrap"><button type="button" class="chip peq ${c.bloque === "todos" ? "active" : ""}" data-bq="todos">Todos</button>${BLOQUES.map(b => `<button type="button" class="chip peq ${c.bloque === b.code ? "active" : ""}" data-bq="${b.code}">${b.rom}</button>`).join("")}<button type="button" class="chip peq ${c.bloque === "sin" ? "active" : ""}" data-bq="sin">Sin clasificar</button></div>
+
+        <h3>Preguntas</h3>
+        <div class="chip-row wrap">${[["todas", modo === "repaso" ? "Las que tocan hoy" : "Todas"], ["falladas", "✗ Solo falladas"], ["dudadas", "🤔 Solo dudadas"], ["dificiles", "🔥 Difíciles (2+ fallos)"], ["nuevas", "🆕 Solo nuevas"], ["importantes", "★ Solo importantes"]]
+          .map(([k, t]) => `<button type="button" class="chip peq ${c.filtro === k ? "active" : ""}" data-fl="${k}">${t}</button>`).join("")}</div>
+
+        ${modo === "repaso" ? `
+        <h3>Opciones</h3>
+        <label class="real-tog"><input type="checkbox" data-op="importantes" ${c.importantes ? "checked" : ""}> ★ Incluir siempre las importantes (aunque no toquen hoy)</label>
+        <label class="real-tog"><input type="checkbox" data-op="azar" ${c.azar ? "checked" : ""}> 🔀 Orden aleatorio</label>
+        <label class="real-tog">Máximo por sesión <select data-op="max">${[0, 20, 50, 100].map(n => `<option value="${n}" ${n === c.max ? "selected" : ""}>${n || "Sin límite"}</option>`).join("")}</select></label>
+        ${pausadas ? `<p class="muted real-paus">💤 ${plural(pausadas, "pregunta pausada", "preguntas pausadas")} (no salen en el repaso). <button type="button" class="btn btn-sm" data-reactivar>Reactivar todas</button></p>` : ""}
+        <div class="real-pills"><span class="big">Total: <b>${cola.length}</b></span><span>🆕 Nuevas: <b>${nNuevas}</b></span><span>🔄 A repasar: <b>${cola.length - nNuevas}</b></span><span>⏱ ~${minutos} min</span></div>
+        ` : `
+        <h3>Condiciones</h3>
+        ${condE ? `<p class="real-cond"><b>${condE.n} preguntas · ${condE.min} minutos · cada error descuenta ${condE.txtPenal}</b>; los blancos no penalizan. <span class="muted">Fuente: ${PROGRAMA_REF}, ${condE.fuente}.</span></p>` : `<p class="real-cond aviso">Elige un solo acceso (turno libre o promoción interna) para aplicar sus condiciones oficiales.${c.accesos.includes("extraordinaria") ? " Para un examen extraordinario hacen falta las condiciones de su convocatoria." : ""}</p>`}
+        <label class="real-tog"><input type="checkbox" data-op="actualizar" ${c.actualizar ? "checked" : ""}> 🧠 Llevar el resultado al repaso (las falladas y en blanco vuelven mañana)</label>
+        <div class="real-pills"><span class="big">${exs.length === 1 && c.filtro === "todas" && c.bloque === "todos" ? `Examen completo: <b>${cola.length}</b> preguntas` : `Disponibles: <b>${cola.length}</b> · se sacarán <b>${Math.min(cola.length, condE ? condE.n : 100)}</b> al azar`}</span>${condE ? `<span>⏱ ${Math.max(1, Math.round(condE.min * Math.min(cola.length, condE.n) / condE.n))} min</span>` : ""}</div>
+        `}
+        <div class="real-dlg-pie">
+          <button class="btn" value="cancel">Cancelar</button>
+          <button type="button" class="btn btn-primary" data-empezar ${cola.length && (modo === "repaso" || condE) ? "" : "disabled"}>${cola.length ? (modo === "repaso" ? "Empezar sesión" : "Empezar examen") : "No hay preguntas con esta selección"}</button>
+        </div>
+      </form>`;
+    const re = () => { guardarCfgReal(c); pintar(); };
+    dlg.querySelectorAll("[data-anio]").forEach(i => i.addEventListener("change", () => { const a = parseInt(i.dataset.anio, 10); c.anios = i.checked ? [...new Set(c.anios.concat(a))] : c.anios.filter(x => x !== a); re(); }));
+    const ta = dlg.querySelector("[data-todos-anios]"); if (ta) ta.addEventListener("click", () => { c.anios = aniosDisponibles(); re(); });
+    const ua = dlg.querySelector("[data-ultimo-anio]"); if (ua) ua.addEventListener("click", () => { c.anios = aniosDisponibles().slice(0, 1); re(); });
+    dlg.querySelectorAll("[data-acc]").forEach(b => b.addEventListener("click", () => { const k = b.dataset.acc; c.accesos = c.accesos.includes(k) ? c.accesos.filter(x => x !== k) : c.accesos.concat(k); re(); }));
+    dlg.querySelectorAll("[data-bq]").forEach(b => b.addEventListener("click", () => { c.bloque = b.dataset.bq; re(); }));
+    dlg.querySelectorAll("[data-fl]").forEach(b => b.addEventListener("click", () => { c.filtro = b.dataset.fl; re(); }));
+    dlg.querySelectorAll("[data-op]").forEach(i => i.addEventListener("change", () => { c[i.dataset.op] = i.type === "checkbox" ? i.checked : parseInt(i.value, 10); re(); }));
+    const rv = dlg.querySelector("[data-reactivar]"); if (rv) rv.addEventListener("click", () => {
+      TESTS_REALES.examenes.forEach(x => x.preguntas.forEach(q => { if (marcasDe(x, q).pa) alternarMarca(x, q, "pa"); })); toast("Preguntas reactivadas"); re();
+    });
+    dlg.querySelector("[data-empezar]").addEventListener("click", () => {
+      guardarCfgReal(c);
+      if (modo === "repaso") {
+        real.ses = { cola, i:0, res:[], resp:null };
+      } else {
+        const unoEntero = exs.length === 1 && c.filtro === "todas" && c.bloque === "todos";
+        const lista = unoEntero ? cola.slice().sort((a, b) => a.q.n - b.q.n) : barajar(cola).slice(0, condE.n);
+        real.ex = { qs:lista, cond:condE, actualizar:c.actualizar, resp:lista.map(() => null), i:0, inicio:Date.now(),
+          fin:Date.now() + Math.round(condE.min * 60000 * Math.min(1, lista.length / condE.n)), corte:unoEntero ? exs[0].corte : null };
+      }
+      cerrar(); renderReal();
+    });
+  };
+  pintar();
+  dlg.showModal();
 }
-function guardarRespReal(it, ok) { marcarProg(claveReal(it.x, it.q), ok, { m:Date.now() }); }
+
+/* ---- Repaso (SRS) ----------------------------------------------------------- */
 const LETRAS = "abcdefgh";
-function pintarPractica(c) {
-  const r = real.run;
-  if (r.i >= r.qs.length) return pintarResultadoReal(c);
-  const it = r.qs[r.i], q = it.q;
+function chipsReal(it) {
+  const s = srsDe(it.x, it.q);
+  return `<span class="tag hot" title="${esc(it.x.fuente || "")}">📋 ${esc(it.x.titulo || it.x.id)} · n.º ${esc(String(it.q.n))}</span>${it.q.tema ? `<span class="tag">${esc(it.q.tema)}</span>` : ""}${it.q.reserva ? `<span class="tag">Reserva</span>` : ""}${s ? `<span class="tag">${s.nx < hoyISO() ? "vencida desde " + s.nx : "repaso"}</span>` : `<span class="tag acc">🆕 Nueva</span>`}`;
+}
+function pintarRepaso(c) {
+  const S = real.ses;
+  if (S.i >= S.cola.length) return pintarResumenRepaso(c);
+  const it = S.cola[S.i], q = it.q, m = marcasDe(it.x, it.q);
+  const pct = S.cola.length ? S.i / S.cola.length * 100 : 0;
+  const prev = srsDe(it.x, it.q);
+  const iv = k => fmtIntervalo(srsSiguiente(prev, k).i);
   c.innerHTML = `
-    <div class="card">
-      ${cabReal(it, r.i, r.qs.length)}
+    <div class="card srs-barra">
+      <span class="muted">Repaso · <b>${S.i + 1}</b>/<b>${S.cola.length}</b></span>
+      <div class="bar"><div style="width:${pct}%"></div></div>
+      <button class="btn btn-sm" id="srs-deshacer" ${S.res.length ? "" : "disabled"} title="Deshacer la última">↶</button>
+      <button class="btn btn-sm" id="srs-salir">Guardar y salir</button>
+    </div>
+    <div class="card srs-q">
+      <div class="q-meta"><span class="tags">${chipsReal(it)}</span>
+        <span class="srs-acc"><button class="srs-ico ${m.st ? "on" : ""}" id="srs-star" title="${m.st ? "Quitar de ★ Importantes" : "Marcar como importante"}" aria-pressed="${!!m.st}">${m.st ? "★" : "☆"}</button><button class="srs-ico" id="srs-pausa" title="Pausar: no volverá a salir en el repaso hasta reactivarla">💤</button></span></div>
       <div class="q-txt">${esc(q.q)}</div>
       <div class="q-opts">${q.o.map((o, i) => `<button class="q-opt" data-i="${i}"><span class="l">${LETRAS[i]})</span><span>${esc(o)}</span></button>`).join("")}</div>
       <div id="fb"></div>
-      <div class="btn-row" style="justify-content:space-between;margin-top:14px">
-        <button class="btn btn-sm" id="r-salir">Terminar</button>
-        <button class="btn btn-sm" id="r-blanco">Dejar en blanco →</button>
-      </div>
-    </div>`;
-  const sig = () => { r.i++; pintarPractica(c); };
-  document.getElementById("r-salir").addEventListener("click", () => { r.qs = r.qs.slice(0, r.i); r.resp = r.resp.slice(0, r.i); pintarPractica(c); });
-  document.getElementById("r-blanco").addEventListener("click", sig);
-  c.querySelectorAll(".q-opt").forEach(b => b.addEventListener("click", () => {
-    const i = parseInt(b.dataset.i, 10), ok = i === q.c;
-    r.resp[r.i] = i; if (ok) r.bien++; else r.mal++;
-    guardarRespReal(it, ok);
-    c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === q.c) x.classList.add("bien"); if (j === i && !ok) x.classList.add("mal"); });
-    document.getElementById("r-blanco").hidden = true;
+      <div class="btn-row" id="srs-pre" style="justify-content:flex-end;margin-top:12px"><button class="btn btn-sm" id="srs-nolase">🤷 No la sé</button></div>
+    </div>
+    <p class="muted srs-teclas">Teclado: <kbd>a</kbd>–<kbd>d</kbd> para responder · después <kbd>1</kbd> fallada / <kbd>2</kbd> dudé / <kbd>3</kbd> la sabía.</p>`;
+  const avanzar = calidad => {
+    const antes = progreso(claveReal(it.x, it.q));
+    const dias = calificar(it.x, it.q, calidad);
+    S.res.push({ it, calidad, antes:antes ? JSON.parse(JSON.stringify(antes)) : null, dias });
+    S.i++; pintarRepaso(c);
+  };
+  const revelar = elegida => {
+    const ok = elegida === q.c;
+    S.resp = elegida;
+    c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === q.c) x.classList.add("bien"); if (j === elegida && !ok) x.classList.add("mal"); });
+    document.getElementById("srs-pre").hidden = true;
     document.getElementById("fb").innerHTML = `
-      <div class="q-fb ${ok ? "bien" : "mal"}">${ok ? "✓ Correcto." : "✗ Incorrecto: la correcta es la " + LETRAS[q.c] + ")."} ${q.e ? esc(q.e) : ""}<div class="muted" style="font-size:12.5px;margin-top:6px">Respuesta según la plantilla ${esc(it.x.plantilla || "oficial")}${it.x.fuente ? " · " + esc(it.x.fuente) : ""}.</div></div>
-      <div class="btn-row" style="justify-content:flex-end;margin-top:12px"><button class="btn btn-primary" id="r-sig">${r.i + 1 === r.qs.length ? "Ver resultado →" : "Siguiente →"}</button></div>`;
-    document.getElementById("r-sig").addEventListener("click", sig);
-  }));
+      <div class="q-fb ${ok ? "bien" : "mal"}">${ok ? "✓ Correcta." : elegida == null ? "La correcta es la " + LETRAS[q.c] + ")." : "✗ Incorrecta: la correcta es la " + LETRAS[q.c] + ")."} ${q.e ? esc(q.e) : ""}<div class="muted" style="font-size:12.5px;margin-top:6px">Respuesta según la plantilla ${esc(it.x.plantilla || "oficial")}${it.x.fuente ? " · " + esc(it.x.fuente) : ""}.</div></div>
+      <div class="srs-rate">${ok
+        ? `<button class="btn srs-r mid" data-cal="3"><span>🤔 Acerté dudando</span><small>${iv(3)}</small></button><button class="btn srs-r si" data-cal="5"><span>✓ La sabía</span><small>${iv(5)}</small></button>`
+        : `<button class="btn srs-r no" data-cal="0"><span>✗ Fallada</span><small>${iv(0)}</small></button>`}</div>`;
+    document.querySelectorAll("[data-cal]").forEach(b => b.addEventListener("click", () => avanzar(parseInt(b.dataset.cal, 10))));
+  };
+  c.querySelectorAll(".q-opt").forEach(b => b.addEventListener("click", () => revelar(parseInt(b.dataset.i, 10))));
+  document.getElementById("srs-nolase").addEventListener("click", () => revelar(null));
+  document.getElementById("srs-salir").addEventListener("click", () => { S.cola = S.cola.slice(0, S.i); pintarRepaso(c); });
+  document.getElementById("srs-deshacer").addEventListener("click", () => {
+    const u = S.res.pop(); if (!u) return;
+    const k = claveReal(u.it.x, u.it.q);
+    if (u.antes) marcarProg(k, u.antes.s, u.antes.d); else marcarProg(k, false, Object.assign({}, marcasDe(u.it.x, u.it.q), { r:undefined, i:undefined, e:undefined, nx:undefined, lr:undefined, h:undefined }));
+    S.i--; pintarRepaso(c);
+  });
+  document.getElementById("srs-star").addEventListener("click", () => { alternarMarca(it.x, it.q, "st"); const b = document.getElementById("srs-star"), on = !!marcasDe(it.x, it.q).st; b.textContent = on ? "★" : "☆"; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+  document.getElementById("srs-pausa").addEventListener("click", () => { alternarMarca(it.x, it.q, "pa"); toast("Pausada: no saldrá en el repaso hasta que la reactives"); S.cola.splice(S.i, 1); pintarRepaso(c); });
+  quitarTeclasReal();
+  real.tecla = e => {
+    if (!document.body.contains(c) || !real.ses) { quitarTeclasReal(); return; }
+    if (e.ctrlKey || e.metaKey || e.altKey || (e.target.closest && e.target.closest("input, select, textarea, dialog"))) return;
+    const k = e.key.toLowerCase();
+    if (!c.querySelector(".srs-rate")) { const i = LETRAS.indexOf(k); if (i >= 0 && i < q.o.length) { e.preventDefault(); revelar(i); } return; }
+    const cal = { "1":0, "2":3, "3":5 }[k];
+    const b = cal != null && c.querySelector(`[data-cal="${cal}"]`);
+    if (b) { e.preventDefault(); b.click(); }
+  };
+  document.addEventListener("keydown", real.tecla);
 }
-function fmtReloj(ms) { const t = Math.max(0, Math.round(ms / 1000)); return Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0"); }
-function pintarSimulacro(c) {
-  const r = real.run;
-  if (r.entregado) return pintarResultadoReal(c);
-  const it = r.qs[r.i], q = it.q;
-  const contestadas = r.resp.filter(x => x != null).length;
+function pintarResumenRepaso(c) {
+  quitarTeclasReal();
+  const S = real.ses, res = S.res;
+  if (res.length && !S.guardado) {
+    S.guardado = true;
+    const g = progreso("RS:global"), d = Object.assign({ sesiones:0, vistas:0, fechas:[] }, g && g.d);
+    d.sesiones++; d.vistas += res.length; if (!d.fechas.includes(hoyISO())) d.fechas = d.fechas.concat(hoyISO()).slice(-400);
+    marcarProg("RS:global", true, d);
+  }
+  const si = res.filter(r => r.calidad === 5).length, mid = res.filter(r => r.calidad === 3).length, no = res.filter(r => r.calidad === 0).length;
+  const pct = res.length ? Math.round((si + mid) / res.length * 100) : 0;
+  const man = masDias(1);
+  let pendMan = 0; TESTS_REALES.examenes.forEach(x => x.preguntas.forEach(q => { if (q.anulada || marcasDe(x, q).pa) return; const s = srsDe(x, q); if (!s || s.nx <= man) pendMan++; }));
+  const porAnio = {};
+  res.forEach(r => { const k = r.it.x.titulo || r.it.x.id; porAnio[k] = porAnio[k] || { t:0, ok:0 }; porAnio[k].t++; if (r.calidad >= 3) porAnio[k].ok++; });
+  c.innerHTML = `
+    <div class="card resultado">
+      <h2 style="margin:0 0 8px">${res.length ? "Sesión terminada" : "Sin preguntas repasadas"}</h2>
+      <div class="big">${pct}%</div>
+      <div class="real-pills" style="justify-content:center"><span class="big">Total: <b>${res.length}</b></span><span>✓ La sabía: <b>${si}</b></span><span>🤔 Dudé: <b>${mid}</b></span><span>✗ Fallé: <b>${no}</b></span></div>
+      <p class="muted">Mañana: ${plural(pendMan, "pregunta pendiente", "preguntas pendientes")} en total. Tu progreso se guarda solo y se sincroniza.</p>
+      ${Object.keys(porAnio).length > 1 ? `<div class="tabla-wrap"><table class="tabla"><thead><tr><th>Examen</th><th>Preguntas</th><th>Acierto</th></tr></thead><tbody>${Object.entries(porAnio).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${v.t}</td><td>${Math.round(v.ok / v.t * 100)}%</td></tr>`).join("")}</tbody></table></div>` : ""}
+      <button class="btn btn-primary" id="r-fin" style="margin-top:12px">← Volver</button>
+    </div>`;
+  document.getElementById("r-fin").addEventListener("click", () => { real.ses = null; renderReal(); });
+}
+
+/* ---- Examen oficial ------------------------------------------------------------ */
+function fmtReloj(ms) { const t = Math.max(0, Math.round(ms / 1000)); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60); return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(t % 60).padStart(2, "0"); }
+function pintarExamen(c) {
+  const E = real.ex, it = E.qs[E.i], q = it.q;
+  const contestadas = E.resp.filter(x => x != null).length;
   c.innerHTML = `
     <div class="card sim-barra">
-      <span>⏱ <b id="sim-reloj">${fmtReloj(r.fin - Date.now())}</b></span>
-      <span class="muted">${contestadas}/${r.qs.length} contestadas</span>
+      <span>⏱ <b id="sim-reloj">${fmtReloj(E.fin - Date.now())}</b></span>
+      <span class="muted">${contestadas}/${E.qs.length} contestadas · error −${E.cond.txtPenal}</span>
       <button class="btn btn-primary btn-sm" id="sim-entregar">Entregar</button>
     </div>
     <div class="card">
-      ${cabReal(it, r.i, r.qs.length)}
+      <div class="q-meta"><span>Pregunta ${E.i + 1} de ${E.qs.length}</span><span class="tags"><span class="tag hot">📋 ${esc(it.x.titulo || it.x.id)} · n.º ${esc(String(q.n))}</span></span></div>
       <div class="q-txt">${esc(q.q)}</div>
-      <div class="q-opts">${q.o.map((o, i) => `<button class="q-opt ${r.resp[r.i] === i ? "marcada" : ""}" data-i="${i}" aria-pressed="${r.resp[r.i] === i}"><span class="l">${LETRAS[i]})</span><span>${esc(o)}</span></button>`).join("")}</div>
+      <div class="q-opts">${q.o.map((o, i) => `<button class="q-opt ${E.resp[E.i] === i ? "marcada" : ""}" data-i="${i}" aria-pressed="${E.resp[E.i] === i}"><span class="l">${LETRAS[i]})</span><span>${esc(o)}</span></button>`).join("")}</div>
       <p class="muted" style="font-size:12.5px;margin:8px 0 0">Pulsa otra vez la opción marcada para dejarla en blanco.</p>
       <div class="btn-row" style="justify-content:space-between;margin-top:14px">
-        <button class="btn btn-sm" id="sim-ant" ${r.i ? "" : "disabled"}>← Anterior</button>
-        <button class="btn btn-sm" id="sim-sig" ${r.i + 1 < r.qs.length ? "" : "disabled"}>Siguiente →</button>
+        <button class="btn btn-sm" id="sim-ant" ${E.i ? "" : "disabled"}>← Anterior</button>
+        <button class="btn btn-sm" id="sim-sig" ${E.i + 1 < E.qs.length ? "" : "disabled"}>Siguiente →</button>
       </div>
     </div>
-    <div class="card sim-mapa">${r.qs.map((_, k) => `<button class="${k === r.i ? "act" : ""} ${r.resp[k] != null ? "resp" : ""}" data-k="${k}">${k + 1}</button>`).join("")}</div>`;
-  const ir_ = k => { r.i = k; pintarSimulacro(c); };
-  c.querySelectorAll(".q-opt").forEach(b => b.addEventListener("click", () => { const i = parseInt(b.dataset.i, 10); r.resp[r.i] = r.resp[r.i] === i ? null : i; pintarSimulacro(c); }));
-  document.getElementById("sim-ant").addEventListener("click", () => ir_(r.i - 1));
-  document.getElementById("sim-sig").addEventListener("click", () => ir_(r.i + 1));
+    <div class="card sim-mapa">${E.qs.map((_, k) => `<button class="${k === E.i ? "act" : ""} ${E.resp[k] != null ? "resp" : ""}" data-k="${k}">${k + 1}</button>`).join("")}</div>`;
+  const ir_ = k => { E.i = k; pintarExamen(c); };
+  c.querySelectorAll(".q-opt").forEach(b => b.addEventListener("click", () => { const i = parseInt(b.dataset.i, 10); E.resp[E.i] = E.resp[E.i] === i ? null : i; pintarExamen(c); }));
+  document.getElementById("sim-ant").addEventListener("click", () => ir_(E.i - 1));
+  document.getElementById("sim-sig").addEventListener("click", () => ir_(E.i + 1));
   c.querySelectorAll(".sim-mapa [data-k]").forEach(b => b.addEventListener("click", () => ir_(parseInt(b.dataset.k, 10))));
   const entregar = () => {
     if (real.reloj) { clearInterval(real.reloj); real.reloj = null; }
-    r.entregado = true;
-    r.qs.forEach((it2, k) => { if (r.resp[k] != null) { const ok = r.resp[k] === it2.q.c; if (ok) r.bien++; else r.mal++; guardarRespReal(it2, ok); } });
-    pintarResultadoReal(c);
+    if (E.entregado) return;
+    E.entregado = true; E.finReal = Date.now();
+    if (E.actualizar) E.qs.forEach((it2, k) => calificar(it2.x, it2.q, E.resp[k] === it2.q.c ? 5 : 0));
+    pintarResultadoExamen(c);
   };
   document.getElementById("sim-entregar").addEventListener("click", () => {
-    const blancos = r.qs.length - r.resp.filter(x => x != null).length;
-    if (confirm(blancos ? `¿Entregar? Quedan ${plural(blancos, "pregunta", "preguntas")} en blanco.` : "¿Entregar el simulacro?")) entregar();
+    const bl = E.qs.length - E.resp.filter(x => x != null).length;
+    if (confirm(bl ? `¿Entregar? Quedan ${plural(bl, "pregunta", "preguntas")} en blanco.` : "¿Entregar el examen?")) entregar();
   });
   if (!real.reloj) real.reloj = setInterval(() => {
     const el = document.getElementById("sim-reloj");
-    if (!el || !real.run || real.run !== r) { clearInterval(real.reloj); real.reloj = null; return; }
-    const quedan = r.fin - Date.now();
+    if (!el || real.ex !== E) { clearInterval(real.reloj); real.reloj = null; return; }
+    const quedan = E.fin - Date.now();
     el.textContent = fmtReloj(quedan);
-    if (quedan <= 0) { toast("Se acabó el tiempo: simulacro entregado"); entregar(); }
+    el.classList.toggle("poco", quedan < 5 * 60000);
+    if (quedan <= 0) { toast("Se acabó el tiempo: examen entregado"); entregar(); }
   }, 1000);
 }
-function pintarResultadoReal(c) {
-  const r = real.run, n = r.qs.length;
-  const blancos = n - r.bien - r.mal;
-  const penal = r.qs.length ? r.qs[0].x.penal : 1 / 3;
-  const neta = r.bien - r.mal * penal;
-  const seg = Math.round((Date.now() - r.inicio) / 1000);
-  const revisar = r.qs.map((it, k) => ({ it, k, a:r.resp[k] })).filter(o => o.a !== o.it.q.c);
+function pintarResultadoExamen(c) {
+  const E = real.ex, n = E.qs.length;
+  const bien = E.qs.filter((it, k) => E.resp[k] === it.q.c).length;
+  const mal = E.qs.filter((it, k) => E.resp[k] != null && E.resp[k] !== it.q.c).length;
+  const blancos = n - bien - mal;
+  const directa = bien - mal * E.cond.penal;
+  const suelo = 0.3 * n;   // la puntuación directa mínima no puede ser inferior al 30 % de la máxima
+  const seg = Math.round(((E.finReal || Date.now()) - E.inicio) / 1000);
+  const revisar = E.qs.map((it, k) => ({ it, k, a:E.resp[k] })).filter(o => o.a !== o.it.q.c);
   c.innerHTML = `
     <div class="card resultado">
-      <div class="big">${n ? Math.round(r.bien / n * 100) : 0}%</div>
-      <p style="margin:0 0 6px">${plural(r.bien, "acierto")}, ${plural(r.mal, "error", "errores")} y ${plural(blancos, "en blanco", "en blanco")} de ${n} · ${Math.floor(seg / 60)} min ${seg % 60} s</p>
-      <p class="muted" style="margin:0 0 16px;font-size:14px">Nota directa (aciertos − errores × ${penal === 1 / 3 ? "1/3" : penal.toFixed(2)}): <b>${neta.toFixed(2)}</b> de ${n} (${n ? (neta / n * 100).toFixed(1) : 0} %)</p>
-      <button class="btn btn-primary" id="r-fin">← Volver</button>
+      <h2 style="margin:0 0 4px">Puntuación directa</h2>
+      <div class="big">${directa.toFixed(2).replace(".", ",")}</div>
+      <p style="margin:0 0 6px">sobre ${n} · ${plural(bien, "acierto")}, ${plural(mal, "error", "errores")} y ${blancos} en blanco · ${fmtReloj(seg * 1000)} de ${E.cond.min} min</p>
+      <p class="muted" style="font-size:13.5px;margin:0 0 4px">Aciertos − errores × ${E.cond.txtPenal} (${PROGRAMA_REF}, ${E.cond.fuente}).</p>
+      ${E.corte != null ? `<p class="real-veredicto ${directa >= E.corte ? "ok" : "ko"}">${directa >= E.corte ? "✓ Por encima" : "✗ Por debajo"} de la puntuación directa mínima publicada para este examen (${String(E.corte).replace(".", ",")}).</p>`
+        : `<p class="muted" style="font-size:13.5px;margin:0">La calificación oficial (0 a 50, mínimo 25) sale de transformar la puntuación directa con el mínimo que fija la Comisión, que no puede ser inferior al 30 % de la máxima (${String(Math.round(suelo * 100) / 100).replace(".", ",")} de ${n}): ${directa >= suelo ? "superas ese suelo legal" : "no llegas a ese suelo legal"}. No es la nota de corte real.</p>`}
+      <button class="btn btn-primary" id="r-fin" style="margin-top:14px">← Volver</button>
     </div>
     ${revisar.length ? `<h2 class="section-title">Para repasar (${revisar.length})</h2>
     ${revisar.map(o => `<div class="card real-rev">
-        ${cabReal(o.it, o.k, n)}
+        <div class="q-meta"><span>Pregunta ${o.k + 1}</span><span class="tags">${chipsReal(o.it)}</span></div>
         <div class="q-txt">${esc(o.it.q.q)}</div>
         <div class="q-opts">${o.it.q.o.map((t, i) => `<div class="q-opt ${i === o.it.q.c ? "bien" : i === o.a ? "mal" : ""}"><span class="l">${LETRAS[i]})</span><span>${esc(t)}</span></div>`).join("")}</div>
         <p class="muted" style="font-size:13px;margin:8px 0 0">${o.a == null ? "La dejaste en blanco." : "Marcaste la " + LETRAS[o.a] + ")."} Correcta: ${LETRAS[o.it.q.c]}).${o.it.q.e ? " " + esc(o.it.q.e) : ""}</p>
       </div>`).join("")}` : ""}`;
-  document.getElementById("r-fin").addEventListener("click", () => { real.run = null; renderReal(); });
+  document.getElementById("r-fin").addEventListener("click", () => { real.ex = null; renderReal(); });
 }
 
 /* Estado local del hub por ámbito (B1…B6 o global). */
