@@ -53,7 +53,7 @@ El epígrafe tiene cuatro frases y recorre la **vida de un contrato**: qué es, 
 # =============================================================================
 T.ap("bI", "I. ¿Qué es un contrato del sector público, qué clases hay y qué elementos tiene?", donde(
   "Primera pregunta, la de la primera frase del epígrafe: **concepto, clases y elementos**. Antes de preparar o adjudicar nada hay que saber qué contratos entran en la ley, cuáles quedan fuera, cuáles son armonizados, administrativos o privados, y cuáles son sus elementos: partes, objeto y precio.",
-  ["1 Objeto y concepto; sector público, Administraciones y poderes adjudicadores (arts. 1 a 3)", "2 Negocios excluidos (arts. 5, 10 y 11)", "3 Calificación y regulación armonizada; umbrales de 2026 (arts. 12 y 19 a 22)", "4 Contratos administrativos y privados; jurisdicción (arts. 24 a 27)", "5 Duración, contenido, perfección y forma (arts. 29 y 35 a 37)", "6 Las partes (arts. 61, 65, 74 y 88)", "7 Objeto, presupuesto, valor estimado, precio y garantías (arts. 99 a 107)", "8 Órganos de contratación del Estado (art. 323)"]))
+  ["1 Objeto y concepto; sector público, Administraciones y poderes adjudicadores (arts. 1 a 3)", "2 Negocios excluidos (arts. 5, 10 y 11)", "3 Calificación y regulación armonizada; umbrales de 2026 (arts. 12 y 19 a 22)", "4 Contratos administrativos y privados; jurisdicción (arts. 24 a 27)", "5 Duración, contenido, perfección y forma (arts. 29 y 35 a 37)", "6 Las partes (arts. 61, 65, 74 y 88)", "7 Objeto, presupuesto, valor estimado, precio y garantías (arts. 99 a 102, 106 y 107)", "8 Órganos de contratación del Estado (art. 323)"]))
 
 ap("s1", "I.1 Objeto y concepto: qué es un contrato del sector público (arts. 1 a 3)", [
   "La LCSP regula la contratación del **sector público**. Un contrato entra en la ley por dos datos: es **oneroso** y lo celebra una **entidad del art. 3**. El art. 3 dibuja tres círculos: sector público ⊃ poderes adjudicadores ⊃ Administraciones Públicas.",
@@ -127,7 +127,7 @@ ap("s3", "I.3 Calificación y contratos sujetos a regulación armonizada (arts. 
            "Solo si contrata un **poder adjudicador** (y los subvencionados del art. 23)",
            f"Valor estimado (art. 101, → I.7.3) {C(19, 'igual o superior a las cuantías que se indican en los artículos siguientes')}",
            "Umbrales: arts. 20 a 22 (→ I.3.3)",
-           "«Igual **o superior**»: el importe exacto del umbral ya es armonizado. El 19.2 excluye ciertos contratos cualquiera que sea su valor (audiovisuales, defensa del art. 346 TFUE, secretos o reservados, comunicaciones electrónicas, ciertos servicios jurídicos…).")),
+           "La ley dice «igual **o superior**»: el importe exacto del umbral ya es armonizado. El 19.2 excluye ciertos contratos cualquiera que sea su valor (audiovisuales, defensa del art. 346 TFUE, secretos o reservados, comunicaciones electrónicas, ciertos servicios jurídicos…).")),
   unidad("3.3 Los umbrales vigentes desde el 1 de enero de 2026 (arts. 20.1, 21.1 y 22.1)",
     L(20, ["5.404.000 euros"], solo=[1]),
     L(21, ["140.000 euros", "216.000 euros"], solo=[1, 2, 3]),
@@ -322,7 +322,7 @@ ap("s10", "II.2 Contratos menores, tramitación urgente y de emergencia (arts. 1
            "Órgano de contratación; adjudicación directa a cualquier empresario con capacidad y habilitación (art. 131.3, → III.1.1)",
            ["Informe motivado de la necesidad y de que no se altera el objeto para eludir los umbrales", "Aprobación del gasto y factura", "Obras: además, el presupuesto (y el proyecto y el informe de supervisión cuando procedan)"],
            ["Obras: valor estimado **inferior a 40.000 €**", "Suministros y servicios: **inferior a 15.000 €**", "Duración: máximo **un año**, sin prórroga (art. 29.8)"],
-           "«**Inferior** a»: un contrato de obras de 40.000 € justos ya no es menor. Pagos por anticipo de caja fija de hasta 5.000 €: sin el informe del 118.2.")),
+           "La ley dice «**inferior** a»: un contrato de obras de 40.000 € justos ya no es menor. Pagos por anticipo de caja fija de hasta 5.000 €: sin el informe del 118.2.")),
   unidad("2.2 Tramitación urgente (art. 119)",
     L(119, ["necesidad inaplazable", "se reducirán a la mitad", "no podrá exceder de un mes"]),
     fichab("Tramitación urgente del expediente",
@@ -468,7 +468,7 @@ ap("s15", "III.4 Procedimiento restringido y procedimientos con negociación (ar
            "Órgano de contratación",
            ["::Entre otros:", "Abierto o restringido sin ofertas o sin ofertas adecuadas, sin modificar sustancialmente las condiciones ni incrementar el presupuesto base", "Un único empresario posible: obra de arte o actuación artística única, falta de competencia técnica, derechos exclusivos", "Contrato secreto o reservado", "Imperiosa urgencia imprevisible y no imputable al órgano (obras, suministros y servicios)", "Supuestos propios del suministro, de los servicios y de la repetición de obras o servicios (168 c a e)"],
            "—",
-           "«**Únicamente**» en esos casos. La imperiosa urgencia solo cabe cuando la tramitación urgente del art. 119 **no basta**.")),
+           "La ley dice «**únicamente**» en esos casos. La imperiosa urgencia solo cabe cuando la tramitación urgente del art. 119 **no basta**.")),
 ], 2)
 
 ap("s16", "III.5 Cuadro de procedimientos (esquema)", [
@@ -592,7 +592,7 @@ ap("s19", "IV.3 Extinción: cumplimiento y resolución (arts. 209 a 213)", [
     L(213, ["le será incautada la garantía", "indemnización del 3 por ciento del importe de la prestación dejada de realizar"], solo=[1, 2, 3, 4]),
     fichab("Efectos de la resolución",
            "—",
-           ["Mutuo acuerdo: lo válidamente estipulado", "Incumplimiento de la Administración: daños y perjuicios al contratista", "Incumplimiento culpable del contratista: **incautación de la garantía** e indemnización de lo que exceda", "Causa del 211.1 g): indemnización del **3 %** de la prestación dejada de realizar"],
+           ["Mutuo acuerdo: lo válidamente estipulado", "Incumplimiento de la Administración: daños y perjuicios al contratista", "Incumplimiento culpable del contratista: **incautación de la garantía** e indemnización de lo que exceda", f"Causa del 211.1 g): indemnización del **3 %** de la prestación dejada de realizar, {C(213, 'salvo que la causa sea imputable al contratista o este rechace la modificación contractual propuesta por la Administración al amparo del artículo 205')}"],
            "—",
            "El acuerdo de resolución se pronuncia **siempre** sobre la garantía (213.5).")),
   resumen([
@@ -661,7 +661,7 @@ ap("s21", "V.2 La modificación del contrato (arts. 203 a 207)", [
            "—",
            "Las del art. 205 son obligatorias si no exceden del 20 %; si exceden, requieren conformidad por escrito del contratista o se resuelve el contrato (211.1 g)",
            "**20 %** del precio inicial, sin IVA",
-           "Más del 20 % sin conformidad → resolución con indemnización del **3 %** de la prestación no realizada (art. 213.4, → IV.3.5).")),
+           f"Más del 20 % sin conformidad → **resolución** (211.1 g) **sin** la indemnización del 3 % del art. 213.4, que se excluye cuando el contratista {C(213, 'rechace la modificación contractual propuesta por la Administración al amparo del artículo 205')} (→ IV.3.5).")),
   unidad("2.5 Especialidades de procedimiento (art. 207.2 y 3)",
     L(207, ["en un plazo no inferior a tres días", "en el plazo de 5 días desde la aprobación de la misma"], solo=[2, 4]),
     fichab("Especialidades procedimentales",
@@ -1080,7 +1080,7 @@ T.real("X", 56, "Revisión de precios")
 # Flashcards
 for q_, a_, cat in [
   ("Concepto de contrato del sector público (art. 2.1 LCSP)", "Contrato oneroso, cualquiera que sea su naturaleza jurídica, celebrado por una entidad del art. 3. Oneroso: el contratista obtiene algún beneficio económico, directo o indirecto.", "Concepto"),
-  ("¿Quiénes son poder adjudicador sin ser Administración Pública? (art. 3.3)", "Las fundaciones públicas, las Mutuas colaboradoras con la Seguridad Social, las entidades del 3.3 d) y sus asociaciones.", "Concepto"),
+  ("¿Quiénes son poder adjudicador sin ser Administración Pública? (art. 3.3)", "Las fundaciones públicas, las Mutuas colaboradoras con la Seguridad Social, las entidades del 3.3 d) que no sean Administración Pública conforme al 3.2 b) y sus asociaciones.", "Concepto"),
   ("Umbrales SARA desde el 1-1-2026 (arts. 20 a 22)", "Obras y concesiones: 5.404.000 €. Suministros y servicios: 140.000 € (AGE, OO. AA., Entidades Gestoras y Servicios Comunes de la Seguridad Social) o 216.000 € (resto). Servicios del anexo IV: 750.000 €.", "Regulación armonizada"),
   ("¿Quién celebra contratos administrativos? (art. 25)", "Solo una Administración Pública: los típicos (obra, concesiones, suministro y servicios) y los administrativos especiales.", "Administrativos y privados"),
   ("Contrato privado de una Administración: ¿qué norma rige cada fase? (art. 26.2)", "Preparación y adjudicación: LCSP (contencioso); efectos, modificación y extinción: derecho privado (civil).", "Administrativos y privados"),

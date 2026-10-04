@@ -500,7 +500,7 @@ U("1.1 Duración de los suministros y servicios (art. 29.4 y 5)",
          "El órgano de contratación, al fijar la duración y acordar las prórrogas",
          "Incluye las prórrogas",
          "**Cinco años**, con prórrogas, tanto en los suministros y servicios de prestación sucesiva como en el arrendamiento de bienes muebles",
-         "Excepciones del 29.4 (para recuperar inversiones, mantenimiento exclusivo, servicios a las personas) y prórroga de hasta nueve meses mientras se formaliza el nuevo contrato: ver tema IV.5.")),
+         "El 29.4 admite excepciones (recuperación de inversiones, mantenimiento exclusivo, servicios a las personas) y una prórroga de hasta nueve meses mientras empieza la ejecución del nuevo contrato (29.4, párrafos segundo a quinto; no se copian aquí).")),
 U("1.2 Arrendamiento (art. 298)",
   L(298, "asumirá durante el plazo de vigencia del contrato la obligación del mantenimiento"),
   fichab("Especialidad del suministro en forma de arrendamiento",
@@ -562,7 +562,7 @@ U("3.1 Causas de resolución (art. 306)",
   fichab("Causas de resolución propias del suministro (las generales: ver tema IV.5)", "—",
          ["a) Desistimiento antes de iniciar el suministro o suspensión de la iniciación por más de cuatro meses, por causa imputable a la Administración", "b) Desistimiento una vez iniciado o suspensión por más de ocho meses acordada por la Administración"],
          "**4** meses (iniciación, desde la fecha señalada en el contrato para la entrega) · **8** meses (iniciado), salvo plazo menor del pliego",
-         "Los mismos **4 y 8 meses** que en obras (→ II.3.3) y servicios (→ V.3.1); aquí el pliego puede fijar uno **menor**.")),
+         "Los mismos **4 y 8 meses** que en obras (→ II.3.3) y servicios (→ V.3.1); en suministro y servicios el pliego puede fijar uno **menor** (en obras, no).")),
 U("3.2 Efectos de la resolución (art. 307)",
   L(307, "3 por ciento", "6 por ciento"),
   fichab("Efectos de la resolución del suministro", "Las partes",
@@ -630,7 +630,7 @@ U("3.1 Causas y efectos de la resolución (art. 313)",
   fichab("Resolución propia de los contratos de servicios (las causas generales: ver tema IV.5)", "—",
          ["a) Desistimiento antes de iniciar o suspensión de la iniciación por más de cuatro meses (causa imputable al órgano de contratación)", "b) Desistimiento iniciada la prestación o suspensión por más de ocho meses", "c) Los contratos complementarios se resuelven con el principal"],
          ["::Indemnización (IVA excluido):", "Letras a) y c): **3 %** del precio de adjudicación", "Letra b): **6 %** de los servicios dejados de prestar"],
-         "En todo caso se paga lo **realizado y recibido**. Mismos 4 y 8 meses que obras y suministro (→ II.3.3 y → IV.3.1).")),
+         "En todo caso se paga lo **realizado y recibido**. Mismos 4 y 8 meses que obras y suministro (→ II.3.3 y → IV.3.1), salvo plazo **menor** en el pliego.")),
 U("3.2 Subsanación de errores del proyecto (art. 314)",
   L(314, "no podrá exceder de dos meses", "25 por ciento del precio del contrato", "un mes improrrogable", "la mitad del precio del contrato"),
   fichab("Contrato de servicios de elaboración íntegra de un proyecto de obra: corrección de deficiencias",
@@ -851,7 +851,7 @@ T.glos("Precio cerrado", "Modalidad del tanto alzado en que el precio ofertado n
 T.glos("Plazo de garantía", "Periodo que empieza con la recepción de las obras, fijado en el pliego y no inferior a un año salvo casos especiales (art. 243).", "s7", "Contrato de obras")
 T.glos("Estudio de viabilidad", "Estudio que acuerda la Administración concedente antes de decidir construir y explotar unas obras en concesión (art. 247); también precede a la concesión de servicios (art. 285.2).", "s8", "Concesiones")
 T.glos("Secuestro o intervención", "Asunción temporal por el órgano de contratación de la explotación de la concesión, por cuenta y riesgo del concesionario, durante un máximo de tres años (art. 263).", "s10", "Concesiones")
-T.glos("Tarifa", "Retribución por la utilización de las obras o servicios en concesión; prestación patrimonial de carácter público no tributario, con carácter de máxima (arts. 267 y 289).", "s10", "Concesiones")
+T.glos("Tarifa", "Retribución por la utilización de las obras o servicios en concesión; prestación patrimonial de carácter público no tributario (arts. 267.1 y 289.2); en la concesión de obras, las que abonan los usuarios son máximas (art. 267.2).", "s10", "Concesiones")
 T.glos("Rescate", "Declaración unilateral del órgano contratante, por interés público, que da por terminada la concesión pese a la buena gestión de su titular, para gestionarla directamente (art. 279 c).", "s11", "Concesiones")
 T.glos("Reversión", "Vuelta del servicio a la Administración al finalizar el plazo de la concesión, con entrega de obras e instalaciones (art. 291).", "s13", "Concesiones")
 
