@@ -267,8 +267,8 @@ T.ap("s7", "II.5 La libre designación (TREBEP, art. 80; RD 364/1995, arts. 51 a
   fichab("Procedimiento de la libre designación",
          ["Informe previo del **titular del centro, organismo o unidad** del puesto", "Si el candidato está en **otro Departamento**: informe **favorable** de este", "Cuerpos con puestos en exclusiva: informe favorable del Ministerio de adscripción del Cuerpo"],
          ["Convocatoria pública con la descripción y requisitos del puesto", "Nombramiento **motivado**: cumplimiento de requisitos por el elegido y competencia", "Toma de posesión: como en el concurso (art. 48, → II.4.2)"],
-         ["Solicitudes: **15 días hábiles** desde la publicación", "Informes: si no se emiten en **15 días naturales**, **favorables**", "Nombramiento: **un mes** desde el fin del plazo de solicitudes, prorrogable **un mes más**"],
-         "Informe desfavorable del otro Departamento: cabe nombrar **con autorización del Secretario de Estado para la Administración Pública**. Ojo: solicitudes en días **hábiles**, informes en días **naturales**."))}
+         ["Solicitudes: **15 días hábiles** desde la publicación", "Informe del otro Departamento: si no se emite en **15 días naturales**, se considera **favorable**", "Nombramiento: **un mes** desde el fin del plazo de solicitudes, prorrogable **un mes más**"],
+         "Informe desfavorable del otro Departamento: cabe nombrar **con autorización del Secretario de Estado para la Administración Pública**. Ojo: solicitudes en días **hábiles**; silencio del otro Departamento sobre su informe, en días **naturales**."))}
 
 {unidad("5.4 Cese y garantía (RD 364/1995, art. 58)",
   lit("RD364", "Artículo 58", ["con carácter discrecional", "se referirá a la competencia para adoptarla", "no inferior en más de dos niveles al de su grado personal en el mismo municipio", "no será de aplicación cuando se trate del cese de funcionarios destinados en el exterior"]),

@@ -20,7 +20,7 @@ def cifra(k, art, v):
 
 
 T = Tema("B5T06",
-  "Cinco preguntas: I. Cómo se ordena el sistema de retribuciones (TREBEP, arts. 21 y 22; Ley 30/1984) · II. Qué son las retribuciones básicas (sueldo, trienios y pagas extraordinarias) · III. Qué son las retribuciones complementarias (TREBEP, art. 24; Ley 30/1984, art. 23.3; RDL 6/2023) · IV. Qué reglas completan el sistema (interinos, prácticas, laborales, retribuciones diferidas y deducciones: arts. 25 a 27, 29 y 30) · V. Las indemnizaciones por razón del servicio (art. 28 y Real Decreto 462/2002). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Cómo se ordena el sistema de retribuciones (TREBEP, arts. 21 y 22; Ley 30/1984) · II. Qué son las retribuciones básicas: sueldo, trienios y pagas extraordinarias (TREBEP, arts. 22 y 23; Ley 30/1984, arts. 23.2 y 24.1) · III. Qué son las retribuciones complementarias (TREBEP, arts. 22.3 y 24; Ley 30/1984, art. 23.3; RDL 6/2023) · IV. Qué reglas completan el sistema (interinos, prácticas, laborales, retribuciones diferidas y deducciones: arts. 25 a 27, 29 y 30) · V. Las indemnizaciones por razón del servicio (art. 28; Ley 30/1984, art. 23.4; Real Decreto 462/2002; Resolución de 20 de enero de 2014). Cada artículo: texto literal del BOE y ficha.",
   ["Retribuciones básicas", "Sueldo", "Trienios", "Pagas extraordinarias", "Retribuciones complementarias", "Complemento de destino", "Complemento específico", "Productividad", "Gratificaciones", "Complemento de desempeño", "Retribuciones diferidas", "Deducción de haberes", "RD 462/2002", "Comisión de servicio", "Dietas", "Residencia eventual", "Asistencias"])
 
 # =============================================================================
@@ -56,7 +56,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 # =============================================================================
 T.ap("bI", "I. ¿Cómo se ordena el sistema de retribuciones?", donde(
   "Primera pregunta del tema. Antes de ver cada concepto retributivo, hay que saber **quién fija las cuantías**, **en qué dos clases** se dividen las retribuciones y **qué norma** se aplica en la Administración del Estado.",
-  ["1 Cuantías e incrementos: la ley de presupuestos (art. 21)", "2 Básicas y complementarias; lo que nunca se puede cobrar (art. 22.1 y 5)", "3 TREBEP y Ley 30/1984: por qué conviven"]))
+  ["1 Cuantías e incrementos: la ley de presupuestos (TREBEP, art. 21; Ley 30/1984, art. 24.2)", "2 Básicas y complementarias; lo que nunca se puede cobrar (TREBEP, art. 22.1 y 5; Ley 30/1984, art. 23.1)", "3 TREBEP y Ley 30/1984: por qué conviven (disposición derogatoria única y disposición final cuarta)"]))
 
 T.ap("s1", "I.1 Cuantías e incrementos: la ley de presupuestos (TREBEP, art. 21; Ley 30/1984, art. 24.2)", f"""
 Las retribuciones de los funcionarios no se pactan individualmente: sus cuantías y sus incrementos se fijan **por ley**, cada año.
@@ -321,7 +321,7 @@ T.ap("s11", "IV.2 Retribuciones diferidas y deducción de retribuciones (TREBEP,
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Qué son las indemnizaciones por razón del servicio? (TREBEP, art. 28; Real Decreto 462/2002)", donde(
+T.ap("bV", "V. ¿Qué son las indemnizaciones por razón del servicio? (TREBEP, art. 28; Ley 30/1984, art. 23.4; Real Decreto 462/2002)", donde(
   "Quinta pregunta. Las indemnizaciones **no retribuyen** el trabajo: **resarcen** los gastos que el servicio ocasiona. El TREBEP y la Ley 30/1984 las reconocen; el **Real Decreto 462/2002** las regula en la Administración General del Estado.",
   ["1 El derecho, los supuestos y el ámbito (TREBEP, art. 28; Ley 30/1984, art. 23.4; RD 462/2002, arts. 1 y 2)", "2 Comisiones de servicio (arts. 3 a 7)", "3 Dietas, residencia eventual y gastos de viaje (arts. 9, 10, 12, 16 y 17 y anexos I y II)", "4 Desplazamientos en el término municipal y traslados de residencia (arts. 20, 22 y 23)", "5 Asistencias (arts. 27, 30, 32 y 33)", "6 Imputación presupuestaria (disposición final primera; Resolución de 20 de enero de 2014)"]))
 
@@ -630,7 +630,7 @@ T.ap("s18", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-L 2025, pregunta 94 · Imputación presupuestaria (relacionada; → V.6.2)", EX_L94,
   "### GACE-P 2025, pregunta 96 · Imputación presupuestaria (relacionada; → V.6.2)", EX_P96,
   "### Cómo se pregunta",
-  "!> Dos patrones: (1) **qué ley** cita el enunciado (TREBEP o Ley 30/1984: cambian las palabras y el lugar de las pagas extraordinarias); (2) **plazos y horas** del RD 462/2002 cambiados en los distractores (un mes / tres meses; 14 y 22 horas; 100 % o 50 %). La pregunta de 2025 sobre el límite de los anticipos de caja fija del artículo 23 está **retenida** en el test real (la plantilla no casa con la Ley General Presupuestaria) y no se incluye aquí.",
+  "!> Dos patrones: (1) **qué ley** cita el enunciado (TREBEP o Ley 30/1984: cambian las palabras y el lugar de las pagas extraordinarias); (2) **plazos y horas** del RD 462/2002 cambiados en los distractores (un mes / tres meses; 14 y 22 horas; 100 % o 50 %). La pregunta de 2025 sobre el límite de los anticipos de caja fija del artículo 23 lleva en el test real la etiqueta **«⚠ Discrepancia»** (la plantilla no casa con el art. 78.3 de la Ley General Presupuestaria; se mantiene su respuesta) y no se incluye aquí.",
 ]))
 
 T.ap("s19", "Cierre 2. Repaso en 10 minutos (por bloques)", f"""

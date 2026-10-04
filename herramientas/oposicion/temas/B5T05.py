@@ -112,7 +112,7 @@ T.ap("s3", "I.3 El Reglamento de situaciones de la AGE (RD 365/1995) y su vigenc
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cuándo se está en servicio activo, en servicios especiales o en servicio en otras Administraciones? (TREBEP, arts. 86 a 88)", donde(
+T.ap("bII", "II. ¿Cuándo se está en servicio activo, en servicios especiales o en servicio en otras Administraciones? (TREBEP, arts. 86 a 88; RD 365/1995, arts. 3, 6, 9 y 11)", donde(
   "Segunda pregunta. Tres situaciones en las que el funcionario **sigue prestando servicios**: en su puesto (servicio activo), en un cargo que la ley protege (servicios especiales) o en otra Administración (servicio en otras Administraciones Públicas).",
   ["1 Servicio activo (art. 86; RD 365/1995, art. 3)", "2 Servicios especiales (art. 87; RD 365/1995, arts. 6 y 9)", "3 Servicio en otras Administraciones Públicas (art. 88; RD 365/1995, art. 11)"]))
 
@@ -210,7 +210,7 @@ T.ap("s6", "II.3 Servicio en otras Administraciones Públicas (TREBEP, art. 88; 
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cuándo se deja de prestar servicio? Excedencias, suspensión de funciones y reingreso (TREBEP, arts. 89 a 91)", donde(
+T.ap("bIII", "III. ¿Cuándo se deja de prestar servicio? Excedencias, suspensión de funciones y reingreso (TREBEP, arts. 89 a 91; RD 365/1995, arts. 12, 13, 15, 18, 19, 21, 22 y 23)", donde(
   "Tercera pregunta. El funcionario puede dejar de prestar servicios sin perder su condición: por **excedencia** (voluntaria o por razones protegidas) o por **suspensión de funciones** (sanción o medida cautelar). La vuelta se llama **reingreso**.",
   ["1 Modalidades de excedencia y excedencia por interés particular (art. 89.1 y 2)", "2 Agrupación familiar (art. 89.3)", "3 Cuidado de familiares (art. 89.4)", "4 Violencia de género o sexual y violencia terrorista (art. 89.5 y 6)", "5 Situaciones propias del reglamento de la AGE (RD 365/1995, arts. 12, 13, 15, 18 y 19)", "6 Suspensión de funciones (art. 90; RD 365/1995, arts. 21 y 22)", "7 Reingreso (art. 91; RD 365/1995, art. 23)", "8 Cuadro de efectos de las situaciones"]))
 
