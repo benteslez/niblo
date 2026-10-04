@@ -32,10 +32,10 @@ Bloque IV: - [x] IV.2 - [x] IV.4 - [x] IV.5 - [x] IV.6 - [x] IV.8 - [x] IV.10
 Bloque V: - [x] V.1 - [x] V.2 - [x] V.3 - [x] V.4 - [x] V.5 - [x] V.6 - [x] V.7
 - [x] V.8 - [x] V.10
 
-Bloque I: - [x] I.2 - [x] I.1 - [x] I.3 - [x] I.4 - [x] I.5 - [x] I.6 - [ ] I.8
-- [ ] I.9 - [ ] I.10 - [ ] I.11
+Bloque I: - [x] I.2 - [x] I.1 - [x] I.3 - [x] I.4 - [x] I.5 - [x] I.6 - [x] I.8
+- [x] I.9 - [x] I.10 - [ ] I.11
 
-Bloque VI: - [ ] VI.3 - [ ] VI.6 - [ ] VI.7
+Bloque VI: - [x] VI.3 - [x] VI.6 - [x] VI.7
 
 Bloque III: - [ ] III.8
 
