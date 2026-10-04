@@ -178,20 +178,22 @@ T.ap("s5", "II.1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 
 FORM_2009 = f"""> [[DOUE|{D2009}]]
 > **Decisión 2009/878/UE del Consejo (Asuntos Generales), de 1 de diciembre de 2009, por la que se establece la lista de formaciones del Consejo, además de las contempladas en los párrafos segundo y tercero del apartado 6 del artículo 16 del Tratado de la Unión Europea (DOUE L 315 de 2.12.2009) · anexo (texto de EUR-Lex, sin las notas al pie)**
 > ANEXO LISTA DE FORMACIONES DEL CONSEJO
-> 1. Asuntos Generales
-> 2. Asuntos Exteriores
-> 3. Asuntos Económicos y Financieros
-> 4. Justicia y Asuntos de Interior
-> 5. Empleo, Política Social, Sanidad y Consumidores
-> 6. Competitividad (Mercado Interior, Industria e Investigación)
-> 7. Transporte, Telecomunicaciones y Energía
-> 8. Agricultura y Pesca
-> 9. Medio Ambiente
-> 10. Educación, Juventud y Cultura"""
+> 1. Asuntos Generales;
+> 2. Asuntos Exteriores;
+> 3. Asuntos Económicos y Financieros;
+> 4. Justicia y Asuntos de Interior;
+> 5. Empleo, Política Social, Sanidad y Consumidores;
+> 6. Competitividad (Mercado Interior, Industria e Investigación);
+> 7. Transporte, Telecomunicaciones y Energía;
+> 8. Agricultura y Pesca;
+> 9. Medio Ambiente;
+> 10. Educación, Juventud y Cultura."""
 FORM_2010 = f"""> [[DOUE|{D2010}]]
 > **Decisión 2010/594/UE del Consejo Europeo, de 16 de septiembre de 2010, por la que se modifica la lista de formaciones del Consejo (DOUE L 263 de 6.10.2010) · artículo 1 (texto de EUR-Lex)**
+> La lista de formaciones del Consejo que figura en el anexo de la Decisión 2009/878/UE y, por consiguiente, la lista de formaciones del Consejo que figura en el anexo I del Reglamento interno del Consejo se modifican como sigue:
 > 1) El punto 6 «Competitividad (Mercado Interior, Industria e Investigación)» se sustituye por el texto siguiente: «6. Competitividad (Mercado Interior, Industria, Investigación y Espacio)».
-> 2) El punto 10 «Educación, Juventud y Cultura» se sustituye por el texto siguiente: «10. Educación, Juventud, Cultura y Deporte»."""
+> 2) El punto 10 «Educación, Juventud y Cultura» se sustituye por el texto siguiente: «10. Educación, Juventud, Cultura y Deporte».
+> Las notas a pie de página permanecen sin cambios."""
 
 T.ap("s6", "II.2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9)", f"""
 {unidad("2.1 Formaciones del Consejo (art. 16.6)",
@@ -584,15 +586,13 @@ T.ap("s18", "V.3 España: las Cortes Generales y la Comisión Mixta para la Uni�
          ["Informe escrito del Gobierno **antes de cada Consejo Europeo ordinario** (e)", "Informe del Gobierno sobre subsidiariedad: **dos semanas** como máximo (j)"],
          "El dictamen de subsidiariedad lo emite la **Comisión Mixta en nombre de las Cortes** (no el Gobierno)."))}
 
-{unidad("3.3 Comparecencias del Gobierno (art. 4 y artículos 8 y 9 «nuevos»)",
+{unidad("3.3 Comparecencia tras el Consejo Europeo (art. 4)",
   lit("L8_1994", "a4", ["ante el Pleno del Congreso de los Diputados, con posterioridad a cada Consejo Europeo, ordinario o extraordinario"]),
-  lit("L8_1994", "a8-2", ["antes de la celebración de la reunión del Consejo"], titulo="Artículo 8 (nuevo) del capítulo tercero (Ley 8/1994)"),
-  lit("L8_1994", "a9-2", ["Al final de cada presidencia semestral del Consejo de la Unión Europea"], titulo="Artículo 9 (nuevo) del capítulo tercero (Ley 8/1994)"),
-  fichab("El Gobierno da cuenta antes y después",
-         ["**Gobierno**, ante el **Pleno del Congreso**: después de cada **Consejo Europeo**", "**Ministros o altos cargos** que decida la **Mesa** de la Comisión Mixta: antes de cada reunión del **Consejo**", "**Ministro de Asuntos Exteriores** o **Secretario de Estado para la UE**: al final de cada **presidencia semestral**"],
-         "Informar de lo decidido y debatir; manifestar la **posición del Gobierno** sobre el orden del día del Consejo; dar cuenta de los **progresos** de la presidencia",
-         ["Consejo Europeo: comparecencia **posterior** (ordinario o extraordinario), ante el **Pleno del Congreso**", "Consejo: comparecencia **previa**, ante la **Comisión Mixta**"],
-         "Consejo **Europeo** → **Pleno del Congreso**, **después**. Consejo (de ministros de la UE) → **Comisión Mixta**, **antes**. La ley tiene **dos** arts. 8 y 9: los añadidos en el capítulo tercero llevan «(nuevo)» en el BOE."))}
+  fichab("El Gobierno da cuenta del Consejo Europeo",
+         "El **Gobierno**, ante el **Pleno del Congreso de los Diputados**",
+         "Informa sobre lo decidido en el Consejo Europeo y mantiene un **debate** con los Grupos Parlamentarios",
+         "Comparecencia **posterior** a cada Consejo Europeo, **ordinario o extraordinario**",
+         "Consejo **Europeo** → **Pleno del Congreso**, **después**. Antes de cada Consejo Europeo **ordinario**, el Gobierno remite a las Cámaras un **informe escrito** (art. 3 e: → V.3.2)."))}
 
 {unidad("3.4 El control de la subsidiariedad (arts. 5 y 6)",
   lit("L8_1994", "a5", ["corresponderá con carácter general a la Comisión Mixta para la Unión Europea", "podrán avocar el debate y la votación", "en el plazo máximo de ocho semanas"]),
@@ -611,6 +611,14 @@ T.ap("s18", "V.3 España: las Cortes Generales y la Comisión Mixta para la Uni�
          ["Recurso de **anulación** ante el TJUE por infracción de la **subsidiariedad** (art. 8 del Protocolo n.º 2: → V.2.4)", f"Oposición a que el Consejo pase de unanimidad a **mayoría cualificada** o de procedimiento especial a **ordinario** (art. 48.7 TUE: {cU(48, 'En caso de oposición de un Parlamento nacional notificada en un plazo de seis meses')}, no se adopta la decisión)"],
          "Solicitud del recurso: **seis semanas** desde la publicación oficial del acto",
          "El Gobierno puede **descartar** el recurso **motivadamente** y lo justifica compareciendo ante la Comisión Mixta si esta lo pide."))}
+{unidad("3.6 Comparecencias ante la Comisión Mixta (artículos 8 y 9 «nuevos»)",
+  lit("L8_1994", "a8-2", ["antes de la celebración de la reunión del Consejo"], titulo="Artículo 8 (nuevo) del capítulo tercero (Ley 8/1994)"),
+  lit("L8_1994", "a9-2", ["Al final de cada presidencia semestral del Consejo de la Unión Europea"], titulo="Artículo 9 (nuevo) del capítulo tercero (Ley 8/1994)"),
+  fichab("El Gobierno da cuenta antes de cada Consejo y al final de cada presidencia",
+         ["**Ministros o altos cargos** que decida la **Mesa** de la Comisión Mixta: antes de cada reunión del **Consejo**", "**Ministro de Asuntos Exteriores** o **Secretario de Estado para la UE**: al final de cada **presidencia semestral**"],
+         "Manifestar la **posición del Gobierno** sobre el orden del día del Consejo; dar cuenta de los **progresos** de la presidencia",
+         ["Consejo: comparecencia **previa**, ante la **Comisión Mixta**", "Presidencia semestral: comparecencia **al final**, ante la **Comisión Mixta**"],
+         "Consejo **Europeo** → **Pleno del Congreso**, **después** (art. 4: → V.3.3). Consejo (de ministros de la UE) → **Comisión Mixta**, **antes**. La ley tiene **dos** arts. 8 y 9: los añadidos en el capítulo tercero llevan «(nuevo)» en el BOE."))}
 """, 2)
 
 T.ap("s19", "V.4 España: las Comunidades Autónomas (Ley 2/1997; Acuerdos de la CARUE de 2004)", f"""
