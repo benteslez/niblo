@@ -112,6 +112,10 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   publicar: dato decisivo literal en la ley y en la opción de la plantilla,
   ningún distractor con todos los datos y prueba de mutación (cambiar la
   respuesta a cualquier otra letra tiene que hacer fallar la comprobación).
+  Derecho de la UE (TUE, TFUE, reglamentos): de EUR-Lex (versión consolidada
+  cuando exista), con Chromium porque la web tiene un desafío antibots
+  (dominios permitidos: `eur-lex.europa.eu` y `*.token.awswaf.com`). Esos
+  bloques llevan `f: "CELEX:…"` y se muestran con la etiqueta **DOUE** (no BOE).
 - Modo **Examen oficial**: condiciones vigentes del primer ejercicio
   (BOE-A-2025-26262): turno libre, 100 preguntas, 90 minutos y −1/3 (anexo VII,
   2.1.1); promoción interna, 100, 90 y −1/4 (anexo VIII, 3.1.1). Los blancos no
