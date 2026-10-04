@@ -110,6 +110,6 @@ for q in data["questions"]:
     assert q["c"] == "abcd".index(PLANT[n]), ("PLANTILLA", n)
     q["e"] = f"Respuesta {PLANT[n]}) según la plantilla definitiva. " + " ".join(
         ("✅ " if k == PLANT[n] else "✗ ") + f"{k}) " + PORQUE[n][k] for k in "abcd").replace("**", "")
-data["subtitle"] = "Cuatro preguntas: I. Qué derechos y deberes hay (arts. 9.2 y 10-52) · II. Cómo se protegen (art. 53, LJCA, habeas corpus y LOTC) · III. Cuándo pueden suspenderse (arts. 55 y 116, LO 4/1981 y LECrim) · IV. Quién vela por ellos (Defensor del Pueblo). Cada artículo: texto literal del BOE y ficha."
+data["subtitle"] = "Cuatro preguntas: I. Qué derechos y deberes hay (arts. 9.2 y 10-52) · II. Cómo se protegen (arts. 53, 17.4, 81, 86, 124.1, 161, 162 y 167-169, LJCA, habeas corpus y LOTC) · III. Cuándo pueden suspenderse (arts. 55 y 116, LO 4/1981, LECrim y art. 3.2 LOPJ) · IV. Quién vela por ellos (Defensor del Pueblo). Cada artículo: texto literal del BOE y ficha."
 print("apartados", len(S), "| preguntas", len(data["questions"]), "| glosario", len(data["glossary"]), "| fc", len(data["flashcards"]), file=sys.stderr)
 json.dump(data, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)

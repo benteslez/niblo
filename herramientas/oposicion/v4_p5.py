@@ -3,7 +3,7 @@
 from v4_util import *
 from v4_examen import EX10, EX10_NOTA, EX_X4
 
-ap("bIII", "III. ¿Cuándo pueden suspenderse? (arts. 55 y 116 y su desarrollo)", f"""
+ap("bIII", "III. ¿Cuándo pueden suspenderse? (arts. 55 y 116, su desarrollo y art. 3.2 LOPJ)", f"""
 {donde("Los derechos están reconocidos (I) y protegidos (II). Pero la Constitución admite que, en situaciones extraordinarias, **algunos** queden temporalmente sin efecto. Este bloque responde a **cuáles**, **cuándo**, **quién lo decide** y **con qué controles**.",
        ["1 El art. 55: dos clases de suspensión", "2 Qué derechos se suspenden", "3 El art. 116 y las reglas comunes (LO 4/1981)", "4 Alarma", "5 Excepción", "6 Sitio", "7 Cuadro comparativo", "8 Práctica y jurisprudencia", "9 Suspensión individual: art. 55.2 y LECrim"])}
 

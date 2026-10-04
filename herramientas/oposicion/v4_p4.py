@@ -2,9 +2,9 @@
 # Tema I.2 (v4) · Parte 4: bloque II, las garantías.
 from v4_util import *
 
-ap("bII", "II. ¿Cómo se protegen? (art. 53 y su desarrollo)", f"""
+ap("bII", "II. ¿Cómo se protegen? (arts. 53, 17.4, 81, 86, 124.1, 161, 162 y 167 a 169, y su desarrollo)", f"""
 {donde("Ya sabes qué derechos hay y en qué nivel está cada uno (bloque I). Ahora, **qué mecanismos** aseguran que se respeten y **cuáles corresponden a cada nivel**.",
-       ["1 El art. 53 y el mapa de garantías", "2 Garantías normativas (81, 86, 161-162, 167-169 y art. 32.1 LOTC)", "3 Procedimiento preferente y sumario (LJCA)", "4 *Habeas corpus* (LO 6/1984)", "5 Recurso de amparo (LOTC)", "6 Cuadro de síntesis"])}
+       ["1 El art. 53 y el mapa de garantías (y el art. 124.1)", "2 Garantías normativas (81, 86, 161-162, 167-169 y art. 32.1 LOTC)", "3 Procedimiento preferente y sumario (LJCA)", "4 *Habeas corpus* (art. 17.4 y LO 6/1984)", "5 Recurso de amparo (LOTC)", "6 Cuadro de síntesis"])}
 
 **Orden de estudio.** Primero el art. 53, que reparte las garantías; después cada garantía en el orden de sus artículos; las leyes de desarrollo (LJCA, LO 6/1984, LOTC), en el orden de sus propios artículos. La garantía **institucional** (Defensor del Pueblo, art. 54) tiene bloque propio (→ IV).
 """)
@@ -239,5 +239,5 @@ Con todo el bloque II visto, el art. 53 se resume así:
           "**Normativas** (frente al legislador): ley orgánica (81), prohibición del decreto-ley (86.1), recurso de inconstitucionalidad (161-162) y rigidez (167-169).",
           "**Jurisdiccionales**: procedimiento preferente y sumario (LJCA, 10 días), *habeas corpus* (LO 6/1984, 24 horas) y amparo constitucional (LOTC: 3 meses, 20 días o 30 días).",
           "El **Defensor del Pueblo** está legitimado en tres de ellas: inconstitucionalidad, amparo y *habeas corpus*."],
-         "Siguiente: bloque III. Los derechos están protegidos, pero en situaciones extraordinarias algunos pueden **suspenderse**: cuáles, cuándo y con qué controles.")}
+         "Siguiente: bloque III. Los derechos están protegidos, pero en situaciones extraordinarias algunos pueden suspenderse: cuáles, cuándo y con qué controles.")}
 """, 2)
