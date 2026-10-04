@@ -18,7 +18,7 @@ EM21 = "Ley 21/2021, de 28 de diciembre · preámbulo, apartado {} (exposición 
 EM23 = "Real Decreto-ley 2/2023, de 16 de marzo · preámbulo, apartado I (exposición de motivos publicada en el BOE; explica la norma, no es parte dispositiva)"
 
 T = Tema("B3T04",
-  "Seis preguntas: I. Cómo se organiza la Seguridad Social (CE, arts. 41, 50, 129 y 149.1.17.ª; LGSS, arts. 1 a 4 y 66 a 80) · II. Cómo se financia (LGSS, arts. 18, 109, 110, 117 a 127 bis) · III. Qué problemas tiene y qué líneas de actuación sigue (Ley 21/2021 y RDL 2/2023; LGSS, art. 58) · IV. Qué regímenes la forman (LGSS, arts. 7 a 11, 136, 137 y 305) · V. Qué protege (LGSS, arts. 42, 43, 63, 64, 155 a 158 y 314) · VI. Qué prestaciones da y cómo son (LGSS, arts. 44, 53, 165 y siguientes). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Cómo se organiza la Seguridad Social (CE, arts. 41, 50, 129.1 y 149.1.17.ª; LGSS, arts. 1, 2, 4, 66, 68, 73, 74, 74 bis, 79 y 80) · II. Cómo se financia (LGSS, arts. 18, 109, 110, 117, 118, 121, 125 y 127 bis) · III. Qué problemas tiene y qué líneas de actuación sigue (Ley 21/2021 y RDL 2/2023; LGSS, art. 58) · IV. Qué regímenes la forman (LGSS, arts. 7, 9, 10, 11, 136, 137 y 305) · V. Qué protege (LGSS, arts. 42, 43, 63, 64, 155 a 158 y 314) · VI. Qué prestaciones da y cómo son (LGSS, arts. 44, 53, 165 y siguientes). Cada artículo: texto literal del BOE y ficha.",
   ["Seguridad Social", "Art. 41 CE", "Art. 149.1.17.ª", "LGSS", "Entidades gestoras", "INSS", "Tesorería General", "Mutuas colaboradoras", "Reparto", "Fondo de Reserva", "MEI", "Pacto de Toledo", "Revalorización", "Régimen General", "Regímenes especiales", "RETA", "Acción protectora", "Accidente de trabajo", "Prestaciones no contributivas", "Jubilación"])
 
 # =============================================================================
@@ -52,7 +52,7 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Cómo se organiza la Seguridad Social? Estructura (CE; LGSS, arts. 1 a 4 y 66 a 80)", donde(
+T.ap("bI", "I. ¿Cómo se organiza la Seguridad Social? Estructura (CE; LGSS, arts. 1, 2, 4, 66, 68, 73, 74, 74 bis, 79 y 80; disp. adic. 9.ª)", donde(
   "Primera pregunta del tema. Antes de ver cuánto cuesta y qué protege, hay que saber **de dónde nace** la Seguridad Social (la Constitución), **qué principios** la rigen y **quién la gestiona**.",
   ["1 Fundamento constitucional (arts. 41, 50, 129.1 y 149.1.17.ª CE)", "2 Derecho, principios y reparto de funciones (LGSS, arts. 1, 2 y 4)", "3 Entidades gestoras (arts. 66 y 68; disp. adic. 9.ª)", "4 Servicios comunes (arts. 73, 74 y 74 bis)", "5 Colaboración en la gestión: mutuas y empresas (arts. 79 y 80)"]))
 
@@ -186,7 +186,7 @@ T.ap("s5", "I.5 Colaboración en la gestión: mutuas y empresas (LGSS, arts. 79 
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo se financia? (LGSS, arts. 18, 109, 110 y 117 a 127 bis)", donde(
+T.ap("bII", "II. ¿Cómo se financia? (LGSS, arts. 18, 109, 110, 117, 118, 121, 125 y 127 bis; disp. trans. 43.ª)", donde(
   "Segunda pregunta. Ya sabemos quién gestiona; ahora, **con qué dinero**: cuotas, aportaciones del Estado y otros recursos, en un sistema de **reparto** con dos colchones: el fondo de estabilización y el **Fondo de Reserva**.",
   ["1 Cotización obligatoria y recursos (arts. 18 y 109)", "2 Sistema financiero de reparto (art. 110)", "3 Fondo de Reserva (arts. 117, 118, 121 y 125)", "4 Mecanismo de Equidad Intergeneracional (art. 127 bis y disp. trans. 43.ª)"]))
 
@@ -345,7 +345,7 @@ T.ap("s12", "III.3 Pendiente (temario): datos y documentos que no son del BOE", 
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Qué regímenes la forman? Régimen General y regímenes especiales (LGSS, arts. 7 a 11, 136, 137 y 305)", donde(
+T.ap("bIV", "IV. ¿Qué regímenes la forman? Régimen General y regímenes especiales (LGSS, arts. 7, 9, 10, 11, 136, 137 y 305)", donde(
   "Cuarta pregunta. ¿A **quién** protege el sistema y **en qué régimen** se encuadra cada uno? El sistema se divide en el **Régimen General** y los **regímenes especiales**, con **sistemas especiales** dentro de ellos.",
   ["1 Campo de aplicación del sistema (art. 7)", "2 Estructura: regímenes y sistemas especiales (arts. 9, 10 y 11)", "3 El Régimen General (arts. 136 y 137)", "4 El Régimen Especial de Trabajadores Autónomos (art. 305)"]))
 
@@ -588,12 +588,12 @@ T.ap("s24", "VI.4 Incapacidad permanente y jubilación (LGSS, arts. 193, 194, 20
         "No cuentan las **pagas extraordinarias** para la edad ni para la carencia. La edad de 67 se aplica de forma gradual (disp. trans. 7.ª, abajo)."))}
 
 {unidad("4.5 Jubilación: aplicación gradual de la edad (disposición transitoria séptima)",
-  lit("LGSS", "dtseptima", ["se aplicarán de forma gradual"], solo=[1]),
+  lit("LGSS", "dtseptima", ["se aplicarán de forma gradual"], solo=[1, 2, 3, 4] + list(range(70, 81))),
   fichab("Calendario transitorio de la edad de jubilación y de la cotización exigida (art. 205.1 a)",
          "Quienes se jubilan desde 2013 (escala anual hasta 2027)",
          ["::Cuadro de la disposición (año · periodo cotizado · edad):", f"2026: {c('LGSS', 'dtseptima', '38 años y 3 meses o más')} → 65 años; menos → {c('LGSS', 'dtseptima', '66 años y 10 meses')}", f"{c('LGSS', 'dtseptima', 'A partir del año 2027')}: {c('LGSS', 'dtseptima', '38 años y 6 meses o más')} → 65 años; menos → 67 años"],
          "La escala sube cada año desde 2013 (65 años y 1 mes) hasta 2027",
-         "Las cifras «**67** años / **65** con **38 años y 6 meses**» del art. 205.1 a) rigen **plenamente desde 2027**; en **2026** la edad ordinaria es **66 años y 10 meses** (o 65 con **38 años y 3 meses**)."))}
+         "Las cifras del art. 205.1 a) (**67** años, o **65** con **38 años y 6 meses**) rigen **plenamente desde 2027**; en **2026** la edad ordinaria es **66 años y 10 meses** (o 65 con **38 años y 3 meses**)."))}
 """, 2)
 
 T.ap("s25", "VI.5 Muerte y supervivencia (LGSS, art. 216)", f"""

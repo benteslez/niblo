@@ -18,7 +18,7 @@ DIAG, OBJ = "CAPÍTULO II", "CAPÍTULO III"   # capítulos de la Estrategia (ane
 NOLEGAL = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
 
 T = Tema("B3T05",
-  "Cuatro preguntas: I. Cómo ha evolucionado el empleo en España (diagnóstico de la Estrategia 2025-2028, RD 633/2025) · II. Qué es la política de empleo y quién la gestiona: el Sistema Nacional de Empleo y los servicios públicos de empleo (CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023) · III. Qué prestaciones protegen frente al desempleo (LGSS, arts. 262 a 303) · IV. Qué son las políticas activas de empleo y cómo se planifican (Ley 3/2023; RD 633/2025). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Cómo ha evolucionado el empleo en España (diagnóstico de la Estrategia 2025-2028, RD 633/2025) · II. Qué es la política de empleo y quién la gestiona: el Sistema Nacional de Empleo y los servicios públicos de empleo (CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023) · III. Qué prestaciones protegen frente al desempleo (LGSS, arts. 262 a 272, 274 a 278, 280, 282, 299 a 301 y 303) · IV. Qué son las políticas activas de empleo y cómo se planifican (Ley 3/2023; RD 633/2025). Cada artículo: texto literal del BOE y ficha.",
   ["Ley 3/2023 de Empleo", "Sistema Nacional de Empleo", "Agencia Española de Empleo", "SEPE", "Conferencia Sectorial", "Estrategia 2025-2028", "Plan Anual (PAFED)", "Ejes", "Prestación contributiva", "Subsidio por desempleo", "Situación legal de desempleo", "Acuerdo de actividad", "Colocación adecuada", "Agencias de colocación", "Colectivos prioritarios", "Servicios garantizados"])
 
 # =============================================================================
@@ -31,8 +31,8 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 | Bloque | Pregunta | Normas |
 |---|---|---|
 | **I** | ¿Cómo ha evolucionado el empleo en España? | RD 633/2025 (Estrategia Española de Apoyo Activo al Empleo 2025-2028), capítulos II y III |
-| **II** | ¿Qué es la política de empleo y quién la gestiona? (los servicios públicos de empleo) | CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023, arts. 1, 2, 6 a 10, 18 a 24, disposiciones adicional primera y transitoria segunda; LGSS, art. 294 |
-| **III** | ¿Qué prestaciones protegen frente al desempleo? (régimen de prestaciones) | LGSS, arts. 262 a 280, 282, 299 a 301 y 303; Ley 3/2023, art. 3 |
+| **II** | ¿Qué es la política de empleo y quién la gestiona? (los servicios públicos de empleo) | CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023, arts. 1, 2, 6 a 10, 18 a 20, 22 a 24, disposiciones adicional primera y transitoria segunda; LGSS, art. 294 |
+| **III** | ¿Qué prestaciones protegen frente al desempleo? (régimen de prestaciones) | LGSS, arts. 262 a 272, 274 a 278, 280, 282, 299 a 301 y 303; Ley 3/2023, art. 3 |
 | **IV** | ¿Qué son las políticas activas de empleo y cómo se planifican? (políticas de empleo) | Ley 3/2023, arts. 11 a 13, 31, 41 a 43, 47, 50, 56, 58 y 61; RD 633/2025 |
 
 !> **La idea que une los cuatro bloques:** la **política de empleo** tiene dos patas (Ley 3/2023, art. 2): las **políticas activas** (orientar, formar, intermediar, fomentar la contratación) y la **protección frente al desempleo** (prestaciones y subsidios). Las gestionan los **servicios públicos de empleo** (la Agencia Española de Empleo —hasta su puesta en funcionamiento, el SEPE— y los de las Comunidades Autónomas) dentro del **Sistema Nacional de Empleo**. El diagnóstico de cómo ha evolucionado el empleo (I) es el punto de partida de la planificación (IV).
@@ -123,7 +123,7 @@ T.ap("s2", "I.2 Situación actual, retos y metas a 2028 (Estrategia, caps. II y 
 # =============================================================================
 T.ap("bII", "II. ¿Qué es la política de empleo y quién la gestiona? Los servicios públicos de empleo (CE; Ley 3/2023)", donde(
   "Segunda pregunta. La Constitución manda una política orientada al **pleno empleo** y protección frente al **desempleo**; la Ley 3/2023 la organiza en el **Sistema Nacional de Empleo**, formado por la **Agencia Española de Empleo** y los **servicios públicos de empleo autonómicos**.",
-  ["1 Fundamento constitucional y concepto de política de empleo (CE; Ley 3/2023, arts. 1 y 2)", "2 Reparto de competencias (Ley 3/2023, arts. 6 y 7)", "3 El Sistema Nacional de Empleo y sus órganos de gobernanza (arts. 8 a 10)", "4 La Agencia Española de Empleo y el SEPE (arts. 18 a 22; disposiciones adicional primera y transitoria segunda; LGSS, art. 294)", "5 Los servicios públicos de empleo de las Comunidades Autónomas (arts. 23 y 24)"]))
+  ["1 Fundamento constitucional y concepto de política de empleo (CE; Ley 3/2023, arts. 1 y 2)", "2 Reparto de competencias (Ley 3/2023, arts. 6 y 7)", "3 El Sistema Nacional de Empleo y sus órganos de gobernanza (arts. 8 a 10)", "4 La Agencia Española de Empleo y el SEPE (arts. 18 a 20 y 22; disposiciones adicional primera y transitoria segunda; LGSS, art. 294)", "5 Los servicios públicos de empleo de las Comunidades Autónomas (arts. 23 y 24)"]))
 
 T.ap("s3", "II.1 Fundamento constitucional y concepto de política de empleo (CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023, arts. 1 y 2)", f"""
 {unidad("1.1 Derecho al trabajo, pleno empleo y protección del desempleo (CE, arts. 35.1, 40.1 y 41)",
@@ -182,7 +182,7 @@ T.ap("s5", "II.3 El Sistema Nacional de Empleo y sus órganos de gobernanza (art
          "La prestación de servicios de empleo es **servicio público** con independencia de quién la realice (8.2). Solo **dos** órganos de gobernanza."))}
 
 {unidad("3.2 Conferencia Sectorial de Empleo y Asuntos Laborales (art. 9)",
-  lit(L3, "Artículo 9", ["es el órgano de colaboración entre la Administración General del Estado y las Comunidades Autónomas", "presidida por la persona titular del Ministerio de Trabajo y Economía Social", "con voz, pero sin voto", "Acordar los criterios de distribución de los créditos presupuestarios destinados a Comunidades Autónomas", "Identificar los colectivos prioritarios"], solo=[1, 2, 4, 8, 10]),
+  lit(L3, "Artículo 9", ["es el órgano de colaboración entre la Administración General del Estado y las Comunidades Autónomas", "presidida por la persona titular del Ministerio de Trabajo y Economía Social", "con voz, pero sin voto", "Acordar los criterios de distribución de los créditos presupuestarios destinados a Comunidades Autónomas", "Identificar los colectivos prioritarios"], solo=[1, 2, 3, 4, 8, 10]),
   fichab("Órgano de **colaboración** entre la AGE y las Comunidades Autónomas",
          ["Preside: el **Ministro/a de Trabajo y Economía Social**", "Miembros: los de los Consejos de Gobierno de las CC. AA. y de **Ceuta y Melilla** con competencias en empleo", "Con voz pero **sin voto**: otras Administraciones y la asociación más representativa de las entidades locales"],
          ["Acuerdos de coordinación; informe de los instrumentos de planificación", "**Distribución de créditos** a las CC. AA.", "**Colectivos prioritarios** de ámbito estatal", "Informe Conjunto sobre el empleo (con el Consejo General)"],
@@ -198,7 +198,7 @@ T.ap("s5", "II.3 El Sistema Nacional de Empleo y sus órganos de gobernanza (art
          "**Conferencia Sectorial** = colaboración AGE-CC. AA. (preside el Ministro). **Consejo General** = consultivo y **tripartito** (preside el director de la Agencia)."))}
 """, 2)
 
-T.ap("s6", "II.4 La Agencia Española de Empleo y el SEPE (Ley 3/2023, arts. 18 a 22, disposiciones adicional primera y transitoria segunda; LGSS, art. 294)", f"""
+T.ap("s6", "II.4 La Agencia Española de Empleo y el SEPE (Ley 3/2023, arts. 18 a 20 y 22, disposiciones adicional primera y transitoria segunda; LGSS, art. 294)", f"""
 {unidad("4.1 Creación, concepto y naturaleza (arts. 18 a 20)",
   lit(L3, "Artículo 18", ["Se autoriza la creación de la Agencia Española de Empleo"]),
   lit(L3, "Artículo 19", ["entidad de derecho público de la Administración General del Estado"]),
@@ -263,7 +263,7 @@ T.ap("s7", "II.5 Los servicios públicos de empleo de las Comunidades Autónomas
 # =============================================================================
 T.ap("bIII", "III. ¿Qué prestaciones protegen frente al desempleo? (LGSS, título III)", donde(
   "Tercera pregunta: el **régimen de prestaciones**. La protección por desempleo tiene un **nivel contributivo** (la prestación) y un **nivel asistencial** (el subsidio). Ambos exigen inscribirse como demandante y suscribir el **acuerdo de actividad** de la Ley 3/2023.",
-  ["1 Objeto, niveles, personas protegidas y acción protectora (arts. 262 a 265)", "2 Requisitos, situación legal de desempleo y solicitud (arts. 266 a 268)", "3 Duración y cuantía de la prestación (arts. 269 y 270)", "4 Suspensión y extinción (arts. 271 y 272)", "5 El subsidio por desempleo (arts. 274 a 280)", "6 Incompatibilidades, obligaciones e impugnación (arts. 282, 299 a 301 y 303; Ley 3/2023, art. 3)"]))
+  ["1 Objeto, niveles, personas protegidas y acción protectora (arts. 262 a 265)", "2 Requisitos, situación legal de desempleo y solicitud (arts. 266 a 268)", "3 Duración y cuantía de la prestación (arts. 269 y 270)", "4 Suspensión y extinción (arts. 271 y 272)", "5 El subsidio por desempleo (arts. 274 a 278 y 280)", "6 Incompatibilidades, obligaciones e impugnación (arts. 282, 299 a 301 y 303; Ley 3/2023, art. 3)"]))
 
 T.ap("s8", "III.1 Objeto, niveles, personas protegidas y acción protectora (LGSS, arts. 262 a 265)", f"""
 {unidad("1.1 Objeto: desempleo total y parcial (art. 262)",
@@ -371,7 +371,7 @@ T.ap("s11", "III.4 Suspensión y extinción (LGSS, arts. 271 y 272)", f"""
         "**Doce meses** de trabajo por cuenta ajena separan la suspensión de la extinción; con derecho de **opción** (art. 269.3)."))}
 """, 2)
 
-T.ap("s12", "III.5 El subsidio por desempleo (LGSS, arts. 274 a 280)", f"""
+T.ap("s12", "III.5 El subsidio por desempleo (LGSS, arts. 274 a 278 y 280)", f"""
 {unidad("5.1 Beneficiarios (art. 274)",
   lit(SS, "Artículo 274", ["Haber agotado la prestación por desempleo", "trescientos sesenta días", "siempre que hayan cotizado al menos noventa días", "carecer de rentas propias, o bien, alternativamente, acreditar responsabilidades familiares"], solo=[1, 2, 3, 6, 7, 8]),
   ficha("Desempleados que reúnan los requisitos",
@@ -432,6 +432,7 @@ T.ap("s13", "III.6 Incompatibilidades, obligaciones e impugnación (LGSS, arts. 
 
 {unidad("6.3 Acuerdo de actividad y colocación adecuada (LGSS, arts. 300 y 301; Ley 3/2023, art. 3 f y g)",
   lit(SS, "Artículo 300", ["artículo 3 de la Ley 3/2023"]),
+  lit(SS, "Artículo 301", ["la así definida en el artículo 3 de la Ley 3/2023"]),
   lit(L3, "Artículo 3", ["Acuerdo documentado", "deberá ser indefinida y con un salario, en ningún caso, inferior al salario mínimo interprofesional"], solo=[10, 11, 12, 13], titulo="Artículo 3 f) y g) (Ley 3/2023, de Empleo)"),
   ficha("Demandante de servicios de empleo y servicio público de empleo",
         ["**Acuerdo de actividad**: acuerdo documentado de derechos y obligaciones para incrementar la empleabilidad", "**Colocación adecuada**: la de la profesión demandada o la habitual, o cualquier otra ajustada a las aptitudes físicas y formativas"],
@@ -451,7 +452,7 @@ T.ap("s13", "III.6 Incompatibilidades, obligaciones e impugnación (LGSS, arts. 
   "Dos niveles **públicos y obligatorios**: **contributivo** (prestación) y **asistencial** (subsidio) (art. 263).",
   "Requisitos: afiliación y alta, **360 días** cotizados en **6 años**, situación legal de desempleo, **acuerdo de actividad**, no edad de jubilación, **inscripción**; solicitud en **15 días** (arts. 266 y 268).",
   "Duración: **120 a 720 días**; cuantía **70 % / 60 %** de la base reguladora (corte en el día **180**), entre **80/107 %** y **175/200/225 %** del IPREM (arts. 269 y 270).",
-  "Subsidio: carencia de rentas (**75 % del SMI**), **95/90/80 %** del IPREM; mayores de **52**: **80 %** y cotización por jubilación (arts. 274 a 280).",
+  "Subsidio: carencia de rentas (**75 % del SMI**), **95/90/80 %** del IPREM; mayores de **52**: **80 %** y cotización por jubilación (arts. 274 a 278 y 280).",
   "Impugnación ante el orden **social**, con **reclamación previa** (art. 303)."],
   "Siguiente: IV. ¿Qué son las políticas activas de empleo y cómo se planifican?")}
 """, 2)

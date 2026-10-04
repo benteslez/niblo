@@ -136,6 +136,7 @@ T.ap("s3", "I.3 Órganos de coordinación, consulta y estudio (LO 4/2000, arts. 
   EX_X101)}
 
 {unidad("3.3 Movimiento asociativo y Foro para la Integración Social de los Inmigrantes (arts. 69 y 70)",
+  lit("LOEX", "a69", ["impulsarán el fortalecimiento del movimiento asociativo entre los inmigrantes"]),
   lit("LOEX", "a70", ["constituido de forma tripartita y equilibrada", "constituye el órgano de consulta, información y asesoramiento en materia de integración de los inmigrantes"]),
   fichab("Órgano de consulta, información y asesoramiento en integración",
          "Representantes de las Administraciones, de las asociaciones de inmigrantes y de otras organizaciones (incluidas las sindicales y empresariales más representativas)",
@@ -203,9 +204,9 @@ T.ap("s4", "I.4 Datos y evolución de la inmigración (pendiente)", f"""
 # =============================================================================
 T.ap("bII", "II. ¿Qué régimen jurídico tienen los extranjeros en España? (LO 4/2000 y su Reglamento)", donde(
   "Segunda pregunta. Ya sabemos quién dirige la política inmigratoria; ahora, **qué derechos** tienen los extranjeros, **cómo entran**, en qué **situaciones** pueden estar, qué pasa con los **menores no acompañados**, cómo **trabajan** y qué ocurre si **infringen** la ley.",
-  ["1 Derechos y libertades (arts. 3 a 22)", "2 Entrada y salida (arts. 25, 25 bis y 28)", "3 Situaciones: estancia y residencia; el arraigo (arts. 29 a 32; Reglamento, arts. 125 y 126)", "4 Menores extranjeros no acompañados (arts. 35, 35 bis y 35 ter)", "5 Autorización de residencia y trabajo (art. 36)", "6 Infracciones, sanciones, expulsión, devolución e internamiento (arts. 51 a 62)", "7 El Reglamento de 2024 y las Oficinas de Extranjería"]))
+  ["1 Derechos y libertades (arts. 3, 4, 6, 9, 14, 17 y 22)", "2 Entrada y salida (arts. 25, 25 bis y 28)", "3 Situaciones: estancia y residencia; el arraigo (arts. 29 a 32; Reglamento, arts. 125 y 126)", "4 Menores extranjeros no acompañados (arts. 35, 35 bis y 35 ter)", "5 Autorización de residencia y trabajo (art. 36)", "6 Infracciones, sanciones, expulsión, devolución e internamiento (arts. 51 a 55, 57, 58 y 62)", "7 El Reglamento de 2024 y las Oficinas de Extranjería"]))
 
-T.ap("s5", "II.1 Derechos y libertades de los extranjeros (LO 4/2000, arts. 3 a 22)", f"""
+T.ap("s5", "II.1 Derechos y libertades de los extranjeros (LO 4/2000, arts. 3, 4, 6, 9, 14, 17 y 22)", f"""
 La LO 4/2000 distingue derechos de **todos** los extranjeros, de los que **se hallen** en España y de los **residentes**. Esa distinción es lo que se pregunta.
 
 {unidad("1.1 Criterio general: igualdad con los españoles (art. 3)",
@@ -378,7 +379,7 @@ T.ap("s9", "II.5 Autorización de residencia y trabajo (LO 4/2000, art. 36)", f"
          "Mayores de **16**. Contratar sin autorización es infracción **muy grave** del empresario (art. 54.1 d), → II.6.2)."))}
 """, 2)
 
-T.ap("s10", "II.6 Infracciones, sanciones, expulsión, devolución e internamiento (LO 4/2000, arts. 51 a 62)", f"""
+T.ap("s10", "II.6 Infracciones, sanciones, expulsión, devolución e internamiento (LO 4/2000, arts. 51 a 55, 57, 58 y 62)", f"""
 {unidad("6.1 Infracciones leves y graves (arts. 51 a 53)",
   lit("LOEX", "a51", ["leves, graves y muy graves"], solo=[2]),
   lit("LOEX", "a52", ["El retraso, hasta tres meses, en la solicitud de renovación"], solo=[1, 3]),
@@ -469,7 +470,7 @@ T.ap("s11", "II.7 El Reglamento de 2024 y las Oficinas de Extranjería (RD 1155/
 # =============================================================================
 T.ap("bIII", "III. ¿Qué son el derecho de asilo y la condición de refugiado, y cómo se obtienen? (art. 13.4 CE; Ley 12/2009)", donde(
   "Tercera pregunta. Dentro de los extranjeros hay un grupo con un régimen propio: quienes huyen de persecución o de daños graves. La Constitución remite a la ley (art. 13.4) y la **Ley 12/2009** regula la **protección internacional**: el **asilo** (para el refugiado) y la **protección subsidiaria**.",
-  ["1 Fundamento: art. 13.4 CE y Ley 12/2009 (arts. 1 y 2)", "2 Quién es refugiado y quién tiene protección subsidiaria (arts. 3, 4, 5 y 10)", "3 Exclusión y denegación (arts. 8, 9, 11 y 12)", "4 El procedimiento (arts. 16 a 29)", "5 Contenido de la protección, familia, cese y revocación (arts. 36, 40, 42 y 44)", "6 Cuadro comparativo: asilo y protección subsidiaria"]))
+  ["1 Fundamento: art. 13.4 CE y Ley 12/2009 (arts. 1 y 2)", "2 Quién es refugiado y quién tiene protección subsidiaria (arts. 3, 4, 5 y 10)", "3 Exclusión y denegación (arts. 8, 9, 11 y 12)", "4 El procedimiento (arts. 16, 17, 19 a 21, 23 a 25 y 29)", "5 Contenido de la protección, familia, cese y revocación (arts. 36, 40, 42 y 44)", "6 Cuadro comparativo: asilo y protección subsidiaria"]))
 
 EX_X46 = examen("X", 46, {
   "a": f"Ley 12/2009, art. 2: la Convención sobre el Estatuto de los Refugiados fue {c('ASILO', 'a2', 'hecha en Ginebra el 28 de julio de 1951')}.",
@@ -558,7 +559,7 @@ T.ap("s14", "III.3 Exclusión y denegación (Ley 12/2009, arts. 8, 9, 11 y 12)",
          "Las dos causas de denegación son **idénticas** para el asilo (9) y la protección subsidiaria (12). La subsidiaria añade como **exclusión** el peligro para la seguridad interior o exterior **o para el orden público** (11.1 d)."))}
 """, 2)
 
-T.ap("s15", "III.4 El procedimiento de protección internacional (Ley 12/2009, arts. 16 a 29)", f"""
+T.ap("s15", "III.4 El procedimiento de protección internacional (Ley 12/2009, arts. 16, 17, 19 a 21, 23 a 25 y 29)", f"""
 {unidad("4.1 Derecho a solicitar y presentación de la solicitud (arts. 16 y 17)",
   lit("ASILO", "a16", ["presentes en territorio español tienen derecho a solicitar protección internacional", "asistencia jurídica gratuita", "tendrá carácter confidencial"], solo=[1, 2, 5]),
   lit("ASILO", "a17", ["mediante comparecencia personal", "en el plazo máximo de un mes desde la entrada en el territorio español", "la entrada ilegal en territorio español no podrá ser sancionada"], solo=[1, 2]),
