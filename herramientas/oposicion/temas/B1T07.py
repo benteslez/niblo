@@ -26,23 +26,15 @@ TAB2 = """| Orden | Conoce de | Apartado |
 |---|---|---|
 | Civil | Materias propias + todas las no atribuidas a otro orden (**residual**) | 9.2 |
 | Penal | Causas y juicios criminales (salvo jurisdicción militar) | 9.3 |
-| Contencioso-administrativo | Actuación administrativa sujeta al derecho administrativo, reglamentos, decretos legislativos ultra vires, inactividad, vía de hecho, responsabilidad patrimonial | 9.4 |
+| Contencioso-administrativo | Actuación administrativa sujeta al derecho administrativo, disposiciones generales de rango inferior a la ley, reales decretos legislativos (en los términos del art. 82.6 CE), inactividad, vía de hecho, responsabilidad patrimonial | 9.4 |
 | Social | Rama social del derecho y Seguridad Social | 9.5 |"""
 TAB3 = """| Órgano | Composición | Mandato | Rasgo que se pregunta |
 |---|---|---|---|
 | Pleno | Presidente + 20 Vocales | El del Consejo (5 años) | Nombramientos discrecionales; TC por tres quintos; quórum 12 / 10 + Presidente |
 | Comisión Permanente | Presidente + 7 Vocales (4 + 3) | Anual | Nombramientos reglados; alzada ante el Pleno |
-| Comisión Disciplinaria | 7 Vocales (4 + 3) | 5 años | Faltas graves y muy graves, salvo separación |
+| Comisión Disciplinaria | 7 Vocales (4 + 3) | 5 años | Infracciones graves y muy graves, salvo separación |
 | Asuntos Económicos | 3 Vocales | Anual | Control financiero y contable |
 | Igualdad | 3 Vocales | Anual | Impacto de género |"""
-TAB4 = f"""| Sala | Competencia principal (cita literal) |
-|---|---|
-| Civil (art. 56) | {c(L, 'acincuentayseis', 'De los recursos de casación, revisión y otros extraordinarios en materia civil que establezca la ley')} |
-| Penal (art. 57) | {c(L, 'acincuentaysiete', 'De los recursos de casación, revisión y otros extraordinarios en materia penal que establezca la ley')}; instrucción y enjuiciamiento de las causas contra los aforados que enumera |
-| Contencioso-administrativo (art. 58) | {c(L, 'acincuentayocho', 'En única instancia, de los recursos contencioso-administrativos contra actos y disposiciones del Consejo de Ministros, de las Comisiones Delegadas del Gobierno y del Consejo General del Poder Judicial')} |
-| Social (art. 59) | {c(L, 'acincuentaynueve', 'de los recursos de casación y revisión y otros extraordinarios que establezca la ley en materias propias de este orden jurisdiccional')} |
-| Sala del art. 61 | Formada por {c(L, 'asesentayuno', 'el Presidente del Tribunal Supremo, los Presidentes de Sala y el Magistrado más antiguo y el más moderno de cada una de ellas')}; conoce, entre otros, {c(L, 'asesentayuno', 'De los procesos de declaración de ilegalidad y consecuente disolución de los partidos políticos')} |"""
-
 # =============================================================================
 T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 **Epígrafe oficial** (BOE-A-2025-26262, anexo VII, Bloque I, tema 7):
@@ -215,12 +207,13 @@ T.ap("s4", "II.1 Unidad jurisdiccional, jurisdicción militar y prohibición de 
          "—",
          "Cayó en 2025 (→ Cierre 1): la jurisdicción militar actúa en el ámbito **estrictamente castrense** y, en su caso, en las materias de la declaración del **estado de sitio**; no en todo lo que afecte a militares."))}
 
-{unidad("1.4 Otras potestades jurisdiccionales que reconoce la Constitución (esquema)",
-  "*Esquema de elaboración propia: recoge las menciones literales de la Constitución a funciones jurisdiccionales fuera de los Juzgados y Tribunales; no es texto legal.*",
-  TAB1,
+{unidad("1.4 Otras potestades jurisdiccionales que reconoce la Constitución (art. 136.2 CE y esquema)",
+  lit("CE", "Artículo 136", ["sin perjuicio de su propia jurisdicción"], solo=[3, 4], titulo="Artículo 136.2"),
   fichab("Potestades jurisdiccionales reconocidas por la Constitución a otros órganos (art. 3.1 LOPJ)", "—",
-         "Las que la Constitución menciona expresamente (cuadro)", "—",
-         "La Constitución regula el Tribunal Constitucional aparte, en su Título IX (tema I.3), no en el Título VI."))}
+         "Las que la Constitución menciona expresamente: la «propia jurisdicción» del Tribunal de Cuentas (136.2) y los Tribunales consuetudinarios y tradicionales (125; → I.3.3). Cuadro de abajo", "—",
+         "La Constitución regula el Tribunal Constitucional aparte, en su Título IX (tema I.3), no en el Título VI."),
+  "*Esquema de elaboración propia: recoge las menciones literales de la Constitución a funciones jurisdiccionales fuera de los Juzgados y Tribunales; no es texto legal.*",
+  TAB1)}
 """, 2)
 
 T.ap("s5", "II.2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOPJ, arts. 4 y 9)", f"""
@@ -267,7 +260,7 @@ T.ap("s6", "III.1 Naturaleza y atribuciones (art. 122.2; LOPJ, arts. 558, 560 y 
   fichab("Ámbito territorial y sede", "El CGPJ", "Ejerce sus competencias en **todo el territorio nacional**", "—", "Sede: **villa de Madrid**."))}
 
 {unidad("1.3 Atribuciones (LOPJ, art. 560.1, 1.ª a 9.ª y 16.ª)",
-  lit(L, "aquinientossesenta", ["Proponer el nombramiento, en los términos previstos por la presente Ley Orgánica, de dos Magistrados del Tribunal Constitucional", "Ser oído por el Gobierno antes del nombramiento del Fiscal General del Estado", "Interponer el conflicto de atribuciones entre órganos constitucionales del Estado", "Ejercer la alta inspección de Tribunales"], solo=list(range(1, 11)), titulo="Artículo 560 (LOPJ), apartado 1, atribuciones 1.ª a 9.ª (fragmento)"),
+  lit(L, "aquinientossesenta", ["Proponer el nombramiento, en los términos previstos por la presente Ley Orgánica, de dos Magistrados del Tribunal Constitucional", "Ser oído por el Gobierno antes del nombramiento del Fiscal General del Estado", "Interponer el conflicto de atribuciones entre órganos constitucionales del Estado", "Ejercer la alta inspección de Tribunales"], solo=list(range(1, 11)) + [18, 32], titulo="Artículo 560 (LOPJ), apartado 1, atribuciones 1.ª a 9.ª y 16.ª (fragmento)"),
   fichab("Qué hace el CGPJ (selección de las 25 atribuciones del art. 560.1)", "El CGPJ",
          ["Propone el nombramiento del **Presidente del TS y del CGPJ**, de Jueces y Magistrados y de **dos Magistrados del TC**", "Es **oído** antes del nombramiento del **Fiscal General del Estado**", "Interpone el **conflicto de atribuciones** entre órganos constitucionales", "Formación, destinos, ascensos, situaciones y **régimen disciplinario** de los jueces; **alta inspección** de Tribunales", f"Potestad reglamentaria {c(L, 'aquinientossesenta', 'en el marco estricto de desarrollo de las previsiones de la Ley Orgánica del Poder Judicial')} (16.ª)"],
          "—",
@@ -306,7 +299,7 @@ T.ap("s7", "III.2 Composición y designación de los Vocales (art. 122.3; LOPJ, 
          "—", "3 + 3 + 6 = 12. Si falta candidato en una categoría, la vacante **acrece** la siguiente."))}
 
 {unidad("2.4 Renovación, nombramiento y constitución (LOPJ, arts. 568 y 569)",
-  lit(L, "aquinientossesentayocho", ["se renovará en su totalidad cada cinco años", "cuatro meses antes de la expiración del mencionado plazo"], solo=[1, 2]),
+  lit(L, "aquinientossesentayocho", ["se renovará en su totalidad cada cinco años", "cuatro meses antes de la expiración del mencionado plazo"], solo=[1, 2, 3, 4]),
   lit(L, "aquinientossesentaynueve", ["nombrados por el Rey mediante Real Decreto", "dentro de los cinco días posteriores a la expiración del anterior Consejo"]),
   fichab("Renovación del Consejo", ["Presidentes del Congreso y del Senado: adoptan las medidas para la renovación en plazo", "El **Rey** nombra a los Vocales por **Real Decreto**"],
          "Renovación **total** cada cinco años desde su constitución; juramento o promesa ante el Rey y sesión constitutiva",
@@ -476,9 +469,12 @@ T.ap("s12", "IV.2 El Tribunal Supremo (art. 123.1 CE; LOPJ, arts. 53 a 61)", f""
          ["Sala **Primera**: Civil", "Sala **Segunda**: Penal", "Sala **Tercera**: Contencioso-Administrativa", "Sala **Cuarta**: Social", "Sala **Quinta**: Militar (con su legislación específica)"],
          "—", "Numeración fija: **1.ª Civil, 2.ª Penal, 3.ª Contencioso, 4.ª Social, 5.ª Militar**."))}
 
-{unidad("2.3 Qué conoce cada Sala (esquema; LOPJ, arts. 56 a 59 y 61)",
-  "*Esquema de elaboración propia: recoge, con cita literal, la primera competencia de cada Sala; no es texto legal.*",
-  TAB4,
+{unidad("2.3 Qué conoce cada Sala (LOPJ, arts. 56 a 59 y 61; fragmentos)",
+  lit(L, "acincuentayseis", ["De los recursos de casación, revisión y otros extraordinarios en materia civil que establezca la ley"], solo=[1, 2], titulo="Artículo 56 (LOPJ), fragmento"),
+  lit(L, "acincuentaysiete", ["De los recursos de casación, revisión y otros extraordinarios en materia penal que establezca la ley", "De la instrucción y enjuiciamiento de las causas contra"], solo=[1, 2, 3, 4], titulo="Artículo 57.1 (LOPJ), fragmento"),
+  lit(L, "acincuentayocho", ["En única instancia, de los recursos contencioso-administrativos contra actos y disposiciones del Consejo de Ministros, de las Comisiones Delegadas del Gobierno y del Consejo General del Poder Judicial"], solo=[1, 2, 3], titulo="Artículo 58 (LOPJ), fragmento"),
+  lit(L, "acincuentaynueve", ["de los recursos de casación y revisión y otros extraordinarios que establezca la ley en materias propias de este orden jurisdiccional"]),
+  lit(L, "asesentayuno", ["el Presidente del Tribunal Supremo, los Presidentes de Sala y el Magistrado más antiguo y el más moderno de cada una de ellas", "De los procesos de declaración de ilegalidad y consecuente disolución de los partidos políticos"], solo=[1, 7], titulo="Artículo 61.1 (LOPJ), fragmento"),
   fichab("Reparto de asuntos entre las Salas del TS", "Cada Sala en su orden; la Sala del art. 61 en asuntos especiales",
          "Sobre todo, recursos de **casación** y **revisión**; en única instancia, los asuntos de aforados y del Consejo de Ministros", "—",
          "Los recursos contra el **Consejo de Ministros** y el **CGPJ** van a la **Sala Tercera** en única instancia. La ilegalización de partidos, a la **Sala del 61**."))}

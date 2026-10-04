@@ -31,7 +31,7 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 |---|---|---|---|
 | **I** | ¿Qué es la AGE y con qué principios se organiza y funciona? | Arts. 3.1, 54, 55.1 y 2 y 56 | — |
 | **II** | ¿Cómo se organizan los órganos centrales? (los Ministerios) | Arts. 57 a 60 | — |
-| **III** | ¿Quiénes son los órganos superiores y directivos? Creación, nombramiento, cese y funciones | Arts. 55.3, 6, 9, 10 y 11, 55 bis y 61 a 67 | Ley 50/1997, art. 15.1 |
+| **III** | ¿Quiénes son los órganos superiores y directivos, cómo se crean, nombran y cesan, y qué funciones tienen? | Arts. 55.3, 6, 9, 10 y 11, 55 bis y 61 a 67 | Ley 50/1997, art. 15.1 |
 | **IV** | ¿Qué son los servicios comunes de los Ministerios? | Art. 68 (y 58.2, 63 y 65) | — |
 | **V** | ¿Cómo se organiza la AGE en el territorio? (órganos territoriales) | Arts. 55.4 y 69 a 79 | — |
 | **VI** | ¿Cómo se organiza la AGE en el exterior? | Arts. 55.5 y 80 | Ley 2/2014, arts. 1, 6, 41, 42, 44, 45, 47 y 48 |
@@ -45,7 +45,7 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 - Fronteras con otros temas: el Gobierno, el Presidente, los Ministros como miembros del Gobierno y la Ley 50/1997 (tema I.6); el sector público institucional: organismos públicos, entidades y sociedades (tema I.9); la competencia, la delegación y la avocación de los órganos administrativos no se desarrollan aquí.
 - Al final: **Cierre 1** (las preguntas oficiales de 2025 sobre este tema) y **Cierre 2** (repaso por bloques).
 
-?> **Aviso sobre los nombres de los Ministerios.** La Ley 40/2015 y la Ley 2/2014 se citan **literalmente**, como están en el BOE, con los nombres de Ministerios de cuando se aprobaron («Ministerio de Hacienda y Administraciones Públicas», «Ministerio de Asuntos Exteriores y de Cooperación»). El número y la denominación de los Ministerios los fija un Real Decreto del Presidente del Gobierno (art. 57.3 → II.1.1), así que pueden no coincidir con los actuales.
+?> **Aviso sobre los nombres de los Ministerios.** La Ley 40/2015 y la Ley 2/2014 se citan **literalmente**, como están en el BOE, con los nombres de Ministerios de cuando se aprobaron («Ministerio de Hacienda y Administraciones Públicas», «Ministerio de Asuntos Exteriores y de Cooperación»): así se preguntan en el examen. El número y la denominación de los Ministerios los fija un Real Decreto del Presidente del Gobierno (art. 57.3 → II.1.1). Hoy, según el Real Decreto 829/2023, de 20 de noviembre, por el que se reestructuran los departamentos ministeriales [[BOE|https://boe.es/buscar/act.php?id=BOE-A-2023-23537]] (texto consolidado; no es norma del tema, solo sirve para situar los nombres): la política en materia de {c('RD829_2023', 'Artículo 5', 'hacienda pública, de presupuestos y de gastos')} corresponde al Ministerio de Hacienda (art. 5.1); la de {c('RD829_2023', 'Artículo 22', 'administración pública, función pública, y gobernanza pública')}, al {c('RD829_2023', 'Artículo 22', 'Ministerio para la Transformación Digital y de la Función Pública')} (art. 22.2); {c('RD273_2024', 'Artículo 1', 'las relaciones con las Delegaciones y Subdelegaciones del Gobierno y el apoyo a su gestión')}, al {c('RD829_2023', 'Artículo 12', 'Ministerio de Política Territorial y Memoria Democrática')} (Real Decreto 273/2024, de 19 de marzo, art. 1.1 [[BOE|https://boe.es/buscar/act.php?id=BOE-A-2024-5481]]); y {c('RD829_2023', 'Artículo 2', 'la propuesta y ejecución de la política exterior')}, al {c('RD829_2023', 'Artículo 2', 'Ministerio de Asuntos Exteriores, Unión Europea y Cooperación')} (art. 2.1).
 """)
 
 # =============================================================================
@@ -158,12 +158,12 @@ T.ap("s5", "II.3 Ordenación jerárquica de los órganos ministeriales (art. 60)
   "En todo Ministerio: **Subsecretaría** y **Secretaría General Técnica**; potestativas: Secretarías de Estado y Secretarías Generales (58).",
   "Órganos hasta Subdirección General: **Real Decreto del Consejo de Ministros**; inferiores: **orden del Ministro**; unidades: **RPT** (59).",
   "Secretario general = categoría de **Subsecretario**; Secretario General Técnico = categoría de **Director general** (60)."],
-  "Siguiente: III. ¿Quiénes son los órganos superiores y directivos? Creación, nombramiento, cese y funciones")}
+  "Siguiente: III. ¿Quiénes son los órganos superiores y directivos, cómo se crean, nombran y cesan, y qué funciones tienen?")}
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. Órganos superiores y directivos: creación, nombramiento, cese y funciones (Ley 40/2015, arts. 55, 55 bis y 61 a 67)", donde(
-  "Tercera pregunta, el centro del epígrafe. Los **órganos superiores** planifican; los **órganos directivos** desarrollan y ejecutan. Para cada uno: quién lo nombra y separa, entre quiénes y qué funciones tiene.",
+T.ap("bIII", "III. ¿Quiénes son los órganos superiores y directivos, cómo se crean, nombran y cesan, y qué funciones tienen? (Ley 40/2015, arts. 55, 55 bis y 61 a 67; Ley 50/1997, art. 15.1)", donde(
+  "Tercera pregunta, el centro del epígrafe. Los **órganos superiores** planifican; los **órganos directivos** desarrollan y ejecutan. Para cada uno: quién lo nombra y separa, entre quiénes y qué funciones tiene. Su **creación** ya se ha visto: Ministerios y Secretarías de Estado, por Real Decreto del Presidente del Gobierno (art. 57.3 → II.1.1); Subsecretarías, Secretarías Generales, Secretarías Generales Técnicas, Direcciones y Subdirecciones Generales, por Real Decreto del Consejo de Ministros (art. 59.1 → II.2.1).",
   ["1 Clases, alto cargo y régimen común (art. 55.3, 6, 7, 9, 10 y 11; art. 55 bis)", "2 Los Ministros (art. 61)", "3 Los Secretarios de Estado (art. 62; Ley 50/1997, art. 15.1)", "4 Subsecretarios y Secretarios generales (arts. 63 y 64)", "5 Secretarios generales técnicos, Directores generales y Subdirectores generales (arts. 65 a 67)", "6 Cuadro: nombramiento, cese y requisitos"]))
 
 T.ap("s6", "III.1 Clases de órganos, alto cargo y régimen común (art. 55.3, 6, 7, 9, 10 y 11; art. 55 bis)", f"""

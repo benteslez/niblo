@@ -40,6 +40,8 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 - Cada artículo: primero el **texto literal del BOE** (con la etiqueta BOE) y debajo su **ficha** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen). En los artículos largos se copian solo los apartados que se citan; lo copiado es literal.
 - Los esquemas y cuadros comparativos **no son texto legal**: resumen los artículos citados.
 - Fronteras con otros temas: la Administración General del Estado, sus órganos y su organización territorial (tema I.8); las Comunidades Autónomas (tema I.10) y la Administración local (tema I.11); los contratos del sector público (tema IV.5). Las relaciones interadministrativas (Título III de la Ley 40/2015, arts. 140 y siguientes) no forman parte de este epígrafe.
+
+?> **Aviso sobre los nombres de los Ministerios.** La Ley 40/2015 se cita **literalmente**, como está en el BOE, con los nombres de Ministerios de cada redacción («Ministerio de Hacienda y Administraciones Públicas», «Ministerio de Hacienda y Función Pública», «Política Territorial y Función Pública»): así se preguntan en el examen. Hoy, según el Real Decreto 829/2023, de 20 de noviembre, por el que se reestructuran los departamentos ministeriales [[BOE|https://boe.es/buscar/act.php?id=BOE-A-2023-23537]] (no es norma del tema), la política en materia de {c('RD829_2023', 'Artículo 5', 'hacienda pública, de presupuestos y de gastos')} corresponde al Ministerio de Hacienda (art. 5.1) y la de {c('RD829_2023', 'Artículo 22', 'administración pública, función pública, y gobernanza pública')}, al {c('RD829_2023', 'Artículo 22', 'Ministerio para la Transformación Digital y de la Función Pública')} (art. 22.2) (→ tema I.8, aviso del mapa).
 """)
 
 # =============================================================================
@@ -88,7 +90,7 @@ T.ap("s3", "I.3 La clasificación presupuestaria (Ley 47/2003, General Presupues
 La Ley General Presupuestaria repite la composición del art. 84 a sus efectos y añade alguna entidad; además divide el sector público estatal en tres sectores (administrativo, empresarial y fundacional), que determinan el régimen presupuestario y contable.
 
 {unidad("3.1 El sector público estatal a efectos de la LGP (art. 2)",
-  lit("LGP", "a2", ["Los consorcios adscritos a la Administración General del Estado.", "Las fundaciones del sector público adscritas a la Administración General del Estado.", "mutuas colaboradoras con la Seguridad Social", "esta Ley no será de aplicación a las Cortes Generales"], solo=list(range(1, 17)) + [18]),
+  lit("LGP", "a2", ["Los consorcios adscritos a la Administración General del Estado.", "Las fundaciones del sector público adscritas a la Administración General del Estado.", "mutuas colaboradoras con la Seguridad Social", "esta Ley no será de aplicación a las Cortes Generales"], solo=list(range(1, 19))),
   fichab("Ámbito de la Ley General Presupuestaria",
          "Administración General del Estado y sector público institucional estatal",
          ["Mismos grupos que el art. 84 de la Ley 40/2015, pero los **consorcios** y **fundaciones** solo si están **adscritos** a la Administración General del Estado", "Añade las entidades gestoras, servicios comunes y mutuas colaboradoras con la Seguridad Social, y cualesquiera organismos y entidades de derecho público vinculados o dependientes"],
@@ -188,7 +190,7 @@ T.ap("s8", "II.4 Medio propio y servicio técnico; transformaciones (arts. 86 y 
          "Un medio propio **nuevo** necesita memoria justificativa informada por la **IGAE**. En su denominación debe figurar «Medio Propio» o «M.P.» (→ I.4)."))}
 
 {unidad("4.2 Transformaciones (art. 87)",
-  lit("L40", "a87", ["podrá transformarse y adoptar la naturaleza jurídica de cualquiera de las entidades citadas", "conservando su personalidad jurídica", "La transformación se llevará a cabo mediante Real Decreto, aunque suponga modificación de la Ley de creación, salvo en el caso de la transformación en agencias estatales que deberá efectuarse por ley"], solo=[1, 2, 3, 4, 10]),
+  lit("L40", "a87", ["podrá transformarse y adoptar la naturaleza jurídica de cualquiera de las entidades citadas", "conservando su personalidad jurídica", "La transformación se llevará a cabo mediante Real Decreto, aunque suponga modificación de la Ley de creación, salvo en el caso de la transformación en agencias estatales que deberá efectuarse por ley"], solo=list(range(1, 11))),
   fichab("Cambio de naturaleza jurídica de una entidad estatal",
          "Organismos autónomos, entidades públicas empresariales, agencias estatales, sociedades mercantiles estatales y fundaciones del sector público estatal",
          ["Conserva su personalidad jurídica: cesión e integración global del activo y del pasivo, con sucesión universal", "Con memoria (justificación, análisis de eficiencia y situación del personal) e informe preceptivo de la IGAE"],
@@ -383,13 +385,13 @@ Las agencias estatales están en la Ley 40/2015 por la Ley 11/2020, de Presupues
 {unidad("5.1 Definición (art. 108 bis)",
   lit("L40", "a1-2", ["creadas por el Gobierno para el cumplimiento de los programas correspondientes a las políticas públicas", "autonomía funcional, responsabilidad por la gestión y control de resultados", "“Agencia Estatal”"]),
   fichab("Organismo público para ejecutar programas de políticas públicas",
-         "Las crea el Gobierno; ejecutan programas de políticas públicas de la AGE",
+         f"{c('L40', 'a1-2', 'creadas por el Gobierno')} (108 bis.1) para los programas de políticas públicas de la AGE; como organismos públicos, su creación se efectúa por ley (art. 91.1 → III.1.4): así, la Ley 7/2025 tiene por objeto {c('L7_2025', 'Artículo 1', 'la creación de la Agencia Estatal de Salud Pública')} (→ Cierre 1)",
          ["Personalidad jurídica pública, patrimonio propio y autonomía de gestión; potestades administrativas", "Mecanismos de autonomía funcional, responsabilidad por la gestión y control de resultados"],
          "—",
          "Su rasgo propio: gestión por **resultados** (contrato de gestión, → III.5.2). Ojo: el art. 87.3 exige **ley** para transformar una entidad en agencia estatal (→ II.4.2)."))}
 
 {unidad("5.2 Régimen jurídico y contrato de gestión (art. 108 ter)",
-  lit("L40", "a1-3", ["se rigen por esta ley y, en su marco, por el estatuto propio de cada una de ellas", "contrato plurianual de gestión", "en el plazo de tres meses desde su constitución", "en el último trimestre de la vigencia del anterior", "por Orden conjunta de los Ministerios de adscripción, de Política Territorial y Función Pública y de Hacienda", "Comisión de Control"], solo=[1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15]),
+  lit("L40", "a1-3", ["se rigen por esta ley y, en su marco, por el estatuto propio de cada una de ellas", "contrato plurianual de gestión", "en el plazo de tres meses desde su constitución", "en el último trimestre de la vigencia del anterior", "por Orden conjunta de los Ministerios de adscripción, de Política Territorial y Función Pública y de Hacienda", "Comisión de Control"], solo=list(range(1, 16))),
   fichab("Cómo actúan las agencias estatales",
          ["**Consejo Rector**: aprueba la propuesta de contrato inicial de gestión", "Aprobación del contrato: **Orden conjunta** de los Ministerios de adscripción, de Política Territorial y Función Pública y de Hacienda", "**Comisión de Control**, en el seno del Consejo Rector"],
          ["Régimen: Ley 40/2015, su estatuto y el derecho administrativo general y especial", "Actúan con arreglo al plan de acción anual y al **contrato plurianual de gestión** (objetivos, planes e indicadores, plantilla máxima, recursos, efectos del cumplimiento, cobertura de déficits, modificaciones)"],
