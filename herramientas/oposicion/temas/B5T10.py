@@ -200,6 +200,7 @@ T.ap("s8", "III.3 Los criterios de la Orden PJC/804/2025", f"""
 {unidad("3.1 Objeto, ajustes y ámbito (arts. 1 a 3)",
   lit("OPJC804", "a1", ["en el ámbito del personal civil de la Administración del Estado"], titulo="Artículo 1. Objeto (Orden PJC/804/2025)"),
   lit("OPJC804", "a2", ["el artículo 2 letra m)", "de los medios materiales y humanos", "La concesión de un tiempo adicional", "no resueltas mediante las adaptaciones genéricas de medios y tiempos"], titulo="Artículo 2. Definición de ajustes razonables (Orden PJC/804/2025)"),
+  lit("OPJC804", "a3", ["al personal civil de la Administración del Estado"], titulo="Artículo 3. Ámbito de aplicación (Orden PJC/804/2025)"),
   fichab("Criterios generales de adaptación en el personal civil del Estado",
          "Procesos de acceso al empleo público del **personal civil** de la Administración del Estado (art. 3)",
          ["Ajustes razonables: los del art. 2 m) del RDLeg 1/2013 (→ I.1.1)", "a) **Medios**: materiales y humanos, asistencias, productos de apoyo, tecnologías asistidas y accesibilidad", "b) **Tiempo adicional**", "c) Otros **ajustes razonables** no resueltos con las adaptaciones genéricas"],
@@ -250,7 +251,7 @@ T.ap("s9", "IV.1 Elección de destino y adaptación del puesto (RD 2271/2004, ar
          "Quienes ingresen habiendo sido admitidos en la convocatoria **ordinaria** con plazas reservadas; decide el **órgano convocante**",
          "Pedir la **alteración del orden de prelación** para elegir plaza dentro del ámbito territorial de la convocatoria",
          "—",
-         "Motivos: **dependencia personal**, **dificultades de desplazamiento** u otras análogas, **acreditados**. No se pide «un destino en la provincia de residencia» (pregunta oficial L 80, → Cierre 1)."))}
+         "Motivos: **dependencia personal**, **dificultades de desplazamiento** u otras análogas, **acreditados**. No se pide un destino en la **provincia** de residencia (pregunta oficial L 80, → Cierre 1)."))}
 
 {unidad("1.2 Adaptación del puesto (art. 10)",
   lit("RD2271", "Artículo 10", ["podrán pedir la adaptación del puesto o de los puestos de trabajo", "un informe expedido por el órgano competente en la materia", "será el encargado de la valoración, la realización y la financiación de las adaptaciones"]),
@@ -319,7 +320,7 @@ for cod, n, tit, por, ap_ in EX:
     bloques += [f"### {('GACE-L' if cod == 'L' else 'GACE-P' if cod == 'P' else 'GACE-L extraordinario')} 2025, pregunta {n} · {tit}", examen(cod, n, por, ap_)]
 T.ap("s11", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join(
   ["En los primeros ejercicios de **2025** cayeron **cuatro** preguntas de este tema (dos en el turno libre y dos en el extraordinario), todas literales. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal."]
-  + bloques + ["### Cómo se pregunta", "!> Cambian **porcentajes** (33 %, 3/5/10 %), el **objeto** de lo que se pide (orden de prelación frente a «un destino en la provincia») o el **tipo** de adaptación (medios humanos frente a tiempos o medios materiales). Fíjate en la **norma** que cita el enunciado: la reserva es del 5 % en el RD 2271/2004, del 7 % en el TREBEP y del 10 % en el RDL 6/2023."]))
+  + bloques + ["### Cómo se pregunta", "!> Cambian **porcentajes** (33 %, 3/5/10 %), el **objeto** de lo que se pide (orden de prelación frente a un destino en la provincia de residencia) o el **tipo** de adaptación (medios humanos frente a tiempos o medios materiales). Fíjate en la **norma** que cita el enunciado: la reserva es del 5 % en el RD 2271/2004, del 7 % en el TREBEP y del 10 % en el RDL 6/2023."]))
 
 T.ap("s12", "Cierre 2. Repaso en 10 minutos (por bloques)", """
 | Bloque | Lo esencial | Dato que más cae |

@@ -105,11 +105,11 @@ T.ap("s3", "I.3 Afiliación, alta, baja y mantenimiento como mutualista (RDLeg 4
          "La excedencia **por cuidado de familiares** conserva la condición; la excedencia **voluntaria** causa baja (→ I.3.2). Quien mantiene el mutualismo por la opción del 7.3 **no** entra en Clases Pasivas."))}
 
 {unidad("3.2 Baja, mantenimiento facultativo y suspensión del alta (art. 8)",
-  lit("MUF", "a8", ["excedencia voluntaria, en cualquiera de sus modalidades", "Los funcionarios que pierdan tal condición, cualquiera que sea la causa.", "siempre que abonen exclusivamente a su cargo las cuotas correspondientes al funcionario y al Estado"], solo=[1, 2, 3, 6]),
-  fichab("Fin del alta obligatoria y mutualistas voluntarios",
-         "Funcionarios en excedencia voluntaria, quienes pierden la condición de funcionario y otros supuestos del 8.1",
-         ["::Causan baja como mutualistas obligatorios, entre otros:", "Excedencia voluntaria, en cualquiera de sus modalidades (salvo la opción del art. 7.3)", "Pérdida de la condición de funcionario, cualquiera que sea la causa"],
-         "Pueden seguir como **mutualistas voluntarios** pagando las dos cuotas (la del funcionario y la del Estado)",
+  lit("MUF", "a8", ["excedencia voluntaria, en cualquiera de sus modalidades", "Los funcionarios que pierdan tal condición, cualquiera que sea la causa.", "siempre que abonen exclusivamente a su cargo las cuotas correspondientes al funcionario y al Estado", "Podrán optar por suspender el alta"]),
+  fichab("Fin del alta obligatoria, mutualistas voluntarios y suspensión del alta",
+         "Funcionarios en excedencia voluntaria, quienes pierden la condición de funcionario y los demás supuestos del 8.1",
+         ["::Causan baja como mutualistas obligatorios (8.1):", "Excedencia voluntaria, en cualquiera de sus modalidades (salvo la opción del art. 7.3)", "Pérdida de la condición de funcionario, cualquiera que sea la causa", "Ejercicio del derecho de transferencia del Estatuto de los Funcionarios de las Comunidades Europeas", "Afiliación obligatoria al Régimen especial de la Seguridad Social de las Fuerzas Armadas (disp. trans. 14.ª de la Ley 17/1999)"],
+         "Supuestos de las letras a), b) y c) del 8.1: pueden seguir como **mutualistas voluntarios** pagando las dos cuotas (la del funcionario y la del Estado) (8.2). Suspensión del alta (8.3): opcional en servicios especiales en la Unión Europea u otra organización internacional, si están acogidos obligatoriamente a su régimen de previsión",
          "El mutualista voluntario paga **las dos** cuotas, «exclusivamente a su cargo»."))}
 
 {resumen([
@@ -158,7 +158,7 @@ T.ap("s4", "II.1 Naturaleza, adscripción y órganos de MUFACE (RDLeg 4/2000, ar
          "El Gobierno (real decreto)",
          "El RD 577/1997 nació como norma que establece la estructura de los órganos de gobierno, administración y representación de MUFACE; el RD 466/2026 cambia su título y lo convierte en el Estatuto del organismo",
          "—",
-         "Pregunta de 2025: «¿qué norma establece la estructura de los órganos de gobierno, administración y representación de MUFACE?» → **RD 577/1997** (→ Cierre 1)."))}
+         "Pregunta de 2025 (X 85): la norma por la que «se establece la estructura de los órganos de gobierno, administración y representación de la Mutualidad General de Funcionarios Civiles del Estado (MUFACE)» es el **RD 577/1997** (→ Cierre 1)."))}
 """, 2)
 
 T.ap("s5", "II.2 Cotización, recursos económicos y Fondo especial (RDLeg 4/2000, arts. 10, 34 y disp. adic. 6.ª)", f"""
@@ -339,7 +339,7 @@ T.ap("s11", "III.5 Protección a la familia, servicios sociales y asistencia soc
 
 {unidad("5.3 Asistencia social (art. 31; RD 375/2003, art. 137)",
   lit("MUF", "a31", ["los servicios y auxilios económicos que, en atención a estados y situaciones de necesidad, se consideren precisos", "no podrá comprometer recursos del ejercicio siguiente"], solo=[1, 2]),
-  lit("RD375", "Artículo 137", ["carece de recursos suficientes"], solo=[2]),
+  lit("RD375", "Artículo 137", ["carece de recursos suficientes"], solo=[2, 3, 4, 5, 6]),
   ficha("Mutualistas y beneficiarios (art. 32; RD 375/2003, art. 138)",
         "Servicios y auxilios económicos para estados y situaciones de necesidad: ayudas asistenciales (tratamientos especiales, inexistencia o insuficiencia de prestaciones, gastos urgentes…)",
         "Límite: los créditos del presupuesto de MUFACE; no compromete recursos del ejercicio siguiente. Hay que acreditar que se **carece de recursos suficientes**",
@@ -396,7 +396,7 @@ T.ap("s13", "IV.1 Acción protectora y ámbito personal (RDLeg 670/1987, arts. 1
          "Tres riesgos: **vejez, incapacidad y muerte y supervivencia**. Para los funcionarios civiles es **uno** de los mecanismos del régimen especial (→ I.1.2)."))}
 
 {unidad("1.2 Ámbito personal de cobertura (art. 2)",
-  lit("RDL670", "a2", ["Los funcionarios de carrera de carácter civil de la Administración del Estado.", "Los funcionarios de carrera de la Administración de Justicia.", "sólo podrá ser ampliado o restringido por Ley"], solo=[1, 2, 4, 5, 6, 7, 8, 9, 10, 13]),
+  lit("RDL670", "a2", ["Los funcionarios de carrera de carácter civil de la Administración del Estado.", "Los funcionarios de carrera de la Administración de Justicia.", "sólo podrá ser ampliado o restringido por Ley"], solo=list(range(1, 14))),
   fichab("Quién está cubierto por Clases Pasivas",
          ["Funcionarios de carrera civiles del Estado, de la Administración de Justicia, de las Cortes Generales y de otros órganos constitucionales si su legislación lo prevé", "Personal militar (letras b, j y k)", "Interinos del Decreto-ley 10/1965; personal transferido a las CC. AA.; funcionarios en prácticas", "Ex Presidentes, Vicepresidentes y Ministros y otros cargos del art. 51"],
          "—",
