@@ -32,7 +32,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 | **II** | ¿Quién hace el control interno? (la IGAE) | LGP, arts. 143 a 147; RD 206/2024, arts. 8.6 y 11 |
 | **III** | ¿Cómo se controla antes de decidir? (función interventora) | LGP, arts. 148 a 156; RD 2188/1995, arts. 8, 13, 14 y 16 |
 | **IV** | ¿Cómo se controla después? (control financiero permanente y auditoría pública) | LGP, arts. 157 a 170; RD 2188/1995, art. 35 |
-| **V** | ¿Quién hace el control externo? (el Tribunal de Cuentas) | CE, arts. 136 y 153 d); LO 2/1982, del Tribunal de Cuentas; Ley 7/1988, de Funcionamiento; Ley 15/2014, art. 22 |
+| **V** | ¿Quién hace el control externo? (el Tribunal de Cuentas) | CE, arts. 136 y 153 d); LO 2/1982, del Tribunal de Cuentas; Ley 7/1988, de Funcionamiento; Ley 15/2014, art. 22; LGP, art. 131 |
 
 !> **La idea que une los cinco bloques:** el gasto del sector público estatal tiene **dos** controles. El **interno** lo hace la **IGAE** con plena autonomía, de tres formas: **función interventora** (antes de aprobar cada acto), **control financiero permanente** (de forma continua) y **auditoría pública** (después y de forma sistemática). El **externo** lo hace el **Tribunal de Cuentas**, que depende de las **Cortes Generales**, fiscaliza y, además, **juzga** la responsabilidad contable.
 
@@ -394,7 +394,7 @@ T.ap("s14", "IV.4 Plan anual de auditorías e informes (LGP, arts. 165 y 166)", 
 T.ap("s15", "IV.5 Auditoría de cuentas anuales y auditorías específicas (LGP, arts. 167 a 170)", f"""
 {unidad("5.1 Auditoría de las cuentas anuales (arts. 167.1 y 168)",
   lit("LGP", "a167", ["la imagen fiel del patrimonio, de la situación financiera, de los resultados de la entidad"], solo=[1]),
-  lit("LGP", "a168", ["realizará anualmente la auditoría de las cuentas anuales"], solo=[1, 2, 3, 4, 5, 6]),
+  lit("LGP", "a168", ["realizará anualmente la auditoría de las cuentas anuales"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]),
   fichab("Modalidad de la auditoría de regularidad contable",
          "La IGAE, **anualmente**",
          ["Objeto: si las cuentas expresan la **imagen fiel** (167.1)", "Sobre: organismos autónomos, agencias, entidades públicas empresariales, autoridades independientes, entidades del 2.2.i), universidades no transferidas, mutuas (168 a)", "Fundaciones que cumplan **dos** de tres circunstancias (168 b)", "Sociedades no obligadas a auditarse incluidas en el plan, consorcios obligados y fondos sin personalidad (168 c a e)"],
@@ -434,7 +434,7 @@ T.ap("s15", "IV.5 Auditoría de cuentas anuales y auditorías específicas (LGP,
 # =============================================================================
 T.ap("bV", "V. ¿Quién hace el control externo? El Tribunal de Cuentas (CE, arts. 136 y 153; LO 2/1982; Ley 7/1988)", donde(
   "Quinta pregunta. El control **externo** lo hace un órgano que **no** forma parte del Gobierno: el **Tribunal de Cuentas**, que depende de las **Cortes Generales**. Tiene dos funciones: **fiscalizar** y **enjuiciar** la responsabilidad contable.",
-  ["1 Posición constitucional y naturaleza (CE, arts. 136 y 153 d; LO 2/1982, arts. 1 a 8)", "2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; Ley 7/1988, arts. 33 y 44 y disposición adicional undécima)", "3 Composición y organización (LO 2/1982, arts. 19 a 36)", "4 El enjuiciamiento contable y la responsabilidad contable (LO 2/1982, arts. 15 a 18 y 38 a 43; Ley 7/1988, arts. 49 y 72)"]))
+  ["1 Posición constitucional y naturaleza (CE, arts. 136 y 153 d; LO 2/1982, arts. 1 a 8)", "2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; LGP, art. 131; Ley 7/1988, arts. 33 y 44 y disposición adicional undécima)", "3 Composición y organización (LO 2/1982, arts. 19 a 36)", "4 El enjuiciamiento contable y la responsabilidad contable (LO 2/1982, arts. 15 a 18 y 38 a 43; Ley 7/1988, arts. 49 y 72)"]))
 
 T.ap("s16", "V.1 Posición constitucional y naturaleza (CE, arts. 136 y 153 d; LO 2/1982, arts. 1 a 8)", f"""
 {unidad("1.1 El artículo 136 de la Constitución",
@@ -472,14 +472,14 @@ T.ap("s16", "V.1 Posición constitucional y naturaleza (CE, arts. 136 y 153 d; L
          "Los conflictos sobre sus competencias los resuelve el **Tribunal Constitucional**; los requerimientos de inhibición **no suspenden** el procedimiento (art. 8)."))}
 """, 2)
 
-T.ap("s17", "V.2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; Ley 7/1988, arts. 33 y 44 y disposición adicional undécima)", f"""
+T.ap("s17", "V.2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; LGP, art. 131; Ley 7/1988, arts. 33 y 44 y disposición adicional undécima)", f"""
 {unidad("2.1 Principios de la fiscalización (LO 2/1982, art. 9)",
   lit("LOTCu", "anoveno", ["legalidad, eficiencia, economía, transparencia, así como a la sostenibilidad ambiental y la igualdad de género"]),
   fichab("Parámetros de la fiscalización", "El Tribunal de Cuentas",
          "Legalidad, eficiencia, economía, transparencia, sostenibilidad ambiental e igualdad de género, en la ejecución de los programas de ingresos y gastos", "—",
          "La lista vigente incluye **transparencia, sostenibilidad ambiental e igualdad de género** (no solo legalidad, eficiencia y economía)."))}
 
-{unidad("2.2 La Cuenta General del Estado (LO 2/1982, art. 10; Ley 7/1988, art. 33.1)",
+{unidad("2.2 La Cuenta General del Estado (LO 2/1982, art. 10; LGP, art. 131.1; Ley 7/1988, art. 33.1)",
   lit("LOTCu", "adiez", ["por delegación, de las Cortes Generales", "dentro del plazo de seis meses", "El Pleno, oído el Fiscal, dictará la declaración definitiva"]),
   lit("LGP", "a131", ["se formará por la Intervención General de la Administración del Estado", "antes del día 31 de octubre del año siguiente al que se refiera"], solo=[1]),
   lit("LFTCu", "a33", ["antes del día 31 de agosto del año siguiente", "dentro de los dos meses siguientes a su conclusión"], solo=[1]),
@@ -497,7 +497,7 @@ T.ap("s17", "V.2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; Ley 7/1988,
          "—", "Los informes se elevan a las **Cortes** y se publican en el **BOE**."))}
 
 {unidad("2.4 El informe o memoria anual y las propuestas de mejora (LO 2/1982, arts. 13 y 14)",
-  lit("LOTCu", "atrece", ["comprenderá el análisis de la Cuenta General del Estado y de las demás del sector público", "Memoria de las actuaciones jurisdiccionales"], solo=[1, 6, 7]),
+  lit("LOTCu", "atrece", ["comprenderá el análisis de la Cuenta General del Estado y de las demás del sector público", "Memoria de las actuaciones jurisdiccionales"], solo=[1, 2, 3, 4, 5, 6, 7]),
   lit("LOTCu", "acatorce", ["propondrá las medidas a adoptar"], solo=[1]),
   fichab("Informe anual del art. 136.2 CE", "El Tribunal de Cuentas → Cortes Generales y Asambleas Legislativas autonómicas",
          ["Análisis de la Cuenta General del Estado y demás del sector público y de la gestión económica", "Idéntico informe a las Asambleas de las CC. AA.", "Incluye una **Memoria de las actuaciones jurisdiccionales**", "Propuesta de medidas para mejorar la gestión (art. 14)"],
@@ -527,7 +527,7 @@ T.ap("s18", "V.3 Composición y organización (LO 2/1982, arts. 19 a 36)", f"""
          "—", "Ocho órganos; dos **Secciones**: Fiscalización y Enjuiciamiento (una por cada función del art. 2)."))}
 
 {unidad("3.2 El Pleno (art. 21)",
-  lit("LOTCu", "aveintiuno", ["doce Consejeros de Cuentas, uno de los cuales será el Presidente, y el Fiscal", "dos tercios de sus componentes", "mayoría de asistentes", "Ejercer la función fiscalizadora"], solo=[1, 2, 3, 4]),
+  lit("LOTCu", "aveintiuno", ["doce Consejeros de Cuentas, uno de los cuales será el Presidente, y el Fiscal", "dos tercios de sus componentes", "mayoría de asistentes", "Ejercer la función fiscalizadora"], solo=[1, 2, 3, 4, 5, 6, 7, 8]),
   fichab("Órgano colegiado superior", "**Doce** Consejeros de Cuentas (uno es el Presidente) y el **Fiscal**",
          "Ejerce la función fiscalizadora; plantea conflictos de competencias; recursos de alzada; aprueba los reglamentos del Tribunal",
          ["Quórum: **dos tercios** de sus componentes", "Acuerdos: **mayoría de asistentes**"],

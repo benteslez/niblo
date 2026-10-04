@@ -228,7 +228,7 @@ T.ap("s6", "III.2 Créditos ampliables (art. 54)", f"""
          "—",
          ["Estado: Fondo de Contingencia (art. 50 → II.1.2) o baja en otros créditos del presupuesto no financiero", "Organismos autónomos: remanente de tesorería no aplicado, mayores ingresos o baja en otros créditos del presupuesto no financiero del organismo", "Seguridad Social: remanente de tesorería no aplicado, mayores ingresos o baja en otros créditos del presupuesto"],
          "—",
-         f"{g(54, 'No podrán ampliarse créditos que hayan sido previamente minorados')}, {g(54, 'salvo en el ámbito de las entidades que integran el sistema de la Seguridad Social y en el de la sección 06 Deuda Pública')} (con la condición del texto) {g(54, 'o cuando la minoración resulte de un traspaso de competencias a las Comunidades Autónomas')}."))}
+         f"{g(54, 'No podrán ampliarse créditos que hayan sido previamente minorados')}, {g(54, 'salvo en el ámbito de las entidades que integran el sistema de la Seguridad Social y en el de la sección 06 ' + chr(34) + 'Deuda Pública' + chr(34))} (con la condición del texto) {g(54, 'o cuando la minoración resulte de un traspaso de competencias a las Comunidades Autónomas')}."))}
 
 {resumen([
   "Generación: **ingresos no previstos o superiores** a los previstos, en **seis** supuestos tasados, y solo cuando el ingreso se ha **efectuado** (53).",

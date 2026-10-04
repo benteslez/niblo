@@ -119,10 +119,10 @@ Los Presupuestos Generales del Estado no son un único presupuesto: integran **d
 
 T.ap("s3", "I.3 Ámbito temporal, créditos y programas (LGP, arts. 34 y 35)", f"""
 {unidad("3.1 El ejercicio presupuestario (art. 34)",
-  lit("LGP", "Artículo 34", ["coincidirá con el año natural", "cualquiera que sea el período del que deriven", "hasta el fin del mes de diciembre", "requerirá norma con rango de ley"], solo=[1, 2, 3, 4, 7]),
+  lit("LGP", "Artículo 34", ["coincidirá con el año natural", "cualquiera que sea el período del que deriven", "hasta el fin del mes de diciembre", "requerirá norma con rango de ley"], solo=[1, 2, 3, 4, 5, 6, 7]),
   fichab("A qué ejercicio se imputan los derechos y las obligaciones",
          "—",
-         ["Derechos: los **liquidados** durante el ejercicio, cualquiera que sea el período del que deriven", "Obligaciones: las **reconocidas hasta el fin de diciembre**, si son gastos realizados dentro del ejercicio", "Excepciones: atrasos de personal y resoluciones judiciales (al presupuesto vigente al expedir la orden de pago)"],
+         ["Derechos: los **liquidados** durante el ejercicio, cualquiera que sea el período del que deriven", "Obligaciones: las **reconocidas hasta el fin de diciembre**, si son gastos realizados dentro del ejercicio", "Excepciones: atrasos de personal y resoluciones judiciales (al presupuesto vigente al expedir la orden de pago) (34.2)", "Obligaciones de ejercicios anteriores para las que se anuló crédito en el de procedencia, o con un crédito específico dotado para ellas: al ejercicio corriente (34.3)"],
          "Ejercicio = **año natural**. Obligaciones de ejercicios anteriores fuera de los supuestos previstos: **norma con rango de ley**",
          "Para los **derechos** basta que se liquiden en el ejercicio (**cualquiera que sea el período del que deriven**); para las **obligaciones**, que el gasto se haya realizado **dentro del ejercicio**."))}
 
@@ -496,7 +496,7 @@ T.ap("s17", "VI.2 Objetivos de estabilidad y deuda e informes de cumplimiento (a
          "Si el **Senado** rechaza, basta la **mayoría simple** del Congreso para ratificar. Los proyectos de presupuesto se acomodan a los objetivos aprobados."))}
 
 {unidad("2.2 Informes sobre el cumplimiento (art. 17)",
-  lit("LOEP", "Artículo 17", ["Antes del 15 de octubre la Autoridad Independiente de Responsabilidad Fiscal", "Antes del 1 de abril de cada año, la Autoridad Independiente de Responsabilidad Fiscal", "Antes del 15 de abril de cada año, el Ministro de Hacienda", "Antes del 15 de octubre de cada año, el Ministro de Hacienda"], solo=[1, 2, 3, 4]),
+  lit("LOEP", "Artículo 17", ["Antes del 15 de octubre la Autoridad Independiente de Responsabilidad Fiscal", "Antes del 1 de abril de cada año, la Autoridad Independiente de Responsabilidad Fiscal", "Antes del 15 de abril de cada año, el Ministro de Hacienda", "Antes del 15 de octubre de cada año, el Ministro de Hacienda"], solo=[1, 2, 3, 4, 5]),
   fichab("Calendario de informes de cumplimiento de los objetivos y de la regla de gasto",
          "AIReF y Ministro de Hacienda",
          ["AIReF, antes del **15 de octubre**: proyecto de PGE y líneas fundamentales (art. 27)", "AIReF, antes del **1 de abril**: presupuestos **iniciales**", "Ministro, antes del **15 de abril**: primer informe del ejercicio **anterior**", "Ministro, antes del **15 de octubre**: segundo informe del ejercicio anterior y previsión del corriente"],
@@ -538,7 +538,7 @@ T.ap("s18", "VI.3 Medidas preventivas, correctivas y coercitivas (arts. 18 a 26)
          "**1 – 2 – 3**: un mes para presentar, dos para aprobar, tres para ponerlo en marcha."))}
 
 {unidad("3.5 Medidas coercitivas (art. 25)",
-  lit("LOEP", "Artículo 25", ["un depósito con intereses en el Banco de España equivalente al 0,2 % de su Producto Interior Bruto nominal", "Si en el plazo de 3 meses desde la constitución del depósito", "multa coercitiva", "comisión de expertos"], solo=[3, 4, 5]),
+  lit("LOEP", "Artículo 25", ["un depósito con intereses en el Banco de España equivalente al 0,2 % de su Producto Interior Bruto nominal", "Si en el plazo de 3 meses desde la constitución del depósito", "multa coercitiva", "comisión de expertos"], solo=[1, 2, 3, 4, 5]),
   fichab("Consecuencias de no presentar, no aprobar o incumplir el plan",
          "La Administración responsable; el **Gobierno** puede enviar una **comisión de expertos**",
          [f"a) No disponibilidad de créditos: {e(25, 'en el plazo de 15 días desde que se produzca el incumplimiento')}", "b) Depósito con intereses en el **Banco de España** del **0,2 %** del PIB nominal, si lo solicita el Ministerio de Hacienda", "Comisión de expertos: propuesta de medidas de **obligado cumplimiento**; conclusiones públicas en **una semana**"],
@@ -556,7 +556,7 @@ T.ap("s18", "VI.3 Medidas preventivas, correctivas y coercitivas (arts. 18 a 26)
 
 T.ap("s19", "VI.4 Gestión presupuestaria y Autoridad Independiente de Responsabilidad Fiscal (LO 2/2012, arts. 29 a 32; LO 6/2013)", f"""
 {unidad("4.1 Plan presupuestario a medio plazo (art. 29)",
-  lit("LOEP", "Artículo 29", ["se incluirá en el Programa de Estabilidad", "un periodo mínimo de tres años"], solo=[1, 2]),
+  lit("LOEP", "Artículo 29", ["se incluirá en el Programa de Estabilidad", "un periodo mínimo de tres años"], solo=[1, 2, 3, 4, 5, 6]),
   fichab("Marco a medio plazo de los presupuestos anuales",
          "—",
          "Objetivos de estabilidad, deuda y regla de gasto; proyecciones de ingresos y gastos; supuestos; evaluación de la sostenibilidad a largo plazo",

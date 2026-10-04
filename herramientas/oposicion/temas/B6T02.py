@@ -232,7 +232,7 @@ T.ap("s7", "III.1 El límite de gasto no financiero (LGP, art. 36.1; LO 2/2012, 
 
 T.ap("s8", "III.2 El procedimiento de elaboración (LGP, art. 36.2 a 5; Orden HAC/557/2026, arts. 4 y 5)", f"""
 {unidad("2.1 Las normas de la LGP (art. 36.2 a 5)",
-  lit("LGP", "Artículo 36", ["por orden del Ministro de Hacienda", "Comisión de Políticas de Gasto", "remitirán al Ministerio de Hacienda sus correspondientes propuestas de presupuesto", "memoria de objetivos anuales", "Corresponderá al Ministro de Hacienda elevar al acuerdo del Gobierno"], solo=[2, 3, 4, 5, 6, 7, 13, 15, 16, 17]),
+  lit("LGP", "Artículo 36", ["por orden del Ministro de Hacienda", "Comisión de Políticas de Gasto", "remitirán al Ministerio de Hacienda sus correspondientes propuestas de presupuesto", "memoria de objetivos anuales", "Corresponderá al Ministro de Hacienda elevar al acuerdo del Gobierno"], solo=[2, 3, 4, 5, 6, 7, 13, 14, 15, 16, 17]),
   fichab("Fase gubernamental: de las directrices al anteproyecto",
          ["**Ministro de Hacienda**: dicta la orden de elaboración, fija las directrices y eleva el anteproyecto al Gobierno", "**Comisión de Políticas de Gasto**: criterios y prioridades", "**Ministerios** y órganos con dotación diferenciada: remiten sus propuestas (y las de sus organismos y entidades)", "**Gobierno**: acuerda el anteproyecto"],
          ["Primera: directrices de distribución del gasto (Ministro de Hacienda; Comisión de Políticas de Gasto)", "Segunda: propuestas de los ministerios, ajustadas a los límites", "Tercera: cada programa, con su **memoria de objetivos anuales**", "Cuarta: especificaciones de la Seguridad Social por orden de su Ministro", "El presupuesto de **ingresos** lo elabora el **Ministerio de Hacienda** (36.3)"],
@@ -362,7 +362,7 @@ T.ap("s12", "IV.2 Las clasificaciones del gasto y del ingreso (LGP, arts. 39 a 4
          "Las tres finalidades de los programas **instrumentales** son los distractores típicos de la definición de programa **finalista**. Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("2.4 Estructura orgánica y económica en la orden (Orden HAC/557/2026, art. 6.1.2 y 1.3)",
-  lit("OPGE27", "a6", ["que se dividirá en secciones y éstas a su vez en servicios", "clasificación por capítulos, artículos, conceptos y subconceptos"], solo=[10, 11, 12, 13, 14, 15, 16, 18, 19]),
+  lit("OPGE27", "a6", ["que se dividirá en secciones y éstas a su vez en servicios", "clasificación por capítulos, artículos, conceptos y subconceptos"], solo=[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]),
   fichab("Subsectores de la clasificación orgánica y naturaleza económica de los créditos",
          "Centros gestores: unidades orgánicas con diferenciación presupuestaria y responsabilidad en la gestión",
          ["::Clasificación orgánica por subsectores:", "a) El **Estado**: secciones → servicios", "b) Organismos autónomos", "c) Seguridad Social", "d) Agencias estatales y resto del sector público administrativo con presupuesto limitativo", "::Económica: capítulos, artículos, conceptos y subconceptos (anexo II de la orden; códigos en la Resolución de 20-1-2014 → V.1.2)"],
@@ -396,7 +396,7 @@ T.ap("s13", "IV.3 Especialidad y especificación de los créditos (LGP, arts. 42
          "Personal y capítulo 2 → **artículo**; inversiones → **capítulo**; lo demás → **concepto**. Cayó dos veces en 2025 (P 87 y L 96, → Cierre 1)."))}
 
 {unidad("3.3 Organismos autónomos y Seguridad Social (LGP, art. 44)",
-  lit("LGP", "Artículo 44", ["que se especificarán a nivel de capítulo", "a nivel de grupo de programas"], solo=[1, 9]),
+  lit("LGP", "Artículo 44", ["que se especificarán a nivel de capítulo", "a nivel de grupo de programas"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9]),
   fichab("Especificación en organismos autónomos, Seguridad Social y entidades del art. 3.1",
          "—",
          ["Regla general: **concepto**", "Personal, bienes y servicios e inversiones reales: **capítulo** (en el Estado, personal y bienes y servicios van a nivel de artículo)", "Mismas excepciones que el art. 43.2 (sin gastos reservados)", "Seguridad Social: **grupo de programas**; acción protectora no contributiva y universal: **programa**"],
