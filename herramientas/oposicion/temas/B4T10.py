@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B4T10",
-  "Tres preguntas: I. Cuándo responde la Administración (art. 106.2 CE; LRJSP, arts. 32 y 34.1) · II. Cuánto se indemniza y quién responde (LRJSP, arts. 33 a 37) · III. Cómo se reclama: el procedimiento (LPAC y LJCA). Cada artículo: texto literal del BOE y ficha.",
+  "Tres preguntas: I. Cuándo responde la Administración (arts. 106.2 y 121 CE; LRJSP, arts. 32 y 34.1) · II. Cuánto se indemniza y quién responde (LRJSP, arts. 33 a 37) · III. Cómo se reclama: el procedimiento (LPAC, LO 3/1980 y LJCA). Cada artículo: texto literal del BOE y ficha.",
   ["Art. 106.2 CE", "LRJSP", "LPAC", "Lesión", "Fuerza mayor", "Relación de causalidad", "Estado legislador", "Responsabilidad concurrente", "Acción de regreso", "Prescripción: un año", "Consejo de Estado", "Silencio desestimatorio", "Procedimiento simplificado"])
 
 T.ap("s0", "Mapa del tema: tres preguntas", f"""
@@ -30,11 +30,11 @@ T.ap("s0", "Mapa del tema: tres preguntas", f"""
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Cuándo responde la Administración? (art. 106.2 CE; LRJSP, arts. 32 y 34.1)", donde(
+T.ap("bI", "I. ¿Cuándo responde la Administración? (arts. 106.2 y 121 CE; LRJSP, arts. 32 y 34.1)", donde(
   "Primera pregunta del tema: **en qué casos** nace el derecho a ser indemnizado. La Constitución lo garantiza y la Ley 40/2015 fija sus requisitos.",
-  ["1 Fundamento constitucional (arts. 106.2 y 121 CE)", "2 Principios y requisitos de la responsabilidad (LRJSP, art. 32)", "3 El daño indemnizable (LRJSP, art. 34.1)"]))
+  ["1 Fundamento constitucional (arts. 106.2 y 121 CE; LRJSP, art. 32.7)", "2 Principios y requisitos de la responsabilidad (LRJSP, art. 32)", "3 El daño indemnizable (LRJSP, art. 34.1)"]))
 
-T.ap("s1", "I.1 Fundamento constitucional (arts. 106.2 y 121 CE)", f"""
+T.ap("s1", "I.1 Fundamento constitucional (arts. 106.2 y 121 CE; LRJSP, art. 32.7)", f"""
 {unidad("1.1 El derecho a ser indemnizado (art. 106.2)",
   lit("CE", "Artículo 106", ["toda lesión que sufran en cualquiera de sus bienes y derechos", "salvo en los casos de fuerza mayor", "consecuencia del funcionamiento de los servicios públicos"], solo=[2]),
   ficha(c("CE", "Artículo 106", "Los particulares"),
@@ -43,7 +43,7 @@ T.ap("s1", "I.1 Fundamento constitucional (arts. 106.2 y 121 CE)", f"""
         "Control de los Tribunales sobre la actuación administrativa (106.1); reclamación ante la Administración y, después, contencioso (→ III.6)",
         "El art. 106.2 está en el **Título IV** (Gobierno y Administración), **no** en el Título I: no es un derecho fundamental susceptible de amparo. Única exclusión constitucional: la **fuerza mayor**."))}
 
-{unidad("1.2 La responsabilidad por la Administración de Justicia (art. 121)",
+{unidad("1.2 La responsabilidad por la Administración de Justicia (art. 121 CE; LRJSP, art. 32.7)",
   lit("CE", "Artículo 121", ["error judicial", "funcionamiento anormal de la Administración de Justicia", "a cargo del Estado"]),
   lit("L40", "Artículo 32", ["se regirá por la Ley Orgánica 6/1985, de 1 de julio, del Poder Judicial"], solo=[14]),
   fichab("Indemnización por error judicial o funcionamiento anormal de la Administración de Justicia",
@@ -172,7 +172,7 @@ T.ap("s8", "III.2 Iniciación (LPAC, arts. 61, 65 y 67)", f"""
   lit("L39", "Artículo 61", ["individualizar la lesión producida en una persona o grupo de personas"], solo=[4]),
   fichab("Contenido de la petición razonada de otro órgano", "Un órgano sin competencia para iniciar que conoce los hechos",
          ["Individualizar la **lesión** en una persona o grupo", "Su **relación de causalidad** con el funcionamiento del servicio", "Su **evaluación económica**, si fuera posible", "El **momento** en que se produjo"],
-         "—", "Mismo contenido que la solicitud del interesado (→ 2.3)."))}
+         "—", "Mismo contenido que la solicitud del interesado (→ III.2.3)."))}
 
 {unidad("2.2 Especialidades del inicio de oficio (art. 65)",
   lit("L39", "Artículo 65", ["será necesario que no haya prescrito el derecho a la reclamación del interesado", "un plazo de diez días", "aunque los particulares presuntamente lesionados no se personen"]),
@@ -214,7 +214,7 @@ T.ap("s10", "III.4 Terminación (LPAC, arts. 86, 91 y 92)", f"""
 {unidad("4.2 Contenido de la resolución y silencio (art. 91)",
   lit("L39", "Artículo 91", ["una vez finalizado el trámite de audiencia", "sobre la existencia o no de la relación de causalidad", "Transcurridos seis meses desde que se inició el procedimiento", "podrá entenderse que la resolución es contraria a la indemnización del particular"]),
   fichab("La resolución del procedimiento",
-         "El órgano competente (→ 4.3); si hay propuesta de acuerdo, la formalizan el interesado y el órgano competente",
+         "El órgano competente (→ III.4.3); si hay propuesta de acuerdo, la formalizan el interesado y el órgano competente",
          ["Se resuelve tras el **dictamen** (si es preceptivo) o tras la **audiencia** (si no lo es)", "Contenido: además del art. 88, la **relación de causalidad** y, en su caso, la **valoración** del daño, la **cuantía** y el **modo** de la indemnización (art. 34 LRJSP)"],
          "**Seis meses** desde el inicio sin resolución expresa notificada ni acuerdo: puede entenderse **contraria** a la indemnización",
          "**Seis meses** desde que **se inició** el procedimiento (pregunta oficial L 56, → Cierre 1). Silencio **desestimatorio**."))}
@@ -245,7 +245,7 @@ T.ap("s12", "III.6 Fin de la vía administrativa y control judicial (LPAC, art. 
          "**Toda** resolución de responsabilidad patrimonial agota la vía, sea **pública o privada** la relación de la que derive."))}
 
 {unidad("6.2 Dictamen del Consejo de Estado (LO 3/1980, art. 22.13)",
-  lit("LO3_1980", "aveintidos", ["en concepto de indemnización por daños y perjuicios"], solo=[14]),
+  lit("LO3_1980", "aveintidos", ["Comisión Permanente", "en concepto de indemnización por daños y perjuicios"], solo=[1, 14]),
   fichab("Competencia de la Comisión Permanente del Consejo de Estado", "La **Comisión Permanente** del Consejo de Estado",
          "Dictamen en las reclamaciones de indemnización a la **AGE** en los supuestos que fijen las leyes (hoy, la cuantía del art. 81.2 LPAC)", "—",
          "Es la remisión del art. 81.2 LPAC: el dictamen es preceptivo desde **50.000 euros**."))}

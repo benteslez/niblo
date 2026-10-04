@@ -28,7 +28,7 @@ def tc_doc(k, url, cab, frases, resaltar=()):
     return "\n".join([f"> [[TC|{url}]]", "> **" + cab + "**"] + ["> " + x for x in out])
 
 T = Tema("B4T13",
-  "Cuatro preguntas: I. Para qué sirve la jurisdicción contencioso-administrativa (arts. 106.1 y 153 CE; LJCA, arts. 1 a 5) · II. Qué órganos la forman y qué conoce cada uno (LJCA, arts. 6 a 14; LO 1/2025) · III. Contra qué se recurre y en qué plazo (LJCA, arts. 25 a 30, 45 y 46) · IV. Quiénes son las partes (LJCA, arts. 18 a 24). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Para qué sirve la jurisdicción contencioso-administrativa (arts. 106.1 y 153 CE; LJCA, arts. 1 a 5; LOPJ, art. 9) · II. Qué órganos la forman y qué conoce cada uno (LJCA, arts. 6 a 14; LO 1/2025) · III. Contra qué se recurre y en qué plazo (LJCA, arts. 25 a 30, 45 y 46) · IV. Quiénes son las partes (LJCA, arts. 18 a 24). Cada artículo: texto literal del BOE y ficha.",
   ["LJCA", "Art. 106.1 CE", "Improrrogable", "Tribunales de Instancia", "Audiencia Nacional", "Tribunal Supremo", "Actividad impugnable", "Inactividad", "Vía de hecho", "Actos confirmatorios", "Plazo de dos meses", "Legitimación", "Lesividad", "Procurador y Abogado"])
 
 T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
@@ -50,7 +50,7 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Para qué sirve? Funciones y ámbito (arts. 106.1 y 153 CE; LJCA, arts. 1 a 5)", donde(
+T.ap("bI", "I. ¿Para qué sirve? Funciones y ámbito (arts. 106.1 y 153 CE; LJCA, arts. 1 a 5; LOPJ, art. 9)", donde(
   "Primera pregunta del tema: la **función** de esta jurisdicción y su **ámbito**, es decir, qué asuntos le corresponden y cuáles no.",
   ["1 Fundamento constitucional (arts. 106.1 y 153 c CE)", "2 Ámbito: qué conoce y qué no (LJCA, arts. 1 a 3)", "3 Cuestiones prejudiciales e improrrogabilidad (LJCA, arts. 4 y 5; LOPJ, art. 9)"]))
 
@@ -132,7 +132,7 @@ T.ap("s4", "II.1 Órganos del orden contencioso (LJCA, art. 6; LO 1/2025)", f"""
 {unidad("1.1 Los cinco órganos (art. 6)",
   lit("LJCA", "Artículo 6", ["Juzgados de lo Contencioso-administrativo", "Juzgados Centrales de lo Contencioso-administrativo", "Tribunales Superiores de Justicia", "Audiencia Nacional", "Tribunal Supremo"]),
   fichab("Planta del orden contencioso",
-         ["Unipersonales: **Juzgados** y **Juzgados Centrales** (hoy, Secciones de los Tribunales de Instancia: → 1.2)", "Colegiados: **Salas** de lo Contencioso de los **TSJ**, de la **Audiencia Nacional** y del **Tribunal Supremo**"],
+         ["Unipersonales: **Juzgados** y **Juzgados Centrales** (hoy, Secciones de los Tribunales de Instancia: → II.1.2)", "Colegiados: **Salas** de lo Contencioso de los **TSJ**, de la **Audiencia Nacional** y del **Tribunal Supremo**"],
          "—", "—",
          f"**Cinco** clases de órganos. «Centrales» = competencia en **todo el territorio nacional**, con sede en Madrid: hoy, Sección de lo Contencioso-Administrativo del Tribunal Central de Instancia (LOPJ, art. 95: {c('LOPJ', 'anoventaycinco', 'En la Villa de Madrid y con jurisdicción en todo el territorio nacional existirá un Tribunal Central de Instancia')})."))}
 
@@ -157,7 +157,7 @@ T.ap("s5", "II.2 Reglas generales de competencia (art. 7)", f"""
 
 T.ap("s6", "II.3 Juzgados y Juzgados Centrales (arts. 8 y 9)", f"""
 {unidad("3.1 Juzgados de lo Contencioso-administrativo (art. 8)",
-  lit("LJCA", "Artículo 8", ["frente a los actos de las entidades locales", "excluidas las impugnaciones de cualquier clase de instrumentos de planeamiento urbanístico", "salvo cuando procedan del respectivo Consejo de Gobierno", "multas no superiores a 60.000 euros", "cuya cuantía no exceda de 30.050 euros", "en materia de extranjería", "Juntas Electorales de Zona", "las autorizaciones para la entrada en domicilios"], solo=list(range(1, 11))),
+  lit("LJCA", "Artículo 8", ["frente a los actos de las entidades locales", "excluidas las impugnaciones de cualquier clase de instrumentos de planeamiento urbanístico", "salvo cuando procedan del respectivo Consejo de Gobierno", "multas no superiores a 60.000 euros", "cuya cuantía no exceda de 30.050 euros", "en materia de extranjería", "Juntas Electorales de Zona", "las autorizaciones para la entrada en domicilios"], solo=list(range(1, 12))),
   fichab("Qué conocen los Juzgados (hoy, Secciones de los Tribunales de Instancia)",
          "Juzgados de lo Contencioso-administrativo, en **única o primera instancia**",
          ["Actos de las **entidades locales** (salvo planeamiento urbanístico) (8.1)", "Actos de las **CCAA** (no del Consejo de Gobierno) sobre **personal** (salvo nacimiento o extinción de la relación de funcionarios de carrera), **sanciones** (multas hasta **60.000 €**, ceses o privaciones hasta **6 meses**) y **responsabilidad patrimonial** hasta **30.050 €** (8.2)", "Administración **periférica** del Estado y de las CCAA (8.3); se exceptúan los actos de la periférica **del Estado** y de los organismos públicos estatales de cuantía superior a **60.000 €** o sobre dominio público, obras públicas del Estado, expropiación forzosa y propiedades especiales", "**Extranjería** de la periférica del Estado y de las CCAA (8.4)", "Juntas Electorales de **Zona** (8.5)", "**Autorizaciones** de entrada en domicilio y ratificación de medidas sanitarias (8.6)"],
@@ -170,7 +170,7 @@ T.ap("s6", "II.3 Juzgados y Juzgados Centrales (arts. 8 y 9)", f"""
          "Juzgados Centrales, en **única o primera instancia**",
          ["**Personal**: actos de **Ministros y Secretarios de Estado**, con excepciones (a)", "Órganos centrales de la AGE en los supuestos del 8.2 b (sanciones) (b)", "Organismos y entidades del **sector público estatal** con competencia en todo el territorio (c)", "**Responsabilidad patrimonial** de Ministros y Secretarios de Estado hasta **30.050 €** (d)", "**Inadmisión de asilo**, en primera instancia (e)", "**Comité Español de Disciplina Deportiva** (f)"],
          "Responsabilidad patrimonial: hasta **30.050 €**",
-         "Ministros y SE: por regla van a la **Audiencia Nacional** (art. 11); al Juzgado Central solo **personal** y responsabilidad patrimonial **≤ 30.050 €**."))}
+         "Ministros y SE: por regla van a la **Audiencia Nacional** (art. 11); al Juzgado Central van su **personal** (con las excepciones de la letra a) y su responsabilidad patrimonial **≤ 30.050 €** (letras a y d), además de las sanciones de los órganos centrales de la AGE del 8.2 b (letra b)."))}
 """, 2)
 
 T.ap("s7", "II.4 Salas de los TSJ, de la Audiencia Nacional y del Tribunal Supremo (arts. 10 a 12)", f"""

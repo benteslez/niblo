@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B4T11",
-  "Seis preguntas: I. Qué regulan las Leyes 39/2015 y 40/2015 y a quién se aplican (arts. 1 y 2 de cada una) · II. Cómo empieza el procedimiento: iniciación (arts. 54 a 69) · III. Cómo avanza: ordenación, términos y plazos (arts. 29 a 33 y 70 a 74) · IV. Cómo se averiguan los hechos: instrucción (arts. 75 a 83) · V. Cómo acaba: terminación y tramitación simplificada (arts. 84 a 96) · VI. Qué pasa si la Administración no resuelve: obligación de resolver y silencio (arts. 21 a 25). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué regulan las Leyes 39/2015 y 40/2015 y a quién se aplican (arts. 1 y 2 de cada una) · II. Cómo empieza el procedimiento: iniciación (arts. 54 a 64, 66, 68 y 69) · III. Cómo avanza: ordenación, términos y plazos (arts. 29 a 33 y 70 a 74) · IV. Cómo se averiguan los hechos: instrucción (arts. 75 a 80, 82 y 83) · V. Cómo acaba: terminación y tramitación simplificada (arts. 84 a 90 y 93 a 96) · VI. Qué pasa si la Administración no resuelve: obligación de resolver y silencio (arts. 21 a 25). Cada artículo: texto literal del BOE y ficha.",
   ["Ley 39/2015", "Ley 40/2015", "Ámbito subjetivo", "Iniciación", "Medidas provisionales", "Denuncia", "Subsanación", "Declaración responsable", "Términos y plazos", "Días hábiles", "Ordenación", "Instrucción", "Prueba", "Informes", "Audiencia", "Información pública", "Terminación", "Desistimiento", "Caducidad", "Tramitación simplificada", "Obligación de resolver", "Art. 21", "Silencio administrativo", "Art. 24"])
 
 ESQ = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
@@ -27,10 +27,10 @@ El epígrafe se lee como **seis preguntas encadenadas**. Casi todo está en la *
 | Bloque | Pregunta | Ley 39/2015 | Otras normas |
 |---|---|---|---|
 | **I** | ¿Qué regulan las dos leyes y a quién se aplican? | Arts. 1 y 2 | Ley 40/2015, arts. 1 y 2 |
-| **II** | ¿Cómo empieza el procedimiento? (iniciación) | Arts. 54 a 69 | — |
+| **II** | ¿Cómo empieza el procedimiento? (iniciación) | Arts. 54 a 64, 66, 68 y 69 | — |
 | **III** | ¿Cómo avanza? (ordenación, términos y plazos) | Arts. 29 a 33 y 70 a 74 | — |
-| **IV** | ¿Cómo se averiguan los hechos? (instrucción) | Arts. 75 a 83 | — |
-| **V** | ¿Cómo acaba? (terminación y tramitación simplificada) | Arts. 84 a 96 | — |
+| **IV** | ¿Cómo se averiguan los hechos? (instrucción) | Arts. 75 a 80, 82 y 83 | — |
+| **V** | ¿Cómo acaba? (terminación y tramitación simplificada) | Arts. 84 a 90 y 93 a 96 | — |
 | **VI** | ¿Qué pasa si la Administración no resuelve a tiempo? (obligación de resolver y silencio) | Arts. 21 a 25 | — |
 
 !> **La idea que une los seis bloques:** la Ley 39/2015 regula **cómo** decide la Administración y la Ley 40/2015 **cómo se organiza** (I). El procedimiento **empieza** de oficio o a solicitud (II), **avanza** impulsado de oficio y con plazos que obligan a todos (III), **reúne** alegaciones, pruebas e informes y oye a los interesados (IV) y **acaba** normalmente con una resolución (V). Si la resolución no llega en plazo, la Administración **sigue obligada a resolver** y la ley da un sentido al silencio (VI).
@@ -109,7 +109,7 @@ T.ap("s3", "I.3 Cuadro comparativo de las dos leyes (esquema)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo empieza el procedimiento? La iniciación (arts. 54 a 69)", donde(
+T.ap("bII", "II. ¿Cómo empieza el procedimiento? La iniciación (arts. 54 a 64, 66, 68 y 69)", donde(
   "Segunda pregunta. El procedimiento empieza **de oficio** (por decisión de la Administración) o **a solicitud del interesado**. Antes de empezar caben actuaciones previas y, si urge, medidas provisionales.",
   ["1 Clases de iniciación y actuaciones previas (arts. 54 y 55)", "2 Medidas provisionales y acumulación (arts. 56 y 57)", "3 Iniciación de oficio: propia iniciativa, orden superior, petición razonada y denuncia (arts. 58 a 62)", "4 Especialidades de los procedimientos sancionadores (arts. 63 y 64)", "5 Iniciación a solicitud del interesado: solicitud, subsanación, declaración responsable y comunicación (arts. 66, 68 y 69)"]))
 
@@ -336,7 +336,7 @@ T.ap("s10", "III.2 Ordenación del procedimiento (arts. 70 a 74)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se averiguan los hechos? La instrucción (arts. 75 a 83)", donde(
+T.ap("bIV", "IV. ¿Cómo se averiguan los hechos? La instrucción (arts. 75 a 80, 82 y 83)", donde(
   "Cuarta pregunta. La instrucción reúne lo necesario para decidir: alegaciones, pruebas e informes. Termina con la **audiencia** a los interesados y, si procede, la **información pública**.",
   ["1 Actos de instrucción y alegaciones (arts. 75 y 76)", "2 Prueba (arts. 77 y 78)", "3 Informes (arts. 79 y 80)", "4 Participación de los interesados: audiencia e información pública (arts. 82 y 83)"]))
 
@@ -422,7 +422,7 @@ T.ap("s14", "IV.4 Audiencia e información pública (arts. 82 y 83)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Cómo acaba el procedimiento? Terminación y tramitación simplificada (arts. 84 a 96)", donde(
+T.ap("bV", "V. ¿Cómo acaba el procedimiento? Terminación y tramitación simplificada (arts. 84 a 90 y 93 a 96)", donde(
   "Quinta pregunta. El procedimiento termina normalmente con la **resolución**, pero también por desistimiento, renuncia, caducidad, imposibilidad material o acuerdo. Si es sencillo, puede seguir la **tramitación simplificada**.",
   ["1 Formas de terminación; terminación de los sancionadores y terminación convencional (arts. 84 a 86)", "2 La resolución (arts. 87 a 90)", "3 Desistimiento y renuncia (arts. 93 y 94)", "4 Caducidad (art. 95)", "5 Tramitación simplificada (art. 96)"]))
 
