@@ -121,7 +121,8 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   Fuente: la API de datos abiertos del BOE
   (`https://boe.es/datosabiertos/api/legislacion-consolidada/id/<BOE-A-…>/texto`,
   dominio `boe.es` **sin** `www`, que está permitido en la red del entorno).
-  Se toma la última versión de cada bloque y se excluyen las notas del BOE
+  Se toma la última versión **vigente** de cada bloque (no las de vigencia futura;
+  ver `NO_VIGENTES` en `boe/boe.py`) y se excluyen las notas del BOE
   («Téngase en cuenta…», «Redacción anterior», notas al pie). Antes de
   publicar: dato decisivo literal en la ley y en la opción de la plantilla,
   ningún distractor con todos los datos y prueba de mutación (cambiar la
