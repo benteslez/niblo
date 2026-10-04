@@ -17,7 +17,7 @@ A2 = "Anexo II (Resolución de 20 de enero de 2014, de la Dirección General de 
 A4 = "Anexo IV (Resolución de 20 de enero de 2014, de la Dirección General de Presupuestos): código de la clasificación económica de los gastos"
 
 T = Tema("B6T06",
-  "Cuatro preguntas: I. Cómo se clasifican los gastos en bienes y servicios, las inversiones y las transferencias (LGP, arts. 40 y 43; Resolución de 20-1-2014) · II. Qué son los anticipos de caja fija y qué límites tienen (LGP, art. 78; RD 725/1989) · III. Cuándo se libran pagos «a justificar» y cómo se gestionan (LGP, art. 79; RD 640/1987) · IV. Cómo se justifican los libramientos (LGP, arts. 78.5, 79.4 a 6, 151, 153, 176 y 177; RD 725/1989, arts. 7 y 9; RD 640/1987, arts. 8 a 10 y 12). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Cómo se clasifican los gastos en bienes y servicios, las inversiones y las transferencias (LGP, arts. 40 y 43; Resolución de 20-1-2014) · II. Qué son los anticipos de caja fija y qué límites tienen (LGP, art. 78 y disp. adicional quinta.3; RD 725/1989) · III. Cuándo se libran pagos «a justificar» y cómo se gestionan (LGP, art. 79 y disp. adicional octava; RD 640/1987) · IV. Cómo se justifican los libramientos (LGP, arts. 78.5, 79.4 a 6, 151, 153, 176 y 177; RD 725/1989, arts. 7 y 9; RD 640/1987, arts. 8 a 10 y 12). Cada artículo: texto literal del BOE y ficha.",
   ["Clasificación económica", "Capítulo 2", "Bienes y servicios", "Artículo 23", "Capítulo 6", "Inversiones reales", "Capítulo 4", "Capítulo 7", "Transferencias", "Anticipos de caja fija", "7 por ciento", "RD 725/1989", "Pagos a justificar", "RD 640/1987", "Cuenta justificativa", "Tres meses", "Cajero pagador"])
 
 # =============================================================================
@@ -63,8 +63,8 @@ La LGP ordena los créditos por **capítulos** y dice a qué **nivel** se especi
          "—",
          "Bienes y servicios y transferencias **corrientes** son operaciones **corrientes**; inversiones reales y transferencias **de capital**, operaciones **de capital**. El último nivel (subconcepto) es potestativo: los conceptos «podrán dividirse»."))}
 
-{unidad("1.2 A qué nivel se especifican los créditos (LGP, art. 43.1)",
-  lit("LGP", "Artículo 43", ["los gastos corrientes en bienes y servicios, que se especificarán a nivel de artículo", "las inversiones reales a nivel de capítulo"], solo=[1]),
+{unidad("1.2 A qué nivel se especifican los créditos (LGP, art. 43)",
+  lit("LGP", "Artículo 43", ["los gastos corrientes en bienes y servicios, que se especificarán a nivel de artículo", "las inversiones reales a nivel de capítulo"], solo=[1, 2, 3, 4, 5, 6, 7, 8]),
   fichab("Nivel de especificación de los créditos en el presupuesto del Estado",
          "—",
          ["Regla general: **concepto**", "Gastos de personal y **gastos corrientes en bienes y servicios**: **artículo**", "**Inversiones reales**: **capítulo**", "Excepciones del art. 43.2: atenciones protocolarias, gastos reservados, arrendamientos de edificios, créditos ampliables, nominativos, los que fije la Ley de Presupuestos y créditos extraordinarios"],
@@ -182,7 +182,7 @@ T.ap("s5", "I.5 Cuadro de los cuatro capítulos del epígrafe (esquema)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Qué son los anticipos de caja fija y qué límites tienen? (LGP, art. 78; RD 725/1989)", donde(
+T.ap("bII", "II. ¿Qué son los anticipos de caja fija y qué límites tienen? (LGP, art. 78 y disp. adicional quinta.3; RD 725/1989)", donde(
   "Segunda pregunta. Muchos gastos del capítulo 2 son pequeños y repetitivos (dietas, material, locomoción). Para pagarlos al momento, la caja recibe un **fondo permanente** que se repone a medida que se gasta: el **anticipo de caja fija**.",
   ["1 Concepto y normas reguladoras (LGP, art. 78.1; RD 725/1989, art. 1)", "2 Límites cuantitativos (LGP, art. 78.3; RD 725/1989, art. 2; disp. adicional quinta.3) y fondos de maniobra", "3 Concesión, situación y disposición de los fondos (RD 725/1989, arts. 3, 4 y 6)", "4 Gestión de los pagos y contabilidad (RD 725/1989, arts. 5 y 8)"]))
 
@@ -290,7 +290,7 @@ T.ap("s9", "II.4 Gestión de los pagos y contabilidad (RD 725/1989, arts. 5 y 8)
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cuándo se libran pagos «a justificar» y cómo se gestionan? (LGP, art. 79; RD 640/1987)", donde(
+T.ap("bIII", "III. ¿Cuándo se libran pagos «a justificar» y cómo se gestionan? (LGP, art. 79 y disp. adicional octava; RD 640/1987)", donde(
   "Tercera pregunta. La regla es que la obligación se reconoce y se paga **después** de acreditar la prestación. El pago «a justificar» es la **excepción**: el dinero sale antes y los documentos se presentan después. A diferencia de la caja fija, se **aplica al presupuesto** desde el principio.",
   ["1 Cuándo se libra un pago a justificar (LGP, art. 79.1 y 2; disp. adicional octava)", "2 Ejercicio al que se imputa y calendario (LGP, art. 79.3)", "3 Normas, fiscalización y cajas pagadoras (RD 640/1987, arts. 1, 3 y 4)", "4 Situación de los fondos y pagos (RD 640/1987, arts. 5 a 7)"]))
 
@@ -428,7 +428,7 @@ T.ap("s15", "IV.2 Cuenta justificativa de los pagos a justificar (LGP, art. 79.4
 T.ap("s16", "IV.3 Contabilidad, control y cuentas en el RD 640/1987 (arts. 8, 9, 10 y 12)", f"""
 {unidad("3.1 Libro registro y estados de tesorería (RD 640/1987, arts. 8 y 9)",
   lit("RD640", "a8", ["Libro registro de órdenes de pago «a justificar»"], solo=[2, 3]),
-  lit("RD640", "a9", ["en las primeras quincenas de los meses de enero, abril, julio y octubre"], solo=[1, 4]),
+  lit("RD640", "a9", ["en las primeras quincenas de los meses de enero, abril, julio y octubre"], solo=[1, 2, 3, 4]),
   fichab("Control de la situación de los fondos librados a justificar",
          "Oficinas de contabilidad (Libro registro, modelo de la IGAE); Jefes de Unidad y Cajeros (estados de tesorería); **Interventores Delegados** (comprobaciones)",
          ["Libro registro de órdenes de pago a justificar, clasificadas por ejercicios y cajas", "Estados de situación de tesorería, como mínimo trimestrales"],

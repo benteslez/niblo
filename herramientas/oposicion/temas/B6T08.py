@@ -112,7 +112,7 @@ T.ap("s1", "I.1 Básicas, complementarias y pagas extraordinarias (TREBEP, arts.
          "Las básicas son «única y exclusivamente» sueldo y trienios: el complemento de destino **no** es básico. Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("1.3 La versión de la Ley 30/1984: devengo de las pagas extraordinarias (art. 23.2 c y 23.4)",
-  lit("L30", "aveintitres", ["se devengarán los meses de junio y diciembre", "Los funcionarios percibirán las indemnizaciones correspondientes por razón del servicio"], solo=[7, 15]),
+  lit("L30", "aveintitres", ["se devengarán los meses de junio y diciembre", "Los funcionarios percibirán las indemnizaciones correspondientes por razón del servicio"], solo=[2, 7, 15]),
   fichab("Cuándo se devengan las pagas extraordinarias y el derecho a indemnizaciones",
          "Funcionarios a los que se aplica el régimen retributivo de la Ley 30/1984 (Administración del Estado: tema V.6)",
          "Dos pagas al año, de **al menos** una mensualidad del sueldo y trienios",
@@ -367,8 +367,8 @@ T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resoluci�
          "Los plazos del sistema de liquidación directa de cuotas",
          "El documento contable de las cuotas sociales se expide a favor de la **Habilitación**, no de la Tesorería General."))}
 
-{unidad("2.4 Reintegro de anticipos: descuento en nómina (regla 93.3; Resolución de 2010, ap. A.4.4)",
-  lit("OIOC", "regla93", ["se efectuará el oportuno descuento en la nómina de personal en activo"], solo=[3]),
+{unidad("2.4 Concesión y reintegro de anticipos: descuento en nómina (regla 93.1 y 3; Resolución de 2010, ap. A.4.4)",
+  lit("OIOC", "regla93", ["se efectuará el oportuno descuento en la nómina de personal en activo"], solo=[1, 3]),
   res([69], "apartado A.4.4", ["a las retribuciones básicas líquidas"]),
   fichab("Anticipos reintegrables a funcionarios",
          "El centro gestor concede; la nómina descuenta",

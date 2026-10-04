@@ -448,8 +448,8 @@ T.ap("s15", "V.2 Documentos del Presupuesto de Gastos (Orden de 1-2-1996, aparta
          "—",
          "Las operaciones de desglose usan el «**Documento de desglose**» (cayó en 2025, → Cierre 1). Las modificaciones de crédito son del tema VI.3."))}
 
-{unidad("2.3 Fases de autorización y compromiso: A, D y AD (apartado sexto.1 e) a j)",
-  lit("ODOC", "sexto", ["Se utilizará en las operaciones de autorización del gasto imputables al Presupuesto corriente", "Se utilizará en las operaciones de compromiso de gasto imputables al Presupuesto corriente", "Se utilizará en operaciones de autorización del gasto imputables a Presupuestos futuros"], solo=[8, 9, 10, 11, 12, 13]),
+{unidad("2.3 Fases de autorización y compromiso: A, D y AD (apartado sexto.1 e) a l´)",
+  lit("ODOC", "sexto", ["Se utilizará en las operaciones de autorización del gasto imputables al Presupuesto corriente", "Se utilizará en las operaciones de compromiso de gasto imputables al Presupuesto corriente", "Se utilizará en operaciones de autorización del gasto imputables a Presupuestos futuros"], solo=[8, 9, 10, 11, 12, 13, 14, 15, 16]),
   fichab("Documentos de las fases A y D",
          "—",
          ["**A**: autorización", "**D**: compromiso", "**AD**: autorización y compromiso combinados", "Cada uno, de ejercicio **corriente** o de ejercicios **posteriores** (presupuestos futuros); y de tramitación anticipada (letras k a l´)"],
@@ -464,8 +464,8 @@ T.ap("s15", "V.2 Documentos del Presupuesto de Gastos (Orden de 1-2-1996, aparta
          "—",
          "Fuera de la Deuda del Estado no se usa el documento O suelto: el reconocimiento va siempre con la propuesta de pago (**OK**)."))}
 
-{unidad("2.5 Quién autoriza los documentos (apartado séptimo.1)",
-  lit("ODOC", "septimo", ["serán autorizados por el Director General de Presupuestos"], solo=[1]),
+{unidad("2.5 Quién autoriza los documentos (apartado séptimo.1 y 2)",
+  lit("ODOC", "septimo", ["serán autorizados por el Director General de Presupuestos"], solo=[1, 2]),
   fichab("Autorización de los documentos del Presupuesto de Gastos",
          ["MC y RC-102: el **Director General de Presupuestos**", f"Los demás: {c('ODOC', 'septimo', 'el responsable del órgano que tenga encomendada la gestión de los créditos')} (con excepciones: RC de oficio, jefe de contabilidad; PR, quien aprobó la prescripción)"],
          "Mediante firma electrónica (apartado cuarto)",
@@ -607,8 +607,8 @@ T.ap("s20", "VI.2 Gestión de la tesorería: información, criterios, cuentas y 
 """, 2)
 
 T.ap("s21", "VI.3 Ordenación del pago y pago material (Orden PRE/1576/2002, apartados octavo y noveno)", f"""
-{unidad("3.1 Criterios de ordenación y retención de propuestas (apartado octavo.2.2)",
-  lit("OPAGO", "octavo", ["aplicará los criterios de ordenación de pagos previstos en el artículo 107 de la Ley 47/2003", "quedarán retenidas a la espera de que se efectúe su ordenación en un proceso posterior"], solo=[9, 10]),
+{unidad("3.1 Actuaciones previas, criterios de ordenación y retención de propuestas (apartado octavo.2.1 y 2.2)",
+  lit("OPAGO", "octavo", ["aplicará los criterios de ordenación de pagos previstos en el artículo 107 de la Ley 47/2003", "quedarán retenidas a la espera de que se efectúe su ordenación en un proceso posterior"], solo=[5, 6, 7, 8, 9, 10]),
   fichab("La fase d): ordenación del pago",
          "La **Dirección General del Tesoro y Política Financiera**",
          "Completa y valida las propuestas con el **Fichero Central de Terceros**; aplica los criterios del art. 107 LGP y de gestión eficiente de tesorería; selecciona las que ordena",
