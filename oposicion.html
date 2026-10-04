@@ -675,8 +675,10 @@ mark.busq { background:color-mix(in srgb, #facc15 50%, transparent); border-radi
 mark.busq.actual { background:#f59e0b; color:#111; box-shadow:0 0 0 2px #f59e0b; }
 /* Resaltados: cinco colores; sin color guardado (los antiguos), rosa. */
 mark.res { --rc:#fb7185; background:color-mix(in srgb, var(--rc) 32%, transparent); border-bottom:2px solid var(--rc); border-radius:2px; cursor:pointer; padding:0 1px; color:inherit; }
-[data-col="amarillo"] { --rc:#eab308; } [data-col="verde"] { --rc:#22c55e; } [data-col="azul"] { --rc:#3b82f6; }
-[data-col="rosa"] { --rc:#fb7185; } [data-col="morado"] { --rc:#a855f7; }
+/* Mismo peso que «mark.res» (va después): si no, el rosa por defecto tapaba el color elegido. */
+mark.res[data-col="amarillo"], [data-col="amarillo"] { --rc:#eab308; } mark.res[data-col="verde"], [data-col="verde"] { --rc:#22c55e; }
+mark.res[data-col="azul"], [data-col="azul"] { --rc:#3b82f6; } mark.res[data-col="rosa"], [data-col="rosa"] { --rc:#fb7185; }
+mark.res[data-col="morado"], [data-col="morado"] { --rc:#a855f7; }
 .barra-resaltar {
   position:fixed; z-index:60; display:flex; align-items:center; gap:6px; padding:5px 6px 5px 5px;
   border-radius:var(--r-pill); background:var(--text); color:var(--text-inv); box-shadow:var(--sh-3);
@@ -3567,7 +3569,12 @@ function seleccionEnApuntes() {
   const nodo = r.commonAncestorContainer.nodeType === 1 ? r.commonAncestorContainer : r.commonAncestorContainer.parentNode;
   const cuerpo = nodo.closest && nodo.closest("[data-cuerpo]");
   if (!cuerpo || !cuerpo.closest(".estudio-main")) return null;
-  const txt = sel.toString().replace(/\s+/g, " ").trim();
+  // Palabras completas: si la selección empieza o acaba a mitad de palabra, se amplía hasta su borde.
+  const letra = c => /[0-9A-Za-zÀ-ÿ]/.test(c || "");
+  const ini = r.startContainer, fin = r.endContainer;
+  if (ini.nodeType === 3) { let i = r.startOffset; while (i > 0 && letra(ini.nodeValue[i - 1]) && letra(ini.nodeValue[i])) i--; r.setStart(ini, i); }
+  if (fin.nodeType === 3) { let j = r.endOffset; while (j < fin.nodeValue.length && letra(fin.nodeValue[j - 1]) && letra(fin.nodeValue[j])) j++; r.setEnd(fin, j); }
+  const txt = r.toString().replace(/\s+/g, " ").trim();
   if (txt.length < 2) return null;
   return { r, cuerpo, txt:txt.slice(0, 400) };
 }
