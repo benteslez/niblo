@@ -89,7 +89,7 @@ El art. 34 reúne en dos apartados los **elementos** del acto: quién lo dicta (
          f"{c('L39', 'Artículo 34', 'el órgano competente')} (elemento subjetivo)",
          ["::Elementos que exige la ley:", "Órgano **competente**", "**Requisitos** y **procedimiento** establecidos", "**Contenido** ajustado al ordenamiento jurídico, **determinado** y **adecuado a los fines**"],
          "—",
-         "Iniciación **de oficio o a instancia** del interesado. Contenido «determinado y **adecuado a los fines**»: si se aparta de ellos, la ley habla de **desviación de poder** (anulabilidad, art. 48.1 → III.1.2)."))}
+         f"Iniciación **de oficio o a instancia** del interesado. Contenido «determinado y **adecuado a los fines**». La LJCA define la desviación de poder como {c('LJCA', 'Artículo 70', 'el ejercicio de potestades administrativas para fines distintos de los fijados por el ordenamiento jurídico')} (art. 70.2); en la Ley 39/2015 es causa de **anulabilidad** (art. 48.1 → III.1.2)."))}
 
 {unidad("2.2 Forma (art. 36)",
   lit("L39", "Artículo 36", ["por escrito a través de medios electrónicos", "a menos que su naturaleza exija otra forma más adecuada de expresión y constancia", "por el titular del órgano inferior o funcionario que la reciba oralmente", "podrán refundirse en un único acto"]),
@@ -113,7 +113,7 @@ El art. 34 reúne en dos apartados los **elementos** del acto: quién lo dicta (
          "Los órganos administrativos que la tengan atribuida **como propia**",
          ["Es **irrenunciable**", "Excepciones al ejercicio por el titular: **delegación** o **avocación**, en los términos de la ley", "Delegación de competencias, encomienda de gestión, delegación de firma y suplencia **no alteran la titularidad**"],
          "—",
-         "Si el órgano es **manifiestamente incompetente por razón de la materia o del territorio**, el acto es **nulo** (art. 47.1 b → III.1.1); las demás incompetencias pueden convalidarse (art. 52.3 → III.2.4)."))}
+         "Si el órgano es **manifiestamente incompetente por razón de la materia o del territorio**, el acto es **nulo** (art. 47.1 b → III.1.1); la incompetencia **no determinante de nulidad** puede convalidarla el órgano competente cuando sea **superior jerárquico** del que dictó el acto (art. 52.3 → III.2.4)."))}
 """, 2)
 
 T.ap("s3", "I.3 Cuadro de clases y elementos (esquema)", f"""
@@ -167,7 +167,7 @@ T.ap("s4", "II.1 Ejecutividad y efectos (arts. 38 y 39)", f"""
          "—",
          ["Regla: efectos **desde la fecha en que se dicten**, salvo que el acto disponga otra cosa", "Se **presumen válidos**", "Eficacia **demorada**: cuando lo exija el **contenido** del acto o esté supeditada a **notificación, publicación o aprobación superior**"],
          "Desde la fecha en que se dicta",
-         "Efectos desde que se **dicta**, no desde que se notifica (salvo que la eficacia esté supeditada a la notificación). La presunción es de **validez**: quien la discute tiene que impugnar el acto."))}
+         "Efectos desde que se **dicta**, no desde que se notifica (salvo que la eficacia esté supeditada a la notificación). Lo que se presume es la **validez** del acto."))}
 
 {unidad("1.3 Eficacia retroactiva (art. 39.3)",
   lit("L39", "Artículo 39", ["Excepcionalmente", "cuando se dicten en sustitución de actos anulados", "cuando produzcan efectos favorables al interesado", "no lesione derechos o intereses legítimos de otras personas"], solo=[3]),
@@ -249,7 +249,7 @@ T.ap("s6", "III.1 Nulidad de pleno derecho y anulabilidad (arts. 47 y 48; Ley 40
          "Actos de la Administración",
          ["Regla: **cualquier infracción** del ordenamiento jurídico, **incluso la desviación de poder**", "**Defecto de forma**: solo si faltan requisitos formales **indispensables** para alcanzar su fin o hay **indefensión**", "Actuación **fuera de plazo**: solo si lo impone la **naturaleza** del término o plazo"],
          "—",
-         "La **desviación de poder** es causa de **anulabilidad**, no de nulidad. Defecto de forma y retraso son, por regla, **irregularidades no invalidantes**: solo anulan en los casos tasados."))}
+         "La **desviación de poder** es causa de **anulabilidad**, no de nulidad. El defecto de forma y la actuación fuera de plazo solo anulan en los casos del 48.2 y del 48.3."))}
 
 {unidad("1.3 Actuar con motivo de abstención no invalida necesariamente el acto (Ley 40/2015, art. 23.4)",
   lit("L40", "Artículo 23", ["no implicará, necesariamente, y en todo caso, la invalidez"], solo=[9]),

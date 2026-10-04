@@ -85,10 +85,10 @@ El art. 1 del Código Civil (redacción del título preliminar de 1974) es la re
   fichab("Integración de los tratados en el ordenamiento interno",
          "—",
          ["Los tratados **válidamente celebrados**, una vez **publicados oficialmente** en España, forman parte del ordenamiento interno (CE 96.1)", "Sin publicación íntegra en el BOE, sus normas **no** son de aplicación directa (CC 1.5)", "Sus disposiciones solo se derogan, modifican o suspenden según el propio tratado o el Derecho internacional general (CE 96.1)"],
-         "Cesión de competencias a una organización internacional (art. 93): autorización **mediante ley orgánica**",
+         "Tratados que atribuyan a una organización o institución internacional el ejercicio de competencias derivadas de la Constitución (art. 93): autorización **mediante ley orgánica**",
          "La clave es la **publicación** (íntegra, en el BOE), no la firma ni la autorización de las Cortes. Se desarrollan en el tema IV.3; el Derecho de la Unión Europea, en el bloque II del programa."))}
 
-{unidad("1.5 La jurisprudencia y el deber de resolver (CC, art. 1.6 y 7)",
+{unidad("1.5 La jurisprudencia y el deber de resolver (CC, arts. 1.6 y 1.7)",
   lit("CC", "a1", ["complementará el ordenamiento jurídico", "de modo reiterado", "el Tribunal Supremo", "el deber inexcusable de resolver en todo caso", "ateniéndose al sistema de fuentes establecido"], solo=[7, 8]),
   fichab("Papel de la jurisprudencia y obligación de los jueces",
          f"{c('CC', 'a1', 'el Tribunal Supremo')} (jurisprudencia); {c('CC', 'a1', 'Los Jueces y Tribunales')} (deber de resolver)",
@@ -249,7 +249,7 @@ T.ap("s8", "II.3 Ley y reglamento: límites y consecuencias (Ley 39/2015, arts. 
   lit("L39", "Artículo 128", ["no podrán vulnerar la Constitución o las leyes", "no podrán tipificar delitos, faltas o infracciones administrativas, establecer penas o sanciones, así como tributos"], solo=[2]),
   fichab("Límites de los reglamentos frente a la ley",
          "Los reglamentos y disposiciones administrativas",
-         ["No pueden **vulnerar** la Constitución o las leyes", "No pueden regular materias de la competencia de las **Cortes** o de las **Asambleas Legislativas** autonómicas", "Sin perjuicio de su función de **desarrollo o colaboración** con la ley, no pueden tipificar delitos, faltas o infracciones, establecer penas o sanciones, tributos, exacciones parafiscales u otras prestaciones personales o patrimoniales de carácter público"],
+         ["No pueden **vulnerar** la Constitución o las leyes", "No pueden regular materias de la competencia de las **Cortes** o de las **Asambleas Legislativas** autonómicas", "Sin perjuicio de su función de **desarrollo o colaboración** con la ley, no pueden tipificar delitos, faltas o infracciones, establecer penas o sanciones, tributos, exacciones parafiscales u otras cargas o prestaciones personales o patrimoniales de carácter público"],
          "—",
          "La lista de lo vedado incluye **infracciones administrativas** y **sanciones**, no solo delitos y penas. Límites del reglamento: tema IV.3."))}
 
@@ -357,7 +357,7 @@ T.ap("s11", "III.1 Principios de buena regulación (Ley 39/2015, art. 129; Ley 5
          "Las Administraciones Públicas",
          ["**Transparencia**: acceso sencillo, universal y actualizado a la normativa y a los documentos de su elaboración (art. 7 de la Ley 19/2013); objetivos y justificación en el preámbulo o exposición de motivos; **participación activa** de los destinatarios", "**Eficiencia**: evitar **cargas administrativas innecesarias o accesorias** y racionalizar la gestión de los recursos públicos", "Si afecta a gastos o ingresos públicos: **cuantificar y valorar** sus repercusiones"],
          "Supeditación a la **estabilidad presupuestaria** y **sostenibilidad financiera** (129.7)",
-         "«Cargas **innecesarias o accesorias**» es **eficiencia** (129.6), no proporcionalidad."))}
+         f"Evitar {c('L39', 'Artículo 129', 'cargas administrativas **innecesarias o accesorias**')} es **eficiencia** (129.6), no proporcionalidad."))}
 """, 2)
 
 T.ap("s12", "III.2 Evaluación, publicidad y planificación normativa (Ley 39/2015, arts. 130 a 132; Ley 50/1997, art. 25; CC, art. 2.1)", f"""
@@ -382,7 +382,7 @@ T.ap("s12", "III.2 Evaluación, publicidad y planificación normativa (Ley 39/20
   lit("L39", "Artículo 132", ["Anualmente", "en el Portal de la Transparencia"]),
   lit("LGOB", "a25", ["El Gobierno aprobará anualmente un Plan Normativo", "antes del 30 de abril"], solo=[1, 3, 4]),
   fichab("El Plan Anual Normativo",
-         "Cada Administración Pública lo hace público; en el Estado, lo aprueba el **Gobierno** (Consejo de Ministros), a propuesta del **Ministro de la Presidencia**",
+         "Cada Administración Pública lo hace público; en el Estado, lo aprueba el **Consejo de Ministros**: lo coordina el **Ministerio de la Presidencia** y lo eleva el **Ministro de la Presidencia** (LGOB 25.4)",
          ["Contiene las iniciativas legales o reglamentarias que se elevarán para su aprobación **el año siguiente**", "Se publica en el **Portal de la Transparencia** (132.2)", "Propuesta normativa no incluida en el Plan: hay que **justificarlo** en la Memoria del Análisis de Impacto Normativo (LGOB 25.3)"],
          "**Anual**; en el Estado, el Ministro de la Presidencia lo eleva al Consejo de Ministros **antes del 30 de abril** (LGOB 25.4)",
          "El Plan recoge las iniciativas del **año siguiente**. El art. 132 no rige para las Comunidades Autónomas (STC 55/2018 → III.4)."))}
@@ -652,7 +652,7 @@ T.glos("Plan Anual Normativo", "Plan que recoge las iniciativas legales o reglam
 T.glos("Consulta pública", "Trámite previo a la elaboración del proyecto o anteproyecto de ley o de reglamento, a través del portal web, sobre problemas, necesidad y oportunidad, objetivos y alternativas (Ley 39/2015, 133.1).", "s13", "Participación")
 
 # Cronología (fechas de los metadatos del BOE)
-T.hito("1889", "Real Decreto de 24 de julio de 1889 por el que se publica el Código Civil (BOE/Gaceta de 25-7-1889)", "Código Civil: art. 1 sobre las fuentes", "normativo", "s1")
+T.hito("1889", "Real Decreto de 24 de julio de 1889 por el que se publica el Código Civil (Gaceta de Madrid de 25-7-1889)", "Código Civil: art. 1 sobre las fuentes", "normativo", "s1")
 T.hito("1974", "Decreto 1836/1974, de 31 de mayo, texto articulado del título preliminar del Código Civil (BOE de 9-7-1974)", "Redacción vigente del art. 1 del Código Civil", "normativo", "s1")
 T.hito("1978", "Constitución Española (27-12-1978; BOE de 29-12-1978)", "Arts. 9.3 (jerarquía normativa), 97 (potestad reglamentaria) y 149.1.8.ª (fuentes del Derecho)", "normativo", "s6")
 T.hito("1985", "Ley 7/1985, de 2 de abril, reguladora de las Bases del Régimen Local (BOE de 3-4-1985)", "Art. 4.1 a): potestad reglamentaria de los entes locales", "normativo", "s4")

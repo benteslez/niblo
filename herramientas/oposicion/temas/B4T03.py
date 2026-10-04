@@ -107,7 +107,7 @@ T.ap("s2", "I.2 Los titulares de la potestad reglamentaria (Ley 39/2015, art. 12
          f"{c('LRBRL', 'Artículo 4', 'los municipios, las provincias y las islas')}",
          f"{c('LRBRL', 'Artículo 4', 'dentro de la esfera de sus competencias')}; corresponde {c('LRBRL', 'Artículo 4', 'en todo caso')}",
          "Las ordenanzas locales se aprueban por el Pleno, con información pública de **treinta días** como mínimo (Ley 7/1985, art. 49)",
-         "La tienen «en su calidad de Administraciones públicas de carácter **territorial**»: municipios, provincias e **islas**."))}
+         f"La tienen municipios, provincias e **islas**: {c('LRBRL', 'Artículo 4', 'En su calidad de Administraciones públicas de carácter **territorial**')}."))}
 
 {resumen([
   "La potestad reglamentaria es del **Gobierno** «de acuerdo con la Constitución y las leyes» (97 CE), con las reglas del Título VI de la Ley 39/2015 (Ley 50/1997, art. 22).",
@@ -149,6 +149,12 @@ T.ap("s3", "II.1 Forma y jerarquía de los reglamentos del Gobierno (Ley 50/1997
 
 P3_129 = f"""El párrafo tercero del art. 129.4 se cita aquí **sin los incisos anulados** (nota del BOE, abajo): {c('L39', 'Artículo 129', 'Las habilitaciones para el desarrollo reglamentario de una ley serán conferidas, con carácter general, al Gobierno')} … {c('L39', 'Artículo 129', 'La atribución directa a los titulares de los departamentos ministeriales')} … {c('L39', 'Artículo 129', 'o a otros órganos dependientes o subordinados de ellos, tendrá carácter excepcional y deberá justificarse en la ley habilitante')}."""
 
+NOTA_129 = f"""> [[BOE|https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565]]
+> **Nota del BOE al artículo 129 de la Ley 39/2015 (texto consolidado) · fuente oficial, no es texto legal**
+> {nota('L39', 'a129', 'Se declara contrario al orden constitucional de competencias en los términos del f.j. 7 b), salvo los párrafos segundo y tercero del apartado 4, y la inconstitucionalidad y nulidad de los incisos destacados en negrita del párrafo tercero del apartado 4, por Sentencia del TC 55/2018, de 24 de mayo.')}
+
+*Los incisos destacados en el texto consolidado del BOE son «o Consejo de Gobierno respectivo» y «o de las consejerías del Gobierno»: por eso no se reproducen.*"""
+
 T.ap("s4", "II.2 Reglamentos ejecutivos y habilitaciones (LO 3/1980, art. 22; Ley 39/2015, art. 129.4)", f"""
 {unidad("2.1 Reglamentos que se dictan en ejecución de las leyes o de tratados: dictamen del Consejo de Estado (LO 3/1980, art. 22)",
   lit("LO3_1980", "aveintidos", ["Disposiciones reglamentarias que se dicten en ejecución, cumplimiento o desarrollo de tratados", "Reglamentos o disposiciones de carácter general que se dicten en ejecución de las Leyes, así como sus modificaciones"], solo=[1, 3, 4], titulo="Artículo veintidós, apartados Dos y Tres (LO 3/1980, del Consejo de Estado)"),
@@ -161,17 +167,12 @@ T.ap("s4", "II.2 Reglamentos ejecutivos y habilitaciones (LO 3/1980, art. 22; Le
 {unidad("2.2 A quién habilita la ley para desarrollarla (Ley 39/2015, art. 129.4, párrafos tercero y cuarto)",
   lit("L39", "Artículo 129", ["cuando la naturaleza de la materia así lo exija"], solo=[7], titulo="Artículo 129.4, párrafo cuarto (Ley 39/2015)"),
   P3_129,
+  NOTA_129,
   fichab("Habilitación legal para dictar reglamentos de desarrollo",
          ["Regla: el **Gobierno**", "Excepción: los **titulares de los departamentos ministeriales** u otros órganos dependientes o subordinados, si lo justifica la ley habilitante", "Autoridades Independientes u otros organismos con esta potestad, cuando la naturaleza de la materia lo exija"],
          "La habilitación la confiere **la ley** que se desarrolla",
          "—",
          "La atribución directa a los **Ministros** es **excepcional** y debe justificarse **en la ley habilitante**."))}
-
-> [[BOE|https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565]]
-> **Nota del BOE al artículo 129 de la Ley 39/2015 (texto consolidado) · fuente oficial, no es texto legal**
-> {nota('L39', 'a129', 'Se declara contrario al orden constitucional de competencias en los términos del f.j. 7 b), salvo los párrafos segundo y tercero del apartado 4, y la inconstitucionalidad y nulidad de los incisos destacados en negrita del párrafo tercero del apartado 4, por Sentencia del TC 55/2018, de 24 de mayo.')}
-
-*Los incisos destacados en el texto consolidado del BOE son «o Consejo de Gobierno respectivo» y «o de las consejerías del Gobierno»: por eso no se reproducen.*
 """, 2)
 
 T.ap("s5", "II.3 Cuadro de las clases de reglamentos (esquema)", f"""
@@ -184,7 +185,7 @@ T.ap("s5", "II.3 Cuadro de las clases de reglamentos (esquema)", f"""
 | Jerarquía (Estado) | 1.º Reales Decretos · 2.º Órdenes Ministeriales | Ley 50/1997, art. 24.2 (→ II.1.2) |
 | Relación con la ley | «Reglamentos … que se dicten en ejecución de las Leyes» (dictamen del Consejo de Estado) y «demás disposiciones reglamentarias que procedan» | LO 3/1980, art. 22.Tres; Ley 50/1997, art. 5.1 h) (→ II.2.1) |
 | Ejecución de tratados y Derecho de la UE | Disposiciones reglamentarias en ejecución de tratados y del derecho comunitario europeo | LO 3/1980, art. 22.Dos (→ II.2.1) |
-| Normas organizativas | Las «normas presupuestarias u organizativas» pueden prescindir de la consulta pública | Ley 39/2015, art. 133.4; Ley 50/1997, art. 26.2 a) (→ III.2.3) |
+| Normas organizativas | Las «normas presupuestarias u organizativas» pueden prescindir de la consulta pública | Ley 39/2015, art. 133.4; Ley 50/1997, art. 26.2 a) (→ III.2.3 y III.3.3) |
 
 {resumen([
   "Formas (Ley 50/1997, art. 24.1): **Real Decreto** (del Presidente o acordado en Consejo de Ministros), **Acuerdo** del Consejo de Ministros, **Orden Ministerial**.",
@@ -421,7 +422,7 @@ T.ap("s13", "V.2 Quién se obliga y cuándo hace falta autorización de las Cort
   lit("CE", "Artículo 63", ["manifestar el consentimiento del Estado para obligarse internacionalmente por medio de tratados"], solo=[2]),
   fichab("Manifestación del consentimiento",
          c("CE", "Artículo 63", "Al Rey"),
-         f"{c('CE', 'Artículo 63', 'de conformidad con la Constitución y las leyes')}; lo acuerda el **Consejo de Ministros** (Ley 25/2014, art. 16.1) y el Rey firma los instrumentos de ratificación y adhesión con el **refrendo del Ministro de Asuntos Exteriores** (art. 22)",
+         f"{c('CE', 'Artículo 63', 'de conformidad con la Constitución y las leyes')}; lo acuerda el **Consejo de Ministros** (Ley 25/2014, art. 16.1) y el Rey firma los instrumentos de ratificación y adhesión con el **refrendo del Ministro de Asuntos Exteriores y de Cooperación** (art. 22)",
          "—",
          "**Acuerda** el Consejo de Ministros; **manifiesta** el Rey."))}
 
@@ -446,7 +447,7 @@ T.ap("s13", "V.2 Quién se obliga y cuándo hace falta autorización de las Cort
   lit("L25_2014", "a15", ["autorizará la aplicación provisional, total o parcial", "no podrá autorizarse respecto de los tratados internacionales a que se refiere el artículo 93"], solo=[1, 2]),
   lit("L25_2014", "a17", ["elevará al Consejo de Estado", "la consulta acerca de la necesidad de autorización de las Cortes Generales"], solo=[1, 2]),
   fichab("Pasos internos antes de obligarse",
-         ["**Consejo de Ministros** (autoriza la aplicación provisional; remite el tratado a las Cortes)", "**Ministerio de Asuntos Exteriores** (eleva la consulta al Consejo de Estado)", "**Consejo de Estado** (dictamen sobre la necesidad de autorización)"],
+         ["**Consejo de Ministros** (autoriza la aplicación provisional; remite el tratado a las Cortes)", "**Ministerio de Asuntos Exteriores y de Cooperación** (eleva la consulta al Consejo de Estado)", "**Consejo de Estado** (dictamen sobre la necesidad de autorización)"],
          ["Aplicación provisional, total o parcial, antes de la entrada en vigor; el Ministerio de la Presidencia la comunica a las Cortes (15.1)", "Consulta al **Consejo de Estado** sobre si hace falta autorización de las Cortes (17.2)"],
          "—",
          "**No** cabe aplicación provisional de los tratados del **art. 93**. La consulta sobre la necesidad de autorización va a la **Comisión Permanente** del Consejo de Estado (LO 3/1980, art. 22.Uno)."))}
@@ -503,7 +504,7 @@ T.ap("s15", "V.4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civ
          "—",
          ["Publicación **íntegra** en el BOE, al tiempo de la entrada en vigor para España o **antes**", "Con aplicación provisional: publicación **inmediata**"],
          "—",
-         "Tres normas dicen lo mismo con palabras distintas: art. 96.1 CE («publicados oficialmente en España»), CC 1.5 («publicación íntegra en el BOE») y Ley 25/2014, art. 23.3."))}
+         f"Tres normas dicen lo mismo con palabras distintas: art. 96.1 CE («publicados oficialmente en España»), CC 1.5 ({c('CC', 'a1', 'publicación íntegra en el «Boletín Oficial del Estado»')}) y Ley 25/2014, art. 23.3."))}
 
 {unidad("4.4 Aplicación directa, ejecución y prevalencia (Ley 25/2014, arts. 30 y 31)",
   lit("L25_2014", "a30", ["serán de aplicación directa, a menos que de su texto se desprenda"]),
@@ -512,7 +513,7 @@ T.ap("s15", "V.4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civ
          ["El **Gobierno** remite a las Cortes los proyectos de ley necesarios", "Gobierno, Comunidades Autónomas y Ciudades de Ceuta y Melilla, en sus competencias, adoptan las medidas de ejecución"],
          ["**Aplicación directa**, salvo que el texto la condicione a leyes o reglamentos", "**Prevalencia** sobre cualquier norma interna en caso de conflicto, **salvo** las de **rango constitucional**"],
          "—",
-         "Prevalecen sobre las **leyes**, pero **no** sobre la **Constitución** (por eso el art. 95 exige reformarla antes)."))}
+         "Prevalecen sobre las **leyes**, pero **no** sobre la **Constitución**: un tratado contrario a ella exige la **previa revisión constitucional** (art. 95 → V.3.1)."))}
 """, 2)
 
 T.ap("s16", "V.5 Denuncia (art. 96.2 CE; Ley 25/2014, art. 37)", f"""
@@ -527,7 +528,7 @@ T.ap("s16", "V.5 Denuncia (art. 96.2 CE; Ley 25/2014, art. 37)", f"""
 {unidad("5.2 Denuncia y suspensión en la Ley 25/2014 (art. 37)",
   lit("L25_2014", "a37", ["podrá acordar la denuncia o la suspensión", "solo podrán ser denunciados previa autorización de las Cortes Generales", "informará inmediatamente a las Cortes Generales"], solo=[1, 3, 4]),
   fichab("Quién denuncia o suspende un tratado",
-         ["El **Consejo de Ministros**, a propuesta del Ministro de Asuntos Exteriores", "Las **Cortes Generales** autorizan la denuncia de los tratados de los arts. 93 y 94.1"],
+         ["El **Consejo de Ministros**, a propuesta del Ministro de Asuntos Exteriores y de Cooperación", "Las **Cortes Generales** autorizan la denuncia de los tratados de los arts. 93 y 94.1"],
          "Conforme a las normas del propio tratado o a las normas generales de Derecho Internacional",
          "—",
          "Los tratados de los arts. **93 y 94.1** solo se denuncian **previa autorización** de las Cortes. Del resto, el Gobierno **informa inmediatamente**."))}
@@ -779,7 +780,7 @@ T.glos("Aplicación provisional", "Aplicación, total o parcial, de un tratado a
 T.glos("Control previo de los tratados", "Requerimiento al Tribunal Constitucional del Gobierno o de cualquiera de las Cámaras para que declare si un tratado contradice la Constitución; la declaración es vinculante (art. 95 CE; LOTC, art. 78).", "s14", "Tratados")
 
 # Cronología (fechas de los metadatos del BOE)
-T.hito("1889", "Real Decreto de 24 de julio de 1889 por el que se publica el Código Civil (BOE de 25-7-1889)", "Art. 1: fuentes del ordenamiento, principios generales del derecho y publicación de los tratados", "normativo", "s10")
+T.hito("1889", "Real Decreto de 24 de julio de 1889 por el que se publica el Código Civil (Gaceta de Madrid de 25-7-1889)", "Art. 1: fuentes del ordenamiento, principios generales del derecho y publicación de los tratados", "normativo", "s10")
 T.hito("1978", "Constitución Española (27-12-1978; BOE de 29-12-1978)", "Arts. 93 a 97: tratados y potestad reglamentaria del Gobierno; art. 106.1: control judicial", "normativo", "s1")
 T.hito("1979", "Ley Orgánica 2/1979, de 3 de octubre, del Tribunal Constitucional (BOE de 5-10-1979)", "Art. 78: control previo de los tratados", "normativo", "s14")
 T.hito("1997", "Ley 50/1997, de 27 de noviembre, del Gobierno (BOE de 28-11-1997)", "Art. 24: forma y jerarquía de los reglamentos del Gobierno", "normativo", "s3")

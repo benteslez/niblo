@@ -22,8 +22,8 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 
 | Bloque | Pregunta | Constitución | Otras normas |
 |---|---|---|---|
-| **I** | ¿Qué es la ley y qué tipos hay? | Arts. 66.2, 91, 81 y 150 | — |
-| **II** | ¿Qué materias exigen ley? (reserva de ley) | Arts. 53.1, 81.1, 30.2, 31.3, 103.3, 133 | — |
+| **I** | ¿Qué es la ley y qué tipos hay? | Arts. 66.2, 91, 81, 82.1, 75.3 y 150 | — |
+| **II** | ¿Qué materias exigen ley? (reserva de ley) | Arts. 53.1, 81.1, 30.2, 31.3, 133 y 103.3 | — |
 | **III** | ¿Cómo legisla el Gobierno por delegación? (decreto legislativo) | Arts. 82 a 85 | Ley 50/1997, art. 24.1 a); LJCA, art. 1.1; LOTC, art. 27.2 |
 | **IV** | ¿Cómo legisla el Gobierno por urgencia? (decreto-ley) | Art. 86 | Reglamento del Congreso, art. 151 |
 
@@ -142,7 +142,7 @@ T.ap("s5", "II.1 La reserva de ley de los derechos (art. 53.1) y la de ley orgá
          "Las Cortes, mediante ley (orgánica si se trata del **desarrollo** de derechos fundamentales: art. 81.1)",
          f"La ley {c('CE', 'Artículo 53', 'en todo caso deberá respetar su contenido esencial')}",
          "—",
-         "Reserva de **ley** + límite del **contenido esencial**. Por eso el decreto-ley no puede **afectar** a los derechos del Título I (86.1 → IV.1)."))}
+         "Reserva de **ley** + límite del **contenido esencial**. Además, el decreto-ley no puede **afectar** a los derechos, deberes y libertades del Título I (86.1 → IV.1)."))}
 
 {unidad("1.2 La reserva de ley orgánica (art. 81.1)",
   lit("CE", "Artículo 81", ["Son leyes orgánicas"], solo=[1]),
@@ -219,7 +219,7 @@ T.ap("s8", "III.2 Ley de bases y texto articulado; ley ordinaria y texto refundi
          "Las Cortes",
          ["Ley de bases: objeto y alcance de la delegación, y principios y criterios (82.4)", "Autorización para refundir: ámbito normativo y si es mera formulación de un texto único o incluye **regularizar, aclarar y armonizar** (82.5)"],
          "—",
-         "«Regularizar, aclarar y armonizar» es propio del **texto refundido**, no del articulado."))}
+         f"La facultad de {c('CE', 'Artículo 82', 'regularizar, aclarar y armonizar')} es propia del **texto refundido**, no del articulado."))}
 
 {unidad("2.3 Lo que nunca puede hacer una ley de bases (art. 83)",
   lit("CE", "Artículo 83", ["Autorizar la modificación de la propia ley de bases", "Facultar para dictar normas con carácter retroactivo"]),
@@ -232,7 +232,7 @@ T.ap("s9", "III.3 Defensa de la delegación y nombre: decretos legislativos (art
 {unidad("3.1 El Gobierno puede oponerse a lo que contradiga la delegación (art. 84)",
   lit("CE", "Artículo 84", ["el Gobierno está facultado para oponerse a su tramitación", "proposición de ley para la derogación total o parcial de la ley de delegación"]),
   fichab("Protección de la delegación en vigor frente a proposiciones o enmiendas contrarias",
-         "El Gobierno (se opone); cualquier titular de la iniciativa (puede proponer derogar la delegación)",
+         f"El Gobierno (se opone); en tal supuesto, {c('CE', 'Artículo 84', 'podrá presentarse una proposición de ley para la derogación total o parcial de la ley de delegación')}",
          "Oposición a la tramitación; como salida, una proposición de ley que derogue total o parcialmente la ley de delegación",
          "—", "Afecta a **proposiciones de ley** y **enmiendas**, no a proyectos del propio Gobierno."))}
 
@@ -254,7 +254,7 @@ T.ap("s10", "III.4 El control del decreto legislativo (art. 82.6; LJCA, art. 1.1
   lit("LJCA", "Artículo 1", ["con los Decretos legislativos cuando excedan los límites de la delegación"], solo=[1]),
   fichab("Control del decreto legislativo por los jueces ordinarios", "Juzgados y Tribunales de lo contencioso-administrativo",
          "Conocen de los decretos legislativos **en lo que excedan** de la delegación", "—",
-         "Lo que excede de la delegación no tiene rango de ley: por eso puede controlarlo el juez ordinario."))}
+         f"El juez contencioso solo conoce de los decretos legislativos {c('LJCA', 'Artículo 1', 'cuando excedan los límites de la delegación')}; el control como norma con fuerza de ley es del TC (→ III.4.3)."))}
 
 {unidad("4.3 Tribunal Constitucional (LOTC, art. 27.2 b)",
   lit("LOTC", "aveintisiete", ["con fuerza de Ley", "En el caso de los Decretos legislativos"], solo=[2, 4]),
@@ -291,7 +291,7 @@ T.ap("s12", "IV.2 Convalidación o derogación por el Congreso (art. 86.2 y Regl
   fichab("Control parlamentario del decreto-ley", "El **Congreso de los Diputados** (convocado al efecto si no está reunido); el Senado no interviene",
          "Debate y votación de **totalidad**; el Congreso se pronuncia **expresamente**: convalidación o derogación",
          f"{c('CE', 'Artículo 86', 'en el plazo de los treinta días siguientes a su promulgación')}",
-         "**30 días** desde la **promulgación** (no desde la publicación). Solo el **Congreso**. Votación de **totalidad**, sin enmiendas."))}
+         "**30 días** desde la **promulgación** (no desde la publicación). Solo el **Congreso**. Debate y votación **de totalidad**."))}
 
 {unidad("2.2 Cómo se vota (Reglamento del Congreso, art. 151.1 a 3 y 6)",
   lit("RCD", "art151", ["en el Pleno de la Cámara o de la Diputación Permanente", "antes de transcurrir los treinta días siguientes a su promulgación", "Un miembro del Gobierno expondrá ante la Cámara las razones", "los votos afirmativos se entenderán favorables a la convalidación y los negativos favorables a la derogación", 'se publicará en el "Boletín Oficial del Estado"'], solo=[1, 2, 3, 6]),
@@ -485,7 +485,7 @@ T.glos("Convalidación", "Pronunciamiento expreso del Congreso, en los 30 días 
 # Cronología (fechas de los metadatos del BOE)
 T.hito("1978", "Constitución Española (27-12-1978; BOE de 29-12-1978)", "Arts. 81 a 86: ley orgánica, delegación legislativa y decreto-ley", "normativo", "s1")
 T.hito("1979", "Ley Orgánica 2/1979, de 3 de octubre, del Tribunal Constitucional (BOE de 5-10-1979)", "Art. 27.2: control de las normas con fuerza de ley", "normativo", "s10")
-T.hito("1982", "Reglamento del Congreso de los Diputados (publicado por Resolución de 24-2-1982; BOE de 5-3-1982)", "Art. 151: procedimiento de convalidación de los decretos-leyes", "normativo", "s12")
+T.hito("1982", "Reglamento del Congreso de los Diputados, aprobado por el Pleno el 10 de febrero de 1982 (BOE de 5-3-1982)", "Art. 151: procedimiento de convalidación de los decretos-leyes", "normativo", "s12")
 T.hito("1997", "Ley 50/1997, de 27 de noviembre, del Gobierno (BOE de 28-11-1997)", "Art. 24.1 a): forma de Real Decreto Legislativo y de Real Decreto-ley", "normativo", "s9")
 T.hito("1998", "Ley 29/1998, de 13 de julio, de la Jurisdicción Contencioso-administrativa (BOE de 14-7-1998)", "Art. 1.1: control de los decretos legislativos que exceden la delegación", "normativo", "s10")
 
