@@ -41,7 +41,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 - Cada artículo: primero el **texto literal del BOE** (con la etiqueta BOE) y debajo su **ficha** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen).
 - Los esquemas y cuadros comparativos **no son texto legal**: resumen los artículos citados.
 - Al final: **Cierre 1** (las preguntas oficiales de 2025 sobre este tema) y **Cierre 2** (repaso por bloques).
-- Lo que el tema VI.6 (gestión del gasto y su control) y el VI.5 (ejecución del gasto) explican con más detalle se remite allí en texto llano.
+- Lo que el tema VI.5 (ejecución del gasto) y el VI.6 (clases de gasto, anticipos de caja fija y pagos «a justificar») explican con más detalle se remite allí en texto llano.
 """)
 
 # =============================================================================
@@ -150,7 +150,7 @@ T.ap("s4", "II.2 Ámbito, principios y prerrogativas del control (LGP, arts. 143
          "El Interventor General y sus interventores delegados",
          ["Principios: **autonomía, ejercicio desconcentrado y jerarquía interna** (144.1)", "Plena autonomía e **independencia funcional** de los controladores (144.2)", "**Procedimiento contradictorio** en la función interventora: resolución de discrepancias del art. 155 (144.3 → III.4.2)", "Prerrogativas: recabar asesoramientos, informes y documentos (144.4) e interponer recursos y reclamaciones (144.5)"],
          "—",
-         "Los principios son **tres**: autonomía, ejercicio desconcentrado y **jerarquía interna** (el RD 2188/1995, art. 3.1, decía «procedimiento contradictorio» como tercero; la LGP lo trata en el apartado 3)."))}
+         f"Los principios son **tres**: autonomía, ejercicio desconcentrado y **jerarquía interna** (el RD 2188/1995, art. 3.1, enumera {c('RD2188', 'a3', 'autonomía funcional, ejercicio desconcentrado y procedimiento contradictorio')}; la LGP trata el procedimiento contradictorio en el apartado 3)."))}
 """, 2)
 
 T.ap("s5", "II.3 Deberes, colaboración e informes generales (LGP, arts. 145 a 147)", f"""
@@ -481,11 +481,12 @@ T.ap("s17", "V.2 La función fiscalizadora (LO 2/1982, arts. 9 a 14; Ley 7/1988,
 
 {unidad("2.2 La Cuenta General del Estado (LO 2/1982, art. 10; Ley 7/1988, art. 33.1)",
   lit("LOTCu", "adiez", ["por delegación, de las Cortes Generales", "dentro del plazo de seis meses", "El Pleno, oído el Fiscal, dictará la declaración definitiva"]),
+  lit("LGP", "a131", ["se formará por la Intervención General de la Administración del Estado", "antes del día 31 de octubre del año siguiente al que se refiera"], solo=[1]),
   lit("LFTCu", "a33", ["antes del día 31 de agosto del año siguiente", "dentro de los dos meses siguientes a su conclusión"], solo=[1]),
   fichab("Examen y comprobación de la Cuenta General del Estado",
-         ["Forma la cuenta: la **IGAE** (Ley 7/1988, art. 33.1; LGP, art. 125.2 d)", "Examina y comprueba: el Tribunal de Cuentas, por **delegación de las Cortes Generales**", "Declaración definitiva: el **Pleno**, oído el Fiscal"],
-         "La declaración se eleva a las Cámaras con la propuesta y se da traslado al Gobierno",
-         ["IGAE: ultima la cuenta antes del **31 de agosto** del año siguiente y la remite en **dos meses**", "Tribunal: **seis meses** desde que se rinde"],
+         ["Forma la cuenta: la **IGAE** (LGP, arts. 125.2 d y 131.1; Ley 7/1988, art. 33.1), que la eleva al **Gobierno** para su remisión al Tribunal", "Examina y comprueba: el Tribunal de Cuentas, por **delegación de las Cortes Generales**", "Declaración definitiva: el **Pleno**, oído el Fiscal"],
+         "La declaración se eleva a las Cámaras con la propuesta y se da traslado al Gobierno (lo repite la LGP, art. 132)",
+         ["Remisión al Tribunal: antes del **31 de octubre** del año siguiente (LGP, art. 131.1); la Ley 7/1988 (art. 33.1) dice: ultimarla antes del **31 de agosto** y remitirla en los **dos meses** siguientes", "Tribunal: **seis meses** desde que se rinde"],
          "Delegan las **Cortes** (no el Ministro de Hacienda) y el plazo es de **seis** meses. Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("2.3 Qué fiscaliza en particular y cómo expone los resultados (LO 2/1982, arts. 11 y 12)",
@@ -550,7 +551,7 @@ T.ap("s19", "V.4 El enjuiciamiento contable y la responsabilidad contable (LO 2/
   lit("LOTCu", "adiecisiete", ["necesaria e improrrogable, exclusiva y plena"], solo=[1]),
   lit("LOTCu", "adieciocho", ["es compatible respecto de unos mismos hechos con el ejercicio de la potestad disciplinaria y con la actuación de la jurisdicción penal", "la responsabilidad civil será determinada por la jurisdicción contable"]),
   fichab("Función jurisdiccional del Tribunal de Cuentas",
-         "Los Consejeros de Cuentas (primera o única instancia) y las Salas de la Sección de Enjuiciamiento",
+         "Los Consejeros de Cuentas (primera o única instancia) y las Salas de la Sección de Enjuiciamiento (LO 2/1982, arts. 24 y 25; Ley 7/1988, art. 52.1)",
          ["Sobre las cuentas de quienes recauden, intervengan, administren, custodien, manejen o utilicen bienes, caudales o efectos públicos (art. 15)", "Excluidos: asuntos del TC, contencioso-administrativos, delitos y cuestiones civiles, laborales o de otros órdenes (art. 16)", "Caracteres: **necesaria e improrrogable, exclusiva y plena** (art. 17.1)"],
          "—",
          "**Compatible** con la potestad disciplinaria y con la jurisdicción penal; si hay delito, la responsabilidad **civil** la fija la jurisdicción **contable** (art. 18)."))}
@@ -830,7 +831,7 @@ T.glos("Omisión de fiscalización", "Falta de la función interventora precepti
 T.glos("Control financiero permanente", "Verificación continua, a través de la intervención delegada, de la situación y funcionamiento económico-financiero de las entidades del sector público estatal (LGP, art. 157).", "s11", "Control financiero permanente")
 T.glos("Plan de Acción", "Documento de cada departamento ministerial con las medidas para corregir las deficiencias de los informes de control (LGP, arts. 161 y 166.3).", "s12", "Control financiero permanente")
 T.glos("Auditoría pública", "Verificación posterior y sistemática de la actividad económico-financiera del sector público estatal con procedimientos de revisión selectivos (LGP, art. 162).", "s13", "Auditoría pública")
-T.glos("Cuenta General del Estado", "Cuenta que forma la IGAE y que el Tribunal de Cuentas examina por delegación de las Cortes en seis meses (LO 2/1982, art. 10; Ley 7/1988, art. 33).", "s17", "Tribunal de Cuentas")
+T.glos("Cuenta General del Estado", "Cuenta que forma la IGAE, que el Gobierno remite al Tribunal de Cuentas antes del 31 de octubre del año siguiente y que este examina por delegación de las Cortes en seis meses (LGP, art. 131.1; LO 2/1982, art. 10; Ley 7/1988, art. 33).", "s17", "Tribunal de Cuentas")
 T.glos("Responsabilidad contable", "Obligación de indemnizar el menoscabo de caudales o efectos públicos causado por acción u omisión contraria a la ley; directa o subsidiaria (LO 2/1982, art. 38).", "s19", "Tribunal de Cuentas")
 T.glos("Alcance", "Saldo deudor injustificado de una cuenta o ausencia de numerario o de justificación en las cuentas de quien maneja caudales o efectos públicos (Ley 7/1988, art. 72.1).", "s19", "Tribunal de Cuentas")
 

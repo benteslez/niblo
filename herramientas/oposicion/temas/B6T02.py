@@ -161,7 +161,7 @@ T.ap("s4", "I.4 La prórroga de los Presupuestos (art. 134.4 CE; LGP, art. 38)",
 
 # =============================================================================
 T.ap("bII", "II. ¿Con qué principios se programa y se gestiona el presupuesto? (LGP, arts. 26 a 31)", donde(
-  "Segunda pregunta. El epígrafe pide los «principios de programación y de gestión». La LGP los recoge en el capítulo I de su título II: primero los principios y después los instrumentos de la programación plurianual.",
+  "Segunda pregunta. El epígrafe pide los «Principios de programación y de gestión». La LGP los recoge en el capítulo I de su título II (arts. 26 y 27); el capítulo II (arts. 28 a 31) regula los instrumentos de la programación plurianual.",
   ["1 Principios de programación y de gestión (arts. 26 y 27)", "2 Escenarios y programas plurianuales; asignación y objetivos (arts. 28 a 31)"]))
 
 T.ap("s5", "II.1 Principios y reglas de programación y de gestión (LGP, arts. 26 y 27)", f"""
@@ -179,7 +179,7 @@ T.ap("s5", "II.1 Principios y reglas de programación y de gestión (LGP, arts. 
          "Administración General del Estado, organismos autónomos y entidades con presupuesto limitativo",
          ["Presupuesto **anual** aprobado por las Cortes, dentro de un escenario **plurianual** (27.1)", "Créditos para su **finalidad específica**; limitativos y vinculantes al **nivel de especificación** (27.2 → IV.3)", "Los recursos financian el **conjunto** de las obligaciones, salvo **afectación por ley** (27.3)", "Derechos y obligaciones por su **importe íntegro**, sin minorar derechos para atender obligaciones salvo autorización expresa de la ley (27.4)", "Información suficiente para verificar principios y objetivos (27.5)"],
          "—",
-         "Los manuales los llaman especialidad, no afectación y presupuesto bruto; la ley los formula así. La **afectación** de recursos a fines determinados exige **ley**."))}
+         f"La regla del 27.2 es la que el art. 42 rotula {c('LGP', 'Artículo 42', 'Especialidad de los créditos')} (→ IV.3.1). La **afectación** de recursos a fines determinados exige **ley** (27.3)."))}
 """, 2)
 
 T.ap("s6", "II.2 Escenarios y programas plurianuales; asignación y objetivos (LGP, arts. 28 a 31)", f"""
@@ -263,7 +263,7 @@ T.ap("s9", "III.3 Presentación a las Cortes y documentación (art. 134.3 CE; LG
          f"{c('CE', 'Artículo 134', 'El Gobierno deberá presentar ante el Congreso de los Diputados')}",
          "Como proyecto de ley, ante el **Congreso** (la Cámara donde empieza su tramitación)",
          "**Al menos tres meses** antes de que expiren los del año anterior",
-         "«Tres meses antes» es el plazo de **presentación**, no el de aprobación (si no se aprueban **antes del 1 de enero**, prórroga → I.4.1)."))}
+         "El de «tres meses antes» es el plazo de **presentación**, no el de aprobación (si no se aprueban **antes del 1 de enero**, prórroga → I.4.1)."))}
 
 {unidad("3.2 Remisión y documentación complementaria (LGP, art. 37)",
   lit("LGP", "Artículo 37", ["antes del día 1 de octubre del año anterior", "El informe de impacto de género", "Una memoria de los beneficios fiscales"]),
@@ -393,7 +393,7 @@ T.ap("s13", "IV.3 Especialidad y especificación de los créditos (LGP, arts. 42
          "—",
          ["Regla general: **concepto**", "Gastos de **personal** y **bienes y servicios**: **artículo**", "**Inversiones reales**: **capítulo**", "::Al nivel de su concreta clasificación económica (43.2):", "Atenciones protocolarias y representativas y gastos reservados", "Arrendamientos de edificios y otras construcciones", "Créditos ampliables", "Créditos con perceptor o beneficiario identificado (salvo transferencias al exterior)", "Los que fije la Ley de Presupuestos", "Créditos extraordinarios"],
          "—",
-         "Personal y capítulo 2 → **artículo**; inversiones → **capítulo**; lo demás → **concepto**. Cayó tres veces en 2025 (→ Cierre 1)."))}
+         "Personal y capítulo 2 → **artículo**; inversiones → **capítulo**; lo demás → **concepto**. Cayó dos veces en 2025 (P 87 y L 96, → Cierre 1)."))}
 
 {unidad("3.3 Organismos autónomos y Seguridad Social (LGP, art. 44)",
   lit("LGP", "Artículo 44", ["que se especificarán a nivel de capítulo", "a nivel de grupo de programas"], solo=[1, 9]),
@@ -485,7 +485,7 @@ T.ap("s16", "V.3 Cuadro para leer una aplicación presupuestaria (esquema)", f""
 EX_P85 = examen("P", 85, {
   "a": f"Literal del art. 134.7: la Ley de Presupuestos {c('CE', 'Artículo 134', 'Podrá modificarlos cuando una ley tributaria sustantiva así lo prevea')}.",
   "b": f"Cambia el órgano: la enmienda es de las Cortes. {c('CE', 'Artículo 134', 'Corresponde al Gobierno la elaboración de los Presupuestos Generales del Estado y a las Cortes Generales, su examen, enmienda y aprobación')}.",
-  "c": f"Mezcla dos plazos. «Tres meses antes» es el de presentación (134.3); la prórroga se produce {c('CE', 'Artículo 134', 'Si la Ley de Presupuestos no se aprobara antes del primer día del ejercicio económico correspondiente')} (134.4).",
+  "c": f"Mezcla dos plazos. El de «tres meses antes» es el de presentación (134.3); la prórroga se produce {c('CE', 'Artículo 134', 'Si la Ley de Presupuestos no se aprobara antes del primer día del ejercicio económico correspondiente')} (134.4).",
   "d": f"Cambia «aumento» por «disminución»: requiere conformidad {c('CE', 'Artículo 134', 'Toda proposición o enmienda que suponga aumento de los créditos o disminución de los ingresos presupuestarios')} (134.6)."},
   [("cuando una ley tributaria sustantiva así lo prevea", "CE", "Artículo 134", "Podrá modificarlos cuando una ley tributaria sustantiva así lo prevea")])
 EX_X89 = examen("X", 89, {
@@ -602,7 +602,7 @@ Q("LGP", "Artículo 32", "Ley de Presupuestos", "Según el artículo 32 de la Le
 Q("LGP", "Artículo 33", "Ley de Presupuestos", "Según el artículo 33.1 b) de la Ley General Presupuestaria, los presupuestos de las entidades de los sectores empresarial y fundacional que integran los Presupuestos Generales del Estado tienen carácter:",
   ["Estimativo.", "Limitativo.", "Vinculante.", "Plurianual."], "Art. 33.1 b) LGP.", "Los presupuestos estimativos de las entidades de los sectores empresarial y fundacional")
 Q("LGP", "Artículo 34", "Ley de Presupuestos", "Según el artículo 34.1 de la Ley General Presupuestaria, al ejercicio presupuestario se imputarán las obligaciones económicas reconocidas:",
-  ["Hasta el fin del mes de diciembre, siempre que correspondan a gastos realizados dentro del ejercicio.", "Hasta el 31 de marzo del año siguiente.", "Durante el ejercicio, cualquiera que sea el período del que deriven.", "Hasta el fin del mes de enero del año siguiente."], "Art. 34.1 b) LGP. «Cualquiera que sea el período del que deriven» es el criterio de los derechos (34.1 a).", "Las obligaciones económicas reconocidas hasta el fin del mes de diciembre")
+  ["Hasta el fin del mes de diciembre, siempre que correspondan a gastos realizados dentro del ejercicio.", "Hasta el 31 de marzo del año siguiente.", "Durante el ejercicio, cualquiera que sea el período del que deriven.", "Hasta el fin del mes de enero del año siguiente."], "Art. 34.1 b) LGP. El criterio «cualquiera que sea el período del que deriven» es el de los derechos (34.1 a).", "Las obligaciones económicas reconocidas hasta el fin del mes de diciembre")
 Q("LGP", "Artículo 38", "Prórroga", "Según el artículo 38 de la Ley General Presupuestaria, si la Ley de Presupuestos no se aprobara antes del primer día del ejercicio, se prorrogan:",
   ["Los presupuestos iniciales del ejercicio anterior.", "Los presupuestos definitivos del ejercicio anterior, con sus modificaciones.", "Los créditos de los programas que terminen en el ejercicio prorrogado.", "Únicamente los créditos de personal."], "Art. 38.1 LGP; los créditos de programas que terminen no se prorrogan (38.2).", "se considerarán automáticamente prorrogados los presupuestos iniciales del ejercicio anterior")
 Q("LGP", "Artículo 38", "Prórroga", "Según el artículo 38.4 de la Ley General Presupuestaria, los criterios para instrumentar la prórroga de los Presupuestos los acuerda:",

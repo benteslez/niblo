@@ -104,7 +104,7 @@ Los Presupuestos Generales del Estado no son un único presupuesto: integran **d
          f"{g(64, 'Las sociedades mercantiles estatales y las entidades públicas empresariales')}",
          ["Presupuesto de **explotación** y presupuesto de **capital**", "Constituidos por una previsión de la **cuenta de resultados** y del **estado de flujos de efectivo**; anexo: previsión del **balance**"],
          f"{g(64, 'Los presupuestos de explotación y de capital se integrarán en los Presupuestos Generales del Estado')}",
-         "No tienen créditos limitativos: su presupuesto es una **previsión** contable (cuenta de resultados y flujos de efectivo), y se **integra** en los PGE."))}
+         f"No tienen créditos limitativos: su presupuesto es una **previsión** contable (cuenta de resultados y flujos de efectivo), y se **integra** en los PGE. No son los únicos: {g(64, 'las fundaciones del sector público estatal elaborarán, igualmente, presupuestos de explotación y de capital')}, igual que los fondos del art. 2.2 (64.1, párrafo tercero)."))}
 
 ### Cuadro de las clases de presupuestos (esquema)
 
@@ -575,7 +575,7 @@ T.ap("s19", "VI.4 Gestión presupuestaria y Autoridad Independiente de Responsab
   lit("LOEP", "Artículo 31", ["necesidades de carácter no discrecional y no previstas"]),
   fichab("Dotación para imprevistos",
          "Estado, CC. AA. y Corporaciones Locales de los arts. 111 y 135 del texto refundido de Haciendas Locales",
-         "Dotación diferenciada de créditos; cuantía y condiciones las fija cada Administración (la del Estado: LGP, art. 50, tema VI.2)",
+         "Dotación diferenciada de créditos; cuantía y condiciones las fija cada Administración (la del Estado: LGP, art. 50, tema VI.3)",
          "—",
          "Necesidades **no discrecionales** y **no previstas**."))}
 

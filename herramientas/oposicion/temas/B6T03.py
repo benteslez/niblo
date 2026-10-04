@@ -3,8 +3,7 @@
 Transferencias de crédito. Créditos extraordinarios. Suplementos de crédito. Ampliaciones
 de créditos. Incorporaciones de créditos. Generaciones de créditos.
 Método del I.2. Norma (texto consolidado del BOE): Ley 47/2003, General Presupuestaria
-(LGP), arts. 47, 47 bis y 51 a 63 (con citas de los arts. 49 y 50, que son del tema VI.2,
-y del art. 22.2 a de la Ley 38/2003, General de Subvenciones)."""
+(LGP), arts. 47 a 63 (con cita del art. 22.2 a de la Ley 38/2003, General de Subvenciones)."""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
@@ -16,7 +15,7 @@ def g(art, frag):
 
 
 T = Tema("B6T03",
-  "Seis preguntas: I. Cómo se comprometen gastos para ejercicios futuros (LGP, arts. 47 y 47 bis) · II. Qué modificaciones de crédito hay y qué es una transferencia (arts. 51 y 52) · III. Cómo crecen los créditos por ingresos o por obligaciones: generaciones y ampliaciones (arts. 53 y 54) · IV. Qué se hace si no hay crédito o no basta: créditos extraordinarios y suplementos (arts. 55 a 57) · V. Cómo pasan los remanentes al ejercicio siguiente: incorporaciones (arts. 58 y 59) · VI. Quién autoriza cada modificación (arts. 60 a 63). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Cómo se comprometen gastos para ejercicios futuros (LGP, arts. 47, 47 bis y 48) · II. Qué modificaciones de crédito hay, con qué se financian y qué es una transferencia (arts. 49 a 52) · III. Cómo crecen los créditos por ingresos o por obligaciones: generaciones y ampliaciones (arts. 53 y 54) · IV. Qué se hace si no hay crédito o no basta: créditos extraordinarios y suplementos (arts. 55 a 57) · V. Cómo pasan los remanentes al ejercicio siguiente: incorporaciones (arts. 58 y 59) · VI. Quién autoriza cada modificación (arts. 60 a 63). Cada artículo: texto literal del BOE y ficha.",
   ["Gastos plurianuales", "Art. 47 LGP", "Art. 47 bis", "Modificaciones de crédito", "Transferencias", "Generaciones", "Créditos ampliables", "Créditos extraordinarios", "Suplementos de crédito", "Fondo de Contingencia", "Incorporaciones", "Anticipos de Tesorería", "Competencias"])
 
 # =============================================================================
@@ -30,27 +29,27 @@ El epígrafe se lee como **seis preguntas encadenadas**, en el orden de los art�
 
 | Bloque | Pregunta | Ley 47/2003, General Presupuestaria |
 |---|---|---|
-| **I** | ¿Cómo se comprometen gastos para ejercicios futuros? (gastos plurianuales) | Arts. 47 y 47 bis |
-| **II** | ¿Qué modificaciones de los créditos iniciales hay y qué es una transferencia? | Arts. 51 y 52 |
+| **I** | ¿Cómo se comprometen gastos para ejercicios futuros? (gastos plurianuales) | Arts. 47, 47 bis y 48 |
+| **II** | ¿Qué modificaciones de los créditos iniciales hay, con qué se financian y qué es una transferencia? | Arts. 49, 50, 51 y 52 |
 | **III** | ¿Cómo crecen los créditos por ingresos o por obligaciones? (generaciones y ampliaciones) | Arts. 53 y 54 |
 | **IV** | ¿Qué se hace si no hay crédito o no basta? (créditos extraordinarios y suplementos) | Arts. 55, 56 y 57 |
 | **V** | ¿Cómo pasan los remanentes al ejercicio siguiente? (incorporaciones) | Arts. 58 y 59 |
 | **VI** | ¿Quién autoriza cada modificación? (y los anticipos de Tesorería) | Arts. 60, 61, 62 y 63 |
 
-!> **La idea que une los seis bloques:** los créditos para gastos son limitativos y se gastan en su ejercicio (arts. 46 y 49, tema VI.2). El tema estudia las dos válvulas de esa regla: comprometer gasto **para ejercicios futuros** con límites (I) y **cambiar los créditos** durante el ejercicio, solo por las cinco vías del art. 51 (II a V), cada una con su órgano competente (VI).
+!> **La idea que une los seis bloques:** los créditos para gastos son limitativos (art. 46, tema VI.5) y se gastan en su ejercicio (art. 49, → II.1.1). El tema estudia las dos válvulas de esa regla: comprometer gasto **para ejercicios futuros** con límites (I) y **cambiar los créditos** durante el ejercicio, solo por las cinco vías del art. 51 (II a V), cada una con su órgano competente (VI).
 
 ### Cómo está escrito
 
 - Cada artículo: primero el **texto literal del BOE** (con la etiqueta BOE) y debajo su **ficha** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen).
 - Los esquemas y cuadros comparativos **no son texto legal**: resumen los artículos citados.
-- Fronteras: la estructura del presupuesto, la temporalidad de los créditos y el Fondo de Contingencia (arts. 49 y 50) son del tema VI.2; los documentos contables de las modificaciones, del tema VI.5.
+- Fronteras: la estructura del presupuesto y la especificación de los créditos (arts. 39 a 44) son del tema VI.2; el carácter limitativo de los créditos (art. 46) y los documentos contables de las modificaciones, del tema VI.5.
 - Al final: **Cierre 1** (las preguntas oficiales de 2025 sobre este tema) y **Cierre 2** (repaso por bloques).
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Cómo se comprometen gastos para ejercicios futuros? Gastos plurianuales (arts. 47 y 47 bis)", donde(
+T.ap("bI", "I. ¿Cómo se comprometen gastos para ejercicios futuros? Gastos plurianuales (arts. 47, 47 bis y 48)", donde(
   "Primera pregunta del tema. Un crédito vale para su ejercicio, pero muchos gastos (una obra, un arrendamiento) duran varios años. La LGP permite **comprometer** gasto para ejercicios posteriores dentro de **límites** de años y de porcentajes.",
-  ["1 Compromisos de gasto plurianual: requisitos, límites y excepciones (art. 47)", "2 Qué pasa si después no hay crédito suficiente (art. 47 bis)"]))
+  ["1 Compromisos de gasto plurianual: requisitos, límites y excepciones (art. 47)", "2 Qué pasa si después no hay crédito suficiente (art. 47 bis)", "3 Inmuebles con pago aplazado y obras de abono total (art. 48)"]))
 
 T.ap("s1", "I.1 Compromisos de gasto de carácter plurianual (art. 47)", f"""
 {unidad("1.1 Requisitos y límites (art. 47.1 y 2)",
@@ -91,25 +90,55 @@ Si un ejercicio posterior llega sin crédito suficiente para lo comprometido, la
          f"Comunicación {g('47 bis', 'tan pronto como se tenga conocimiento de ello')}",
          "Orden: **comunicar → reprogramar → resolver**; la resolución es el último paso. Si la obligación estaba **condicionada** a la existencia de crédito, antes de resolver se valoran **soluciones alternativas** y se notifica **de forma fehaciente** al tercero."))}
 
+""", 2)
+
+T.ap("s2b", "I.3 Inmuebles con pago aplazado y obras de abono total (art. 48)", f"""
+{unidad("3.1 Adquisiciones y obras con pago aplazado (art. 48)",
+  lit("LGP", "Artículo 48", ["cuyo importe exceda de seis millones de euros", "pueda ser inferior al 25 por ciento del precio", "en los cuatro ejercicios siguientes", "abono total"]),
+  fichab("Compromisos plurianuales especiales: compra directa de inmuebles con pago diferido y contratos de obras de abono total",
+         "—",
+         ["Inmuebles adquiridos directamente por más de **seis millones de euros**: puede diferirse el vencimiento del pago del precio", "Desembolso inicial a la firma de la escritura: **no inferior al 25 %** del precio", "Resto: en los **cuatro ejercicios siguientes**, dentro de los porcentajes del art. 47 (→ I.1.1)", "Obras bajo la modalidad de **abono total**: se les aplica el procedimiento del art. 47 (48.2)"],
+         "Cuatro ejercicios siguientes, con los límites porcentuales del art. 47",
+         f"**Más de 6 millones**, **25 %** como mínimo a la firma y **cuatro** ejercicios. Las obras de abono total siguen el art. 47, pero sin la retención adicional del 10 %: {g(47, 'con excepción de los realizados bajo la modalidad de abono total del precio')} (47.2)."))}
+
 {resumen([
   "Gastos plurianuales: ejecución iniciada **en el propio ejercicio**; máximo **cuatro** ejercicios; **70 / 60 / 50 / 50 %** del crédito inicial (47.1 y 2).",
   "Obras: retención adicional del **10 %** de la adjudicación; sin límites la **Deuda** y los **arrendamientos de inmuebles** (47.2).",
   "Excepciones: el **Gobierno**, en casos especialmente justificados, a propuesta del Ministro de Hacienda (47.3).",
-  "Sin crédito en un ejercicio posterior: **comunicar**, **reprogramar** y, si no cabe, **resolver** (47 bis)."],
-  "Siguiente: II. ¿Qué modificaciones de los créditos iniciales hay? Las transferencias")}
+  "Sin crédito en un ejercicio posterior: **comunicar**, **reprogramar** y, si no cabe, **resolver** (47 bis).",
+  "Inmuebles de más de **6 millones**: pago diferido con **25 %** a la firma y el resto en **cuatro** ejercicios; obras de abono total: procedimiento del art. 47 (48)."],
+  "Siguiente: II. ¿Qué modificaciones de los créditos iniciales hay, con qué se financian y qué es una transferencia?")}
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Qué modificaciones de los créditos iniciales hay y qué es una transferencia? (arts. 51 y 52)", donde(
-  "Segunda pregunta. Aprobado el presupuesto, la **cuantía** y la **finalidad** de los créditos solo cambian por las vías que enumera el art. 51. La primera es la **transferencia**: mover dotación de un crédito a otro.",
-  ["1 Las cinco modificaciones de los créditos iniciales (art. 51)", "2 Transferencias de crédito: concepto, restricciones y excepciones (art. 52)"]))
+T.ap("bII", "II. ¿Qué modificaciones de los créditos iniciales hay, con qué se financian y qué es una transferencia? (arts. 49 a 52)", donde(
+  "Segunda pregunta. Los créditos valen para su ejercicio y lo no gastado se anula (art. 49); para las necesidades imprevistas, el presupuesto del Estado reserva un **Fondo de Contingencia** (art. 50). Aprobado el presupuesto, la **cuantía** y la **finalidad** de los créditos solo cambian por las vías que enumera el art. 51. La primera es la **transferencia**: mover dotación de un crédito a otro.",
+  ["1 Temporalidad de los créditos y Fondo de Contingencia (arts. 49 y 50)", "2 Las cinco modificaciones de los créditos iniciales (art. 51)", "3 Transferencias de crédito: concepto, restricciones y excepciones (art. 52)"]))
 
-T.ap("s3", "II.1 Las modificaciones de los créditos iniciales (art. 51)", f"""
-{unidad("1.1 Lista cerrada (art. 51)",
+T.ap("s2c", "II.1 Temporalidad de los créditos y Fondo de Contingencia (arts. 49 y 50)", f"""
+{unidad("1.1 Temporalidad de los créditos (art. 49)",
+  lit("LGP", "Artículo 49", ["que se realicen en el propio ejercicio presupuestario", "quedarán anulados de pleno derecho"]),
+  fichab("Regla por la que los créditos de un presupuesto solo atienden gastos de su propio ejercicio",
+         "—",
+         ["Solo obligaciones por gastos que se realicen **en el propio ejercicio** (salvedades del art. 34.2 y 3)", "Créditos no afectados a obligaciones ya reconocidas el **último día** del ejercicio: **anulados de pleno derecho**"],
+         "Último día del ejercicio presupuestario",
+         "La anulación tiene una salvedad expresa: las **incorporaciones** del art. 58 (→ V.1)."))}
+
+{unidad("1.2 Fondo de Contingencia de ejecución presupuestaria (art. 50)",
+  lit("LGP", "Artículo 50", ["necesidades inaplazables, de carácter no discrecional", "por importe del dos por ciento del total de gastos para operaciones no financieras", "El Fondo únicamente financiará", "En ningún caso podrá utilizarse el Fondo", "mediante acuerdo del Consejo de Ministros", "un informe trimestral"]),
+  fichab("Sección del presupuesto del Estado para necesidades inaplazables y no discrecionales sin dotación adecuada",
+         ["Aplicación del Fondo: **acuerdo del Consejo de Ministros**, a propuesta del Ministro de Hacienda (el texto cita al de Economía y Hacienda), **antes** de autorizar la modificación", "Informe a las Cortes: el **Gobierno**, a través de su Oficina Presupuestaria"],
+         ["::Cuantía:", "**2 %** del total de gastos para operaciones no financieras, excluidos los destinados a financiar a CC. AA. y EE. LL. por sus sistemas de financiación", "::Solo financia (salvo los casos del art. 59 → V.2):", "a) Ampliaciones (art. 54 → III.2)", "b) Créditos extraordinarios y suplementos (art. 55 → IV.1)", "c) Incorporaciones (art. 58 → V.1)"],
+         "Informe **trimestral** a las Cortes",
+         "**2 %** (el **1 %** es el límite de los anticipos de Tesorería, → VI.1.1). **Nunca** para gastos que deriven de **decisiones discrecionales** sin cobertura presupuestaria. Solo financia **ampliaciones, créditos extraordinarios y suplementos e incorporaciones**."))}
+""", 2)
+
+T.ap("s3", "II.2 Las modificaciones de los créditos iniciales (art. 51)", f"""
+{unidad("2.1 Lista cerrada (art. 51)",
   lit("LGP", "Artículo 51", ["La cuantía y finalidad", "sólo podrán ser modificadas durante el ejercicio"]),
   fichab("Modificaciones de la cuantía y finalidad de los créditos de los presupuestos de gastos",
          "Cada figura tiene su órgano competente (→ VI.4)",
-         ["::Solo mediante:", "a) Transferencias (→ II.2)", "b) Generaciones (→ III.1)", "c) Ampliaciones (→ III.2)", "d) Créditos extraordinarios y suplementos de crédito (→ IV.1)", "e) Incorporaciones (→ V.1)"],
+         ["::Solo mediante:", "a) Transferencias (→ II.3)", "b) Generaciones (→ III.1)", "c) Ampliaciones (→ III.2)", "d) Créditos extraordinarios y suplementos de crédito (→ IV.1)", "e) Incorporaciones (→ V.1)"],
          f"{g(51, 'durante el ejercicio')}, dentro de los límites y con el procedimiento de los artículos siguientes",
          "Cinco letras (créditos extraordinarios y suplementos van juntos en la **d**). **No** son modificaciones de crédito los **gastos plurianuales** (art. 47) ni las «redistribuciones»: lo preguntaron L 86 y P 89 (→ Cierre 1)."))}
 
@@ -127,8 +156,8 @@ T.ap("s3", "II.1 Las modificaciones de los créditos iniciales (art. 51)", f"""
 | Incorporación | Lleva al ejercicio remanentes de crédito del **ejercicio anterior** | 58 |
 """, 2)
 
-T.ap("s4", "II.2 Transferencias de crédito (art. 52)", f"""
-{unidad("2.1 Concepto y restricciones (art. 52.1)",
+T.ap("s4", "II.3 Transferencias de crédito (art. 52)", f"""
+{unidad("3.1 Concepto y restricciones (art. 52.1)",
   lit("LGP", "Artículo 52", ["traspasos de dotaciones entre créditos", "ni desde créditos para operaciones de capital a créditos para operaciones corrientes", "entre créditos de distintas secciones presupuestarias", "No minorarán créditos extraordinarios o créditos que se hayan suplementado o ampliado en el ejercicio"], solo=[1, 2, 3, 4, 5, 6]),
   fichab(f"{g(52, 'traspasos de dotaciones entre créditos')}, {g(52, 'incluso con la creación de créditos nuevos')}",
          "Ministros, Ministro de Hacienda o Gobierno, según el caso (→ VI.4)",
@@ -136,7 +165,7 @@ T.ap("s4", "II.2 Transferencias de crédito (art. 52)", f"""
          "—",
          "La dirección prohibida es **de capital a corrientes** y **desde financieras** al resto. No se puede **minorar** lo que ya se ha **incrementado** en el ejercicio (extraordinarios, suplementados o ampliados)."))}
 
-{unidad("2.2 Excepciones y subvenciones nominativas (art. 52.2 y 3)",
+{unidad("3.2 Excepciones y subvenciones nominativas (art. 52.2 y 3)",
   lit("LGP", "Artículo 52", ["reorganizaciones administrativas o traspaso de competencias a comunidades autónomas", "programa de imprevistos", "En ningún caso las transferencias podrán crear créditos destinados a subvenciones nominativas"], solo=[7, 8]),
   fichab("Casos en que no rigen las restricciones del art. 52.1, y límite de las subvenciones nominativas",
          "Las transferencias entre distintas secciones por reorganizaciones administrativas las autoriza el Gobierno (→ VI.1.2)",
@@ -145,6 +174,7 @@ T.ap("s4", "II.2 Transferencias de crédito (art. 52)", f"""
          f"Las transferencias **no** pueden crear ni aumentar subvenciones **nominativas**, {g(52, 'salvo que sean conformes con lo dispuesto en la Ley General de Subvenciones o se trate de subvenciones o aportaciones a otros entes del sector público')}."))}
 
 {resumen([
+  "Los créditos atienden gastos del **propio ejercicio**; lo no afectado a obligaciones se **anula** el último día, salvo incorporación (49). **Fondo de Contingencia**: **2 %** del gasto no financiero; solo financia ampliaciones, créditos extraordinarios y suplementos e incorporaciones, por acuerdo del **Consejo de Ministros** (50).",
   "La cuantía y finalidad de los créditos solo cambian por **cinco** vías: transferencias, generaciones, ampliaciones, créditos extraordinarios y suplementos, e incorporaciones (51).",
   "Transferencia = **traspaso de dotaciones entre créditos**, incluso creando créditos nuevos (52.1).",
   "Prohibido: desde **financieras** al resto, de **capital a corrientes**, entre **secciones** y minorar lo **incrementado** en el ejercicio (52.1), salvo las excepciones del 52.2.",
@@ -186,7 +216,7 @@ T.ap("s6", "III.2 Créditos ampliables (art. 54)", f"""
 
 {unidad("2.2 Créditos ampliables de la Seguridad Social (art. 54.2)",
   lit("LGP", "Artículo 54", ["En todo caso se consideran ampliables", "pensiones de todo tipo", "ingreso mínimo vital", "capitales-renta", "Fondo de Reserva de la Seguridad Social", "sistema de protección por cese de actividad"], solo=[3, 4, 5, 6, 7, 8, 9, 10, 11]),
-  fichab("Créditos de los Presupuestos de la Seguridad Social ampliables «en todo caso»",
+  fichab("Créditos de los Presupuestos de la Seguridad Social que la ley considera ampliables en todo caso",
          "Autorizan las ampliaciones los presidentes y directores de las entidades de la Seguridad Social (art. 63.3 b → VI.3.2)",
          ["a) Pensiones de todo tipo, incapacidad temporal, protección a la familia, nacimiento y cuidado de menor, riesgos durante el embarazo y la lactancia, cuidado de menores con cáncer u otra enfermedad grave, ingreso mínimo vital y entregas únicas (con los requisitos de la letra a)", "b) Subsidios de garantía de ingresos mínimos, de movilidad y de ayuda de tercera persona", "c) Constitución de capitales-renta para el pago de pensiones", "d) Fondo de Reserva y Fondo de Prevención y Rehabilitación de la Seguridad Social", "e) Aportaciones de las Mutuas", "f) Recargos de prestaciones previamente ingresados", "g) Transferencias de derechos al sistema de pensiones de la Unión Europea", "h) Sistema de protección por cese de actividad"],
          f"{g(54, 'en la cuantía resultante de las obligaciones que se reconozcan y liquiden')}",
@@ -196,7 +226,7 @@ T.ap("s6", "III.2 Créditos ampliables (art. 54)", f"""
   lit("LGP", "Artículo 54", ["con cargo al Fondo de Contingencia", "con baja en otros créditos del presupuesto no financiero", "No podrán ampliarse créditos que hayan sido previamente minorados"], solo=[12, 13, 14, 15, 16]),
   fichab("Cómo se financian las ampliaciones y qué créditos no pueden ampliarse",
          "—",
-         ["Estado: Fondo de Contingencia (art. 50, tema VI.2) o baja en otros créditos del presupuesto no financiero", "Organismos autónomos: remanente de tesorería no aplicado, mayores ingresos o baja en otros créditos del presupuesto no financiero del organismo", "Seguridad Social: remanente de tesorería no aplicado, mayores ingresos o baja en otros créditos del presupuesto"],
+         ["Estado: Fondo de Contingencia (art. 50 → II.1.2) o baja en otros créditos del presupuesto no financiero", "Organismos autónomos: remanente de tesorería no aplicado, mayores ingresos o baja en otros créditos del presupuesto no financiero del organismo", "Seguridad Social: remanente de tesorería no aplicado, mayores ingresos o baja en otros créditos del presupuesto"],
          "—",
          f"{g(54, 'No podrán ampliarse créditos que hayan sido previamente minorados')}, {g(54, 'salvo en el ámbito de las entidades que integran el sistema de la Seguridad Social y en el de la sección 06 Deuda Pública')} (con la condición del texto) {g(54, 'o cuando la minoración resulte de un traspaso de competencias a las Comunidades Autónomas')}."))}
 
@@ -295,7 +325,7 @@ T.ap("s10", "IV.4 Cuadro comparativo: Estado, organismos autónomos y Seguridad 
 
 # =============================================================================
 T.ap("bV", "V. ¿Cómo pasan los remanentes al ejercicio siguiente? Incorporaciones (arts. 58 y 59)", donde(
-  f"Quinta pregunta. Los créditos no comprometidos al cerrar el ejercicio {c('LGP', 'Artículo 49', 'quedarán anulados de pleno derecho, sin perjuicio de lo establecido en el artículo 58 de esta ley')} (art. 49.2, tema VI.2). La **incorporación** es esa salvedad: lleva remanentes del ejercicio anterior al corriente.",
+  f"Quinta pregunta. Los créditos no comprometidos al cerrar el ejercicio {c('LGP', 'Artículo 49', 'quedarán anulados de pleno derecho, sin perjuicio de lo establecido en el artículo 58 de esta ley')} (art. 49.2, → II.1.1). La **incorporación** es esa salvedad: lleva remanentes del ejercicio anterior al corriente.",
   ["1 Incorporaciones de crédito: supuestos y financiación (art. 58)", "2 Modificaciones excluidas de las reglas de financiación (art. 59)"]))
 
 T.ap("s11", "V.1 Incorporaciones de crédito (art. 58)", f"""
@@ -345,13 +375,13 @@ T.ap("s13", "VI.1 El Gobierno: anticipos de Tesorería y competencias (arts. 60 
          g(60, "el Gobierno, a propuesta del Ministro de Economía"),
          ["a) Iniciado el expediente de crédito extraordinario o suplemento, con dictamen favorable del Consejo de Estado", "b) Promulgada una ley que establezca obligaciones que exijan crédito extraordinario o suplemento", "Si financia necesidades de un organismo autónomo, autoriza a pagarlas mediante operaciones de Tesorería"],
          "Máximo en cada ejercicio: **1 %** de los créditos autorizados al Estado por la Ley de Presupuestos Generales del Estado",
-         f"**1 %**, no 2 % (el Fondo de Contingencia es {c('LGP', 'Artículo 50', 'por importe del dos por ciento del total de gastos para operaciones no financieras')}, tema VI.2). Si las Cortes no aprueban la ley, el Gobierno cancela el anticipo con cargo a los créditos {g(60, 'cuya minoración ocasione menos trastornos para el servicio público')}."))}
+         f"**1 %**, no 2 % (el Fondo de Contingencia es {c('LGP', 'Artículo 50', 'por importe del dos por ciento del total de gastos para operaciones no financieras')}, → II.1.2). Si las Cortes no aprueban la ley, el Gobierno cancela el anticipo con cargo a los créditos {g(60, 'cuya minoración ocasione menos trastornos para el servicio público')}."))}
 
 {unidad("1.2 Modificaciones reservadas al Gobierno (art. 61)",
   lit("LGP", "Artículo 61", ["a propuesta del Ministro de Hacienda y a iniciativa de los ministros afectados", "entre distintas secciones presupuestarias como consecuencia de reorganizaciones administrativas"]),
   fichab("Modificaciones que solo puede autorizar el Gobierno",
          f"{g(61, 'Corresponde al Gobierno')}, {g(61, 'a propuesta del Ministro de Hacienda y a iniciativa de los ministros afectados')}",
-         ["a) Transferencias entre distintas secciones por reorganizaciones administrativas (→ II.2.2)", "b) Créditos extraordinarios y suplementos de organismos autónomos del art. 56.3 c), los «restantes casos» (→ IV.2.2)", "c) Créditos extraordinarios y suplementos de la Seguridad Social reservados al Gobierno por el art. 57.2, más del 2 % (→ IV.3.1)", "d) Créditos extraordinarios y suplementarios del art. 55.3, financiados con el Fondo de Contingencia (→ IV.1.2)"],
+         ["a) Transferencias entre distintas secciones por reorganizaciones administrativas (→ II.3.2)", "b) Créditos extraordinarios y suplementos de organismos autónomos del art. 56.3 c), los «restantes casos» (→ IV.2.2)", "c) Créditos extraordinarios y suplementos de la Seguridad Social reservados al Gobierno por el art. 57.2, más del 2 % (→ IV.3.1)", "d) Créditos extraordinarios y suplementarios del art. 55.3, financiados con el Fondo de Contingencia (→ IV.1.2)"],
          "—",
          "Transferencias **entre secciones** → solo por **reorganizaciones administrativas** y las autoriza el **Gobierno**."))}
 """, 2)
@@ -387,7 +417,7 @@ T.ap("s15", "VI.3 Ministros, presidentes y directores (art. 63)", f"""
 T.ap("s16", "VI.4 Cuadro de competencias (esquema)", f"""
 *Esquema de elaboración propia: resume los artículos citados; no es texto legal.*
 
-| Modificación | Ministros / presidentes y directores (art. 63) | Ministro de Hacienda (art. 62) | Gobierno / Consejo de Ministros (arts. 55, 56, 57 y 61) | Cortes (ley) |
+| Modificación | Ministros / presidentes y directores (arts. 56, 57 y 63) | Ministro de Hacienda (art. 62) | Gobierno / Consejo de Ministros (arts. 55, 56, 57 y 61) | Cortes (ley) |
 |---|---|---|---|---|
 | Transferencias | Mismo programa o programas de un mismo servicio | Las no reservadas al Consejo de Ministros que no puedan acordar los ministros | Entre secciones por reorganizaciones administrativas | — |
 | Generaciones | Ministros: 53.2 a), d) y f); organismos autónomos: b) y e); Seguridad Social: todas salvo c) | 53.2 c); en el Estado, b) y e) | — | — |
@@ -406,7 +436,7 @@ T.ap("s16", "VI.4 Cuadro de competencias (esquema)", f"""
 
 # =============================================================================
 EX = [
- ("L", 86, "Qué no es modificación presupuestaria (→ II.1.1)", {
+ ("L", 86, "Qué no es modificación presupuestaria (→ II.2.1)", {
    "a": f"Sí es modificación: art. 51 {g(51, 'c) Ampliaciones')}.",
    "b": f"Sí es modificación: art. 51 {g(51, 'd) Créditos extraordinarios y suplementos de crédito')}.",
    "c": f"El gasto plurianual no está en la lista cerrada del art. 51: es un compromiso de gasto que se extiende a ejercicios posteriores (art. 47, {g(47, 'Compromisos de gasto de carácter plurianual')}).",
@@ -424,7 +454,7 @@ EX = [
    "c": f"Literal del art. 54.4: {g(54, 'No podrán ampliarse créditos que hayan sido previamente minorados')}.",
    "d": f"Son ampliables en todo caso (54.2 a): {g(54, 'Los destinados al pago de pensiones de todo tipo')}."},
   [("previamente minorados", "LGP", "Artículo 54", "No podrán ampliarse créditos que hayan sido previamente minorados")]),
- ("P", 89, "Qué no es modificación de los créditos iniciales (→ II.1.1)", {
+ ("P", 89, "Qué no es modificación de los créditos iniciales (→ II.2.1)", {
    "a": f"Sí es modificación: art. 51 {g(51, 'a) Transferencias')}.",
    "b": f"Sí es modificación: art. 51 {g(51, 'b) Generaciones')}.",
    "c": f"Sí es modificación: art. 51 {g(51, 'e) Incorporaciones')}.",
@@ -441,8 +471,8 @@ T.ap("s17", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
 T.ap("s18", "Cierre 2. Repaso en 10 minutos (por bloques)", """
 | Bloque | Lo esencial | Dato que más cae |
 |---|---|---|
-| I. Gastos plurianuales | Ejecución iniciada en el ejercicio; límites del art. 47.2; excepciones del Gobierno; art. 47 bis | **4** ejercicios; **70 / 60 / 50 / 50 %**; obras: retención del **10 %** |
-| II. Modificaciones y transferencias | Lista cerrada del art. 51; transferencias y sus restricciones (art. 52) | **Cinco** figuras; no de **capital a corrientes** ni entre **secciones** |
+| I. Gastos plurianuales | Ejecución iniciada en el ejercicio; límites del art. 47.2; excepciones del Gobierno; art. 47 bis; inmuebles y obras de abono total (art. 48) | **4** ejercicios; **70 / 60 / 50 / 50 %**; obras: retención del **10 %**; inmuebles: más de **6 millones** y **25 %** a la firma |
+| II. Modificaciones y transferencias | Temporalidad (art. 49); Fondo de Contingencia (art. 50); lista cerrada del art. 51; transferencias y sus restricciones (art. 52) | Fondo de Contingencia: **2 %**; **cinco** figuras; no de **capital a corrientes** ni entre **secciones** |
 | III. Generaciones y ampliaciones | Seis supuestos de generación; créditos ampliables del Estado y de la Seguridad Social | Reembolso de préstamos → **nuevos préstamos**; **no** se amplía lo **previamente minorado** |
 | IV. Créditos extraordinarios y suplementos | Requisitos y financiación; Estado, OO. AA. y Seguridad Social | **Fondo de Contingencia → Consejo de Ministros**; OO. AA.: **10 % / 500.000 €** y **20 % / 1.000.000 €**; Seguridad Social: **2 %** |
 | V. Incorporaciones | Cuatro supuestos; financiación (art. 58); exclusiones (art. 59) | Generaciones **a) y e)**; ley en el **último mes** |
@@ -474,6 +504,16 @@ Q = [
   ["Comunicar tal circunstancia al tercero, tan pronto como se tenga conocimiento de ello.", "Acordar la resolución del negocio.", "Solicitar un crédito extraordinario.", "Suspender la ejecución hasta el ejercicio siguiente."], "Art. 47 bis, 1.º LGP.", "estará obligado a comunicar tal circunstancia al tercero, tan pronto como se tenga conocimiento de ello"),
  ("Artículo 47 bis", "Gastos plurianuales", "Según el artículo 47 bis de la Ley General Presupuestaria, cuando no resulte posible la reprogramación de las obligaciones, el órgano competente:",
   ["Acordará la resolución del negocio, fijando las compensaciones que, en su caso, procedan.", "Solicitará un anticipo de Tesorería.", "Mantendrá las obligaciones sin crédito hasta el ejercicio siguiente.", "Remitirá un proyecto de ley a las Cortes Generales."], "Art. 47 bis, 3.º LGP.", "el órgano competente acordará la resolución del negocio siguiendo el procedimiento establecido en las correspondientes normas, y fijando las compensaciones que, en su caso, procedan"),
+ ("Artículo 48", "Gastos plurianuales", "Según el artículo 48.1 de la Ley General Presupuestaria, podrá ser diferido el vencimiento de la obligación de pago del precio de compra de bienes inmuebles adquiridos directamente cuyo importe exceda de:",
+  ["Seis millones de euros, sin que el desembolso inicial a la firma de la escritura pueda ser inferior al 25 por ciento del precio.", "Seis millones de euros, sin que el desembolso inicial a la firma de la escritura pueda ser inferior al 50 por ciento del precio.", "Tres millones de euros, sin que el desembolso inicial a la firma de la escritura pueda ser inferior al 25 por ciento del precio.", "Un millón de euros, sin que el desembolso inicial a la firma de la escritura pueda ser inferior al 10 por ciento del precio."], "Art. 48.1 LGP: el resto puede distribuirse en los cuatro ejercicios siguientes, dentro de los porcentajes del art. 47.", ["cuyo importe exceda de seis millones de euros", "pueda ser inferior al 25 por ciento del precio"]),
+ ("Artículo 49", "Modificaciones de crédito", "Según el artículo 49.2 de la Ley General Presupuestaria, los créditos para gastos que en el último día del ejercicio presupuestario no estén afectados al cumplimiento de obligaciones ya reconocidas:",
+  ["Quedarán anulados de pleno derecho, sin perjuicio de lo establecido en el artículo 58.", "Se incorporarán automáticamente al ejercicio siguiente.", "Se transferirán al Fondo de Contingencia.", "Quedarán retenidos hasta el 31 de marzo del ejercicio siguiente."], "Art. 49.2 LGP; la salvedad son las incorporaciones del art. 58.", "quedarán anulados de pleno derecho, sin perjuicio de lo establecido en el artículo 58 de esta ley"),
+ ("Artículo 50", "Fondo de Contingencia", "Según el artículo 50.1 de la Ley General Presupuestaria, el presupuesto del Estado incluirá una sección bajo la rúbrica «Fondo de Contingencia de ejecución presupuestaria» por importe:",
+  ["Del dos por ciento del total de gastos para operaciones no financieras.", "Del uno por ciento del total de gastos para operaciones no financieras.", "Del dos por ciento del total de gastos del presupuesto, incluidas las operaciones financieras.", "Del cinco por ciento del total de gastos para operaciones no financieras."], "Art. 50.1 LGP (excluidos los gastos destinados a financiar a CC. AA. y EE. LL. por sus sistemas de financiación). El 1 % es el límite de los anticipos de Tesorería (art. 60).", "por importe del dos por ciento del total de gastos para operaciones no financieras"),
+ ("Artículo 50", "Fondo de Contingencia", "Según el artículo 50.1 de la Ley General Presupuestaria, el Fondo de Contingencia únicamente financiará, cuando proceda, salvo los supuestos del artículo 59:",
+  ["Las ampliaciones de crédito, los créditos extraordinarios y suplementos de crédito y las incorporaciones de crédito.", "Las transferencias de crédito y las generaciones de crédito.", "Los anticipos de Tesorería y las generaciones de crédito.", "Cualquier modificación de crédito, incluidas las derivadas de decisiones discrecionales de la Administración."], "Art. 50.1 a) a c) LGP; nunca gastos derivados de decisiones discrecionales sin cobertura presupuestaria.", ["a) Las ampliaciones de crédito reguladas en el artículo 54.", "b) Los créditos extraordinarios y suplementos de crédito", "c) Las incorporaciones de crédito"]),
+ ("Artículo 50", "Fondo de Contingencia", "Según el artículo 50.2 de la Ley General Presupuestaria, la aplicación del Fondo de Contingencia se aprobará:",
+  ["Mediante acuerdo del Consejo de Ministros, previamente a la autorización de las respectivas modificaciones de crédito.", "Mediante orden del Ministro de Hacienda, después de autorizar las modificaciones de crédito.", "Por la Dirección General de Presupuestos, previo informe de la Intervención General.", "Por las Cortes Generales, mediante ley."], "Art. 50.2 LGP (a propuesta del Ministro de Economía y Hacienda, según el texto).", "mediante acuerdo del Consejo de Ministros, previamente a la autorización de las respectivas modificaciones de crédito"),
  ("Artículo 51", "Modificaciones de crédito", "Según el artículo 51 de la Ley General Presupuestaria, la cuantía y finalidad de los créditos contenidos en los presupuestos de gastos sólo podrán ser modificadas durante el ejercicio mediante, entre otras:",
   ["Generaciones.", "Anticipos de caja fija.", "Compromisos de gasto plurianuales.", "Retenciones de crédito."], "Art. 51 LGP: transferencias, generaciones, ampliaciones, créditos extraordinarios y suplementos, e incorporaciones.", "b) Generaciones"),
  ("Artículo 52", "Transferencias", "Según el artículo 52.1 de la Ley General Presupuestaria, las transferencias son:",
@@ -552,6 +592,8 @@ for q_, a_, cat in [
   ("¿A qué compromisos no se aplican los límites del art. 47.2?", "A la carga financiera de la Deuda y a los arrendamientos de inmuebles (incluidos los mixtos de arrendamiento y adquisición).", "Gastos plurianuales"),
   ("¿Quién puede excepcionar los límites de los gastos plurianuales? (art. 47.3)", "El Gobierno, en casos especialmente justificados, a propuesta del Ministro de Hacienda e iniciativa del ministerio, previo informe de la Dirección General de Presupuestos.", "Gastos plurianuales"),
   ("Pasos del art. 47 bis si falta crédito en un ejercicio posterior", "1.º Comunicarlo al tercero; 2.º reprogramar y reajustar anualidades; 3.º si no es posible, resolver con compensaciones.", "Gastos plurianuales"),
+  ("Inmuebles con pago aplazado (art. 48.1)", "Compra directa de más de seis millones de euros: desembolso inicial no inferior al 25 % a la firma de la escritura y el resto en los cuatro ejercicios siguientes, con los límites del art. 47.", "Gastos plurianuales"),
+  ("Fondo de Contingencia (art. 50)", "2 % del total de gastos para operaciones no financieras; solo financia ampliaciones, créditos extraordinarios y suplementos e incorporaciones; su aplicación la aprueba el Consejo de Ministros antes de la modificación; informe trimestral a las Cortes.", "Fondo de Contingencia"),
   ("Las cinco modificaciones de crédito (art. 51)", "Transferencias, generaciones, ampliaciones, créditos extraordinarios y suplementos de crédito, e incorporaciones.", "Modificaciones de crédito"),
   ("Restricciones de las transferencias (art. 52.1)", "No desde financieras al resto ni de capital a corrientes; no entre secciones; no minorar créditos extraordinarios, suplementados o ampliados en el ejercicio.", "Transferencias"),
   ("Supuestos de generación de crédito (art. 53.2)", "Aportaciones para financiar conjuntamente gastos; ventas de bienes y servicios; enajenaciones de inmovilizado; reembolsos de préstamos; ingresos legalmente afectados; reintegros de pagos indebidos del presupuesto corriente.", "Generaciones"),
@@ -572,6 +614,7 @@ for q_, a_, cat in [
 T.glos("Compromiso de gasto plurianual", "Compromiso de gasto que se extiende a ejercicios posteriores a aquel en que se autoriza, con los límites de años y porcentajes del art. 47 LGP.", "s1", "Gastos plurianuales")
 T.glos("Tramitación anticipada", "Tramitación de contratos, encargos o convenios que puede llegar a la adjudicación y formalización aunque la ejecución empiece en ejercicios posteriores (art. 47.6 LGP).", "s1", "Gastos plurianuales")
 T.glos("Reprogramación", "Reajuste de las anualidades de un compromiso plurianual cuando una Ley de Presupuestos posterior no autoriza créditos suficientes (art. 47 bis LGP).", "s2", "Gastos plurianuales")
+T.glos("Fondo de Contingencia de ejecución presupuestaria", "Sección del presupuesto del Estado, del 2 % del gasto no financiero, para necesidades inaplazables y no discrecionales; financia ampliaciones, créditos extraordinarios y suplementos e incorporaciones (art. 50 LGP).", "s2c", "Fondo de Contingencia")
 T.glos("Modificación de crédito", "Cambio de la cuantía o finalidad de los créditos iniciales durante el ejercicio, solo por las cinco vías del art. 51 LGP.", "s3", "Modificaciones de crédito")
 T.glos("Transferencia de crédito", "Traspaso de dotaciones entre créditos, incluso con creación de créditos nuevos, con las restricciones del art. 52 LGP.", "s4", "Transferencias")
 T.glos("Generación de crédito", "Incremento de créditos como consecuencia de ingresos no previstos o superiores a los del presupuesto inicial (art. 53 LGP).", "s5", "Generaciones")
