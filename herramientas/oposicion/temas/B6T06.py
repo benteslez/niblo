@@ -211,7 +211,7 @@ T.ap("s7", "II.2 Límites cuantitativos y fondos de maniobra (LGP, art. 78.2 a 4
          "Cada ministerio u organismo autónomo; excepciones: Agencia Española de Cooperación Internacional y Ministerio del Interior (programa 222A)",
          ["General: **7 %** de los créditos del **capítulo 2** del presupuesto vigente", "AECI: hasta el **14 %** del capítulo 2", "Interior, programa 222A «Seguridad ciudadana»: hasta el **10 % de los créditos del artículo 23**, solo para gestionar ese artículo"],
          "Porcentajes sobre el presupuesto **vigente en cada momento**",
-         "El 7 % es sobre el **capítulo 2** (no sobre el total del presupuesto). El 10 % no es un límite general: es sobre el **artículo 23** del programa **222A** de **Interior**. La pregunta X-96 de 2025 (7 % / 10 %) está **retenida** porque ninguna opción reproduce esta regla (→ Cierre 1)."))}
+         "El 7 % es sobre el **capítulo 2** (no sobre el total del presupuesto). El 10 % no es un límite general: es sobre el **artículo 23** del programa **222A** de **Interior**. La pregunta X-96 de 2025 (7 % / 10 %) lleva la marca **Discrepancia** en el test real: ninguna opción reproduce esta regla (→ Cierre 1)."))}
 
 {unidad("2.2 Fondos de maniobra de la Seguridad Social (LGP, art. 78.2 y 4)",
   lit("LGP", "Artículo 78", ["fondos de maniobra", "del tres por ciento", "hasta un siete por ciento"], solo=[3, 7, 8]),
@@ -555,8 +555,8 @@ T.ap("s19", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-P 2025, pregunta 87 · Bienes y servicios: nivel de artículo (relacionada; → I.1.2)", EX_P87,
   "### GACE-L 2025, pregunta 94 · Indemnizaciones por razón del servicio: artículo 23 (relacionada; → I.2.2)", EX_L94,
   "### GACE-P 2025, pregunta 96 · Indemnizaciones por razón del servicio: artículo 23 (relacionada; → I.2.2)", EX_P96,
-  "### Pregunta retenida",
-  f"?> **GACE-L 2025 extraordinario, pregunta 96** (límite de los anticipos de caja fija imputables al artículo 23): está **retenida** y no se incluye. La plantilla oficial da la b) («10 % del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios»), pero el art. 78.3 LGP fija el límite general en {c('LGP', 'Artículo 78', 'el siete por ciento del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios')} y el 10 % lo calcula sobre {c('LGP', 'Artículo 78', 'los créditos del artículo 23')} y solo para el programa 222A del Ministerio del Interior (→ II.2.1). Ninguna opción reproduce la ley.",
+  "### Pregunta con discrepancia",
+  f"?> **GACE-L 2025 extraordinario, pregunta 96** (límite de los anticipos de caja fija imputables al artículo 23): no se incluye en estos apuntes. En el test real se mantiene la respuesta de la plantilla con la marca **Discrepancia**. La plantilla oficial da la b) («10 % del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios»), pero el art. 78.3 LGP fija el límite general en {c('LGP', 'Artículo 78', 'el siete por ciento del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios')} y el 10 % lo calcula sobre {c('LGP', 'Artículo 78', 'los créditos del artículo 23')} y solo para el programa 222A del Ministerio del Interior (→ II.2.1). Ninguna opción reproduce la ley.",
   "### Cómo se pregunta",
   "!> En caja fija y pagos a justificar los distractores cambian **una palabra** (presupuestario/extrapresupuestario, permanente/temporal), **un mes** (diciembre frente a enero, abril, julio y octubre), **un porcentaje** (7, 10, 14) o **un órgano** (el perceptor frente al Ministro). En la clasificación económica, el **número** del artículo o el **nivel** de especificación.",
 ]))

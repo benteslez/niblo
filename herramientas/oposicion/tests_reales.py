@@ -63,7 +63,10 @@ for n_, b_ in verif_examen.verificar(leyes25L, Q25L).items():
     LEYES[n_] = b_
 assert verif_examen.mutacion(leyes25L, Q25L)[0] == []
 
-def preguntas(qs, tema, leyes, n_anuladas, retenidas={}):
+import discrepancias   # boe/discrepancias.py: plantilla ≠ norma → se mantiene la plantilla con aviso
+DISC = discrepancias.comprobar()
+
+def preguntas(qs, tema, leyes, n_anuladas, retenidas={}, disc={}):
     out = []
     for q in qs:
         p = {"n": q["n"], "q": q["q"], "o": [q["o"][k] for k in "abcd"], "c": q["c"]}
@@ -71,7 +74,8 @@ def preguntas(qs, tema, leyes, n_anuladas, retenidas={}):
         if q["reserva"]: p["reserva"] = True; p["nr"] = q["n"] - 100     # número dentro de la reserva
         if q["anulada"]: p["anulada"] = True
         if q["n"] in leyes: p["ley"] = leyes[q["n"]]
-        if q["n"] in retenidas: p["retenida"] = retenidas[q["n"]]
+        if q["n"] in disc: p["disc"] = {"t": disc[q["n"]]["t"], "p": disc[q["n"]]["p"]}
+        elif q["n"] in retenidas: p["retenida"] = retenidas[q["n"]]
         out.append(p)
     assert sum(1 for p in out if p.get("anulada")) == n_anuladas and sum(1 for p in out if p.get("reserva")) == 5
     return out
@@ -97,7 +101,7 @@ for cod, meta, n_anul in OTROS:
     sin = set(getattr(L_, "SIN_LEY", {})) | set(getattr(L_, "RETENIDA", {}))
     falta = [q["n"] for q in E_.qs if not q["anulada"] and q["n"] not in ley_ and q["n"] not in sin]
     assert not falta, (cod, "preguntas sin especificar", falta)
-    examenes.append(dict(meta, preguntas=preguntas(E_.qs, L_.TEMA, ley_, n_anul, getattr(L_, "RETENIDA", {}))))
+    examenes.append(dict(meta, preguntas=preguntas(E_.qs, L_.TEMA, ley_, n_anul, getattr(L_, "RETENIDA", {}), DISC.get(cod, {}))))
 
 datos = {"_formato": "tests_reales_v1", "examenes": examenes}
 open("tests_reales.json", "w", encoding="utf-8").write(json.dumps(datos, ensure_ascii=False, separators=(",", ":")))
