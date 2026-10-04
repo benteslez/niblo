@@ -348,7 +348,7 @@ T.ap("s15", "IV.2 Las competencias exclusivas del Estado (art. 149.1)", f"""
 T.ap("s16", "IV.3 Cultura y cláusulas de cierre: residual, prevalencia y supletoriedad (art. 149.2 y 3)", f"""
 {unidad("3.1 La cultura, deber y atribución esencial del Estado (art. 149.2)",
   lit("CE", "Artículo 149", ["el servicio de la cultura como deber y atribución esencial"], solo=[34]),
-  fichab("Competencia concurrente en cultura", "El Estado, sin perjuicio de las competencias de las Comunidades",
+  fichab("El servicio de la cultura, deber y atribución esencial del Estado", "El Estado, sin perjuicio de las competencias de las Comunidades",
          "Considera la cultura deber y atribución esencial y facilita la comunicación cultural entre Comunidades, de acuerdo con ellas", "—",
          "La comunicación cultural entre Comunidades la facilita el Estado «**de acuerdo con ellas**»."))}
 

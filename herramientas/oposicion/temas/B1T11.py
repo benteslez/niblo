@@ -219,7 +219,7 @@ El **conflicto en defensa de la autonomía local** se estudia con el Tribunal Co
   fichab("Quién puede plantear el conflicto y qué trámites previos exige",
          ["Municipio o provincia destinatario único de la ley", "Municipios: al menos un séptimo de los existentes y un sexto de la población", "Provincias: al menos la mitad de las existentes y la mitad de la población"],
          "Acuerdo del Pleno y, antes de formalizar el conflicto, dictamen del Consejo de Estado u órgano consultivo autonómico",
-         f"{c('LOTC', 'asetentaycincoter', 'mayoría absoluta del número legal de miembros')}; dictamen {c('LOTC', 'asetentaycincoter', 'con carácter preceptivo pero no vinculante')}; solicitud del dictamen {c('LOTC', 'asetentaycincoquater', 'dentro de los tres meses siguientes al día de la publicación de la ley')}",
+         f"{c('LOTC', 'asetentaycincoter', 'mayoría absoluta del número legal de miembros')}; dictamen {c('LOTC', 'asetentaycincoter', 'con carácter preceptivo pero no vinculante')}; solicitud del dictamen {c('LOTC', 'asetentaycincoquater', 'dentro de los tres meses siguientes al día de la publicación de la ley')} (art. 75 quater.1)",
          "**Un séptimo** de los municipios y **un sexto** de la población; provincias, **la mitad** y **la mitad**. Dictamen **preceptivo pero no vinculante**."))}
 
 {resumen([
