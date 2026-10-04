@@ -274,7 +274,7 @@ T.ap("bIV", "IV. ¿Qué estatuto tienen Diputados y Senadores? (arts. 70 y 71)",
 
 T.ap("s8", "IV.1 Inelegibilidad, incompatibilidad y control de las actas (art. 70)", f"""
 {unidad("1.1 Causas que la ley electoral comprenderá en todo caso (art. 70.1)",
-  lit("CE", "Artículo 70", ["en todo caso", "con la excepción de los miembros del Gobierno", "en activo", "Juntas Electorales"]),
+  lit("CE", "Artículo 70", ["en todo caso", "con la excepción de los miembros del Gobierno", "en activo", "Juntas Electorales"], solo=[1, 2, 3, 4, 5, 6, 7]),
   fichab("Causas mínimas de inelegibilidad e incompatibilidad",
          "Las determina **la ley electoral**; la Constitución fija un mínimo",
          ["::Comprenderán en todo caso a:", "Los componentes del Tribunal Constitucional", "Los altos cargos de la Administración del Estado que determine la ley, **salvo los miembros del Gobierno**", "El Defensor del Pueblo", "Los Magistrados, Jueces y Fiscales **en activo**", "Los militares profesionales y miembros de las Fuerzas y Cuerpos de Seguridad y Policía **en activo**", "Los miembros de las Juntas Electorales"],
@@ -597,7 +597,7 @@ T.ap("s20", "VI.5 Cuadro de atribuciones de cada Cámara (esquema)", f"""
 | **Congreso** | Autorizar el referéndum consultivo (art. 92.2 → VI.4.1) | {c('CE', 'Artículo 92', 'previamente autorizada por el Congreso de los Diputados')} |
 | **Congreso** | Estados de alarma (prórroga), excepción y sitio (art. 116; temas I.2 y I.6) | {c('CE', 'Artículo 116', 'sin cuya autorización no podrá ser prorrogado dicho plazo')}; {c('CE', 'Artículo 116', 'previa autorización del Congreso de los Diputados')}; {c('CE', 'Artículo 116', 'El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados')} |
 | **Congreso** | Recibir los Presupuestos (art. 134.3) | {c('CE', 'Artículo 134', 'El Gobierno deberá presentar ante el Congreso de los Diputados los Presupuestos Generales del Estado')} |
-| **Senado** | Aprobar las medidas del art. 155 (organización territorial: temas I.10 y I.11) | {c('CE', 'Artículo 155', 'con la aprobación por mayoría absoluta del Senado')} |
+| **Senado** | Aprobar las medidas del art. 155 (organización territorial: tema I.10) | {c('CE', 'Artículo 155', 'con la aprobación por mayoría absoluta del Senado')} |
 | **Senado** | Iniciar el procedimiento de los arts. 145.2 y 158.2 (→ V.3.3) | {c('CE', 'Artículo 74', 'y en los otros dos, por el Senado')} |
 | **Las dos Cámaras** | Proponer Magistrados del Tribunal Constitucional (art. 159.1; tema I.3) | {c('CE', 'Artículo 159', 'cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría')} |
 | **Las dos Cámaras** | Proponer Vocales del CGPJ (art. 122.3; tema I.7) | {c('CE', 'Artículo 122', 'cuatro a propuesta del Congreso de los Diputados, y cuatro a propuesta del Senado, elegidos en ambos casos por mayoría de tres quintos de sus miembros')} |

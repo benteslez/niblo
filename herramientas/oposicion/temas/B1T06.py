@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B1T06",
-  "Cuatro preguntas: I. Qué es el Gobierno y cómo se organiza (arts. 97 y 98 CE; Ley 50/1997) · II. Cómo se designa, cuándo cesa y de qué responde penalmente (arts. 99 a 102; Reglamento del Congreso) · III. Cómo se relaciona con las Cortes: control y responsabilidad política (arts. 108 a 116) · IV. Qué es el Consejo de Estado (art. 107; LO 3/1980). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué es el Gobierno y cómo se organiza (arts. 97 y 98 CE; Ley 50/1997) · II. Cómo se designa, cuándo cesa y de qué responde penalmente (arts. 98.3 y 4 y 99 a 102; Ley 50/1997; Reglamento del Congreso) · III. Cómo se relaciona con las Cortes: control y responsabilidad política (arts. 108 a 116; Ley 50/1997; Reglamento del Congreso) · IV. Qué es el Consejo de Estado (arts. 107 y 153 b CE; LO 3/1980). Cada artículo: texto literal del BOE y ficha.",
   ["Gobierno", "Art. 97", "Art. 98", "Ley 50/1997", "Presidente del Gobierno", "Consejo de Ministros", "Comisiones Delegadas", "Investidura", "Art. 99", "Gobierno en funciones", "Art. 102", "Cuestión de confianza", "Moción de censura", "Art. 115", "Consejo de Estado", "LO 3/1980"])
 
 # =============================================================================
@@ -29,7 +29,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 | **I** | ¿Qué es el Gobierno y cómo se organiza? (poder ejecutivo, Presidente y Consejo de Ministros) | Arts. 97 y 98.1 y 2 | Ley 50/1997, arts. 1 a 10, 17, 18, 20 y 24 |
 | **II** | ¿Cómo se designa, cuándo cesa y de qué responde penalmente? | Arts. 99 a 102 (y 98.3 y 4) | Ley 50/1997, arts. 11 a 14 y 21; Reglamento del Congreso, arts. 170 a 172 |
 | **III** | ¿Cómo se relacionan el Gobierno y las Cortes? (control y responsabilidad política) | Arts. 108 a 116 | Ley 50/1997, art. 29; Reglamento del Congreso, arts. 174, 175, 177 a 181 y 184 a 187 |
-| **IV** | ¿Qué es el Consejo de Estado? | Art. 107 | LO 3/1980, del Consejo de Estado |
+| **IV** | ¿Qué es el Consejo de Estado? | Arts. 107 y 153 b | LO 3/1980, del Consejo de Estado |
 
 !> **La idea que une los cuatro bloques:** el Gobierno **dirige la política** y ejerce la función ejecutiva (I). Nace de la **confianza del Congreso** (investidura) y cesa cuando la pierde, con las elecciones o con la dimisión o muerte de su Presidente (II). Mientras gobierna, **responde políticamente ante el Congreso**, que puede retirarle la confianza (III). Y para decidir en Derecho cuenta con un **supremo órgano consultivo**: el Consejo de Estado (IV).
 
@@ -210,7 +210,7 @@ T.ap("s6", "I.6 Funcionamiento, delegación y forma de las decisiones (Ley 50/19
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo se designa al Gobierno, cuándo cesa y de qué responde penalmente? (arts. 99 a 102)", donde(
+T.ap("bII", "II. ¿Cómo se designa al Gobierno, cuándo cesa y de qué responde penalmente? (arts. 98.3 y 4 y 99 a 102; Ley 50/1997, arts. 11 a 14 y 21; Reglamento del Congreso, arts. 170 a 172)", donde(
   "Segunda pregunta. Ya sabemos qué es el Gobierno; ahora, **cómo nace** (investidura del Presidente y nombramiento de los demás miembros), **cuándo cesa** (y qué puede hacer en funciones) y **cómo responde penalmente**. La responsabilidad **política** se ve en el bloque III.",
   ["1 La investidura del Presidente y el nombramiento de los demás miembros (arts. 99 y 100; Reglamento del Congreso, arts. 170 a 172)", "2 Los demás miembros: requisitos, nombramiento y cese, suplencia e incompatibilidades (art. 98.3 y 4; Ley 50/1997, arts. 11 a 14)", "3 El cese y el Gobierno en funciones (art. 101; Ley 50/1997, art. 21)", "4 La responsabilidad criminal (art. 102)"]))
 
@@ -324,9 +324,9 @@ T.ap("s10", "II.4 La responsabilidad criminal del Gobierno (art. 102)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se relacionan el Gobierno y las Cortes? Control y responsabilidad política (arts. 108 a 116)", donde(
+T.ap("bIII", "III. ¿Cómo se relacionan el Gobierno y las Cortes? Control y responsabilidad política (arts. 108 a 116; Ley 50/1997, art. 29; Reglamento del Congreso, arts. 174, 175, 177 a 181 y 184 a 187)", donde(
   "Tercera pregunta. El Título V de la Constitución, " + c("CE", "tv", "De las relaciones entre el Gobierno y las Cortes Generales") + ", regula cómo las Cámaras **controlan** al Gobierno y cómo el Congreso puede **exigirle la responsabilidad política** o **renovarle la confianza**; y, a la inversa, cómo el Presidente puede **disolver** las Cámaras.",
-  ["1 Responsabilidad política solidaria y control (art. 108; Ley 50/1997, art. 29)", "2 Información, presencia, interpelaciones y preguntas (arts. 109 a 111; Reglamento del Congreso)", "3 La cuestión de confianza (art. 112)", "4 La moción de censura (art. 113)", "5 Efectos de la pérdida de confianza (art. 114)", "6 La disolución anticipada (art. 115)", "7 Los estados de alarma, excepción y sitio: el papel del Congreso (art. 116)", "8 Cuadro: investidura, cuestión de confianza y moción de censura"]))
+  ["1 Responsabilidad política solidaria y control (art. 108; Ley 50/1997, art. 29)", "2 Información, presencia, interpelaciones y preguntas (arts. 109 a 111; Reglamento del Congreso, arts. 180, 181 y 184 a 187)", "3 La cuestión de confianza (art. 112; Reglamento del Congreso, art. 174)", "4 La moción de censura (art. 113; Reglamento del Congreso, arts. 175, 177 y 179)", "5 Efectos de la pérdida de confianza (art. 114; Reglamento del Congreso, art. 178)", "6 La disolución anticipada (art. 115)", "7 Los estados de alarma, excepción y sitio: el papel del Congreso (art. 116)", "8 Cuadro: investidura, cuestión de confianza y moción de censura"]))
 
 T.ap("s11", "III.1 Responsabilidad política solidaria y control del Gobierno (art. 108; Ley 50/1997, art. 29)", f"""
 {unidad("1.1 El Gobierno responde ante el Congreso (art. 108)",
@@ -469,9 +469,9 @@ T.ap("s18", "III.8 Cuadro: investidura, cuestión de confianza y moción de cens
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Qué es el Consejo de Estado? (art. 107; LO 3/1980)", donde(
+T.ap("bIV", "IV. ¿Qué es el Consejo de Estado? (arts. 107 y 153 b CE; LO 3/1980)", donde(
   "Cuarta pregunta. El Gobierno no decide solo: para muchos asuntos debe oír antes al **supremo órgano consultivo**. La Constitución lo crea en una línea (art. 107) y remite a una **ley orgánica** su composición y competencia: la LO 3/1980.",
-  ["1 Naturaleza y función consultiva (art. 107; LO 3/1980, arts. 1 y 2)", "2 Órganos y miembros (arts. 3 a 10)", "3 Estatuto de los Consejeros, Secciones y funcionamiento (arts. 11 a 13, 16 y 19)", "4 Competencias: Pleno y Comisión Permanente (arts. 21, 22, 24 y 25)", "5 Cuadro de la composición del Consejo de Estado"]))
+  ["1 Naturaleza y función consultiva (art. 107; LO 3/1980, arts. 1 y 2)", "2 Órganos y miembros (arts. 3 a 10)", "3 Estatuto de los Consejeros, Secciones y funcionamiento (arts. 11 a 13, 16 y 19)", "4 Competencias: Pleno y Comisión Permanente (LO 3/1980, arts. 21, 22, 24 y 25; art. 153 b CE)", "5 Cuadro de la composición del Consejo de Estado"]))
 
 T.ap("s19", "IV.1 Naturaleza y función consultiva (art. 107; LO 3/1980, arts. 1 y 2)", f"""
 {unidad("1.1 Supremo órgano consultivo del Gobierno (art. 107; LO 3/1980, art. 1)",
@@ -587,7 +587,7 @@ T.ap("s21", "IV.3 Estatuto de los Consejeros, Secciones y funcionamiento (LO 3/1
          "El Gobierno puede pedir después el dictamen del **Pleno**."))}
 """, 2)
 
-T.ap("s22", "IV.4 Competencias: Pleno y Comisión Permanente (LO 3/1980, arts. 21, 22, 24 y 25)", f"""
+T.ap("s22", "IV.4 Competencias: Pleno y Comisión Permanente (LO 3/1980, arts. 21, 22, 24 y 25; art. 153 b CE)", f"""
 {unidad("4.1 Consultas al Pleno (LO 3/1980, art. 21)",
   lit("LO3_1980", "aveintiuno", ["Anteproyectos de reforma constitucional", "Proyectos de Decretos legislativos", "Separación de Consejeros permanentes", "Asuntos de Estado a los que el Gobierno reconozca especial trascendencia o repercusión"]),
   fichab("Asuntos en que debe consultarse al Pleno", "El Consejo de Estado en **Pleno**",
