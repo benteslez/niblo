@@ -74,7 +74,8 @@ def _fila(k, v):
     if v is None or v == "": v = "—"
     if isinstance(v, (list, tuple)):
         v = list(v); cab = v.pop(0)[2:] if v and v[0].startswith("::") else ""
-        return [f"=> {k}: {cab}"] + [f"=> - {x}" for x in v]
+        # «::Subtítulo:» fuera de la primera posición: el visor no lo trata → negrita.
+        return [f"=> {k}: {cab}"] + [f"=> - **{x[2:].replace('**', '').strip()}**" if x.startswith("::") else f"=> - {x}" for x in v]
     return [f"=> {k}: {v}"]
 def _ficha(pares):
     out = []
