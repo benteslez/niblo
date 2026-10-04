@@ -313,7 +313,7 @@ T.ap("s9", "IV.1 Contratación: el gasto en la LCSP (arts. 116, 117 y 198)", f""
 
 T.ap("s10", "IV.2 Contratación: los documentos contables (Instrucción, reglas 42, 77 y 78)", f"""
 {unidad("2.1 Tramitación anticipada de expedientes de contratación (regla 42.1 a 3)",
-  lit("OIOC", "regla42", ["condición suspensiva de existencia de crédito adecuado y suficiente", "detallando el importe que del gasto en cuestión corresponde a cada uno de los ejercicios posteriores afectados"], solo=[1, 2, 3, 4, 5, 7]),
+  lit("OIOC", "regla42", ["condición suspensiva de existencia de crédito adecuado y suficiente", "detallando el importe que del gasto en cuestión corresponde a cada uno de los ejercicios posteriores afectados"], solo=[1, 2, 3, 4, 5, 6, 7]),
   fichab("Gastos cuya ejecución empieza en el ejercicio siguiente",
          "El Servicio gestor expide el RC de tramitación anticipada; el certificado de cumplimiento de límites se obtiene del Sistema de Información Contable",
          ["Pliego: adjudicación y formalización sujetas a la **condición suspensiva** de existencia de crédito", "Certificado de cumplimiento de los límites del art. 47 LGP (documento RC de tramitación anticipada)", "Después: documentos A, D o AD «de tramitación anticipada»"],
@@ -422,7 +422,7 @@ T.ap("s14", "V.1 Normas generales: documentos electrónicos y firma (Orden de 1-
          "—",
          "Regla: **electrónicos**. Papel solo por circunstancias **excepcionales** que determine la **IGAE** a propuesta del responsable de la oficina de contabilidad."))}
 
-{unidad("1.2 Agrupación de facturas en un documento con fase O (apartado tercero.4)",
+{unidad("1.2 Firma electrónica y agrupación de facturas en un documento con fase O (apartado tercero.1 y 4)",
   lit("ODOC", "tercero", ["cuando la fecha en la que se inicia el cómputo de los plazos para el abono del precio sea la misma para todas ellas"], solo=[1, 5, 6]),
   fichab("Firma y agrupación de facturas",
          f"Firma electrónica de {c('ODOC', 'tercero', 'quien tenga atribuidas las facultades para ello')}",
@@ -441,10 +441,10 @@ T.ap("s15", "V.2 Documentos del Presupuesto de Gastos (Orden de 1-2-1996, aparta
          "Por eso hay documentos A, D y AD **de ejercicio corriente**, **de ejercicios posteriores** y **de tramitación anticipada** (→ V.2.3)."))}
 
 {unidad("2.2 Gestión de los créditos: MC, desglose y RC (apartado sexto.1 a) a d)",
-  lit("ODOC", "sexto", ["Se utilizará en las modificaciones presupuestarias que aumenten o disminuyan los créditos", "Documento de desglose", "Se utilizará para solicitar certificado de existencia y retención de crédito"], solo=[1, 2, 3, 4]),
+  lit("ODOC", "sexto", ["Se utilizará en las modificaciones presupuestarias que aumenten o disminuyan los créditos", "Documento de desglose", "Se utilizará para solicitar certificado de existencia y retención de crédito", "Documento RC de ejercicios posteriores"], solo=[1, 2, 3, 4, 5]),
   fichab("Documentos que no son fases del gasto: actúan sobre el crédito",
          "—",
-         ["**MC**: modificaciones presupuestarias que aumentan o disminuyen los créditos", "**Documento de desglose**: desglose de aplicaciones presupuestarias y seguimiento de créditos distribuidos a servicios periféricos", "**RC**: certificado de existencia y retención de crédito (no disponibilidad: RC-102; presupuesto del cajero de ACF: RC-110)"],
+         ["**MC**: modificaciones presupuestarias que aumentan o disminuyen los créditos", "**Documento de desglose**: desglose de aplicaciones presupuestarias y seguimiento de créditos distribuidos a servicios periféricos", "**RC**: certificado de existencia y retención de crédito (no disponibilidad: RC-102; presupuesto del cajero de ACF: RC-110)", "**RC de ejercicios posteriores**: certificado de cumplimiento de los límites del art. 47 LGP"],
          "—",
          "Las operaciones de desglose usan el «**Documento de desglose**» (cayó en 2025, → Cierre 1). Las modificaciones de crédito son del tema VI.3."))}
 
@@ -475,10 +475,10 @@ T.ap("s15", "V.2 Documentos del Presupuesto de Gastos (Orden de 1-2-1996, aparta
 
 T.ap("s16", "V.3 Claves de operación de los documentos (Orden de 1-2-1996, anexo I)", f"""
 {unidad("3.1 Claves del documento MC y de las fases (anexo I, nota 2)",
-  lit("ODOC", "ani", ["030 Créditos extraordinarios.", "040 Suplemento de créditos.", "420 Reconocimiento de obligaciones."], solo=[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 32, 33, 35, 36, 38, 39, 40, 52, 53, 55, 56, 57], titulo="Anexo I, nota 2 (Orden de 1-2-1996, documentos contables): claves de operación"),
+  lit("ODOC", "ani", ["030 Créditos extraordinarios.", "040 Suplemento de créditos.", "420 Reconocimiento de obligaciones."], solo=[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 52, 53, 54, 55, 56, 57, 58], titulo="Anexo I, nota 2 (Orden de 1-2-1996, documentos contables): claves de operación"),
   fichab("Código numérico de cada operación en el documento contable",
          "El Servicio gestor, al cumplimentar el documento",
-         ["MC: **030** crédito extraordinario, **040** suplemento, **050** ampliación, **060/061** transferencias positivas/negativas, **070** incorporación de remanentes, **080** generación por ingresos", "A: 200 / 210 · D: 300 · AD: 220 / 230 · OK: 420 · ADOK: 260 / 270"],
+         ["MC: **030** crédito extraordinario, **040** suplemento, **050** ampliación, **060/061** transferencias positivas/negativas, **070** incorporación de remanentes, **080** generación por ingresos", "A: 200 / 210 · D: 300 · AD: 220 / 230 · OK: 420 · ADOK: 260 / 270", "Cancelaciones de Anticipos de Tesorería: 206 (A), 306 (D), 226 (AD), 426 (OK), 266 (ADOK)"],
          "—",
          "Para un **crédito extraordinario** se expide un **MC con clave 030** (MC030); 070 es la incorporación y 060 la transferencia positiva (→ Cierre 1)."))}
 """, 2)

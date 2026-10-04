@@ -12,7 +12,7 @@ from plantilla import *
 CORTO["L8_1989"] = "Ley 8/1989"
 
 T = Tema("B6T07",
-  "Cuatro preguntas: I. Qué son los ingresos públicos y cómo se clasifican (LGP, arts. 5, 10, 19, 27 y 41; CE, art. 31.3; LGT, disposición adicional primera) · II. Cómo es el sistema tributario español (CE, arts. 31.1, 133 y 134.7; LGT, arts. 1 a 4, 7, 8, 10, 20 a 22 y 36) · III. Qué son las tasas y cómo se regulan (Ley 8/1989, arts. 1 a 23) · IV. Qué son los precios públicos y en qué se diferencian de las tasas (Ley 8/1989, arts. 24 a 27). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué son los ingresos públicos y cómo se clasifican (LGP, arts. 5, 10, 19, 27 y 41; CE, art. 31.3; LGT, disposición adicional primera) · II. Cómo es el sistema tributario español (CE, arts. 31.1, 133 y 134.7; LGT, arts. 1 a 4, 7, 8, 10, 20 a 22 y 36) · III. Qué son las tasas y cómo se regulan (Ley 8/1989, arts. 1, 2 y 6 a 23) · IV. Qué son los precios públicos y en qué se diferencian de las tasas (Ley 8/1989, arts. 24 a 27). Cada artículo: texto literal del BOE y ficha.",
   ["Ingresos públicos", "Hacienda Pública estatal", "Derechos de naturaleza pública", "Clasificación económica", "Prestaciones patrimoniales", "Tributo", "Tasas", "Contribuciones especiales", "Impuestos", "Potestad tributaria", "Reserva de ley tributaria", "Hecho imponible", "Devengo", "Exención", "Ley 8/1989", "Precios públicos", "Memoria económico-financiera"])
 
 # =============================================================================
@@ -28,7 +28,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 |---|---|---|
 | **I** | ¿Qué son los ingresos públicos y cómo se clasifican? | Ley 47/2003, General Presupuestaria (LGP), arts. 5, 10.1, 19.1, 27.3 y 4 y 41; CE, art. 31.3; Ley 58/2003, General Tributaria (LGT), disposición adicional primera |
 | **II** | ¿Cómo es el sistema tributario español? (régimen actual) | CE, arts. 31.1, 133 y 134.7; LGT, arts. 1, 2, 3, 4, 7, 8, 10, 20, 21, 22 y 36 |
-| **III** | ¿Qué son las tasas y cómo se regulan? | LGT, art. 2.2 a); Ley 8/1989, de Tasas y Precios Públicos, arts. 1 a 23 |
+| **III** | ¿Qué son las tasas y cómo se regulan? | LGT, art. 2.2 a); Ley 8/1989, de Tasas y Precios Públicos, arts. 1, 2 y 6 a 23 |
 | **IV** | ¿Qué son los precios públicos y en qué se diferencian de las tasas? | Ley 8/1989, arts. 24 a 27 y disposición adicional séptima |
 
 !> **La idea que une los cuatro bloques:** la Hacienda Pública estatal tiene derechos de **naturaleza pública** (los tributos y los que derivan de **potestades administrativas**) y de **naturaleza privada** (I). Los **tributos** son el ingreso público típico: los crea la **ley**, se clasifican en **tasas, contribuciones especiales e impuestos** y se rigen por la **LGT** (II). Las **tasas** son tributos (III); los **precios públicos** no lo son: son **contraprestaciones** por servicios que también presta el **sector privado** y que se solicitan **voluntariamente** (IV).

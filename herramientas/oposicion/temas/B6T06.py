@@ -100,7 +100,7 @@ El capítulo 2 es el de los «gastos para la compra de bienes y servicios» del 
          "La regla se da «Como norma general». La clave es si la reparación **mejora o alarga** el bien (→ I.3)."))}
 
 {unidad("2.4 Indemnizaciones por razón del servicio (anexo IV, artículo 23)",
-  lit("RES2014", "ai-4", ["altos cargos y asimilados, y su séquito, funcionarios, personal laboral fijo y eventual y otro personal", "asistencia a tribunales y órganos colegiados"], solo=[382, 383, 384, 389, 391, 392, 393], titulo=A4 + ", artículo 23"),
+  lit("RES2014", "ai-4", ["altos cargos y asimilados, y su séquito, funcionarios, personal laboral fijo y eventual y otro personal", "asistencia a tribunales y órganos colegiados"], solo=[382, 383, 384, 385, 386, 387, 388, 389, 391, 392, 393], titulo=A4 + ", artículo 23"),
   fichab("Resarcimiento de gastos causados por el servicio",
          "Altos cargos y asimilados y su séquito, funcionarios, personal laboral fijo y eventual y otro personal",
          ["Conceptos: 230 Dietas · 231 Locomoción · 232 Traslado · 233 Otras indemnizaciones", "Incluye asistencias a tribunales y órganos colegiados"],
@@ -126,10 +126,10 @@ T.ap("s3", "I.3 Gastos de inversión: capítulo 6 (Resolución de 20-1-2014)", f
          "Par = **nueva**, impar = **reposición** (60/61 y 62/63). El 64 es inmaterial (estudios, campañas, propiedad industrial, software de varios ejercicios)."))}
 
 {unidad("3.3 Inversión nueva y de reposición (anexo IV, artículos 60 a 64)",
-  lit("RES2014", "ai-4", ["que incrementen el stock de capital público", "Mantener o reponer los bienes deteriorados", "Prorrogar la vida útil del bien", "susceptibles de producir sus efectos en varios ejercicios futuros"], solo=[530, 531, 537, 538, 539, 540, 546, 547, 557, 558, 565, 566], titulo=A4 + ", artículos 60 a 64"),
+  lit("RES2014", "ai-4", ["que incrementen el stock de capital público", "Mantener o reponer los bienes deteriorados", "Prorrogar la vida útil del bien", "susceptibles de producir sus efectos en varios ejercicios futuros"], solo=[530, 531, 537, 538, 539, 540, 546, 547, 557, 558, 559, 560, 561, 565, 566, 567], titulo=A4 + ", artículos 60 a 64"),
   fichab("Criterios para elegir el artículo de inversión",
          "—",
-         ["**Nueva** (60 y 62): incrementa el stock de capital público", "**Reposición** (61 y 63): mantener o reponer bienes deteriorados, prorrogar su vida útil o aumentar su eficacia", "**Inmaterial** (64): gastos no materializados en activos que producen efectos en varios ejercicios"],
+         ["**Nueva** (60 y 62): incrementa el stock de capital público", "**Reposición** (61 y 63): mantener o reponer bienes deteriorados, prorrogar su vida útil o aumentar su eficacia; en el 63, también reponer los bienes que han devenido inútiles por su uso normal", "**Inmaterial** (64): gastos no materializados en activos que producen efectos en varios ejercicios"],
          "—",
          "Uso **general** (60-61: infraestructura y bienes destinados al uso general) frente a funcionamiento **operativo** de los servicios (62-63: edificios, mobiliario, equipos informáticos de la propia Administración)."))}
 """, 2)
@@ -556,7 +556,7 @@ T.ap("s19", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-L 2025, pregunta 94 · Indemnizaciones por razón del servicio: artículo 23 (relacionada; → I.2.2)", EX_L94,
   "### GACE-P 2025, pregunta 96 · Indemnizaciones por razón del servicio: artículo 23 (relacionada; → I.2.2)", EX_P96,
   "### Pregunta con discrepancia",
-  f"?> **GACE-L 2025 extraordinario, pregunta 96** (límite de los anticipos de caja fija imputables al artículo 23): no se incluye en estos apuntes. En el test real se mantiene la respuesta de la plantilla con la marca **Discrepancia**. La plantilla oficial da la b) («10 % del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios»), pero el art. 78.3 LGP fija el límite general en {c('LGP', 'Artículo 78', 'el siete por ciento del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios')} y el 10 % lo calcula sobre {c('LGP', 'Artículo 78', 'los créditos del artículo 23')} y solo para el programa 222A del Ministerio del Interior (→ II.2.1). Ninguna opción reproduce la ley.",
+  f"?> **GACE-L 2025 extraordinario, pregunta 96** (límite de los anticipos de caja fija imputables al artículo 23): no se incluye en estos apuntes. En el test real se mantiene la respuesta de la plantilla con la marca **Discrepancia**. La plantilla oficial da la b) («10% del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios.»), pero el art. 78.3 LGP fija el límite general en {c('LGP', 'Artículo 78', 'el siete por ciento del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios')} y el 10 % lo calcula sobre {c('LGP', 'Artículo 78', 'los créditos del artículo 23')} y solo para el programa 222A del Ministerio del Interior (→ II.2.1). Ninguna opción reproduce la ley.",
   "### Cómo se pregunta",
   "!> En caja fija y pagos a justificar los distractores cambian **una palabra** (presupuestario/extrapresupuestario, permanente/temporal), **un mes** (diciembre frente a enero, abril, julio y octubre), **un porcentaje** (7, 10, 14) o **un órgano** (el perceptor frente al Ministro). En la clasificación económica, el **número** del artículo o el **nivel** de especificación.",
 ]))

@@ -54,7 +54,7 @@ def orden(ap, rub, resaltar=(), solo=None):
     return lit("ONOM1992", ap, resaltar, solo=solo, titulo=f"Orden de 30-7-1992 (confección de nóminas), apartado {ap[1:]}" + (f". {rub}" if rub else ""))
 
 T = Tema("B6T08",
-  "Cinco preguntas: I. Qué retribuciones lleva la nómina (TREBEP, arts. 22 y 23; Ley 30/1984, art. 23; régimen completo en el tema V.6) · II. Cómo es una nómina y cómo se confecciona y se paga (Orden de 30-7-1992, aps. 1 y 5 a 8; Instrucción de operatoria contable, reglas 66, 67 y 69) · III. Cómo se justifican las altas, las bajas y las modificaciones (Orden de 1992, aps. 2 a 4) · IV. Qué se descuenta y se ingresa en formalización (Orden de 1992, ap. 5.1.5 a 5.1.8; Resolución de 25-5-2010, ap. A.3; reglas 70 y 93) · V. Cómo se devengan y liquidan los derechos económicos (TREBEP, art. 30; Resolución de 25-5-2010). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué retribuciones lleva la nómina (TREBEP, arts. 22 y 23; Ley 30/1984, art. 23; régimen completo en el tema V.6) · II. Cómo es una nómina y cómo se confecciona y se paga (Orden de 30-7-1992, aps. 1 y 5 a 8; Instrucción de operatoria contable, reglas 66, 67 y 69) · III. Cómo se justifican las altas, las bajas y las modificaciones (Orden de 1992, aps. 2 a 4) · IV. Qué se descuenta y se ingresa en formalización (Orden de 1992, ap. 5.1.5 a 5.1.8; Resolución de 25-5-2010, aps. A.3 y A.4.4 y anexo XIV; reglas 70 y 93) · V. Cómo se devengan y liquidan los derechos económicos (TREBEP, art. 30; Resolución de 25-5-2010). Cada artículo: texto literal del BOE y ficha.",
   ["Nómina", "Orden de 30-7-1992", "Habilitado", "Cierre el día 5", "Altas en nómina", "Bajas en nómina", "Modificaciones", "Deducciones formalizables", "Ingreso en formalización", "Importe líquido", "Devengo", "Liquidación por días", "Valor hora", "Pagas extraordinarias", "Indemnización por residencia", "Resolución de 25-5-2010"])
 
 # =============================================================================
@@ -71,7 +71,7 @@ El epígrafe tiene **cinco frases**; cada una es un bloque de los apuntes:
 | **I** | ¿Qué retribuciones lleva la nómina? | TREBEP, arts. 22 y 23; Ley 30/1984, art. 23 (régimen completo: tema V.6) |
 | **II** | ¿Cómo es una nómina y cómo se confecciona y se paga? | Orden de 30-7-1992, aps. 1, 5, 6, 7 y 8; Instrucción de operatoria contable (Orden de 1-2-1996), reglas 66, 67 y 69 |
 | **III** | ¿Cómo se justifican las altas, las bajas y las modificaciones? | Orden de 30-7-1992, aps. 2, 3 y 4 |
-| **IV** | ¿Qué se descuenta en la nómina y se ingresa en formalización? | Orden de 30-7-1992, ap. 5.1.5 a 5.1.8; Resolución de 25-5-2010, ap. A.3 y anexo XIV; reglas 70 y 93 |
+| **IV** | ¿Qué se descuenta en la nómina y se ingresa en formalización? | Orden de 30-7-1992, ap. 5.1.5 a 5.1.8; Resolución de 25-5-2010, aps. A.3 y A.4.4 y anexo XIV; reglas 70 y 93 |
 | **V** | ¿Cómo se devengan y se liquidan los derechos económicos? | TREBEP, art. 30; Resolución de 25-5-2010, aps. A.2, A.4.3 y C.1 y anexo XV; Orden de 1992, ap. 8 |
 
 !> **La idea que une los cinco bloques:** el funcionario tiene derecho a unas **retribuciones** (I). Se le pagan **cada mes** a través de una **nómina** que confecciona el **habilitado** con una estructura fija (II). Cada **cambio** respecto de la nómina del mes anterior (alta, baja o modificación) se **justifica** con un documento (III). Del importe **íntegro** se **descuentan** deducciones; las **formalizables** se ingresan **en formalización** en el Tesoro (IV). Y las reglas de **devengo** dicen **cuánto** corresponde cada mes: mensualidad completa o por días, pagas extraordinarias, deducciones (V).
@@ -314,7 +314,7 @@ T.ap("s9", "III.4 Cuadro de altas, bajas y modificaciones (esquema)", f"""
 # =============================================================================
 T.ap("bIV", "IV. ¿Qué se descuenta en la nómina y se ingresa en formalización?", donde(
   "Cuarta frase del epígrafe. De lo que se paga al funcionario se **retienen** cantidades (IRPF, derechos pasivos, mutualidades…). Las que se ingresan **en formalización** en el Tesoro Público son las **deducciones formalizables**.",
-  ["1 Deducciones formalizables y no formalizables; íntegro, líquido y neto (Orden, ap. 5.1.5 a 5.1.8)", "2 Lo que se retiene en la nómina: cuotas y anticipos (Resolución de 2010, ap. A.3 y anexo XIV; reglas 70 y 93)", "3 Pendiente (temario)"]))
+  ["1 Deducciones formalizables y no formalizables; íntegro, líquido y neto (Orden, ap. 5.1.5 a 5.1.8)", "2 Lo que se retiene en la nómina: cuotas y anticipos (Resolución de 2010, aps. A.3 y A.4.4 y anexo XIV; reglas 70 y 93)", "3 Pendiente (temario)"]))
 
 T.ap("s10", "IV.1 Deducciones formalizables y no formalizables; íntegro, líquido y neto (Orden de 1992, ap. 5.1.5 a 5.1.8)", f"""
 {unidad("1.1 Deducciones formalizables y no formalizables (ap. 5.1.5 y 5.1.6)",
@@ -342,7 +342,7 @@ T.ap("s10", "IV.1 Deducciones formalizables y no formalizables; íntegro, líqui
          "Íntegro → (−formalizables) → líquido → (−no formalizables) → neto. Al pagar la nómina en las Delegaciones se anticipa el importe **líquido** (→ II.4.2)."))}
 """, 2)
 
-T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resolución de 2010, ap. A.3 y anexo XIV; reglas 70 y 93)", f"""
+T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resolución de 2010, aps. A.3 y A.4.4 y anexo XIV; reglas 70 y 93)", f"""
 {unidad("2.1 Cuotas de mutualidades y de derechos pasivos (Resolución de 2010, ap. A.3.1 a 3.4)",
   res([56, 58, 62, 63, 64], "apartado A.3", ["que los habilitados de personal deben retener en nómina cada mes", "cualquiera que sea su antigüedad en el servicio del Estado, la cuota supone una cantidad única e idéntica", "no experimentarán reducción en su cuantía"]),
   fichab("Cuotas que el habilitado retiene a los funcionarios",
