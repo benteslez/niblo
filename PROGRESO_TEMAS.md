@@ -37,7 +37,7 @@ Bloque I: - [x] I.2 - [x] I.1 - [x] I.3 - [x] I.4 - [x] I.5 - [x] I.6 - [x] I.8
 
 Bloque VI: - [x] VI.3 - [x] VI.6 - [x] VI.7
 
-Bloque III: - [ ] III.8
+Bloque III: - [x] III.8
 
 ## 3. Temas «BOE + temario» y bloque II
 
