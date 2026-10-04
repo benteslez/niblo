@@ -17,7 +17,7 @@ STC = "STC55_2018"   # Sentencia del TC 55/2018, BOE-A-2018-8574 (texto del BOE)
 TIT_STC = "Sentencia del Tribunal Constitucional 55/2018, de 24 de mayo (BOE núm. 151, de 22 de junio de 2018) · {} · doctrina del TC publicada en el BOE; no es texto legal"
 
 T = Tema("B4T01",
-  "Tres preguntas: I. Qué son las fuentes y qué clases hay (Código Civil, art. 1; CE, arts. 1.1, 9.1, 10.2, 96, 97 y 103.1; Ley 39/2015, arts. 127 y 128.1) · II. Cómo se ordenan: la jerarquía (CE, art. 9.3; CC, art. 1.2; Ley 39/2015, arts. 37, 47.2 y 128; Ley 50/1997, art. 24; CE, arts. 106.1 y 149.3) · III. Cómo se hacen las normas: buena regulación, planificación y participación (Ley 39/2015, arts. 129 a 133, y STC 55/2018). Cada artículo: texto literal del BOE y ficha.",
+  "Tres preguntas: I. Qué son las fuentes y qué clases hay (Código Civil, art. 1; CE, arts. 1.1, 9.1, 10.2, 93, 96.1, 97, 103.1 y 149.1.8.ª; Ley 40/2015, art. 3.1; Ley 39/2015, arts. 127 y 128.1; LRBRL, art. 4.1 a) · II. Cómo se ordenan: la jerarquía (CE, arts. 9.3, 106.1 y 149.3; CC, art. 1.2; Ley 39/2015, arts. 37, 47.2 y 128; Ley 50/1997, art. 24; LJCA, art. 26) · III. Cómo se hacen las normas: buena regulación, planificación y participación (Ley 39/2015, arts. 129 a 133; Ley 50/1997, arts. 22 y 25; CC, art. 2.1; STC 55/2018). Cada artículo: texto literal del BOE y ficha.",
   ["Fuentes del Derecho", "CC art. 1", "Costumbre", "Principios generales", "Jurisprudencia", "Jerarquía normativa", "Art. 9.3 CE", "Potestad reglamentaria", "Art. 97 CE", "Ley 50/1997 art. 24", "Orden Ministerial", "Inderogabilidad singular", "Buena regulación", "Consulta pública", "STC 55/2018"])
 
 # =============================================================================
@@ -48,16 +48,15 @@ El epígrafe se lee como **tres preguntas encadenadas**. Cada una es un bloque d
 # =============================================================================
 T.ap("bI", "I. ¿Qué son las fuentes y qué clases hay? (concepto y clases)", donde(
   "Primera pregunta del tema. Antes de ordenar las normas hay que saber **cuáles son**: qué fuentes enumera el Código Civil, qué papel tiene la Constitución y quién puede dictar normas con rango de ley y reglamentos.",
-  ["1 Las fuentes del ordenamiento según el Código Civil (art. 1)", "2 La Constitución, norma suprema y fuente del Derecho administrativo", "3 Las normas con rango de ley (Ley 39/2015, art. 127)", "4 El reglamento: quién tiene la potestad reglamentaria", "5 Cuadro de las clases de fuentes"]))
+  ["1 Las fuentes del ordenamiento según el Código Civil (art. 1; CE, arts. 93, 96.1 y 149.1.8.ª)", "2 La Constitución, norma suprema y fuente del Derecho administrativo", "3 Las normas con rango de ley (Ley 39/2015, art. 127)", "4 El reglamento: quién tiene la potestad reglamentaria", "5 Cuadro de las clases de fuentes"]))
 
-T.ap("s1", "I.1 Las fuentes del ordenamiento según el Código Civil (art. 1)", f"""
-El art. 1 del Código Civil (redacción del título preliminar de 1974) es la regla general sobre fuentes de todo el ordenamiento español, también del administrativo. La Constitución reserva al Estado su determinación.
+T.ap("s1", "I.1 Las fuentes del ordenamiento según el Código Civil (art. 1; CE, arts. 93, 96.1 y 149.1.8.ª)", f"""
+El art. 1 del Código Civil (redacción del título preliminar de 1974) es la regla general sobre fuentes de todo el ordenamiento español, también del administrativo. La Constitución reserva al Estado su determinación (→ I.1.6).
 
-{unidad("1.1 Cuáles son las fuentes (CC, art. 1.1; CE, art. 149.1.8.ª)",
+{unidad("1.1 Cuáles son las fuentes (CC, art. 1.1)",
   lit("CC", "a1", ["la ley, la costumbre y los principios generales del derecho"], solo=[1]),
-  lit("CE", "Artículo 149", ["determinación de las fuentes del Derecho"], solo=[1, 9]),
   fichab("Enumeración de las fuentes del ordenamiento jurídico español",
-         f"Las fija el **Estado**: {c('CE', 'Artículo 149', 'determinación de las fuentes del Derecho, con respeto, en este último caso, a las normas de derecho foral o especial')} (149.1.8.ª)",
+         f"Las fija el **Estado**: {c('CE', 'Artículo 149', 'determinación de las fuentes del Derecho, con respeto, en este último caso, a las normas de derecho foral o especial')} (149.1.8.ª → I.1.6)",
          ["::Tres fuentes, por este orden (CC 1.1):", "La **ley**", "La **costumbre**", "Los **principios generales del derecho**"],
          "—",
          "Son **tres**. Ni la **jurisprudencia** ni los **reglamentos** ni los **tratados** figuran en la lista del 1.1 (los tratados se integran por publicación, → I.1.4; la jurisprudencia «complementará», → I.1.5). Cayó en 2025 (→ Cierre 1)."))}
@@ -78,10 +77,10 @@ El art. 1 del Código Civil (redacción del título preliminar de 1974) es la re
          "—",
          "Doble papel: fuente **subsidiaria** (tras ley y costumbre) y carácter **informador**. Se desarrollan en el tema IV.3."))}
 
-{unidad("1.4 Los tratados internacionales (CC, art. 1.5; CE, arts. 96.1 y 93)",
+{unidad("1.4 Los tratados internacionales (CC, art. 1.5; CE, arts. 93 y 96.1)",
   lit("CC", "a1", ["mediante su publicación íntegra en el «Boletín Oficial del Estado»"], solo=[6]),
-  lit("CE", "Artículo 96", ["una vez publicados oficialmente en España, formarán parte del ordenamiento interno"], solo=[1]),
   lit("CE", "Artículo 93", ["Mediante ley orgánica"]),
+  lit("CE", "Artículo 96", ["una vez publicados oficialmente en España, formarán parte del ordenamiento interno"], solo=[1]),
   fichab("Integración de los tratados en el ordenamiento interno",
          "—",
          ["Los tratados **válidamente celebrados**, una vez **publicados oficialmente** en España, forman parte del ordenamiento interno (CE 96.1)", "Sin publicación íntegra en el BOE, sus normas **no** son de aplicación directa (CC 1.5)", "Sus disposiciones solo se derogan, modifican o suspenden según el propio tratado o el Derecho internacional general (CE 96.1)"],
@@ -95,26 +94,34 @@ El art. 1 del Código Civil (redacción del título preliminar de 1974) es la re
          ["La jurisprudencia **complementa** el ordenamiento: doctrina del **Tribunal Supremo**, **reiterada**, al interpretar y aplicar ley, costumbre y principios", "Los jueces deben resolver **en todo caso**, conforme al sistema de fuentes"],
          "Doctrina establecida **de modo reiterado**",
          "La jurisprudencia **no** está en la lista del 1.1: «complementará». Es la del **Tribunal Supremo** (no la de cualquier tribunal) y exige reiteración."))}
+
+{unidad("1.6 La determinación de las fuentes, competencia del Estado (CE, art. 149.1.8.ª)",
+  lit("CE", "Artículo 149", ["determinación de las fuentes del Derecho"], solo=[1, 9]),
+  fichab("Quién puede fijar el sistema de fuentes",
+         "El **Estado**, con competencia exclusiva",
+         f"Competencia exclusiva sobre la {c('CE', 'Artículo 149', 'determinación de las fuentes del Derecho, con respeto, en este último caso, a las normas de derecho foral o especial')}",
+         "—",
+         "Es competencia **exclusiva** del Estado, pero con **respeto** a las normas de derecho foral o especial."))}
 """, 2)
 
 T.ap("s2", "I.2 La Constitución, norma suprema y fuente del Derecho administrativo", f"""
-La Constitución es la primera norma del ordenamiento: obliga a todos, fija sus valores superiores y somete la Administración a la ley y al Derecho.
+La Constitución es la primera norma del ordenamiento: fija sus valores superiores, obliga a todos y somete la Administración a la ley y al Derecho.
 
-{unidad("2.1 Sujeción a la Constitución y al ordenamiento (CE, art. 9.1)",
-  lit("CE", "Artículo 9", ["están sujetos a la Constitución y al resto del ordenamiento jurídico"], solo=[1]),
-  fichab("La Constitución vincula a todos",
-         f"{c('CE', 'Artículo 9', 'Los ciudadanos y los poderes públicos')}",
-         "Sujeción a la Constitución **y** al resto del ordenamiento",
-         "—",
-         "Vincula a **ciudadanos y poderes públicos** (no solo a los poderes públicos)."))}
-
-{unidad("2.2 Los valores superiores del ordenamiento (CE, art. 1.1)",
+{unidad("2.1 Los valores superiores del ordenamiento (CE, art. 1.1)",
   lit("CE", "Artículo 1", ["la libertad, la justicia, la igualdad y el pluralismo político"], solo=[1]),
   fichab("Valores que propugna el Estado social y democrático de Derecho",
          "El Estado (España)",
          ["Libertad", "Justicia", "Igualdad", "Pluralismo político"],
          "—",
          "Son **cuatro** valores superiores. La seguridad jurídica no es uno de ellos: es una garantía del art. 9.3 (→ II.1.1)."))}
+
+{unidad("2.2 Sujeción a la Constitución y al ordenamiento (CE, art. 9.1)",
+  lit("CE", "Artículo 9", ["están sujetos a la Constitución y al resto del ordenamiento jurídico"], solo=[1]),
+  fichab("La Constitución vincula a todos",
+         f"{c('CE', 'Artículo 9', 'Los ciudadanos y los poderes públicos')}",
+         "Sujeción a la Constitución **y** al resto del ordenamiento",
+         "—",
+         "Vincula a **ciudadanos y poderes públicos** (no solo a los poderes públicos)."))}
 
 {unidad("2.3 Interpretación de las normas sobre derechos (CE, art. 10.2)",
   lit("CE", "Artículo 10", ["la Declaración Universal de Derechos Humanos y los tratados y acuerdos internacionales sobre las mismas materias ratificados por España"], solo=[2]),
@@ -198,7 +205,7 @@ T.ap("s5", "I.5 Cuadro de las clases de fuentes (esquema)", f"""
 # =============================================================================
 T.ap("bII", "II. ¿Cómo se ordenan las fuentes? La jerarquía", donde(
   "Segunda pregunta. Ya sabemos cuáles son las fuentes; ahora, **qué vale más**. La Constitución garantiza la jerarquía normativa y el Código Civil y la Ley 39/2015 dicen qué pasa con la norma que contradice otra superior.",
-  ["1 El principio de jerarquía normativa (CE, art. 9.3; CC, art. 1.2; Ley 39/2015, art. 128.3)", "2 La jerarquía de los reglamentos del Estado (Ley 50/1997, art. 24)", "3 Ley y reglamento: límites y consecuencias (Ley 39/2015, arts. 128.2, 47.2 y 37)", "4 Quién controla la jerarquía (CE, art. 106.1; LJCA, art. 26)", "5 Jerarquía y competencia: Estado y Comunidades Autónomas (CE, art. 149.3)"]))
+  ["1 El principio de jerarquía normativa (CE, art. 9.3; CC, art. 1.2; Ley 39/2015, art. 128.3)", "2 La jerarquía de los reglamentos del Estado (Ley 50/1997, art. 24)", "3 Ley y reglamento: límites y consecuencias (Ley 39/2015, arts. 37, 47.2 y 128.2)", "4 Quién controla la jerarquía (CE, art. 106.1; LJCA, art. 26)", "5 Jerarquía y competencia: Estado y Comunidades Autónomas (CE, art. 149.3)"]))
 
 T.ap("s6", "II.1 El principio de jerarquía normativa (CE, art. 9.3; CC, art. 1.2; Ley 39/2015, art. 128.3)", f"""
 {unidad("1.1 La Constitución garantiza la jerarquía normativa (CE, art. 9.3)",
@@ -244,16 +251,16 @@ T.ap("s7", "II.2 La jerarquía de los reglamentos del Estado (Ley 50/1997, art. 
          "Solo **dos** escalones. El Real Decreto del Presidente y el acordado en Consejo de Ministros están en el **mismo** nivel; las Órdenes Ministeriales, debajo."))}
 """, 2)
 
-T.ap("s8", "II.3 Ley y reglamento: límites y consecuencias (Ley 39/2015, arts. 128.2, 47.2 y 37)", f"""
-{unidad("3.1 Lo que el reglamento no puede hacer (Ley 39/2015, art. 128.2)",
-  lit("L39", "Artículo 128", ["no podrán vulnerar la Constitución o las leyes", "no podrán tipificar delitos, faltas o infracciones administrativas, establecer penas o sanciones, así como tributos"], solo=[2]),
-  fichab("Límites de los reglamentos frente a la ley",
-         "Los reglamentos y disposiciones administrativas",
-         ["No pueden **vulnerar** la Constitución o las leyes", "No pueden regular materias de la competencia de las **Cortes** o de las **Asambleas Legislativas** autonómicas", "Sin perjuicio de su función de **desarrollo o colaboración** con la ley, no pueden tipificar delitos, faltas o infracciones, establecer penas o sanciones, tributos, exacciones parafiscales u otras cargas o prestaciones personales o patrimoniales de carácter público"],
+T.ap("s8", "II.3 Ley y reglamento: límites y consecuencias (Ley 39/2015, arts. 37, 47.2 y 128.2)", f"""
+{unidad("3.1 La inderogabilidad singular de los reglamentos (Ley 39/2015, art. 37)",
+  lit("L39", "Artículo 37", ["aunque aquéllas procedan de un órgano de igual o superior jerarquía", "Son nulas las resoluciones administrativas que vulneren lo establecido en una disposición reglamentaria"]),
+  fichab("La resolución particular no puede saltarse el reglamento",
+         "Cualquier órgano, **aunque sea de igual o superior jerarquía** al que dictó la disposición general",
+         "Las resoluciones de **carácter particular** no pueden vulnerar una disposición de **carácter general**",
          "—",
-         "La lista de lo vedado incluye **infracciones administrativas** y **sanciones**, no solo delitos y penas. Límites del reglamento: tema IV.3."))}
+         "Rige **aunque** la resolución venga de un órgano de **igual o superior** jerarquía. Efecto: **nulidad** de la resolución (37.2)."))}
 
-{unidad("3.2 La sanción: nulidad de pleno derecho (Ley 39/2015, art. 47.2)",
+{unidad("3.2 Disposiciones nulas de pleno derecho (Ley 39/2015, art. 47.2)",
   lit("L39", "Artículo 47", ["las disposiciones administrativas que vulneren la Constitución, las leyes u otras disposiciones administrativas de rango superior"], solo=[9]),
   fichab("Disposiciones administrativas nulas de pleno derecho",
          "—",
@@ -261,13 +268,13 @@ T.ap("s8", "II.3 Ley y reglamento: límites y consecuencias (Ley 39/2015, arts. 
          "—",
          "En los supuestos del 47.2 la disposición es **nula de pleno derecho**, no anulable. Incluye regular **materias reservadas a la Ley**."))}
 
-{unidad("3.3 La inderogabilidad singular de los reglamentos (Ley 39/2015, art. 37)",
-  lit("L39", "Artículo 37", ["aunque aquéllas procedan de un órgano de igual o superior jerarquía", "Son nulas las resoluciones administrativas que vulneren lo establecido en una disposición reglamentaria"]),
-  fichab("La resolución particular no puede saltarse el reglamento",
-         "Cualquier órgano, **aunque sea de igual o superior jerarquía** al que dictó la disposición general",
-         "Las resoluciones de **carácter particular** no pueden vulnerar una disposición de **carácter general**",
+{unidad("3.3 Lo que el reglamento no puede hacer (Ley 39/2015, art. 128.2)",
+  lit("L39", "Artículo 128", ["no podrán vulnerar la Constitución o las leyes", "no podrán tipificar delitos, faltas o infracciones administrativas, establecer penas o sanciones, así como tributos"], solo=[2]),
+  fichab("Límites de los reglamentos frente a la ley",
+         "Los reglamentos y disposiciones administrativas",
+         ["No pueden **vulnerar** la Constitución o las leyes", "No pueden regular materias de la competencia de las **Cortes** o de las **Asambleas Legislativas** autonómicas", "Sin perjuicio de su función de **desarrollo o colaboración** con la ley, no pueden tipificar delitos, faltas o infracciones, establecer penas o sanciones, tributos, exacciones parafiscales u otras cargas o prestaciones personales o patrimoniales de carácter público"],
          "—",
-         "Rige **aunque** la resolución venga de un órgano de **igual o superior** jerarquía. Efecto: **nulidad** de la resolución (37.2)."))}
+         "La lista de lo vedado incluye **infracciones administrativas** y **sanciones**, no solo delitos y penas. Límites del reglamento: tema IV.3."))}
 """, 2)
 
 T.ap("s9", "II.4 Quién controla la jerarquía (CE, art. 106.1; LJCA, art. 26)", f"""
@@ -320,7 +327,7 @@ Entre normas del Estado y de las Comunidades Autónomas no decide solo el rango:
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se hacen las normas administrativas? Buena regulación, planificación y participación (Ley 39/2015, arts. 129 a 133)", donde(
+T.ap("bIII", "III. ¿Cómo se hacen las normas administrativas? Buena regulación, planificación y participación (Ley 39/2015, arts. 129 a 133; Ley 50/1997, arts. 22 y 25; CC, art. 2.1; STC 55/2018)", donde(
   "Tercera pregunta. El Título VI de la Ley 39/2015 fija los **principios** con que las Administraciones ejercen la iniciativa legislativa y la potestad reglamentaria, la **evaluación**, la **publicidad**, la **planificación** y la **participación** ciudadana. La STC 55/2018 limitó su alcance para las Comunidades Autónomas.",
   ["1 Principios de buena regulación (art. 129; Ley 50/1997, art. 22)", "2 Evaluación, publicidad y planificación normativa (arts. 130 a 132; Ley 50/1997, art. 25; CC, art. 2.1)", "3 Participación de los ciudadanos (art. 133)", "4 El alcance de los arts. 129 a 133 tras la STC 55/2018"]))
 

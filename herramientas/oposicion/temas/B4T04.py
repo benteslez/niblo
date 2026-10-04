@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B4T04",
-  "Cinco preguntas: I. Qué es el acto administrativo, qué clases distingue la ley y cuáles son sus elementos (arts. 34, 36 y 37 Ley 39/2015; art. 8 Ley 40/2015) · II. Cuándo produce efectos y cómo se ejecuta: eficacia (arts. 38, 39 y 97 a 100) · III. Cuándo es inválido y cómo se salva: validez (arts. 47 a 52) · IV. Cuándo hay que motivar (art. 35) · V. Cómo llega al interesado: notificación y publicación (arts. 40 a 46). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué es el acto administrativo, qué clases distingue la ley y cuáles son sus elementos (arts. 24.2, 34, 36, 37, 112.1 y 114 Ley 39/2015; art. 8 Ley 40/2015) · II. Cuándo produce efectos y cómo se ejecuta: eficacia (arts. 38, 39 y 97 a 100) · III. Cuándo es inválido y cómo se salva: validez (arts. 47 a 52 Ley 39/2015; art. 23.4 Ley 40/2015) · IV. Cuándo hay que motivar (art. 35) · V. Cómo llega al interesado: notificación y publicación (arts. 40 a 46). Cada artículo: texto literal del BOE y ficha.",
   ["Acto administrativo", "Ley 39/2015", "Título III", "Elementos del acto", "Art. 34", "Forma", "Inderogabilidad singular", "Eficacia", "Art. 39", "Ejecutoriedad", "Ejecución forzosa", "Nulidad", "Art. 47", "Anulabilidad", "Art. 48", "Convalidación", "Motivación", "Art. 35", "Notificación", "Arts. 40-46", "Publicación"])
 
 ESQ = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
@@ -219,7 +219,7 @@ Los arts. 97 a 105 están en el Título IV (procedimiento), pero desarrollan la 
          "Las Administraciones Públicas; para entrar en el domicilio, **consentimiento** del titular o **autorización judicial**",
          ["**Apremio sobre el patrimonio** (cantidad líquida, art. 101)", "**Ejecución subsidiaria** (actos no personalísimos, a costa del obligado, art. 102)", "**Multa coercitiva** (cuando lo autoricen las Leyes, art. 103)", "**Compulsión sobre las personas** (obligaciones personalísimas de no hacer o soportar, art. 104)"],
          "—",
-         f"Son **cuatro** y siempre con **proporcionalidad**; si caben varios, {c('L39', 'Artículo 100', 'el menos restrictivo de la libertad individual')}. No son medios: el «lanzamiento», el «arresto» ni el «embargo judicial» (→ Cierre 1)."))}
+         f"Son **cuatro** y siempre con **proporcionalidad**; si caben varios, {c('L39', 'Artículo 100', 'el menos restrictivo de la libertad individual')}. No son medios el lanzamiento, el arresto personal ni el embargo judicial de bienes (→ Cierre 1)."))}
 
 {resumen([
   "Ejecutividad: los actos sujetos al Derecho Administrativo **son ejecutivos** (38) y se **presumen válidos**; producen efectos **desde la fecha en que se dictan** (39.1).",
@@ -230,7 +230,7 @@ Los arts. 97 a 105 están en el Título IV (procedimiento), pero desarrollan la 
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cuándo es inválido el acto y cómo se salva? La validez (arts. 47 a 52)", donde(
+T.ap("bIII", "III. ¿Cuándo es inválido el acto y cómo se salva? La validez (arts. 47 a 52; Ley 40/2015, art. 23.4)", donde(
   "Tercera pregunta. El acto se presume válido (→ II.1), pero puede tener vicios. La ley distingue dos grados: **nulidad de pleno derecho** (lista cerrada de vicios graves) y **anulabilidad** (cualquier otra infracción). Después fija reglas para **salvar** lo que se pueda.",
   ["1 Nulidad de pleno derecho y anulabilidad (arts. 47 y 48; Ley 40/2015, art. 23.4)", "2 Límites, conversión, conservación y convalidación (arts. 49 a 52)", "3 Cuadro: nulidad y anulabilidad"]))
 
@@ -449,10 +449,10 @@ EX_P55 = examen("P", 55, {
   [("incompetente", "L39", "Artículo 52", "Si el vicio consistiera en incompetencia no determinante de nulidad"),
    ("jerarqu", "L39", "Artículo 52", "cuando sea superior jerárquico del que dictó el acto viciado")])
 EX_P62 = examen("P", 62, {
-  "a": f"El «lanzamiento» no está entre los cuatro medios del art. 100.1: {c('L39', 'Artículo 100', 'Apremio sobre el patrimonio')}, ejecución subsidiaria, multa coercitiva y compulsión sobre las personas.",
+  "a": f"El lanzamiento no está entre los cuatro medios del art. 100.1: {c('L39', 'Artículo 100', 'Apremio sobre el patrimonio')}, ejecución subsidiaria, multa coercitiva y compulsión sobre las personas.",
   "b": f"Literal del art. 100.1 b): {c('L39', 'Artículo 100', 'Ejecución subsidiaria')}.",
-  "c": f"El «arresto personal» no es un medio de ejecución forzosa; el más cercano es la {c('L39', 'Artículo 100', 'Compulsión sobre las personas')}, que la ley solo admite {c('L39', 'Artículo 104', 'en los casos en que la ley expresamente lo autorice')} (art. 104.1).",
-  "d": f"No es «embargo judicial»: la ejecución forzosa la hace la propia Administración; el medio patrimonial es el {c('L39', 'Artículo 100', 'Apremio sobre el patrimonio')} (art. 100.1 a)."},
+  "c": f"El arresto personal no es un medio de ejecución forzosa; el más cercano es la {c('L39', 'Artículo 100', 'Compulsión sobre las personas')}, que la ley solo admite {c('L39', 'Artículo 104', 'en los casos en que la ley expresamente lo autorice')} (art. 104.1).",
+  "d": f"No es un embargo judicial: la ejecución forzosa la hace la propia Administración; el medio patrimonial es el {c('L39', 'Artículo 100', 'Apremio sobre el patrimonio')} (art. 100.1 a)."},
   [("Ejecución subsidiaria", "L39", "Artículo 100", "b) Ejecución subsidiaria.")])
 
 T.ap("s13", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join([

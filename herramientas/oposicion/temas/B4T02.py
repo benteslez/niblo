@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B4T02",
-  "Cuatro preguntas: I. Qué es la ley y qué tipos hay (arts. 66, 81, 91 y 150 CE) · II. Qué materias exigen ley: la reserva de ley (arts. 53.1, 81 y otros) · III. Cómo legisla el Gobierno por delegación: el decreto legislativo (arts. 82 a 85) · IV. Cómo legisla por urgencia: el decreto-ley (art. 86 y Reglamento del Congreso). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué es la ley y qué tipos hay (arts. 66.2, 75.3, 81, 82.1, 91 y 150 CE) · II. Qué materias exigen ley: la reserva de ley (arts. 30.2, 31.3, 53.1, 81.1, 103.3 y 133 CE) · III. Cómo legisla el Gobierno por delegación: el decreto legislativo (arts. 82 a 85 CE; Ley 50/1997, art. 24; LJCA, art. 1; LOTC, art. 27) · IV. Cómo legisla por urgencia: el decreto-ley (art. 86 y Reglamento del Congreso). Cada artículo: texto literal del BOE y ficha.",
   ["Ley orgánica", "Art. 81", "Leyes del art. 150", "Reserva de ley", "Art. 53.1", "Decreto legislativo", "Arts. 82-85", "Ley de bases", "Texto refundido", "Decreto-ley", "Art. 86", "Convalidación", "RCD art. 151"])
 
 # =============================================================================
@@ -22,8 +22,8 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 
 | Bloque | Pregunta | Constitución | Otras normas |
 |---|---|---|---|
-| **I** | ¿Qué es la ley y qué tipos hay? | Arts. 66.2, 91, 81, 82.1, 75.3 y 150 | — |
-| **II** | ¿Qué materias exigen ley? (reserva de ley) | Arts. 53.1, 81.1, 30.2, 31.3, 133 y 103.3 | — |
+| **I** | ¿Qué es la ley y qué tipos hay? | Arts. 66.2, 75.3, 91, 81, 82.1 y 150 | — |
+| **II** | ¿Qué materias exigen ley? (reserva de ley) | Arts. 53.1, 81.1, 30.2, 31.3, 103.3 y 133 | — |
 | **III** | ¿Cómo legisla el Gobierno por delegación? (decreto legislativo) | Arts. 82 a 85 | Ley 50/1997, art. 24.1 a); LJCA, art. 1.1; LOTC, art. 27.2 |
 | **IV** | ¿Cómo legisla el Gobierno por urgencia? (decreto-ley) | Art. 86 | Reglamento del Congreso, art. 151 |
 
@@ -37,11 +37,11 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué es la ley y qué tipos hay? (arts. 66, 81, 91 y 150)", donde(
+T.ap("bI", "I. ¿Qué es la ley y qué tipos hay? (arts. 66.2, 75.3, 81, 82.1, 91 y 150)", donde(
   "Primera pregunta del tema. Antes de hablar de reserva de ley o de las normas del Gobierno con fuerza de ley, hay que saber **quién** hace la ley y **qué clases** de ley prevé la Constitución.",
-  ["1 La ley: las Cortes y la sanción del Rey", "2 Leyes orgánicas (art. 81)", "3 Las leyes del art. 150: marco, de transferencia o delegación y de armonización", "4 Cuadro de los tipos de leyes"]))
+  ["1 La ley: las Cortes, la delegación en Comisiones y la sanción del Rey (arts. 66.2, 75.3 y 91)", "2 Leyes orgánicas (arts. 81 y 82.1)", "3 Las leyes del art. 150: marco, de transferencia o delegación y de armonización", "4 Cuadro de los tipos de leyes"]))
 
-T.ap("s1", "I.1 La ley: potestad legislativa de las Cortes y sanción (arts. 66.2 y 91)", f"""
+T.ap("s1", "I.1 La ley: potestad legislativa de las Cortes, delegación en Comisiones y sanción (arts. 66.2, 75.3 y 91)", f"""
 La ley es la norma que aprueban las **Cortes Generales**, titulares de la potestad legislativa del Estado; el Rey la sanciona y promulga.
 
 {unidad("1.1 La potestad legislativa (art. 66.2)",
@@ -52,7 +52,15 @@ La ley es la norma que aprueban las **Cortes Generales**, titulares de la potest
          "—",
          "La potestad legislativa es de las **Cortes**; el Gobierno solo dicta normas con rango de ley en los dos casos tasados (→ III.1 y → IV.1)."))}
 
-{unidad("1.2 Sanción, promulgación y publicación (art. 91)",
+{unidad("1.2 Delegación en las Comisiones Legislativas Permanentes y sus excepciones (art. 75.2 y 3)",
+  lit("CE", "Artículo 75", ["podrán delegar en las Comisiones Legislativas Permanentes", "las leyes orgánicas y de bases"], solo=[2, 3]),
+  fichab("Aprobación de leyes por las Comisiones Legislativas Permanentes y sus excepciones",
+         ["Las **Cámaras** delegan; aprueban las **Comisiones Legislativas Permanentes**", "El **Pleno** puede recabar en cualquier momento el debate y votación"],
+         ["::No se puede delegar (75.3):", "La **reforma constitucional**", "Las **cuestiones internacionales**", "Las **leyes orgánicas y de bases**", "Los **Presupuestos Generales del Estado**"],
+         "—",
+         "Las leyes **orgánicas** y **de bases** no se aprueban en Comisión. Cayó en 2025 (→ Cierre 1)."))}
+
+{unidad("1.3 Sanción, promulgación y publicación (art. 91)",
   lit("CE", "Artículo 91", ["en el plazo de quince días"]),
   fichab("Último paso de la ley: sanción, promulgación y orden de publicación",
          c("CE", "Artículo 91", "El Rey"),
@@ -61,7 +69,7 @@ La ley es la norma que aprueban las **Cortes Generales**, titulares de la potest
          "**Quince** días para sancionar; la publicación es **inmediata**. Es el Rey, no el Presidente del Gobierno ni el del Congreso."))}
 """, 2)
 
-T.ap("s2", "I.2 Las leyes orgánicas (art. 81)", f"""
+T.ap("s2", "I.2 Las leyes orgánicas (arts. 81 y 82.1)", f"""
 La Constitución distingue la ley **orgánica** de la **ordinaria** por dos rasgos: las **materias** que regula y la **mayoría** que exige.
 
 {unidad("2.1 Materias y mayoría (art. 81)",
@@ -72,14 +80,13 @@ La Constitución distingue la ley **orgánica** de la **ordinaria** por dos rasg
          f"{c('CE', 'Artículo 81', 'mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto')}, para aprobarlas, modificarlas o derogarlas",
          "La mayoría absoluta es del **Congreso** y en la **votación final sobre el conjunto**, no en cada artículo ni en el Senado. Vale para aprobar, **modificar o derogar**."))}
 
-{unidad("2.2 Ni delegación en el Gobierno ni en las Comisiones (arts. 82.1 y 75.3)",
+{unidad("2.2 Tampoco por delegación en el Gobierno (art. 82.1)",
   lit("CE", "Artículo 82", ["no incluidas en el artículo anterior"], solo=[1]),
-  lit("CE", "Artículo 75", ["las leyes orgánicas y de bases"], solo=[3]),
   fichab("Límites de procedimiento de la ley orgánica",
          "—",
-         ["No cabe delegación legislativa en el Gobierno sobre materias del art. 81 (82.1 → III.1)", "No cabe delegar su aprobación en las Comisiones Legislativas Permanentes (75.3)"],
+         ["No cabe delegación legislativa en el Gobierno sobre materias del art. 81 (82.1 → III.1)", "Tampoco cabe delegar su aprobación en las Comisiones Legislativas Permanentes (75.3 → I.1.2)"],
          "—",
-         "En el art. 75.3 la excepción incluye también la **reforma constitucional**, las **cuestiones internacionales**, las leyes **de bases** y los **Presupuestos**. Cayó en 2025 (→ Cierre 1)."))}
+         "El «artículo anterior» es el **81**: la ley orgánica la aprueban siempre las **Cortes** (ni el Gobierno por decreto legislativo ni las Comisiones)."))}
 """, 2)
 
 T.ap("s3", "I.3 Las leyes del art. 150: marco, de transferencia o delegación y de armonización", f"""
@@ -161,28 +168,33 @@ Ejemplos literales de materias que la Constitución reserva a la ley. Es la téc
   fichab("Reserva de ley de las obligaciones militares y de la objeción de conciencia", "Las Cortes, por ley", "La ley fija las obligaciones militares y regula la objeción de conciencia y la prestación social sustitutoria", "—",
          "Cayó en 2025 (→ Cierre 1): crear Ministerios, dirigir la política exterior o convocar elecciones **no** se hacen por ley."))}
 
-{unidad("2.2 Prestaciones personales o patrimoniales y tributos (arts. 31.3 y 133)",
+{unidad("2.2 Prestaciones personales o patrimoniales (art. 31.3)",
   lit("CE", "Artículo 31", ["con arreglo a la ley"], solo=[3]),
-  lit("CE", "Artículo 133", ["mediante ley", "en virtud de ley", "de acuerdo con las leyes"]),
-  fichab("Reserva de ley tributaria y de gasto", f"{c('CE', 'Artículo 133', 'La potestad originaria para establecer los tributos corresponde exclusivamente al Estado, mediante ley')}; las Comunidades Autónomas y las Corporaciones locales, {c('CE', 'Artículo 133', 'de acuerdo con la Constitución y las leyes')}",
-         ["Prestaciones personales o patrimoniales de carácter público: con arreglo a la ley (31.3)", "Tributos: potestad originaria del Estado mediante ley (133.1)", "Beneficios fiscales sobre tributos del Estado: en virtud de ley (133.3)", "Obligaciones financieras y gastos: de acuerdo con las leyes (133.4)"],
-         "—", "Potestad **originaria**: solo el **Estado**, mediante ley. Las CC. AA. y los entes locales, «de acuerdo con la Constitución y las leyes»."))}
+  fichab("Reserva de ley de las prestaciones personales o patrimoniales de carácter público", "Las Cortes, por ley",
+         "Solo pueden establecerse «con arreglo a la ley»",
+         "—", "Incluye las prestaciones **personales** y las **patrimoniales** de carácter público (los tributos, además, en el art. 133 → II.2.4)."))}
 
 {unidad("2.3 Estatuto de los funcionarios (art. 103.3)",
   lit("CE", "Artículo 103", ["La ley regulará el estatuto de los funcionarios públicos"], solo=[3]),
   fichab("Reserva de ley del estatuto de los funcionarios", "Las Cortes, por ley", "Estatuto, acceso por mérito y capacidad, sindicación, incompatibilidades y garantías de imparcialidad", "—",
          "Acceso «de acuerdo con los principios de **mérito y capacidad**» (no «igualdad, mérito y capacidad»: la igualdad está en el art. 23.2)."))}
 
+{unidad("2.4 Tributos, beneficios fiscales y gasto (art. 133)",
+  lit("CE", "Artículo 133", ["mediante ley", "en virtud de ley", "de acuerdo con las leyes"]),
+  fichab("Reserva de ley tributaria y de gasto", f"{c('CE', 'Artículo 133', 'La potestad originaria para establecer los tributos corresponde exclusivamente al Estado, mediante ley')}; las Comunidades Autónomas y las Corporaciones locales, {c('CE', 'Artículo 133', 'de acuerdo con la Constitución y las leyes')}",
+         ["Tributos: potestad originaria del Estado mediante ley (133.1)", "Beneficios fiscales sobre tributos del Estado: en virtud de ley (133.3)", "Obligaciones financieras y gastos: de acuerdo con las leyes (133.4)"],
+         "—", "Potestad **originaria**: solo el **Estado**, mediante ley. Las CC. AA. y los entes locales, «de acuerdo con la Constitución y las leyes»."))}
+
 {resumen([
   "La reserva de ley se lee en fórmulas como «Sólo por ley», «La ley regulará», «mediante ley».",
   "Derechos del Capítulo segundo: **sólo por ley**, respetando el **contenido esencial** (53.1).",
   "Ley **orgánica**: materias del 81.1 y las demás previstas en la Constitución.",
-  "Ejemplos: obligaciones militares (30.2), prestaciones y tributos (31.3 y 133), estatuto de los funcionarios (103.3)."],
+  "Ejemplos: obligaciones militares (30.2), prestaciones personales o patrimoniales (31.3), estatuto de los funcionarios (103.3) y tributos (133)."],
   "Siguiente: III. ¿Cómo legisla el Gobierno por delegación? El decreto legislativo")}
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo legisla el Gobierno por delegación? El decreto legislativo (arts. 82 a 85)", donde(
+T.ap("bIII", "III. ¿Cómo legisla el Gobierno por delegación? El decreto legislativo (arts. 82 a 85; Ley 50/1997, art. 24; LJCA, art. 1; LOTC, art. 27)", donde(
   "Tercera pregunta. Las Cortes pueden **delegar** en el Gobierno la potestad de dictar normas con rango de ley. El resultado es el **decreto legislativo**.",
   ["1 La delegación: materias, forma y límites (art. 82.1 y 3)", "2 Ley de bases y texto articulado; ley ordinaria y texto refundido (arts. 82.2, 4 y 5 y 83)", "3 Defensa de la delegación y nombre (arts. 84 y 85; Ley 50/1997, art. 24)", "4 El control del decreto legislativo (art. 82.6; LJCA; LOTC)"]))
 
@@ -271,7 +283,7 @@ T.ap("s10", "III.4 El control del decreto legislativo (art. 82.6; LJCA, art. 1.1
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo legisla el Gobierno por urgencia? El decreto-ley (art. 86)", donde(
+T.ap("bIV", "IV. ¿Cómo legisla el Gobierno por urgencia? El decreto-ley (art. 86; Reglamento del Congreso, art. 151)", donde(
   "Cuarta pregunta. Sin delegación de las Cortes, el Gobierno puede dictar normas con rango de ley en caso de **extraordinaria y urgente necesidad**: el **decreto-ley**. Es provisional y el Congreso debe convalidarlo o derogarlo.",
   ["1 Presupuesto y límites materiales (art. 86.1)", "2 Convalidación o derogación por el Congreso (art. 86.2 y Reglamento del Congreso, art. 151)", "3 Tramitación como proyecto de ley (arts. 86.3 y 151.4 y 5)", "4 Cuadro comparativo: decreto legislativo y decreto-ley"]))
 
@@ -361,7 +373,7 @@ T.ap("s15", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-L 2025, pregunta 47 · Decretos Legislativos (→ III.3.2)", EX_L47,
   "### GACE-P 2025, pregunta 47 · Decretos Legislativos (→ III.3.2)", EX_P47,
   "### GACE-P 2025, pregunta 44 · Reserva de ley (→ II.2.1)", EX_P44,
-  "### GACE-L 2025, pregunta 7 · Delegación en Comisiones (relacionada; → I.2.2)", EX_L7,
+  "### GACE-L 2025, pregunta 7 · Delegación en Comisiones (relacionada; → I.1.2)", EX_L7,
   "### Cómo se pregunta",
   "!> El art. 85 se pregunta con distractores que son **otras figuras del tema**: decretos-leyes (86), leyes de bases (82.2), leyes marco (150.1). Saber **qué produce cada una** resuelve la pregunta.",
 ]))
