@@ -26,8 +26,8 @@ publica en `temas/<id>.json` y se apunta en `temas/indice.json`.
 
 ## 2. Temas «Solo BOE»
 
-Bloque IV: - [x] IV.2 - [x] IV.4 - [ ] IV.5 - [ ] IV.6 - [x] IV.8 - [x] IV.10
-- [ ] IV.11 - [ ] IV.12 - [ ] IV.13
+Bloque IV: - [x] IV.2 - [x] IV.4 - [x] IV.5 - [x] IV.6 - [x] IV.8 - [x] IV.10
+- [ ] IV.11 - [ ] IV.12 - [x] IV.13
 
 Bloque V: - [ ] V.1 - [ ] V.2 - [ ] V.3 - [ ] V.4 - [ ] V.5 - [ ] V.6 - [ ] V.7
 - [ ] V.8 - [ ] V.10
