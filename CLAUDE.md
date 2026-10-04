@@ -70,13 +70,23 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   (cuestionario + plantilla). **Nunca** se añade ninguna inventada ni se
   rellena «de ejemplo»; hasta que las aporte, el test real está vacío.
 - Datos en `oposicion.html`, `<script type="application/json" id="tests-reales">`:
-  `{"_formato":"tests_reales_v1","examenes":[{ id, titulo, convocatoria,
-  ejercicio, fecha, plantilla:"provisional"|"definitiva", fuente, minutos,
-  penalizacion, preguntas:[{ n, q, o:[…], c, tema?, reserva?, anulada?, e? }] }]}`.
+  `{"_formato":"tests_reales_v1","examenes":[{ id, titulo, anio,
+  acceso:"libre"|"promocion"|"extraordinaria", convocatoria, ejercicio, fecha,
+  plantilla:"provisional"|"definitiva", fuente, corte?, minutos?, penalizacion?,
+  preguntas:[{ n, q, o:[…], c, tema?, reserva?, anulada?, e? }] }]}`.
   `c` es el índice (0 = a) de la respuesta de la plantilla; `tema` es el
-  código del programa (`"I.2"`) si se puede asignar con seguridad.
+  código del programa (`"I.2"`) si se puede asignar con seguridad; `corte`,
+  la puntuación directa mínima publicada para ese examen (solo si hay fuente);
+  `minutos` y `penalizacion`, solo para accesos sin condiciones vigentes
+  (extraordinaria), copiados de su convocatoria.
 - Antes de publicar: enunciado y opciones copiados literales del cuestionario,
   respuesta de la plantilla comprobada contra la ley (como en los apuntes) y
   avisar al usuario de cualquier respuesta que no case.
-- Condiciones por defecto (anexo VII, 2.1.1 de BOE-A-2025-26262): 90 minutos,
-  cada error descuenta 1/3 de un acierto y los blancos no penalizan.
+- Modo **Repaso (SRS)**: el mismo SM-2 del SRS de vocabulario (fallada → mañana;
+  dudada → 3 días; sabida → 7 días; luego intervalo × facilidad; facilidad
+  1,3–2,8). No cambiar los parámetros sin que lo pida el usuario.
+- Modo **Examen oficial**: condiciones vigentes del primer ejercicio
+  (BOE-A-2025-26262): turno libre, 100 preguntas, 90 minutos y −1/3 (anexo VII,
+  2.1.1); promoción interna, 100, 90 y −1/4 (anexo VIII, 3.1.1). Los blancos no
+  penalizan. La calificación oficial (0-50) depende del mínimo que fije la
+  Comisión: no se inventa una conversión.
