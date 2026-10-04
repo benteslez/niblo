@@ -907,15 +907,23 @@ mark.res { --rc:#fb7185; background:color-mix(in srgb, var(--rc) 32%, transparen
 .sim-mapa button.act { outline:2px solid var(--accent); outline-offset:1px; }
 .real-rev { margin-bottom:10px; }
 /* Pantalla completa del test real (repaso y examen) */
-.real-full { position:fixed; inset:0; z-index:90; overflow-y:auto; background:var(--bg); -webkit-overflow-scrolling:touch; }
-.real-full-in { max-width:860px; margin:0 auto; padding:14px 16px calc(28px + env(safe-area-inset-bottom)); }
+/* Centrado en vertical y horizontal; si el contenido es más alto que la pantalla,
+   los márgenes automáticos se anulan y se desplaza desde arriba sin cortarse. */
+.real-full { position:fixed; inset:0; z-index:90; overflow-y:auto; background:var(--bg); -webkit-overflow-scrolling:touch;
+  display:flex; flex-direction:column; }
+.real-full-in { width:100%; max-width:900px; margin:auto; padding:calc(16px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom)); }
 .real-full .srs-barra, .real-full .sim-barra { top:0; }
 .real-full .q-txt { font-size:18px; line-height:1.5; }
 .real-full .q-opt { font-size:16px; }
+@media (min-width:900px) {
+  .real-full .q-txt { font-size:21px; }
+  .real-full .q-opt { font-size:17.5px; padding:14px 16px; }
+}
 body.real-abierto { overflow:hidden; }
 body.real-abierto .fab-herr { display:none; }
 .srs-cf { margin-top:8px; font-size:13.5px; color:var(--warn); font-weight:600; }
 .real-ex { display:inline-block; margin:2px 0; }
+.res-real { cursor:default; border-left:3px solid var(--hot); }
 </style>
 </head>
 <body>
@@ -4165,15 +4173,21 @@ function chipsTemas(temas, activo, attr, conTodos) {
 }
 const etiquetaRes = { glosario:"📖 Glosario", crono:"📅 Cronología", fc:"🎴 Flashcard", test:"📝 Pregunta", seccion:"📑 Sección" };
 
+/** Preguntas de los tests reales de un ámbito: todas en el global; las de su bloque, en cada bloque. */
+function realesDeAmbito(ambito) {
+  const out = [];
+  TESTS_REALES.examenes.forEach(x => x.preguntas.forEach(q => { if (ambito === "global" || bloqueDeReal(q) === ambito) out.push({ x, q }); }));
+  return out;
+}
 /* 1 · Búsqueda */
 function hubBuscar(c, ambito, temas) {
   const s = hl(ambito);
   c.innerHTML = `
     <section class="card hub-busq">
       <h2>🔍 Búsqueda${ambito === "global" ? " en todo el temario" : ""}</h2>
-      <div class="toolbar"><input class="input" type="search" id="q" placeholder="Buscar en glosario, cronología, flashcards, test y secciones…" value="${esc(s.q)}"></div>
+      <div class="toolbar"><input class="input" type="search" id="q" placeholder="Buscar en glosario, cronología, flashcards, test, secciones y exámenes reales…" value="${esc(s.q)}"></div>
       <div class="chip-row">
-        ${[["todo","Todo"],["glosario","📖 Glosario"],["crono","📅 Cronología"],["fc","🎴 Flashcards"],["test","📝 Preguntas"],["seccion","📑 Secciones"]].map(([k, v]) =>
+        ${[["todo","Todo"],["glosario","📖 Glosario"],["crono","📅 Cronología"],["fc","🎴 Flashcards"],["test","📝 Preguntas"],["seccion","📑 Secciones"]].concat(realesDeAmbito(ambito).length ? [["real","📋 Tests reales"]] : []).map(([k, v]) =>
           `<button class="chip peq ${s.tipo === k ? "active" : ""}" data-tipo="${k}">${v}</button>`).join("")}
       </div>
       <div class="stats-line" id="st"></div><div id="res"></div>
@@ -4187,18 +4201,29 @@ function hubBuscar(c, ambito, temas) {
       qs(t).forEach(q => pool.push({ tipo:"test", t, tit:q.q, txt:q.o.join(" / ") + (q.e ? " · " + q.e : ""), ancla:"" }));
       t.sections.forEach(x => pool.push({ tipo:"seccion", t, tit:x.title || "(sin título)", txt:textoPlano(x.body || ""), ancla:x.id }));
     });
+    // Preguntas de los exámenes oficiales (Test real global), con la respuesta de su plantilla.
+    realesDeAmbito(ambito).forEach(({ x, q }) => pool.push({ tipo:"real", t:null, x, q, tit:q.q,
+      txt:q.o.map((o, i) => "abcdefgh"[i] + ") " + o).join(" · ") + (q.anulada ? " · Pregunta ANULADA en la plantilla" : " · ✓ Respuesta: " + "abcdefgh"[q.c] + ") " + q.o[q.c]),
+      etq:"📋 Test " + (x.anio || "") + (x.acceso && x.acceso !== "libre" ? " · " + ((ACCESOS.find(a => a.id === x.acceso) || {}).txt || x.acceso) : ""),
+      num:numReal(q) }));
     if (s.tipo !== "todo") pool = pool.filter(p => p.tipo === s.tipo);
     const q = s.q.trim();
     if (q) { const nq = norm(q); pool = pool.filter(p => norm(p.tit).includes(nq) || norm(p.txt).includes(nq)); }
+    // Las secciones (textos largos) al final, para que no tapen lo demás en el límite de 200.
+    pool = pool.filter(p => p.tipo !== "seccion").concat(pool.filter(p => p.tipo === "seccion"));
     document.getElementById("st").textContent = q ? `${plural(pool.length, "resultado")} para «${q}»` : plural(pool.length, "elemento");
     const res = document.getElementById("res");
     if (!pool.length) { res.innerHTML = `<div class="empty"><div class="ico">🔍</div><h3>Sin coincidencias</h3></div>`; return; }
-    res.innerHTML = pool.slice(0, 200).map(p => `
+    res.innerHTML = pool.slice(0, 200).map(p => p.tipo === "real" ? `
+      <div class="res res-real">
+        <div class="res-row">${p.q.tema && ID_POR_CODIGO[p.q.tema] ? `<span class="tag acc" data-b="${TEMA_POR_ID[ID_POR_CODIGO[p.q.tema]].b}">${esc(p.q.tema)}</span>` : ""}<span class="tag hot">${esc(p.etq)}</span><span class="tag">${esc(p.num)}</span><span class="res-tit">${resaltar(p.tit, q)}</span></div>
+        <div class="res-txt">${resaltar(p.txt, q)}</div>
+      </div>` : `
       <div class="res" data-id="${p.t.id}" data-ancla="${esc(p.ancla)}">
         <div class="res-row"><span class="tag acc" data-b="${TEMA_POR_ID[p.t.id].b}">${esc(codigoDe(p.t.id))}</span><span class="tag">${etiquetaRes[p.tipo]}</span><span class="res-tit">${resaltar(p.tit, q)}</span></div>
         ${p.txt ? `<div class="res-txt">${resaltar(p.txt.length > 260 ? p.txt.slice(0, 260) + "…" : p.txt, q)}</div>` : ""}
       </div>`).join("") + (pool.length > 200 ? `<div class="stats-line">+${pool.length - 200} más…</div>` : "");
-    res.querySelectorAll(".res").forEach(x => x.addEventListener("click", () => abrirTema(x.dataset.id, x.dataset.ancla)));
+    res.querySelectorAll(".res[data-id]").forEach(x => x.addEventListener("click", () => abrirTema(x.dataset.id, x.dataset.ancla)));
   };
   document.getElementById("q").addEventListener("input", e => { s.q = e.target.value; pintar(); });
   c.querySelectorAll("[data-tipo]").forEach(x => x.addEventListener("click", () => { s.tipo = x.dataset.tipo; hubBuscar(c, ambito, temas); }));
