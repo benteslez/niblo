@@ -119,7 +119,7 @@ El capítulo II del título III reconoce el derecho a la carrera y a la promoci�
 
 # =============================================================================
 T.ap("bII", "II. ¿Cuánto trabaja y qué permisos y vacaciones tiene? (TREBEP, arts. 47 a 51)", donde(
-  "Segunda pregunta. El derecho del art. 14 m) «a las vacaciones, descansos, permisos y licencias» se concreta en el capítulo V del título III: **jornada** y **teletrabajo**, **permisos** (art. 48), permisos **por conciliación y por violencia de género, violencia sexual o terrorismo** (art. 49) y **vacaciones** (art. 50).",
+  "Segunda pregunta. El derecho del art. 14 m) «A las vacaciones, descansos, permisos y licencias» se concreta en el capítulo V del título III: **jornada** y **teletrabajo**, **permisos** (art. 48), permisos **por conciliación y por violencia de género, violencia sexual o terrorismo** (art. 49) y **vacaciones** (art. 50).",
   ["1 Jornada y teletrabajo (arts. 47 y 47 bis)", "2 Permisos de los funcionarios (art. 48)", "3 Permisos por conciliación, violencia de género o sexual y terrorismo (art. 49)", "4 Vacaciones y personal laboral (arts. 50 y 51) y cuadro de permisos"]))
 
 T.ap("s4", "II.1 Jornada y teletrabajo (arts. 47 y 47 bis)", f"""
@@ -196,9 +196,9 @@ El art. 49 fija **condiciones mínimas** ({c(TB, 'Artículo 49', 'En todo caso s
         "**19** semanas (no 16 ni 17); **32** si monoparental. Derecho **individual** e **intransferible**. Disfrute interrumpido: preaviso de **quince días** y por **semanas completas**. Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("3.2 Permiso por adopción, guarda con fines de adopción o acogimiento (art. 49 b)",
-  lit(TB, "Artículo 49", ["tendrá una duración de diecinueve semanas para cada adoptante, guardador o acogedor", "un permiso de hasta dos meses de duración, percibiendo durante este periodo exclusivamente las retribuciones básicas", "no inferior a un año"], solo=[18, 19, 22, 26, 30, 33], titulo="Artículo 49. Permisos por motivos de conciliación… (TREBEP), letra b) (fragmento)"),
+  lit(TB, "Artículo 49", ["tendrá una duración de diecinueve semanas para cada adoptante, guardador o acogedor", "un permiso de hasta dos meses de duración, percibiendo durante este periodo exclusivamente las retribuciones básicas", "no inferior a un año"], solo=[18, 19, 20, 21, 22, 23, 24, 26, 30, 33], titulo="Artículo 49. Permisos por motivos de conciliación… (TREBEP), letra b) (fragmento)"),
   ficha("Cada adoptante, guardador o acogedor",
-        ["**Diecinueve semanas** para cada uno; **treinta y dos** en monoparentalidad", "Seis semanas obligatorias tras la resolución judicial o la decisión administrativa", "Adopción o acogimiento **internacional**: además, hasta **dos meses** con solo las retribuciones **básicas**"],
+        ["**Diecinueve semanas** para cada uno; **treinta y dos** en monoparentalidad", "Seis semanas obligatorias tras la resolución judicial o la decisión administrativa", "Once semanas (veintidós si monoparentalidad) dentro de los doce meses siguientes; dos semanas (cuatro si monoparentalidad) hasta que el hijo cumpla **ocho años**", "Discapacidad del hijo o adopción, guarda o acogimiento múltiples: **dos semanas más** / una por cada hijo a partir del segundo", "Adopción o acogimiento **internacional**: además, hasta **dos meses** con solo las retribuciones **básicas**"],
         "Acogimiento temporal: duración **no inferior a un año**",
         "—",
         "Derecho **individual** e intransferible. El permiso adicional por desplazamiento al país de origen es de **dos meses** con retribuciones **básicas**."))}
@@ -220,15 +220,15 @@ El art. 49 fija **condiciones mínimas** ({c(TB, 'Artículo 49', 'En todo caso s
         "Retribuciones **íntegras** si reduce la jornada en **un tercio o menos**."))}
 
 {unidad("3.5 Cuidado de hijo menor afectado por cáncer u otra enfermedad grave (art. 49 e)",
-  lit(TB, "Artículo 49", ["de al menos la mitad de la duración de aquélla, percibiendo las retribuciones íntegras", "cumpla los 23 años", "hasta que la persona a su cargo cumpla 26 años"], solo=[55, 57], titulo="Artículo 49. Permisos por motivos de conciliación… (TREBEP), letra e) (fragmento)"),
+  lit(TB, "Artículo 49", ["de al menos la mitad de la duración de aquélla, percibiendo las retribuciones íntegras", "cumpla los 23 años", "hasta que la persona a su cargo cumpla 26 años"], solo=[55, 56, 57], titulo="Artículo 49. Permisos por motivos de conciliación… (TREBEP), letra e) (fragmento)"),
   ficha(f"El funcionario, {c(TB, 'Artículo 49', 'siempre que ambas personas progenitoras, adoptantes, guardadoras con fines de adopción o acogedoras de carácter permanente trabajen')}",
         "Reducción de jornada de **al menos la mitad**, con retribuciones **íntegras**, durante la hospitalización y tratamiento continuado",
-        "Como máximo hasta que el hijo cumpla **23 años**; hasta **26** si antes de los 23 acredita una discapacidad igual o superior al **65 %**",
+        "Como máximo hasta que el hijo cumpla **23 años** (cumplidos los 18, si el cáncer o la enfermedad grave se diagnosticó antes de la mayoría de edad); hasta **26** si antes de los 23 acredita una discapacidad igual o superior al **65 %**",
         "Acreditación por informe del servicio público de salud u órgano sanitario de la comunidad autónoma (o entidad concertada)",
         "Reducción **mínima** del **50 %** con sueldo **íntegro**. Edades: **23** y, con discapacidad ≥ 65 %, **26**."))}
 
 {unidad("3.6 Víctimas del terrorismo y sus familiares (art. 49 f)",
-  lit(TB, "Artículo 49", ["como consecuencia de la actividad terrorista", "previo reconocimiento del Ministerio del Interior o de sentencia judicial firme"], solo=[62], titulo="Artículo 49. Permisos por motivos de conciliación… (TREBEP), letra f) (fragmento)"),
+  lit(TB, "Artículo 49", ["como consecuencia de la actividad terrorista", "previo reconocimiento del Ministerio del Interior o de sentencia judicial firme"], solo=[62, 63], titulo="Artículo 49. Permisos por motivos de conciliación… (TREBEP), letra f) (fragmento)"),
   ficha("Funcionarios víctimas del terrorismo, su cónyuge o persona con análoga relación de afectividad y los hijos de heridos y fallecidos (si son funcionarios y víctimas), y funcionarios amenazados",
         "Reducción de jornada con disminución proporcional de la retribución, o reordenación del tiempo de trabajo",
         f"{c(TB, 'Artículo 49', 'previo reconocimiento del Ministerio del Interior o de sentencia judicial firme')}",

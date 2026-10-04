@@ -125,7 +125,7 @@ El art. 10 es el que **más se pregunta** del bloque: concepto, **cuatro supuest
          "Se le aplica el régimen de los funcionarios de carrera **en cuanto sea adecuado**, **salvo** los derechos **inherentes** a la condición de funcionario de carrera."))}
 
 {unidad("3.6 Control de la temporalidad (disposición adicional decimoséptima)",
-  lit(TB, "da", ["nulo de pleno derecho", "veinte días de sus retribuciones fijas por año de servicio", "hasta un máximo de doce mensualidades", "No habrá derecho a compensación en caso de que la finalización de la relación de servicio sea por causas disciplinarias ni por renuncia voluntaria"], solo=[1, 3, 4, 5], titulo="Disposición adicional decimoséptima. Medidas dirigidas al control de la temporalidad en el empleo público (TREBEP)"),
+  lit(TB, "da", ["nulo de pleno derecho", "veinte días de sus retribuciones fijas por año de servicio", "hasta un máximo de doce mensualidades", "No habrá derecho a compensación en caso de que la finalización de la relación de servicio sea por causas disciplinarias ni por renuncia voluntaria"], solo=[1, 2, 3, 4, 5], titulo="Disposición adicional decimoséptima. Medidas dirigidas al control de la temporalidad en el empleo público (TREBEP), apartados 1 a 4"),
   fichab("Consecuencias del incumplimiento de los plazos máximos de permanencia como personal temporal",
          "Las Administraciones Públicas (responsables de evitar irregularidades); el personal funcionario interino afectado (compensación)",
          ["Actos, pactos, acuerdos o reglamentos que supongan incumplir los plazos máximos: **nulos de pleno derecho**", "Actuaciones irregulares: exigencia de responsabilidades", "Interino afectado: compensación económica"],
@@ -143,10 +143,10 @@ T.ap("s4", "I.4 Personal laboral (art. 11; Ley 30/1984, art. 15.1 c)", f"""
          "**Contrato** (no nombramiento) **formalizado por escrito**. Selección: igualdad, mérito y capacidad (sin «publicidad y celeridad» del interino, salvo la **celeridad** del laboral **temporal**). Su régimen jurídico: art. 7 (→ III.4.2); convenio y detalle, en el tema V.7."))}
 
 {unidad("4.2 Qué puestos puede ocupar en la AGE (Ley 30/1984, art. 15.1 c)",
-  lit("L30", "aquince", ["serán desempeñados por funcionarios públicos", "podrán desempeñarse por personal laboral"], solo=[4, 5, 6, 7, 8, 9, 10, 11]),
+  lit("L30", "aquince", ["serán desempeñados por funcionarios públicos", "podrán desempeñarse por personal laboral"], solo=[4, 5, 6, 7, 8, 9, 10, 11, 12]),
   fichab("Regla y excepciones en los puestos de la Administración del Estado",
          "Administración del Estado y sus Organismos Autónomos; Entidades Gestoras y Servicios Comunes de la Seguridad Social",
-         ["::Regla: puestos desempeñados por **funcionarios públicos**. Excepciones (pueden ser de personal laboral):", "Puestos no permanentes y de necesidades periódicas y discontinuas", "Oficios, vigilancia, custodia, porteo y análogos", "Puestos instrumentales de mantenimiento y conservación, artes gráficas, encuestas, protección civil, comunicación social, expresión artística, servicios sociales y protección de menores", "Conocimientos técnicos especializados sin Cuerpos o Escalas con la preparación necesaria", "Puestos en el extranjero con funciones administrativas de trámite y colaboración y auxiliares", "Funciones auxiliares de carácter instrumental y apoyo administrativo"],
+         ["::Regla: puestos desempeñados por **funcionarios públicos**. Excepciones (pueden ser de personal laboral):", "Puestos no permanentes y de necesidades periódicas y discontinuas", "Oficios, vigilancia, custodia, porteo y análogos", "Puestos instrumentales de mantenimiento y conservación, artes gráficas, encuestas, protección civil, comunicación social, expresión artística, servicios sociales y protección de menores", "Conocimientos técnicos especializados sin Cuerpos o Escalas con la preparación necesaria", "Puestos en el extranjero con funciones administrativas de trámite y colaboración y auxiliares", "Funciones auxiliares de carácter instrumental y apoyo administrativo", "Además, los Organismos Públicos de Investigación pueden contratar personal laboral en los términos del art. 17 de la Ley 13/1986"],
          "—",
          "La regla general en la AGE es el **funcionario**; el laboral es la **excepción** tasada. El art. 15 de la Ley 30/1984 **no** figura entre los artículos que deroga el TREBEP (→ III.5.3)."))}
 """, 2)
@@ -395,7 +395,7 @@ T.ap("s16", "III.5 Título competencial, derogación y entrada en vigor; la Ley 
          "**Tres** títulos: 18.ª (funcionarios), 7.ª (laboral) y 13.ª (economía)."))}
 
 {unidad("5.2 Entrada en vigor diferida y normas vigentes (disposición final cuarta)",
-  lit(TB, "dfcuaa", ["producirá efectos a partir de la entrada en vigor de las leyes de Función Pública", "se mantendrán en vigor en cada Administración Pública las normas vigentes sobre ordenación, planificación y gestión de recursos humanos"], solo=[1, 3], titulo="Disposición final cuarta. Entrada en vigor (TREBEP)"),
+  lit(TB, "dfcuaa", ["producirá efectos a partir de la entrada en vigor de las leyes de Función Pública", "se mantendrán en vigor en cada Administración Pública las normas vigentes sobre ordenación, planificación y gestión de recursos humanos"], solo=[1, 2, 3], titulo="Disposición final cuarta. Entrada en vigor (TREBEP)"),
   fichab("Qué partes del TREBEP esperan a las leyes de Función Pública",
          "Cada Administración Pública",
          ["Capítulos II y III del título III (salvo el art. 25.2) y capítulo III del título V: efectos desde la entrada en vigor de las **leyes de Función Pública**", "Mientras tanto, siguen en vigor las normas vigentes sobre ordenación, planificación y gestión de recursos humanos, **en tanto no se opongan** al TREBEP"],
@@ -414,7 +414,7 @@ T.ap("s16", "III.5 Título competencial, derogación y entrada en vigor; la Ley 
   lit("L30", "auno", ["Al personal de la Administración Civil del Estado y sus Organismos autónomos", "tiene carácter supletorio"], solo=[1, 2, 3, 4, 5, 7, 8]),
   fichab("A quién se aplica la Ley 30/1984",
          ["Personal de la Administración Civil del Estado y sus Organismos autónomos", "Personal civil al servicio de la Administración Militar y sus Organismos autónomos", "Personal funcionario de la Administración de la Seguridad Social"],
-         ["Normas específicas posibles para personal docente e investigador, sanitario, de servicios postales y de telecomunicación y destinado en el extranjero (1.2)", "«Personal al servicio de la Administración del Estado» = el del apartado 1 (1.4)"],
+         ["Normas específicas posibles para personal docente e investigador, sanitario, de servicios postales y de telecomunicación y destinado en el extranjero (1.2)", "«personal al servicio de la Administración del Estado» = el del apartado 1 (1.4)"],
          "—",
          "Es **supletoria** para el personal no incluido en su ámbito (1.5), igual que el TREBEP (art. 2.5 → III.3.1)."))}
 
