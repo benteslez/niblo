@@ -41,6 +41,10 @@ _L["anexoXV"] = ("Anexo XV", [("articulo", "Anexo XV. Indemnización por residen
     ("El personal que perciba su sueldo", "misma proporción."),
     ("Quienes vinieran percibiendo", "estas últimas.")]])
 assert _L["anexoXIV"][1][1][1].endswith("número 3.3 de la presente Resolución."), _L["anexoXIV"]
+# El anexo XIII (cuotas a MUFACE, ISFAS y MUGEJU) repite la frase de la cuota doble (se cita en la ficha de IV.2.2).
+_i13 = _T.index("ANEXO XIII")
+assert "MUTUALIDAD GENERAL DE FUNCIONARIOS CIVILES DEL ESTADO, AL INSTITUTO SOCIAL DE LAS FUERZAS ARMADAS Y A LA MUTUALIDAD GENERAL JUDICIAL" in _T[_i13:_i14]
+assert _trozo(_T, "En los meses de junio y diciembre se abonará", "presente Resolución.", _i13) == _L["anexoXIV"][1][1][1] and _T.index("En los meses de junio", _i13) < _i14
 
 # Resolución de 25-5-2010: el XML del diario no tiene artículos; los apartados son párrafos del bloque «preambulo».
 R = "preambulo"
@@ -105,7 +109,7 @@ T.ap("s1", "I.1 Básicas, complementarias y pagas extraordinarias (TREBEP, arts.
          "Funcionarios de carrera (cuantías en la Ley de Presupuestos Generales del Estado)",
          ["Sueldo del Subgrupo o Grupo", "Trienios: cantidad igual por Subgrupo o Grupo por cada tres años de servicio"],
          "Trienio: cada **tres años** de servicio",
-         "«Única y exclusivamente» sueldo y trienios: el complemento de destino **no** es básico. Cayó en 2025 (→ Cierre 1)."))}
+         "Las básicas son «única y exclusivamente» sueldo y trienios: el complemento de destino **no** es básico. Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("1.3 La versión de la Ley 30/1984: devengo de las pagas extraordinarias (art. 23.2 c y 23.4)",
   lit("L30", "aveintitres", ["se devengarán los meses de junio y diciembre", "Los funcionarios percibirán las indemnizaciones correspondientes por razón del servicio"], solo=[7, 15]),
@@ -353,7 +357,7 @@ T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resoluci�
          "Todos los funcionarios",
          "Cuota doble en junio y diciembre",
          "—",
-         "Salvo las pagas reducidas por servicios parciales del ap. 3.3 (→ IV.2.1)."))}
+         "Salvo las pagas reducidas por servicios parciales del ap. 3.3 (→ IV.2.1). El anexo XIII (cuotas a MUFACE, ISFAS y MUGEJU, texto del PDF oficial del BOE) repite la misma frase: también la cuota de mutualidades es **doble** en junio y diciembre."))}
 
 {unidad("2.3 Cuotas obreras de la Seguridad Social (regla 70.4)",
   lit("OIOC", "regla70", ["junto con las retenciones de las cuotas obreras"], solo=[5, 6]),
@@ -370,7 +374,7 @@ T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resoluci�
          "El centro gestor concede; la nómina descuenta",
          "Reintegro mediante **descuento en la nómina** del mes en que toque devolver (código de deducción 20: → IV.1.2)",
          f"Límite de cálculo: los haberes líquidos se entienden referidos {c('RES2010N', R, 'a las retribuciones básicas líquidas')}",
-         "«Haberes líquidos» para el anticipo = **retribuciones básicas líquidas** (no todas las retribuciones)."))}
+         "Los «haberes líquidos» para el anticipo = **retribuciones básicas líquidas** (no todas las retribuciones)."))}
 """, 2)
 
 T.ap("s12", "IV.3 Pendiente (temario)", f"""

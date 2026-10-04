@@ -5,7 +5,7 @@ Especial referencia a la contratación administrativa y la gestión de subvencio
 contables que intervienen en la ejecución de los gastos y de los pagos. Gestión de la tesorería
 del Estado.
 Método del I.2. Normas (textos consolidados del BOE): Ley 47/2003, General Presupuestaria
-(arts. 21, 46, 69, 73 a 75, 90, 91 y 106 a 112); Ley 9/2017, de Contratos del Sector Público
+(arts. 21, 46, 69, 73 a 75, 90, 91, 106 a 110 y 112); Ley 9/2017, de Contratos del Sector Público
 (arts. 116, 117, 198 y 323); Ley 38/2003, General de Subvenciones (arts. 9, 10 y 34); Orden de
 1 de febrero de 1996 por la que se aprueba la Instrucción de operatoria contable a seguir en la
 ejecución del gasto del Estado (OIOC); Orden de 1 de febrero de 1996 por la que se aprueban los
@@ -29,7 +29,7 @@ def g(art, frag):
 ESQ = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
 
 T = Tema("B6T05",
-  "Seis preguntas: I. Qué reglas rigen la ejecución del gasto (LGP, arts. 21, 46 y 69) · II. Quién es competente (LGP, arts. 74 y 75; LCSP, art. 323; LGS, art. 10) · III. Qué fases tiene el procedimiento y cómo se relacionan con la actuación administrativa (LGP, art. 73; Instrucción de operatoria contable, reglas 14 y 20 a 27) · IV. Cómo se ejecuta el gasto de los contratos y de las subvenciones (LCSP, arts. 116, 117 y 198; LGS, arts. 9 y 34; reglas 42, 77, 78 y 82 a 86) · V. Qué documentos contables intervienen en los gastos y en los pagos (Orden de 1-2-1996 de documentos contables; regla 25; Orden PRE/1576/2002) · VI. Cómo se gestiona la tesorería del Estado (LGP, arts. 90, 91 y 106 a 112; Orden PRE/1576/2002). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué reglas rigen la ejecución del gasto (LGP, arts. 21, 46 y 69) · II. Quién es competente (LGP, arts. 74 y 75; LCSP, art. 323; LGS, art. 10) · III. Qué fases tiene el procedimiento y cómo se relacionan con la actuación administrativa (LGP, art. 73; Instrucción de operatoria contable, reglas 14, 20 a 24 y 27) · IV. Cómo se ejecuta el gasto de los contratos y de las subvenciones (LCSP, arts. 116, 117 y 198; LGS, arts. 9 y 34; reglas 42, 77, 78, 82, 83, 85 y 86) · V. Qué documentos contables intervienen en los gastos y en los pagos (Orden de 1-2-1996 de documentos contables; regla 25; Orden PRE/1576/2002) · VI. Cómo se gestiona la tesorería del Estado (LGP, arts. 90, 91, 106 a 110 y 112; Orden PRE/1576/2002). Cada artículo: texto literal del BOE y ficha.",
   ["Fases del gasto", "Art. 73 LGP", "Aprobación", "Compromiso", "Reconocimiento de la obligación", "Ordenación del pago", "Pago material", "ADOK", "Art. 74 LGP", "12 millones", "Ordenador General de pagos", "Retención de crédito", "Documentos contables", "Documento OK", "Documento MC", "Documento de desglose", "Propuesta de pago", "Tesoro Público", "Unidad de caja", "Art. 91 LGP"])
 
 # =============================================================================
@@ -45,10 +45,10 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 |---|---|---|---|
 | **I** | ¿Qué reglas rigen la ejecución del presupuesto de gasto? | Arts. 21, 46 y 69 | — |
 | **II** | ¿Quién es competente para gastar y para pagar? | Arts. 74 y 75 | LCSP, art. 323; LGS, art. 10 |
-| **III** | ¿Qué fases tiene el procedimiento y cómo se relacionan con la actuación administrativa? | Art. 73 | Instrucción de operatoria contable (Orden de 1-2-1996), reglas 14 y 20 a 24 y 27 |
+| **III** | ¿Qué fases tiene el procedimiento y cómo se relacionan con la actuación administrativa? | Art. 73 | Instrucción de operatoria contable (Orden de 1-2-1996), reglas 14, 20 a 24 y 27 |
 | **IV** | ¿Cómo se ejecuta el gasto de los contratos y de las subvenciones? | — | LCSP, arts. 116, 117 y 198; LGS, arts. 9 y 34; Instrucción, reglas 42, 77, 78, 82, 83, 85 y 86 |
 | **V** | ¿Qué documentos contables intervienen en la ejecución de los gastos y de los pagos? | — | Orden de 1-2-1996 de documentos contables, apartados segundo, tercero, quinto a séptimo y anexo I; Instrucción, regla 25; Orden PRE/1576/2002, apartados sexto y séptimo |
-| **VI** | ¿Cómo se gestiona la tesorería del Estado? | Arts. 90, 91 y 106 a 112 | Orden PRE/1576/2002, apartados octavo y noveno |
+| **VI** | ¿Cómo se gestiona la tesorería del Estado? | Arts. 90, 91, 106 a 110 y 112 | Orden PRE/1576/2002, apartados octavo y noveno |
 
 !> **La idea que une los seis bloques:** los créditos son **limitativos** y las obligaciones solo son exigibles si resultan de la ejecución del presupuesto (I). Gastan los **Ministros** y demás titulares de dotaciones diferenciadas; paga el **Ordenador General de pagos**, que es el **Director General del Tesoro y Política Financiera** (II). El gasto recorre cinco fases: **aprobación, compromiso, reconocimiento de la obligación, ordenación del pago y pago material** (III); en los contratos y en las subvenciones cada fase coincide con un acto concreto del expediente (IV). Cada fase se refleja en un **documento contable** (RC, A, D, AD, OK, ADOK…) (V) y el pago lo hace el **Tesoro Público**, que centraliza los fondos por el principio de **unidad de caja** (VI).
 
@@ -160,7 +160,7 @@ T.ap("s5", "II.3 Órganos de contratación y de concesión de subvenciones (LCSP
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Qué fases tiene el procedimiento y cómo se relacionan con la actuación administrativa? (LGP, art. 73; Instrucción de operatoria contable, reglas 14 y 20 a 27)", donde(
+T.ap("bIII", "III. ¿Qué fases tiene el procedimiento y cómo se relacionan con la actuación administrativa? (LGP, art. 73; Instrucción de operatoria contable, reglas 14, 20 a 24 y 27)", donde(
   "Tercera pregunta, el núcleo del tema. La LGP define las **cinco fases** de la gestión del gasto; la Instrucción de operatoria contable (Orden de 1 de febrero de 1996) las describe como **actos administrativos** y dice qué documento contable expide el servicio gestor en cada una.",
   ["1 Las fases en la LGP (art. 73)", "2 Las fases como actos administrativos (Instrucción de operatoria contable)", "3 Cuadro de las fases"]))
 
@@ -187,7 +187,7 @@ T.ap("s6", "III.1 Las fases del procedimiento de gestión de los gastos (LGP, ar
          "El órgano competente para gastar (→ II.1.1)",
          [f"Declara {g(73, 'la existencia de un crédito exigible contra la Hacienda Pública estatal o contra la Seguridad Social')}", "Deriva de un gasto **aprobado y comprometido**", "Lleva consigo la **propuesta de pago**"],
          "Previa **acreditación documental** de la prestación o del derecho del acreedor",
-         "Definición literal que cayó en 2025 (→ Cierre 1). «Crédito exigible» es el **derecho del acreedor** contra la Hacienda, no un crédito presupuestario."))}
+         "Definición literal que cayó en 2025 (→ Cierre 1). El «crédito exigible» es el **derecho del acreedor** contra la Hacienda, no un crédito presupuestario."))}
 
 {unidad("1.4 Documentos, extinción de las obligaciones y acumulación de fases (art. 73.5 a 7)",
   lit("LGP", "Artículo 73", ["a propuesta de la Intervención General de la Administración del Estado", "se extinguen por el pago, la compensación, la prescripción o cualquier otro medio", "se acumularán en un solo acto las fases de ejecución precisas"], solo=[13, 14, 15]),
@@ -198,7 +198,7 @@ T.ap("s6", "III.1 Las fases del procedimiento de gestión de los gastos (LGP, ar
          "La acumulación de fases explica los documentos **mixtos** AD y ADOK (→ III.2.6)."))}
 """, 2)
 
-T.ap("s7", "III.2 Las fases como actos administrativos (Instrucción de operatoria contable, reglas 14 y 20 a 27)", f"""
+T.ap("s7", "III.2 Las fases como actos administrativos (Instrucción de operatoria contable, reglas 14, 20 a 24 y 27)", f"""
 La Instrucción de operatoria contable (anexo I de la Orden de 1 de febrero de 1996) es la norma que une cada **acto administrativo** del expediente de gasto con su **documento contable**.
 
 {unidad("2.1 Antes de la primera fase: retención de crédito (regla 14.1)",
@@ -281,7 +281,7 @@ T.ap("s8", "III.3 Cuadro de las fases: acto, contenido y documento (esquema)", f
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se ejecuta el gasto de los contratos y de las subvenciones? (LCSP, arts. 116, 117 y 198; LGS, arts. 9 y 34; Instrucción, reglas 42, 77, 78 y 82 a 86)", donde(
+T.ap("bIV", "IV. ¿Cómo se ejecuta el gasto de los contratos y de las subvenciones? (LCSP, arts. 116, 117 y 198; LGS, arts. 9 y 34; Instrucción, reglas 42, 77, 78, 82, 83, 85 y 86)", donde(
   "Cuarta pregunta: la «especial referencia» del epígrafe. En los contratos y en las subvenciones cada fase del gasto coincide con un acto del expediente: la **aprobación del expediente** de contratación o de la **convocatoria**, la **adjudicación** o la **concesión**, y la **acreditación** de la prestación o de la actividad subvencionada.",
   ["1 Contratación: el gasto en la LCSP (arts. 116, 117 y 198)", "2 Contratación: los documentos contables (reglas 42, 77 y 78)", "3 Subvenciones: el gasto en la LGS (arts. 9.4 y 34)", "4 Subvenciones: los documentos contables (reglas 82, 83, 85 y 86)", "5 Cuadro: fases y actos en contratos y subvenciones"]))
 
@@ -315,7 +315,7 @@ T.ap("s10", "IV.2 Contratación: los documentos contables (Instrucción, reglas 
 {unidad("2.1 Tramitación anticipada de expedientes de contratación (regla 42.1 a 3)",
   lit("OIOC", "regla42", ["condición suspensiva de existencia de crédito adecuado y suficiente", "detallando el importe que del gasto en cuestión corresponde a cada uno de los ejercicios posteriores afectados"], solo=[1, 2, 3, 4, 5, 7]),
   fichab("Gastos cuya ejecución empieza en el ejercicio siguiente",
-         "El Servicio gestor; la oficina de contabilidad expide el certificado de cumplimiento de límites",
+         "El Servicio gestor expide el RC de tramitación anticipada; el certificado de cumplimiento de límites se obtiene del Sistema de Información Contable",
          ["Pliego: adjudicación y formalización sujetas a la **condición suspensiva** de existencia de crédito", "Certificado de cumplimiento de los límites del art. 47 LGP (documento RC de tramitación anticipada)", "Después: documentos A, D o AD «de tramitación anticipada»"],
          "Se tramita en el ejercicio **anterior** al del comienzo de la ejecución",
          "La regla 42.1 cita el art. 110.2 del texto refundido de 2011; su texto coincide con el del art. 117.2 LCSP (→ IV.1.2). Los límites del art. 47 LGP son del tema VI.3."))}
@@ -534,7 +534,7 @@ T.ap("s18", "V.5 Cuadro de los documentos contables del gasto (esquema)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bVI", "VI. ¿Cómo se gestiona la tesorería del Estado? (LGP, arts. 90, 91 y 106 a 112; Orden PRE/1576/2002)", donde(
+T.ap("bVI", "VI. ¿Cómo se gestiona la tesorería del Estado? (LGP, arts. 90, 91, 106 a 110 y 112; Orden PRE/1576/2002)", donde(
   "Sexta y última pregunta. Las dos últimas fases del gasto (ordenación del pago y pago material) las ejecuta el **Tesoro Público**, que centraliza todos los fondos del Estado (unidad de caja) y gestiona la tesorería a través de cuentas en el **Banco de España**.",
   ["1 El Tesoro Público y sus funciones (arts. 90 y 91)", "2 Gestión de la tesorería: información, criterios, cuentas y medios de pago (arts. 106 a 110 y 112)", "3 Ordenación del pago y pago material (Orden PRE/1576/2002, apartados octavo y noveno)"]))
 
@@ -563,7 +563,7 @@ T.ap("s20", "VI.2 Gestión de la tesorería: información, criterios, cuentas y 
          "La **Dirección General del Tesoro y Política Financiera**",
          ["Recabar datos, previsiones y documentación sobre pagos e ingresos", "Retener propuestas de pago a favor de entidades del sector público administrativo estatal, según sus pagos previstos y su tesorería"],
          "—",
-         "La retención es solo frente a **entidades del sector público administrativo estatal**, no frente a acreedores privados."))}
+         "La retención del art. 106.2 se refiere a las propuestas de pago **a favor de entidades del sector público administrativo estatal**. Otra cosa es que las propuestas no seleccionadas en un proceso de ordenación queden retenidas para un proceso posterior (→ VI.3.1)."))}
 
 {unidad("2.2 Criterios de ordenación de pagos (art. 107)",
   lit("LGP", "Artículo 107", ["criterios objetivos", "la fecha de recepción, el importe de la operación, la aplicación presupuestaria y la forma de pago"]),
@@ -695,10 +695,10 @@ T.ap("s23", "Cierre 2. Repaso en 10 minutos (por bloques)", f"""
 |---|---|---|
 | I. Reglas | Exigibilidad (21); créditos limitativos (46); principios (69) | Exceder el crédito: **nulidad de pleno derecho** |
 | II. Órganos | Ministros aprueban, comprometen y reconocen (74.1); convenios (74.5); Ordenador de pagos (75); LCSP 323; LGS 10 | Convenio de más de **12 millones**: **Consejo de Ministros**, y su autorización **implica la aprobación**; Ordenador: **Director General del Tesoro y Política Financiera** |
-| III. Fases | Aprobación, compromiso, reconocimiento, ordenación del pago y pago material (73); reglas 14 y 20 a 27 | Reconocimiento: «declara la existencia de un **crédito exigible**»; documento **OK** |
+| III. Fases | Aprobación, compromiso, reconocimiento, ordenación del pago y pago material (73); reglas 14, 20 a 24 y 27 | Reconocimiento: «declara la existencia de un **crédito exigible**»; documento **OK** |
 | IV. Contratos y subvenciones | Aprobación del expediente = aprobación del gasto (LCSP 117); concesión = compromiso (LGS 34); reglas 77, 78, 83, 85 y 86 | Contrato: A al aprobar, **D al formalizar**, OK tras la prestación; pago en **30 días** |
 | V. Documentos | MC, desglose, RC, A, D, AD, OK, ADOK, O, K; claves del anexo I; propuesta de pago | **MC030** crédito extraordinario; **D de ejercicio corriente** = compromiso imputable al presupuesto corriente; **documento de desglose** |
-| VI. Tesorería | Tesoro Público (90); funciones (91); arts. 106 a 112; Orden PRE/1576/2002 | **Unidad de caja**; silencio **negativo** a los **3 meses** para cuentas fuera del Banco de España; pago por **transferencia** |
+| VI. Tesorería | Tesoro Público (90); funciones (91); arts. 106 a 110 y 112; Orden PRE/1576/2002 | **Unidad de caja**; silencio **negativo** a los **3 meses** para cuentas fuera del Banco de España; pago por **transferencia** |
 
 ?> **Trampas frecuentes:** «el reconocimiento de la obligación es el acto que acuerda la realización de gastos previamente aprobados» (eso es el **compromiso**); «la aprobación tiene relevancia jurídica para con terceros» (es el **compromiso**); «el Ministro autoriza un convenio de 15 millones» (el **Consejo de Ministros**); «la autorización del Consejo de Ministros en las subvenciones implica la aprobación del gasto» (en las subvenciones **no**; en los convenios del art. 74.5, **sí**); «Ordenador General: el Ministro o el Secretario General del Tesoro» (es el **Director General del Tesoro y Política Financiera**); «documento O para cualquier reconocimiento» (solo en la **Deuda del Estado**); «MC040 para un crédito extraordinario» (040 es el **suplemento**).
 """)
@@ -714,7 +714,7 @@ T.q(L, "Artículo 73", "Fases del gasto", "Según el artículo 73.2 de la Ley Ge
     ["Inicia el procedimiento de ejecución del gasto, sin que implique relaciones con terceros ajenos a la Hacienda Pública estatal.", "Vincula a la Hacienda Pública estatal a la realización del gasto en la cuantía y condiciones establecidas.", "Declara la existencia de un crédito exigible contra la Hacienda Pública estatal.", "Es un acto con relevancia jurídica para con terceros."],
     "Art. 73.2 LGP. La vinculación y la relevancia frente a terceros son del compromiso (73.3); el crédito exigible, del reconocimiento (73.4).", "La aprobación inicia el procedimiento de ejecución del gasto, sin que implique relaciones con terceros ajenos a la Hacienda Pública estatal")
 T.q(L, "Artículo 73", "Fases del gasto", "Según el artículo 73.3 de la Ley General Presupuestaria, el compromiso es el acto mediante el cual se acuerda la realización de gastos previamente aprobados por un importe:",
-    ["Determinado o determinable.", "Cierto o aproximado.", "Máximo y estimado.", "Exigible y líquido."], "Art. 73.3 LGP: «por un importe determinado o determinable». «Cuantía cierta o aproximada» es la aprobación (73.2).", "por un importe determinado o determinable")
+    ["Determinado o determinable.", "Cierto o aproximado.", "Máximo y estimado.", "Exigible y líquido."], "Art. 73.3 LGP: «por un importe determinado o determinable». La «cuantía cierta o aproximada» es de la aprobación (73.2).", "por un importe determinado o determinable")
 T.q(L, "Artículo 73", "Fases del gasto", "Según el artículo 73.2 de la Ley General Presupuestaria, la aprobación autoriza la realización de un gasto determinado por una cuantía:",
     ["Cierta o aproximada.", "Determinada o determinable.", "Líquida y exigible.", "Máxima, sin reserva de crédito."], "Art. 73.2 LGP.", "se autoriza la realización de un gasto determinado por una cuantía cierta o aproximada")
 T.q(L, "Artículo 73", "Fases del gasto", "Según el artículo 73.3 de la Ley General Presupuestaria, ¿qué fase es un acto con relevancia jurídica para con terceros?",

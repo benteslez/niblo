@@ -105,7 +105,7 @@ T.ap("s3", "I.3 Las prestaciones patrimoniales de carácter público (CE, art. 3
 {unidad("3.1 Reserva de ley (CE, art. 31.3)",
   lit("CE", "Artículo 31", ["con arreglo a la ley"], solo=[3]),
   fichab("Reserva de ley de las prestaciones personales o patrimoniales de carácter público",
-         "Las Cortes, mediante ley",
+         "El legislador: solo «con arreglo a la ley»",
          "Solo pueden establecerse con arreglo a la ley",
          "—",
          "Es la base de la disposición adicional primera de la LGT (→ I.3.2): tributos y prestaciones **no tributarias** necesitan ley."))}
@@ -205,7 +205,7 @@ T.ap("s6", "II.3 Las clases de tributos: tasas, contribuciones especiales e impu
 
 | Tributo | Clave del hecho imponible | Palabra que lo delata |
 |---|---|---|
-| Tasa | Dominio público o servicio/actividad pública que beneficia **de modo particular** | «utilización privativa», «aprovechamiento especial», «no voluntaria» |
+| Tasa | Dominio público o servicio/actividad pública que beneficia **de modo particular** | «utilización privativa», «aprovechamiento especial», «no sean de solicitud o recepción voluntaria» |
 | Contribución especial | **Beneficio** o **aumento de valor** de los bienes por obras o servicios públicos | «obras públicas», «aumento de valor» |
 | Impuesto | Negocios, actos o hechos que muestran **capacidad económica** | «sin contraprestación» |
 """, 2)
@@ -232,7 +232,7 @@ T.ap("s7", "II.4 Potestad tributaria, fuentes, reserva de ley y vigencia (LGT, a
          "El legislador: «en todo caso por ley»",
          ["Hecho imponible, devengo, base, tipo y demás elementos de la cuantía (a)", "Pagos a cuenta (b); obligados del art. 35.2 y responsables (c)", "Beneficios fiscales (d); recargos e intereses de demora (e); prescripción y caducidad (f)", "Infracciones y sanciones (g); declaraciones y autoliquidaciones (h)", "Condonación, moratorias y quitas (k); actos reclamables en vía económico-administrativa (l)"],
          "—",
-         "«**En todo caso** por ley»: son trece letras (a a m). La **condonación** de deudas y sanciones también exige ley."))}
+         "«Se regularán **en todo caso** por ley»: son trece letras (a a m). La **condonación** de deudas y sanciones también exige ley."))}
 
 {unidad("4.4 Entrada en vigor y retroactividad (art. 10)",
   lit("LGT", "Artículo 10", ["a los veinte días naturales de su completa publicación", "no tendrán efecto retroactivo", "cuando su aplicación resulte más favorable para el interesado"]),
@@ -315,7 +315,7 @@ T.ap("s9", "III.1 Objeto de la ley, concepto y principios de las tasas (Ley 8/19
          "—",
          ["**Equivalencia** (7): tienden a cubrir el coste del servicio o actividad", "**Capacidad económica** (8): se tiene en cuenta cuando lo permitan las características del tributo"],
          "—",
-         "Las tasas «**tenderán** a cubrir» el coste (no «cubrirán como mínimo», que es lo de los **precios públicos**, art. 25.1 → IV.1.2)."))}
+         "Las tasas «**tenderán** a cubrir» el coste (no «que cubra, como mínimo, los costes», que es lo de los **precios públicos**, art. 25.1 → IV.1.2)."))}
 """, 2)
 
 T.ap("s10", "III.2 Fuentes, establecimiento por ley, previsión presupuestaria y devolución (Ley 8/1989, arts. 9 a 12)", f"""
@@ -402,7 +402,7 @@ T.ap("s12", "III.4 Cuantía, memoria económico-financiera, pago y gestión (Ley
   lit("L8_1989", "Artículo 22", ["corresponde al Ministerio de Economía y Hacienda", "los principios y procedimientos de la Ley General Tributaria"]),
   lit("L8_1989", "Artículo 23", ["cuando así se prevea reglamentariamente"]),
   fichab("Cómo se pagan y se gestionan las tasas",
-         "Gestión: Ministerio de Economía y Hacienda, con posible participación reglamentaria de otros departamentos y entes",
+         "Gestión: el «Ministerio de Economía y Hacienda» (denominación de la ley, de 1989), con posible participación reglamentaria de otros departamentos y entes",
          ["Pago en efectivo o con efectos timbrados (21)", "Gestión con los principios y procedimientos de la **LGT**: liquidación, recaudación, inspección y revisión (22.3)", "Autoliquidación e ingreso en el Tesoro cuando lo prevea un reglamento (23)"],
          "—",
          "Como son **tributos**, en su gestión se aplica **en todo caso** la LGT (en los precios públicos, en cambio, la LGP: art. 27.7 → IV.2.2)."))}

@@ -17,7 +17,7 @@ A2 = "Anexo II (Resolución de 20 de enero de 2014, de la Dirección General de 
 A4 = "Anexo IV (Resolución de 20 de enero de 2014, de la Dirección General de Presupuestos): código de la clasificación económica de los gastos"
 
 T = Tema("B6T06",
-  "Cuatro preguntas: I. Cómo se clasifican los gastos en bienes y servicios, las inversiones y las transferencias (LGP, arts. 40 y 43; Resolución de 20-1-2014) · II. Qué son los anticipos de caja fija y qué límites tienen (LGP, art. 78; RD 725/1989) · III. Cuándo se libran pagos «a justificar» y cómo se gestionan (LGP, art. 79; RD 640/1987) · IV. Cómo se justifican los libramientos (LGP, arts. 78.5, 79.4 a 6, 151, 153 y 177; RD 725/1989, art. 7; RD 640/1987, art. 12). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Cómo se clasifican los gastos en bienes y servicios, las inversiones y las transferencias (LGP, arts. 40 y 43; Resolución de 20-1-2014) · II. Qué son los anticipos de caja fija y qué límites tienen (LGP, art. 78; RD 725/1989) · III. Cuándo se libran pagos «a justificar» y cómo se gestionan (LGP, art. 79; RD 640/1987) · IV. Cómo se justifican los libramientos (LGP, arts. 78.5, 79.4 a 6, 151, 153, 176 y 177; RD 725/1989, arts. 7 y 9; RD 640/1987, arts. 8 a 10 y 12). Cada artículo: texto literal del BOE y ficha.",
   ["Clasificación económica", "Capítulo 2", "Bienes y servicios", "Artículo 23", "Capítulo 6", "Inversiones reales", "Capítulo 4", "Capítulo 7", "Transferencias", "Anticipos de caja fija", "7 por ciento", "RD 725/1989", "Pagos a justificar", "RD 640/1987", "Cuenta justificativa", "Tres meses", "Cajero pagador"])
 
 # =============================================================================
@@ -97,7 +97,7 @@ El capítulo 2 es el de los «gastos para la compra de bienes y servicios» del 
          "—",
          ["Mantenimiento, reparación y conservación ordinarios: **artículo 21** (capítulo 2)", "Grandes reparaciones que aumentan productividad, capacidad, rendimiento, eficiencia o vida útil: **capítulo 6**"],
          "—",
-         "Es una regla «como norma general». La clave es si la reparación **mejora o alarga** el bien (→ I.3)."))}
+         "La regla se da «Como norma general». La clave es si la reparación **mejora o alarga** el bien (→ I.3)."))}
 
 {unidad("2.4 Indemnizaciones por razón del servicio (anexo IV, artículo 23)",
   lit("RES2014", "ai-4", ["altos cargos y asimilados, y su séquito, funcionarios, personal laboral fijo y eventual y otro personal", "asistencia a tribunales y órganos colegiados"], solo=[382, 383, 384, 389, 391, 392, 393], titulo=A4 + ", artículo 23"),
@@ -174,7 +174,7 @@ T.ap("s5", "I.5 Cuadro de los cuatro capítulos del epígrafe (esquema)", f"""
 | **7** | Transferencias de capital | De capital | Sin contrapartida directa; el receptor financia operaciones **de capital** | Concepto (regla general) |
 
 {resumen([
-  "Clasificación económica: **corrientes** (cap. 1 a 4), Fondo de Contingencia (5), **de capital** (6 y 7) y financieras (8 y 9) (LGP, art. 40.1 c).",
+  "Clasificación económica: **corrientes** (cap. 1 a 4), Fondo de Contingencia (5), **de capital** (6 y 7) y financieras (8 y 9) (LGP, art. 40.1 c; numeración de los capítulos: Resolución de 20-1-2014, anexo II).",
   "Bienes y servicios a nivel de **artículo**; inversiones reales a nivel de **capítulo**; el resto, de **concepto** (art. 43.1).",
   "Capítulo 2: basta **una** característica (fungible, menos de un año, no inventariable, reiterativo). Indemnizaciones por razón del servicio: **artículo 23**.",
   "Transferencias: **sin contrapartida directa**; capítulo 4 si financian gasto corriente, 7 si financian operaciones de capital; el segundo dígito es el **receptor**."],
@@ -216,7 +216,7 @@ T.ap("s7", "II.2 Límites cuantitativos y fondos de maniobra (LGP, art. 78.2 a 4
 {unidad("2.2 Fondos de maniobra de la Seguridad Social (LGP, art. 78.2 y 4)",
   lit("LGP", "Artículo 78", ["fondos de maniobra", "del tres por ciento", "hasta un siete por ciento"], solo=[3, 7, 8]),
   fichab("Equivalente de la caja fija en las entidades gestoras y servicios comunes de la Seguridad Social",
-         "Normas: Director General de la **Tesorería General de la Seguridad Social**, previo informe de la Intervención General de la Seguridad Social · Elevación del porcentaje: el Ministro de Trabajo",
+         "Normas: Director General de la **Tesorería General de la Seguridad Social**, previo informe de la Intervención General de la Seguridad Social · Elevación del porcentaje: el «Ministro de Trabajo y Asuntos Sociales» (denominación de la ley)",
          "Fondos de maniobra asignados a los centros de gestión de cada entidad",
          "Máximo **3 %** del capítulo 2; elevable hasta el **7 %**",
          "En la Seguridad Social no se llaman anticipos de caja fija sino **fondos de maniobra**: 3 % (elevable al 7 %)."))}
@@ -323,7 +323,7 @@ T.ap("s11", "III.2 Ejercicio al que se imputa y calendario (LGP, art. 79.3)", f"
 """, 2)
 
 T.ap("s12", "III.3 Normas, fiscalización y cajas pagadoras (RD 640/1987, arts. 1, 3 y 4)", f"""
-?> **Aviso de vigencia.** El RD 640/1987 desarrolla la Ley General Presupuestaria de 1977 y cita normas de su época (Ley 46/1985, Ministerio de Economía y Hacienda, Dirección General del Tesoro y Política Financiera). Se cita **literal** como está en el BOE; sus arts. 2 y 11 (anticipos de caja fija) están derogados por el RD 725/1989 ({c('RD725', 'dd', 'en especial los artículos 2.º y 11, del Real Decreto 640/1987')}).
+?> **Aviso de vigencia.** El RD 640/1987 desarrolla la Ley General Presupuestaria de 1977 y cita normas de su época (Ley 46/1985, Ministerio de Economía y Hacienda). Se cita **literal** como está en el BOE; sus arts. 2 y 11 (anticipos de caja fija) están derogados por el RD 725/1989 ({c('RD725', 'dd', 'en especial los artículos 2.º y 11, del Real Decreto 640/1987')}).
 
 {unidad("3.1 Normas de cada ministerio y límites (RD 640/1987, art. 1)",
   lit("RD640", "a1", ["previo informe del Interventor Delegado", "No se podrán expedir órdenes de pago «a justificar» a favor de las Cajas pagadoras cuando transcurridos los plazos reglamentarios"], solo=[1, 2, 3]),
@@ -465,7 +465,7 @@ T.ap("s17", "IV.4 Fiscalización y responsabilidad (LGP, arts. 151, 153, 176 y 1
 {unidad("4.2 Requisitos de fiscalización y de intervención de las cuentas (LGP, art. 153)",
   lit("LGP", "Artículo 153", ["Reglamentariamente se determinarán"]),
   fichab("Remisión al reglamento del control de pagos a justificar y anticipos de caja fija",
-         "El Gobierno, por reglamento",
+         "La norma reglamentaria a la que remite la ley",
          ["Requisitos de la fiscalización previa de las órdenes de pago a justificar", "Requisitos de la constitución, modificación y reposiciones de los anticipos de caja fija", "Procedimiento de intervención de sus cuentas justificativas"],
          "—",
          "La LGP no fija esos requisitos: los **remite al reglamento**."))}
@@ -687,7 +687,7 @@ for q_, a_, cat in [
   ("Operaciones corrientes y de capital en la clasificación económica (LGP, art. 40.1 c)", "Corrientes: personal, bienes y servicios, gastos financieros y transferencias corrientes. De capital: inversiones reales y transferencias de capital.", "Clasificación económica"),
   ("Nivel de especificación en el presupuesto del Estado (LGP, art. 43.1)", "Regla: concepto. Personal y bienes y servicios: artículo. Inversiones reales: capítulo.", "Clasificación económica"),
   ("Características de los bienes del capítulo 2 (Resolución de 20-1-2014, anexo IV)", "Alguna de estas: fungibles; duración previsiblemente inferior al ejercicio; no inventariables; previsiblemente reiterativos.", "Bienes y servicios"),
-  ("Artículos del capítulo 2", "20 Arrendamientos y cánones · 21 Reparaciones, mantenimiento y conservación · 22 Material, suministros y otros · 23 Indemnizaciones por razón del servicio · 24 Publicaciones · 25 Conciertos de asistencia sanitaria · 27 Compras de las Agencias Estatales.", "Bienes y servicios"),
+  ("Artículos del capítulo 2", "20 Arrendamientos y cánones · 21 Reparaciones, mantenimiento y conservación · 22 Material, suministros y otros · 23 Indemnizaciones por razón del servicio · 24 Gastos de publicaciones · 25 Conciertos de asistencia sanitaria · 27 Compras, suministros y otros gastos relacionados con la actividad.", "Bienes y servicios"),
   ("¿Dónde se imputan las grandes reparaciones que alargan la vida útil del bien?", "Al capítulo 6, como norma general (anexo IV, artículo 21).", "Bienes y servicios"),
   ("¿Qué es el capítulo 6?", "Inversiones reales: gastos realizados directamente por la Administración para crear o adquirir bienes de capital, bienes inventariables y gastos inmateriales amortizables.", "Inversiones reales"),
   ("Artículos 60 a 64", "60 nueva y 61 reposición (uso general); 62 nueva y 63 reposición (funcionamiento operativo); 64 inmaterial.", "Inversiones reales"),
@@ -696,7 +696,7 @@ for q_, a_, cat in [
   ("Concepto de anticipo de caja fija (LGP, art. 78.1; RD 725/1989, art. 1)", "Provisión de fondos extrapresupuestaria y permanente a pagadurías, cajas y habilitaciones, para gastos periódicos o repetitivos del capítulo 2 del año.", "Anticipos de caja fija"),
   ("¿Quién dicta las normas de los anticipos de caja fija?", "Los ministros y los presidentes o directores de los organismos autónomos, previo informe de su Intervención Delegada (LGP, art. 78.1).", "Anticipos de caja fija"),
   ("Límites de los anticipos de caja fija (LGP, art. 78.3)", "7 % del capítulo 2; AECI hasta el 14 %; Interior (programa 222A) hasta el 10 % de los créditos del artículo 23.", "Anticipos de caja fija"),
-  ("Fondos de maniobra de la Seguridad Social (LGP, art. 78.4)", "Hasta el 3 % del capítulo 2; elevable al 7 % por el Ministro de Trabajo.", "Anticipos de caja fija"),
+  ("Fondos de maniobra de la Seguridad Social (LGP, art. 78.4)", "Hasta el 3 % del capítulo 2; elevable al 7 % por el «Ministro de Trabajo y Asuntos Sociales» (así lo nombra la ley).", "Anticipos de caja fija"),
   ("Límites por pago (RD 725/1989, art. 2.3)", "No libramientos directos de menos de 600 €; no pagos por caja fija de más de 5.000 €, salvo teléfono, energía eléctrica, combustibles e indemnizaciones por razón del servicio.", "Anticipos de caja fija"),
   ("¿Cuándo se rinden las cuentas de caja fija? (RD 725/1989, art. 7.1)", "Cuando lo aconseje la tesorería y, necesariamente, en diciembre.", "Justificación"),
   ("Supuestos de pagos a justificar (LGP, art. 79.1 y 2)", "Documentación no disponible antes del reconocimiento de la obligación; servicios en el extranjero; gastos en localidad sin dependencia.", "Pagos a justificar"),
