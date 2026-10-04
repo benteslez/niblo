@@ -451,7 +451,7 @@ T.ap("s10", "II.7 Disposiciones comunes y Estatuto (TFUE, arts. 278 a 281; Estat
 
 {unidad("7.2 Fuerza ejecutiva de las sentencias (art. 280)",
   lit("TFUE", "Artículo 280", ["tendrán fuerza ejecutiva en las condiciones que establece el artículo 299"]),
-  fichab("Ejecución forzosa de las sentencias", "—", "Según el art. 299 TFUE", "—", "Remite al **art. 299** (tema II.2)."))}
+  fichab("Ejecución forzosa de las sentencias", "—", f"Según el art. 299 TFUE: {c('TFUE', 'Artículo 299', 'La ejecución forzosa se regirá por las normas de procedimiento civil vigentes en el Estado en cuyo territorio se lleve a cabo')}", "—", f"Remite al **art. 299** TFUE (no se desarrolla en estos apuntes): la ejecución forzosa {c('TFUE', 'Artículo 299', 'sólo podrá ser suspendida en virtud de una decisión del Tribunal de Justicia de la Unión Europea')}."))}
 
 {unidad("7.3 El Estatuto del TJUE (art. 281)",
   lit("TFUE", "Artículo 281", ["en un protocolo independiente", "a excepción de su título I y su artículo 64"]),

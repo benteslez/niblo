@@ -27,7 +27,7 @@ def frag(t): return t + " (fragmento)"
 
 
 T = Tema("B2T02",
-  "Cinco preguntas: I. Qué es el Consejo Europeo y qué hace (TUE, arts. 13 y 15; TFUE, arts. 235 y 236) · II. Qué es el Consejo y cómo decide (TUE, art. 16; TFUE, arts. 237 a 243) · III. Qué es la Comisión y cómo funciona (TUE, art. 17; TFUE, arts. 244 a 250) · IV. Cómo se decide: el procedimiento legislativo (TFUE, arts. 289 y 293 a 297) · V. Cómo participan los Estados miembros en cada fase (TUE, art. 12; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997). Cada artículo: texto literal (DOUE o BOE) y ficha.",
+  "Cinco preguntas: I. Qué es el Consejo Europeo y qué hace (TUE, arts. 13, 10.2 y 15; TFUE, arts. 235 y 236) · II. Qué es el Consejo y cómo decide (TUE, art. 16; TFUE, arts. 237 a 243) · III. Qué es la Comisión y cómo funciona (TUE, arts. 17 y 18; TFUE, arts. 244 a 250) · IV. Cómo se decide: el procedimiento legislativo (TFUE, arts. 289 y 293 a 297; TUE, art. 11.4) · V. Cómo participan los Estados miembros en cada fase (TUE, art. 12; TFUE, art. 291; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997). Cada artículo: texto literal (DOUE o BOE) y ficha.",
   ["Consejo Europeo", "Presidente del Consejo Europeo", "Consejo", "Mayoría cualificada", "COREPER", "Formaciones del Consejo", "Comisión Europea", "Iniciativa legislativa", "Moción de censura", "Procedimiento legislativo ordinario", "Comité de Conciliación", "Art. 294 TFUE", "Parlamentos nacionales", "Subsidiariedad", "Comisión Mixta para la UE", "CARUE"])
 
 # =============================================================================
