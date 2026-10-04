@@ -18,10 +18,10 @@ publica en `temas/<id>.json` y se apunta en `temas/indice.json`.
 ## 1. Tests reales (petición intercalada del usuario)
 
 - [x] GACE-P 2025 (promoción interna): 96 con texto legal, 8 sin norma literal
-      (105 PENDIENTE: Resolución de 25-5-2010 sobre nóminas; pedir al usuario).
+      (105 con texto legal: Resolución de 25-5-2010, BOE-A-2010-8386).
 - [x] GACE-X 2025 (extraordinaria): 95 con texto legal, 10 sin norma literal.
       **96 RETENIDA** (la plantilla da b; el art. 78.3 LGP no casa): esperar
-      decisión del usuario. X85 ya con texto legal (RD 466/2026, art. tercero). Pendientes de fuente: 31, 91, 100 (Res. 25-5-2010). X31: la ficha 1.1.2 del PE da «Tratado de Fusión, de 8 de abril de 1965 … Entró en vigor en 1967»; ninguna fuente da «1 de julio de 1967» (plantilla a): consultado al usuario.
+      decisión del usuario. X85 ya con texto legal (RD 466/2026, art. tercero); X91 con la Orden HAC/557/2026, art. 6.1.1; P105 con la Resolución de 25-5-2010 (BOE-A-2010-8386). Pendientes de fuente: 31, 100 (anexo XV de la Resolución de 2010 solo en el PDF del BOE; se usa en el tema VI.8) (Res. 25-5-2010). X31: la ficha 1.1.2 del PE da «Tratado de Fusión, de 8 de abril de 1965 … Entró en vigor en 1967»; ninguna fuente da «1 de julio de 1967» (plantilla a): consultado al usuario.
       Sin condiciones oficiales (minutos/penalización) hasta tener su convocatoria.
 
 ## 2. Temas «Solo BOE»

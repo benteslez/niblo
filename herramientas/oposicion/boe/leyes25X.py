@@ -345,7 +345,6 @@ SIN_LEY = {
   44: "Concepto doctrinal sobre la financiación de la Seguridad Social (función redistribuidora de los tributos, carácter finalista): "
       "no está literal en la LGSS.",
   53: "Dato de un plan (plan conjunto plurianual en materia de violencia contra las mujeres 2023-2027, acuerdo de la Conferencia Sectorial de Igualdad), no de una norma publicada en las fuentes.",
-  91: "Definición de los programas finalistas de la clasificación por programas: está en la Orden anual de elaboración de los PGE, no disponible en las fuentes; pendiente de que el usuario la aporte.",
   97: "La LGP no enumera literalmente las fuentes de ingreso de las opciones (impuestos directos, cotizaciones, multas); la respuesta (los préstamos entre entidades privadas no son ingreso público) "
       "es de razonamiento, no de un precepto.",
   100: "Resolución de 25 de mayo de 2010, de la Secretaría de Estado de Hacienda y Presupuestos (anexo XV): no está en el texto consolidado del BOE ni en las fuentes; pendiente de que el usuario la aporte.",
@@ -367,6 +366,10 @@ assert sorted(TEMA) == list(range(1, 106))
 # del repaso y del examen hasta que el usuario decida (CLAUDE.md: nunca publicar una respuesta que
 # contradiga la ley).
 RETENIDA = {96: "la plantilla oficial da la b), pero el art. 78.3 de la Ley General Presupuestaria fija el límite general en el 7 % del capítulo 2 y el 10 % lo calcula sobre los créditos del artículo 23 y solo para el programa 222A del Ministerio del Interior; ninguna opción reproduce la ley."}
+# 91: la Orden HAC/557/2026 (elaboración de los PGE para 2027) define los programas finalistas (art. 6.1.1).
+NOMBRE["OPGE27"] = "Orden HAC/557/2026, por la que se dictan las normas para la elaboración de los Presupuestos Generales del Estado para 2027"
+LEY[91] = [("OPGE27", "a6", [3, 5], "artículo 6.1.1", ["Los programas finalistas son aquellos a los que se puede asignar objetivos cuantificables e indicadores de ejecución mensurables"])]
+SI[91] = [("objetivos cuantificables e indicadores de ejecución mensurables", "OPGE27", "a6", "Los programas finalistas son aquellos a los que se puede asignar objetivos cuantificables e indicadores de ejecución mensurables")]
 # 85: el art. tercero del RD 466/2026 recoge literal el título original del RD 577/1997 (el de la pregunta) y lo sustituye.
 LEY[85] = [("RD466_2026", "at", [0, 1, 2, 3], "Real Decreto 466/2026 · artículo tercero (modificación del Real Decreto 577/1997)", ["Real Decreto 577/1997, de 18 de abril, por el que se establece la estructura de los órganos de gobierno, administración y representación de la Mutualidad General de Funcionarios Civiles del Estado"])]
 SI[85] = [("Real Decreto 577/1997", "RD466_2026", "at", "Real Decreto 577/1997, de 18 de abril, por el que se establece la estructura de los órganos de gobierno, administración y representación de la Mutualidad General de Funcionarios Civiles del Estado")]
