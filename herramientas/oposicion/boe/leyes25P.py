@@ -284,7 +284,11 @@ LEY[103] = [("RD203", "Artículo 21", [11, 16], "artículo 21.4 e)", ["Este plaz
 SI[103] = [("Al menos de cinco años", "RD203", "Artículo 21", "Este plazo será al menos de cinco años")]
 LEY[104] = [("CONV", "a1-8", [3], "artículo 16.2", ["cuando lo soliciten al menos siete de las personas que componen la parte social o de la Administración"])]
 SI[104] = [("al menos siete", "CONV", "a1-8", "cuando lo soliciten al menos siete de las personas que componen la parte social o de la Administración")]
-SIN_LEY[105] = "PENDIENTE: la Resolución de 25 de mayo de 2010 (nóminas de los funcionarios) no está en la base consolidada del BOE; falta su texto (pedirlo al usuario)."
+# 105: la Resolución de 25-5-2010 está en el BOE (BOE-A-2010-8386, texto del diario, sin consolidar): todo cae en el bloque «preambulo».
+NOMBRE["RES2010N"] = "Resolución de 25 de mayo de 2010, de la Secretaría de Estado de Hacienda y Presupuestos (nóminas de los funcionarios)"
+LEY[105] = [("RES2010N", "preambulo", [36, 37, 38], "apartado A.2.3", ["se liquidarán por días", "En el mes de iniciación de licencias sin derecho a retribución."])]
+SI[105] = [("mes de iniciación de licencias sin derecho a retribución", "RES2010N", "preambulo", "En el mes de iniciación de licencias sin derecho a retribución."),
+           ("se liquidarán por días", "RES2010N", "preambulo", "salvo en los siguientes casos, en que se liquidarán por días")]
 
 # Tema del programa de cada pregunta: solo cuando el epígrafe la cubre sin duda (None = sin clasificar).
 TEMA = {1:"III.10", 2:"I.8", 3:"I.8", 4:"I.9", 5:"I.9", 6:"I.9", 7:"I.9", 8:None, 9:"II.1", 10:"II.4",
