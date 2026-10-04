@@ -15,7 +15,7 @@ LITERAL comprobado por programa. Se ejecutan desde esta carpeta.
 - JSON que `descargar.py` NO regenera (se hicieron a mano desde el HTML oficial; no
   borrarlos): `TUEPRE` (preámbulo del TUE), `PROT16`, `REG2024_2019`, `RIPE`
   (Reglamento interno del PE), las síntesis y glosarios de EUR-Lex (`SINT_*`,
-  `GLOS_*`) `DTC1_2004` (Declaración del TC) y `GA_*` (Portal de la Transparencia: Gobierno Abierto); `boe/eurdoc.py` convierte una página
+  `GLOS_*`) `DTC1_2004` (Declaración del TC) `GA_*` (Portal de la Transparencia: Gobierno Abierto) y `PACTO2025` (Pacto de Estado contra la violencia de género, PDF oficial); `boe/eurdoc.py` convierte una página
   sin artículos (sentencia, síntesis) en un JSON de un solo bloque «Texto».
 - `boe/boe.py`: `ley(k)`, `parrafos(k, bloque)`, `bloque(k, "Artículo 55 bis")`,
   `buscar(k, fragmento)`. Última versión de cada bloque, sin las notas del BOE.
