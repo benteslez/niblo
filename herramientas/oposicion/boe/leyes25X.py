@@ -29,7 +29,7 @@ Revisión manual (SI con dato None: no hay dato automático que discrimine):
 """
 from leyes25L import NOMBRE as _N
 
-NOMBRE = dict(_N,
+NOMBRE = dict(_N, RD466_2026="Real Decreto 466/2026, por el que se aprueba el Estatuto de MUFACE",
   CE="Constitución Española",
   LODP="Ley Orgánica 3/1981, del Defensor del Pueblo",
   LOTC="Ley Orgánica 2/1979, del Tribunal Constitucional",
@@ -345,9 +345,6 @@ SIN_LEY = {
   44: "Concepto doctrinal sobre la financiación de la Seguridad Social (función redistribuidora de los tributos, carácter finalista): "
       "no está literal en la LGSS.",
   53: "Dato de un plan (plan conjunto plurianual en materia de violencia contra las mujeres 2023-2027, acuerdo de la Conferencia Sectorial de Igualdad), no de una norma publicada en las fuentes.",
-  85: "La respuesta es la identidad (título) de la norma, no un precepto. Además, el título original del RD 577/1997 («por el que se establece la estructura "
-      "de los órganos de gobierno, administración y representación de MUFACE») fue sustituido por el RD 466/2026 («por el que se aprueba el Estatuto de MUFACE»): "
-      "el texto consolidado vigente ya no lo recoge.",
   91: "Definición de los programas finalistas de la clasificación por programas: está en la Orden anual de elaboración de los PGE, no disponible en las fuentes; pendiente de que el usuario la aporte.",
   97: "La LGP no enumera literalmente las fuentes de ingreso de las opciones (impuestos directos, cotizaciones, multas); la respuesta (los préstamos entre entidades privadas no son ingreso público) "
       "es de razonamiento, no de un precepto.",
@@ -370,5 +367,8 @@ assert sorted(TEMA) == list(range(1, 106))
 # del repaso y del examen hasta que el usuario decida (CLAUDE.md: nunca publicar una respuesta que
 # contradiga la ley).
 RETENIDA = {96: "la plantilla oficial da la b), pero el art. 78.3 de la Ley General Presupuestaria fija el límite general en el 7 % del capítulo 2 y el 10 % lo calcula sobre los créditos del artículo 23 y solo para el programa 222A del Ministerio del Interior; ninguna opción reproduce la ley."}
+# 85: el art. tercero del RD 466/2026 recoge literal el título original del RD 577/1997 (el de la pregunta) y lo sustituye.
+LEY[85] = [("RD466_2026", "at", [0, 1, 2, 3], "Real Decreto 466/2026 · artículo tercero (modificación del Real Decreto 577/1997)", ["Real Decreto 577/1997, de 18 de abril, por el que se establece la estructura de los órganos de gobierno, administración y representación de la Mutualidad General de Funcionarios Civiles del Estado"])]
+SI[85] = [("Real Decreto 577/1997", "RD466_2026", "at", "Real Decreto 577/1997, de 18 de abril, por el que se establece la estructura de los órganos de gobierno, administración y representación de la Mutualidad General de Funcionarios Civiles del Estado")]
 LEY[96] = [("LGP", "Artículo 78", [4, 5, 6], "artículo 78.3", ["el siete por ciento del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios", "hasta un máximo del 10 por ciento de los créditos del artículo 23", "del programa 222A, \"Seguridad ciudadana\", del Ministerio del Interior"])]
 assert not set(SIN_LEY) & set(LEY) and set(SIN_LEY) | set(LEY) == set(range(1, 106)), "LEY + SIN_LEY deben cubrir las 105"

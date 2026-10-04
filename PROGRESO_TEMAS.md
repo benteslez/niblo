@@ -21,7 +21,7 @@ publica en `temas/<id>.json` y se apunta en `temas/indice.json`.
       (105 PENDIENTE: Resolución de 25-5-2010 sobre nóminas; pedir al usuario).
 - [x] GACE-X 2025 (extraordinaria): 95 con texto legal, 10 sin norma literal.
       **96 RETENIDA** (la plantilla da b; el art. 78.3 LGP no casa): esperar
-      decisión del usuario. Pendientes de fuente: 31, 91, 100 (Res. 25-5-2010). X31: la ficha 1.1.2 del PE da «Tratado de Fusión, de 8 de abril de 1965 … Entró en vigor en 1967»; ninguna fuente da «1 de julio de 1967» (plantilla a): consultado al usuario.
+      decisión del usuario. X85 ya con texto legal (RD 466/2026, art. tercero). Pendientes de fuente: 31, 91, 100 (Res. 25-5-2010). X31: la ficha 1.1.2 del PE da «Tratado de Fusión, de 8 de abril de 1965 … Entró en vigor en 1967»; ninguna fuente da «1 de julio de 1967» (plantilla a): consultado al usuario.
       Sin condiciones oficiales (minutos/penalización) hasta tener su convocatoria.
 
 ## 2. Temas «Solo BOE»
@@ -41,9 +41,9 @@ Bloque III: - [x] III.8
 
 ## 3. Temas «BOE + temario» y bloque II
 
-- [ ] I.7 - [x] II.1 - [x] II.2 - [x] II.3 - [x] II.4 - [x] II.5 - [x] II.6
+- [x] I.7 - [x] II.1 - [x] II.2 - [x] II.3 - [x] II.4 - [x] II.5 - [x] II.6
 - [ ] III.4 - [ ] III.5 - [ ] III.6 - [ ] III.7 - [ ] III.9
-- [x] IV.1 - [x] IV.3 - [x] IV.7 - [x] IV.9 - [ ] V.9
+- [x] IV.1 - [x] IV.3 - [x] IV.7 - [x] IV.9 - [x] V.9
 - [ ] VI.1 - [ ] VI.2 - [ ] VI.4 - [ ] VI.5 - [ ] VI.8
 
 ## Notas
