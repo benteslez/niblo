@@ -43,7 +43,7 @@ Bloque III: - [x] III.8
 
 - [ ] I.7 - [x] II.1 - [x] II.2 - [x] II.3 - [x] II.4 - [x] II.5 - [x] II.6
 - [ ] III.4 - [ ] III.5 - [ ] III.6 - [ ] III.7 - [ ] III.9
-- [x] IV.1 - [ ] IV.3 - [ ] IV.7 - [ ] IV.9 - [ ] V.9
+- [x] IV.1 - [x] IV.3 - [x] IV.7 - [x] IV.9 - [ ] V.9
 - [ ] VI.1 - [ ] VI.2 - [ ] VI.4 - [ ] VI.5 - [ ] VI.8
 
 ## Notas
