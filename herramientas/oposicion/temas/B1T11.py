@@ -338,8 +338,8 @@ T.ap("s14", "III.6 Junta de Gobierno Local, Tenientes de Alcalde y gestión desc
 """, 2)
 
 T.ap("s15", "III.7 Competencias propias (art. 25)", f"""
-{unidad("7.1 Las materias de competencia propia (art. 25.1 a 3)",
-  lit(L, "Artículo 25", ["ejercerá en todo caso como competencias propias", "Policía local, protección civil, prevención y extinción de incendios", "Información y promoción de la actividad turística de interés y ámbito local", "Protección de la salubridad pública", "Actuaciones en la promoción de la igualdad entre hombres y mujeres así como contra la violencia de género", "se determinarán por Ley"], solo=list(range(1, 21))),
+{unidad("7.1 Las materias de competencia propia (art. 25.1 a 5)",
+  lit(L, "Artículo 25", ["ejercerá en todo caso como competencias propias", "Policía local, protección civil, prevención y extinción de incendios", "Información y promoción de la actividad turística de interés y ámbito local", "Protección de la salubridad pública", "Actuaciones en la promoción de la igualdad entre hombres y mujeres así como contra la violencia de género", "se determinarán por Ley"], solo=list(range(1, 24))),
   fichab("Materias en que el municipio tiene siempre competencias propias",
          c(L, 'Artículo 25', 'El Municipio'),
          ["Las ejerce «en los términos de la legislación del Estado y de las Comunidades Autónomas» (25.2)", "La ley que las determine evalúa la conveniencia conforme a descentralización, eficiencia, estabilidad y sostenibilidad financiera (25.3)", "Memoria económica y garantía de que no hay atribución simultánea a otra Administración (25.4 y 5)"],
@@ -369,7 +369,7 @@ T.ap("s16", "III.8 Servicios mínimos obligatorios (art. 26)", f"""
 
 T.ap("s17", "III.9 Competencias delegadas (art. 27)", f"""
 {unidad("9.1 La delegación de competencias en los municipios (art. 27)",
-  lit(L, "Artículo 27", ["El Estado y las Comunidades Autónomas", "no podrá ser inferior a cinco años", "requerirá su aceptación por el Municipio interesado", "siendo nula sin dicha dotación", "El acuerdo de renuncia se adoptará por el Pleno"], solo=[1, 2, 3, 4, 23, 24, 25, 27, 28]),
+  lit(L, "Artículo 27", ["El Estado y las Comunidades Autónomas", "no podrá ser inferior a cinco años", "requerirá su aceptación por el Municipio interesado", "siendo nula sin dicha dotación", "El acuerdo de renuncia se adoptará por el Pleno"], solo=[1, 2, 3, 4] + list(range(7, 26)) + [27, 28]),
   fichab("Ejercicio por el municipio de competencias del Estado o de la Comunidad Autónoma",
          f"Delegan {c(L, 'Artículo 27', 'El Estado y las Comunidades Autónomas')}; acepta el municipio",
          ["Debe mejorar la eficiencia, eliminar duplicidades y ajustarse a la estabilidad presupuestaria", "Fija alcance, contenido, condiciones, duración, control de eficiencia y medios; memoria económica", "La delegante dirige y controla: instrucciones, información, comisionados, requerimientos; puede revocar o ejecutar por sí misma (27.4)", "Lista orientativa de competencias delegables en el 27.3 (p. ej., promoción y gestión turística)"],
