@@ -45,7 +45,7 @@ def lit_pe(url, art, resaltar, rubrica):
     return f"> [[PE|{url}]]\n" + lit("RIPE", art, resaltar, titulo=f"{art} del Reglamento interno del Parlamento Europeo. {rubrica} · texto oficial publicado por el Parlamento Europeo (10.ª legislatura, versión de mayo de 2026); norma interna de la Cámara, no publicada en el BOE")
 
 T = Tema("B2T03",
-  "Cuatro preguntas: I. Qué es y cómo funciona el Parlamento Europeo (TUE, art. 14; TFUE, arts. 223 a 234) · II. Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea (TUE, art. 19; TFUE, arts. 251 a 281; Estatuto del TJUE) · III. Quién controla las cuentas de la Unión: el Tribunal de Cuentas (TFUE, arts. 285 a 287) · IV. Quién dirige la política monetaria: el Banco Central Europeo (TFUE, arts. 282 a 284). Cada artículo: texto literal de EUR-Lex y ficha.",
+  "Cuatro preguntas: I. Qué es y cómo funciona el Parlamento Europeo (TUE, art. 14; TFUE, arts. 223 a 234; Reglamento interno del Parlamento Europeo, arts. 15 y 16) · II. Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea (TUE, art. 19; TFUE, arts. 251 a 281; Estatuto del TJUE; Reglamento (UE, Euratom) 2024/2019; Decisión 2013/336/UE) · III. Quién controla las cuentas de la Unión: el Tribunal de Cuentas (TFUE, arts. 285 a 287) · IV. Quién dirige la política monetaria: el Banco Central Europeo (TFUE, arts. 282 a 284). Cada artículo: texto literal de EUR-Lex y ficha.",
   ["Parlamento Europeo", "TUE art. 14", "Moción de censura", "Defensor del Pueblo Europeo", "Derecho de petición", "TJUE", "TUE art. 19", "Abogados generales", "Tribunal General", "Comité del art. 255", "Recurso por incumplimiento", "Recurso de anulación", "Cuestión prejudicial", "Tribunal de Cuentas", "BCE", "Eurosistema"])
 
 # =============================================================================
@@ -75,7 +75,7 @@ El epígrafe nombra **cuatro instituciones** de la Unión. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué es y cómo funciona el Parlamento Europeo? (TUE, art. 14; TFUE, arts. 223 a 234)", donde(
+T.ap("bI", "I. ¿Qué es y cómo funciona el Parlamento Europeo? (TUE, art. 14; TFUE, arts. 223 a 234; Reglamento interno, arts. 15 y 16)", donde(
   "Primera pregunta del tema. El Parlamento Europeo es la institución de **los ciudadanos de la Unión**: sus diputados se eligen por sufragio universal directo. Hay que saber qué funciones tiene, cómo se compone, qué poderes de impulso y control ejerce y cómo decide.",
   ["1 Funciones, composición, elección y Presidente (TUE, art. 14; TFUE, art. 223; Reglamento interno, arts. 15 y 16)", "2 Poderes de impulso y de control: partidos, iniciativa, investigación, peticiones y Defensor del Pueblo (TFUE, arts. 224 a 228)", "3 Funcionamiento y moción de censura (TFUE, arts. 229 a 234)"]))
 
@@ -225,11 +225,11 @@ T.ap("s3", "I.3 Funcionamiento y moción de censura (TFUE, arts. 229 a 234)", f"
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea? (TUE, art. 19; TFUE, arts. 251 a 281)", donde(
+T.ap("bII", "II. ¿Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea? (TUE, art. 19; TFUE, arts. 251 a 281; Estatuto del TJUE; Reglamento (UE, Euratom) 2024/2019; Decisión 2013/336/UE)", donde(
   "Segunda pregunta. El TJUE es la institución **jurisdiccional** de la Unión. Primero, **quiénes lo forman** (Tribunal de Justicia, Tribunal General y tribunales especializados); después, **qué recursos** conoce y **con qué límites**.",
-  ["1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255; Estatuto)", "2 Tribunal General y tribunales especializados (TFUE, arts. 256 y 257; Estatuto)", "3 Recurso por incumplimiento (arts. 258 a 260)", "4 Control de legalidad: anulación, omisión y excepción de ilegalidad (arts. 263 a 266 y 277)", "5 Cuestión prejudicial (art. 267)", "6 Otras competencias y límites (arts. 261, 262, 268 a 276)", "7 Disposiciones comunes y Estatuto (arts. 278 a 281; Estatuto, art. 20)"]))
+  ["1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255; Estatuto; Decisión 2013/336/UE)", "2 Tribunal General y tribunales especializados (TFUE, arts. 256 y 257; Estatuto; Reglamento (UE, Euratom) 2024/2019)", "3 Recurso por incumplimiento (arts. 258 a 260)", "4 Control de legalidad: anulación, omisión y excepción de ilegalidad (arts. 263 a 266 y 277)", "5 Cuestión prejudicial (art. 267)", "6 Otras competencias y límites (arts. 261, 262, 268 a 276)", "7 Disposiciones comunes y Estatuto (arts. 278 a 281; Estatuto, art. 20)"]))
 
-T.ap("s4", "II.1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255; Estatuto)", f"""
+T.ap("s4", "II.1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255; Estatuto; Decisión 2013/336/UE)", f"""
 {unidad("1.1 Qué comprende y para qué sirve (TUE, art. 19.1)",
   lit("TUE", "Artículo 19", ["comprenderá el Tribunal de Justicia, el Tribunal General y los tribunales especializados", "Garantizará el respeto del Derecho en la interpretación y aplicación de los Tratados", "tutela judicial efectiva"], solo=[1, 2]),
   fichab("La institución jurisdiccional de la Unión",
@@ -301,7 +301,7 @@ T.ap("s4", "II.1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255;
          "La autorización la da el **Consejo** por **mayoría simple**, y solo con carácter **excepcional**; nunca para funciones **políticas o administrativas**."))}
 """, 2)
 
-T.ap("s5", "II.2 Tribunal General y tribunales especializados (TFUE, arts. 256 y 257; Estatuto, arts. 50 ter y 56)", f"""
+T.ap("s5", "II.2 Tribunal General y tribunales especializados (TFUE, arts. 256 y 257; Estatuto, arts. 50 ter y 56; Reglamento (UE, Euratom) 2024/2019, art. 4)", f"""
 {unidad("2.1 Competencias del Tribunal General (art. 256)",
   lit("TFUE", "Artículo 256", ["en primera instancia de los recursos contemplados en los artículos 263, 265, 268, 270 y 272", "limitado a las cuestiones de Derecho", "contra las resoluciones de los tribunales especializados", "en materias específicas determinadas por el Estatuto", "podrá remitir el asunto ante el Tribunal de Justicia"]),
   fichab("Qué juzga el Tribunal General y qué recurso cabe",

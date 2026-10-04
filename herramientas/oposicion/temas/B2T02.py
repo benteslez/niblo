@@ -27,7 +27,7 @@ def frag(t): return t + " (fragmento)"
 
 
 T = Tema("B2T02",
-  "Cinco preguntas: I. Qué es el Consejo Europeo y qué hace (TUE, arts. 13, 10.2 y 15; TFUE, arts. 235 y 236) · II. Qué es el Consejo y cómo decide (TUE, art. 16; TFUE, arts. 237 a 243) · III. Qué es la Comisión y cómo funciona (TUE, arts. 17 y 18; TFUE, arts. 244 a 250) · IV. Cómo se decide: el procedimiento legislativo (TFUE, arts. 289 y 293 a 297; TUE, art. 11.4) · V. Cómo participan los Estados miembros en cada fase (TUE, art. 12; TFUE, art. 291; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997). Cada artículo: texto literal (DOUE o BOE) y ficha.",
+  "Cinco preguntas: I. Qué es el Consejo Europeo y qué hace (TUE, arts. 13, 10.2 y 15; TFUE, arts. 235 y 236) · II. Qué es el Consejo y cómo decide (TUE, art. 16; TFUE, arts. 237 a 243; Decisiones 2009/878/UE y 2010/594/UE) · III. Qué es la Comisión y cómo funciona (TUE, arts. 17 y 18; TFUE, arts. 244 a 250; Decisión 2013/272/UE) · IV. Cómo se decide: el procedimiento legislativo (TFUE, arts. 289 y 293 a 297; TUE, art. 11.4) · V. Cómo participan los Estados miembros en cada fase (TUE, art. 12; TFUE, art. 291; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997; Acuerdos de la CARUE de 2004). Cada artículo: texto literal (DOUE o BOE) y ficha.",
   ["Consejo Europeo", "Presidente del Consejo Europeo", "Consejo", "Mayoría cualificada", "COREPER", "Formaciones del Consejo", "Comisión Europea", "Iniciativa legislativa", "Moción de censura", "Procedimiento legislativo ordinario", "Comité de Conciliación", "Art. 294 TFUE", "Parlamentos nacionales", "Subsidiariedad", "Comisión Mixta para la UE", "CARUE"])
 
 # =============================================================================
@@ -153,9 +153,9 @@ T.ap("s4", "I.4 Funcionamiento: votaciones y decisiones sobre el Consejo (TFUE, 
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Qué es el Consejo y cómo decide? (TUE, art. 16; TFUE, arts. 237 a 243)", donde(
+T.ap("bII", "II. ¿Qué es el Consejo y cómo decide? (TUE, art. 16; TFUE, arts. 237 a 243; Decisiones 2009/878/UE y 2010/594/UE)", donde(
   "Segunda pregunta. El **Consejo** (los ministros de los Estados) es, con el Parlamento Europeo, **colegislador** y autoridad **presupuestaria**. Hay que saber cómo se compone, en qué **formaciones** se reúne, quién prepara sus trabajos (**COREPER**) y, sobre todo, con qué **mayorías** decide.",
-  ["1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 a 5)", "2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9)", "3 Funcionamiento y mayorías (TFUE, arts. 237 a 243)"]))
+  ["1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 a 5)", "2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9; Decisiones 2009/878/UE y 2010/594/UE)", "3 Funcionamiento y mayorías (TFUE, arts. 237 a 243)"]))
 
 T.ap("s5", "II.1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 a 5)", f"""
 {unidad("1.1 Funciones y composición (art. 16.1 y 2)",
@@ -195,7 +195,7 @@ FORM_2010 = f"""> [[DOUE|{D2010}]]
 > 2) El punto 10 «Educación, Juventud y Cultura» se sustituye por el texto siguiente: «10. Educación, Juventud, Cultura y Deporte».
 > Las notas a pie de página permanecen sin cambios."""
 
-T.ap("s6", "II.2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9)", f"""
+T.ap("s6", "II.2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9; Decisiones 2009/878/UE y 2010/594/UE)", f"""
 {unidad("2.1 Formaciones del Consejo (art. 16.6)",
   U(16, ["El Consejo se reunirá en diferentes formaciones", "El Consejo de Asuntos Generales velará por la coherencia de los trabajos de las diferentes formaciones del Consejo", "Preparará las reuniones del Consejo Europeo", "El Consejo de Asuntos Exteriores elaborará la acción exterior de la Unión"], solo=[8, 9, 10], titulo=frag("Artículo 16 (TUE)")),
   FORM_2009, FORM_2010,
@@ -270,7 +270,7 @@ T.ap("s7", "II.3 Funcionamiento y mayorías del Consejo (TFUE, arts. 237 a 243)"
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Qué es la Comisión y cómo funciona? (TUE, arts. 17 y 18; TFUE, arts. 244 a 250)", donde(
+T.ap("bIII", "III. ¿Qué es la Comisión y cómo funciona? (TUE, arts. 17 y 18; TFUE, arts. 244 a 250; Decisión 2013/272/UE)", donde(
   "Tercera pregunta. La **Comisión** promueve el **interés general** de la Unión, tiene casi en exclusiva la **iniciativa legislativa** y actúa con **plena independencia** de los Gobiernos. Responde ante el **Parlamento Europeo**.",
   ["1 Funciones e iniciativa legislativa (TUE, art. 17.1 y 2)", "2 Mandato, composición e independencia (TUE, art. 17.3 a 5; Decisión 2013/272/UE; TFUE, arts. 244 y 245)", "3 Presidente, nombramiento y responsabilidad (TUE, arts. 17.6 a 8 y 18; TFUE, art. 248)", "4 Fin del mandato, cese y funcionamiento (TFUE, arts. 246, 247, 249 y 250)"]))
 
@@ -506,7 +506,7 @@ T.ap("s15", "IV.4 Cooperación, motivación, firma y publicación (TFUE, arts. 2
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Cómo participan los Estados miembros en cada fase? (TUE, art. 12; TFUE, art. 291; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997)", donde(
+T.ap("bV", "V. ¿Cómo participan los Estados miembros en cada fase? (TUE, art. 12; TFUE, art. 291; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997; Acuerdos de la CARUE de 2004)", donde(
   "Quinta pregunta. Los Estados no están fuera del proceso: deciden en el **Consejo Europeo** y en el **Consejo**; sus **Parlamentos nacionales** reciben los proyectos y controlan la **subsidiariedad**; y, al final, los Estados **ejecutan** el Derecho de la Unión. En España, esa participación se articula en las **Cortes** (Comisión Mixta para la Unión Europea) y con las **Comunidades Autónomas** (CARUE).",
   ["1 Las fases del proceso y la ejecución por los Estados (esquema; TFUE, art. 291)", "2 Los Parlamentos nacionales (TUE, art. 12; Protocolos n.º 1 y 2)", "3 España: las Cortes Generales y la Comisión Mixta para la Unión Europea (Ley 8/1994)", "4 España: las Comunidades Autónomas (Ley 2/1997; Acuerdos de la CARUE de 2004)"]))
 
@@ -611,6 +611,7 @@ T.ap("s18", "V.3 España: las Cortes Generales y la Comisión Mixta para la Uni�
          ["Recurso de **anulación** ante el TJUE por infracción de la **subsidiariedad** (art. 8 del Protocolo n.º 2: → V.2.4)", f"Oposición a que el Consejo pase de unanimidad a **mayoría cualificada** o de procedimiento especial a **ordinario** (art. 48.7 TUE: {cU(48, 'En caso de oposición de un Parlamento nacional notificada en un plazo de seis meses')}, no se adopta la decisión)"],
          "Solicitud del recurso: **seis semanas** desde la publicación oficial del acto",
          "El Gobierno puede **descartar** el recurso **motivadamente** y lo justifica compareciendo ante la Comisión Mixta si esta lo pide."))}
+
 {unidad("3.6 Comparecencias ante la Comisión Mixta (artículos 8 y 9 «nuevos»)",
   lit("L8_1994", "a8-2", ["antes de la celebración de la reunión del Consejo"], titulo="Artículo 8 (nuevo) del capítulo tercero (Ley 8/1994)"),
   lit("L8_1994", "a9-2", ["Al final de cada presidencia semestral del Consejo de la Unión Europea"], titulo="Artículo 9 (nuevo) del capítulo tercero (Ley 8/1994)"),
@@ -642,7 +643,7 @@ T.ap("s19", "V.4 España: las Comunidades Autónomas (Ley 2/1997; Acuerdos de la
          ["Un miembro **con rango de Consejero** (o de un Consejo de Gobierno autonómico) que **representa al conjunto** de las Comunidades Autónomas", "Lo designa el **Pleno** de la **Conferencia Sectorial** correspondiente (apartado 3.1)"],
          ["Se integra en la **delegación española** como miembro de pleno derecho", "Asesora al **jefe de delegación** sobre la **posición común** autonómica", "Puede pedir la palabra si hay posición común; el jefe de delegación se la cede si lo estima oportuno"],
          "—",
-         "La **responsabilidad última** de la negociación es siempre del **jefe de delegación** (Estado). Texto publicado en el BOE (resolución de 28-2-2005, no consolidado); el propio Acuerdo previó su revisión tras aplicarse en 2005 (apartado 7.2)."))}
+         "La **responsabilidad última** de la negociación es siempre del **jefe de delegación** (Estado). Texto consolidado del BOE: los apartados 2.1 (formaciones) y 3.1 se modificaron por Acuerdos de 2 de julio de 2009 y de 7 de febrero de 2011, publicados por la Resolución de 22-7-2011 (BOE-A-2011-13747); el propio Acuerdo previó su revisión tras aplicarse en 2005 (apartado 7.2)."))}
 
 {resumen([
   "Los Estados están en todas las fases: **Consejo Europeo** y **Consejo** (decisión), **Parlamentos nacionales** (control de la propuesta) y **ejecución** (TFUE 291).",
