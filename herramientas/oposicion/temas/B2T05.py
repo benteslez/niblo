@@ -363,7 +363,7 @@ T.ap("s14", "V.5 El Mecanismo de Recuperación y Resiliencia y Horizonte Europa 
   fichab("Instrumento de ayuda financiera a las reformas e inversiones de los Estados miembros", "Los Estados miembros, según sus **planes de recuperación y resiliencia**",
          ["**Seis pilares**: transición ecológica; transformación digital; crecimiento inteligente, sostenible e integrador; cohesión social y territorial; salud y resiliencia; políticas para la próxima generación", "Objetivo general: fomentar la **cohesión económica, social y territorial**, en el contexto de la crisis de la **COVID-19**", "Objetivo específico: ayuda financiera para alcanzar los **hitos y objetivos** de reformas e inversiones"],
          "—",
-         "**Seis** pilares. Se financia con los empréstitos excepcionales de la Decisión de recursos propios (→ II.2.3)."))}
+         f"**Seis** pilares. Su dinero viene del Instrumento de Recuperación de la UE: {c('MRR', 'Artículo 6', 'Las medidas contempladas en el artículo 1 del Reglamento (UE) 2020/2094 se aplicarán en el marco del Mecanismo')} (art. 6.1), y ese Instrumento se financia con los empréstitos excepcionales de la Decisión de recursos propios, {c('DRP', 'Artículo 5', 'mediante el Reglamento del Consejo por el que se establece un Instrumento de Recuperación de la Unión Europea')} (art. 5.1, → II.2.3)."))}
 
 {unidad("5.2 Horizonte Europa (Reglamento (UE) 2021/695, art. 1.1)",
   lit("HEUR", "Artículo 1", ["Programa Marco de Investigación e Innovación «Horizonte Europa»", "marco financiero plurianual 2021-2027"], solo=[1, 2], titulo="Artículo 1.1 (Reglamento (UE) 2021/695) · Objeto"),
@@ -714,7 +714,7 @@ for q_, a_, cat in [
 
 # Glosario
 T.glos("Recursos propios", "Ingresos que financian íntegramente el presupuesto de la Unión (art. 311 TFUE); categorías fijadas por la Decisión 2020/2053.", "s3", "Recursos propios")
-T.glos("Recursos propios tradicionales", "Derechos de aduana, exacciones y cotizaciones en los intercambios con terceros países (Decisión 2020/2053, art. 2.1 a); los Estados retienen el 25 % como gastos de recaudación.", "s4", "Recursos propios")
+T.glos("Recursos propios tradicionales", "Exacciones y derechos de aduana en los intercambios comerciales con terceros países, y cotizaciones y otros derechos de la organización común de mercados del azúcar (Decisión 2020/2053, art. 2.1 a); los Estados retienen el 25 % como gastos de recaudación.", "s4", "Recursos propios")
 T.glos("Principio de universalidad", "Los ingresos se utilizan indistintamente para financiar todos los gastos del presupuesto (Decisión 2020/2053, art. 7).", "s4", "Recursos propios")
 T.glos("Marco financiero plurianual (MFP)", "Reglamento del Consejo que fija, para un mínimo de cinco años, los límites máximos anuales de créditos para compromisos y para pagos (art. 312 TFUE). Vigente: 2021-2027.", "s5", "Marco financiero plurianual")
 T.glos("Créditos de compromiso y de pago", "Límites del MFP por categoría de gastos (compromisos) y global (pagos) (art. 312.3 TFUE).", "s5", "Marco financiero plurianual")

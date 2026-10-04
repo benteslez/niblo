@@ -127,14 +127,6 @@ Los Tratados no tienen un artículo que enumere «las fuentes». La clasificaci�
 T.ap("s2", "I.2 Los Tratados y sus protocolos: el Derecho originario (art. 51 TUE)", f"""
 El Derecho originario (o primario) son los **Tratados**. El art. 1 TUE (tema II.1) dice que la Unión se fundamenta en el TUE y en el TFUE y que {c('TUE', 'Artículo 1', 'Ambos Tratados tienen el mismo valor jurídico')}. El art. 51 TUE incluye en ellos sus protocolos y anexos.
 
-{unidad("2.1 Protocolos y anexos (art. 51 TUE)",
-  lit("TUE", "Artículo 51", ["forman parte integrante de los mismos"]),
-  fichab("Valor de los protocolos y anexos de los Tratados",
-         "—",
-         "Se integran en los Tratados: tienen su mismo rango (Derecho originario)",
-         "—",
-         "Los **Protocolos** (por ejemplo, el del Estatuto del TJUE o el de los criterios de convergencia) **son Tratado**: no son Derecho derivado."))}
-
 {doc("SINT_PRIMARIO", "Síntesis de EUR-Lex «El Derecho primario de la Unión Europea» (última actualización 12.10.2022) · fuente oficial, no es texto legal", [
   "Es la fuente suprema del Derecho de la Unión Europea (UE). Proviene principalmente de los tratados constitutivos, en particular, el Tratado de Roma (que se convirtió en el Tratado de Funcionamiento de la Unión Europea) y el Tratado de Maastricht (también denominado Tratado de la Unión Europea).",
   "El Derecho primario, también conocido como fuentes primarias, se deriva de los siguientes textos de la UE:",
@@ -144,6 +136,14 @@ El Derecho originario (o primario) son los **Tratados**. El art. 1 TUE (tema II.
   "Los tratados constitutivos son: el Tratado de París constitutivo de la Comunidad Europea del Carbón y del Acero (1951); el Tratado de Roma constitutivo de la Comunidad Económica Europea (1957); el Tratado Euratom (1957); el Tratado de Maastricht (1992).",
   "Los tratados modificativos son: el Acta Única Europea (1986); el Tratado de Ámsterdam (1997); el Tratado de Niza (2001); el Tratado de Lisboa (2007)."],
   ["fuente suprema", "Tratado de Maastricht (también denominado Tratado de la Unión Europea)"])}
+
+{unidad("2.1 Protocolos y anexos (art. 51 TUE)",
+  lit("TUE", "Artículo 51", ["forman parte integrante de los mismos"]),
+  fichab("Valor de los protocolos y anexos de los Tratados",
+         "—",
+         "Se integran en los Tratados: tienen su mismo rango (Derecho originario)",
+         "—",
+         "Los **Protocolos** (por ejemplo, el del Estatuto del TJUE o el de los criterios de convergencia) **son Tratado**: no son Derecho derivado."))}
 
 !> El **TUE** es **Derecho primario**: cayó en 2025 (→ Cierre 1). La historia de cada Tratado se estudia en el tema II.1.
 """, 2)
@@ -205,6 +205,13 @@ T.ap("bII", "II. ¿Qué es el Derecho derivado? Reglamentos, directivas y decisi
   ["1 Los cinco actos del art. 288 TFUE", "2 Actos legislativos, delegados y de ejecución (arts. 289 a 291)", "3 Las recomendaciones (art. 292) y cuadro de los actos"]))
 
 T.ap("s5", "II.1 Los cinco actos del art. 288 TFUE", f"""
+{doc("SINT_DERIVADO", "Síntesis de EUR-Lex «El Derecho derivado de la Unión Europea» (última actualización 2.12.2021) · fuente oficial, no es texto legal", [
+  "El Derecho derivado de la Unión Europea (UE) es el corpus jurídico que se basa en los Tratados de la UE.",
+  "Los reglamentos, las directivas y las decisiones son actos jurídicos vinculantes.",
+  "Una decisión puede dirigirse a uno o varios destinatarios concretos (Estados miembros de la UE, personas físicas o jurídicas). Al mismo tiempo, existen decisiones sin destinatario específico, en particular en el ámbito de la política exterior y de seguridad común.",
+  "Las recomendaciones y los dictámenes son actos jurídicos no legislativos no vinculantes."],
+  ["se basa en los Tratados", "actos jurídicos vinculantes", "no vinculantes"])}
+
 {unidad("1.1 La lista (art. 288, párrafo primero)",
   lit("TFUE", "Artículo 288", ["reglamentos, directivas, decisiones, recomendaciones y dictámenes"], solo=[1]),
   fichab("Los actos jurídicos de la Unión",
@@ -217,7 +224,7 @@ T.ap("s5", "II.1 Los cinco actos del art. 288 TFUE", f"""
   lit("TFUE", "Artículo 288", ["alcance general", "obligatorio en todos sus elementos", "directamente aplicable en cada Estado miembro"], solo=[2]),
   fichab("Acto de alcance general, obligatorio en todo y directamente aplicable",
          "Destinatarios: todos (alcance general)",
-         ["**Alcance general**", "**Obligatorio en todos sus elementos**", "**Directamente aplicable** en cada Estado miembro: no necesita norma nacional de transposición"],
+         ["**Alcance general**", "**Obligatorio en todos sus elementos**", "**Directamente aplicable** en cada Estado miembro"],
          "—",
          "Tres notas: alcance **general** + obligatorio en **todos sus elementos** + **directamente aplicable**. Si la opción dice «obliga en cuanto al resultado», es la directiva."))}
 
@@ -235,7 +242,7 @@ T.ap("s5", "II.1 Los cinco actos del art. 288 TFUE", f"""
          "Si designa destinatarios, solo ellos; si no, es obligatoria en general",
          "Obligatoria en todos sus elementos",
          "—",
-         "Pregunta oficial de 2025 (→ Cierre 1): «Cuando designe destinatarios, **sólo** será obligatoria para éstos». No tiene «alcance general» ni es «directamente aplicable» según el texto: eso es del reglamento."))}
+         "Pregunta oficial de 2025 (→ Cierre 1): «Cuando designe destinatarios, **sólo** será obligatoria para éstos». El art. 288 no le atribuye «alcance general» ni la declara «directamente aplicable»: eso lo dice del reglamento."))}
 
 {unidad("1.5 Recomendaciones y dictámenes (art. 288, párrafo quinto)",
   lit("TFUE", "Artículo 288", ["no serán vinculantes"], solo=[5]),
@@ -244,13 +251,6 @@ T.ap("s5", "II.1 Los cinco actos del art. 288 TFUE", f"""
          "Recomendaciones y dictámenes: **no vinculantes**",
          "—",
          "Los dos son actos del art. 288, pero **no vinculan**. «No será vinculante» es un distractor típico para la decisión."))}
-
-{doc("SINT_DERIVADO", "Síntesis de EUR-Lex «El Derecho derivado de la Unión Europea» (última actualización 2.12.2021) · fuente oficial, no es texto legal", [
-  "El Derecho derivado de la Unión Europea (UE) es el corpus jurídico que se basa en los Tratados de la UE.",
-  "Los reglamentos, las directivas y las decisiones son actos jurídicos vinculantes.",
-  "Una decisión puede dirigirse a uno o varios destinatarios concretos (Estados miembros de la UE, personas físicas o jurídicas). Al mismo tiempo, existen decisiones sin destinatario específico, en particular en el ámbito de la política exterior y de seguridad común.",
-  "Las recomendaciones y los dictámenes son actos jurídicos no legislativos no vinculantes."],
-  ["se basa en los Tratados", "actos jurídicos vinculantes", "no vinculantes"])}
 """, 2)
 
 T.ap("s6", "II.2 Actos legislativos, delegados y de ejecución (arts. 289 a 291 TFUE)", f"""
@@ -319,33 +319,31 @@ T.ap("bIII", "III. ¿Qué otras fuentes hay? Principios generales, acuerdos inte
 T.ap("s8", "III.1 Los principios generales y los derechos fundamentales (art. 6.3 TUE)", f"""
 {unidad("1.1 Derechos fundamentales como principios generales (art. 6.3 TUE)",
   lit("TUE", "Artículo 6", ["tradiciones constitucionales comunes a los Estados miembros", "como principios generales"], solo=[5]),
+  doc("SINT_FUENTES", "Síntesis de EUR-Lex «Las fuentes del Derecho de la Unión Europea» · fuente oficial, no es texto legal", [
+  "Estos pueden corresponder con fuentes de Derecho no escritas desarrolladas por la jurisprudencia del Tribunal de Justicia de la Unión Europea (TJUE).",
+  "Los principios generales del Derecho de la UE también pueden ser el resultado de las tradiciones constitucionales comunes a los Estados miembros."],
+  ["fuentes de Derecho no escritas"]),
   fichab("Los derechos fundamentales forman parte del Derecho de la Unión como principios generales",
          "—",
          ["Los derechos que garantiza el **Convenio Europeo** (CEDH)", "Los que son fruto de las **tradiciones constitucionales comunes** a los Estados miembros"],
          "—",
          "Dos orígenes: **Convenio Europeo** y **tradiciones constitucionales comunes**. Entran «**como principios generales**», no como Derecho derivado."))}
-
-{doc("SINT_FUENTES", "Síntesis de EUR-Lex «Las fuentes del Derecho de la Unión Europea» · fuente oficial, no es texto legal", [
-  "Estos pueden corresponder con fuentes de Derecho no escritas desarrolladas por la jurisprudencia del Tribunal de Justicia de la Unión Europea (TJUE).",
-  "Los principios generales del Derecho de la UE también pueden ser el resultado de las tradiciones constitucionales comunes a los Estados miembros."],
-  ["fuentes de Derecho no escritas"])}
 """, 2)
 
 T.ap("s9", "III.2 Los acuerdos internacionales de la Unión (art. 216 TFUE)", f"""
 {unidad("2.1 Cuándo celebra acuerdos la Unión y a quién vinculan (art. 216)",
   lit("TFUE", "Artículo 216", ["cuando así lo prevean los Tratados", "vincularán a las instituciones de la Unión y a los Estados miembros"]),
+  doc("SINT_PRIMARIO", "Síntesis de EUR-Lex «El Derecho primario de la Unión Europea» · fuente oficial, no es texto legal", [
+  "Los acuerdos internacionales con países no pertenecientes a la UE o con organizaciones internacionales son también una parte integral del Derecho de la UE. Estos acuerdos son independientes del Derecho primario y del Derecho derivado, además de conformar una categoría sui generis (es decir, una categoría propia y única).",
+  "De acuerdo con la sentencia del TJUE en el asunto Demirel contra Stadt Schwäbisch Gmünd, los acuerdos internacionales pueden tener efecto directo y su fuerza jurídica es superior a la del Derecho derivado, que, por lo tanto, debe cumplirlas."],
+  ["sui generis", "superior a la del Derecho derivado"]),
   fichab("Acuerdos de la Unión con terceros países u organizaciones internacionales",
          "La Unión (procedimiento de negociación y celebración: art. 218 TFUE, tema II.2)",
          ["Cuando lo prevean los Tratados", "Cuando sea necesario para alcanzar, en el contexto de las políticas de la Unión, un objetivo de los Tratados", "Cuando esté previsto en un acto jurídicamente vinculante de la Unión", "Cuando pueda afectar a normas comunes o alterar su alcance"],
          "—",
          "Vinculan **a las instituciones de la Unión y a los Estados miembros** (216.2)."))}
 
-{doc("SINT_PRIMARIO", "Síntesis de EUR-Lex «El Derecho primario de la Unión Europea» · fuente oficial, no es texto legal", [
-  "Los acuerdos internacionales con países no pertenecientes a la UE o con organizaciones internacionales son también una parte integral del Derecho de la UE. Estos acuerdos son independientes del Derecho primario y del Derecho derivado, además de conformar una categoría sui generis (es decir, una categoría propia y única).",
-  "De acuerdo con la sentencia del TJUE en el asunto Demirel contra Stadt Schwäbisch Gmünd, los acuerdos internacionales pueden tener efecto directo y su fuerza jurídica es superior a la del Derecho derivado, que, por lo tanto, debe cumplirlas."],
-  ["sui generis", "superior a la del Derecho derivado"])}
-
-?> Un acuerdo internacional que la Unión quiera celebrar puede someterse al **dictamen del Tribunal de Justicia**: {c('TFUE', 'Artículo 218', 'En caso de dictamen negativo del Tribunal de Justicia, el acuerdo previsto no podrá entrar en vigor, salvo modificación de éste o revisión de los Tratados')} (art. 218.11 TFUE). Por eso los acuerdos están **por debajo de los Tratados** y **por encima del Derecho derivado**.
+?> Un acuerdo internacional que la Unión quiera celebrar puede someterse al **dictamen del Tribunal de Justicia**: {c('TFUE', 'Artículo 218', 'En caso de dictamen negativo del Tribunal de Justicia, el acuerdo previsto no podrá entrar en vigor, salvo modificación de éste o revisión de los Tratados')} (art. 218.11 TFUE). Por eso los acuerdos están **por debajo de los Tratados**; y, según la síntesis de EUR-Lex citada arriba, su fuerza jurídica es **superior a la del Derecho derivado**.
 """, 2)
 
 T.ap("s10", "III.3 Jurisprudencia del TJUE y actos atípicos (síntesis de EUR-Lex)", f"""
@@ -380,26 +378,23 @@ T.ap("s11", "IV.1 La primacía (Declaración n.º 17; Costa/ENEL; Simmenthal)", 
 {unidad("1.1 La Declaración n.º 17, relativa a la primacía (Acta Final del Tratado de Lisboa)",
   lit("DECL17", T_, ["priman sobre el Derecho de los Estados miembros", "Costa/ENEL, 15 de julio de 1964, asunto 6/64", "el Tratado no contenía mención alguna a la primacía, y todavía hoy sigue sin contenerla"], solo=[2, 3, 4, 5, 6],
       titulo="Declaración n.º 17, relativa a la primacía (aneja al Acta Final de la Conferencia intergubernamental que adoptó el Tratado de Lisboa; DO C 202 de 7-6-2016, p. 344)"),
+  doc("STJ_COSTA", "Sentencia del Tribunal de Justicia de 15 de julio de 1964, Costa/ENEL, asunto 6/64 (EUR-Lex; fundamentos de Derecho) · jurisprudencia, no es texto legal", [
+  "Considerando que, a diferencia de los Tratados internacionales ordinarios, el Tratado de la CEE creó un ordenamiento jurídico propio, integrado en el sistema jurídico de los Estados miembros desde la entrada en vigor del Tratado, y que vincula a sus órganos jurisdiccionales;",
+  "Considerando que la primacía del Derecho comunitario está confirmada por el artículo 189, a cuyo tenor los Reglamentos tienen fuerza «obligatoria» y son «directamente aplicables en cada Estado miembro»;",
+  "Considerando que del conjunto de estos elementos se desprende que al Derecho creado por el Tratado, nacido de una fuente autónoma, no se puede oponer, en razón de su específica naturaleza original una norma interna, cualquiera que sea ésta, ante los órganos jurisdiccionales, sin que al mismo tiempo aquél pierda su carácter comunitario y se ponga en tela de juicio la base jurídica misma de la Comunidad;"],
+  ["ordenamiento jurídico propio", "la primacía del Derecho comunitario", "no se puede oponer"]),
+  doc("STJ_SIMMENTHAL", "Sentencia del Tribunal de Justicia de 9 de marzo de 1978, Simmenthal, asunto 106/77 (EUR-Lex; fallo) · jurisprudencia, no es texto legal", [
+  "Los Jueces nacionales encargados de aplicar, en el marco de su competencia, las disposiciones del Derecho comunitario, están obligados a garantizar la plena eficacia de dichas normas dejando, si procede, inaplicadas, por su propia iniciativa, cualesquiera disposiciones contrarias de la legislación nacional, aunque sean posteriores, sin que estén obligados a solicitar o a esperar la derogación previa de éstas por vía legislativa o mediante otro procedimiento constitucional."],
+  ["inaplicadas, por su propia iniciativa", "aunque sean posteriores"]),
+  doc("GLOS_PRIMACIA", "Glosario de EUR-Lex «Primacía del Derecho de la Unión (prevalencia o supremacía)» · fuente oficial, no es texto legal", [
+  "El principio de primacía del Derecho de la Unión se ha desarrollado con el paso del tiempo a partir de la jurisprudencia del Tribunal de Justicia de la Unión Europea. No está consagrado en los Tratados de la UE, aunque hay una breve declaración anexa al Tratado de Lisboa al respecto.",
+  "Cuando el Derecho de la Unión prevalece sobre el Derecho interno en conflicto, las disposiciones nacionales no se anulan o invalidan automáticamente. Sin embargo, las autoridades y los órganos jurisdiccionales nacionales deben negarse a aplicar dichas disposiciones mientras esté en vigor el Derecho de la UE primordial."],
+  ["No está consagrado en los Tratados", "no se anulan o invalidan automáticamente"]),
   fichab("Reconocimiento por los Estados de la primacía, sin incluirla en el articulado",
          "La **Conferencia** de los representantes de los Gobiernos de los Estados miembros; incorpora el dictamen del **Servicio Jurídico del Consejo** de 22 de junio de 2007",
          ["Los Tratados y el Derecho adoptado sobre su base **priman** sobre el Derecho de los Estados miembros", "En las **condiciones establecidas por la jurisprudencia** del TJUE"],
          "—",
          "La primacía es de **construcción jurisprudencial**: la primera sentencia es **Costa/ENEL (15-7-1964, asunto 6/64)**. Es una **declaración**, no un artículo de los Tratados."))}
-
-{doc("STJ_COSTA", "Sentencia del Tribunal de Justicia de 15 de julio de 1964, Costa/ENEL, asunto 6/64 (EUR-Lex; fundamentos de Derecho) · jurisprudencia, no es texto legal", [
-  "Considerando que, a diferencia de los Tratados internacionales ordinarios, el Tratado de la CEE creó un ordenamiento jurídico propio, integrado en el sistema jurídico de los Estados miembros desde la entrada en vigor del Tratado, y que vincula a sus órganos jurisdiccionales;",
-  "Considerando que la primacía del Derecho comunitario está confirmada por el artículo 189, a cuyo tenor los Reglamentos tienen fuerza «obligatoria» y son «directamente aplicables en cada Estado miembro»;",
-  "Considerando que del conjunto de estos elementos se desprende que al Derecho creado por el Tratado, nacido de una fuente autónoma, no se puede oponer, en razón de su específica naturaleza original una norma interna, cualquiera que sea ésta, ante los órganos jurisdiccionales, sin que al mismo tiempo aquél pierda su carácter comunitario y se ponga en tela de juicio la base jurídica misma de la Comunidad;"],
-  ["ordenamiento jurídico propio", "la primacía del Derecho comunitario", "no se puede oponer"])}
-
-{doc("STJ_SIMMENTHAL", "Sentencia del Tribunal de Justicia de 9 de marzo de 1978, Simmenthal, asunto 106/77 (EUR-Lex; fallo) · jurisprudencia, no es texto legal", [
-  "Los Jueces nacionales encargados de aplicar, en el marco de su competencia, las disposiciones del Derecho comunitario, están obligados a garantizar la plena eficacia de dichas normas dejando, si procede, inaplicadas, por su propia iniciativa, cualesquiera disposiciones contrarias de la legislación nacional, aunque sean posteriores, sin que estén obligados a solicitar o a esperar la derogación previa de éstas por vía legislativa o mediante otro procedimiento constitucional."],
-  ["inaplicadas, por su propia iniciativa", "aunque sean posteriores"])}
-
-{doc("GLOS_PRIMACIA", "Glosario de EUR-Lex «Primacía del Derecho de la Unión (prevalencia o supremacía)» · fuente oficial, no es texto legal", [
-  "El principio de primacía del Derecho de la Unión se ha desarrollado con el paso del tiempo a partir de la jurisprudencia del Tribunal de Justicia de la Unión Europea. No está consagrado en los Tratados de la UE, aunque hay una breve declaración anexa al Tratado de Lisboa al respecto.",
-  "Cuando el Derecho de la Unión prevalece sobre el Derecho interno en conflicto, las disposiciones nacionales no se anulan o invalidan automáticamente. Sin embargo, las autoridades y los órganos jurisdiccionales nacionales deben negarse a aplicar dichas disposiciones mientras esté en vigor el Derecho de la UE primordial."],
-  ["No está consagrado en los Tratados", "no se anulan o invalidan automáticamente"])}
 
 ?> **Primacía ≠ anulación.** La norma nacional contraria **se inaplica** (Simmenthal: «dejando, si procede, inaplicadas»); no se anula ni hay que esperar a que se derogue. Por eso es falsa la fórmula «debe inaplicarse la norma nacional **y eliminarla del ordenamiento**».
 """, 2)
@@ -461,6 +456,12 @@ T.ap("s13", "IV.3 El juez nacional y la cuestión prejudicial (art. 267 TFUE; LO
 T.ap("s14", "IV.4 España: arts. 93 a 96 CE y la Declaración del Tribunal Constitucional 1/2004", f"""
 {unidad("4.1 Atribución del ejercicio de competencias (art. 93 CE)",
   lit("CE", "Artículo 93", ["Mediante ley orgánica", "el ejercicio de competencias derivadas de la Constitución", "Corresponde a las Cortes Generales o al Gobierno, según los casos, la garantía del cumplimiento"]),
+  doc("DTC1_2004", "Declaración del Tribunal Constitucional 1/2004, de 13 de diciembre (BOE núm. 3, de 4 de enero de 2005), sobre el Tratado por el que se establece una Constitución para Europa (buscador oficial del TC) · doctrina, no es texto legal", [
+  "Primacía y supremacía son categorías que se desenvuelven en órdenes diferenciados. Aquélla, en el de la aplicación de normas válidas; ésta, en el de los procedimientos de normación.",
+  "La supremacía de la Constitución es, pues, compatible con regímenes de aplicación que otorguen preferencia aplicativa a normas de otro Ordenamiento diferente del nacional siempre que la propia Constitución lo haya así dispuesto, que es lo que ocurre exactamente con la previsión contenida en su art. 93",
+  "En suma, la Constitución ha aceptado, ella misma, en virtud de su art. 93, la primacía del Derecho de la Unión en el ámbito que a ese Derecho le es propio",
+  "3º Que el art. 93 de la Constitución española es suficiente para la prestación del consentimiento del Estado al Tratado referido."],
+  ["Primacía y supremacía son categorías que se desenvuelven en órdenes diferenciados", "la primacía del Derecho de la Unión en el ámbito que a ese Derecho le es propio"]),
   fichab("Cauce constitucional de la integración en la Unión Europea",
          ["Autorizan: las **Cortes Generales**, por **ley orgánica**", "Garantizan el cumplimiento: las **Cortes Generales o el Gobierno**, según los casos"],
          "Tratados que atribuyen a una organización o institución internacional **el ejercicio** de competencias derivadas de la Constitución",
@@ -481,7 +482,7 @@ T.ap("s14", "IV.4 España: arts. 93 a 96 CE y la Declaración del Tribunal Const
          "Pueden requerir al **Tribunal Constitucional**: el **Gobierno** o **cualquiera de las Cámaras**",
          "Si el tratado contiene estipulaciones contrarias a la Constitución: **previa revisión constitucional**",
          "—",
-         "Por esta vía el Gobierno requirió al TC en 2004 (Declaración 1/2004, abajo). El TC declara si existe **o no** contradicción."))}
+         "Por esta vía el Gobierno requirió al TC en 2004 (Declaración 1/2004, → IV.4.1). El TC declara si existe **o no** contradicción."))}
 
 {unidad("4.4 Los tratados forman parte del ordenamiento interno (art. 96 CE)",
   lit("CE", "Artículo 96", ["una vez publicados oficialmente en España, formarán parte del ordenamiento interno", "en la forma prevista en los propios tratados o de acuerdo con las normas generales del Derecho internacional"]),
@@ -490,13 +491,6 @@ T.ap("s14", "IV.4 España: arts. 93 a 96 CE y la Declaración del Tribunal Const
          ["Válidamente celebrados + **publicados oficialmente en España** = parte del ordenamiento interno", "Solo se derogan, modifican o suspenden según **los propios tratados** o las **normas generales del Derecho internacional**"],
          "Denuncia: el **mismo procedimiento** que para su aprobación (art. 94)",
          "Requisito de la eficacia interna: la **publicación oficial en España**. Una ley posterior no puede derogar un tratado."))}
-
-{doc("DTC1_2004", "Declaración del Tribunal Constitucional 1/2004, de 13 de diciembre (BOE núm. 3, de 4 de enero de 2005), sobre el Tratado por el que se establece una Constitución para Europa (buscador oficial del TC) · doctrina, no es texto legal", [
-  "Primacía y supremacía son categorías que se desenvuelven en órdenes diferenciados. Aquélla, en el de la aplicación de normas válidas; ésta, en el de los procedimientos de normación.",
-  "La supremacía de la Constitución es, pues, compatible con regímenes de aplicación que otorguen preferencia aplicativa a normas de otro Ordenamiento diferente del nacional siempre que la propia Constitución lo haya así dispuesto, que es lo que ocurre exactamente con la previsión contenida en su art. 93",
-  "En suma, la Constitución ha aceptado, ella misma, en virtud de su art. 93, la primacía del Derecho de la Unión en el ámbito que a ese Derecho le es propio",
-  "3º Que el art. 93 de la Constitución española es suficiente para la prestación del consentimiento del Estado al Tratado referido."],
-  ["Primacía y supremacía son categorías que se desenvuelven en órdenes diferenciados", "la primacía del Derecho de la Unión en el ámbito que a ese Derecho le es propio"])}
 
 ?> El Tratado examinado en la Declaración 1/2004 no llegó a ratificarse: el glosario de EUR-Lex se refiere a él como {cs('GLOS_JERARQUIA', 'el Tratado constitucional no ratificado')}. La distinción **primacía (aplicación) / supremacía (validez)** es la que se pregunta.
 

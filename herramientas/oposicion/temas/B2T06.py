@@ -298,6 +298,14 @@ T.ap("s10", "II.5 La política monetaria: SEBC, BCE y euro (TFUE, arts. 127, 128
          "La independencia alcanza también a los **bancos centrales nacionales**. Los Estados adaptan su legislación (art. 131)."))}
 """, 2)
 
+EURO_BLK = f"""> [[COMISION|{EURO_URL}]]
+> **Países que utilizan el euro · página oficial de la Unión Europea (european-union.europa.eu, actualizada el 12 de enero de 2026) · fuente oficial, no es texto legal**
+> Hoy en día, el euro (€) es la moneda oficial de 21 de los 27 países de la UE, que juntos constituyen la eurozona, denominada oficialmente zona del euro.
+> **Países de la zona del euro:** Austria · Bélgica · Bulgaria · Croacia · Chipre · Estonia · Finlandia · Francia · Alemania · Grecia · Irlanda · Italia · Letonia · Lituania · Luxemburgo · Malta · Países Bajos · Portugal · Eslovaquia · Eslovenia · España
+> **Países no pertenecientes a la zona del euro:** Los siguientes países aún no han adoptado el euro, pero se espera que lo hagan una vez que cumplan las condiciones necesarias. Chequia · Hungría · Polonia · Rumanía · Suecia
+> En algunos casos, los países de la UE pueden negociar una cláusula de exclusión voluntaria de la legislación o los tratados de la Unión Europea y decidir no participar en determinados ámbitos políticos. Dinamarca se ha acogido a esta cláusula para la moneda única y ha mantenido su propia moneda tras su adhesión a la UE.
+> Estas condiciones económicas y jurídicas de obligado cumplimiento se acordaron en 1992 a través del Tratado de Maastricht."""
+
 T.ap("s11", "II.6 Estados del euro y Estados acogidos a una excepción (TFUE, arts. 136, 139 y 140; Protocolos n.º 13 y 16)", f"""
 {unidad("6.1 Medidas propias de la zona del euro y mecanismo de estabilidad (art. 136)",
   lit(TF, tf(136), ["Únicamente participarán en las votaciones", "podrán establecer un mecanismo de estabilidad", "se supeditará a condiciones estrictas"], solo=[1, 2, 3, 4, 5, 6]),
@@ -308,6 +316,7 @@ T.ap("s11", "II.6 Estados del euro y Estados acogidos a una excepción (TFUE, ar
 
 {unidad("6.2 Qué es un Estado acogido a una excepción (art. 139.1)",
   lit(TF, tf(139), ["Estados miembros acogidos a una excepción"], solo=[1]),
+  EURO_BLK,
   fichab("Estados de la UE que aún no han adoptado el euro", "Lo determina el **Consejo** (si no ha decidido que cumplen las condiciones)",
          "No se les aplican, entre otras, las normas sobre objetivos del SEBC, emisión del euro y actos del BCE (139.2); sus votos se suspenden en esas materias (139.4)", "—",
          "Definición **negativa**: los Estados sobre los que el Consejo **no** ha decidido que cumplen las condiciones."))}
@@ -329,14 +338,6 @@ T.ap("s11", "II.6 Estados del euro y Estados acogidos a una excepción (TFUE, ar
          ["Inflación: no más de **1½ punto** sobre los tres Estados con mejor comportamiento", "Presupuesto: no tener una **decisión de déficit excesivo** (126.6)", "Tipo de cambio: **dos años** sin tensiones graves y sin devaluar", "Interés a largo plazo: no más de **2 puntos** sobre los tres mejores en estabilidad de precios"],
          "Observación de **un año** antes del examen (inflación e interés)",
          "Cayó en 2025 (→ Cierre 1): el interés es **2 puntos**, no 3; la inflación, **1½**."))}
-
-> [[COMISION|{EURO_URL}]]
-> **Países que utilizan el euro · página oficial de la Unión Europea (european-union.europa.eu, actualizada el 12 de enero de 2026) · fuente oficial, no es texto legal**
-> Hoy en día, el euro (€) es la moneda oficial de 21 de los 27 países de la UE, que juntos constituyen la eurozona, denominada oficialmente zona del euro.
-> **Países de la zona del euro:** Austria · Bélgica · Bulgaria · Croacia · Chipre · Estonia · Finlandia · Francia · Alemania · Grecia · Irlanda · Italia · Letonia · Lituania · Luxemburgo · Malta · Países Bajos · Portugal · Eslovaquia · Eslovenia · España
-> **Países no pertenecientes a la zona del euro:** Los siguientes países aún no han adoptado el euro, pero se espera que lo hagan una vez que cumplan las condiciones necesarias. Chequia · Hungría · Polonia · Rumanía · Suecia
-> En algunos casos, los países de la UE pueden negociar una cláusula de exclusión voluntaria de la legislación o los tratados de la Unión Europea y decidir no participar en determinados ámbitos políticos. Dinamarca se ha acogido a esta cláusula para la moneda única y ha mantenido su propia moneda tras su adhesión a la UE.
-> Estas condiciones económicas y jurídicas de obligado cumplimiento se acordaron en 1992 a través del Tratado de Maastricht.
 
 {unidad("6.5 Dinamarca: la excepción por protocolo (Protocolo n.º 16)",
   lit("PROT16", "Disposiciones", ["Dinamarca disfrutará de una excepción", "sólo se iniciará a petición de Dinamarca"], solo=[1, 2], titulo="Protocolo (n.º 16) sobre determinadas disposiciones relativas a Dinamarca, puntos 1 y 2"),
@@ -776,7 +777,7 @@ EX_L29 = examen("L", 29, {
   "a": f"Literal del art. 82.1: {c(TF, tf(82), 'se basará en el principio de reconocimiento mutuo de las sentencias y resoluciones judiciales')}.",
   "b": f"La atribución es el principio que rige la **delimitación** de las competencias de la Unión: {c('TUE', tf(5), 'La delimitación de las competencias de la Unión se rige por el principio de atribución')} (TUE, art. 5.1).",
   "c": f"La proporcionalidad rige el **ejercicio** de las competencias (TUE, art. 5.1: {c('TUE', tf(5), 'se rige por los principios de subsidiariedad y proporcionalidad')}), no la base de la cooperación penal.",
-  "d": "La subsidiariedad también rige el **ejercicio** de las competencias (TUE, art. 5.1 y 3); en este título la vigilan los Parlamentos nacionales (TFUE, art. 69), pero no es la base de la cooperación penal."},
+  "d": f"La subsidiariedad también rige el **ejercicio** de las competencias (TUE, art. 5.1 y 3); en la cooperación penal y policial (capítulos 4 y 5 de este título) la vigilan los Parlamentos nacionales: {c(TF, tf(69), 'En relación con las propuestas e iniciativas legislativas presentadas en el marco de los capítulos 4 y 5, los Parlamentos nacionales velarán por que se respete el principio de subsidiariedad')} (TFUE, art. 69); pero no es la base de la cooperación penal."},
   [("Reconocimiento mutuo de las sentencias y resoluciones judiciales", TF, tf(82), "se basará en el principio de reconocimiento mutuo de las sentencias y resoluciones judiciales")])
 EX_L102 = examen("L", 102, {
   "a": f"Literal del art. 25.1: {c('FEMPA', tf(25), 'El FEMPA podrá apoyar acciones que contribuyan a la protección y la recuperación de la biodiversidad y los ecosistemas acuáticos, incluso en las aguas interiores')}.",
@@ -796,7 +797,7 @@ T.ap("s30", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-P 2025, pregunta 18 · Mercado interior (→ I.1.2)", EX_P18,
   "### GACE-P 2025, pregunta 15 · Liberalización de servicios (→ I.4.3)", EX_P15,
   "### GACE-P 2025, pregunta 19 · Política monetaria, competencia exclusiva (relacionada; → II.1.1)", EX_P19,
-  "### GACE-L 2025, pregunta 17 · La zona del euro (→ II.6.5)", EX_L17,
+  "### GACE-L 2025, pregunta 17 · La zona del euro (→ II.6.2 y II.6.5)", EX_L17,
   "### GACE-X 2025, pregunta 37 · Criterios de convergencia (→ II.6.4)", EX_X37,
   "### GACE-L 2025, pregunta 30 · Tratado de Estabilidad, Coordinación y Gobernanza (→ II.7.1)", EX_L30,
   "### GACE-L 2025, pregunta 29 · Cooperación judicial penal (→ IV.3.2)", EX_L29,
