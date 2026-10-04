@@ -104,6 +104,14 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   con el dato decisivo en `**negrita**`. Se abre solo al fallar (al acertar,
   plegado). Solo con la norma en las fuentes; si falta, la pregunta va sin
   texto legal y se pide la norma al usuario (nunca de memoria).
+  Fuente: la API de datos abiertos del BOE
+  (`https://boe.es/datosabiertos/api/legislacion-consolidada/id/<BOE-A-…>/texto`,
+  dominio `boe.es` **sin** `www`, que está permitido en la red del entorno).
+  Se toma la última versión de cada bloque y se excluyen las notas del BOE
+  («Téngase en cuenta…», «Redacción anterior», notas al pie). Antes de
+  publicar: dato decisivo literal en la ley y en la opción de la plantilla,
+  ningún distractor con todos los datos y prueba de mutación (cambiar la
+  respuesta a cualquier otra letra tiene que hacer fallar la comprobación).
 - Modo **Examen oficial**: condiciones vigentes del primer ejercicio
   (BOE-A-2025-26262): turno libre, 100 preguntas, 90 minutos y −1/3 (anexo VII,
   2.1.1); promoción interna, 100, 90 y −1/4 (anexo VIII, 3.1.1). Los blancos no
