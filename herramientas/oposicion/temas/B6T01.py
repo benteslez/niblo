@@ -39,9 +39,9 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 | Bloque | Pregunta | Constitución | Leyes |
 |---|---|---|---|
 | **I** | ¿Qué es el presupuesto y qué clases hay? (concepto y clases) | Art. 134.2 | LGP, arts. 32, 33, 34, 35 y 64; exposición de motivos |
-| **II** | ¿Qué es la Ley General Presupuestaria y cómo está estructurada? | — | LGP, arts. 1, 2 y 3; títulos I a VII |
+| **II** | ¿Qué es la Ley General Presupuestaria y cómo está estructurada? | — | LGP, arts. 1, 2 y 3; títulos I a VII; exposición de motivos |
 | **III** | ¿Qué principios generales rigen el presupuesto en la LGP? | — | LGP, arts. 26 a 31 |
-| **IV** | ¿Qué son las leyes de estabilidad presupuestaria? | Art. 135 | LO 2/2012, arts. 1 y 2 y disposición derogatoria única |
+| **IV** | ¿Qué son las leyes de estabilidad presupuestaria? | Art. 135 | LO 2/2012, preámbulo, arts. 1 y 2 y disposición derogatoria única; LGP, exposición de motivos |
 | **V** | ¿Qué principios fija la Ley Orgánica 2/2012? | — | LO 2/2012, arts. 3 a 9 |
 | **VI** | ¿Cómo se hacen cumplir? (límites, objetivos, medidas y AIReF) | — | LO 2/2012, arts. 11 a 15, 17 a 19, 21, 23, 25, 26 y 29 a 32; LO 6/2013, arts. 1, 2 y 17 |
 
