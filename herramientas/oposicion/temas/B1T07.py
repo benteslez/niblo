@@ -14,7 +14,7 @@ CORTO["LO1_2025"] = "LO 1/2025"
 L = "LOPJ"
 
 T = Tema("B1T07",
-  "Cuatro preguntas: I. Qué es el Poder Judicial y cómo actúa (arts. 117.1 a 4, 118 a 122.1 y 124 a 127 CE; LOPJ, arts. 1, 2, 182, 183 y 185) · II. Qué significa el principio de unidad jurisdiccional (art. 117.5 y 6 CE; LOPJ, arts. 3, 4 y 9) · III. Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace (arts. 122 y 123 CE; LOPJ, Libro VIII) · IV. Cómo se organizan los Juzgados y Tribunales (LOPJ, arts. 26, 29, 30, 32 a 34, 53 a 59, 61, 62 a 66, 70 a 74, 80 a 82, 84, 95, 99 a 102 y 439 ter; LO 1/2025). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué es el Poder Judicial y cómo actúa (arts. 117.1 a 4, 118 a 122.1 y 124 a 127 CE; LOPJ, arts. 1, 2, 182, 183 y 185) · II. Qué significa el principio de unidad jurisdiccional (arts. 117.5 y 6 y 136.2 CE; LOPJ, arts. 3, 4 y 9) · III. Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace (arts. 122.2 y 3 y 123.2 CE; LOPJ, Libro VIII) · IV. Cómo se organizan los Juzgados y Tribunales (arts. 123.1 y 152.1 CE; LOPJ, arts. 26, 29, 30, 32 a 34, 53 a 59, 61, 62 a 66, 70 a 74, 80 a 82, 84, 95, 99 a 102 y 439 ter; LO 1/2025). Cada artículo: texto literal del BOE y ficha.",
   ["Poder Judicial", "Arts. 117-127 CE", "LOPJ", "Unidad jurisdiccional", "Jurisdicción militar", "Órdenes jurisdiccionales", "CGPJ", "Art. 122 CE", "Vocales", "Tres quintos", "Tribunal Supremo", "Audiencia Nacional", "Tribunales Superiores de Justicia", "Audiencias Provinciales", "Tribunales de Instancia", "Tribunal Central de Instancia", "Jueces de paz", "LO 1/2025", "Ministerio Fiscal"])
 
 # Cuadros (esquemas) con citas literales
@@ -47,7 +47,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 | Bloque | Pregunta | Constitución | LOPJ y otras normas |
 |---|---|---|---|
 | **I** | ¿Qué es el Poder Judicial y cómo actúa? | Arts. 117.1 a 4, 118 a 122.1 y 124 a 127 | LOPJ, arts. 1, 2, 182, 183 y 185 |
-| **II** | ¿Qué significa el principio de unidad jurisdiccional? | Art. 117.5 y 6 | LOPJ, arts. 3, 4 y 9 |
+| **II** | ¿Qué significa el principio de unidad jurisdiccional? | Arts. 117.5 y 6 y 136.2 | LOPJ, arts. 3, 4 y 9 |
 | **III** | ¿Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace? | Arts. 122.2 y 3 y 123.2 | LOPJ (Libro VIII), arts. 558, 560, 561, 566 a 570 bis, 578, 579, 581, 582, 585 a 587, 589, 595, 599 a 604, 609, 610 y 638 |
 | **IV** | ¿Cómo se organizan los Juzgados y Tribunales? | Arts. 123.1 y 152.1 | LOPJ, arts. 26, 29, 30, 32 a 34, 53 a 59, 61, 62 a 66, 70 a 74, 80 a 82, 84, 95, 99 a 102 y 439 ter; LO 1/2025 |
 
@@ -181,11 +181,11 @@ T.ap("s3", "I.3 Cuerpo único, Ministerio Fiscal, participación ciudadana, poli
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Qué significa el principio de unidad jurisdiccional? (art. 117.5 y 6 CE; LOPJ, arts. 3, 4 y 9)", donde(
+T.ap("bII", "II. ¿Qué significa el principio de unidad jurisdiccional? (arts. 117.5 y 6 y 136.2 CE; LOPJ, arts. 3, 4 y 9)", donde(
   "Segunda pregunta. Ya sabemos quién administra la justicia; ahora, **cuántas jurisdicciones** hay. La Constitución responde con el **principio de unidad jurisdiccional**: una sola jurisdicción, con la única especialidad de la **militar** y la prohibición de **Tribunales de excepción**.",
-  ["1 Unidad jurisdiccional, jurisdicción militar y prohibición de Tribunales de excepción (art. 117.5 y 6; LOPJ, art. 3)", "2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOPJ, arts. 4 y 9)"]))
+  ["1 Unidad jurisdiccional, jurisdicción militar y prohibición de Tribunales de excepción (arts. 117.5 y 6 y 136.2; LOPJ, art. 3)", "2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOPJ, arts. 4 y 9)"]))
 
-T.ap("s4", "II.1 Unidad jurisdiccional, jurisdicción militar y prohibición de Tribunales de excepción (art. 117.5 y 6; LOPJ, art. 3)", f"""
+T.ap("s4", "II.1 Unidad jurisdiccional, jurisdicción militar y prohibición de Tribunales de excepción (arts. 117.5 y 6 y 136.2; LOPJ, art. 3)", f"""
 {unidad("1.1 El principio y la jurisdicción militar (art. 117.5)",
   lit("CE", "Artículo 117", ["El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales", "en el ámbito estrictamente castrense y en los supuestos de estado de sitio"], solo=[5]),
   fichab("Una sola jurisdicción como base de la organización y funcionamiento de los Tribunales",
@@ -243,7 +243,7 @@ T.ap("s5", "II.2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOP
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace? (arts. 122 y 123.2 CE; LOPJ, Libro VIII)", donde(
+T.ap("bIII", "III. ¿Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace? (arts. 122.2 y 3 y 123.2 CE; LOPJ, Libro VIII)", donde(
   "Tercera pregunta. Los jueces son independientes al juzgar, pero alguien tiene que **gobernar** el Poder Judicial: nombramientos, ascensos, inspección, disciplina. La Constitución lo encarga al **Consejo General del Poder Judicial**, no al Gobierno.",
   ["1 Naturaleza y atribuciones (art. 122.2; LOPJ, arts. 558, 560 y 561)", "2 Composición y designación de los Vocales (art. 122.3; LOPJ, arts. 566 a 570 bis y 578)", "3 Estatuto de los Vocales (LOPJ, arts. 579, 581 y 582)", "4 El Presidente y el Vicepresidente (art. 123.2; LOPJ, arts. 585 a 587 y 589)", "5 Órganos del Consejo y recursos contra sus actos (LOPJ, arts. 595, 599 a 604, 609, 610 y 638)"]))
 
@@ -424,7 +424,7 @@ T.ap("s10", "III.5 Órganos del Consejo y recursos contra sus actos (LOPJ, arts.
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se organizan los Juzgados y Tribunales? (LOPJ, arts. 26, 29, 30, 32 a 34, 53 a 59, 61, 62 a 66, 70 a 74, 80 a 82, 84, 95, 99 a 102 y 439 ter; LO 1/2025)", donde(
+T.ap("bIV", "IV. ¿Cómo se organizan los Juzgados y Tribunales? (arts. 123.1 y 152.1 CE; LOPJ, arts. 26, 29, 30, 32 a 34, 53 a 59, 61, 62 a 66, 70 a 74, 80 a 82, 84, 95, 99 a 102 y 439 ter; LO 1/2025)", donde(
   "Cuarta pregunta. La **organización judicial española** es la **planta** de órganos que ejercen la potestad jurisdiccional y su reparto por el **territorio**. Tras la LO 1/2025, los antiguos Juzgados se han transformado en **Tribunales de Instancia**.",
   ["1 Los órganos y el territorio (LOPJ, arts. 26, 29, 30 y 32 a 34)", "2 El Tribunal Supremo (art. 123.1 CE; LOPJ, arts. 53 a 59 y 61)", "3 La Audiencia Nacional (LOPJ, arts. 62 a 66)", "4 Los Tribunales Superiores de Justicia (art. 152.1 CE; LOPJ, arts. 70 a 74)", "5 Las Audiencias Provinciales (LOPJ, arts. 80 a 82)", "6 Los Tribunales de Instancia y el Tribunal Central de Instancia (LOPJ, arts. 84 y 95; LO 1/2025)", "7 Jueces de paz y Oficinas de Justicia en los municipios (LOPJ, arts. 99 a 102 y 439 ter)", "8 Cuadro de la organización judicial"]))
 

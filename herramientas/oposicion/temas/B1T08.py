@@ -15,7 +15,7 @@ from plantilla import *
 CORTO["L2_2014"] = "Ley 2/2014"
 
 T = Tema("B1T08",
-  "Seis preguntas: I. Qué es la AGE y con qué principios se organiza (Ley 40/2015, arts. 3.1, 54, 55.1 y 2 y 56) · II. Cómo se organizan los órganos centrales: los Ministerios (arts. 57 a 60) · III. Quiénes son los órganos superiores y directivos y cómo se crean, nombran, cesan y qué hacen (arts. 55, 55 bis y 61 a 67; Ley 50/1997, art. 15) · IV. Qué son los servicios comunes (art. 68) · V. Cómo se organiza la AGE en el territorio: Delegados y Subdelegados del Gobierno (arts. 69 a 79) · VI. Cómo actúa en el exterior (art. 80; Ley 2/2014). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué es la AGE y con qué principios se organiza (Ley 40/2015, arts. 3.1, 54, 55.1 y 2 y 56) · II. Cómo se organizan los órganos centrales: los Ministerios (arts. 57 a 60) · III. Quiénes son los órganos superiores y directivos y cómo se crean, nombran, cesan y qué hacen (arts. 55.3, 6, 7, 9, 10 y 11, 55 bis y 61 a 67; Ley 50/1997, art. 15.1) · IV. Qué son los servicios comunes (art. 68) · V. Cómo se organiza la AGE en el territorio: Delegados y Subdelegados del Gobierno (arts. 55.4 y 69 a 79) · VI. Cómo actúa en el exterior (arts. 55.5 y 80; Ley 2/2014). Cada artículo: texto literal del BOE y ficha.",
   ["Administración General del Estado", "Ley 40/2015", "Arts. 54-80", "Órganos superiores", "Órganos directivos", "Art. 55 bis", "Ministros", "Secretarios de Estado", "Subsecretarios", "Directores generales", "Servicios comunes", "Delegados del Gobierno", "Subdelegados del Gobierno", "Servicio Exterior", "Ley 2/2014", "Embajadores", "Oficinas Consulares"])
 
 # =============================================================================
@@ -162,7 +162,7 @@ T.ap("s5", "II.3 Ordenación jerárquica de los órganos ministeriales (art. 60)
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Quiénes son los órganos superiores y directivos, cómo se crean, nombran y cesan, y qué funciones tienen? (Ley 40/2015, arts. 55, 55 bis y 61 a 67; Ley 50/1997, art. 15.1)", donde(
+T.ap("bIII", "III. ¿Quiénes son los órganos superiores y directivos, cómo se crean, nombran y cesan, y qué funciones tienen? (Ley 40/2015, arts. 55.3, 6, 7, 9, 10 y 11, 55 bis y 61 a 67; Ley 50/1997, art. 15.1)", donde(
   "Tercera pregunta, el centro del epígrafe. Los **órganos superiores** planifican; los **órganos directivos** desarrollan y ejecutan. Para cada uno: quién lo nombra y separa, entre quiénes y qué funciones tiene. Su **creación** ya se ha visto: Ministerios y Secretarías de Estado, por Real Decreto del Presidente del Gobierno (art. 57.3 → II.1.1); Subsecretarías, Secretarías Generales, Secretarías Generales Técnicas, Direcciones y Subdirecciones Generales, por Real Decreto del Consejo de Ministros (art. 59.1 → II.2.1).",
   ["1 Clases, alto cargo y régimen común (art. 55.3, 6, 7, 9, 10 y 11; art. 55 bis)", "2 Los Ministros (art. 61)", "3 Los Secretarios de Estado (art. 62; Ley 50/1997, art. 15.1)", "4 Subsecretarios y Secretarios generales (arts. 63 y 64)", "5 Secretarios generales técnicos, Directores generales y Subdirectores generales (arts. 65 a 67)", "6 Cuadro: nombramiento, cese y requisitos"]))
 

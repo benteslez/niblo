@@ -172,10 +172,10 @@ T.ap("s7", "II.3 Presencia equilibrada y control de eficacia y supervisión cont
          "Se mide **en cada entidad**. Se aplica también a los **órganos colegiados de gobierno**."))}
 
 {unidad("3.2 Control de eficacia y supervisión continua (art. 85)",
-  lit("L40", "a85", ["se revisarán cada tres años", "será ejercido por el Departamento al que estén adscritos, a través de las inspecciones de servicios", "a través de la Intervención General de la Administración del Estado"], solo=[1, 2, 3, 4, 5, 6, 7, 13]),
+  lit("L40", "a85", ["se revisarán cada tres años", "será ejercido por el Departamento al que estén adscritos, a través de las inspecciones de servicios", "a través de la Intervención General de la Administración del Estado"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]),
   fichab("Dos controles sobre todas las entidades estatales",
          ["**Control de eficacia**: el Departamento de adscripción, a través de las inspecciones de servicios", "**Supervisión continua**: el Ministerio de Hacienda, a través de la IGAE"],
-         ["Plan de actuación desde la creación, con planes anuales", "Supervisión: subsistencia de las circunstancias de la creación, sostenibilidad financiera y causa de disolución por incumplimiento de fines", "Resultado: informe con recomendaciones de mejora o propuesta de transformación o supresión"],
+         ["Plan de actuación desde la creación, con planes anuales", "Supervisión: subsistencia de las circunstancias de la creación, sostenibilidad financiera y causa de disolución por incumplimiento de fines", "Ambos controles tienen en cuenta la información económico-financiera, la que suministren las entidades y las propuestas de las inspecciones de servicios (85.4)", "Resultado: informe con recomendaciones de mejora o propuesta de transformación o supresión"],
          "Revisión del plan de actuación: **cada tres años**",
          "Eficacia → **Ministerio de adscripción** (inspecciones de servicios). Supervisión continua → **Hacienda/IGAE**, **desde la creación hasta la extinción**."))}
 """, 2)
