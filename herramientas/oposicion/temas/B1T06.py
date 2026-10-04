@@ -28,7 +28,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 |---|---|---|---|
 | **I** | ¿Qué es el Gobierno y cómo se organiza? (poder ejecutivo, Presidente y Consejo de Ministros) | Arts. 97 y 98.1 y 2 | Ley 50/1997, arts. 1 a 10, 17, 18, 20 y 24 |
 | **II** | ¿Cómo se designa, cuándo cesa y de qué responde penalmente? | Arts. 99 a 102 (y 98.3 y 4) | Ley 50/1997, arts. 11 a 14 y 21; Reglamento del Congreso, arts. 170 a 172 |
-| **III** | ¿Cómo se relacionan el Gobierno y las Cortes? (control y responsabilidad política) | Arts. 108 a 116 | Ley 50/1997, art. 29; Reglamento del Congreso, arts. 173 a 188 |
+| **III** | ¿Cómo se relacionan el Gobierno y las Cortes? (control y responsabilidad política) | Arts. 108 a 116 | Ley 50/1997, art. 29; Reglamento del Congreso, arts. 174, 175, 177 a 181 y 184 a 187 |
 | **IV** | ¿Qué es el Consejo de Estado? | Art. 107 | LO 3/1980, del Consejo de Estado |
 
 !> **La idea que une los cuatro bloques:** el Gobierno **dirige la política** y ejerce la función ejecutiva (I). Nace de la **confianza del Congreso** (investidura) y cesa cuando la pierde, con las elecciones o con la dimisión o muerte de su Presidente (II). Mientras gobierna, **responde políticamente ante el Congreso**, que puede retirarle la confianza (III). Y para decidir en Derecho cuenta con un **supremo órgano consultivo**: el Consejo de Estado (IV).
@@ -72,7 +72,7 @@ T.ap("s2", "I.2 Composición del Gobierno (art. 98.1; Ley 50/1997, arts. 1.2 y 3
          c("LGOB", "a3", "cuando existan"),
          f"Ejercen {c('LGOB', 'a3', 'las funciones que les encomiende el Presidente')}",
          "—",
-         "Si asume un Departamento ministerial, es **también Ministro** (3.2). Su separación extingue el órgano, salvo que se designe otro en sustitución (art. 12.3 → II.2.3)."))}
+         "Si asume un Departamento ministerial, es **también Ministro** (3.2). Su separación extingue el órgano, salvo que se designe otro en sustitución (art. 12.3 → II.2.2)."))}
 
 {unidad("2.3 Los Ministros (Ley 50/1997, art. 4)",
   lit("LGOB", "a4", ["Ejercer la potestad reglamentaria en las materias propias de su Departamento", "Refrendar, en su caso, los actos del Rey en materia de su competencia", "Ministros sin cartera", "por Real Decreto se determinará el ámbito de sus competencias"]),
@@ -212,9 +212,9 @@ T.ap("s6", "I.6 Funcionamiento, delegación y forma de las decisiones (Ley 50/19
 # =============================================================================
 T.ap("bII", "II. ¿Cómo se designa al Gobierno, cuándo cesa y de qué responde penalmente? (arts. 99 a 102)", donde(
   "Segunda pregunta. Ya sabemos qué es el Gobierno; ahora, **cómo nace** (investidura del Presidente y nombramiento de los demás miembros), **cuándo cesa** (y qué puede hacer en funciones) y **cómo responde penalmente**. La responsabilidad **política** se ve en el bloque III.",
-  ["1 La investidura del Presidente (art. 99; Reglamento del Congreso, arts. 170 a 172)", "2 Los demás miembros: nombramiento, requisitos, suplencia e incompatibilidades (art. 100 y 98.3 y 4; Ley 50/1997, arts. 11 a 14)", "3 El cese y el Gobierno en funciones (art. 101; Ley 50/1997, art. 21)", "4 La responsabilidad criminal (art. 102)"]))
+  ["1 La investidura del Presidente y el nombramiento de los demás miembros (arts. 99 y 100; Reglamento del Congreso, arts. 170 a 172)", "2 Los demás miembros: requisitos, nombramiento y cese, suplencia e incompatibilidades (art. 98.3 y 4; Ley 50/1997, arts. 11 a 14)", "3 El cese y el Gobierno en funciones (art. 101; Ley 50/1997, art. 21)", "4 La responsabilidad criminal (art. 102)"]))
 
-T.ap("s7", "II.1 La investidura del Presidente del Gobierno (art. 99; Reglamento del Congreso, arts. 170 a 172)", f"""
+T.ap("s7", "II.1 La investidura del Presidente y el nombramiento de los demás miembros (arts. 99 y 100; Reglamento del Congreso, arts. 170 a 172)", f"""
 {unidad("1.1 La propuesta de candidato (art. 99.1; Reglamento del Congreso, art. 170)",
   lit("CE", "Artículo 99", ["previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria", "a través del Presidente del Congreso"], solo=[1]),
   lit("RCD", "art170", ["la Presidencia de la Cámara convocará el Pleno"]),
@@ -241,18 +241,18 @@ T.ap("s7", "II.1 La investidura del Presidente del Gobierno (art. 99; Reglamento
          "Sucesivas propuestas por el mismo procedimiento; si nadie la obtiene en el plazo, disolución y nuevas elecciones",
          "**Dos meses** desde la **primera votación** de investidura",
          "El plazo corre desde la **primera votación**, no desde las elecciones ni desde la constitución de las Cámaras. Refrenda el **Presidente del Congreso**, no el del Gobierno. Esta disolución es la excepción al plazo de un año del art. 115.3 (→ III.6.1)."))}
-""", 2)
 
-T.ap("s8", "II.2 Los demás miembros: nombramiento, requisitos, suplencia e incompatibilidades (art. 100 y 98.3 y 4; Ley 50/1997, arts. 11 a 14)", f"""
-{unidad("2.1 Nombramiento y separación (art. 100)",
+{unidad("1.4 Nombramiento y separación de los demás miembros (art. 100)",
   lit("CE", "Artículo 100", ["a propuesta de su Presidente"]),
   fichab("Nombramiento de Vicepresidentes y Ministros",
          f"{c('CE', 'Artículo 100', 'el Rey')}, {c('CE', 'Artículo 100', 'a propuesta de su Presidente')}",
          "Nombramiento y separación",
          "—",
          "El Congreso solo inviste al **Presidente**: los demás miembros los nombra y separa el **Rey a propuesta del Presidente**, sin votación parlamentaria."))}
+""", 2)
 
-{unidad("2.2 Requisitos para ser miembro del Gobierno (Ley 50/1997, art. 11)",
+T.ap("s8", "II.2 Los demás miembros: requisitos, nombramiento y cese, suplencia e incompatibilidades (art. 98.3 y 4; Ley 50/1997, arts. 11 a 14)", f"""
+{unidad("2.1 Requisitos para ser miembro del Gobierno (Ley 50/1997, art. 11)",
   lit("LGOB", "a11", ["ser español, mayor de edad, disfrutar de los derechos de sufragio activo y pasivo", "no estar inhabilitado para ejercer empleo o cargo público por sentencia judicial firme"]),
   fichab("Requisitos de acceso al cargo",
          "Cualquier miembro del Gobierno",
@@ -260,7 +260,7 @@ T.ap("s8", "II.2 Los demás miembros: nombramiento, requisitos, suplencia e inco
          "—",
          "No se exige ser Diputado ni Senador."))}
 
-{unidad("2.3 Nombramiento y cese en la Ley 50/1997 (art. 12)",
+{unidad("2.2 Nombramiento y cese en la Ley 50/1997 (art. 12)",
   lit("LGOB", "a12", ["en los términos previstos en la Constitución", "nombrados y separados por el Rey, a propuesta del Presidente del Gobierno", "como mínimo el cuarenta por ciento", "llevará aparejada la extinción de dichos órganos, salvo"]),
   fichab("Nombramiento, cese y presencia equilibrada",
          ["Presidente: según la Constitución (art. 99 → II.1)", "Vicepresidentes y Ministros: el Rey, a propuesta del Presidente"],
@@ -268,7 +268,7 @@ T.ap("s8", "II.2 Los demás miembros: nombramiento, requisitos, suplencia e inco
          "Cada sexo, como mínimo el **40 %** en su conjunto (12.2 bis)",
          "La separación del Vicepresidente extingue el órgano **salvo** que se designe otro en sustitución. El estatuto del ex Presidente: **Real Decreto** (12.4)."))}
 
-{unidad("2.4 La suplencia (Ley 50/1997, art. 13)",
+{unidad("2.3 La suplencia (Ley 50/1997, art. 13)",
   lit("LGOB", "a13", ["por los Vicepresidentes, de acuerdo con el correspondiente orden de prelación", "según el orden de precedencia de los Departamentos", "debiendo recaer, en todo caso, en otro miembro del Gobierno"], solo=[1, 2]),
   fichab("Quién sustituye al Presidente y a los Ministros",
          ["Presidente: los Vicepresidentes por su orden de prelación; en su defecto, los Ministros por el orden de precedencia de los Departamentos", "Ministros: otro miembro del Gobierno"],
@@ -276,7 +276,7 @@ T.ap("s8", "II.2 Los demás miembros: nombramiento, requisitos, suplencia e inco
          "—",
          "Supuestos: **vacante, ausencia o enfermedad**. El suplente de un Ministro es siempre **otro miembro del Gobierno** (no un Secretario de Estado)."))}
 
-{unidad("2.5 Incompatibilidades (art. 98.3 y 4; Ley 50/1997, art. 14)",
+{unidad("2.4 Incompatibilidades (art. 98.3 y 4; Ley 50/1997, art. 14)",
   lit("CE", "Artículo 98", ["que las propias del mandato parlamentario", "actividad profesional o mercantil alguna"], solo=[3, 4]),
   lit("LGOB", "a14", ["el régimen de incompatibilidades de los altos cargos"]),
   fichab("Estatuto e incompatibilidades de los miembros del Gobierno",
@@ -346,7 +346,7 @@ T.ap("s11", "III.1 Responsabilidad política solidaria y control del Gobierno (a
          "El control político alcanza a **todos los actos y omisiones** del Gobierno y es de las **Cortes Generales** (art. 29.2); la responsabilidad política solidaria, en cambio, es ante el **Congreso** (art. 108 CE)."))}
 """, 2)
 
-T.ap("s12", "III.2 Información, presencia, interpelaciones y preguntas (arts. 109 a 111; Reglamento del Congreso, arts. 180 a 187)", f"""
+T.ap("s12", "III.2 Información, presencia, interpelaciones y preguntas (arts. 109 a 111; Reglamento del Congreso, arts. 180, 181 y 184 a 187)", f"""
 {unidad("2.1 Petición de información (art. 109)",
   lit("CE", "Artículo 109", ["a través de los Presidentes de aquéllas"]),
   fichab("Derecho de las Cámaras a recabar información y ayuda",
@@ -394,7 +394,7 @@ T.ap("s13", "III.3 La cuestión de confianza (art. 112; Reglamento del Congreso,
          "Iniciativa **del Presidente** (no del Congreso); el Consejo de Ministros **delibera**, no autoriza. Mayoría **simple** (la censura exige **absoluta**). Si se niega: → III.5.1."))}
 """, 2)
 
-T.ap("s14", "III.4 La moción de censura (art. 113; Reglamento del Congreso, arts. 175 a 179)", f"""
+T.ap("s14", "III.4 La moción de censura (art. 113; Reglamento del Congreso, arts. 175, 177 y 179)", f"""
 {unidad("4.1 Requisitos, plazos y mayoría (art. 113)",
   lit("CE", "Artículo 113", ["por mayoría absoluta", "al menos por la décima parte de los Diputados", "un candidato a la Presidencia del Gobierno", "cinco días desde su presentación", "En los dos primeros días", "durante el mismo período de sesiones"]),
   fichab("El Congreso exige la responsabilidad política del Gobierno",
@@ -521,7 +521,7 @@ T.ap("s20", "IV.2 Órganos y miembros del Consejo de Estado (LO 3/1980, arts. 3 
   lit("LO3_1980", "aseptimo", ["en numero igual al de las Secciones del Consejo, son nombrados, sin límite de tiempo, por Real Decreto", "Ex Gobernadores del Banco de España"]),
   fichab("Consejeros permanentes",
          "Tantos como **Secciones** (mínimo ocho: → IV.3.3)",
-         "Nombrados por Real Decreto entre quienes estén o hayan estado en alguna de las **diez** categorías del artículo (Ministro, Consejero de Estado, Letrado Mayor, catedrático con 15 años, funcionarios con 15 años en cuerpos de titulado universitario, ex Gobernadores del Banco de España…)",
+         "Nombrados por Real Decreto entre quienes estén o hayan estado en alguna de las **diez** categorías del artículo (Ministro, Consejero de Estado, Letrado Mayor, profesor numerario de disciplinas jurídicas, económicas o sociales con 15 años de ejercicio, funcionarios con 15 años en cuerpos de titulado universitario, ex Gobernadores del Banco de España…)",
          "**Sin límite de tiempo**; presencia equilibrada: cada sexo, mínimo el **40 %**",
          "Los **ex** Gobernadores del Banco de España son categoría de Consejero **permanente**; el Gobernador **en ejercicio** es Consejero **nato** (→ IV.2.5)."))}
 
@@ -700,7 +700,7 @@ T.ap("s24", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-L 2025, pregunta 8 · Pleno del Consejo de Estado (→ IV.2.4)", EX_L8,
   "### GACE-L 2025 extraordinario, pregunta 16 · Secciones del Consejo de Estado (→ IV.3.3)", EX_X16,
   "### GACE-L 2025 extraordinario, pregunta 17 · Consejeros natos (→ IV.2.5)", EX_X17,
-  "### GACE-L 2025 extraordinario, pregunta 12 · Miembros del Gobierno y escaño (relacionada; → II.2.5)", EX_X12,
+  "### GACE-L 2025 extraordinario, pregunta 12 · Miembros del Gobierno y escaño (relacionada; → II.2.4)", EX_X12,
   "### GACE-L 2025 extraordinario, pregunta 24 · Control de funciones delegadas, previo dictamen del Consejo de Estado (relacionada; → IV.4.2)", EX_X24,
   "### Cómo se pregunta",
   "!> Dos patrones: **quién** hace cada cosa (el Rey propone **a través del** Presidente del Congreso; el Consejo de Ministros adopta **Acuerdos**; el Fiscal General es Consejero **nato**) y **cuánto** (mayoría **absoluta** en la censura; **ocho** Secciones; **diez** electivos). Los distractores cambian el órgano o el número.",

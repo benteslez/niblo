@@ -14,7 +14,7 @@ CORTO["RS"] = "Reglamento del Senado"
 CORTO["LOREG"] = "LOREG"
 
 T = Tema("B1T05",
-  "Seis preguntas: I. Qué son las Cortes Generales (arts. 66 y 67 CE) · II. Cómo se compone el Congreso (art. 68; LOREG, art. 162; Reglamento del Congreso, arts. 1 a 5) · III. Cómo se compone el Senado (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5) · IV. Qué estatuto tienen Diputados y Senadores (arts. 70 y 71) · V. Cómo se organizan y funcionan las Cámaras (arts. 72 a 80 y Reglamentos) · VI. Qué atribuciones tienen (arts. 66.2, 87 a 90 y 92 a 94). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué son las Cortes Generales (arts. 66 y 67 CE) · II. Cómo se compone el Congreso (art. 68; LOREG, art. 162; Reglamento del Congreso, arts. 1 a 5) · III. Cómo se compone el Senado (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5 y 7) · IV. Qué estatuto tienen Diputados y Senadores (arts. 70 y 71) · V. Cómo se organizan y funcionan las Cámaras (arts. 72 a 80 y Reglamentos) · VI. Qué atribuciones tienen (arts. 66.2, 87 a 90 y 92 a 94). Cada artículo: texto literal del BOE y ficha.",
   ["Cortes Generales", "Art. 66", "Bicameralismo", "Congreso: art. 68", "LOREG art. 162", "Senado: art. 69", "LOREG art. 165", "Inelegibilidad: art. 70", "Inviolabilidad e inmunidad", "Reglamentos de las Cámaras", "Mesa", "Grupos parlamentarios", "Junta de Portavoces", "Diputación Permanente", "Comisiones", "Iniciativa legislativa", "Veto del Senado", "Tratados: art. 94"])
 
 # =============================================================================
@@ -30,9 +30,9 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 |---|---|---|---|
 | **I** | ¿Qué son las Cortes Generales? | Arts. 66.1 y 3 y 67 | — |
 | **II** | ¿Cómo se compone el Congreso? | Art. 68 | LOREG, art. 162; Reglamento del Congreso, arts. 1 a 5 |
-| **III** | ¿Cómo se compone el Senado? | Art. 69 | LOREG, art. 165; Reglamento del Senado, arts. 2 a 5 |
+| **III** | ¿Cómo se compone el Senado? | Art. 69 | LOREG, art. 165; Reglamento del Senado, arts. 2 a 5 y 7 |
 | **IV** | ¿Qué estatuto tienen Diputados y Senadores? | Arts. 70 y 71 | — |
-| **V** | ¿Cómo se organizan y funcionan las Cámaras? | Arts. 72 a 80 | Reglamento del Congreso, arts. 23 a 39, 46 y 57; Reglamento del Senado, arts. 7, 27, 35, 43, 45, 48 y 49 |
+| **V** | ¿Cómo se organizan y funcionan las Cámaras? | Arts. 72 a 80 | Reglamento del Congreso, arts. 23 a 25, 30, 37, 39, 46 y 57; Reglamento del Senado, arts. 27, 35, 43, 45, 48 y 49 |
 | **VI** | ¿Qué atribuciones tienen? | Arts. 66.2, 87 a 90 y 92 a 94 (y cuadro de las atribuciones repartidas por la Constitución) | — |
 
 !> **La idea que une los seis bloques:** las Cortes **representan al pueblo español** y son **dos Cámaras** (I). El **Congreso** se elige por provincias con criterios de **representación proporcional** (II); el **Senado** es la Cámara de **representación territorial**, con Senadores elegidos y Senadores **designados por las Comunidades Autónomas** (III). Sus miembros tienen un estatuto propio (IV) y las Cámaras se organizan con **autonomía** (V). Sus atribuciones: **legislar, aprobar los Presupuestos y controlar al Gobierno** (VI), con un claro **predominio del Congreso**.
@@ -173,9 +173,9 @@ T.ap("s4", "II.2 La sesión constitutiva del Congreso (Reglamento del Congreso, 
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se compone el Senado? (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5)", donde(
+T.ap("bIII", "III. ¿Cómo se compone el Senado? (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5 y 7)", donde(
   "Tercera pregunta. El Senado es la Cámara de **representación territorial** y mezcla dos tipos de Senadores: los **elegidos** por los votantes (provincias, islas, Ceuta y Melilla) y los **designados** por las Comunidades Autónomas.",
-  ["1 Composición (art. 69; LOREG, art. 165)", "2 La constitución del Senado (Reglamento del Senado, arts. 2 a 5)", "3 Cuadro comparativo de la composición de las dos Cámaras"]))
+  ["1 Composición (art. 69; LOREG, art. 165)", "2 La constitución del Senado (Reglamento del Senado, arts. 2 a 5 y 7)", "3 Cuadro comparativo de la composición de las dos Cámaras"]))
 
 T.ap("s5", "III.1 Composición del Senado (art. 69; LOREG, art. 165)", f"""
 {unidad("1.1 Cámara de representación territorial (art. 69.1)",
@@ -218,7 +218,7 @@ T.ap("s5", "III.1 Composición del Senado (art. 69; LOREG, art. 165)", f"""
          "Misma regla que el Congreso (68.4 → II.1.3)."))}
 """, 2)
 
-T.ap("s6", "III.2 La constitución del Senado (Reglamento del Senado, arts. 2 a 5)", f"""
+T.ap("s6", "III.2 La constitución del Senado (Reglamento del Senado, arts. 2 a 5 y 7)", f"""
 {unidad("2.1 Junta Preparatoria y Mesa de edad (Reglamento del Senado, arts. 2 y 3)",
   lit("RS", "a2", ["Junta Preparatoria", "El que figure primero en la lista de presentación de credenciales"]),
   lit("RS", "a3", ["el Senador de más edad de entre los presentes", "los cuatro más jóvenes"]),
@@ -235,10 +235,13 @@ T.ap("s6", "III.2 La constitución del Senado (Reglamento del Senado, arts. 2 a 
          "Interinidad hasta que se confirme al menos el **80 %**; iniciativa para tratar otros temas: un Grupo parlamentario o **veinticinco** Senadores",
          "El 20 % se calcula sobre los Senadores **de elección directa**. Durante la interinidad, solo **incompatibilidades** (salvo lo indispensable)."))}
 
-{unidad("2.3 Composición de la Mesa del Senado (Reglamento del Senado, art. 5)",
+{unidad("2.3 Composición de la Mesa y elección del Presidente del Senado (Reglamento del Senado, arts. 5 y 7)",
   lit("RS", "a5", ["el Presidente, dos Vicepresidentes y cuatro Secretarios"]),
-  fichab("Mesa del Senado", "El Pleno la elige en la sesión de constitución", "Por papeletas (art. 6 RS)", "**1 + 2 + 4 = 7** miembros",
-         "Senado: **dos** Vicepresidentes; Congreso: **cuatro** Vicepresidencias (→ V.2.2)."))}
+  lit("RS", "a7", ["mayoría absoluta de los miembros de la Cámara acreditados hasta el momento", "las dos mayores votaciones"]),
+  fichab("Mesa del Senado y elección de su Presidente", "El Pleno la elige en la sesión de constitución",
+         ["Por papeletas (art. 6 RS)", "Presidente: un solo nombre por papeleta; **mayoría absoluta** de los miembros acreditados; si no, nueva votación entre los empatados con mayor número de votos o entre las **dos** mayores votaciones"],
+         ["**1 + 2 + 4 = 7** miembros", "Presidente: mayoría absoluta en la primera votación; en la segunda, **más votos**"],
+         "Senado: **dos** Vicepresidentes; Congreso: **cuatro** Vicepresidencias (→ V.2.2). La mayoría absoluta para elegir al Presidente se calcula sobre los miembros **acreditados hasta el momento** ante la Cámara."))}
 """, 2)
 
 T.ap("s7", "III.3 Cuadro comparativo: composición del Congreso y del Senado (esquema)", f"""
@@ -380,14 +383,13 @@ La Constitución solo prevé que cada Cámara elija su Presidente y su Mesa (art
          "Disolución si baja de **seis**, al final del período de sesiones",
          "Senado: **10** para constituir y disolución por debajo de **6**. Congreso: **15** (→ V.2.1)."))}
 
-{unidad("2.5 La Mesa y el Presidente del Senado (Reglamento del Senado, arts. 35 y 7)",
+{unidad("2.5 La Mesa del Senado (Reglamento del Senado, art. 35)",
   lit("RS", "a35", ["órgano rector del Senado", "Letrado Mayor"], solo=[1, 2]),
-  lit("RS", "a7", ["mayoría absoluta de los miembros de la Cámara acreditados hasta el momento", "las dos mayores votaciones"]),
   fichab("Órgano rector del Senado",
          "La Mesa (Presidente, dos Vicepresidentes y cuatro Secretarios → III.2.3), bajo la autoridad y dirección del **Presidente**; la asiste el **Letrado Mayor**",
-         "Presidente: un solo nombre por papeleta; **mayoría absoluta** de los miembros acreditados; si no, nueva votación",
-         "Presidente: mayoría absoluta en la primera votación; en la segunda, **más votos**",
-         "La mayoría absoluta se calcula sobre los miembros **acreditados hasta el momento** ante la Cámara."))}
+         "El **Letrado Mayor** la asiste y asesora: es el Jefe de los Servicios y responde ante el Presidente de la Cámara",
+         "—",
+         "La Mesa y su Presidente se eligen en la sesión de constitución (arts. 5 y 7 RS → III.2.3)."))}
 
 {unidad("2.6 Junta de Portavoces del Senado (Reglamento del Senado, art. 43)",
   lit("RS", "a43", ["el Presidente de la Cámara, que la convoca, preside y dirige"], solo=[1]),
