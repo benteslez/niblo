@@ -629,7 +629,7 @@ EX_P63 = examen("P", 63, {
 EX_P64 = examen("P", 64, {
   "a": f"No se rigen por la Ley 38/2003 y el derecho privado: el art. 6.1 dice que {c('LGS', 'Artículo 6', 'se regirán por las normas comunitarias aplicables en cada caso')}.",
   "b": f"Literal del art. 6: {c('LGS', 'Artículo 6', 'se regirán por las normas comunitarias aplicables en cada caso y por las normas nacionales de desarrollo o transposición de aquéllas')}, y los procedimientos de la ley {c('LGS', 'Artículo 6', 'tendrán carácter supletorio respecto de las normas de aplicación directa')}.",
-  "c": "Cambia «las normas comunitarias **y** las nacionales» por «**exclusivamente** la normativa nacional»: el art. 6.1 pone primero las normas comunitarias aplicables.",
+  "c": f"Añade «**exclusivamente**» y deja fuera las normas comunitarias: el art. 6.1 dice que {c('LGS', 'Artículo 6', 'se regirán por las normas comunitarias aplicables en cada caso y por las normas nacionales de desarrollo o transposición de aquéllas')}.",
   "d": f"Invierte la relación: la ley no es preferente, sino que {c('LGS', 'Artículo 6', 'tendrán carácter supletorio respecto de las normas de aplicación directa')}."},
   [("normas comunitarias aplicables", "LGS", "Artículo 6", "se regirán por las normas comunitarias aplicables en cada caso"),
    ("normas de aplicación directa", "LGS", "Artículo 6", "tendrán carácter supletorio respecto de las normas de aplicación directa")])

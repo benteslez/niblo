@@ -631,7 +631,7 @@ T.ap("s17", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-P 2025, pregunta 70 · Gestión del Patrimonio del Estado (→ I.3.1)", EX_P70,
   "### GACE-L 2025, pregunta 55 · Órganos del deslinde (→ I.5.3)", EX_L55,
   "### GACE-L 2025 extraordinario, pregunta 60 · Norma supletoria del Patrimonio Nacional (→ IV.2.2)", EX_X60,
-  "?> **Nota sobre esta pregunta.** El enunciado dice «según la Ley 23/1982», cuyo art. 6 sigue remitiendo literalmente a la «Ley del Patrimonio del Estado» (la opción b la identifica con el Decreto 1022/1964). La plantilla da la a), que es lo vigente: ese texto de 1964 está derogado por la Ley 33/2003, cuya disposición adicional cuarta la declara supletoria para el Patrimonio Nacional. Conviene saber las dos cosas.",
+  "?> **Nota sobre esta pregunta.** El enunciado dice «Según la Ley 23/1982», cuyo art. 6 sigue remitiendo literalmente a la «Ley del Patrimonio del Estado» (la opción b la identifica con el Decreto 1022/1964). La plantilla da la a), que es lo vigente: ese texto de 1964 está derogado por la Ley 33/2003, cuya disposición adicional cuarta la declara supletoria para el Patrimonio Nacional. Conviene saber las dos cosas.",
   "### GACE-L 2025 extraordinario, pregunta 59 · Comunales no disfrutados (→ V.2.3)", EX_X59,
   "### Cómo se pregunta",
   "!> Las preguntas de la Ley 33/2003 cambian el **órgano** (Ministro, Director General, Delegados; Hacienda frente a Presidencia o Cultura) y las del Reglamento de Bienes, el **plazo**. Para el Patrimonio Nacional, distinguir **Patrimonio del Estado** (Hacienda) de **Patrimonio Nacional** (Consejo de Administración, Presidencia del Gobierno).",

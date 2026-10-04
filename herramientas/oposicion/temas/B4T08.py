@@ -43,7 +43,7 @@ T.ap("s1", "I.1 Garantía constitucional y concepto (art. 33.3 CE; LEF, art. 1)"
         ["::Nadie puede ser privado de sus bienes y derechos salvo con:", "Causa justificada de **utilidad pública o interés social**", "La correspondiente **indemnización**", "Conformidad con lo dispuesto por las **leyes** (procedimiento)"],
         "La propiedad y la herencia tienen una función social que delimita su contenido (33.2)",
         "Es un derecho de la Sección 2.ª del Capítulo segundo (→ tema I.2): vincula a los poderes públicos y solo la ley puede regularlo",
-        "Tres garantías: **causa**, **indemnización** y **ley**. «Utilidad pública **o** interés social»."))}
+        "Tres garantías: **causa**, **indemnización** y **ley**. «utilidad pública **o** interés social»."))}
 
 {unidad("1.2 Concepto legal de expropiación (LEF, art. 1)",
   lit("LEF", "aprimero", ["cualquier forma de privación singular de la propiedad privada o de derechos o intereses patrimoniales legítimos", "acordada imperativamente", "ya implique venta, permuta, censo, arrendamiento, ocupación temporal o mera cesación de su ejercicio", "Quedan fuera del ámbito de esta Ley las ventas forzosas"]),
@@ -70,7 +70,7 @@ T.ap("s2", "I.2 Sujetos: expropiante, beneficiario, expropiado e interesados (ar
          ["El propietario o titular del derecho, **en primer lugar** (art. 3.1)", "Titulares de derechos reales e intereses económicos directos y arrendatarios, si lo solicitan (art. 4)", "El **Ministerio Fiscal**, si no comparecen o están incapacitados sin representante o la propiedad es litigiosa (art. 5.1)", "Quienes presenten títulos contradictorios (art. 5.2)"],
          "Se presume propietario quien conste en registros públicos que produzcan presunción de titularidad; en su defecto, en registros fiscales",
          "—",
-         "«En primer lugar, con el **propietario**» (pregunta oficial X 58, → Cierre 1), no con el poseedor ni con el Ayuntamiento."))}
+         "El expediente se entiende «en primer lugar, con el **propietario**» (pregunta oficial X 58, → Cierre 1), no con el poseedor ni con el Ayuntamiento."))}
 """, 2)
 
 T.ap("s3", "I.3 Transmisiones y cargas (arts. 7 y 8)", f"""
@@ -95,7 +95,7 @@ T.ap("s3", "I.3 Transmisiones y cargas (arts. 7 y 8)", f"""
 # =============================================================================
 T.ap("bII", "II. ¿Cómo se expropia? El procedimiento general (LEF, arts. 9 a 58)", donde(
   "Segunda pregunta. El procedimiento general sigue el orden de las garantías del art. 33.3: primero la **causa**, después **qué bienes** hacen falta, luego **cuánto** se paga y, por último, el **pago** y la **ocupación**.",
-  ["1 Causa: declaración de utilidad pública o interés social (arts. 9 a 13)", "2 Necesidad de ocupación (arts. 15 a 23)", "3 Justo precio: acuerdo, hojas de aprecio y Jurado (arts. 24 a 36, 43 y 47)", "4 Pago y ocupación; ocupación urgente (arts. 48 a 53)", "5 Demora, retasación y reversión (arts. 54 a 58)"]))
+  ["1 Causa: declaración de utilidad pública o interés social (arts. 9 a 13)", "2 Necesidad de ocupación (arts. 15 a 23)", "3 Justo precio: acuerdo, hojas de aprecio y Jurado (arts. 24 a 36, 43 y 47)", "4 Pago y ocupación; ocupación urgente (arts. 48 a 53)", "5 Reversión, demora y retasación (arts. 54 a 58)"]))
 
 T.ap("s4", "II.1 La causa: declaración de utilidad pública o interés social (arts. 9 a 13)", f"""
 {unidad("1.1 Requisito previo (art. 9)",
@@ -177,7 +177,7 @@ T.ap("s6", "II.3 El justo precio: acuerdo, hojas de aprecio y Jurado (arts. 24 a
          "—",
          ["Valor al tiempo de **iniciarse el expediente de justiprecio**, sin plusvalías del proyecto ni futuras (art. 36.1)", "Inmuebles: **solo** el sistema de la ley de valoración del suelo; el régimen estimativo del art. 43 no se aplica (art. 43.2 a)", "**Premio de afección**: un **5 %** además del justo precio, en todos los casos (art. 47)"],
          "—",
-         "Premio de afección: **cinco por ciento**, «en todos los casos de expropiación»."))}
+         "Premio de afección: **cinco por ciento**, «En todos los casos de expropiación»."))}
 """, 2)
 
 T.ap("s7", "II.4 Pago y ocupación; la ocupación urgente (arts. 48 a 53)", f"""
@@ -199,8 +199,17 @@ T.ap("s7", "II.4 Pago y ocupación; la ocupación urgente (arts. 48 a 53)", f"""
          "Es **excepcional** y la acuerda el **Consejo de Ministros**, con **retención de crédito** en el expediente."))}
 """, 2)
 
-T.ap("s8", "II.5 Demora, retasación y reversión (arts. 54 a 58)", f"""
-{unidad("5.1 Intereses de demora y retasación (arts. 56 a 58)",
+T.ap("s8", "II.5 Reversión, demora y retasación (arts. 54 a 58)", f"""
+{unidad("5.1 La reversión (arts. 54 y 55)",
+  lit("LEF", "acincuentaycuatro", ["no ejecutarse la obra o no establecerse el servicio", "podrán recobrar la totalidad o la parte sobrante", "se prolongue durante diez años", "el de tres meses", "no hubieran transcurrido veinte años", "transcurrido cinco años", "suspendidas más de dos años"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9]),
+  lit("LEF", "acincuentaycinco", ["la restitución de la indemnización expropiatoria percibida por el expropiado, actualizada"], solo=[1]),
+  fichab("Derecho del expropiado a recuperar el bien si no se usa para su fin",
+         "El primitivo dueño o sus causahabientes",
+         ["Supuestos: obra o servicio no ejecutado, parte sobrante o desaparición de la afectación (art. 54.1)", "Excluida si hay nueva afectación de utilidad pública o interés social, o si la afectación duró **10 años** (art. 54.2)", "Presupuesto: restituir la indemnización **actualizada** (art. 55.1)"],
+         "Solicitud: **3 meses** desde la notificación; sin notificación: exceso o desafectación (20 años), obra no iniciada (5 años), suspensión imputable (más de 2 años)",
+         "Cifras que se cruzan: **10** años de afectación excluyen la reversión; **3 meses** para pedirla si hubo notificación; **5** años sin iniciar la obra; **20** años como máximo para excesos o desafectación."))}
+
+{unidad("5.2 Intereses de demora y retasación (arts. 56 a 58)",
   lit("LEF", "acincuentayseis", ["Cuando hayan transcurrido seis meses desde la iniciación legal del expediente expropiatorio", "el interés legal del justo precio"]),
   lit("LEF", "acincuentaysiete", ["devengará el interés legal"]),
   lit("LEF", "acincuentayocho", ["Si transcurrieran cuatro años", "evaluar de nuevo", "no procederá el derecho a la retasación"]),
@@ -210,20 +219,11 @@ T.ap("s8", "II.5 Demora, retasación y reversión (arts. 54 a 58)", f"""
          "6 meses (intereses) · 4 años (retasación)",
          "Retasación a los **cuatro años**; si ya se pagó o consignó, **no** hay retasación aunque pasen los cuatro años."))}
 
-{unidad("5.2 La reversión (arts. 54 y 55)",
-  lit("LEF", "acincuentaycuatro", ["no ejecutarse la obra o no establecerse el servicio", "podrán recobrar la totalidad o la parte sobrante", "se prolongue durante diez años", "el de tres meses", "no hubieran transcurrido veinte años", "transcurrido cinco años", "suspendidas más de dos años"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9]),
-  lit("LEF", "acincuentaycinco", ["la restitución de la indemnización expropiatoria percibida por el expropiado, actualizada"], solo=[1]),
-  fichab("Derecho del expropiado a recuperar el bien si no se usa para su fin",
-         "El primitivo dueño o sus causahabientes",
-         ["Supuestos: obra o servicio no ejecutado, parte sobrante o desaparición de la afectación (art. 54.1)", "Excluida si hay nueva afectación de utilidad pública o interés social, o si la afectación duró **10 años** (art. 54.2)", "Presupuesto: restituir la indemnización **actualizada** (art. 55.1)"],
-         "Solicitud: **3 meses** desde la notificación; sin notificación: exceso o desafectación (20 años), obra no iniciada (5 años), suspensión imputable (más de 2 años)",
-         "Cifras que se cruzan: **10** años de afectación excluyen la reversión; **3 meses** para pedirla si hubo notificación; **5** años sin iniciar la obra; **20** años como máximo para excesos o desafectación."))}
-
 {resumen([
   "Causa: declaración **previa** de utilidad pública o interés social (art. 9); implícita en los planes de obras y servicios para inmuebles (art. 10).",
   "Necesidad de ocupación: información pública **15 días**; resolución **20 días**; **inicia** el expediente; alzada ante el **Ministerio** en **10 días**, con efectos suspensivos (arts. 18 a 22).",
   "Justo precio: mutuo acuerdo; hojas de aprecio **20/20/10 días**; **Jurado provincial** presidido por un Magistrado; **premio de afección del 5 %**.",
-  "Pago en **6 meses**; ocupación tras pagar o consignar; **ocupación urgente** por el **Consejo de Ministros**; intereses, retasación a los **4 años** y **reversión**."],
+  "Pago en **6 meses**; ocupación tras pagar o consignar; **ocupación urgente** por el **Consejo de Ministros**; **reversión**, intereses y retasación a los **4 años**."],
   "Siguiente: III. ¿Hay otros procedimientos? Especiales y ocupación temporal")}
 """, 2)
 
