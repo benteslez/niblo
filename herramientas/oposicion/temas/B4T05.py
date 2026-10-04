@@ -17,7 +17,7 @@ def ap(id, title, partes, nivel=2): T.ap(id, title, "\n\n".join(p.strip("\n") fo
 ESQ = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
 
 T = Tema("B4T05",
-  "Seis preguntas: I. Qué es un contrato del sector público, qué clases hay y qué elementos tiene (arts. 1 a 37, 61 a 107 y 323) · II. Cómo se prepara: expediente y pliegos (arts. 28 y 116 a 124) · III. Cómo se adjudica (arts. 131 a 168) · IV. Efectos, cumplimiento y extinción (arts. 188 a 213) · V. Revisión de precios y otras alteraciones (arts. 103 a 105 y 203 a 215) · VI. Invalidez y recurso especial (arts. 38 a 59). Ley 9/2017 con los umbrales vigentes desde el 1-1-2026. Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué es un contrato del sector público, qué clases hay y qué elementos tiene (arts. 1 a 3, 5, 10 a 12, 19 a 22, 24 a 27, 29, 35 a 37, 61, 65, 74, 88, 99 a 102, 106, 107 y 323) · II. Cómo se prepara: expediente y pliegos (arts. 28, 116 a 122 y 124) · III. Cómo se adjudica (arts. 131, 145, 150, 151, 153, 156, 158 a 160, 162, 166 y 168) · IV. Efectos, cumplimiento y extinción (arts. 188 a 193, 196 a 198 y 209 a 213) · V. Revisión de precios y otras alteraciones (arts. 103 a 105, 203 a 208, 214 y 215) · VI. Invalidez y recurso especial (arts. 38 a 45, 48 a 50, 53 y 57 a 59). Ley 9/2017 con los umbrales vigentes desde el 1-1-2026. Cada artículo: texto literal del BOE y ficha.",
   ["LCSP", "Contrato del sector público", "Poder adjudicador", "Regulación armonizada", "Umbrales 2026", "Contratos administrativos y privados", "Valor estimado", "Expediente y pliegos", "Contrato menor", "Procedimiento abierto", "Abierto simplificado", "Prerrogativas", "Resolución", "Revisión de precios", "Modificación", "Invalidez", "Recurso especial"])
 
 # =============================================================================
@@ -432,7 +432,7 @@ ap("s14", "III.3 El procedimiento abierto y el abierto simplificado (arts. 156, 
            ["Precio como único criterio: **15 días**", "Pluralidad de criterios (o solo el coste del ciclo de vida): **2 meses**, salvo otro plazo en el pliego"],
            "Si no se adjudica a tiempo, los licitadores pueden **retirar** su proposición y recuperar la garantía provisional.")),
   unidad("3.3 Procedimiento abierto simplificado (art. 159)",
-    L(159, ["igual o inferior a 2.000.000 de euros", "veinticinco por ciento", "únicamente precisará de publicación en el perfil de contratante", "En los contratos de obras el plazo será como mínimo de veinte días", "No procederá la constitución de garantía provisional", "inferior a 80.000 euros", "inferior a 60.000 euros", "Se eximirá a los licitadores de la acreditación de la solvencia", "No se requerirá la constitución de garantía definitiva."], solo=[1, 2, 3, 4, 5, 8, 29, 30, 31, 36]),
+    L(159, ["igual o inferior a 2.000.000 de euros", "veinticinco por ciento", "únicamente precisará de publicación en el perfil de contratante", "En los contratos de obras el plazo será como mínimo de veinte días", "No procederá la constitución de garantía provisional", "inferior a 80.000 euros", "inferior a 60.000 euros", "Se eximirá a los licitadores de la acreditación de la solvencia", "No se requerirá la constitución de garantía definitiva."], solo=[1, 2, 3, 4, 5, 6, 8, 29, 30, 31, 36]),
     fichab("Procedimiento abierto simplificado y su tramitación sumaria (159.6)",
            "Órgano de contratación (es potestativo: «podrán acordar»); licitadores inscritos en el Registro Oficial de Licitadores y Empresas Clasificadas del Sector Público (o registro autonómico)",
            ["Anuncio solo en el perfil de contratante", "Sin garantía provisional", "159.6: sin solvencia y sin garantía definitiva; oferta en un único sobre valorada por fórmulas"],
@@ -550,7 +550,7 @@ ap("s18", "IV.2 Ejecución: penalidades, daños, riesgo y ventura y pago (arts. 
            "—",
            "—",
            "Salvedad: lo establecido para el contrato de **obras** en el art. 239 (fuerza mayor; tema IV.6).")),
-  unidad("2.5 Pago del precio (art. 198.4 a 6)",
+  unidad("2.5 Pago del precio (art. 198.1 y 4 a 6)",
     L(198, ["dentro de los treinta días siguientes a la fecha de aprobación de las certificaciones de obra", "superior a cuatro meses", "superior a seis meses"], solo=[1, 6, 9, 10]),
     fichab("Pago del precio y demora de la Administración",
            "La Administración paga; el contratista debe presentar la factura en plazo",
@@ -649,7 +649,7 @@ ap("s21", "V.2 La modificación del contrato (arts. 203 a 207)", [
            "Máximo **20 %** del precio inicial",
            "Nunca puede alterar la **naturaleza global** del contrato (sustituir el objeto o cambiar el tipo de contrato).")),
   unidad("2.3 Modificaciones no previstas (art. 205)",
-    L(205, ["del 50 por ciento de su precio inicial, IVA excluido", "una Administración diligente no hubiera podido prever", "Cuando las modificaciones no sean sustanciales", "del 15 por ciento del precio inicial del mismo, IVA excluido, si se trata del contrato de obras o de un 10 por ciento"], solo=[1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 21]),
+    L(205, ["del 50 por ciento de su precio inicial, IVA excluido", "una Administración diligente no hubiera podido prever", "Cuando las modificaciones no sean sustanciales", "del 15 por ciento del precio inicial del mismo, IVA excluido, si se trata del contrato de obras o de un 10 por ciento"], solo=[1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21]),
     fichab("Modificaciones no previstas: tres supuestos tasados",
            "Órgano de contratación",
            ["Solo las variaciones **estrictamente indispensables** (205.1 b)", "a) Prestaciones adicionales cuando el cambio de contratista no es posible", "b) Circunstancias sobrevenidas e imprevisibles", "c) Modificaciones no sustanciales"],
@@ -663,7 +663,7 @@ ap("s21", "V.2 La modificación del contrato (arts. 203 a 207)", [
            "**20 %** del precio inicial, sin IVA",
            f"Más del 20 % sin conformidad → **resolución** (211.1 g) **sin** la indemnización del 3 % del art. 213.4, que se excluye cuando el contratista {C(213, 'rechace la modificación contractual propuesta por la Administración al amparo del artículo 205')} (→ IV.3.5).")),
   unidad("2.5 Especialidades de procedimiento (art. 207.2 y 3)",
-    L(207, ["en un plazo no inferior a tres días", "en el plazo de 5 días desde la aprobación de la misma"], solo=[2, 4]),
+    L(207, ["en un plazo no inferior a tres días", "en el plazo de 5 días desde la aprobación de la misma"], solo=[2, 3, 4]),
     fichab("Especialidades procedimentales",
            "Órgano de contratación; audiencia al redactor del proyecto o de las especificaciones si es un tercero",
            ["Audiencia al redactor (modificaciones del 205): al menos 3 días", "Anuncio de modificación en el perfil de contratante, siempre, con las alegaciones e informes"],

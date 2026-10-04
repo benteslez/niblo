@@ -16,7 +16,7 @@ U = unidad
 T29 = "Artículo 29. Plazo de duración de los contratos y de ejecución de la prestación (LCSP)"
 
 T = Tema("B4T06",
-  "Cinco preguntas: I. Qué tipos de contrato define la Ley 9/2017 (arts. 12 a 18 y 34.2) · II. Qué tiene de propio el contrato de obras (arts. 231 a 246) · III. Qué tienen de propio las concesiones de obras y de servicios (arts. 29.6 y 247 a 297) · IV. Qué tiene de propio el suministro (arts. 29.4 y 5 y 298 a 307) · V. Qué tiene de propio el contrato de servicios (arts. 308 a 315). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué tipos de contrato define la Ley 9/2017 (arts. 12 a 18 y 34.2) · II. Qué tiene de propio el contrato de obras (arts. 231 a 246) · III. Qué tienen de propio las concesiones de obras y de servicios (arts. 29.6, 247, 248, 251, 254, 256 a 258, 261, 263, 264, 267, 270, 279, 280, 283 a 285, 287 a 291, 294, 296 y 297) · IV. Qué tiene de propio el suministro (arts. 29.4 y 5 y 298 a 307) · V. Qué tiene de propio el contrato de servicios (arts. 308 a 315). Cada artículo: texto literal del BOE y ficha.",
   ["LCSP", "Tipos de contrato", "Arts. 12-18", "Contrato de obras", "Concesión de obras", "Concesión de servicios", "Riesgo operacional", "Suministro", "Servicios", "Contrato mixto", "Proyecto y replanteo", "Plazo de garantía", "Estudio de viabilidad", "Arts. 231-315"])
 
 # =============================================================================
@@ -32,7 +32,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. La primera responde a 
 |---|---|---|
 | **I** | ¿Qué tipos de contrato define la Ley? | Arts. 12 a 18 y 34.2 |
 | **II** | ¿Qué tiene de propio el contrato de obras? | Arts. 231 a 246 |
-| **III** | ¿Qué tienen de propio las concesiones de obras y de servicios? | Arts. 29.6, 247 a 283 (obras) y 284 a 297 (servicios) |
+| **III** | ¿Qué tienen de propio las concesiones de obras y de servicios? | Arts. 29.6, 247, 248, 251, 254, 256 a 258, 261, 263, 264, 267, 270, 279, 280 y 283 (obras) y 284, 285, 287 a 291, 294, 296 y 297 (servicios) |
 | **IV** | ¿Qué tiene de propio el contrato de suministro? | Arts. 29.4 y 5 y 298 a 307 |
 | **V** | ¿Qué tiene de propio el contrato de servicios? | Arts. 308 a 315 |
 
@@ -48,7 +48,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. La primera responde a 
 
 # =============================================================================
 # BLOQUE I
-T.ap("bI", "I. ¿Qué tipos de contrato define la Ley? (arts. 12 a 18)", donde(
+T.ap("bI", "I. ¿Qué tipos de contrato define la Ley? (arts. 12 a 18 y 34.2)", donde(
   "Primera pregunta del tema. Antes de ver las reglas propias de cada contrato hay que saber **cómo los define la Ley**: el tipo decide qué normas se aplican.",
   ["1 Calificación, obras y concesión de obras (arts. 12 a 14)", "2 Concesión de servicios, suministro y servicios (arts. 15 a 17)", "3 Contratos mixtos (arts. 18 y 34.2)", "4 Cuadro de los tipos de contrato"]))
 
@@ -90,7 +90,7 @@ U("2.2 Contrato de suministro (art. 16)",
   fichab("Contrato para adquirir o arrendar productos o bienes muebles",
          "Entidad del sector público adquirente y empresario",
          ["::Objeto (16.1): adquisición, arrendamiento financiero o arrendamiento, con o sin opción de compra. Siempre son suministro (16.3):", "a) Entregas sucesivas por precio unitario sin cuantía total definida, por depender de las necesidades del adquirente", "b) Equipos y sistemas de telecomunicaciones o de tratamiento de la información, sus dispositivos y programas (salvo programas a medida)", "c) Fabricación con características peculiares fijadas por la entidad contratante", "d) Adquisición de energía primaria o transformada"],
-         "Duración máxima: 5 años (→ IV.1.1)",
+         "Duración máxima de los de prestación sucesiva y del arrendamiento de bienes muebles: 5 años (→ IV.1.1)",
          f"Programas de ordenador **a medida** = **servicios**. No es suministro el contrato sobre **propiedades incorporales o valores negociables**. La fabricación es suministro {C(16, 'aun cuando esta se obligue a aportar, total o parcialmente, los materiales precisos')}.")),
 U("2.3 Contrato de servicios (art. 17)",
   L(17, "prestaciones de hacer", "ejercicio de la autoridad inherente a los poderes públicos"),
@@ -271,9 +271,9 @@ resumen([
 
 # =============================================================================
 # BLOQUE III
-T.ap("bIII", "III. ¿Qué tienen de propio las concesiones de obras y de servicios? (arts. 29.6 y 247 a 297)", donde(
+T.ap("bIII", "III. ¿Qué tienen de propio las concesiones de obras y de servicios? (arts. 29.6, 247, 248, 251, 254, 256 a 258, 261, 263, 264, 267, 270, 279, 280, 283 a 285, 287 a 291, 294, 296 y 297)", donde(
   "Tercera pregunta. Las concesiones son contratos **largos**, en los que el concesionario **financia y explota** y asume el **riesgo operacional**. Por eso tienen reglas propias: estudio de viabilidad, tarifas, equilibrio económico, secuestro, rescate y reversión. La Ley regula a fondo la de obras y la aplica, en lo no previsto, a la de servicios.",
-  ["1 Duración y actuaciones preparatorias (arts. 29.6, 247 y 248)", "2 Concesión de obras: ejecución, derechos y prerrogativas (arts. 251 a 261)", "3 Secuestro, penalidades, tarifas y equilibrio económico (arts. 263 a 270)", "4 Extinción de la concesión de obras (arts. 279, 280 y 283)", "5 Concesión de servicios: ámbito, pliegos y obligaciones (arts. 284 a 289)", "6 Concesión de servicios: equilibrio, reversión y resolución (arts. 290 a 297)"]))
+  ["1 Duración y actuaciones preparatorias (arts. 29.6, 247 y 248)", "2 Concesión de obras: ejecución, derechos y prerrogativas (arts. 251, 254, 256 a 258 y 261)", "3 Secuestro, penalidades, tarifas y equilibrio económico (arts. 263, 264, 267 y 270)", "4 Extinción de la concesión de obras (arts. 279, 280 y 283)", "5 Concesión de servicios: ámbito, pliegos y obligaciones (arts. 284, 285 y 287 a 289)", "6 Concesión de servicios: equilibrio, reversión y resolución (arts. 290, 291, 294, 296 y 297)"]))
 
 T.ap("s8", "III.1 Duración y actuaciones preparatorias de la concesión (arts. 29.6, 247 y 248)", "\n\n".join([
 U("1.1 Duración de las concesiones (art. 29.6)",
@@ -299,7 +299,7 @@ U("1.3 Anteproyecto de construcción y explotación (art. 248)",
          "El anteproyecto es **potestativo** («podrá acordar»); el estudio de viabilidad, **obligatorio**. Al aprobarlo, la Administración insta el reconocimiento de la **utilidad pública** a efectos expropiatorios.")),
 ]), 2)
 
-T.ap("s9", "III.2 Concesión de obras: ejecución, derechos y prerrogativas (arts. 251 a 261)", "\n\n".join([
+T.ap("s9", "III.2 Concesión de obras: ejecución, derechos y prerrogativas (arts. 251, 254, 256 a 258 y 261)", "\n\n".join([
 U("2.1 Efectos, cumplimiento y extinción (art. 251)",
   L(251, "excluidos los artículos 208 y 210"),
   fichab("Régimen de efectos, cumplimiento y extinción de la concesión de obras",
@@ -344,7 +344,7 @@ U("2.6 Prerrogativas de la Administración (art. 261)",
          "Las tarifas que fija la Administración son **máximas** (→ III.3.3).")),
 ]), 2)
 
-T.ap("s10", "III.3 Secuestro, penalidades, tarifas y equilibrio económico (arts. 263 a 270)", "\n\n".join([
+T.ap("s10", "III.3 Secuestro, penalidades, tarifas y equilibrio económico (arts. 263, 264, 267 y 270)", "\n\n".join([
 U("3.1 Secuestro o intervención de la concesión (art. 263)",
   L(263, "previa audiencia del concesionario", "de tres años"),
   fichab("La Administración asume temporalmente la explotación",
@@ -399,7 +399,7 @@ U("4.3 Destino de las obras a la extinción (art. 283)",
          "Los pliegos pueden prever la **demolición** y reposición del terreno. Los bienes que vayan a revertir son **inembargables**.")),
 ]), 2)
 
-T.ap("s12", "III.5 Concesión de servicios: ámbito, pliegos y obligaciones (arts. 284 a 289)", "\n\n".join([
+T.ap("s12", "III.5 Concesión de servicios: ámbito, pliegos y obligaciones (arts. 284, 285 y 287 a 289)", "\n\n".join([
 U("5.1 Ámbito de la concesión de servicios (art. 284)",
   L(284, "siempre que sean susceptibles de explotación económica por particulares", "ejercicio de la autoridad inherente a los poderes públicos"),
   fichab("Gestión indirecta de servicios mediante concesión",
@@ -437,7 +437,7 @@ U("5.5 Prestaciones económicas (art. 289)",
          "Si el pliego lo establece, es el **concesionario** quien paga a la Administración un **canon o participación**.")),
 ]), 2)
 
-T.ap("s13", "III.6 Concesión de servicios: equilibrio, reversión y resolución (arts. 290 a 297)", "\n\n".join([
+T.ap("s13", "III.6 Concesión de servicios: equilibrio, reversión y resolución (arts. 290, 291, 294, 296 y 297)", "\n\n".join([
 U("6.1 Modificación y equilibrio económico (art. 290)",
   L(290, "únicamente por razones de interés público", "15 por ciento de su duración inicial", solo=[1, 2, 3, 4, 5, 6, 7, 8, 9]),
   fichab("Modificación del servicio y restablecimiento del equilibrio",
