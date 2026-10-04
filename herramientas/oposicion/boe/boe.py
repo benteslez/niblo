@@ -13,6 +13,12 @@ for _f in sorted(_glob.glob(os.path.join(AQUI, "ids*.txt"))):
             assert IDS.get(_k, _v) == _v, ("clave repetida con otro id", _k)
             IDS[_k] = _v
 _cache = {}
+import datetime
+HOY = datetime.date.today().strftime("%Y%m%d")
+# Versiones consolidadas publicadas sin fecha de vigencia que aún no rigen (comprobado en su nota del BOE).
+NO_VIGENTES = {("RCD", "art23", "BOE-A-2026-16353")}   # reforma del art. 23.1 RCD: entra en vigor en la XVI legislatura
+
+
 def ley(k):
     if k in _cache: return _cache[k]
     if os.path.exists(os.path.join(AQUI, k + ".json")):
@@ -50,7 +56,10 @@ def ley(k):
     for b in raiz.iter("bloque"):
         vs = b.findall("version")
         if not vs: continue
-        v = vs[-1]
+        # Solo versiones ya vigentes: fuera las de fecha de vigencia futura y las que el BOE
+        # publica sin fecha porque entran en vigor más adelante (NO_VIGENTES).
+        ok = [x for x in vs if not ((x.get("fecha_vigencia") or "") > HOY or (k, b.get("id"), x.get("id_norma")) in NO_VIGENTES)]
+        v = (ok or vs)[-1]
         ps = []
         def ps_de(nodo):
             for h in nodo:
