@@ -14,7 +14,7 @@ from plantilla import *
 CORTO["L22_2009"] = "Ley 22/2009"
 
 T = Tema("B1T10",
-  "Cinco preguntas: I. Qué son las Comunidades Autónomas y cómo se constituyen (arts. 2, 137 a 139, 143 a 145 y 151.1 CE) · II. Qué son los Estatutos de Autonomía y cómo se aprueban y reforman (arts. 81.1, 146, 147, 151.2 y 152.2) · III. Cómo se organizan y con qué medios (arts. 152, 154 y 156 a 158) · IV. Quién hace qué: la delimitación de competencias (arts. 148 a 150) · V. Quién controla a las Comunidades Autónomas (arts. 153 y 155). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué son las Comunidades Autónomas y cómo se constituyen (arts. 2, 137 a 139, 143 a 145 y 151.1 CE; disposiciones transitorias primera, segunda, cuarta y quinta) · II. Qué son los Estatutos de Autonomía y cómo se aprueban y reforman (arts. 81.1, 146, 147, 151.2 y 3 y 152.2; arts. 3.2 y 4.2; disposición adicional primera) · III. Cómo se organizan y con qué medios (arts. 152, 154 y 156 a 158) · IV. Quién hace qué: la delimitación de competencias (arts. 148 a 150) · V. Quién controla a las Comunidades Autónomas (arts. 153 y 155; LO 3/1980, art. 22). Cada artículo: texto literal del BOE y ficha.",
   ["Art. 2 CE", "Art. 137", "Solidaridad", "Art. 139", "Art. 143", "Art. 151", "Federación", "Estatutos de Autonomía", "Art. 147", "Art. 152", "Delegado del Gobierno", "Autonomía financiera", "Art. 148", "Art. 149.1", "Cláusula residual", "Art. 150", "Art. 153", "Art. 155"])
 
 # =============================================================================
@@ -46,7 +46,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué son las Comunidades Autónomas y cómo se constituyen? (arts. 2, 137 a 139, 143 a 145 y 151.1)", donde(
+T.ap("bI", "I. ¿Qué son las Comunidades Autónomas y cómo se constituyen? (arts. 2, 137 a 139, 143 a 145 y 151.1; disposiciones transitorias primera, segunda, cuarta y quinta)", donde(
   "Primera pregunta del tema. Antes de los Estatutos, las instituciones o las competencias, hay que saber **en qué principios** se apoya el Estado autonómico y **por qué vías** se accede a la autonomía.",
   ["1 Unidad, autonomía y organización territorial (arts. 2 y 137)", "2 Solidaridad e igualdad (arts. 138 y 139)", "3 La vía general de acceso y la intervención de las Cortes (arts. 143 y 144)", "4 Ni federación: convenios y acuerdos de cooperación (art. 145)", "5 La vía del art. 151.1 y las disposiciones transitorias"]))
 
@@ -145,7 +145,7 @@ T.ap("s5", "I.5 La vía del art. 151.1 y las disposiciones transitorias", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Qué son los Estatutos de Autonomía y cómo se aprueban y reforman? (arts. 81.1, 146, 147, 151.2 y 152.2)", donde(
+T.ap("bII", "II. ¿Qué son los Estatutos de Autonomía y cómo se aprueban y reforman? (arts. 81.1, 146, 147, 151.2 y 3 y 152.2; arts. 3.2 y 4.2; disposición adicional primera)", donde(
   "Segunda pregunta. El derecho a la autonomía se concreta en un **Estatuto**. Hay que saber qué es, qué contiene, quién lo elabora y cómo se reforma, porque el procedimiento cambia según la vía de acceso.",
   ["1 Norma institucional básica aprobada por ley orgánica (arts. 81.1 y 147.1 y 2)", "2 Elaboración: vía general y vía del art. 151 (arts. 146 y 151.2 y 3)", "3 Reforma de los Estatutos (arts. 147.3 y 152.2)", "4 Otras materias que la Constitución remite a los Estatutos (arts. 3.2 y 4.2; disposición adicional primera)"]))
 
@@ -413,7 +413,7 @@ T.ap("s18", "IV.5 Cuadro de las materias que se confunden (esquema)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Quién controla a las Comunidades Autónomas? (arts. 153 y 155)", donde(
+T.ap("bV", "V. ¿Quién controla a las Comunidades Autónomas? (arts. 153 y 155; LO 3/1980, art. 22)", donde(
   "Quinta pregunta. La autonomía no es soberanía: la Constitución reparte el **control** de la actividad autonómica entre cuatro órganos según **qué** se controla, y prevé una medida extraordinaria de **coerción** del Gobierno con el Senado.",
   ["1 Los cuatro controles del art. 153", "2 La coerción estatal (art. 155)"]))
 

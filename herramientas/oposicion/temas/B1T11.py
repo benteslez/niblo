@@ -14,7 +14,7 @@ CORTO["CEAL"] = "Carta Europea de Autonomía Local"
 L = "LRBRL"
 
 T = Tema("B1T11",
-  "Cuatro preguntas: I. Qué entidades forman la Administración local (arts. 137 y 141 CE; Ley 7/1985, arts. 3 y 42 a 44) · II. Qué es la autonomía local y cómo se protege (art. 142 CE; Carta Europea de Autonomía Local; Ley 7/1985, arts. 1, 2, 4, 7 y 10; LOTC) · III. Cómo se organiza el municipio y qué competencias tiene (art. 140 CE; Ley 7/1985, arts. 11 a 29 y 121) · IV. Cómo se organiza la provincia y qué competencias tiene (art. 141 CE; Ley 7/1985, arts. 31 a 41). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué entidades forman la Administración local (arts. 137 y 141 CE; Ley 7/1985, arts. 3 y 42 a 44) · II. Qué es la autonomía local y cómo se protege (art. 142 CE; Carta Europea de Autonomía Local; Ley 7/1985, arts. 1, 2, 4, 7 y 10; LOTC) · III. Cómo se organiza el municipio y qué competencias tiene (art. 140 CE; Ley 7/1985, arts. 11 a 13, 15, 19 a 27, 29 y 121) · IV. Cómo se organiza la provincia y qué competencias tiene (art. 141 CE; Ley 7/1985, arts. 31 a 41). Cada artículo: texto literal del BOE y ficha.",
   ["Administración local", "Ley 7/1985", "Entidades locales", "Autonomía local", "Carta Europea de Autonomía Local", "Municipio", "Alcalde", "Pleno", "Junta de Gobierno Local", "Concejo abierto", "Competencias propias", "Servicios mínimos", "Provincia", "Diputación", "Cabildos y Consejos insulares", "Áreas metropolitanas", "Mancomunidades"])
 
 # =============================================================================
@@ -231,7 +231,7 @@ El **conflicto en defensa de la autonomía local** se estudia con el Tribunal Co
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se organiza el municipio y qué competencias tiene? (art. 140 CE; Ley 7/1985, arts. 11 a 29 y 121)", donde(
+T.ap("bIII", "III. ¿Cómo se organiza el municipio y qué competencias tiene? (art. 140 CE; Ley 7/1985, arts. 11 a 13, 15, 19 a 27, 29 y 121)", donde(
   "Tercera pregunta, la más preguntada. El municipio es la **entidad local básica**: primero, qué es y cuáles son sus elementos; después, sus **órganos** (Alcalde, Pleno, Junta de Gobierno Local) y sus **competencias** (propias, servicios mínimos y delegadas).",
   ["1 El municipio en la Constitución (art. 140)", "2 Concepto y elementos: territorio y población (arts. 11 a 13 y 15)", "3 Organización: el Ayuntamiento y los órganos necesarios (arts. 19 y 20)", "4 El Alcalde (art. 21)", "5 El Pleno (art. 22)", "6 Junta de Gobierno Local, Tenientes de Alcalde y gestión desconcentrada (arts. 23, 24 y 24 bis)", "7 Competencias propias (art. 25)", "8 Servicios mínimos obligatorios (art. 26)", "9 Competencias delegadas (art. 27)", "10 Regímenes especiales: concejo abierto y municipios de gran población (arts. 29 y 121)"]))
 
@@ -357,10 +357,10 @@ T.ap("s16", "III.8 Servicios mínimos obligatorios (art. 26)", f"""
          "Los tramos son **acumulativos** («además»). **Biblioteca**: más de 5.000; **incendios**: más de 20.000; **transporte urbano**: más de 50.000."))}
 
 {unidad("8.2 Coordinación por la Diputación en municipios de menos de 20.000 habitantes (art. 26.2 y 3)",
-  lit(L, "Artículo 26", ["con población inferior a 20.000 habitantes", "la Diputación provincial o entidad equivalente la que coordinará"], solo=[6, 7, 8, 9, 10, 11, 12, 14, 16]),
+  lit(L, "Artículo 26", ["con población inferior a 20.000 habitantes", "la Diputación provincial o entidad equivalente la que coordinará"], solo=[6, 7, 8, 9, 10, 11, 12, 14, 15, 16]),
   fichab("Papel de la Diputación en los servicios mínimos de los municipios pequeños",
          "La Diputación provincial o entidad equivalente",
-         ["Coordina: recogida y tratamiento de residuos, agua y aguas residuales, limpieza viaria, acceso a núcleos, pavimentación y alumbrado", "El municipio puede asumirlos si acredita ante la Diputación un coste efectivo menor", "Su asistencia del art. 36 se dirige preferentemente a los servicios mínimos (26.3)"],
+         ["Coordina: recogida y tratamiento de residuos, agua y aguas residuales, limpieza viaria, acceso a núcleos, pavimentación y alumbrado", "El municipio puede asumirlos si acredita ante la Diputación un coste efectivo menor", "Si la Diputación asume la prestación, repercute a los municipios el coste efectivo del servicio en función de su uso (y, si se financia con tasas, la tasa va a la Diputación)", "Su asistencia del art. 36 se dirige preferentemente a los servicios mínimos (26.3)"],
          "Municipios de **menos de 20.000** habitantes",
          "Es **coordinación** de la Diputación (la competencia sigue siendo municipal)."))}
 
@@ -631,7 +631,7 @@ T.q(L, "Artículo 1", "Autonomía local", "Según el artículo 1.1 de la Ley 7/1
     "Art. 1.1 Ley 7/1985. La «división territorial para el cumplimiento de las actividades del Estado» es la provincia (art. 141.1 CE).", "Los Municipios son entidades básicas de la organización territorial del Estado y cauces inmediatos de participación ciudadana en los asuntos públicos")
 T.q(L, "Artículo 2", "Autonomía local", "Según el artículo 2.1 de la Ley 7/1985, la legislación estatal y autonómica atribuirá competencias a los entes locales de conformidad con los principios de:",
     ["Descentralización y de máxima proximidad de la gestión administrativa a los ciudadanos.", "Jerarquía y desconcentración.", "Solidaridad y equilibrio intermunicipales.", "Eficacia, jerarquía y coordinación."],
-    "Art. 2.1 Ley 7/1985. «Solidaridad y equilibrio intermunicipales» son los fines de la provincia (art. 31.2).", "de conformidad con los principios de descentralización y de máxima proximidad de la gestión administrativa a los ciudadanos")
+    "Art. 2.1 Ley 7/1985. «solidaridad y equilibrio intermunicipales» son los fines de la provincia (art. 31.2).", "de conformidad con los principios de descentralización y de máxima proximidad de la gestión administrativa a los ciudadanos")
 T.q(L, "Artículo 4", "Autonomía local", "Según el artículo 4.1 de la Ley 7/1985, ¿cuál de las siguientes potestades corresponde en todo caso a los municipios, las provincias y las islas?",
     ["La potestad expropiatoria.", "La potestad legislativa.", "La potestad jurisdiccional.", "La potestad de indulto."],
     "Art. 4.1 d) Ley 7/1985.", "d) Las potestades expropiatoria y de investigación, deslinde y recuperación de oficio de sus bienes.")

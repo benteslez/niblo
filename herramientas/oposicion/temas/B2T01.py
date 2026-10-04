@@ -174,7 +174,7 @@ T.ap("bII", "II. ¿Qué es la Unión y qué persigue? Naturaleza jurídica y obj
 
 T.ap("s3", "II.1 La creación de la Unión: preámbulo, art. 1 y personalidad jurídica (TUE, art. 47)", f"""
 {unidad("1.1 El preámbulo del TUE (fragmento)",
-  lit("TUEPRE", "Preámbulo", ["RESUELTOS a salvar una nueva etapa en el proceso de integración europea", "una unión cada vez más estrecha entre los pueblos de Europa", "de acuerdo con el principio de subsidiariedad", "HAN DECIDIDO crear una Unión Europea"], solo=[2, 3, 4, 14, 16], titulo="Preámbulo del TUE (fragmento)"),
+  lit("TUEPRE", "Preámbulo", ["RESUELTOS a salvar una nueva etapa en el proceso de integración europea", "una unión cada vez más estrecha entre los pueblos de Europa", "de acuerdo con el principio de subsidiariedad", "HAN DECIDIDO crear una Unión Europea"], solo=[2, 3, 4, 14, 16], titulo="Preámbulo del TUE (fragmento)") + chr(10) + "> (no se reproduce la lista de los plenipotenciarios)",
   fichab("Declaración de intenciones de las Altas Partes Contratantes al crear la Unión",
          "Los Jefes de Estado de los Estados firmantes (Altas Partes Contratantes)",
          ["Continúa el proceso de integración " + c("TUEPRE", "Preámbulo", "emprendido con la constitución de las Comunidades Europeas"), "Se inspira en la herencia cultural, religiosa y humanista de Europa", "Persigue una unión cada vez más estrecha, con decisiones lo más próximas posible a los ciudadanos (subsidiariedad)"],
