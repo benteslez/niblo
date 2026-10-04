@@ -90,7 +90,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 |---|---|---|---|
 | **I** | ¿Cómo está hecha? (estructura) | Fórmula de promulgación, Preámbulo, Títulos preliminar y I a X, disposiciones adicionales, transitorias, derogatoria y final | — |
 | **II** | ¿Qué dice? (contenido) | Título preliminar, arts. 1 a 9; rúbricas de los Títulos I a X | — |
-| **III** | ¿Cómo se reforma? | Título X, arts. 166 a 169; arts. 75.3, 87.1 y 2 y 116 | Reglamento del Congreso, arts. 146 y 147; Reglamento del Senado, arts. 152 a 159; LO 2/1980, arts. 2, 4 y 7 |
+| **III** | ¿Cómo se reforma? | Título X, arts. 166 a 169; arts. 75.3, 87.1 y 2 y 116 | Reglamento del Congreso, arts. 146 y 147; Reglamento del Senado, arts. 152, 154 y 156 a 159; LO 2/1980, arts. 2, 4 y 7 |
 | **IV** | ¿Cuándo se ha reformado? | Art. 95; arts. 13.2, 135, 49 y 69.3 (reformados) | Reformas de la Constitución de 1992, 2011, 2024 y 2026 |
 
 !> **La idea que une los cuatro bloques:** la Constitución tiene una **estructura** fija (I) que hay que saber de memoria: once títulos, 169 artículos y quince disposiciones. Su **contenido** empieza por el Título preliminar, que fija la forma del Estado y sus principios (II); los demás títulos se estudian en sus temas. Para cambiarla hay dos **procedimientos de reforma** (III): el del art. 167 y el del art. 168, más exigente, para la revisión total o la de las partes protegidas. Y se ha **reformado** cuatro veces, siempre por artículos sueltos (IV).
@@ -331,24 +331,24 @@ T.ap("s9", "II.5 Qué regula cada título y dónde se estudia (esquema)", f"""
 # =============================================================================
 T.ap("bIII", "III. ¿Cómo se reforma? Título X (arts. 166 a 169)", donde(
   "Tercera pregunta. La Constitución prevé **dos procedimientos** de reforma: el del **art. 167** y el del **art. 168**, mucho más exigente, para la revisión total o la que afecte a sus partes protegidas. Los Reglamentos de las Cámaras y la LO 2/1980 completan el procedimiento.",
-  ["1 La iniciativa (art. 166)", "2 El procedimiento del art. 167", "3 El procedimiento del art. 168", "4 Límites y reglas comunes (arts. 169 y 75.3; LO 2/1980)", "5 Cuadro comparativo"]))
+  ["1 La iniciativa (arts. 87 y 166)", "2 El procedimiento del art. 167", "3 El procedimiento del art. 168", "4 Límites y reglas comunes (arts. 75.3, 116.1 y 169; LO 2/1980, art. 4)", "5 Cuadro comparativo"]))
 
-T.ap("s10", "III.1 La iniciativa de reforma (art. 166 y art. 87.1 y 2)", f"""
-{unidad("1.1 Remisión al art. 87 (art. 166)",
-  lit("CE", "Artículo 166", ["apartados 1 y 2 del artículo 87"]),
-  fichab("Quién puede proponer una reforma constitucional",
-         "Los titulares de los apartados 1 y 2 del art. 87 (→ III.1.2)",
-         "En los términos de la iniciativa legislativa",
-         "—",
-         "El art. 166 remite **solo** a los apartados **1 y 2** del art. 87: la **iniciativa popular** (87.3) **no** puede proponer una reforma constitucional."))}
-
-{unidad("1.2 Los titulares (art. 87.1 y 2)",
+T.ap("s10", "III.1 La iniciativa de reforma (arts. 87.1 y 2 y 166)", f"""
+{unidad("1.1 Los titulares (art. 87.1 y 2)",
   lit("CE", "Artículo 87", ["al Gobierno, al Congreso y al Senado", "Las Asambleas de las Comunidades Autónomas", "un máximo de tres miembros"], solo=[1, 2]),
-  fichab("Iniciativa a la que remite el art. 166",
+  fichab("Iniciativa a la que remite el art. 166 (→ III.1.2)",
          ["El **Gobierno**", "El **Congreso** y el **Senado**", "Las **Asambleas de las Comunidades Autónomas**"],
          [f"Asambleas autonómicas: {c('CE', 'Artículo 87', 'solicitar del Gobierno la adopción de un proyecto de ley')} o {c('CE', 'Artículo 87', 'remitir a la Mesa del Congreso una proposición de ley')}"],
          "Las Asambleas delegan ante el Congreso **un máximo de tres** miembros",
          "Las Asambleas autonómicas **no** presentan la iniciativa ante el Senado: la remiten a la **Mesa del Congreso** o la piden al **Gobierno**."))}
+
+{unidad("1.2 Remisión al art. 87 (art. 166)",
+  lit("CE", "Artículo 166", ["apartados 1 y 2 del artículo 87"]),
+  fichab("Quién puede proponer una reforma constitucional",
+         "Los titulares de los apartados 1 y 2 del art. 87 (→ III.1.1)",
+         "En los términos de la iniciativa legislativa",
+         "—",
+         "El art. 166 remite **solo** a los apartados **1 y 2** del art. 87: la **iniciativa popular** (87.3) **no** puede proponer una reforma constitucional."))}
 
 {unidad("1.3 Requisitos de las proposiciones en cada Cámara (Reglamento del Congreso, art. 146.1; Reglamento del Senado, art. 152)",
   lit("RCD", "art146", ["suscritas por dos grupos parlamentarios o por una quinta parte de los miembros de la Cámara"], solo=[1], titulo="Artículo 146.1 (Reglamento del Congreso)"),
@@ -388,8 +388,8 @@ T.ap("s11", "III.2 El procedimiento del art. 167", f"""
 
 {unidad("2.4 El referéndum facultativo (Reglamento del Senado, art. 157; LO 2/1980, arts. 2.3 y 7)",
   lit("RS", "Artículo 157", ["dentro de los quince días siguientes, una décima parte de los miembros del Senado"]),
-  lit("LO2_1980", "Artículo séptimo", ["será condición previa la comunicación por las Cortes Generales al Presidente del Gobierno", "dentro del plazo de treinta días", "dentro de los sesenta días siguientes"]),
   lit("LO2_1980", "Artículo segundo", ["Corresponde al Rey convocar a referéndum"], solo=[3]),
+  lit("LO2_1980", "Artículo séptimo", ["será condición previa la comunicación por las Cortes Generales al Presidente del Gobierno", "dentro del plazo de treinta días", "dentro de los sesenta días siguientes"]),
   fichab("Ratificación popular de la reforma",
          ["Lo solicita **una décima parte** de los miembros de cualquiera de las Cámaras (en el Senado, por escrito al Presidente)", "Lo convoca el **Rey**, mediante Real Decreto acordado en Consejo de Ministros y refrendado por su Presidente"],
          "Las Cortes comunican al Presidente del Gobierno el proyecto aprobado, con la solicitud del art. 167.3",
@@ -424,23 +424,23 @@ T.ap("s12", "III.3 El procedimiento del art. 168", f"""
          "La **mayoría absoluta** para ratificar la decisión la fija el **Reglamento del Senado** (art. 159), no la Constitución."))}
 """, 2)
 
-T.ap("s13", "III.4 Límites y reglas comunes (arts. 169 y 75.3; LO 2/1980, art. 4)", f"""
-{unidad("4.1 Límite temporal: guerra y estados del art. 116 (art. 169)",
-  lit("CE", "Artículo 169", ["en tiempo de guerra o de vigencia de alguno de los estados previstos en el artículo 116"]),
-  lit("CE", "Artículo 116", ["los estados de alarma, de excepción y de sitio"], solo=[1]),
-  fichab("Cuándo no puede iniciarse una reforma",
-         "—",
-         ["En tiempo de **guerra**", "Durante la vigencia del estado de **alarma**, de **excepción** o de **sitio** (art. 116)"],
-         "—",
-         "Lo que se prohíbe es **iniciar** la reforma. Incluye el estado de **alarma**, no solo los de excepción y sitio."))}
-
-{unidad("4.2 Sin delegación en Comisiones (art. 75.3)",
+T.ap("s13", "III.4 Límites y reglas comunes (arts. 75.3, 116.1 y 169; LO 2/1980, art. 4)", f"""
+{unidad("4.1 Sin delegación en Comisiones (art. 75.3)",
   lit("CE", "Artículo 75", ["la reforma constitucional"], solo=[2, 3]),
   fichab("La reforma constitucional la aprueba el Pleno",
          "El **Pleno** de cada Cámara",
          "No cabe delegar su aprobación en las Comisiones Legislativas Permanentes",
          "—",
          "La **reforma constitucional** encabeza la lista del 75.3, con las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos."))}
+
+{unidad("4.2 Límite temporal: guerra y estados del art. 116 (arts. 116.1 y 169)",
+  lit("CE", "Artículo 116", ["los estados de alarma, de excepción y de sitio"], solo=[1]),
+  lit("CE", "Artículo 169", ["en tiempo de guerra o de vigencia de alguno de los estados previstos en el artículo 116"]),
+  fichab("Cuándo no puede iniciarse una reforma",
+         "—",
+         ["En tiempo de **guerra**", "Durante la vigencia del estado de **alarma**, de **excepción** o de **sitio** (art. 116)"],
+         "—",
+         "Lo que se prohíbe es **iniciar** la reforma. Incluye el estado de **alarma**, no solo los de excepción y sitio."))}
 
 {unidad("4.3 El referéndum constitucional y el calendario electoral (LO 2/1980, art. 4)",
   lit("LO2_1980", "Artículo cuarto", ["durante la vigencia de los estados de excepción y sitio", "salvo los previstos en los artículos ciento sesenta y siete y ciento sesenta y ocho de la Constitución"]),

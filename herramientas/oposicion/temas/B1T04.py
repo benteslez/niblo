@@ -294,7 +294,7 @@ T.ap("s9", "III.1 La sucesión en la Corona (art. 57 y LO 3/2014)", f"""
   fichab("Instrumento para resolver abdicaciones, renuncias y dudas sucesorias",
          "Las Cortes Generales, mediante **ley orgánica**",
          ["Abdicaciones y renuncias", "Cualquier duda de **hecho o de derecho** en el orden de sucesión"],
-         "Ley orgánica: mayoría absoluta del Congreso en una votación final sobre el conjunto del proyecto (art. 81.2; tema I.5)",
+         "Ley orgánica: mayoría absoluta del Congreso en una votación final sobre el conjunto del proyecto (art. 81.2; tema IV.2)",
          "Ley **orgánica** (no ordinaria, ni real decreto, ni acuerdo de las Cortes). Aplicación: la LO 3/2014 (→ III.1.5)."))}
 
 {unidad("1.5 La abdicación de Don Juan Carlos I (LO 3/2014, artículo único)",
