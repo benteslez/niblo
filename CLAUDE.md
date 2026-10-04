@@ -71,7 +71,7 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   rellena «de ejemplo»; hasta que las aporte, el test real está vacío.
 - Datos en `oposicion.html`, `<script type="application/json" id="tests-reales">`:
   `{"_formato":"tests_reales_v1","examenes":[{ id, titulo, anio,
-  acceso:"libre"|"promocion"|"extraordinaria", convocatoria, ejercicio, fecha,
+  acceso:"libre"|"promocion"|"extraordinaria"|"estabilizacion", convocatoria, ejercicio, fecha,
   plantilla:"provisional"|"definitiva", fuente, corte?, minutos?, penalizacion?,
   preguntas:[{ n, q, o:[…], c, tema?, reserva?, anulada?, e? }] }]}`.
   `c` es el índice (0 = a) de la respuesta de la plantilla; `tema` es el
@@ -82,9 +82,23 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
 - Antes de publicar: enunciado y opciones copiados literales del cuestionario,
   respuesta de la plantilla comprobada contra la ley (como en los apuntes) y
   avisar al usuario de cualquier respuesta que no case.
-- Modo **Repaso (SRS)**: el mismo SM-2 del SRS de vocabulario (fallada → mañana;
-  dudada → 3 días; sabida → 7 días; luego intervalo × facilidad; facilidad
-  1,3–2,8). No cambiar los parámetros sin que lo pida el usuario.
+- Modo **Repaso (SRS para test)**: SM-2 adaptado a preguntas de cuatro
+  opciones (pedido por el usuario): fallada → vuelve en la misma sesión con
+  las opciones rebarajadas hasta acertarla y después mañana; dudada → mañana
+  y luego el intervalo se acorta (×0,8, mín. 2 días); sabida → 4, 10 días y
+  luego × facilidad (tras un fallo, 2 días); facilidad 1,3–2,5; máximo 90
+  días; 🔥 rebelde (3+ fallos) sale cada día hasta dos aciertos seguros
+  seguidos; se recuerda la opción equivocada. No cambiar sin que lo pida.
+- **Opciones siempre barajadas** en cualquier test (la corrección indica la
+  letra del examen original). Las preguntas del test real se muestran en
+  **pantalla completa**.
+- Examen completo: si hay preguntas anuladas, se sustituyen por las de reserva
+  por su orden, como en la corrección oficial.
+- Al añadir un examen: extraer cuestionario y plantilla del PDF, comprobar la
+  plantilla también **sobre su imagen** (transcripción independiente) y, tras
+  incrustarlo, volver a comparar las respuestas del HTML publicado con ella.
+  Códigos de archivo: L = turno libre, P = promoción interna,
+  X = extraordinaria, ST = estabilización.
 - Modo **Examen oficial**: condiciones vigentes del primer ejercicio
   (BOE-A-2025-26262): turno libre, 100 preguntas, 90 minutos y −1/3 (anexo VII,
   2.1.1); promoción interna, 100, 90 y −1/4 (anexo VIII, 3.1.1). Los blancos no
