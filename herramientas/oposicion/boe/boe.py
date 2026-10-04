@@ -3,7 +3,15 @@
 Se usa la ÚLTIMA versión de cada bloque (la vigente) y se excluyen las notas."""
 import xml.etree.ElementTree as ET, re, os
 AQUI = os.path.dirname(os.path.abspath(__file__))
-IDS = dict(l.split() for l in open(os.path.join(AQUI, "ids.txt")) if l.strip())
+import glob as _glob
+# ids.txt y, aparte, ids_*.txt (uno por tarea, para no pisarse): clave → BOE-A-… / CELEX:…
+IDS = {}
+for _f in sorted(_glob.glob(os.path.join(AQUI, "ids*.txt"))):
+    for _l in open(_f):
+        if _l.strip():
+            _k, _v = _l.split()
+            assert IDS.get(_k, _v) == _v, ("clave repetida con otro id", _k)
+            IDS[_k] = _v
 _cache = {}
 def ley(k):
     if k in _cache: return _cache[k]

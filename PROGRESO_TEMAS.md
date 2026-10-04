@@ -17,9 +17,12 @@ publica en `temas/<id>.json` y se apunta en `temas/indice.json`.
 
 ## 1. Tests reales (petición intercalada del usuario)
 
-- [ ] GACE-P 2025 (promoción interna): cuestionario + plantilla, comprobación
-      plantilla ↔ ley y texto legal por pregunta.
-- [ ] GACE-X 2025 (extraordinaria): ídem.
+- [x] GACE-P 2025 (promoción interna): 96 con texto legal, 8 sin norma literal
+      (105 PENDIENTE: Resolución de 25-5-2010 sobre nóminas; pedir al usuario).
+- [x] GACE-X 2025 (extraordinaria): 95 con texto legal, 10 sin norma literal.
+      **96 RETENIDA** (la plantilla da b; el art. 78.3 LGP no casa): esperar
+      decisión del usuario. Pendientes de fuente: 31, 91, 100 (Res. 25-5-2010).
+      Sin condiciones oficiales (minutos/penalización) hasta tener su convocatoria.
 
 ## 2. Temas «Solo BOE»
 
