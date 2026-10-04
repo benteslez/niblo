@@ -261,7 +261,7 @@ Además, la justicia {c("CE", "Artículo 117", "se administra en nombre del Rey"
 
 # =============================================================================
 T.ap("bIII", "III. ¿Quién sucede al Rey y quién lo suple? Sucesión, regencia y tutela (arts. 57 a 61; LO 3/2014)", donde(
-  "Tercera pregunta. La Corona es **hereditaria**: la Constitución fija el **orden de sucesión** y qué pasa si se agotan las líneas, si hay abdicación o dudas. Si el Rey es **menor de edad** o queda **inhabilitado**, ejerce sus funciones la **Regencia**; el Rey menor tiene además un **tutor**. Todos juran ante las Cortes.",
+  "Tercera pregunta. La Corona es **hereditaria**: la Constitución fija el **orden de sucesión** y qué pasa si se agotan las líneas, si hay abdicación o dudas. Si el Rey es **menor de edad** o queda **inhabilitado**, ejerce sus funciones la **Regencia**; el Rey menor tiene además un **tutor**. Prestan juramento el Rey, el Príncipe heredero y el Regente o Regentes (art. 61); el tutor, no.",
   ["1 La sucesión en la Corona (art. 57 y LO 3/2014)", "2 El consorte (art. 58)", "3 La Regencia (art. 59)", "4 La tutela del Rey menor (art. 60)", "5 El juramento (art. 61)", "6 Cuadro: Regencia y tutela"]))
 
 T.ap("s9", "III.1 La sucesión en la Corona (art. 57 y LO 3/2014)", f"""
@@ -294,7 +294,7 @@ T.ap("s9", "III.1 La sucesión en la Corona (art. 57 y LO 3/2014)", f"""
   fichab("Instrumento para resolver abdicaciones, renuncias y dudas sucesorias",
          "Las Cortes Generales, mediante **ley orgánica**",
          ["Abdicaciones y renuncias", "Cualquier duda de **hecho o de derecho** en el orden de sucesión"],
-         "Ley orgánica: mayoría absoluta del Congreso en una votación final sobre el conjunto del proyecto (art. 81.2; tema I.5)",
+         "Ley orgánica: mayoría absoluta del Congreso en una votación final sobre el conjunto del proyecto (art. 81.2; tema IV.2)",
          "Ley **orgánica** (no ordinaria, ni real decreto, ni acuerdo de las Cortes). Aplicación: la LO 3/2014 (→ III.1.5)."))}
 
 {unidad("1.5 La abdicación de Don Juan Carlos I (LO 3/2014, artículo único)",
@@ -549,8 +549,8 @@ T.q("CE", "Artículo 168", "La Corona", "Según el artículo 168.1 de la Constit
     ["Mayoría de dos tercios de cada Cámara, y la disolución inmediata de las Cortes.", "Mayoría de tres quintos de cada Cámara.", "Mayoría absoluta del Congreso y del Senado.", "Mayoría de dos tercios del Congreso, sin disolución de las Cortes."],
     "Art. 168.1 CE.", "se procederá a la aprobación del principio por mayoría de dos tercios de cada Cámara, y a la disolución inmediata de las Cortes")
 T.q("CE", "Artículo 62", "Funciones del Rey", "Según el artículo 62 de la Constitución, corresponde al Rey:",
-    ["El mando supremo de las Fuerzas Armadas.", "El Alto Patronazgo de las Fuerzas Armadas.", "La dirección de la política de defensa.", "La jefatura del Estado Mayor de la Defensa."],
-    "Art. 62 h) CE. La dirección de la política de defensa es del Gobierno (art. 97, tema I.6).", "El mando supremo de las Fuerzas Armadas")
+    ["El mando supremo de las Fuerzas Armadas.", "El Alto Patronazgo de las Fuerzas Armadas.", "La dirección de la defensa del Estado.", "La jefatura del Estado Mayor de la Defensa."],
+    "Art. 62 h) CE. La defensa del Estado la dirige el Gobierno: «El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado» (art. 97, tema I.6).", "El mando supremo de las Fuerzas Armadas")
 T.q("CE", "Artículo 62", "Funciones del Rey", "Según el artículo 62 j) de la Constitución, corresponde al Rey el Alto Patronazgo de:",
     ["Las Reales Academias.", "Las Fuerzas Armadas.", "Las Universidades públicas.", "El Patrimonio Nacional."],
     "Art. 62 j) CE.", "El Alto Patronazgo de las Reales Academias")
@@ -618,7 +618,7 @@ T.q("CE", "Artículo 59", "Regencia", "Según el artículo 59.3 de la Constituci
     "Art. 59.3 CE.", "se compondrá de una, tres o cinco personas")
 T.q("CE", "Artículo 59", "Regencia", "Según el artículo 59.4 de la Constitución, para ejercer la Regencia es preciso:",
     ["Ser español y mayor de edad.", "Ser español de nacimiento y mayor de edad.", "Ser miembro de la Familia Real.", "Ser mayor de cuarenta años."],
-    "Art. 59.4 CE. «Español de nacimiento» se exige al tutor testamentario (art. 60.1).", "Para ejercer la Regencia es preciso ser español y mayor de edad")
+    "Art. 59.4 CE. Al tutor testamentario se le exige ser «español de nacimiento» (art. 60.1).", "Para ejercer la Regencia es preciso ser español y mayor de edad")
 T.q("CE", "Artículo 59", "Regencia", "Según el artículo 59.5 de la Constitución, la Regencia se ejercerá:",
     ["Por mandato constitucional y siempre en nombre del Rey.", "Por delegación de las Cortes Generales y en nombre propio.", "Por mandato del Rey y en su nombre.", "Por mandato constitucional y en nombre de las Cortes Generales."],
     "Art. 59.5 CE.", "La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey")

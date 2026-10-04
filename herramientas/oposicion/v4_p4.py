@@ -2,15 +2,15 @@
 # Tema I.2 (v4) · Parte 4: bloque II, las garantías.
 from v4_util import *
 
-ap("bII", "II. ¿Cómo se protegen? (arts. 53 y 54 y su desarrollo)", f"""
+ap("bII", "II. ¿Cómo se protegen? (arts. 53, 17.4, 81, 86, 124.1, 161, 162 y 167 a 169, y su desarrollo)", f"""
 {donde("Ya sabes qué derechos hay y en qué nivel está cada uno (bloque I). Ahora, **qué mecanismos** aseguran que se respeten y **cuáles corresponden a cada nivel**.",
-       ["1 El art. 53 y el mapa de garantías", "2 Garantías normativas (81, 86, 161-162, 167-169)", "3 Procedimiento preferente y sumario (LJCA)", "4 *Habeas corpus* (LO 6/1984)", "5 Recurso de amparo (LOTC)", "6 Cuadro de síntesis"])}
+       ["1 El art. 53 y el mapa de garantías (y el art. 124.1)", "2 Garantías normativas (81, 86, 161-162, 167-169 y art. 32.1 LOTC)", "3 Procedimiento preferente y sumario (LJCA)", "4 *Habeas corpus* (art. 17.4 y LO 6/1984)", "5 Recurso de amparo (LOTC)", "6 Cuadro de síntesis"])}
 
 **Orden de estudio.** Primero el art. 53, que reparte las garantías; después cada garantía en el orden de sus artículos; las leyes de desarrollo (LJCA, LO 6/1984, LOTC), en el orden de sus propios artículos. La garantía **institucional** (Defensor del Pueblo, art. 54) tiene bloque propio (→ IV).
 """)
 
 # ---------------------------------------------------------------------------
-ap("s5", "II.1 El art. 53: las garantías según el nivel del derecho", f"""
+ap("s5", "II.1 El art. 53: las garantías según el nivel del derecho (y el art. 124.1)", f"""
 ### 1.1 Qué es una garantía y qué tipos hay
 
 Reconocer un derecho no basta: hacen falta **mecanismos que aseguren su respeto**. El Capítulo cuarto, «De las garantías de las libertades y derechos fundamentales» (arts. 53 y 54), los recoge junto con otros preceptos. La doctrina los clasifica en tres tipos:
@@ -19,7 +19,7 @@ Reconocer un derecho no basta: hacen falta **mecanismos que aseguren su respeto*
 |---|---|---|---|
 | **Normativas** | Protegen los derechos **frente al legislador** | Arts. 53.1, 81, 86.1, 161.1 a), 167-169 | → II.2 |
 | **Jurisdiccionales** | Permiten acudir a un **tribunal** | Arts. 53.2, 17.4, 161.1 b) y 162.1 b) | → II.3 a II.5 |
-| **Institucionales** | Encargan su defensa a una **institución** | Art. 54 (Defensor del Pueblo) y art. 124 (Ministerio Fiscal) | → IV |
+| **Institucionales** | Encargan su defensa a una **institución** | Art. 54 (Defensor del Pueblo) y art. 124 (Ministerio Fiscal) | → IV y II.1.3 |
 
 {unidad("1.2 Las garantías de las libertades y derechos (art. 53)",
   lit("CE", 53, ["vinculan a todos los poderes públicos", "Sólo por ley, que en todo caso deberá respetar su contenido esencial", "artículo 161, 1, a)", "preferencia y sumariedad", "recurso de amparo ante el Tribunal Constitucional", "objeción de conciencia reconocida en el artículo 30", "informarán la legislación positiva, la práctica judicial y la actuación de los poderes públicos"]),
@@ -31,7 +31,7 @@ Reconocer un derecho no basta: hacen falta **mecanismos que aseguren su respeto*
 
 **Dos ideas que el art. 53.1 condensa** (doctrina, no texto legal):
 - **Reserva de ley:** solo una norma con rango de ley puede regular el ejercicio de estos derechos; un reglamento no puede hacerlo por sí solo.
-- **Contenido esencial:** ni siquiera la ley puede vaciar el núcleo del derecho. La STC 11/1981 lo define como las facultades sin las cuales el derecho se desnaturaliza o deja de ser reconocible.
+- **Contenido esencial:** ni siquiera la ley puede vaciar el núcleo del derecho. La STC 11/1981 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/11]] lo define como las facultades sin las cuales el derecho se desnaturaliza o deja de ser reconocible.
 
 ### 1.3 Otra garantía institucional: el Ministerio Fiscal (art. 124.1)
 
@@ -39,7 +39,7 @@ Además del Defensor del Pueblo (→ IV), el art. 124.1 encomienda al Ministerio
 """, 2)
 
 # ---------------------------------------------------------------------------
-ap("s5-1", "II.2 Garantías normativas (arts. 81, 86, 161, 162 y 167 a 169)", f"""
+ap("s5-1", "II.2 Garantías normativas (arts. 81, 86, 161, 162 y 167 a 169 CE; art. 32.1 LOTC)", f"""
 Las garantías normativas limitan al **legislador**: quién puede regular los derechos, con qué norma y cómo se controla. Se ven en el orden de sus artículos.
 
 {unidad("2.1 Ley orgánica (art. 81)",
@@ -48,7 +48,7 @@ Las garantías normativas limitan al **legislador**: quién puede regular los de
          "Las Cortes; la mayoría la exige al **Congreso**",
          "Aprobación, modificación o derogación en una **votación final sobre el conjunto del proyecto**",
          "**Mayoría absoluta del Congreso**",
-         ["«Derechos fundamentales y libertades públicas» es la rúbrica de la **Sección 1.ª**. Que no alcance al art. 14 ni a la Sección 2.ª es **doctrina del TC**, no texto literal", "Mayoría **absoluta**, no tres quintos"]))}
+         ["«De los derechos fundamentales y de las libertades públicas» es la rúbrica de la **Sección 1.ª**. Que no alcance al art. 14 ni a la Sección 2.ª es **doctrina del TC** (STC 76/1983 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/204]]; para la objeción de conciencia, STC 160/1987 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/892]]), no texto literal", "Mayoría **absoluta**, no tres quintos"]))}
 
 {unidad("2.2 Prohibición del decreto-ley (art. 86.1)",
   lit("CE", 86, ["extraordinaria y urgente necesidad", "a los derechos, deberes y libertades de los ciudadanos regulados en el Título I"], solo=[0], titulo="Artículo 86.1"),
@@ -69,12 +69,13 @@ Las garantías normativas limitan al **legislador**: quién puede regular los de
          ["El **Defensor del Pueblo** es el único que está en **las dos** listas", "El Ministerio Fiscal, solo en la de amparo; los 50 Diputados o Senadores, solo en la de inconstitucionalidad"]))}
 
 {unidad("2.4 Rigidez constitucional (arts. 167 a 169)",
+  lit("CE", 167, ["mayoría de tres quintos de cada una de las Cámaras", "mayoría absoluta del Senado", "por mayoría de dos tercios", "una décima parte de los miembros de cualquiera de las Cámaras"]),
   lit("CE", 168, ["al Capítulo segundo, Sección primera del Título I", "mayoría de dos tercios de cada Cámara", "disolución inmediata de las Cortes", "referéndum"]),
   lit("CE", 169, ["en tiempo de guerra o de vigencia de alguno de los estados previstos en el artículo 116"]),
   fichab("Protección de los derechos frente a la propia reforma de la Constitución",
          ["Reforma **agravada** (168): revisión total o parcial que afecte al Título preliminar, a la **Sección 1.ª** del Capítulo segundo del Título I o al Título II", "Reforma **ordinaria** (167): el resto, incluidos el **art. 14**, la **Sección 2.ª** y el **Capítulo tercero**"],
-         ["168: aprobación del principio, **disolución** de las Cortes, ratificación y estudio del nuevo texto por las nuevas Cámaras y **referéndum** obligatorio", "169: no puede **iniciarse** la reforma en tiempo de guerra ni con un estado del art. 116 en vigor"],
-         "168: **dos tercios** de cada Cámara (para el principio y para el nuevo texto)",
+         ["167: aprobación por las dos Cámaras; si no hay acuerdo, Comisión paritaria de Diputados y Senadores; referéndum solo si lo solicita una décima parte de los miembros de cualquiera de las Cámaras", "168: aprobación del principio, **disolución** de las Cortes, ratificación y estudio del nuevo texto por las nuevas Cámaras y **referéndum** obligatorio", "169: no puede **iniciarse** la reforma en tiempo de guerra ni con un estado del art. 116 en vigor"],
+         ["167: **tres quintos** de cada Cámara; si no, con mayoría absoluta del Senado, **dos tercios** del Congreso; referéndum si lo piden, en **quince días**, una **décima parte** de los miembros de una Cámara", "168: **dos tercios** de cada Cámara (para el principio y para el nuevo texto)"],
          "El art. 14 tiene amparo, pero su reforma es **ordinaria**: el 168 solo nombra la Sección primera."))}
 """, 2)
 
@@ -135,7 +136,7 @@ El art. 17.4 CE ordena: {c("CE", 17, "La ley regulará un procedimiento de «hab
          ["Regla: el **Juez de Instrucción del lugar donde se encuentre** la persona privada de libertad", "Si no consta, el del lugar de la detención; en defecto de ambos, el del lugar de las últimas noticias", "Detención por terrorismo (ley orgánica del art. 55.2 CE): el **Juez Central de Instrucción**", "Jurisdicción Militar: el **Juez Togado Militar de Instrucción** de la circunscripción de la detención"],
          "—",
          "—",
-         ["El juez es el del lugar **donde esté** el detenido, no el de la detención (salvo que aquel no conste)", "*Pendiente de comprobar:* el texto consolidado no incluye nota sobre la LO 1/2025 (Tribunales de Instancia), que sí llevan la LECrim y la LJCA. Confirmar si «Juez Central de Instrucción» debe leerse ya como Sección del Tribunal Central de Instancia"]))}
+         ["El juez es el del lugar **donde esté** el detenido, no el de la detención (salvo que aquel no conste)", f"Tribunales de Instancia: el texto consolidado de la LO 6/1984 no lleva nota (la LECrim y la LJCA sí), pero la disposición adicional primera de la LO 1/2025 (BOE-A-2025-76) es general: {c('LO1_2025', 'Disposición adicional primera', 'Las referencias realizadas en las leyes y en el resto de disposiciones de nuestro ordenamiento jurídico a los Juzgados de … de Instrucción … se entenderán referidas a las Secciones del orden jurisdiccional correspondiente de los Tribunales de Instancia')}; y {c('LO1_2025', 'Disposición adicional primera', 'La misma consideración tendrán las referencias a los Juzgados Centrales respecto de las correspondientes Secciones del Tribunal Central de Instancia')}. En el examen, la letra de la LO 6/1984: «Juez de Instrucción» y «Juez Central de Instrucción»"]))}
 
 {unidad("4.3 Legitimación e iniciación (arts. 3 a 5)",
   lit("HC", "tercero", ["El Ministerio Fiscal.", "El Defensor del Pueblo.", "de oficio"]),
@@ -224,17 +225,19 @@ Con todo el bloque II visto, el art. 53 se resume así:
 
 | Ubicación | Vinculación, reserva de ley y contenido esencial (53.1) | Ley orgánica (81) | Preferente y sumario (53.2) | Amparo ante el TC | Reforma de la CE |
 |---|---|---|---|---|---|
-| Art. 14 | Sí | No (doctrina del TC) | Sí | Sí | Ordinaria (167) |
+| Art. 14 | Sí | No (STC 76/1983 [[TC]]) | Sí | Sí | Ordinaria (167) |
 | Sección 1.ª (arts. 15-29) | Sí | Sí | Sí | Sí | Agravada (168) |
-| Art. 30 (objeción de conciencia) | Sí | No (doctrina del TC) | No | **Sí** | Ordinaria |
-| Resto de la Sección 2.ª (arts. 30-38) | Sí | No (doctrina del TC) | No | No | Ordinaria |
+| Art. 30 (objeción de conciencia) | Sí | No (STC 160/1987 [[TC]]) | No | **Sí** | Ordinaria |
+| Resto de la Sección 2.ª (arts. 30-38) | Sí | No (STC 76/1983 [[TC]]) | No | No | Ordinaria |
 | Capítulo tercero (arts. 39-52) | No: «informarán» (53.3) | No | No | No | Ordinaria |
+
+*Ley orgánica: el art. 81 no lo precisa; es doctrina del TC, no texto legal:* STC 76/1983 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/204]] (art. 14 y Sección 2.ª) y STC 160/1987 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/892]] (objeción de conciencia).
 
 **Comunes a todo el Título I:** prohibición del **decreto-ley** (86.1); **recurso de inconstitucionalidad** contra las leyes; supervisión del **Defensor del Pueblo**, que defiende {c("CE", 54, "los derechos comprendidos en este Título")} (art. 54 → IV).
 
 {resumen(["El **art. 53** reparte las garantías: 53.1 para todo el Capítulo segundo, 53.2 para el art. 14 y la Sección 1.ª (y el amparo, también para la objeción de conciencia), 53.3 para el Capítulo tercero.",
           "**Normativas** (frente al legislador): ley orgánica (81), prohibición del decreto-ley (86.1), recurso de inconstitucionalidad (161-162) y rigidez (167-169).",
           "**Jurisdiccionales**: procedimiento preferente y sumario (LJCA, 10 días), *habeas corpus* (LO 6/1984, 24 horas) y amparo constitucional (LOTC: 3 meses, 20 días o 30 días).",
-          "El **Defensor del Pueblo** aparece en todas: inconstitucionalidad, amparo y *habeas corpus*."],
-         "Siguiente: bloque III. Los derechos están protegidos, pero en situaciones extraordinarias algunos pueden **suspenderse**: cuáles, cuándo y con qué controles.")}
+          "El **Defensor del Pueblo** está legitimado en tres de ellas: inconstitucionalidad, amparo y *habeas corpus*."],
+         "Siguiente: bloque III. Los derechos están protegidos, pero en situaciones extraordinarias algunos pueden suspenderse: cuáles, cuándo y con qué controles.")}
 """, 2)

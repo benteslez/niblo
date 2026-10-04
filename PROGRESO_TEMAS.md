@@ -23,7 +23,6 @@ publica en `temas/<id>.json` y se apunta en `temas/indice.json`.
       96: DISCREPANCIA (la plantilla da b; el art. 78.3 LGP no casa): por decisión del
       usuario se mantiene la plantilla con la etiqueta «Discrepancia» (también X31, X44,
       X60 y P91; ver boe/discrepancias.py). X85 ya con texto legal (RD 466/2026, art. tercero); X91 con la Orden HAC/557/2026, art. 6.1.1; P105 con la Resolución de 25-5-2010 (BOE-A-2010-8386). Pendientes de fuente: 31, 100 (anexo XV de la Resolución de 2010 solo en el PDF del BOE; se usa en el tema VI.8) (Res. 25-5-2010). X31: la ficha 1.1.2 del PE da «Tratado de Fusión, de 8 de abril de 1965 … Entró en vigor en 1967»; ninguna fuente da «1 de julio de 1967» (plantilla a): se mantiene con «Discrepancia».
-      Sin condiciones oficiales (minutos/penalización) hasta tener su convocatoria.
 
 ## 2. Temas «Solo BOE»
 
@@ -54,3 +53,26 @@ Bloque III: - [x] III.8
   *.tribunalconstitucional.es, *.poderjudicial.es, *.seg-social.es, *.sepe.es,
   *.muface.es, *.tcu.es, *.airef.es, *.defensordelpueblo.es,
   *.consejodetransparencia.es, *.senado.es.
+
+## Auditoría completa (4-10-2026, petición del usuario)
+
+- [x] Normas del BOE descargadas de nuevo: coinciden bloque a bloque con las usadas.
+- [x] Epígrafes del hub = anexo VII de BOE-A-2025-26262 (los 58, literales).
+- [x] Tema I.2 cotejado con la API del BOE (LO 4/1981, LO 6/1984, LECrim, Ley 36/1985).
+- [x] Revisión de contenido de los 54 temas (fichas, guías, test, glosario, flashcards,
+      cronología, cobertura del epígrafe, títulos y orden) y correcciones.
+- [x] Citas y apoyos comprobados CON mayúsculas (`plantilla.py`: `_lit`).
+- [x] «::Subtítulo:» fuera de la primera posición de una ficha → negrita.
+- Quedan para el usuario: «Pendiente (temario)» de II.5, II.6, III.4, III.6 y VI.8;
+  naturaleza de la expropiación (IV.8); P55 (¿Discrepancia?); RD 466/2026 en I.9;
+  [sic] en «Diposición» (I.1, errata del BOE).
+
+## Auditoría en rondas (4-10-2026, petición del usuario: «hasta que esté 100 % correcta, máx. 10 rondas»)
+
+- [x] Ronda 1: revisión completa de los 54 temas (≈150 correcciones).
+- [x] Ronda 2: ≈115 correcciones (citas con mayúsculas, extractos, títulos).
+- [x] Ronda 3: ≈250 correcciones (criterios fijos de orden, rangos y extractos `solo=[…]`).
+- [x] Ronda 4: 56 correcciones; limpios IV.7-9, bloque V entero y VI.5-8.
+- [ ] Ronda 5: parada por el usuario al empezar (publicado lo hecho hasta la ronda 4).
+- Criterios y herramientas de la auditoría: scratchpad de la sesión (RONDA.md, autochk, citas, solochk, mapachk).
+- Pendiente de decisión del usuario: P55 y P66 (¿Discrepancia?), RD 466/2026 en I.9, [sic] en I.1.

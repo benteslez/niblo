@@ -12,7 +12,7 @@ from plantilla import *
 CORTO.update({"LGD": "RDLeg 1/2013", "RD2271": "RD 2271/2004", "RDL6": "RDL 6/2023", "OPJC804": "Orden PJC/804/2025"})
 
 T = Tema("B5T10",
-  "Cuatro preguntas: I. Quién es persona con discapacidad y qué principios rigen su acceso (RDLeg 1/2013; RD 2271/2004; RDL 6/2023) · II. Cuántas plazas se reservan (TREBEP, art. 59; RDL 6/2023, art. 108; RD 2271/2004) · III. Cómo se adapta el proceso selectivo (Orden PJC/804/2025) · IV. Qué pasa después del ingreso: destino, adaptación del puesto y formación. Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Quién es persona con discapacidad y qué principios rigen su acceso (RDLeg 1/2013; RD 2271/2004; RDL 6/2023) · II. Cuántas plazas se reservan (TREBEP, art. 59; RDL 6/2023, arts. 108 y 113; RD 2271/2004) · III. Cómo se adapta el proceso selectivo (TREBEP, art. 59; RDL 6/2023, arts. 113 y 115; RD 2271/2004; Orden PJC/804/2025) · IV. Qué pasa después del ingreso: destino, adaptación del puesto y formación (RD 2271/2004; RDL 6/2023). Cada artículo: texto literal del BOE y ficha.",
   ["Discapacidad", "33 por ciento", "Cupo de reserva", "7 % (TREBEP)", "10 % (AGE)", "Discapacidad intelectual", "Ajustes razonables", "Adaptación de tiempos", "Adaptación de medios", "Orden PJC/804/2025", "Alteración del orden de prelación", "Adaptación del puesto", "Unidades de inclusión"])
 
 T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
@@ -20,6 +20,8 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 > Acceso al empleo público y provisión de puestos de trabajo de las personas con discapacidad.
 
 ### El hilo conductor
+
+El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque de los apuntes:
 
 | Bloque | Pregunta | Normas |
 |---|---|---|
@@ -31,6 +33,13 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 !> **La idea que une los cuatro bloques:** la persona con discapacidad (grado **igual o superior al 33 %**) accede al empleo público en **igualdad de condiciones**, con dos herramientas: un **cupo de reserva** de plazas y las **adaptaciones y ajustes razonables** de tiempos y medios. Una vez dentro, puede pedir **alterar el orden** para elegir destino y la **adaptación del puesto**.
 
 ?> **Aviso: tres porcentajes de reserva en tres normas vigentes.** El RD 2271/2004 dice «**no inferior al cinco por ciento**» (texto de 2004, no actualizado); el TREBEP, norma básica, «**no inferior al siete por ciento**» (art. 59.1); y el RDL 6/2023, para la **Administración del Estado**, «**no inferior al diez por ciento**» (art. 108.4). Se citan los tres literalmente (→ II.2). En el examen, fíjate en **qué norma** cita el enunciado.
+
+### Cómo está escrito
+
+- Cada artículo: primero el **texto literal del BOE** (con la etiqueta BOE) y debajo su **ficha**: de **institución o procedimiento** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen) o de **derecho** (Titulares · Contenido · Límites · Protección · ⚠ Ojo en el examen).
+- Los esquemas y cuadros **no son texto legal**: resumen los artículos citados.
+- El RD 2271/2004 conserva denominaciones antiguas («minusvalía», «Ministerio de Administraciones Públicas»): se copian **literales**, tal como están en el texto consolidado.
+- Al final: **Cierre 1** (las preguntas oficiales de 2025 sobre este tema) y **Cierre 2** (repaso por bloques).
 """)
 
 # =============================================================================
@@ -61,7 +70,7 @@ T.ap("s2", "I.2 Derecho de acceso y principios (RD 2271/2004, art. 1; RDL 6/2023
         "Derecho a **acceder al empleo público** en las condiciones del real decreto",
         "Ámbito: el personal del art. 1.1 de la Ley 30/1984 (Administración del Estado); **supletorio** para el resto del sector público (disposición adicional única)",
         "—",
-        "**Cuatro** principios: igualdad de oportunidades, no discriminación, accesibilidad universal y **compensación de desventajas**. Nota: el art. 1.1 remite aún a la Ley 51/2003 y habla de «minusvalía»; hoy rige el concepto del RDLeg 1/2013 (→ I.1.2), que usa «persona con discapacidad»."))}
+        f"**Cuatro** principios: igualdad de oportunidades, no discriminación, accesibilidad universal y **compensación de desventajas**. Nota: el art. 1.1 remite aún a la Ley 51/2003 y habla de «minusvalía»; esa ley está derogada e integrada en el RDLeg 1/2013 (disposición derogatoria única: {c('LGD', 'ddunica', 'La Ley 51/2003, de 2 de diciembre')}…), cuyo concepto rige hoy (→ I.1.2) y que usa «persona con discapacidad»."))}
 
 {unidad("2.2 Principios del RDL 6/2023 para la Administración del Estado (art. 113.1 y 2)",
   lit("RDL6", "a1-25", ["igualdad de oportunidades, no discriminación y accesibilidad universal", "en igualdad de condiciones que el resto de las personas aspirantes", "la compatibilidad con el desempeño de las funciones y tareas genéricas"], solo=[1, 2], titulo="Artículo 113. Acceso al empleo público de personas con discapacidad (RDL 6/2023)"),
@@ -191,13 +200,14 @@ T.ap("s8", "III.3 Los criterios de la Orden PJC/804/2025", f"""
 {unidad("3.1 Objeto, ajustes y ámbito (arts. 1 a 3)",
   lit("OPJC804", "a1", ["en el ámbito del personal civil de la Administración del Estado"], titulo="Artículo 1. Objeto (Orden PJC/804/2025)"),
   lit("OPJC804", "a2", ["el artículo 2 letra m)", "de los medios materiales y humanos", "La concesión de un tiempo adicional", "no resueltas mediante las adaptaciones genéricas de medios y tiempos"], titulo="Artículo 2. Definición de ajustes razonables (Orden PJC/804/2025)"),
+  lit("OPJC804", "a3", ["al personal civil de la Administración del Estado"], titulo="Artículo 3. Ámbito de aplicación (Orden PJC/804/2025)"),
   fichab("Criterios generales de adaptación en el personal civil del Estado",
          "Procesos de acceso al empleo público del **personal civil** de la Administración del Estado (art. 3)",
          ["Ajustes razonables: los del art. 2 m) del RDLeg 1/2013 (→ I.1.1)", "a) **Medios**: materiales y humanos, asistencias, productos de apoyo, tecnologías asistidas y accesibilidad", "b) **Tiempo adicional**", "c) Otros **ajustes razonables** no resueltos con las adaptaciones genéricas"],
          "—", "Tres tipos: **medios**, **tiempos** y **otros ajustes**."))}
 
 {unidad("3.2 Personas beneficiarias (art. 4)",
-  lit("OPJC804", "a4", ["igual o superior al 33 por ciento", "aun sin contar con un reconocimiento oficial del grado de discapacidad", "solo las adaptaciones de medios y otros ajustes razonables"], titulo="Artículo 4. Personas beneficiarias (Orden PJC/804/2025)"),
+  lit("OPJC804", "a4", ["igual o superior al 33 por ciento", "aun sin contar con un reconocimiento oficial del grado de discapacidad", "solo las adaptaciones de medios y otros ajustes razonables"], titulo="Artículo 4. Personas beneficiarias de las medidas de adaptación de medios y tiempos, y de otros ajustes razonables en los procesos selectivos (Orden PJC/804/2025)"),
   fichab("Quién puede pedir adaptaciones",
          ["Personas con grado **igual o superior al 33 %** (art. 4.2 RDLeg 1/2013)", "Personas **sin reconocimiento oficial** que acrediten su necesidad de apoyo por cualquier medio admitido en Derecho"],
          "Sin grado reconocido: **solo** adaptaciones de **medios** y otros ajustes (no de **tiempos**)", "—",
@@ -214,7 +224,7 @@ T.ap("s8", "III.3 Los criterios de la Orden PJC/804/2025", f"""
 
 {unidad("3.4 Petición y concesión (arts. 7 y 8)",
   lit("OPJC804", "a7", ["formular petición concreta en la solicitud de participación", "Dictamen Técnico Facultativo"], titulo="Artículo 7. Petición de adaptación de medios y tiempos y ajustes razonables (Orden PJC/804/2025)"),
-  lit("OPJC804", "a8", ["guarde relación con la prueba a realizar", "Corresponde a los órganos de selección resolver", "Criterios generales para las adaptaciones de tiempos en pruebas orales y escritas según deficiencias y grados de discapacidad", "en el plazo de diez días hábiles", "del modo más favorable a la garantía de la igualdad de oportunidades"], titulo="Artículo 8. Criterios y procesos aplicables para la concesión (Orden PJC/804/2025)"),
+  lit("OPJC804", "a8", ["guarde relación con la prueba a realizar", "Corresponde a los órganos de selección resolver", "Criterios generales para las adaptaciones de tiempos en pruebas orales y escritas según deficiencias y grados de discapacidad", "en el plazo de diez días hábiles", "del modo más favorable a la garantía de la igualdad de oportunidades"], titulo="Artículo 8. Criterios y procesos aplicables para la concesión de adaptación de medios y tiempos y otros ajustes razonables (Orden PJC/804/2025)"),
   fichab("Procedimiento de las adaptaciones",
          ["La persona aspirante lo pide **en la solicitud**, con el **Dictamen Técnico Facultativo**", "Resuelven los **órganos de selección**", "Pueden pedir informes a órganos técnicos, a las **unidades de inclusión** (→ IV.2.2) y a organizaciones de la discapacidad"],
          ["Solo si la discapacidad **guarda relación** con la prueba (8.2)", "Baremo de **tiempos** en los anexos (8.3)", "Casos no previstos: del modo **más favorable** a la igualdad de oportunidades (8.7)"],
@@ -241,7 +251,7 @@ T.ap("s9", "IV.1 Elección de destino y adaptación del puesto (RD 2271/2004, ar
          "Quienes ingresen habiendo sido admitidos en la convocatoria **ordinaria** con plazas reservadas; decide el **órgano convocante**",
          "Pedir la **alteración del orden de prelación** para elegir plaza dentro del ámbito territorial de la convocatoria",
          "—",
-         "Motivos: **dependencia personal**, **dificultades de desplazamiento** u otras análogas, **acreditados**. No se pide «un destino en la provincia de residencia» (pregunta oficial L 80, → Cierre 1)."))}
+         "Motivos: **dependencia personal**, **dificultades de desplazamiento** u otras análogas, **acreditados**. No se pide un destino en la **provincia** de residencia (pregunta oficial L 80, → Cierre 1)."))}
 
 {unidad("1.2 Adaptación del puesto (art. 10)",
   lit("RD2271", "Artículo 10", ["podrán pedir la adaptación del puesto o de los puestos de trabajo", "un informe expedido por el órgano competente en la materia", "será el encargado de la valoración, la realización y la financiación de las adaptaciones"]),
@@ -310,7 +320,7 @@ for cod, n, tit, por, ap_ in EX:
     bloques += [f"### {('GACE-L' if cod == 'L' else 'GACE-P' if cod == 'P' else 'GACE-L extraordinario')} 2025, pregunta {n} · {tit}", examen(cod, n, por, ap_)]
 T.ap("s11", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join(
   ["En los primeros ejercicios de **2025** cayeron **cuatro** preguntas de este tema (dos en el turno libre y dos en el extraordinario), todas literales. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal."]
-  + bloques + ["### Cómo se pregunta", "!> Cambian **porcentajes** (33 %, 3/5/10 %), el **objeto** de lo que se pide (orden de prelación frente a «un destino en la provincia») o el **tipo** de adaptación (medios humanos frente a tiempos o medios materiales). Fíjate en la **norma** que cita el enunciado: la reserva es del 5 % en el RD 2271/2004, del 7 % en el TREBEP y del 10 % en el RDL 6/2023."]))
+  + bloques + ["### Cómo se pregunta", "!> Cambian **porcentajes** (33 %, 3/5/10 %), el **objeto** de lo que se pide (orden de prelación frente a un destino en la provincia de residencia) o el **tipo** de adaptación (medios humanos frente a tiempos o medios materiales). Fíjate en la **norma** que cita el enunciado: la reserva es del 5 % en el RD 2271/2004, del 7 % en el TREBEP y del 10 % en el RDL 6/2023."]))
 
 T.ap("s12", "Cierre 2. Repaso en 10 minutos (por bloques)", """
 | Bloque | Lo esencial | Dato que más cae |

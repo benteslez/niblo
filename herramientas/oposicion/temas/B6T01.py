@@ -24,7 +24,7 @@ def e(art, frag):
 
 
 T = Tema("B6T01",
-  "Seis preguntas: I. Qué es el presupuesto y qué clases hay (CE, art. 134.2; LGP, arts. 32 a 35 y 64) · II. Qué es la Ley General Presupuestaria y cómo está estructurada (LGP, arts. 1 a 3 y títulos) · III. Qué principios generales rigen el presupuesto en la LGP (arts. 26 a 31) · IV. Qué son las leyes de estabilidad presupuestaria (CE, art. 135; LO 2/2012, arts. 1 y 2) · V. Qué principios fija la LO 2/2012 (arts. 3 a 9) · VI. Cómo se hacen cumplir: límites, objetivos y medidas (LO 2/2012, arts. 11 a 32; LO 6/2013). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué es el presupuesto y qué clases hay (CE, art. 134.2; LGP, arts. 32 a 35 y 64) · II. Qué es la Ley General Presupuestaria y cómo está estructurada (LGP, arts. 1 a 3 y títulos) · III. Qué principios generales rigen el presupuesto en la LGP (arts. 26 a 31) · IV. Qué son las leyes de estabilidad presupuestaria (CE, art. 135; LO 2/2012, arts. 1 y 2) · V. Qué principios fija la LO 2/2012 (arts. 3 a 9) · VI. Cómo se hacen cumplir: límites, objetivos y medidas (LO 2/2012, arts. 11 a 15, 17 a 19, 21, 23, 25, 26 y 29 a 32; LO 6/2013). Cada artículo: texto literal del BOE y ficha.",
   ["Presupuesto", "Art. 32 LGP", "Presupuestos limitativos", "Presupuestos estimativos", "Universalidad", "Sector público estatal", "Estructura de la LGP", "Principios presupuestarios", "Escenarios plurianuales", "Art. 135 CE", "LO 2/2012", "Estabilidad presupuestaria", "Sostenibilidad financiera", "Regla de gasto", "Límite de deuda", "Medidas coercitivas", "AIReF"])
 
 # =============================================================================
@@ -39,11 +39,11 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 | Bloque | Pregunta | Constitución | Leyes |
 |---|---|---|---|
 | **I** | ¿Qué es el presupuesto y qué clases hay? (concepto y clases) | Art. 134.2 | LGP, arts. 32, 33, 34, 35 y 64; exposición de motivos |
-| **II** | ¿Qué es la Ley General Presupuestaria y cómo está estructurada? | — | LGP, arts. 1, 2 y 3; títulos I a VII |
+| **II** | ¿Qué es la Ley General Presupuestaria y cómo está estructurada? | — | LGP, arts. 1, 2 y 3; títulos I a VII; exposición de motivos |
 | **III** | ¿Qué principios generales rigen el presupuesto en la LGP? | — | LGP, arts. 26 a 31 |
-| **IV** | ¿Qué son las leyes de estabilidad presupuestaria? | Art. 135 | LO 2/2012, arts. 1 y 2 y disposición derogatoria única |
+| **IV** | ¿Qué son las leyes de estabilidad presupuestaria? | Art. 135 | LO 2/2012, preámbulo, arts. 1 y 2 y disposición derogatoria única; LGP, exposición de motivos |
 | **V** | ¿Qué principios fija la Ley Orgánica 2/2012? | — | LO 2/2012, arts. 3 a 9 |
-| **VI** | ¿Cómo se hacen cumplir? (límites, objetivos, medidas y AIReF) | — | LO 2/2012, arts. 11 a 32 (lo esencial); LO 6/2013, arts. 1, 2 y 17 |
+| **VI** | ¿Cómo se hacen cumplir? (límites, objetivos, medidas y AIReF) | — | LO 2/2012, arts. 11 a 15, 17 a 19, 21, 23, 25, 26 y 29 a 32; LO 6/2013, arts. 1, 2 y 17 |
 
 !> **La idea que une los seis bloques:** el presupuesto es la **expresión cifrada** de los derechos y obligaciones del sector público estatal para **un año** (I). Lo regula la **Ley General Presupuestaria** (II), que somete la programación y la gestión a unos **principios** (III). Desde 2011 la Constitución impone además la **estabilidad presupuestaria** a todas las Administraciones (IV), y la **Ley Orgánica 2/2012** la desarrolla con sus principios (V) y con **límites, objetivos y medidas** para hacerla cumplir (VI).
 
@@ -104,7 +104,7 @@ Los Presupuestos Generales del Estado no son un único presupuesto: integran **d
          f"{g(64, 'Las sociedades mercantiles estatales y las entidades públicas empresariales')}",
          ["Presupuesto de **explotación** y presupuesto de **capital**", "Constituidos por una previsión de la **cuenta de resultados** y del **estado de flujos de efectivo**; anexo: previsión del **balance**"],
          f"{g(64, 'Los presupuestos de explotación y de capital se integrarán en los Presupuestos Generales del Estado')}",
-         "No tienen créditos limitativos: su presupuesto es una **previsión** contable (cuenta de resultados y flujos de efectivo), y se **integra** en los PGE."))}
+         f"No tienen créditos limitativos: su presupuesto es una **previsión** contable (cuenta de resultados y flujos de efectivo), y se **integra** en los PGE. No son los únicos: {g(64, 'las fundaciones del sector público estatal elaborarán, igualmente, presupuestos de explotación y de capital')}, igual que los fondos del art. 2.2 (64.1, párrafo tercero)."))}
 
 ### Cuadro de las clases de presupuestos (esquema)
 
@@ -119,10 +119,10 @@ Los Presupuestos Generales del Estado no son un único presupuesto: integran **d
 
 T.ap("s3", "I.3 Ámbito temporal, créditos y programas (LGP, arts. 34 y 35)", f"""
 {unidad("3.1 El ejercicio presupuestario (art. 34)",
-  lit("LGP", "Artículo 34", ["coincidirá con el año natural", "cualquiera que sea el período del que deriven", "hasta el fin del mes de diciembre", "requerirá norma con rango de ley"], solo=[1, 2, 3, 4, 7]),
+  lit("LGP", "Artículo 34", ["coincidirá con el año natural", "cualquiera que sea el período del que deriven", "hasta el fin del mes de diciembre", "requerirá norma con rango de ley"], solo=[1, 2, 3, 4, 5, 6, 7]),
   fichab("A qué ejercicio se imputan los derechos y las obligaciones",
          "—",
-         ["Derechos: los **liquidados** durante el ejercicio, cualquiera que sea el período del que deriven", "Obligaciones: las **reconocidas hasta el fin de diciembre**, si son gastos realizados dentro del ejercicio", "Excepciones: atrasos de personal y resoluciones judiciales (al presupuesto vigente al expedir la orden de pago)"],
+         ["Derechos: los **liquidados** durante el ejercicio, cualquiera que sea el período del que deriven", "Obligaciones: las **reconocidas hasta el fin de diciembre**, si son gastos realizados dentro del ejercicio", "Excepciones: atrasos de personal y resoluciones judiciales (al presupuesto vigente al expedir la orden de pago) (34.2)", "Obligaciones de ejercicios anteriores para las que se anuló crédito en el de procedencia, o con un crédito específico dotado para ellas: al ejercicio corriente (34.3)"],
          "Ejercicio = **año natural**. Obligaciones de ejercicios anteriores fuera de los supuestos previstos: **norma con rango de ley**",
          "Para los **derechos** basta que se liquiden en el ejercicio (**cualquiera que sea el período del que deriven**); para las **obligaciones**, que el gasto se haya realizado **dentro del ejercicio**."))}
 
@@ -192,7 +192,7 @@ T.ap("s6", "II.3 Estructura de la Ley General Presupuestaria", f"""
 | I | {c('LGP', 'ti', 'Del ámbito de aplicación y de la Hacienda Pública estatal')} | Arts. 1 a 3 (→ II.1 y → II.2) |
 | II | {c('LGP', 'tii', 'De los Presupuestos Generales del Estado')} | Principios (→ III.1), concepto y clases (→ I.1), elaboración y estructura (tema VI.2), modificaciones (tema VI.3), gestión (tema VI.5) |
 | III | {c('LGP', 'tiii', 'De las relaciones financieras con otras administraciones')} | Unión Europea, comunidades autónomas y entidades locales |
-| IV | {c('LGP', 'tiv', 'Del Tesoro Público, de la Deuda del Estado y de las Operaciones Financieras')} | Tesoro y Deuda (tema VI.6) |
+| IV | {c('LGP', 'tiv', 'Del Tesoro Público, de la Deuda del Estado y de las Operaciones Financieras')} | Tesoro y Deuda (la gestión de la tesorería, tema VI.5) |
 | V | {c('LGP', 'tv', 'Contabilidad del sector público estatal')} | Contabilidad y rendición de cuentas |
 | VI | {c('LGP', 'tvi', 'Del control de la gestión económico-financiera efectuado por la Intervención General de la Administración del Estado')} | Control interno (tema VI.4) |
 | VII | {c('LGP', 'tvii', 'De las responsabilidades')} | Responsabilidades |
@@ -448,9 +448,9 @@ T.ap("s15", "V.3 Responsabilidad y lealtad institucional (arts. 8 y 9)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bVI", "VI. ¿Cómo se hacen cumplir? Límites, objetivos y medidas (LO 2/2012, arts. 11 a 32; LO 6/2013)", donde(
+T.ap("bVI", "VI. ¿Cómo se hacen cumplir? Límites, objetivos y medidas (LO 2/2012, arts. 11 a 15, 17 a 19, 21, 23, 25, 26 y 29 a 32; LO 6/2013)", donde(
   "Sexta pregunta. Los principios se convierten en **reglas numéricas** (déficit, gasto, deuda), en **objetivos** que fija el Gobierno y aprueban las Cortes, y en **medidas** escalonadas si se incumplen. Vigila la **Autoridad Independiente de Responsabilidad Fiscal**.",
-  ["1 Déficit estructural, regla de gasto, límite de deuda y prioridad de pago (arts. 11 a 14)", "2 Objetivos e informes de cumplimiento (arts. 15 a 17)", "3 Medidas preventivas, correctivas y coercitivas (arts. 18 a 26)", "4 Gestión presupuestaria y AIReF (arts. 29 a 32; LO 6/2013)"]))
+  ["1 Déficit estructural, regla de gasto, límite de deuda y prioridad de pago (arts. 11 a 14)", "2 Objetivos e informes de cumplimiento (arts. 15 y 17)", "3 Medidas preventivas, correctivas y coercitivas (arts. 18, 19, 21, 23, 25 y 26)", "4 Gestión presupuestaria y AIReF (arts. 29 a 32; LO 6/2013)"]))
 
 T.ap("s16", "VI.1 Déficit, regla de gasto y deuda (arts. 11 a 14)", f"""
 {unidad("1.1 Instrumentación de la estabilidad: déficit estructural (art. 11)",
@@ -486,7 +486,7 @@ T.ap("s16", "VI.1 Déficit, regla de gasto y deuda (arts. 11 a 14)", f"""
          "Prioridad **absoluta** frente a **cualquier otro gasto** (repite el art. 135.3 CE, → IV.1.2)."))}
 """, 2)
 
-T.ap("s17", "VI.2 Objetivos de estabilidad y deuda e informes de cumplimiento (arts. 15 a 17)", f"""
+T.ap("s17", "VI.2 Objetivos de estabilidad y deuda e informes de cumplimiento (arts. 15 y 17)", f"""
 {unidad("2.1 Fijación de los objetivos (art. 15)",
   lit("LOEP", "Artículo 15", ["En el primer semestre de cada año", "referidos a los tres ejercicios siguientes", "antes del 1 de abril de cada año", "en un plazo máximo de 15 días", "límite de gasto no financiero", "aprobándose si este los ratifica por mayoría simple", "en el plazo máximo de un mes"], solo=[1, 2, 3, 9, 10, 11, 12, 13]),
   fichab("Objetivos de estabilidad presupuestaria y de deuda pública para el conjunto de Administraciones y cada subsector",
@@ -496,7 +496,7 @@ T.ap("s17", "VI.2 Objetivos de estabilidad y deuda e informes de cumplimiento (a
          "Si el **Senado** rechaza, basta la **mayoría simple** del Congreso para ratificar. Los proyectos de presupuesto se acomodan a los objetivos aprobados."))}
 
 {unidad("2.2 Informes sobre el cumplimiento (art. 17)",
-  lit("LOEP", "Artículo 17", ["Antes del 15 de octubre la Autoridad Independiente de Responsabilidad Fiscal", "Antes del 1 de abril de cada año, la Autoridad Independiente de Responsabilidad Fiscal", "Antes del 15 de abril de cada año, el Ministro de Hacienda", "Antes del 15 de octubre de cada año, el Ministro de Hacienda"], solo=[1, 2, 3, 4]),
+  lit("LOEP", "Artículo 17", ["Antes del 15 de octubre la Autoridad Independiente de Responsabilidad Fiscal", "Antes del 1 de abril de cada año, la Autoridad Independiente de Responsabilidad Fiscal", "Antes del 15 de abril de cada año, el Ministro de Hacienda", "Antes del 15 de octubre de cada año, el Ministro de Hacienda"], solo=[1, 2, 3, 4, 5]),
   fichab("Calendario de informes de cumplimiento de los objetivos y de la regla de gasto",
          "AIReF y Ministro de Hacienda",
          ["AIReF, antes del **15 de octubre**: proyecto de PGE y líneas fundamentales (art. 27)", "AIReF, antes del **1 de abril**: presupuestos **iniciales**", "Ministro, antes del **15 de abril**: primer informe del ejercicio **anterior**", "Ministro, antes del **15 de octubre**: segundo informe del ejercicio anterior y previsión del corriente"],
@@ -504,7 +504,7 @@ T.ap("s17", "VI.2 Objetivos de estabilidad y deuda e informes de cumplimiento (a
          "Fechas que se cruzan en los distractores: **15 de octubre**, **1 de abril**, **15 de abril**; y el **15 de julio** de la LO 6/2013 (→ VI.4.5). Se publican para general conocimiento."))}
 """, 2)
 
-T.ap("s18", "VI.3 Medidas preventivas, correctivas y coercitivas (arts. 18 a 26)", f"""
+T.ap("s18", "VI.3 Medidas preventivas, correctivas y coercitivas (arts. 18, 19, 21, 23, 25 y 26)", f"""
 {unidad("3.1 Medidas automáticas de prevención (art. 18)",
   lit("LOEP", "Artículo 18", ["no se incumple el objetivo de estabilidad presupuestaria", "por encima del 95 %", "serán las de tesorería"], solo=[1, 3]),
   fichab("Seguimiento de la ejecución y umbral preventivo de deuda",
@@ -538,7 +538,7 @@ T.ap("s18", "VI.3 Medidas preventivas, correctivas y coercitivas (arts. 18 a 26)
          "**1 – 2 – 3**: un mes para presentar, dos para aprobar, tres para ponerlo en marcha."))}
 
 {unidad("3.5 Medidas coercitivas (art. 25)",
-  lit("LOEP", "Artículo 25", ["un depósito con intereses en el Banco de España equivalente al 0,2 % de su Producto Interior Bruto nominal", "Si en el plazo de 3 meses desde la constitución del depósito", "multa coercitiva", "comisión de expertos"], solo=[3, 4, 5]),
+  lit("LOEP", "Artículo 25", ["un depósito con intereses en el Banco de España equivalente al 0,2 % de su Producto Interior Bruto nominal", "Si en el plazo de 3 meses desde la constitución del depósito", "multa coercitiva", "comisión de expertos"], solo=[1, 2, 3, 4, 5]),
   fichab("Consecuencias de no presentar, no aprobar o incumplir el plan",
          "La Administración responsable; el **Gobierno** puede enviar una **comisión de expertos**",
          [f"a) No disponibilidad de créditos: {e(25, 'en el plazo de 15 días desde que se produzca el incumplimiento')}", "b) Depósito con intereses en el **Banco de España** del **0,2 %** del PIB nominal, si lo solicita el Ministerio de Hacienda", "Comisión de expertos: propuesta de medidas de **obligado cumplimiento**; conclusiones públicas en **una semana**"],
@@ -556,7 +556,7 @@ T.ap("s18", "VI.3 Medidas preventivas, correctivas y coercitivas (arts. 18 a 26)
 
 T.ap("s19", "VI.4 Gestión presupuestaria y Autoridad Independiente de Responsabilidad Fiscal (LO 2/2012, arts. 29 a 32; LO 6/2013)", f"""
 {unidad("4.1 Plan presupuestario a medio plazo (art. 29)",
-  lit("LOEP", "Artículo 29", ["se incluirá en el Programa de Estabilidad", "un periodo mínimo de tres años"], solo=[1, 2]),
+  lit("LOEP", "Artículo 29", ["se incluirá en el Programa de Estabilidad", "un periodo mínimo de tres años"], solo=[1, 2, 3, 4, 5, 6]),
   fichab("Marco a medio plazo de los presupuestos anuales",
          "—",
          "Objetivos de estabilidad, deuda y regla de gasto; proyecciones de ingresos y gastos; supuestos; evaluación de la sostenibilidad a largo plazo",
@@ -575,7 +575,7 @@ T.ap("s19", "VI.4 Gestión presupuestaria y Autoridad Independiente de Responsab
   lit("LOEP", "Artículo 31", ["necesidades de carácter no discrecional y no previstas"]),
   fichab("Dotación para imprevistos",
          "Estado, CC. AA. y Corporaciones Locales de los arts. 111 y 135 del texto refundido de Haciendas Locales",
-         "Dotación diferenciada de créditos; cuantía y condiciones las fija cada Administración (la del Estado: LGP, art. 50, tema VI.2)",
+         "Dotación diferenciada de créditos; cuantía y condiciones las fija cada Administración (la del Estado: LGP, art. 50, tema VI.3)",
          "—",
          "Necesidades **no discrecionales** y **no previstas**."))}
 

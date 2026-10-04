@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B4T04",
-  "Cinco preguntas: I. Qué es el acto administrativo, qué clases distingue la ley y cuáles son sus elementos (arts. 34, 36 y 37 Ley 39/2015; art. 8 Ley 40/2015) · II. Cuándo produce efectos y cómo se ejecuta: eficacia (arts. 38, 39 y 97 a 100) · III. Cuándo es inválido y cómo se salva: validez (arts. 47 a 52) · IV. Cuándo hay que motivar (art. 35) · V. Cómo llega al interesado: notificación y publicación (arts. 40 a 46). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué es el acto administrativo, qué clases distingue la ley y cuáles son sus elementos (arts. 24.2, 34, 36, 37, 112.1 y 114 Ley 39/2015; art. 8 Ley 40/2015) · II. Cuándo produce efectos y cómo se ejecuta: eficacia (arts. 38, 39 y 97 a 100) · III. Cuándo es inválido y cómo se salva: validez (arts. 47 a 52 Ley 39/2015; art. 23.4 Ley 40/2015) · IV. Cuándo hay que motivar (art. 35) · V. Cómo llega al interesado: notificación y publicación (arts. 40 a 46). Cada artículo: texto literal del BOE y ficha.",
   ["Acto administrativo", "Ley 39/2015", "Título III", "Elementos del acto", "Art. 34", "Forma", "Inderogabilidad singular", "Eficacia", "Art. 39", "Ejecutoriedad", "Ejecución forzosa", "Nulidad", "Art. 47", "Anulabilidad", "Art. 48", "Convalidación", "Motivación", "Art. 35", "Notificación", "Arts. 40-46", "Publicación"])
 
 ESQ = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
@@ -89,7 +89,7 @@ El art. 34 reúne en dos apartados los **elementos** del acto: quién lo dicta (
          f"{c('L39', 'Artículo 34', 'el órgano competente')} (elemento subjetivo)",
          ["::Elementos que exige la ley:", "Órgano **competente**", "**Requisitos** y **procedimiento** establecidos", "**Contenido** ajustado al ordenamiento jurídico, **determinado** y **adecuado a los fines**"],
          "—",
-         "Iniciación **de oficio o a instancia** del interesado. Contenido «determinado y **adecuado a los fines**»: si se aparta de ellos, la ley habla de **desviación de poder** (anulabilidad, art. 48.1 → III.1.2)."))}
+         f"Iniciación **de oficio o a instancia** del interesado. Contenido «determinado y **adecuado a los fines**». La LJCA define la desviación de poder como {c('LJCA', 'Artículo 70', 'el ejercicio de potestades administrativas para fines distintos de los fijados por el ordenamiento jurídico')} (art. 70.2); en la Ley 39/2015 es causa de **anulabilidad** (art. 48.1 → III.1.2)."))}
 
 {unidad("2.2 Forma (art. 36)",
   lit("L39", "Artículo 36", ["por escrito a través de medios electrónicos", "a menos que su naturaleza exija otra forma más adecuada de expresión y constancia", "por el titular del órgano inferior o funcionario que la reciba oralmente", "podrán refundirse en un único acto"]),
@@ -113,7 +113,7 @@ El art. 34 reúne en dos apartados los **elementos** del acto: quién lo dicta (
          "Los órganos administrativos que la tengan atribuida **como propia**",
          ["Es **irrenunciable**", "Excepciones al ejercicio por el titular: **delegación** o **avocación**, en los términos de la ley", "Delegación de competencias, encomienda de gestión, delegación de firma y suplencia **no alteran la titularidad**"],
          "—",
-         "Si el órgano es **manifiestamente incompetente por razón de la materia o del territorio**, el acto es **nulo** (art. 47.1 b → III.1.1); las demás incompetencias pueden convalidarse (art. 52.3 → III.2.4)."))}
+         "Si el órgano es **manifiestamente incompetente por razón de la materia o del territorio**, el acto es **nulo** (art. 47.1 b → III.1.1); la incompetencia **no determinante de nulidad** puede convalidarla el órgano competente cuando sea **superior jerárquico** del que dictó el acto (art. 52.3 → III.2.4)."))}
 """, 2)
 
 T.ap("s3", "I.3 Cuadro de clases y elementos (esquema)", f"""
@@ -167,7 +167,7 @@ T.ap("s4", "II.1 Ejecutividad y efectos (arts. 38 y 39)", f"""
          "—",
          ["Regla: efectos **desde la fecha en que se dicten**, salvo que el acto disponga otra cosa", "Se **presumen válidos**", "Eficacia **demorada**: cuando lo exija el **contenido** del acto o esté supeditada a **notificación, publicación o aprobación superior**"],
          "Desde la fecha en que se dicta",
-         "Efectos desde que se **dicta**, no desde que se notifica (salvo que la eficacia esté supeditada a la notificación). La presunción es de **validez**: quien la discute tiene que impugnar el acto."))}
+         "Efectos desde que se **dicta**, no desde que se notifica (salvo que la eficacia esté supeditada a la notificación). Lo que se presume es la **validez** del acto."))}
 
 {unidad("1.3 Eficacia retroactiva (art. 39.3)",
   lit("L39", "Artículo 39", ["Excepcionalmente", "cuando se dicten en sustitución de actos anulados", "cuando produzcan efectos favorables al interesado", "no lesione derechos o intereses legítimos de otras personas"], solo=[3]),
@@ -219,7 +219,7 @@ Los arts. 97 a 105 están en el Título IV (procedimiento), pero desarrollan la 
          "Las Administraciones Públicas; para entrar en el domicilio, **consentimiento** del titular o **autorización judicial**",
          ["**Apremio sobre el patrimonio** (cantidad líquida, art. 101)", "**Ejecución subsidiaria** (actos no personalísimos, a costa del obligado, art. 102)", "**Multa coercitiva** (cuando lo autoricen las Leyes, art. 103)", "**Compulsión sobre las personas** (obligaciones personalísimas de no hacer o soportar, art. 104)"],
          "—",
-         f"Son **cuatro** y siempre con **proporcionalidad**; si caben varios, {c('L39', 'Artículo 100', 'el menos restrictivo de la libertad individual')}. No son medios: el «lanzamiento», el «arresto» ni el «embargo judicial» (→ Cierre 1)."))}
+         f"Son **cuatro** y siempre con **proporcionalidad**; si caben varios, {c('L39', 'Artículo 100', 'el menos restrictivo de la libertad individual')}. No son medios el lanzamiento, el arresto personal ni el embargo judicial de bienes (→ Cierre 1)."))}
 
 {resumen([
   "Ejecutividad: los actos sujetos al Derecho Administrativo **son ejecutivos** (38) y se **presumen válidos**; producen efectos **desde la fecha en que se dictan** (39.1).",
@@ -230,7 +230,7 @@ Los arts. 97 a 105 están en el Título IV (procedimiento), pero desarrollan la 
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cuándo es inválido el acto y cómo se salva? La validez (arts. 47 a 52)", donde(
+T.ap("bIII", "III. ¿Cuándo es inválido el acto y cómo se salva? La validez (arts. 47 a 52; Ley 40/2015, art. 23.4)", donde(
   "Tercera pregunta. El acto se presume válido (→ II.1), pero puede tener vicios. La ley distingue dos grados: **nulidad de pleno derecho** (lista cerrada de vicios graves) y **anulabilidad** (cualquier otra infracción). Después fija reglas para **salvar** lo que se pueda.",
   ["1 Nulidad de pleno derecho y anulabilidad (arts. 47 y 48; Ley 40/2015, art. 23.4)", "2 Límites, conversión, conservación y convalidación (arts. 49 a 52)", "3 Cuadro: nulidad y anulabilidad"]))
 
@@ -249,7 +249,7 @@ T.ap("s6", "III.1 Nulidad de pleno derecho y anulabilidad (arts. 47 y 48; Ley 40
          "Actos de la Administración",
          ["Regla: **cualquier infracción** del ordenamiento jurídico, **incluso la desviación de poder**", "**Defecto de forma**: solo si faltan requisitos formales **indispensables** para alcanzar su fin o hay **indefensión**", "Actuación **fuera de plazo**: solo si lo impone la **naturaleza** del término o plazo"],
          "—",
-         "La **desviación de poder** es causa de **anulabilidad**, no de nulidad. Defecto de forma y retraso son, por regla, **irregularidades no invalidantes**: solo anulan en los casos tasados."))}
+         "La **desviación de poder** es causa de **anulabilidad**, no de nulidad. El defecto de forma y la actuación fuera de plazo solo anulan en los casos del 48.2 y del 48.3."))}
 
 {unidad("1.3 Actuar con motivo de abstención no invalida necesariamente el acto (Ley 40/2015, art. 23.4)",
   lit("L40", "Artículo 23", ["no implicará, necesariamente, y en todo caso, la invalidez"], solo=[9]),
@@ -449,10 +449,10 @@ EX_P55 = examen("P", 55, {
   [("incompetente", "L39", "Artículo 52", "Si el vicio consistiera en incompetencia no determinante de nulidad"),
    ("jerarqu", "L39", "Artículo 52", "cuando sea superior jerárquico del que dictó el acto viciado")])
 EX_P62 = examen("P", 62, {
-  "a": f"El «lanzamiento» no está entre los cuatro medios del art. 100.1: {c('L39', 'Artículo 100', 'Apremio sobre el patrimonio')}, ejecución subsidiaria, multa coercitiva y compulsión sobre las personas.",
+  "a": f"El lanzamiento no está entre los cuatro medios del art. 100.1: {c('L39', 'Artículo 100', 'Apremio sobre el patrimonio')}, ejecución subsidiaria, multa coercitiva y compulsión sobre las personas.",
   "b": f"Literal del art. 100.1 b): {c('L39', 'Artículo 100', 'Ejecución subsidiaria')}.",
-  "c": f"El «arresto personal» no es un medio de ejecución forzosa; el más cercano es la {c('L39', 'Artículo 100', 'Compulsión sobre las personas')}, que la ley solo admite {c('L39', 'Artículo 104', 'en los casos en que la ley expresamente lo autorice')} (art. 104.1).",
-  "d": f"No es «embargo judicial»: la ejecución forzosa la hace la propia Administración; el medio patrimonial es el {c('L39', 'Artículo 100', 'Apremio sobre el patrimonio')} (art. 100.1 a)."},
+  "c": f"El arresto personal no es un medio de ejecución forzosa; el más cercano es la {c('L39', 'Artículo 100', 'Compulsión sobre las personas')}, que la ley solo admite {c('L39', 'Artículo 104', 'en los casos en que la ley expresamente lo autorice')} (art. 104.1).",
+  "d": f"No es un embargo judicial: la ejecución forzosa la hace la propia Administración; el medio patrimonial es el {c('L39', 'Artículo 100', 'Apremio sobre el patrimonio')} (art. 100.1 a)."},
   [("Ejecución subsidiaria", "L39", "Artículo 100", "b) Ejecución subsidiaria.")])
 
 T.ap("s13", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join([
@@ -504,7 +504,7 @@ T.q("L40", f"{A} 8", "Elementos del acto", "Según el artículo 8.1 de la Ley 40
     "Art. 8.1 Ley 40/2015.", "salvo los casos de delegación o avocación, cuando se efectúen en los términos previstos en ésta u otras leyes")
 T.q("L39", f"{A} 24", "Clases de actos", "Según el artículo 24.2 de la Ley 39/2015, la estimación por silencio administrativo:",
     ["Tiene a todos los efectos la consideración de acto administrativo finalizador del procedimiento.", "Tiene los solos efectos de permitir a los interesados la interposición del recurso que resulte procedente.", "Solo tiene la consideración de acto administrativo si se expide certificado.", "Carece de efectos hasta que la Administración dicte resolución expresa."],
-    "Art. 24.2 Ley 39/2015. La opción b) describe la **desestimación** por silencio.", "La estimación por silencio administrativo tiene a todos los efectos la consideración de acto administrativo finalizador del procedimiento")
+    f"Art. 24.2 Ley 39/2015. Los {c('L39', 'Artículo 24', 'solos efectos de permitir a los interesados la interposición del recurso')} son los de la **desestimación** por silencio.", "La estimación por silencio administrativo tiene a todos los efectos la consideración de acto administrativo finalizador del procedimiento")
 T.q("L39", f"{A} 112", "Clases de actos", "Según el artículo 112.1 de la Ley 39/2015, la oposición a los actos de trámite que no deciden el fondo, ni impiden continuar el procedimiento, ni producen indefensión o perjuicio irreparable:",
     ["Podrá alegarse por los interesados para su consideración en la resolución que ponga fin al procedimiento.", "Podrá articularse mediante recurso de alzada.", "Podrá articularse mediante recurso potestativo de reposición.", "No podrá alegarse en ningún momento del procedimiento."],
     "Art. 112.1, párrafo segundo, Ley 39/2015.", "La oposición a los restantes actos de trámite podrá alegarse por los interesados para su consideración en la resolución que ponga fin al procedimiento")

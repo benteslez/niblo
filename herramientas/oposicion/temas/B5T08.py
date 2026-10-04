@@ -34,7 +34,7 @@ def aviso_tc(bid, frag):
 
 
 T = Tema("B5T08",
-  "Cuatro preguntas: I. Qué derechos colectivos tienen los empleados públicos y en qué se apoyan (CE, arts. 7, 28.1 y 103.3; TREBEP, arts. 15, 31 y 32; LO 11/1985) · II. Cómo se negocian sus condiciones de trabajo (TREBEP, arts. 33 a 38 y 45) · III. Quién los representa (TREBEP, arts. 39 a 44 y 46; IV Convenio Único, art. 85) · IV. Cómo se ejerce el derecho de huelga (CE, art. 28.2; RDL 17/1977; TREBEP, arts. 30.2 y 95.2). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué derechos colectivos tienen los empleados públicos y en qué se apoyan (CE, arts. 7, 28.1 y 103.3; TREBEP, arts. 15, 31 y 32; LO 11/1985) · II. Cómo se negocian sus condiciones de trabajo (CE, art. 37.1; TREBEP, arts. 33 a 38 y 45 y disposición adicional duodécima) · III. Quién los representa (TREBEP, arts. 39 a 44 y 46 y disposición transitoria quinta; Estatuto de los Trabajadores, arts. 62 y 63; IV Convenio Único, art. 85) · IV. Cómo se ejerce el derecho de huelga (CE, arts. 28.2 y 37.2; RDL 17/1977; TREBEP, arts. 30.2 y 95.2). Cada artículo: texto literal del BOE y ficha.",
   ["Negociación colectiva", "Representación", "Participación institucional", "Libertad sindical", "Sindicatos más representativos", "Mesas de Negociación", "Art. 37 TREBEP", "Pactos y Acuerdos", "Delegados de Personal", "Juntas de Personal", "Cuatro años", "Derecho de reunión", "Huelga", "RDL 17/1977", "STC 11/1981", "Servicios esenciales"])
 
 # =============================================================================
@@ -55,7 +55,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 
 !> **La idea que une los cuatro bloques:** los empleados públicos tienen derechos individuales que **se ejercen de forma colectiva** (TREBEP, art. 15): libertad sindical, negociación colectiva, huelga, conflictos colectivos y reunión (I). Los sindicatos **negocian** en Mesas y firman **Pactos y Acuerdos** (II); los empleados **eligen** a sus representantes unitarios: Delegados y Juntas de Personal, o Delegados de personal y Comités de empresa si son laborales (III); y el último recurso es la **huelga**, con la garantía de los **servicios esenciales** (IV).
 
-?> **Aviso de vigencia (huelga).** El Real Decreto-ley 17/1977 sigue vigente, pero la STC 11/1981 declaró inconstitucionales algunos incisos de sus artículos 3, 5, 6, 10 y 11. Aquí se cita **solo lo vigente** y, donde hay inciso anulado, se reproduce la **nota del BOE** (→ IV.2).
+?> **Aviso de vigencia (huelga)** [[BOE|{URL_RDL17}]]. El Real Decreto-ley 17/1977 sigue vigente, pero, según las notas de su texto consolidado, la STC 11/1981 declaró inconstitucionales algunos incisos de sus artículos 3, 5, 6, 10 y 11. Aquí se cita **solo lo vigente** y, donde hay inciso anulado, se reproduce la **nota del BOE** (→ IV.2).
 
 ### Cómo está escrito
 
@@ -159,7 +159,7 @@ La Ley Orgánica 11/1985, de Libertad Sindical, desarrolla el art. 28.1 CE. El T
          ["::Más representativos a nivel estatal (6.2):", "Los que obtengan en ese ámbito el **10 por 100 o más** del total de delegados de personal, miembros de comités de empresa y órganos correspondientes de las Administraciones públicas", "Los afiliados, federados o confederados a una organización estatal más representativa"],
          ["::Capacidad representativa a todos los niveles (6.3), entre otras:", "a) **Representación institucional** ante las Administraciones públicas", "c) Interlocución en la determinación de las condiciones de trabajo en las Administraciones públicas", "d) Sistemas no jurisdiccionales de solución de conflictos", "e) Promover elecciones"],
          "Estatal: **10 por 100**",
-         "La mayor representatividad da una posición singular **tanto de participación institucional como de acción sindical** (6.1). La **participación institucional** del art. 31.4 TREBEP se ejerce a través de estos sindicatos (6.3 a)."))}
+         "La mayor representatividad da una posición singular **tanto de participación institucional como de acción sindical** (6.1). La **participación institucional** del art. 31.4 TREBEP se ejerce **a través de las organizaciones sindicales**; ostentar **representación institucional** ante las Administraciones públicas es una facultad de los más representativos (6.3 a y 7.1)."))}
 
 {unidad("4.4 Más representativos de Comunidad Autónoma y sindicatos con el 10 por 100 en un ámbito (art. 7)",
   lit("LOLS", "Artículo séptimo", ["al menos, el 15 por 100 de los delegados de personal", "siempre que cuenten con un mínimo de 1.500 representantes", "el 10 por 100 o más de delegados de personal y miembros de comité de empresa"], titulo="Artículo 7 (LO 11/1985, de Libertad Sindical)"),
@@ -178,7 +178,7 @@ La Ley Orgánica 11/1985, de Libertad Sindical, desarrolla el art. 28.1 CE. El T
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo se negocian las condiciones de trabajo? La negociación colectiva (TREBEP, arts. 33 a 38 y 45)", donde(
+T.ap("bII", "II. ¿Cómo se negocian las condiciones de trabajo? La negociación colectiva (CE, art. 37.1; TREBEP, arts. 33 a 38 y 45 y DA 12.ª)", donde(
   "Segunda pregunta. La Constitución garantiza la negociación colectiva **laboral** (art. 37.1); para los funcionarios, el TREBEP regula **principios**, **Mesas de Negociación**, **materias** y el resultado: **Pactos y Acuerdos**.",
   ["1 Fundamento y principios: quién negocia (CE, art. 37.1; TREBEP, art. 33)", "2 Las Mesas de Negociación (arts. 34 a 36 y disposición adicional duodécima)", "3 Materias negociables y excluidas (art. 37)", "4 Pactos y Acuerdos (art. 38)", "5 Solución extrajudicial de conflictos (art. 45)"]))
 
@@ -291,7 +291,7 @@ T.ap("s9", "II.5 Solución extrajudicial de conflictos colectivos (art. 45)", f"
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Quién representa a los empleados públicos? Representación unitaria y reunión (TREBEP, arts. 39 a 44 y 46)", donde(
+T.ap("bIII", "III. ¿Quién representa a los empleados públicos? Representación unitaria y reunión (TREBEP, arts. 39 a 44 y 46 y DT 5.ª; ET, arts. 62 y 63; IV Convenio Único, art. 85)", donde(
   "Tercera pregunta. La **representación** es la facultad de elegir representantes y constituir **órganos unitarios** (art. 31.3, → I.3.1). Para los funcionarios son los **Delegados** y las **Juntas de Personal**; para el personal laboral, los **Delegados de personal** y los **Comités de empresa**.",
   ["1 Órganos de representación (TREBEP, art. 39; ET, arts. 62 y 63; IV Convenio Único, art. 85)", "2 Funciones, legitimación y garantías (arts. 40 y 41)", "3 Mandato, promoción de elecciones y procedimiento electoral (arts. 42 a 44 y disposición transitoria quinta)", "4 Derecho de reunión (art. 46)"]))
 
@@ -395,7 +395,7 @@ T.ap("s13", "III.4 Derecho de reunión (art. 46)", f"""
 # =============================================================================
 T.ap("bIV", "IV. ¿Cómo se ejerce el derecho de huelga? (CE, arts. 28.2 y 37.2; RDL 17/1977; TREBEP, arts. 30.2 y 95.2)", donde(
   "Cuarta pregunta. La huelga es un **derecho fundamental** de los trabajadores (art. 28.2 CE) y el TREBEP la reconoce a los empleados públicos con la garantía de los **servicios esenciales** (art. 15 c, → I.2.1). Su ejercicio se regula en el título I del **Real Decreto-ley 17/1977**, en lo que dejó vigente la **STC 11/1981**.",
-  ["1 Reconocimiento constitucional (arts. 28.2 y 37.2)", "2 El ejercicio del derecho de huelga (RDL 17/1977, arts. 1 a 11)", "3 Consecuencias para el empleado público (TREBEP, arts. 30.2 y 95.2 l y m)", "4 Cuadro: lo vigente y lo anulado del RDL 17/1977"]))
+  ["1 Reconocimiento constitucional (arts. 28.2 y 37.2)", "2 El ejercicio del derecho de huelga (RDL 17/1977, arts. 1 a 11)", "3 Consecuencias para el empleado público (TREBEP, arts. 30.2 y 95.2 k, l y m)", "4 Cuadro: lo vigente y lo anulado del RDL 17/1977"]))
 
 T.ap("s14", "IV.1 Reconocimiento constitucional (arts. 28.2 y 37.2)", f"""
 {unidad("1.1 El derecho de huelga (art. 28.2)",
@@ -484,7 +484,7 @@ El título I («El derecho de huelga») del Real Decreto-ley 17/1977, sobre rela
          "Cuatro supuestos: **políticos**, **solidaridad** (salvo interés profesional), **alterar un convenio vigente** y **contravenir** el RDL o el convenio."))}
 """, 2)
 
-T.ap("s16", "IV.3 Consecuencias para el empleado público (TREBEP, arts. 30.2 y 95.2 l y m)", f"""
+T.ap("s16", "IV.3 Consecuencias para el empleado público (TREBEP, arts. 30.2 y 95.2 k, l y m)", f"""
 Las retribuciones se estudian en el tema V.6 y el régimen disciplinario en el tema V.2; aquí, solo lo que el TREBEP dice de la huelga.
 
 {unidad("3.1 Deducción de retribuciones (art. 30.2)",
@@ -588,7 +588,7 @@ Q = [
   "Art. 31.4 TREBEP.", "el derecho a participar, a través de las organizaciones sindicales, en los órganos de control y seguimiento"),
  ("TREBEP", "Artículo 31", "Derechos colectivos", "Según el artículo 31.3 del TREBEP, se entiende por representación:",
   ["La facultad de elegir representantes y constituir órganos unitarios a través de los cuales se instrumente la interlocución entre las Administraciones Públicas y sus empleados.", "El derecho a negociar la determinación de condiciones de trabajo de los empleados de la Administración Pública.", "El derecho a participar, a través de las organizaciones sindicales, en los órganos de control y seguimiento de las entidades u organismos.", "La facultad de constituir secciones sindicales en cada centro de trabajo."],
-  "Art. 31.3 TREBEP. La b) es la negociación colectiva (31.2) y la c), la participación institucional (31.4).", "la facultad de elegir representantes y constituir órganos unitarios a través de los cuales se instrumente la interlocución"),
+  "Art. 31.3 TREBEP. El derecho a negociar la determinación de condiciones de trabajo es la negociación colectiva (31.2), y el de participar a través de las organizaciones sindicales en los órganos de control y seguimiento, la participación institucional (31.4).", "la facultad de elegir representantes y constituir órganos unitarios a través de los cuales se instrumente la interlocución"),
  ("TREBEP", "Artículo 31", "Derechos colectivos", "Según el artículo 31.6 del TREBEP, ¿quiénes están legitimadas para interponer recursos en vía administrativa y jurisdiccional contra las resoluciones de los órganos de selección?",
   ["Las organizaciones sindicales más representativas en el ámbito de la Función Pública.", "Cualquier organización sindical legalmente constituida.", "Las Juntas de Personal, por decisión mayoritaria.", "Las organizaciones sindicales firmantes del último Acuerdo de la Mesa General."],
   "Art. 31.6 TREBEP.", "Las organizaciones sindicales más representativas en el ámbito de la Función Pública están legitimadas para la interposición de recursos"),
@@ -648,7 +648,7 @@ Q = [
   "Art. 38.3 TREBEP.", "Para su validez y eficacia será necesaria su aprobación expresa y formal por estos órganos"),
  ("TREBEP", "Artículo 38", "Pactos y Acuerdos", "Según el artículo 38.2 del TREBEP, los Pactos:",
   ["Se celebrarán sobre materias que se correspondan estrictamente con el ámbito competencial del órgano administrativo que lo suscriba y se aplicarán directamente al personal del ámbito correspondiente.", "Versarán sobre materias competencia de los órganos de gobierno y necesitarán su aprobación expresa y formal.", "Solo tendrán eficacia una vez convalidados por el Congreso de los Diputados.", "Se aplicarán solo al personal laboral."],
-  "Art. 38.2 TREBEP. La b) describe los Acuerdos (38.3).", "Los Pactos se celebrarán sobre materias que se correspondan estrictamente con el ámbito competencial del órgano administrativo que lo suscriba y se aplicarán directamente"),
+  "Art. 38.2 TREBEP. Las materias competencia de los órganos de gobierno, con aprobación expresa y formal, son las de los Acuerdos (38.3).", "Los Pactos se celebrarán sobre materias que se correspondan estrictamente con el ámbito competencial del órgano administrativo que lo suscriba y se aplicarán directamente"),
  ("TREBEP", "Artículo 38", "Pactos y Acuerdos", "Según el artículo 38.11 del TREBEP, salvo acuerdo en contrario, los Pactos y Acuerdos:",
   ["Se prorrogarán de año en año si no mediara denuncia expresa de una de las partes.", "Se extinguirán al término de su vigencia sin posibilidad de prórroga.", "Se prorrogarán por periodos de dos años si no mediara denuncia expresa.", "Se prorrogarán indefinidamente hasta que se firme otro que los sustituya."],
   "Art. 38.11 TREBEP.", "Salvo acuerdo en contrario, los Pactos y Acuerdos se prorrogarán de año en año si no mediara denuncia expresa de una de las partes"),

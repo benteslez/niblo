@@ -25,7 +25,7 @@ CORTO.update({
   "FEMPA": "Reglamento (UE) 2021/1139, del FEMPA"})
 
 T = Tema("B2T05",
-  "Seis preguntas: I. Qué es el presupuesto de la Unión y qué reglas lo rigen (TFUE, arts. 310, 313, 316 y 320) · II. Con qué se financia: los recursos propios (art. 311 y Decisión 2020/2053) · III. Qué es el marco financiero plurianual (art. 312 y Reglamento 2020/2093) · IV. Cómo se aprueba, ejecuta y controla (arts. 314 a 325) · V. Qué son los fondos europeos (FSE+, FEDER, Fondo de Cohesión, FEAGA, Feader, FEMPA, MRR) · VI. Qué es la cohesión económica, social y territorial (arts. 174 a 178). Cada artículo: texto literal (EUR-Lex) y ficha.",
+  "Seis preguntas: I. Qué es el presupuesto de la Unión y qué reglas lo rigen (TFUE, arts. 310, 313, 316 y 320) · II. Con qué se financia: los recursos propios (art. 311 y Decisión 2020/2053) · III. Qué es el marco financiero plurianual (art. 312 y Reglamento 2020/2093) · IV. Cómo se aprueba, ejecuta y controla (arts. 314, 315, 317 a 319, 322, 324 y 325) · V. Qué son los fondos europeos (TFUE, arts. 162 a 164; FSE+, FEDER, Fondo de Cohesión, FEAGA, Feader, FEMPA, MRR y Horizonte Europa) · VI. Qué es la cohesión económica, social y territorial (TUE, art. 3.3; TFUE, arts. 4.2 c) y 174 a 178; Reglamento 2021/1060). Cada artículo: texto literal (EUR-Lex) y ficha.",
   ["Presupuesto de la UE", "Arts. 310-325 TFUE", "Recursos propios", "Decisión 2020/2053", "Marco financiero plurianual", "MFP 2021-2027", "Procedimiento presupuestario", "Comité de Conciliación", "Aprobación de la gestión", "Fondos europeos", "FEDER", "Fondo de Cohesión", "FSE+", "Feader", "FEMPA", "MRR", "Cohesión", "Arts. 174-178 TFUE"])
 
 # =============================================================================
@@ -67,7 +67,7 @@ T.ap("s1", "I.1 Unidad, equilibrio, anualidad y legalidad del gasto (TFUE, arts.
   fichab("Reglas básicas del presupuesto de la Unión",
          f"{c('TFUE', 'Artículo 310', 'El Parlamento Europeo y el Consejo establecerán el presupuesto anual de la Unión')} (→ IV.1); la Unión y los Estados miembros cooperan en la buena gestión y en la lucha contra el fraude",
          ["Todos los ingresos y gastos, en el presupuesto de cada ejercicio (310.1)", "Presupuesto **equilibrado** en ingresos y gastos (310.1)", "Gastos autorizados para **todo el ejercicio anual** (310.2)", "Ejecutar un gasto exige **antes** un acto jurídicamente vinculante que le dé fundamento (310.3)", "**Disciplina**: no adoptar actos con incidencia considerable sin garantizar su financiación dentro de los recursos propios y del MFP (310.4)", "**Buena gestión financiera** (310.5) y lucha contra el **fraude** (310.6 → IV.3)"],
-         "Anual (→ 1.2)",
+         "Anual (→ I.1.2)",
          "Los gastos se autorizan **para todo el ejercicio presupuestario anual**, no por semestres ni por trimestres (pregunta oficial L 26, → Cierre 1). El presupuesto debe estar **equilibrado**."))}
 
 {unidad("1.2 El ejercicio presupuestario (art. 313)",
@@ -120,7 +120,7 @@ La Decisión vigente es la **2020/2053**, adoptada conforme al art. 311 TFUE (�
 {unidad("2.1 Categorías de recursos propios (art. 2.1)",
   lit("DRP", "Artículo 2", ["los recursos propios tradicionales", "del 0,30 %", "residuos de envases de plástico generados en cada Estado miembro que no se reciclen", "0,80 EUR por kilogramo", "a la suma de la RNB de todos los Estados miembros"], solo=[1, 2, 3, 4, 5], titulo="Artículo 2.1 (Decisión (UE, Euratom) 2020/2053) · Categorías de recursos propios"),
   fichab("Los cuatro ingresos que constituyen recursos propios",
-         "Los recaudan los Estados miembros (los tradicionales, → 2.4) y los ponen a disposición de la Comisión",
+         "Los recaudan los Estados miembros (los tradicionales, → II.2.4) y los ponen a disposición de la Comisión",
          ["a) **Tradicionales**: derechos de aduana y exacciones en los intercambios con terceros países, cotizaciones del azúcar", "b) **IVA**: tipo uniforme del **0,30 %** sobre la base armonizada (base limitada al **50 % de la RNB**)", "c) **Plástico**: **0,80 EUR por kilogramo** de residuos de envases de plástico no reciclados", "d) **RNB**: tipo uniforme sobre la suma de la RNB, fijado en el procedimiento presupuestario"],
          "—",
          "Cuatro categorías. Los tipos que se preguntan: **0,30 %** (IVA) y **0,80 EUR/kg** (plástico). El recurso RNB es el que **cierra** el presupuesto: su tipo se fija teniendo en cuenta **todos los demás ingresos**."))}
@@ -141,7 +141,7 @@ La Decisión vigente es la **2020/2053**, adoptada conforme al art. 311 TFUE (�
          ["Hasta **750 000 millones EUR** (precios de 2018)", "Para préstamos: hasta **360 000 millones**", "Para gastos: hasta **390 000 millones**", "Sin endeudamiento neto nuevo **después de 2026**"],
          f"Los pasivos deben reembolsarse {c('DRP', 'Artículo 5', 'a más tardar el 31 de diciembre de 2058')}. La excepción es **única y temporal** y está ligada a la COVID-19 (financia, entre otros, el MRR → V.5)."))}
 
-{unidad("2.4 Universalidad y gastos de recaudación (arts. 7 y 9.2)",
+{unidad("2.4 Universalidad y gastos de recaudación (art. 7 y art. 9.1 y 2)",
   lit("DRP", "Artículo 7", ["se utilizarán indistintamente"], titulo="Artículo 7 (Decisión (UE, Euratom) 2020/2053) · Principio de universalidad"),
   lit("DRP", "Artículo 9", ["serán recaudados por los Estados miembros", "el 25 %"], solo=[1, 3], titulo="Artículo 9.1 y 2 (Decisión (UE, Euratom) 2020/2053) · Recaudación de los recursos propios"),
   fichab("Destino de los ingresos y quién los recauda",
@@ -200,7 +200,7 @@ T.ap("s6", "III.2 El MFP 2021-2027 (Reglamento (UE, Euratom) 2020/2093)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se aprueba, se ejecuta y se controla el presupuesto? (TFUE, arts. 314 a 325)", donde(
+T.ap("bIV", "IV. ¿Cómo se aprueba, se ejecuta y se controla el presupuesto? (TFUE, arts. 314, 315, 317 a 319, 322, 324 y 325)", donde(
   "Cuarta pregunta. Ya sabemos qué es el presupuesto, cómo se financia y qué marco respeta. Ahora, el **ciclo**: quién lo **aprueba** y con qué plazos, quién lo **ejecuta** y quién **controla** esa ejecución.",
   ["1 Aprobación: el procedimiento presupuestario y las doceavas partes (arts. 314 y 315)", "2 Ejecución, cuentas y aprobación de la gestión (arts. 317 a 319)", "3 Normas financieras, concertación y lucha contra el fraude (arts. 322, 324 y 325)"]))
 
@@ -235,7 +235,7 @@ T.ap("s8", "IV.2 Ejecución, cuentas y aprobación de la gestión (TFUE, arts. 3
   lit("TFUE", "Artículo 318", ["las cuentas del ejercicio cerrado", "un balance financiero del activo y pasivo de la Unión", "un informe de evaluación de las finanzas de la Unión"]),
   fichab("Rendición de cuentas de la Comisión", "La **Comisión**, ante el Parlamento Europeo y el Consejo",
          ["Cuentas del ejercicio cerrado", "Balance financiero del activo y pasivo", "Informe de evaluación de las finanzas basado en los resultados"],
-         "Cada año", "Son los documentos que examina después el Parlamento para aprobar la gestión (→ 2.3)."))}
+         "Cada año", "Son los documentos que examina después el Parlamento para aprobar la gestión (→ IV.2.3)."))}
 
 {unidad("2.3 La aprobación de la gestión de la Comisión (art. 319)",
   lit("TFUE", "Artículo 319", ["El Parlamento Europeo, por recomendación del Consejo, aprobará la gestión de la Comisión en la ejecución del presupuesto", "después del Consejo", "el informe anual del Tribunal de Cuentas", "podrá solicitar explicaciones a la Comisión"]),
@@ -363,7 +363,7 @@ T.ap("s14", "V.5 El Mecanismo de Recuperación y Resiliencia y Horizonte Europa 
   fichab("Instrumento de ayuda financiera a las reformas e inversiones de los Estados miembros", "Los Estados miembros, según sus **planes de recuperación y resiliencia**",
          ["**Seis pilares**: transición ecológica; transformación digital; crecimiento inteligente, sostenible e integrador; cohesión social y territorial; salud y resiliencia; políticas para la próxima generación", "Objetivo general: fomentar la **cohesión económica, social y territorial**, en el contexto de la crisis de la **COVID-19**", "Objetivo específico: ayuda financiera para alcanzar los **hitos y objetivos** de reformas e inversiones"],
          "—",
-         "**Seis** pilares. Se financia con los empréstitos excepcionales de la Decisión de recursos propios (→ II.2.3)."))}
+         f"**Seis** pilares. Su dinero viene del Instrumento de Recuperación de la UE: {c('MRR', 'Artículo 6', 'Las medidas contempladas en el artículo 1 del Reglamento (UE) 2020/2094 se aplicarán en el marco del Mecanismo')} (art. 6.1), y ese Instrumento se financia con los empréstitos excepcionales de la Decisión de recursos propios, {c('DRP', 'Artículo 5', 'mediante el Reglamento del Consejo por el que se establece un Instrumento de Recuperación de la Unión Europea')} (art. 5.1, → II.2.3)."))}
 
 {unidad("5.2 Horizonte Europa (Reglamento (UE) 2021/695, art. 1.1)",
   lit("HEUR", "Artículo 1", ["Programa Marco de Investigación e Innovación «Horizonte Europa»", "marco financiero plurianual 2021-2027"], solo=[1, 2], titulo="Artículo 1.1 (Reglamento (UE) 2021/695) · Objeto"),
@@ -397,7 +397,7 @@ T.ap("s15", "V.6 Cuadro de los fondos (esquema)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bVI", "VI. ¿Qué es la cohesión económica, social y territorial? (TUE, art. 3.3; TFUE, arts. 4 y 174 a 178)", donde(
+T.ap("bVI", "VI. ¿Qué es la cohesión económica, social y territorial? (TUE, art. 3.3; TFUE, arts. 4.2 c) y 174 a 178; Reglamento 2021/1060)", donde(
   "Sexta y última pregunta. La cohesión es un **objetivo** de la Unión y una **competencia compartida**. El Título XVIII del TFUE (arts. 174 a 178) dice qué persigue y con qué instrumentos (los fondos del bloque V).",
   ["1 La cohesión como objetivo y como competencia (TUE, art. 3.3; TFUE, arts. 4.2 c) y 174)", "2 Los instrumentos: fondos estructurales, FEDER y Fondo de Cohesión (TFUE, arts. 175 a 178)", "3 Las categorías de regiones (Reglamento (UE) 2021/1060, arts. 5.2 y 108)"]))
 
@@ -436,7 +436,7 @@ T.ap("s17", "VI.2 Los instrumentos: fondos estructurales, FEDER y Fondo de Cohes
   fichab("Fondo para los desequilibrios regionales", "Fondo Europeo de Desarrollo Regional",
          ["Corregir los **principales desequilibrios regionales**", "Desarrollo y ajuste estructural de las **regiones menos desarrolladas**", "**Reconversión** de las **regiones industriales en declive**"],
          "—",
-         "«Corrección de los principales desequilibrios regionales» es el **FEDER**, no el Fondo de Cohesión (pregunta oficial P 17, → Cierre 1)."))}
+         f"{c('TFUE', 'Artículo 176', 'corrección de los principales desequilibrios regionales')} es el **FEDER**, no el Fondo de Cohesión (pregunta oficial P 17, → Cierre 1)."))}
 
 {unidad("2.3 Fondos estructurales y Fondo de Cohesión (art. 177)",
   lit("TFUE", "Artículo 177", ["mediante reglamentos adoptados con arreglo al procedimiento legislativo ordinario", "Un Fondo de Cohesión", "proyectos en los sectores del medio ambiente y de las redes transeuropeas en materia de infraestructuras del transporte"]),
@@ -714,7 +714,7 @@ for q_, a_, cat in [
 
 # Glosario
 T.glos("Recursos propios", "Ingresos que financian íntegramente el presupuesto de la Unión (art. 311 TFUE); categorías fijadas por la Decisión 2020/2053.", "s3", "Recursos propios")
-T.glos("Recursos propios tradicionales", "Derechos de aduana, exacciones y cotizaciones en los intercambios con terceros países (Decisión 2020/2053, art. 2.1 a); los Estados retienen el 25 % como gastos de recaudación.", "s4", "Recursos propios")
+T.glos("Recursos propios tradicionales", "Exacciones y derechos de aduana en los intercambios comerciales con terceros países, y cotizaciones y otros derechos de la organización común de mercados del azúcar (Decisión 2020/2053, art. 2.1 a); los Estados retienen el 25 % como gastos de recaudación.", "s4", "Recursos propios")
 T.glos("Principio de universalidad", "Los ingresos se utilizan indistintamente para financiar todos los gastos del presupuesto (Decisión 2020/2053, art. 7).", "s4", "Recursos propios")
 T.glos("Marco financiero plurianual (MFP)", "Reglamento del Consejo que fija, para un mínimo de cinco años, los límites máximos anuales de créditos para compromisos y para pagos (art. 312 TFUE). Vigente: 2021-2027.", "s5", "Marco financiero plurianual")
 T.glos("Créditos de compromiso y de pago", "Límites del MFP por categoría de gastos (compromisos) y global (pagos) (art. 312.3 TFUE).", "s5", "Marco financiero plurianual")

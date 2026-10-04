@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B4T12",
-  "Cinco preguntas: I. Quién actúa ante la Administración: capacidad, interesados y representación (arts. 3 a 11 Ley 39/2015) · II. Qué derechos tienen los ciudadanos (arts. 13, 14 y 53.1) · III. Qué garantías rodean el procedimiento: el presunto responsable (art. 53.2) y la imparcialidad (abstención y recusación, arts. 23 y 24 Ley 40/2015) · IV. Cómo revisa la Administración sus actos: revisión de oficio (arts. 106 a 111) · V. Cómo recurre el interesado: alzada, reposición y revisión (arts. 112 a 126). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Quién actúa ante la Administración: capacidad, interesados y representación (arts. 3, 4, 5, 7, 8 y 11 Ley 39/2015) · II. Qué derechos tienen los ciudadanos (arts. 13, 14 y 53.1) · III. Qué garantías rodean el procedimiento: el presunto responsable (art. 53.2) y la imparcialidad (abstención y recusación, arts. 23 y 24 Ley 40/2015) · IV. Cómo revisa la Administración sus actos: revisión de oficio (arts. 106 a 111 y Ley 7/1985, art. 22.2 k) · V. Cómo recurre el interesado: alzada, reposición y revisión (arts. 112 a 126). Cada artículo: texto literal del BOE y ficha.",
   ["Interesado", "Art. 4", "Representación", "Derechos de las personas", "Art. 13", "Art. 14", "Derechos del interesado", "Art. 53", "Abstención", "Recusación", "Arts. 23-24 Ley 40/2015", "Revisión de oficio", "Art. 106", "Lesividad", "Art. 107", "Revocación", "Rectificación de errores", "Recursos administrativos", "Art. 112", "Fin de la vía administrativa", "Art. 114", "Recurso de alzada", "Recurso de reposición", "Recurso extraordinario de revisión"])
 
 ESQ = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
@@ -42,7 +42,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Casi todo está en la 
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Quién actúa ante la Administración? Capacidad, interesados y representación (arts. 3 a 11)", donde(
+T.ap("bI", "I. ¿Quién actúa ante la Administración? Capacidad, interesados y representación (arts. 3, 4, 5, 7, 8 y 11)", donde(
   "Primera pregunta del tema. Antes de hablar de derechos y garantías hay que saber **quién** tiene capacidad para actuar ante la Administración, **quién es interesado** en un procedimiento y **cómo** se actúa por medio de otro.",
   ["1 Capacidad de obrar y concepto de interesado (arts. 3 y 4)", "2 Representación, pluralidad, nuevos interesados y firma (arts. 5, 7, 8 y 11)"]))
 
@@ -132,7 +132,7 @@ La Ley 39/2015 abre su Título IV con un capítulo titulado «Garantías del pro
         ["a) **Conocer en cualquier momento** el estado de la tramitación, el sentido del silencio, el órgano competente y los actos de trámite; **acceder y obtener copia** de los documentos", "b) **Identificar** a las autoridades y al personal bajo cuya responsabilidad se tramitan", "c) **No presentar documentos originales**, salvo excepción normativa (y entonces, copia autenticada)", "d) **No presentar datos y documentos** no exigidos o que ya tenga la Administración", "e) **Formular alegaciones**, usar los medios de defensa y **aportar documentos** en cualquier fase **anterior al trámite de audiencia**", "f) **Información y orientación** sobre los requisitos de proyectos, actuaciones o solicitudes", "g) Actuar **asistidos de asesor**", "h) Cumplir las obligaciones de pago por **medios electrónicos** (art. 98.2)", "i) Cualesquiera otros que reconozcan la Constitución y las leyes"],
         "Original solo si la normativa lo establece «de manera excepcional»; documentos y alegaciones, antes del trámite de audiencia",
         f"Lo alegado y aportado {c('L39', 'Artículo 53', 'deberán ser tenidos en cuenta por el órgano competente al redactar la propuesta de resolución')}; con medios electrónicos, la consulta se hace en el Punto de Acceso General electrónico",
-        "Cayó dos veces en 2025 (→ Cierre 1): **conocer en cualquier momento** el estado de la tramitación (a) e **identificar** a autoridades y personal (b). Los distractores: «aportar documentos **una vez finalizado** el trámite de audiencia» (es **antes**) o «exigir que la Administración aporte **originales**» (el derecho es a **no presentarlos**)."))}
+        "Cayó dos veces en 2025 (→ Cierre 1): **conocer en cualquier momento** el estado de la tramitación (a) e **identificar** a autoridades y personal (b). Los distractores: «Aportar documentos **una vez finalizado** el trámite de audiencia» (es **antes**) o «Exigir que la Administración aporte los documentos **originales**» (el derecho es a **no presentarlos**)."))}
 """, 2)
 
 T.ap("s6", "II.4 Cuadro: derechos de las personas (art. 13) y derechos del interesado (art. 53.1) (esquema)", f"""
@@ -202,7 +202,7 @@ T.ap("s8", "III.2 Imparcialidad: abstención y recusación (Ley 40/2015, arts. 2
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo revisa la Administración sus propios actos? La revisión de oficio (arts. 106 a 111)", donde(
+T.ap("bIV", "IV. ¿Cómo revisa la Administración sus propios actos? La revisión de oficio (arts. 106 a 111; Ley 7/1985, art. 22.2 k)", donde(
   "Cuarta pregunta. El Título V de la Ley 39/2015 trata «De la revisión de los actos en vía administrativa». Su capítulo I, «Revisión de oficio», permite a la Administración **declarar la nulidad** de actos y disposiciones, **impugnar** sus actos favorables anulables previa **declaración de lesividad**, **revocar** actos desfavorables y **rectificar errores**. Los vicios de nulidad y anulabilidad (arts. 47 y 48) son del tema IV.4.",
   ["1 Revisión de actos y disposiciones nulos (art. 106)", "2 Declaración de lesividad de actos anulables (art. 107; Ley 7/1985, art. 22.2 k)", "3 Suspensión, revocación, rectificación de errores y límites (arts. 108 a 110)", "4 Competencia en el ámbito estatal (art. 111) y cuadro"]))
 
@@ -226,7 +226,7 @@ T.ap("s10", "IV.2 Declaración de lesividad de actos anulables (art. 107; Ley 7/
          "Actos **favorables** y **anulables** (art. 48). **Cuatro años** desde que **se dictó** el acto (no desde la notificación). En los entes locales, el **Pleno**."))}
 
 {unidad("2.2 En el municipio, el Pleno (Ley 7/1985, art. 22.2 k)",
-  lit("LRBRL", "Artículo 22", ["al Pleno municipal en los Ayuntamientos, y a la Asamblea vecinal en el régimen de Concejo Abierto", "La declaración de lesividad de los actos del Ayuntamiento"], solo=[2, 13], titulo="Artículo 22.2 (Ley 7/1985, Reguladora de las Bases del Régimen Local)"),
+  lit("LRBRL", "Artículo 22", ["al Pleno municipal en los Ayuntamientos, y a la Asamblea vecinal en el régimen de Concejo Abierto", "La declaración de lesividad de los actos del Ayuntamiento"], solo=list(range(2, 21)), titulo="Artículo 22.2 (Ley 7/1985, Reguladora de las Bases del Régimen Local)"),
   fichab("Órgano municipal competente para declarar la lesividad",
          "El **Pleno** municipal; en régimen de Concejo Abierto, la **Asamblea vecinal**",
          "Es atribución que les corresponde «en todo caso» (art. 22.2)",
@@ -434,7 +434,7 @@ T.ap("s18", "V.6 Cuadro comparativo de los tres recursos (esquema)", f"""
 | Plazo para interponer | **1 mes** (expreso); acto no expreso, en cualquier momento | **1 mes** (expreso); acto no expreso, en cualquier momento | **4 años** (error de hecho); **3 meses** (demás causas) |
 | Plazo para resolver | **3 meses** | **1 mes** | **3 meses** |
 | Silencio | Desestimatorio (salvo art. 24.1, tercer párrafo) | Desestimación presunta (123.2) | Desestimatorio (126.3) |
-| Después | Solo el extraordinario de revisión (122.3) | No cabe nueva reposición (124.3) | Vía contencioso-administrativa |
+| Después | Ningún otro recurso administrativo, salvo el extraordinario de revisión (122.3); vía contencioso-administrativa | No cabe nueva reposición (124.3) | Vía contencioso-administrativa |
 
 {resumen([
   "Se recurren las **resoluciones** y los actos de trámite **cualificados**; motivos: los de los arts. **47 y 48**; contra **disposiciones generales**, no hay recurso administrativo (112).",
@@ -447,7 +447,7 @@ T.ap("s18", "V.6 Cuadro comparativo de los tres recursos (esquema)", f"""
 # =============================================================================
 EX = [
  ("P", 75, "Derechos del interesado: conocer el estado de la tramitación (→ II.3.1)", {
-   "a": f"Invierte el derecho: el interesado tiene derecho {c('L39', 'Artículo 53', 'A no presentar documentos originales salvo que, de manera excepcional, la normativa reguladora aplicable establezca lo contrario')} (art. 53.1 c); no hay un derecho a «exigir que la Administración aporte» originales.",
+   "a": f"Invierte el derecho: el interesado tiene derecho {c('L39', 'Artículo 53', 'A no presentar documentos originales salvo que, de manera excepcional, la normativa reguladora aplicable establezca lo contrario')} (art. 53.1 c); no hay un derecho a exigir que la Administración aporte originales.",
    "b": f"Literal del art. 53.1 a): {c('L39', 'Artículo 53', 'A conocer, en cualquier momento, el estado de la tramitación de los procedimientos en los que tengan la condición de interesados')}.",
    "c": f"Cambia el momento: se aportan documentos {c('L39', 'Artículo 53', 'en cualquier fase del procedimiento anterior al trámite de audiencia')} (art. 53.1 e), no una vez finalizado.",
    "d": f"Cambia el objeto: el derecho de identificación se refiere {c('L39', 'Artículo 53', 'a las autoridades y al personal al servicio de las Administraciones Públicas')} (art. 53.1 b), no al resto de interesados."},
@@ -533,7 +533,7 @@ Q = [
  ("L39", "Artículo 53", "Derechos", f"{L} 53.1 g) de la Ley 39/2015, los interesados tienen derecho a actuar asistidos de asesor:",
   ["Cuando lo consideren conveniente en defensa de sus intereses.", "Solo en los procedimientos sancionadores.", "Solo si lo autoriza el órgano instructor.", "Solo en la fase de recurso."], "Art. 53.1 g) Ley 39/2015.", "A actuar asistidos de asesor cuando lo consideren conveniente en defensa de sus intereses"),
  ("L39", "Artículo 53", "Garantías", f"{L} 53.2 b) de la Ley 39/2015, en los procedimientos de naturaleza sancionadora los presuntos responsables tienen derecho:",
-  ["A la presunción de no existencia de responsabilidad administrativa mientras no se demuestre lo contrario.", "A la suspensión automática del procedimiento si recusan al instructor.", "A que la sanción no se ejecute hasta que sea firme en vía judicial.", "A no ser notificados de la identidad del instructor."], "Art. 53.2 b) Ley 39/2015.", "A la presunción de no existencia de responsabilidad administrativa mientras no se demuestre lo contrario"),
+  ["A la presunción de no existencia de responsabilidad administrativa mientras no se demuestre lo contrario.", "A que el procedimiento lo instruya y resuelva el mismo órgano.", "A que la sanción no se ejecute hasta que sea firme en vía judicial.", "A no ser notificados de la identidad del instructor."], "Art. 53.2 b) Ley 39/2015.", "A la presunción de no existencia de responsabilidad administrativa mientras no se demuestre lo contrario"),
  ("L40", "Artículo 23", "Garantías", f"{L} 23.2 b) de la Ley 40/2015, es motivo de abstención el parentesco con cualquiera de los interesados:",
   ["De consanguinidad dentro del cuarto grado o de afinidad dentro del segundo.", "De consanguinidad dentro del segundo grado o de afinidad dentro del cuarto.", "De consanguinidad o afinidad dentro del tercer grado.", "De consanguinidad dentro del cuarto grado, sin incluir la afinidad."], "Art. 23.2 b) Ley 40/2015.", "consanguinidad dentro del cuarto grado o de afinidad dentro del segundo"),
  ("L40", "Artículo 23", "Garantías", f"{L} 23.2 e) de la Ley 40/2015, es motivo de abstención haber prestado servicios profesionales a la persona interesada directamente en el asunto:",
@@ -616,7 +616,7 @@ for q_, a_, cat in [
   ("¿Pone fin a la vía administrativa el Director general? (art. 114.2 c)", "Solo en relación con sus competencias en materia de personal.", "Recursos"),
   ("¿Suspende el recurso la ejecución del acto? (art. 117)", "No, salvo disposición en contrario; cabe suspensión por perjuicios de imposible o difícil reparación o nulidad de pleno derecho; un mes sin resolver la solicitud = suspendido.", "Recursos"),
   ("Alzada presentada ante el autor del acto (art. 121.2)", "Debe remitirla al competente en diez días, con su informe y copia completa y ordenada del expediente.", "Recursos"),
-  ("Alzada: plazos (art. 122)", "Un mes para interponer (acto expreso); tres meses para resolver; después, solo el extraordinario de revisión.", "Recursos"),
+  ("Alzada: plazos (art. 122)", "Un mes para interponer (acto expreso); tres meses para resolver; después, ningún otro recurso administrativo salvo el extraordinario de revisión (122.3).", "Recursos"),
   ("Reposición: plazos (art. 124)", "Un mes para interponer (acto expreso) y un mes para resolver; no cabe nueva reposición.", "Recursos"),
   ("Extraordinario de revisión: plazos (arts. 125 y 126)", "Error de hecho: cuatro años desde la notificación; demás causas: tres meses; tres meses para resolver o desestimado.", "Recursos"),
 ]: T.fc(q_, a_, cat)
@@ -640,7 +640,7 @@ T.glos("Recurso extraordinario de revisión", "Recurso contra actos firmes en v�
 T.hito("1985", "Ley 7/1985, de 2 de abril, Reguladora de las Bases del Régimen Local (BOE de 3-4-1985)", "Art. 22.2 k): el Pleno declara la lesividad de los actos del Ayuntamiento", "normativo", "s10")
 T.hito("2015", "Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas (BOE de 2-10-2015)", "Derechos de las personas e interesados (arts. 3 a 14 y 53); revisión de oficio y recursos (Título V, arts. 106 a 126)", "normativo", "s3")
 T.hito("2015", "Ley 40/2015, de 1 de octubre, de Régimen Jurídico del Sector Público (BOE de 2-10-2015)", "Arts. 23 y 24: abstención y recusación", "normativo", "s8")
-T.hito("2016", "Entrada en vigor de la Ley 39/2015 (2-10-2016)", "Disposición final séptima: «al año de su publicación en el Boletín Oficial del Estado»", "normativo", "s13")
+T.hito("2016", "Entrada en vigor de la Ley 39/2015 (2-10-2016)", f"Disposición final séptima: {c('L39', 'Disposición final séptima', 'al año de su publicación en el “Boletín Oficial del Estado”')}", "normativo", "s13")
 T.hito("2021", "Efectos de las previsiones sobre registro electrónico de apoderamientos y Punto de Acceso General electrónico de la Ley 39/2015 (2-4-2021)", "Disposición final séptima: afecta a la acreditación de la representación (art. 5.4) y al derecho del art. 13 a)", "normativo", "s2")
 
 T.publicar()

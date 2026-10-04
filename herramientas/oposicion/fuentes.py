@@ -17,7 +17,21 @@ SRC = {
 }
 import lecrim as _lecrim
 SRC["LEC"] = _lecrim.articulos("lecrim.txt")[0]
-NOMBRE = {"CE": "CE", "LO4": "LO 4/1981", "LO3": "LO 3/1981", "LOTC": "LOTC", "LJCA": "LJCA", "HC": "LO 6/1984", "L36": "Ley 36/1985", "LEC": "LECrim"}
+
+# Normas tomadas de la API de datos abiertos del BOE (boe/<CLAVE>.xml, última
+# versión vigente, sin notas): solo los bloques que cita el tema.
+sys.path.insert(0, "boe")
+import boe as _boe
+def _api(k, titulos):
+    out = {}
+    for t, clave in titulos:
+        ps = _boe.parrafos(k, _boe.bloque(k, t))
+        out[clave] = ps[1:]          # sin la línea del título
+    return out
+SRC["LOPJ"] = _api("LOPJ", [("Artículo tercero", "Artículo 3.")])
+SRC["LO1_2025"] = _api("LO1_2025", [("Disposición adicional primera", "Disposición adicional primera.")])
+NOMBRE = {"CE": "CE", "LO4": "LO 4/1981", "LO3": "LO 3/1981", "LOTC": "LOTC", "LJCA": "LJCA", "HC": "LO 6/1984", "L36": "Ley 36/1985", "LEC": "LECrim",
+          "LOPJ": "LOPJ", "LO1_2025": "LO 1/2025"}
 # Fórmula de promulgación al final de la última disposición: no es texto normativo.
 # Y encabezados de sección que el extractor pega al artículo anterior.
 for _f in SRC.values():

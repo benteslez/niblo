@@ -18,7 +18,7 @@ DIAG, OBJ = "CAPÍTULO II", "CAPÍTULO III"   # capítulos de la Estrategia (ane
 NOLEGAL = "*Esquema de elaboración propia: resume los artículos citados; no es texto legal.*"
 
 T = Tema("B3T05",
-  "Cuatro preguntas: I. Cómo ha evolucionado el empleo en España (diagnóstico de la Estrategia 2025-2028, RD 633/2025) · II. Qué es la política de empleo y quién la gestiona: el Sistema Nacional de Empleo y los servicios públicos de empleo (CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023) · III. Qué prestaciones protegen frente al desempleo (LGSS, arts. 262 a 303) · IV. Qué son las políticas activas de empleo y cómo se planifican (Ley 3/2023; RD 633/2025). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Cómo ha evolucionado el empleo en España (diagnóstico de la Estrategia 2025-2028, RD 633/2025) · II. Qué es la política de empleo y quién la gestiona: el Sistema Nacional de Empleo y los servicios públicos de empleo (CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023) · III. Qué prestaciones protegen frente al desempleo (LGSS, arts. 262 a 272, 274 a 278, 280, 282, 299 a 301 y 303) · IV. Qué son las políticas activas de empleo y cómo se planifican (Ley 3/2023; RD 633/2025). Cada artículo: texto literal del BOE y ficha.",
   ["Ley 3/2023 de Empleo", "Sistema Nacional de Empleo", "Agencia Española de Empleo", "SEPE", "Conferencia Sectorial", "Estrategia 2025-2028", "Plan Anual (PAFED)", "Ejes", "Prestación contributiva", "Subsidio por desempleo", "Situación legal de desempleo", "Acuerdo de actividad", "Colocación adecuada", "Agencias de colocación", "Colectivos prioritarios", "Servicios garantizados"])
 
 # =============================================================================
@@ -31,8 +31,8 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 | Bloque | Pregunta | Normas |
 |---|---|---|
 | **I** | ¿Cómo ha evolucionado el empleo en España? | RD 633/2025 (Estrategia Española de Apoyo Activo al Empleo 2025-2028), capítulos II y III |
-| **II** | ¿Qué es la política de empleo y quién la gestiona? (los servicios públicos de empleo) | CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023, arts. 1, 2, 6 a 10, 18 a 24, disposiciones adicional primera y transitoria segunda; LGSS, art. 294 |
-| **III** | ¿Qué prestaciones protegen frente al desempleo? (régimen de prestaciones) | LGSS, arts. 262 a 280, 282, 299 a 301 y 303; Ley 3/2023, art. 3 |
+| **II** | ¿Qué es la política de empleo y quién la gestiona? (los servicios públicos de empleo) | CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023, arts. 1, 2, 6 a 10, 18 a 20, 22 a 24, disposiciones adicional primera y transitoria segunda; LGSS, art. 294 |
+| **III** | ¿Qué prestaciones protegen frente al desempleo? (régimen de prestaciones) | LGSS, arts. 262 a 272, 274 a 278, 280, 282, 299 a 301 y 303; Ley 3/2023, art. 3 |
 | **IV** | ¿Qué son las políticas activas de empleo y cómo se planifican? (políticas de empleo) | Ley 3/2023, arts. 11 a 13, 31, 41 a 43, 47, 50, 56, 58 y 61; RD 633/2025 |
 
 !> **La idea que une los cuatro bloques:** la **política de empleo** tiene dos patas (Ley 3/2023, art. 2): las **políticas activas** (orientar, formar, intermediar, fomentar la contratación) y la **protección frente al desempleo** (prestaciones y subsidios). Las gestionan los **servicios públicos de empleo** (la Agencia Española de Empleo —hasta su puesta en funcionamiento, el SEPE— y los de las Comunidades Autónomas) dentro del **Sistema Nacional de Empleo**. El diagnóstico de cómo ha evolucionado el empleo (I) es el punto de partida de la planificación (IV).
@@ -102,7 +102,7 @@ T.ap("s2", "I.2 Situación actual, retos y metas a 2028 (Estrategia, caps. II y 
          "Datos de Eurostat citados por la Estrategia",
          ["Una de las **menores tasas de vacantes** de Europa, pero dificultades para cubrir ciertos puestos", "Retos: transformación **digital**, transición **ecológica**, **envejecimiento** y falta de **relevo generacional**"],
          "Vacantes (4.º trimestre de 2024): España 0,9 %; UE-27 2,3 %; eurozona 2,5 %",
-         "Tres transiciones que la Estrategia nombra: **digital**, **ecológica** y **demográfica** (envejecimiento)."))}
+         f"Los «tres grandes retos» que nombra la Estrategia (cap. II): {c(RD, DIAG, 'la transformación digital, la transición ecológica y energética y el reto demográfico')}."))}
 
 {unidad("2.3 Meta a 2028: tasa de paro del 8,5 % (cap. III.3)",
   lit(RD, OBJ, ["para situarse en el 8,5 % a su finalización", "la intermediación debería alcanzar el 42 % en jóvenes"], solo=[56, 57, 61], titulo="Estrategia 2025-2028, capítulo III, 3. Metas a 2028 (RD 633/2025) · texto oficial, no es texto legal"),
@@ -123,7 +123,7 @@ T.ap("s2", "I.2 Situación actual, retos y metas a 2028 (Estrategia, caps. II y 
 # =============================================================================
 T.ap("bII", "II. ¿Qué es la política de empleo y quién la gestiona? Los servicios públicos de empleo (CE; Ley 3/2023)", donde(
   "Segunda pregunta. La Constitución manda una política orientada al **pleno empleo** y protección frente al **desempleo**; la Ley 3/2023 la organiza en el **Sistema Nacional de Empleo**, formado por la **Agencia Española de Empleo** y los **servicios públicos de empleo autonómicos**.",
-  ["1 Fundamento constitucional y concepto de política de empleo (CE; Ley 3/2023, arts. 1 y 2)", "2 Reparto de competencias (Ley 3/2023, arts. 6 y 7)", "3 El Sistema Nacional de Empleo y sus órganos de gobernanza (arts. 8 a 10)", "4 La Agencia Española de Empleo y el SEPE (arts. 18 a 22; disposiciones adicional primera y transitoria segunda; LGSS, art. 294)", "5 Los servicios públicos de empleo de las Comunidades Autónomas (arts. 23 y 24)"]))
+  ["1 Fundamento constitucional y concepto de política de empleo (CE; Ley 3/2023, arts. 1 y 2)", "2 Reparto de competencias (Ley 3/2023, arts. 6 y 7)", "3 El Sistema Nacional de Empleo y sus órganos de gobernanza (arts. 8 a 10)", "4 La Agencia Española de Empleo y el SEPE (arts. 18 a 20 y 22; disposiciones adicional primera y transitoria segunda; LGSS, art. 294)", "5 Los servicios públicos de empleo de las Comunidades Autónomas (arts. 23 y 24)"]))
 
 T.ap("s3", "II.1 Fundamento constitucional y concepto de política de empleo (CE, arts. 35, 40, 41 y 149.1.7.ª; Ley 3/2023, arts. 1 y 2)", f"""
 {unidad("1.1 Derecho al trabajo, pleno empleo y protección del desempleo (CE, arts. 35.1, 40.1 y 41)",
@@ -174,7 +174,7 @@ T.ap("s4", "II.2 Reparto de competencias (Ley 3/2023, arts. 6 y 7)", f"""
 
 T.ap("s5", "II.3 El Sistema Nacional de Empleo y sus órganos de gobernanza (arts. 8 a 10)", f"""
 {unidad("3.1 Composición y funciones del Sistema Nacional de Empleo (art. 8)",
-  lit(L3, "Artículo 8", ["Está conformado por la Agencia Española de Empleo y por los servicios públicos de empleo de las Comunidades Autónomas", "tendrán la consideración de servicios públicos de empleo", "La Conferencia Sectorial de Empleo y Asuntos Laborales", "El Consejo General del Sistema Nacional de Empleo"], solo=[1, 3, 4, 5, 6, 7, 8, 9, 14]),
+  lit(L3, "Artículo 8", ["Está conformado por la Agencia Española de Empleo y por los servicios públicos de empleo de las Comunidades Autónomas", "tendrán la consideración de servicios públicos de empleo", "La Conferencia Sectorial de Empleo y Asuntos Laborales", "El Consejo General del Sistema Nacional de Empleo"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 14]),
   fichab("Conjunto de estructuras, recursos, estrategias, planes, programas e información para las políticas de empleo",
          ["Lo forman la **Agencia Española de Empleo** y los **servicios públicos de empleo autonómicos**", "Colaboran las Corporaciones Locales y otras entidades públicas o privadas"],
          ["Órganos de gobernanza: **Conferencia Sectorial de Empleo y Asuntos Laborales** y **Consejo General del Sistema Nacional de Empleo** (8.3)", "Funciones (8.4), entre otras: concretar la Estrategia a través del **Plan Anual** y mantener una **Cartera Común de Servicios**"],
@@ -182,7 +182,7 @@ T.ap("s5", "II.3 El Sistema Nacional de Empleo y sus órganos de gobernanza (art
          "La prestación de servicios de empleo es **servicio público** con independencia de quién la realice (8.2). Solo **dos** órganos de gobernanza."))}
 
 {unidad("3.2 Conferencia Sectorial de Empleo y Asuntos Laborales (art. 9)",
-  lit(L3, "Artículo 9", ["es el órgano de colaboración entre la Administración General del Estado y las Comunidades Autónomas", "presidida por la persona titular del Ministerio de Trabajo y Economía Social", "con voz, pero sin voto", "Acordar los criterios de distribución de los créditos presupuestarios destinados a Comunidades Autónomas", "Identificar los colectivos prioritarios"], solo=[1, 2, 4, 8, 10]),
+  lit(L3, "Artículo 9", ["es el órgano de colaboración entre la Administración General del Estado y las Comunidades Autónomas", "presidida por la persona titular del Ministerio de Trabajo y Economía Social", "con voz, pero sin voto", "Acordar los criterios de distribución de los créditos presupuestarios destinados a Comunidades Autónomas", "Identificar los colectivos prioritarios"], solo=[1, 2, 3, 4, 5, 6, 8, 10, 11]),
   fichab("Órgano de **colaboración** entre la AGE y las Comunidades Autónomas",
          ["Preside: el **Ministro/a de Trabajo y Economía Social**", "Miembros: los de los Consejos de Gobierno de las CC. AA. y de **Ceuta y Melilla** con competencias en empleo", "Con voz pero **sin voto**: otras Administraciones y la asociación más representativa de las entidades locales"],
          ["Acuerdos de coordinación; informe de los instrumentos de planificación", "**Distribución de créditos** a las CC. AA.", "**Colectivos prioritarios** de ámbito estatal", "Informe Conjunto sobre el empleo (con el Consejo General)"],
@@ -190,7 +190,7 @@ T.ap("s5", "II.3 El Sistema Nacional de Empleo y sus órganos de gobernanza (art
          "Preside el **Ministro**, no el director de la Agencia (ese preside el **Consejo General**, → II.3.3). Las entidades locales: **voz sin voto**."))}
 
 {unidad("3.3 Consejo General del Sistema Nacional de Empleo (art. 10)",
-  lit(L3, "Artículo 10", ["es el órgano consultivo y de participación institucional en materia de Empleo", "presidido por la persona titular de la Dirección de la Agencia Española de Empleo", "manteniendo así el carácter tripartito del Consejo"], solo=[1, 2, 3, 4]),
+  lit(L3, "Artículo 10", ["es el órgano consultivo y de participación institucional en materia de Empleo", "presidido por la persona titular de la Dirección de la Agencia Española de Empleo", "manteniendo así el carácter tripartito del Consejo"], solo=[1, 2, 3, 4, 5, 6]),
   fichab("Órgano **consultivo** y de **participación institucional**, **tripartito**",
          ["Preside: el **titular de la Dirección de la Agencia Española de Empleo**", "Un representante de cada **Comunidad Autónoma** e igual número de la **AGE**, de las organizaciones **empresariales** y de las **sindicales** más representativas"],
          ["Informa las propuestas normativas y los instrumentos de planificación", "Analiza la eficacia de la política de empleo; colabora en el Informe Conjunto", "Funciones en formación en el trabajo (Comisión Estatal de Formación en el trabajo)"],
@@ -198,7 +198,7 @@ T.ap("s5", "II.3 El Sistema Nacional de Empleo y sus órganos de gobernanza (art
          "**Conferencia Sectorial** = colaboración AGE-CC. AA. (preside el Ministro). **Consejo General** = consultivo y **tripartito** (preside el director de la Agencia)."))}
 """, 2)
 
-T.ap("s6", "II.4 La Agencia Española de Empleo y el SEPE (Ley 3/2023, arts. 18 a 22, disposiciones adicional primera y transitoria segunda; LGSS, art. 294)", f"""
+T.ap("s6", "II.4 La Agencia Española de Empleo y el SEPE (Ley 3/2023, arts. 18 a 20 y 22, disposiciones adicional primera y transitoria segunda; LGSS, art. 294)", f"""
 {unidad("4.1 Creación, concepto y naturaleza (arts. 18 a 20)",
   lit(L3, "Artículo 18", ["Se autoriza la creación de la Agencia Española de Empleo"]),
   lit(L3, "Artículo 19", ["entidad de derecho público de la Administración General del Estado"]),
@@ -263,7 +263,7 @@ T.ap("s7", "II.5 Los servicios públicos de empleo de las Comunidades Autónomas
 # =============================================================================
 T.ap("bIII", "III. ¿Qué prestaciones protegen frente al desempleo? (LGSS, título III)", donde(
   "Tercera pregunta: el **régimen de prestaciones**. La protección por desempleo tiene un **nivel contributivo** (la prestación) y un **nivel asistencial** (el subsidio). Ambos exigen inscribirse como demandante y suscribir el **acuerdo de actividad** de la Ley 3/2023.",
-  ["1 Objeto, niveles, personas protegidas y acción protectora (arts. 262 a 265)", "2 Requisitos, situación legal de desempleo y solicitud (arts. 266 a 268)", "3 Duración y cuantía de la prestación (arts. 269 y 270)", "4 Suspensión y extinción (arts. 271 y 272)", "5 El subsidio por desempleo (arts. 274 a 280)", "6 Incompatibilidades, obligaciones e impugnación (arts. 282, 299 a 301 y 303; Ley 3/2023, art. 3)"]))
+  ["1 Objeto, niveles, personas protegidas y acción protectora (arts. 262 a 265)", "2 Requisitos, situación legal de desempleo y solicitud (arts. 266 a 268)", "3 Duración y cuantía de la prestación (arts. 269 y 270)", "4 Suspensión y extinción (arts. 271 y 272)", "5 El subsidio por desempleo (arts. 274 a 278 y 280)", "6 Incompatibilidades, obligaciones e impugnación (arts. 282, 299 a 301 y 303; Ley 3/2023, art. 3)"]))
 
 T.ap("s8", "III.1 Objeto, niveles, personas protegidas y acción protectora (LGSS, arts. 262 a 265)", f"""
 {unidad("1.1 Objeto: desempleo total y parcial (art. 262)",
@@ -293,7 +293,7 @@ T.ap("s8", "III.1 Objeto, niveles, personas protegidas y acción protectora (LGS
 {unidad("1.4 Acción protectora (art. 265.1)",
   lit(SS, "Artículo 265", ["Prestación por desempleo total o parcial", "Subsidio por desempleo"], solo=[1, 2, 3, 4, 5, 6, 7, 8]),
   ficha("Personas protegidas (art. 264)",
-        ["::Contributivo:", "Prestación por desempleo **total o parcial**", "Abono de la **aportación de la empresa** a la Seguridad Social", "::Asistencial:", "**Subsidio** por desempleo", "Cotización por **jubilación** (supuestos del art. 280)", "Asistencia sanitaria y, en su caso, prestaciones familiares"],
+        ["::Contributivo:", "Prestación por desempleo **total o parcial**", "Abono de la **aportación de la empresa** a la Seguridad Social", "**Asistencial:**", "**Subsidio** por desempleo", "Cotización por **jubilación** (supuestos del art. 280)", "Asistencia sanitaria y, en su caso, prestaciones familiares"],
         "—",
         "Además: acciones de formación, orientación, reconversión e inserción (265.2)",
         "Contributivo = **prestación**; asistencial = **subsidio**."))}
@@ -360,7 +360,7 @@ T.ap("s11", "III.4 Suspensión y extinción (LGSS, arts. 271 y 272)", f"""
   ficha("Beneficiarios de la prestación",
         ["Se suspende, entre otros casos, por **sanción** leve o grave, **trabajo por cuenta ajena** de **menos de 12 meses**, trabajo por cuenta propia de menos de **60 meses**, traslado al extranjero de menos de 12 meses o estancia de hasta **90 días** al año (comunicados y autorizados)"],
         "La suspensión interrumpe el abono pero **no** reduce el periodo de percepción, salvo la **sanción**",
-        "Reanudación: de oficio (sanción) o a solicitud en los **quince días** siguientes",
+        "Reanudación (271.3): de oficio (sanción) o a solicitud en los **quince días** siguientes",
         "Salida al extranjero de **hasta 30 días** una vez al año: ni estancia ni traslado. Trabajo ajeno **< 12 meses** suspende; **≥ 12 meses** extingue (→ III.4.2)."))}
 
 {unidad("4.2 Extinción (art. 272)",
@@ -371,7 +371,7 @@ T.ap("s11", "III.4 Suspensión y extinción (LGSS, arts. 271 y 272)", f"""
         "**Doce meses** de trabajo por cuenta ajena separan la suspensión de la extinción; con derecho de **opción** (art. 269.3)."))}
 """, 2)
 
-T.ap("s12", "III.5 El subsidio por desempleo (LGSS, arts. 274 a 280)", f"""
+T.ap("s12", "III.5 El subsidio por desempleo (LGSS, arts. 274 a 278 y 280)", f"""
 {unidad("5.1 Beneficiarios (art. 274)",
   lit(SS, "Artículo 274", ["Haber agotado la prestación por desempleo", "trescientos sesenta días", "siempre que hayan cotizado al menos noventa días", "carecer de rentas propias, o bien, alternativamente, acreditar responsabilidades familiares"], solo=[1, 2, 3, 6, 7, 8]),
   ficha("Desempleados que reúnan los requisitos",
@@ -389,7 +389,7 @@ T.ap("s12", "III.5 El subsidio por desempleo (LGSS, arts. 274 a 280)", f"""
         "El umbral es el **75 % del SMI** (no del IPREM), **sin** la parte proporcional de **dos pagas extraordinarias**."))}
 
 {unidad("5.3 Solicitud y duración (arts. 276 y 277.3)",
-  lit(SS, "Artículo 276", ["en los quince días hábiles siguientes a la fecha del mismo", "cada vez que se hayan devengado tres meses de su percepción"], solo=[1, 5]),
+  lit(SS, "Artículo 276", ["en los quince días hábiles siguientes a la fecha del mismo", "cada vez que se hayan devengado tres meses de su percepción"], solo=[1, 2, 5]),
   lit(SS, "Artículo 277", ["por periodos trimestrales"], solo=[6]),
   ficha("Solicitantes del subsidio",
         ["Nace al día siguiente del hecho causante si se solicita en **15 días hábiles**; fuera de plazo pero en **seis meses**, desde la solicitud", "Se reconoce por **periodos trimestrales** prorrogables"],
@@ -415,7 +415,7 @@ T.ap("s12", "III.5 El subsidio por desempleo (LGSS, arts. 274 a 280)", f"""
 
 T.ap("s13", "III.6 Incompatibilidades, obligaciones e impugnación (LGSS, arts. 282, 299 a 301 y 303; Ley 3/2023, art. 3)", f"""
 {unidad("6.1 Incompatibilidades (art. 282, apartados 1, 2 y 4)",
-  lit(SS, "Artículo 282", ["incompatibles con el trabajo por cuenta propia", "excepto cuando éste se realice a tiempo parcial", "compatibles con la percepción de cualquier tipo de rentas mínimas"], solo=[1, 3, 18]),
+  lit(SS, "Artículo 282", ["incompatibles con el trabajo por cuenta propia", "excepto cuando éste se realice a tiempo parcial", "compatibles con la percepción de cualquier tipo de rentas mínimas"], solo=[1, 2, 3, 18]),
   ficha("Beneficiarios de prestación o subsidio",
         ["**Incompatibles** con el trabajo por **cuenta propia** y, en general, con prestaciones contributivas de la Seguridad Social", "Prestación **compatible** con trabajo **a tiempo parcial** (deduciendo la parte proporcional)", "**Compatibles** con rentas mínimas y prestaciones no contributivas (salvo la de jubilación)"],
         "El subsidio se compatibiliza con el empleo como **complemento de apoyo al empleo** (282.3)",
@@ -423,7 +423,7 @@ T.ap("s13", "III.6 Incompatibilidades, obligaciones e impugnación (LGSS, arts. 
         "Tiempo **parcial**: compatible con deducción; cuenta **propia**: incompatible (salvo programas de fomento, 282.7)."))}
 
 {unidad("6.2 Obligaciones de los beneficiarios (art. 299.1, selección)",
-  lit(SS, "Artículo 299", ["Inscribirse como persona demandante de empleo", "Buscar activamente empleo", "en el plazo de cinco días"], solo=[1, 5, 7, 9, 10]),
+  lit(SS, "Artículo 299", ["Inscribirse como persona demandante de empleo", "Buscar activamente empleo", "en el plazo de cinco días"], solo=[1, 5, 7, 8, 9, 10]),
   ficha("Trabajadores, solicitantes y beneficiarios",
         ["Inscribirse, mantener la inscripción y cumplir el **acuerdo de actividad**", "**Buscar activamente empleo** y acreditarlo cuando se requiera", "Participar en programas de empleo y formación y **aceptar la colocación adecuada**", "Devolver el justificante de comparecencia a una oferta en **cinco días**"],
         "—",
@@ -432,7 +432,8 @@ T.ap("s13", "III.6 Incompatibilidades, obligaciones e impugnación (LGSS, arts. 
 
 {unidad("6.3 Acuerdo de actividad y colocación adecuada (LGSS, arts. 300 y 301; Ley 3/2023, art. 3 f y g)",
   lit(SS, "Artículo 300", ["artículo 3 de la Ley 3/2023"]),
-  lit(L3, "Artículo 3", ["Acuerdo documentado", "deberá ser indefinida y con un salario, en ningún caso, inferior al salario mínimo interprofesional"], solo=[10, 11, 12, 13], titulo="Artículo 3 f) y g) (Ley 3/2023, de Empleo)"),
+  lit(SS, "Artículo 301", ["la así definida en el artículo 3 de la Ley 3/2023"]),
+  lit(L3, "Artículo 3", ["Acuerdo documentado", "deberá ser indefinida y con un salario, en ningún caso, inferior al salario mínimo interprofesional"], solo=[10, 11, 12, 13, 14], titulo="Artículo 3 f) y g) (Ley 3/2023, de Empleo)"),
   ficha("Demandante de servicios de empleo y servicio público de empleo",
         ["**Acuerdo de actividad**: acuerdo documentado de derechos y obligaciones para incrementar la empleabilidad", "**Colocación adecuada**: la de la profesión demandada o la habitual, o cualquier otra ajustada a las aptitudes físicas y formativas"],
         "La colocación ofrecida debe ser **indefinida** y con salario **no inferior al SMI**",
@@ -451,7 +452,7 @@ T.ap("s13", "III.6 Incompatibilidades, obligaciones e impugnación (LGSS, arts. 
   "Dos niveles **públicos y obligatorios**: **contributivo** (prestación) y **asistencial** (subsidio) (art. 263).",
   "Requisitos: afiliación y alta, **360 días** cotizados en **6 años**, situación legal de desempleo, **acuerdo de actividad**, no edad de jubilación, **inscripción**; solicitud en **15 días** (arts. 266 y 268).",
   "Duración: **120 a 720 días**; cuantía **70 % / 60 %** de la base reguladora (corte en el día **180**), entre **80/107 %** y **175/200/225 %** del IPREM (arts. 269 y 270).",
-  "Subsidio: carencia de rentas (**75 % del SMI**), **95/90/80 %** del IPREM; mayores de **52**: **80 %** y cotización por jubilación (arts. 274 a 280).",
+  "Subsidio: carencia de rentas (**75 % del SMI**), **95/90/80 %** del IPREM; mayores de **52**: **80 %** y cotización por jubilación (arts. 274 a 278 y 280).",
   "Impugnación ante el orden **social**, con **reclamación previa** (art. 303)."],
   "Siguiente: IV. ¿Qué son las políticas activas de empleo y cómo se planifican?")}
 """, 2)
@@ -466,7 +467,7 @@ T.ap("s14", "IV.1 Concepto de políticas activas e instrumentos de planificació
   lit(L3, "Artículo 11", ["Informe Conjunto sobre el empleo", "La Estrategia Española de Apoyo Activo al Empleo", "El Plan Anual para el Fomento del Empleo Digno", "El Sistema Público Integrado de Información de los Servicios de Empleo"], solo=[2, 4, 5, 6, 7]),
   fichab("Cómo se planifica y coordina la política de empleo",
          "Seguimiento y evaluación en la **Conferencia Sectorial** y el **Consejo General** (Informe Conjunto sobre el empleo)",
-         ["Tres instrumentos: **Estrategia** (→ IV.2), **Plan Anual** (→ IV.3) y **Sistema Público Integrado de Información** (SISPE)"],
+         ["Tres instrumentos: **Estrategia** (→ IV.2), **Plan Anual** (→ IV.3) y **Sistema Público Integrado de Información de los Servicios de Empleo**"],
          "—",
          "Son **tres** instrumentos. El **Informe Conjunto** es el resultado del seguimiento, no un instrumento del art. 11.4."))}
 
@@ -481,7 +482,7 @@ T.ap("s14", "IV.1 Concepto de políticas activas e instrumentos de planificació
 
 T.ap("s15", "IV.2 La Estrategia Española de Apoyo Activo al Empleo (Ley 3/2023, art. 12; RD 633/2025)", f"""
 {unidad("2.1 Aprobación, contenido, duración y ejes (art. 12)",
-  lit(L3, "Artículo 12", ["aprobará mediante real decreto", "se someterá a informe del Consejo General del Sistema Nacional de Empleo y de la Conferencia Sectorial de Empleo y Asuntos Laborales", "El diagnóstico de la situación y tendencias del mercado de trabajo", "La Estrategia tendrá carácter cuatrienal", "Eje 7. Mejora del marco institucional"], solo=[1, 2, 3, 4, 10, 11, 12, 13, 14, 15, 16, 17, 18]),
+  lit(L3, "Artículo 12", ["aprobará mediante real decreto", "se someterá a informe del Consejo General del Sistema Nacional de Empleo y de la Conferencia Sectorial de Empleo y Asuntos Laborales", "El diagnóstico de la situación y tendencias del mercado de trabajo", "La Estrategia tendrá carácter cuatrienal", "Eje 7. Mejora del marco institucional"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]),
   fichab("Instrumento plurianual de planificación de las políticas activas",
          ["Aprueba: el **Gobierno**, por **real decreto**, a propuesta del Ministerio de Trabajo", "Elabora la propuesta: con la Agencia, los servicios autonómicos y los interlocutores sociales", "Informan antes: **Consejo General** y **Conferencia Sectorial**"],
          ["Contenido: diagnóstico del mercado de trabajo (→ I.1), plan integral de políticas activas, evaluación, buenas prácticas y modelo financiero", "**Siete ejes**: orientación; formación; oportunidades de empleo; oportunidades para personas con discapacidad; igualdad de oportunidades; emprendimiento; mejora del marco institucional (transversal)"],
@@ -508,7 +509,7 @@ T.ap("s15", "IV.2 La Estrategia Española de Apoyo Activo al Empleo (Ley 3/2023,
 
 T.ap("s16", "IV.3 El Plan Anual para el Fomento del Empleo Digno (Ley 3/2023, art. 13)", f"""
 {unidad("3.1 Contenido, elaboración y ejes (art. 13)",
-  lit(L3, "Artículo 13", ["concretará, con carácter anual", "se elaborará por el Ministerio de Trabajo y Economía Social", "se aprobará por el Consejo de Ministros", "f) Eje 6. Mejora del marco institucional"], solo=[1, 2, 4, 5, 6, 7, 9, 10, 11, 12, 13]),
+  lit(L3, "Artículo 13", ["concretará, con carácter anual", "se elaborará por el Ministerio de Trabajo y Economía Social", "se aprobará por el Consejo de Ministros", "f) Eje 6. Mejora del marco institucional"], solo=[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13]),
   fichab("Concreción anual de la Estrategia",
          ["Elabora: el **Ministerio de Trabajo y Economía Social**, con las previsiones de las CC. AA. y de la Agencia", "Informan: **Consejo General** y **Conferencia Sectorial**", "Aprueba: el **Consejo de Ministros**"],
          ["Directrices anuales, indicadores y servicios y programas de las CC. AA. y de la Agencia", "**Seis ejes**: orientación; formación; oportunidades de empleo; igualdad de oportunidades en el acceso al empleo; emprendimiento; mejora del marco institucional"],
@@ -556,7 +557,7 @@ T.ap("s18", "IV.5 Coordinación con las prestaciones y colectivos prioritarios (
   fichab("Colectivos vulnerables de atención prioritaria",
          "El **Gobierno** y las **Comunidades Autónomas** adoptan programas específicos; las CC. AA. pueden identificar colectivos propios (50.3)",
          ["Entre otros: jóvenes (especialmente con baja cualificación), parados de **larga duración**, personas con discapacidad, **mayores de 45 años**, migrantes, víctimas de violencia de género, de trata o de terrorismo, personas LGTBI, personas gitanas…", "Discapacidad con mayores dificultades: parálisis cerebral, salud mental, discapacidad intelectual o autismo con grado **≥ 33 %**; física o sensorial con grado **≥ 65 %**"],
-         "Itinerarios individuales y personalizados; objetivos cuantitativos y cualitativos con perspectiva de género",
+         "Itinerarios individuales y personalizados; objetivos cuantitativos y cualitativos con perspectiva de género (50.2)",
          "Mayores de **45** (no de 52 ni de 55). Persona joven: menor de **30** años o beneficiaria de la Garantía Juvenil (art. 3 e)."))}
 """, 2)
 
@@ -565,7 +566,7 @@ T.ap("s19", "IV.6 Servicios garantizados, compromisos y cartera común (Ley 3/20
   lit(L3, "Artículo 56", ["Elaboración de un perfil individualizado de usuario", "Tutorización individual", "Un itinerario o plan personalizado adecuado a su perfil que exigirá la formalización de un acuerdo de actividad", "en el plazo máximo de un mes, a contar desde la elaboración de su perfil de usuario", "Un expediente laboral personalizado único"], solo=[1, 2, 5, 8, 15, 17, 18, 19, 20, 22, 25, 26]),
   ficha("Personas demandantes de servicios de empleo",
         ["Perfil individualizado (a)", "Tutorización individual (b)", "Itinerario o plan personalizado con **acuerdo de actividad** (c)", "Formación en el trabajo (d)", "Asesoramiento para el autoempleo (e)", "Intermediación eficiente (f)", "Canal presencial o digital (g)", "Acceso a trabajos en todo el Estado (h)", "Búsqueda de protección social (i)", "**Expediente laboral personalizado único** (j)"],
-        "Los garantizan la Agencia y los servicios autonómicos en **todo el territorio**",
+        "Se implementan a través de la **Cartera Común de Servicios** del Sistema Nacional de Empleo (56.2; → IV.6.3)",
         "Itinerario: en el plazo máximo de **un mes** desde el perfil",
         "**Un mes** desde la elaboración del **perfil** para disponer del **itinerario**."))}
 
@@ -622,7 +623,7 @@ T.ap("s21", "Cierre 2. Repaso en 10 minutos (por bloques)", """
 | I. Evolución del empleo | Paro en descenso desde 2015 (salvo 2020); más indefinidos tras la reforma de 2021 | Menores de 25: **46,24 % → 24,90 %**; meta 2028: **8,5 %** |
 | II. Servicios públicos de empleo | Sistema Nacional de Empleo: Agencia Española de Empleo (SEPE hasta su funcionamiento efectivo) + servicios autonómicos | Conferencia Sectorial (preside el **Ministro**); Consejo General (**tripartito**, preside el **director de la Agencia**) |
 | III. Prestaciones | Contributivo y asistencial; requisitos; duración y cuantía; subsidio | **360** días → **120**; tope **720**; **70/60 %**; subsidio **75 % SMI**, **95/90/80 %** IPREM |
-| IV. Políticas activas | Estrategia, Plan Anual, SISPE; intermediación; servicios garantizados | Estrategia **7 ejes**, Plan Anual **6 ejes**; agencias por **declaración responsable** |
+| IV. Políticas activas | Estrategia, Plan Anual, Sistema Público Integrado de Información; intermediación; servicios garantizados | Estrategia **7 ejes**, Plan Anual **6 ejes**; agencias por **declaración responsable** |
 
 ?> **Trampas frecuentes:** «la Estrategia la aprueba el Consejo de Ministros por acuerdo» (por **real decreto** del Gobierno; el que aprueba el Consejo de Ministros es el **Plan Anual**); «el Plan Anual tiene siete ejes» (tiene **seis**; siete la Estrategia); «la Conferencia Sectorial es tripartita» (es el **Consejo General**); «las CC. AA. gestionan las prestaciones por desempleo» (gestión **estatal**); «la prestación es el 70 % durante un año» (el 70 % son los **180 primeros días**); «el subsidio exige rentas inferiores al 75 % del IPREM» (es del **SMI**); «las agencias de colocación necesitan autorización» (basta **declaración responsable**).
 """)

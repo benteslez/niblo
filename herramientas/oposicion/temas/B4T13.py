@@ -12,8 +12,23 @@ from plantilla import *
 CORTO["LO1_2025"] = "LO 1/2025"
 STC52 = "https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/23903"
 
+
+def tc_doc(k, url, cab, frases, resaltar=()):
+    """Bloque literal de una resolución del TC (no es texto legal): cada frase tiene que ser
+    un párrafo (o parte de un párrafo) del texto guardado en boe/<k>.json, descargado del
+    buscador oficial hj.tribunalconstitucional.es. Comparación exacta (distingue mayúsculas)."""
+    ps = [" ".join(x.split()) for x in boe.parrafos(k, "Texto")]
+    out = []
+    for f in frases:
+        assert any(" ".join(f.split()) in x for x in ps), ("TC NO LITERAL", k, f)
+        for r in resaltar:
+            if r in f: f = f.replace(r, "**" + r + "**", 1)
+        out.append(f)
+    for r in resaltar: assert any(r in f for f in frases), ("NEGRITA NO LITERAL", k, r)
+    return "\n".join([f"> [[TC|{url}]]", "> **" + cab + "**"] + ["> " + x for x in out])
+
 T = Tema("B4T13",
-  "Cuatro preguntas: I. Para qué sirve la jurisdicción contencioso-administrativa (arts. 106.1 y 153 CE; LJCA, arts. 1 a 5) · II. Qué órganos la forman y qué conoce cada uno (LJCA, arts. 6 a 14; LO 1/2025) · III. Contra qué se recurre y en qué plazo (LJCA, arts. 25 a 30, 45 y 46) · IV. Quiénes son las partes (LJCA, arts. 18 a 24). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Para qué sirve la jurisdicción contencioso-administrativa (arts. 106.1 y 153 CE; LJCA, arts. 1 a 5; LOPJ, art. 9) · II. Qué órganos la forman y qué conoce cada uno (LJCA, arts. 6 a 14; LO 1/2025) · III. Contra qué se recurre y en qué plazo (LJCA, arts. 25 a 30, 45 y 46) · IV. Quiénes son las partes (LJCA, arts. 18 a 24). Cada artículo: texto literal del BOE y ficha.",
   ["LJCA", "Art. 106.1 CE", "Improrrogable", "Tribunales de Instancia", "Audiencia Nacional", "Tribunal Supremo", "Actividad impugnable", "Inactividad", "Vía de hecho", "Actos confirmatorios", "Plazo de dos meses", "Legitimación", "Lesividad", "Procurador y Abogado"])
 
 T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
@@ -35,7 +50,7 @@ T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Para qué sirve? Funciones y ámbito (arts. 106.1 y 153 CE; LJCA, arts. 1 a 5)", donde(
+T.ap("bI", "I. ¿Para qué sirve? Funciones y ámbito (arts. 106.1 y 153 CE; LJCA, arts. 1 a 5; LOPJ, art. 9)", donde(
   "Primera pregunta del tema: la **función** de esta jurisdicción y su **ámbito**, es decir, qué asuntos le corresponden y cuáles no.",
   ["1 Fundamento constitucional (arts. 106.1 y 153 c CE)", "2 Ámbito: qué conoce y qué no (LJCA, arts. 1 a 3)", "3 Cuestiones prejudiciales e improrrogabilidad (LJCA, arts. 4 y 5; LOPJ, art. 9)"]))
 
@@ -117,9 +132,9 @@ T.ap("s4", "II.1 Órganos del orden contencioso (LJCA, art. 6; LO 1/2025)", f"""
 {unidad("1.1 Los cinco órganos (art. 6)",
   lit("LJCA", "Artículo 6", ["Juzgados de lo Contencioso-administrativo", "Juzgados Centrales de lo Contencioso-administrativo", "Tribunales Superiores de Justicia", "Audiencia Nacional", "Tribunal Supremo"]),
   fichab("Planta del orden contencioso",
-         ["Unipersonales: **Juzgados** y **Juzgados Centrales** (hoy, Secciones de los Tribunales de Instancia: → 1.2)", "Colegiados: **Salas** de lo Contencioso de los **TSJ**, de la **Audiencia Nacional** y del **Tribunal Supremo**"],
+         ["Unipersonales: **Juzgados** y **Juzgados Centrales** (hoy, Secciones de los Tribunales de Instancia: → II.1.2)", "Colegiados: **Salas** de lo Contencioso de los **TSJ**, de la **Audiencia Nacional** y del **Tribunal Supremo**"],
          "—", "—",
-         "**Cinco** clases de órganos. «Centrales» = competencia en **todo el territorio nacional**, con sede en Madrid."))}
+         f"**Cinco** clases de órganos. «Centrales» = competencia en **todo el territorio nacional**, con sede en Madrid: hoy, Sección de lo Contencioso-Administrativo del Tribunal Central de Instancia (LOPJ, art. 95: {c('LOPJ', 'anoventaycinco', 'En la Villa de Madrid y con jurisdicción en todo el territorio nacional existirá un Tribunal Central de Instancia')})."))}
 
 {unidad("1.2 Juzgados → Secciones de los Tribunales de Instancia (LO 1/2025)",
   lit("LO1_2025", "da", ["de lo Contencioso-Administrativo", "se entenderán referidas a las Secciones del orden jurisdiccional correspondiente de los Tribunales de Instancia", "las referencias a los Juzgados Centrales respecto de las correspondientes Secciones del Tribunal Central de Instancia"], titulo="Disposición adicional primera (LO 1/2025). Menciones a Juzgados y Tribunales"),
@@ -142,11 +157,11 @@ T.ap("s5", "II.2 Reglas generales de competencia (art. 7)", f"""
 
 T.ap("s6", "II.3 Juzgados y Juzgados Centrales (arts. 8 y 9)", f"""
 {unidad("3.1 Juzgados de lo Contencioso-administrativo (art. 8)",
-  lit("LJCA", "Artículo 8", ["frente a los actos de las entidades locales", "excluidas las impugnaciones de cualquier clase de instrumentos de planeamiento urbanístico", "salvo cuando procedan del respectivo Consejo de Gobierno", "multas no superiores a 60.000 euros", "cuya cuantía no exceda de 30.050 euros", "en materia de extranjería", "Juntas Electorales de Zona", "las autorizaciones para la entrada en domicilios"], solo=list(range(1, 11))),
+  lit("LJCA", "Artículo 8", ["frente a los actos de las entidades locales", "excluidas las impugnaciones de cualquier clase de instrumentos de planeamiento urbanístico", "salvo cuando procedan del respectivo Consejo de Gobierno", "multas no superiores a 60.000 euros", "cuya cuantía no exceda de 30.050 euros", "en materia de extranjería", "Juntas Electorales de Zona", "las autorizaciones para la entrada en domicilios"], solo=list(range(1, 12))),
   fichab("Qué conocen los Juzgados (hoy, Secciones de los Tribunales de Instancia)",
          "Juzgados de lo Contencioso-administrativo, en **única o primera instancia**",
-         ["Actos de las **entidades locales** (salvo planeamiento urbanístico) (8.1)", "Actos de las **CCAA** (no del Consejo de Gobierno) sobre **personal** (salvo nacimiento o extinción de la relación de funcionarios de carrera), **sanciones** (multas hasta **60.000 €**, ceses o privaciones hasta **6 meses**) y **responsabilidad patrimonial** hasta **30.050 €** (8.2)", "Administración **periférica** del Estado y de las CCAA, salvo actos de más de **60.000 €** o sobre dominio público, obras públicas, expropiación y propiedades especiales (8.3)", "**Extranjería** de la periférica del Estado y de las CCAA (8.4)", "Juntas Electorales de **Zona** (8.5)", "**Autorizaciones** de entrada en domicilio y ratificación de medidas sanitarias (8.6)"],
-         "Cuantías: **60.000 €** (multas y periférica) · **30.050 €** (responsabilidad patrimonial) · **6 meses** (ceses)",
+         ["Actos de las **entidades locales** (salvo planeamiento urbanístico) (8.1)", "Actos de las **CCAA** (no del Consejo de Gobierno) sobre **personal** (salvo nacimiento o extinción de la relación de funcionarios de carrera), **sanciones** (multas hasta **60.000 €**, ceses o privaciones hasta **6 meses**) y **responsabilidad patrimonial** hasta **30.050 €** (8.2)", "Administración **periférica** del Estado y de las CCAA (8.3); se exceptúan los actos de la periférica **del Estado** y de los organismos públicos estatales de cuantía superior a **60.000 €** o sobre dominio público, obras públicas del Estado, expropiación forzosa y propiedades especiales", "**Extranjería** de la periférica del Estado y de las CCAA (8.4)", "Juntas Electorales de **Zona** (8.5)", "**Autorizaciones** de entrada en domicilio y ratificación de medidas sanitarias (8.6)"],
+         "Cuantías: **60.000 €** (multas; excepción de la periférica del Estado) · **30.050 €** (responsabilidad patrimonial) · **6 meses** (ceses)",
          "**Extranjería** de las CCAA → **Juzgado** (no TSJ; pregunta oficial P 76, → Cierre 1). Planeamiento urbanístico local → **TSJ**."))}
 
 {unidad("3.2 Juzgados Centrales de lo Contencioso-administrativo (art. 9)",
@@ -155,7 +170,7 @@ T.ap("s6", "II.3 Juzgados y Juzgados Centrales (arts. 8 y 9)", f"""
          "Juzgados Centrales, en **única o primera instancia**",
          ["**Personal**: actos de **Ministros y Secretarios de Estado**, con excepciones (a)", "Órganos centrales de la AGE en los supuestos del 8.2 b (sanciones) (b)", "Organismos y entidades del **sector público estatal** con competencia en todo el territorio (c)", "**Responsabilidad patrimonial** de Ministros y Secretarios de Estado hasta **30.050 €** (d)", "**Inadmisión de asilo**, en primera instancia (e)", "**Comité Español de Disciplina Deportiva** (f)"],
          "Responsabilidad patrimonial: hasta **30.050 €**",
-         "Ministros y SE: por regla van a la **Audiencia Nacional** (art. 11); al Juzgado Central solo **personal** y responsabilidad patrimonial **≤ 30.050 €**."))}
+         "Ministros y SE: por regla van a la **Audiencia Nacional** (art. 11); al Juzgado Central van su **personal** (con las excepciones de la letra a) y su responsabilidad patrimonial **≤ 30.050 €** (letras a y d), además de las sanciones de los órganos centrales de la AGE del 8.2 b (letra b)."))}
 """, 2)
 
 T.ap("s7", "II.4 Salas de los TSJ, de la Audiencia Nacional y del Tribunal Supremo (arts. 10 a 12)", f"""
@@ -255,7 +270,7 @@ T.ap("s10", "III.2 Inactividad y vía de hecho (arts. 29 y 30)", f"""
 
 T.ap("s11", "III.3 Interposición y plazos (arts. 45 y 46)", f"""
 {unidad("3.1 El escrito de interposición (art. 45)",
-  lit("LJCA", "Artículo 45", ["por un escrito reducido a citar la disposición, acto, inactividad o actuación constitutiva de vía de hecho", "El recurso de lesividad se iniciará por demanda", "podrá iniciarse también mediante demanda"], solo=[1, 2, 3, 4, 5, 6, 9, 10]),
+  lit("LJCA", "Artículo 45", ["por un escrito reducido a citar la disposición, acto, inactividad o actuación constitutiva de vía de hecho", "El recurso de lesividad se iniciará por demanda", "podrá iniciarse también mediante demanda"]),
   fichab("Cómo empieza el proceso",
          "El recurrente; el **Secretario judicial** (hoy, Letrado de la Administración de Justicia) examina la comparecencia (45.3)",
          ["Regla: **escrito de interposición** que cita lo impugnado y pide que se tenga por interpuesto (45.1), con los documentos del 45.2 (representación, legitimación, copia del acto, requisitos de personas jurídicas, autorización de afiliados)", "**Lesividad**: por **demanda**, con la declaración de lesividad y el expediente (45.4)", "Sin terceros interesados: puede iniciarse **por demanda** (45.5)"],
@@ -264,15 +279,14 @@ T.ap("s11", "III.3 Interposición y plazos (arts. 45 y 46)", f"""
 
 {unidad("3.2 Plazos para recurrir (art. 46)",
   lit("LJCA", "Artículo 46", ["será de dos meses contados desde el día siguiente al de la publicación de la disposición impugnada", "Si no lo fuera, el plazo será de seis meses", "será de diez días a contar desde el día siguiente a la terminación del plazo establecido en el artículo 30", "el plazo será de veinte días", "en que éste deba entenderse presuntamente desestimado", "El plazo para interponer recurso de lesividad será de dos meses"]),
+  tc_doc("STC52_2014", STC52, "STC 52/2014, de 10 de abril (BOE núm. 111, de 7 de mayo de 2014) · resumen del buscador de jurisprudencia del Tribunal Constitucional (doctrina; no es texto legal)",
+         ['Se desestima la cuestión de inconstitucionalidad. El precepto impugnado no vulnera el derecho a la tutela judicial efectiva en su vertiente de acceso a la justicia. De acuerdo con la jurisprudencia del Tribunal Constitucional, el silencio administrativo negativo es una mera ficción legal que responde a la finalidad de que el ciudadano pueda acceder a la vía judicial, pero que no exonera de la obligación de resolver expresamente. Con arreglo a la ordenación del silencio administrativo introducida en la Ley de procedimiento administrativo, no tienen encaje en el concepto legal de acto presunto los supuestos en los que, como en el presente, el ordenamiento jurídico determina el efecto desestimatorio de la solicitud formulada, de modo que la impugnación jurisdiccional de las desestimaciones por silencio administrativo no está sujeta al plazo de caducidad de seis meses previsto en dicho precepto.'],
+         ["no está sujeta al plazo de caducidad de seis meses"]),
   fichab("Cuándo se recurre",
          "El recurrente",
          ["Desde el día **siguiente** a la publicación o notificación", "Si hubo **reposición**, desde su resolución expresa o desestimación presunta (46.4)"],
-         ["::Plazos:", "Disposición o acto **expreso**: **2 meses** (46.1)", "Acto no expreso: **6 meses** según el texto (46.1; ver la STC 52/2014 abajo)", "Inactividad (art. 29): **2 meses** desde el vencimiento de los plazos del art. 29 (46.2)", "Vía de hecho: **10 días** tras el plazo del requerimiento; sin requerimiento, **20 días** (46.3)", "**Lesividad**: **2 meses** desde la declaración (46.5)", "Litigios entre Administraciones: **2 meses** (46.6)"],
+         ["::Plazos:", "Disposición o acto **expreso**: **2 meses** (46.1)", "Acto no expreso: **6 meses** según el texto (46.1; ver la STC 52/2014 arriba)", "Inactividad (art. 29): **2 meses** desde el vencimiento de los plazos del art. 29 (46.2)", "Vía de hecho: **10 días** tras el plazo del requerimiento; sin requerimiento, **20 días** (46.3)", "**Lesividad**: **2 meses** desde la declaración (46.5)", "Litigios entre Administraciones: **2 meses** (46.6)"],
          "**Dos meses** desde el día siguiente (pregunta oficial P 77, → Cierre 1). Vía de hecho: **10** o **20** días."))}
-
-> [[TC|{STC52}]]
-> **STC 52/2014, de 10 de abril (BOE núm. 111, de 7 de mayo de 2014) · resumen del buscador de jurisprudencia del Tribunal Constitucional (doctrina; no es texto legal)**
-> Se desestima la cuestión de inconstitucionalidad. El precepto impugnado no vulnera el derecho a la tutela judicial efectiva en su vertiente de acceso a la justicia. De acuerdo con la jurisprudencia del Tribunal Constitucional, el silencio administrativo negativo es una mera ficción legal que responde a la finalidad de que el ciudadano pueda acceder a la vía judicial, pero que no exonera de la obligación de resolver expresamente. Con arreglo a la ordenación del silencio administrativo introducida en la Ley de procedimiento administrativo, no tienen encaje en el concepto legal de acto presunto los supuestos en los que, como en el presente, el ordenamiento jurídico determina el efecto desestimatorio de la solicitud formulada, de modo que la impugnación jurisdiccional de las desestimaciones por silencio administrativo **no está sujeta al plazo de caducidad de seis meses** previsto en dicho precepto.
 
 ?> **Cómo leer el plazo de seis meses.** El texto del art. 46.1 sigue diciendo «seis meses» para el acto no expreso, y así hay que citarlo en el examen. Pero, según la STC 52/2014, contra la **desestimación por silencio** no corre ese plazo de caducidad de seis meses.
 
@@ -300,7 +314,7 @@ T.ap("s12", "IV.1 Capacidad procesal (art. 18)", f"""
 
 T.ap("s13", "IV.2 Legitimación activa y pasiva (arts. 19 a 22)", f"""
 {unidad("2.1 Legitimación activa (art. 19)",
-  lit("LJCA", "Artículo 19", ["Las personas físicas o jurídicas que ostenten un derecho o interés legítimo", "intereses legítimos colectivos", "El Ministerio Fiscal para intervenir en los procesos que determine la Ley", "en ejercicio de la acción popular, en los casos expresamente previstos por las Leyes", "previa su declaración de lesividad para el interés público"], solo=list(range(1, 10)) + [16, 17, 18]),
+  lit("LJCA", "Artículo 19", ["Las personas físicas o jurídicas que ostenten un derecho o interés legítimo", "intereses legítimos colectivos", "El Ministerio Fiscal para intervenir en los procesos que determine la Ley", "en ejercicio de la acción popular, en los casos expresamente previstos por las Leyes", "previa su declaración de lesividad para el interés público"], solo=list(range(1, 19))),
   fichab("Quién puede recurrir",
          ["Personas físicas o jurídicas con **derecho o interés legítimo** (a)", "Corporaciones, asociaciones, sindicatos y grupos, por **intereses colectivos** (b)", "AGE, CCAA, entidades locales y entidades de Derecho público, en defensa de su ámbito (c, d, e, g)", "**Ministerio Fiscal**, en los procesos que determine la ley (f)", "**Cualquier ciudadano**, por **acción popular**, solo en los casos **previstos por las leyes** (h)", "Igualdad de trato y discriminación; sindicatos por sus afiliados (i, j, k)"],
          ["La **Administración autora** de un acto lo impugna **previa declaración de lesividad** (19.2)", "Vecinos en nombre de las entidades locales: legislación de régimen local (19.3)"],
@@ -349,7 +363,7 @@ T.ap("s14", "IV.3 Representación y defensa (arts. 23 y 24)", f"""
 # =============================================================================
 EX = [
  ("L", 60, "Legitimación activa (→ IV.2.1)", {
-   "a": f"La legitimación de «cualquier ciudadano» es la **acción popular**, solo {c('LJCA', 'Artículo 19', 'en los casos expresamente previstos por las Leyes')}; no hay legitimación general «sin interés».",
+   "a": f"La legitimación de {c('LJCA', 'Artículo 19', 'Cualquier ciudadano')} es la **acción popular**, solo {c('LJCA', 'Artículo 19', 'en los casos expresamente previstos por las Leyes')}; no hay legitimación general «sin interés».",
    "b": "Restringe la ley: basta un derecho **o** un **interés legítimo**, no solo un derecho subjetivo.",
    "c": f"Literal del art. 19.1 a): {c('LJCA', 'Artículo 19', 'Las personas físicas o jurídicas que ostenten un derecho o interés legítimo')}.",
    "d": "La Administración demandada es parte **pasiva** (art. 21), y el art. 19 enumera muchos otros legitimados."},
@@ -487,7 +501,7 @@ for q_, a_, cat in [
   ("Cuestiones prejudiciales (art. 4)", "Las conoce, salvo las constitucionales y penales; sin efectos fuera del proceso.", "Funciones"),
   ("Órganos del orden contencioso (art. 6)", "Juzgados, Juzgados Centrales, Salas de los TSJ, de la AN y del TS.", "Órganos"),
   ("Juzgados tras la LO 1/2025", "Secciones de lo Contencioso-Administrativo de los Tribunales de Instancia (Centrales: del Tribunal Central de Instancia).", "Órganos"),
-  ("Cuantías de los Juzgados (art. 8)", "Multas hasta 60.000 €; responsabilidad patrimonial hasta 30.050 €; periférica: hasta 60.000 €.", "Competencias"),
+  ("Cuantías de los Juzgados (art. 8)", "Multas hasta 60.000 €; responsabilidad patrimonial hasta 30.050 €; periférica del Estado: actos de hasta 60.000 €.", "Competencias"),
   ("Reglamentos autonómicos y locales", "TSJ en única instancia (art. 10.1 b).", "Competencias"),
   ("Ministros y Secretarios de Estado", "Audiencia Nacional en única instancia (art. 11.1 a); personal y responsabilidad hasta 30.050 €: Juzgados Centrales (art. 9).", "Competencias"),
   ("Consejo de Ministros, CGPJ y Fiscal General", "Tribunal Supremo en única instancia (art. 12.1).", "Competencias"),
@@ -501,7 +515,7 @@ for q_, a_, cat in [
 ]: T.fc(q_, a_, cat)
 
 T.glos("Jurisdicción improrrogable", "La que no puede extenderse a asuntos de otro orden ni por voluntad de las partes; se aprecia de oficio (LJCA, art. 5).", "s3", "Funciones")
-T.glos("Tribunal de Instancia", "Órgano judicial colegiado en que se integran, como Secciones, los antiguos Juzgados (LO 1/2025, disposiciones adicional primera y transitoria primera).", "s4", "Órganos")
+T.glos("Tribunal de Instancia", f"Órgano judicial en que se integran, como Secciones, los antiguos Juzgados (LO 1/2025, disposiciones adicional primera y transitoria primera). Según el preámbulo de la LO 1/2025, {c('LO1_2025', 'pr', 'se configuran como órganos judiciales colegiados, desde el punto de vista organizativo')}.", "s4", "Órganos")
 T.glos("Actividad administrativa impugnable", "Disposiciones generales, actos que ponen fin a la vía administrativa, inactividad y vía de hecho (LJCA, art. 25).", "s9", "Actividad impugnable")
 T.glos("Acto de trámite cualificado", "El de trámite que decide directa o indirectamente el fondo, impide continuar el procedimiento o produce indefensión o perjuicio irreparable; es recurrible (LJCA, art. 25.1). Expresión doctrinal.", "s9", "Actividad impugnable")
 T.glos("Recurso indirecto", "Impugnación de un acto de aplicación fundada en que la disposición general no es conforme a Derecho (LJCA, art. 26). Expresión doctrinal.", "s9", "Actividad impugnable")

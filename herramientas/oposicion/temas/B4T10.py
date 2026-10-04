@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plantilla import *
 
 T = Tema("B4T10",
-  "Tres preguntas: I. Cuándo responde la Administración (art. 106.2 CE; LRJSP, arts. 32 y 34.1) · II. Cuánto se indemniza y quién responde (LRJSP, arts. 33 a 37) · III. Cómo se reclama: el procedimiento (LPAC y LJCA). Cada artículo: texto literal del BOE y ficha.",
+  "Tres preguntas: I. Cuándo responde la Administración (arts. 106.2 y 121 CE; LRJSP, arts. 32 y 34.1) · II. Cuánto se indemniza y quién responde (LRJSP, arts. 33 a 37) · III. Cómo se reclama: el procedimiento (LPAC, LO 3/1980 y LJCA). Cada artículo: texto literal del BOE y ficha.",
   ["Art. 106.2 CE", "LRJSP", "LPAC", "Lesión", "Fuerza mayor", "Relación de causalidad", "Estado legislador", "Responsabilidad concurrente", "Acción de regreso", "Prescripción: un año", "Consejo de Estado", "Silencio desestimatorio", "Procedimiento simplificado"])
 
 T.ap("s0", "Mapa del tema: tres preguntas", f"""
@@ -30,20 +30,20 @@ T.ap("s0", "Mapa del tema: tres preguntas", f"""
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Cuándo responde la Administración? (art. 106.2 CE; LRJSP, arts. 32 y 34.1)", donde(
+T.ap("bI", "I. ¿Cuándo responde la Administración? (arts. 106.2 y 121 CE; LRJSP, arts. 32 y 34.1)", donde(
   "Primera pregunta del tema: **en qué casos** nace el derecho a ser indemnizado. La Constitución lo garantiza y la Ley 40/2015 fija sus requisitos.",
-  ["1 Fundamento constitucional (arts. 106.2 y 121 CE)", "2 Principios y requisitos de la responsabilidad (LRJSP, art. 32)", "3 El daño indemnizable (LRJSP, art. 34.1)"]))
+  ["1 Fundamento constitucional (arts. 106.2 y 121 CE; LRJSP, art. 32.7)", "2 Principios y requisitos de la responsabilidad (LRJSP, art. 32)", "3 El daño indemnizable (LRJSP, art. 34.1)"]))
 
-T.ap("s1", "I.1 Fundamento constitucional (arts. 106.2 y 121 CE)", f"""
+T.ap("s1", "I.1 Fundamento constitucional (arts. 106.2 y 121 CE; LRJSP, art. 32.7)", f"""
 {unidad("1.1 El derecho a ser indemnizado (art. 106.2)",
   lit("CE", "Artículo 106", ["toda lesión que sufran en cualquiera de sus bienes y derechos", "salvo en los casos de fuerza mayor", "consecuencia del funcionamiento de los servicios públicos"], solo=[2]),
   ficha(c("CE", "Artículo 106", "Los particulares"),
-        ["::Derecho a ser indemnizados por toda lesión en sus bienes y derechos:", "Que sea **consecuencia del funcionamiento de los servicios públicos**", "«En los **términos establecidos por la ley**» (hoy, Leyes 40/2015 y 39/2015)"],
+        ["::Derecho a ser indemnizados por toda lesión en sus bienes y derechos:", "Que sea **consecuencia del funcionamiento de los servicios públicos**", f"{c('CE', 'Artículo 106', 'en los **términos establecidos por la ley**')} (hoy, Leyes 40/2015 y 39/2015)"],
         "**Fuerza mayor**: excluye la indemnización",
         "Control de los Tribunales sobre la actuación administrativa (106.1); reclamación ante la Administración y, después, contencioso (→ III.6)",
         "El art. 106.2 está en el **Título IV** (Gobierno y Administración), **no** en el Título I: no es un derecho fundamental susceptible de amparo. Única exclusión constitucional: la **fuerza mayor**."))}
 
-{unidad("1.2 La responsabilidad por la Administración de Justicia (art. 121)",
+{unidad("1.2 La responsabilidad por la Administración de Justicia (art. 121 CE; LRJSP, art. 32.7)",
   lit("CE", "Artículo 121", ["error judicial", "funcionamiento anormal de la Administración de Justicia", "a cargo del Estado"]),
   lit("L40", "Artículo 32", ["se regirá por la Ley Orgánica 6/1985, de 1 de julio, del Poder Judicial"], solo=[14]),
   fichab("Indemnización por error judicial o funcionamiento anormal de la Administración de Justicia",
@@ -60,7 +60,7 @@ T.ap("s2", "I.2 Principios y requisitos de la responsabilidad (LRJSP, art. 32)",
         ["::Indemnización por toda lesión en sus bienes y derechos si:", "Es consecuencia del funcionamiento **normal o anormal** de los servicios públicos (responsabilidad **objetiva**)", "El daño es **efectivo**, **evaluable económicamente** e **individualizado** con relación a una persona o grupo de personas (32.2)"],
         ["::No se indemniza:", "**Fuerza mayor**", "Daños que el particular tenga el **deber jurídico de soportar** de acuerdo con la Ley", "La **anulación** de un acto o disposición **no presupone, por sí misma**, el derecho a indemnización (32.1, párrafo 2.º)"],
         "Reclamación en el procedimiento de la Ley 39/2015 (→ III) y, después, el contencioso-administrativo",
-        "«Funcionamiento **normal o anormal**»: también responde por el funcionamiento **normal**. La anulación **no** da derecho automático a indemnización (pregunta oficial X 61, → Cierre 1). Tres notas del daño: **efectivo, evaluable, individualizado**."))}
+        f"{c('L40', 'Artículo 32', 'funcionamiento **normal o anormal**')}: también responde por el funcionamiento **normal**. La anulación **no** da derecho automático a indemnización (pregunta oficial X 61, → Cierre 1). Tres notas del daño: **efectivo, evaluable, individualizado**."))}
 
 {unidad("2.2 La responsabilidad del Estado legislador (art. 32.3 a 6)",
   lit("L40", "Artículo 32", ["actos legislativos de naturaleza no expropiatoria", "cuando así se establezca en los propios actos legislativos", "norma con rango de ley declarada inconstitucional", "norma contraria al Derecho de la Unión Europea", "sentencia firme desestimatoria", "suficientemente caracterizado", "relación de causalidad directa", "desde la fecha de su publicación"], solo=list(range(4, 14))),
@@ -162,7 +162,7 @@ T.ap("s7", "III.1 Reglas generales: silencio y motivación (LPAC, arts. 24 y 35)
          "En responsabilidad patrimonial el silencio es **negativo**, igual que en el derecho de petición y en las facultades sobre dominio o servicio público."))}
 
 {unidad("1.2 Motivación (art. 35.1 h)",
-  lit("L39", "Artículo 35", ["o de responsabilidad patrimonial"], solo=[1, 9]),
+  lit("L39", "Artículo 35", ["o de responsabilidad patrimonial"], solo=list(range(1, 11))),
   fichab("Actos que deben motivarse", "El órgano que resuelve", "Se motivan, con sucinta referencia de hechos y fundamentos de derecho, los actos que resuelvan procedimientos de responsabilidad patrimonial", "—",
          "Motivación **obligatoria** de la resolución de responsabilidad patrimonial (letra **h**)."))}
 """, 2)
@@ -172,7 +172,7 @@ T.ap("s8", "III.2 Iniciación (LPAC, arts. 61, 65 y 67)", f"""
   lit("L39", "Artículo 61", ["individualizar la lesión producida en una persona o grupo de personas"], solo=[4]),
   fichab("Contenido de la petición razonada de otro órgano", "Un órgano sin competencia para iniciar que conoce los hechos",
          ["Individualizar la **lesión** en una persona o grupo", "Su **relación de causalidad** con el funcionamiento del servicio", "Su **evaluación económica**, si fuera posible", "El **momento** en que se produjo"],
-         "—", "Mismo contenido que la solicitud del interesado (→ 2.3)."))}
+         "—", "Mismo contenido que la solicitud del interesado (→ III.2.3)."))}
 
 {unidad("2.2 Especialidades del inicio de oficio (art. 65)",
   lit("L39", "Artículo 65", ["será necesario que no haya prescrito el derecho a la reclamación del interesado", "un plazo de diez días", "aunque los particulares presuntamente lesionados no se personen"]),
@@ -214,7 +214,7 @@ T.ap("s10", "III.4 Terminación (LPAC, arts. 86, 91 y 92)", f"""
 {unidad("4.2 Contenido de la resolución y silencio (art. 91)",
   lit("L39", "Artículo 91", ["una vez finalizado el trámite de audiencia", "sobre la existencia o no de la relación de causalidad", "Transcurridos seis meses desde que se inició el procedimiento", "podrá entenderse que la resolución es contraria a la indemnización del particular"]),
   fichab("La resolución del procedimiento",
-         "El órgano competente (→ 4.3); si hay propuesta de acuerdo, la formalizan el interesado y el órgano competente",
+         "El órgano competente (→ III.4.3); si hay propuesta de acuerdo, la formalizan el interesado y el órgano competente",
          ["Se resuelve tras el **dictamen** (si es preceptivo) o tras la **audiencia** (si no lo es)", "Contenido: además del art. 88, la **relación de causalidad** y, en su caso, la **valoración** del daño, la **cuantía** y el **modo** de la indemnización (art. 34 LRJSP)"],
          "**Seis meses** desde el inicio sin resolución expresa notificada ni acuerdo: puede entenderse **contraria** a la indemnización",
          "**Seis meses** desde que **se inició** el procedimiento (pregunta oficial L 56, → Cierre 1). Silencio **desestimatorio**."))}
@@ -240,18 +240,18 @@ T.ap("s11", "III.5 Tramitación simplificada (LPAC, art. 96)", f"""
 
 T.ap("s12", "III.6 Fin de la vía administrativa y control judicial (LPAC, art. 114; LO 3/1980, art. 22; LJCA, art. 2)", f"""
 {unidad("6.1 La resolución pone fin a la vía administrativa (art. 114.1 e)",
-  lit("L39", "Artículo 114", ["cualquiera que fuese el tipo de relación, pública o privada, de que derive"], solo=[1, 6]),
+  lit("L39", "Artículo 114", ["cualquiera que fuese el tipo de relación, pública o privada, de que derive"], solo=list(range(1, 9))),
   fichab("Recursos contra la resolución", "El reclamante", "La resolución **pone fin a la vía administrativa**: cabe reposición potestativa (→ tema IV.12) o, directamente, el contencioso", "—",
          "**Toda** resolución de responsabilidad patrimonial agota la vía, sea **pública o privada** la relación de la que derive."))}
 
 {unidad("6.2 Dictamen del Consejo de Estado (LO 3/1980, art. 22.13)",
-  lit("LO3_1980", "aveintidos", ["en concepto de indemnización por daños y perjuicios"], solo=[14]),
+  lit("LO3_1980", "aveintidos", ["Comisión Permanente", "en concepto de indemnización por daños y perjuicios"], solo=[1, 14]),
   fichab("Competencia de la Comisión Permanente del Consejo de Estado", "La **Comisión Permanente** del Consejo de Estado",
          "Dictamen en las reclamaciones de indemnización a la **AGE** en los supuestos que fijen las leyes (hoy, la cuantía del art. 81.2 LPAC)", "—",
          "Es la remisión del art. 81.2 LPAC: el dictamen es preceptivo desde **50.000 euros**."))}
 
 {unidad("6.3 Jurisdicción competente (LJCA, art. 2 e)",
-  lit("LJCA", "Artículo 2", ["cualquiera que sea la naturaleza de la actividad o el tipo de relación de que derive", "no pudiendo ser demandadas aquellas por este motivo ante los órdenes jurisdiccionales civil o social", "cuenten con un seguro de responsabilidad"], solo=[1, 6]),
+  lit("LJCA", "Artículo 2", ["cualquiera que sea la naturaleza de la actividad o el tipo de relación de que derive", "no pudiendo ser demandadas aquellas por este motivo ante los órdenes jurisdiccionales civil o social", "cuenten con un seguro de responsabilidad"], solo=list(range(1, 8))),
   fichab("Unidad jurisdiccional", "Orden **contencioso-administrativo**",
          "Conoce de la responsabilidad patrimonial de las AAPP **cualquiera que sea** la actividad o la relación; las AAPP **no** pueden ser demandadas por ello en los órdenes civil o social",
          "—", "Aunque concurran **particulares** en el daño o haya un **seguro** de responsabilidad: siempre el **contencioso** (→ II.3.1)."))}
@@ -411,7 +411,7 @@ T.glos("Acción de regreso", "Exigencia de oficio, por la Administración que in
 T.glos("Índice de Garantía de la Competitividad", "Índice del INE con el que se actualiza la indemnización (LRJSP, art. 34.3).", "s5", "Indemnización")
 T.glos("Procedimiento simplificado de responsabilidad patrimonial", "El que acuerda de oficio el órgano cuando la causalidad, la valoración y la cuantía son inequívocas; se resuelve en 30 días (LPAC, art. 96.4 y 6).", "s11", "Procedimiento")
 
-T.hito("1954", "Ley de 16 de diciembre de 1954 sobre expropiación forzosa, art. 121", "Primera regulación general de la indemnización por el funcionamiento normal o anormal de los servicios públicos (artículo que sigue en el texto consolidado)", "normativo", "s1")
+T.hito("1954", "Ley de 16 de diciembre de 1954 sobre expropiación forzosa, art. 121", f"Ya preveía indemnizar la lesión consecuencia del {c('LEF', 'acientoveintiuno', 'funcionamiento normal o anormal de los servicios públicos')}, limitada a los bienes y derechos objeto de esa Ley (art. 121.1 y exposición de motivos; artículo que sigue en el texto consolidado)", "normativo", "s1")
 T.hito("1978", "Constitución Española, arts. 106.2 y 121", "Garantía constitucional de la responsabilidad patrimonial, salvo fuerza mayor", "normativo", "s1")
 T.hito("2015", "Leyes 39/2015 y 40/2015, de 1 de octubre (BOE de 2-10-2015)", "Separan el procedimiento (Ley 39) y el régimen sustantivo (Ley 40) de la responsabilidad patrimonial; entraron en vigor al año de su publicación", "normativo", "s2")
 

@@ -27,7 +27,7 @@ def nota(k, bloque, frag):
 
 
 T = Tema("B4T03",
-  "Cinco preguntas: I. Qué es el reglamento y quién lo dicta (art. 97 CE; Ley 39/2015, art. 128.1; Ley 50/1997) · II. Qué clases hay: forma, jerarquía y relación con la ley (Ley 50/1997, art. 24; LO 3/1980, art. 22) · III. Qué límites tiene y cómo se controla (Ley 39/2015, arts. 37, 47.2 y 128 a 133; Ley 50/1997, arts. 23, 25 y 26; art. 106.1 CE; LJCA) · IV. Qué son los principios generales del Derecho (Código Civil, art. 1; art. 9.3 CE) · V. Cómo se celebra un tratado y cómo entra en el ordenamiento (arts. 93 a 96 CE; Código Civil, art. 1.5; Ley 25/2014). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué es el reglamento y quién lo dicta (art. 97 CE; Ley 50/1997, arts. 4, 5 y 22; Ley 39/2015, art. 128.1; Ley 7/1985, art. 4) · II. Qué clases hay: forma, jerarquía y relación con la ley (Ley 50/1997, art. 24; Ley 39/2015, arts. 128.3 y 129.4; LO 3/1980, art. 22) · III. Qué límites tiene y cómo se controla (Ley 39/2015, arts. 37, 47.2, 128.2, 129 y 131 a 133; Código Civil, art. 1.2; Ley 50/1997, arts. 23, 25 y 26; arts. 106.1 y 153 CE; LJCA, arts. 1, 26 y 27) · IV. Qué son los principios generales del Derecho (Código Civil, art. 1; art. 9.3 CE) · V. Cómo se celebra un tratado y cómo entra en el ordenamiento (arts. 63.2, 74.2 y 93 a 96 CE; Código Civil, art. 1.5; LOTC, arts. 27 y 78; Ley 25/2014). Cada artículo: texto literal del BOE y ficha.",
   ["Potestad reglamentaria", "Art. 97 CE", "Art. 128 LPAC", "Real Decreto", "Orden Ministerial", "Jerarquía", "Reglamento ejecutivo", "Inderogabilidad singular", "Nulidad de disposiciones", "Buena regulación", "Recurso indirecto", "Principios generales del Derecho", "Art. 1 CC", "Tratados", "Arts. 93-96 CE", "Ley 25/2014", "Control previo"])
 
 # =============================================================================
@@ -43,7 +43,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**: tres sobre el reglamen
 |---|---|---|---|
 | **I** | ¿Qué es el reglamento y quién lo dicta? (concepto) | Art. 97 | Ley 50/1997, arts. 4.1 b), 5.1 h) y 22; Ley 39/2015, art. 128.1; Ley 7/1985, art. 4.1 a) |
 | **II** | ¿Qué clases de reglamentos hay? (clases) | — | Ley 50/1997, art. 24; Ley 39/2015, art. 128.3; LO 3/1980, art. 22; Ley 39/2015, art. 129.4 |
-| **III** | ¿Qué límites tiene y cómo se controla? (límites) | Arts. 106.1 y 153 c) | Ley 39/2015, arts. 37, 47.2, 128.2, 129 a 133; Código Civil, art. 1.2; Ley 50/1997, arts. 23, 25 y 26; LJCA, arts. 1.1, 26 y 27 |
+| **III** | ¿Qué límites tiene y cómo se controla? (límites) | Arts. 106.1 y 153 c) | Ley 39/2015, arts. 37, 47.2, 128.2, 129 y 131 a 133; Código Civil, art. 1.2; Ley 50/1997, arts. 23, 25 y 26; LJCA, arts. 1.1, 26 y 27 |
 | **IV** | ¿Qué son los principios generales del Derecho? | Art. 9.3 | Código Civil, art. 1 (apartados 1, 3, 4, 6 y 7) |
 | **V** | ¿Cómo se celebra un tratado y cómo entra en el ordenamiento? | Arts. 63.2, 74.2, 93 a 96 | Ley 25/2014, de Tratados; Código Civil, art. 1.5; LOTC, arts. 27.2 c) y 78 |
 
@@ -59,7 +59,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**: tres sobre el reglamen
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué es el reglamento y quién lo dicta? (art. 97 CE; Ley 39/2015, art. 128.1)", donde(
+T.ap("bI", "I. ¿Qué es el reglamento y quién lo dicta? (art. 97 CE; Ley 50/1997, arts. 4, 5 y 22; Ley 39/2015, art. 128.1; Ley 7/1985, art. 4)", donde(
   "Primera pregunta del tema. La Constitución no define el reglamento: atribuye al Gobierno la **potestad reglamentaria** «de acuerdo con la Constitución y las leyes». La Ley 39/2015 dice **quién más** la tiene.",
   ["1 La potestad reglamentaria del Gobierno (art. 97 CE; Ley 50/1997, art. 22)", "2 Los titulares de la potestad reglamentaria (Ley 39/2015, art. 128.1; Ley 50/1997, arts. 4 y 5; Ley 7/1985, art. 4)"]))
 
@@ -92,11 +92,11 @@ T.ap("s2", "I.2 Los titulares de la potestad reglamentaria (Ley 39/2015, art. 12
          "—",
          "Son **tres** niveles: Estado, Comunidades Autónomas y entes locales. Para las Comunidades, «de conformidad con lo establecido en sus respectivos **Estatutos**»."))}
 
-{unidad("2.2 Consejo de Ministros y Ministros (Ley 50/1997, arts. 5.1 h) y 4.1 b)",
-  lit("LGOB", "a5", ["Aprobar los reglamentos para el desarrollo y la ejecución de las leyes, previo dictamen del Consejo de Estado"], solo=[1, 9], titulo="Artículo 5.1 h) (Ley 50/1997, del Gobierno)"),
+{unidad("2.2 Ministros y Consejo de Ministros (Ley 50/1997, arts. 4.1 b) y 5.1 h)",
   lit("LGOB", "a4", ["Ejercer la potestad reglamentaria en las materias propias de su Departamento"], solo=[1, 3], titulo="Artículo 4.1 b) (Ley 50/1997, del Gobierno)"),
+  lit("LGOB", "a5", ["Aprobar los reglamentos para el desarrollo y la ejecución de las leyes, previo dictamen del Consejo de Estado"], solo=[1, 9], titulo="Artículo 5.1 h) (Ley 50/1997, del Gobierno)"),
   fichab("Reparto de la potestad reglamentaria dentro del Gobierno",
-         ["**Consejo de Ministros**: reglamentos de desarrollo y ejecución de las leyes y demás disposiciones reglamentarias que procedan", "**Ministros**: en las materias propias de su Departamento"],
+         ["**Ministros**: en las materias propias de su Departamento", "**Consejo de Ministros**: reglamentos de desarrollo y ejecución de las leyes y demás disposiciones reglamentarias que procedan"],
          "Los reglamentos de desarrollo y ejecución de las leyes, **previo dictamen del Consejo de Estado** (→ II.2.1)",
          "—",
          "El **dictamen del Consejo de Estado** se exige para los reglamentos **para el desarrollo y la ejecución de las leyes**. El Ministro solo en las materias **de su Departamento**."))}
@@ -107,7 +107,7 @@ T.ap("s2", "I.2 Los titulares de la potestad reglamentaria (Ley 39/2015, art. 12
          f"{c('LRBRL', 'Artículo 4', 'los municipios, las provincias y las islas')}",
          f"{c('LRBRL', 'Artículo 4', 'dentro de la esfera de sus competencias')}; corresponde {c('LRBRL', 'Artículo 4', 'en todo caso')}",
          "Las ordenanzas locales se aprueban por el Pleno, con información pública de **treinta días** como mínimo (Ley 7/1985, art. 49)",
-         "La tienen «en su calidad de Administraciones públicas de carácter **territorial**»: municipios, provincias e **islas**."))}
+         f"La tienen municipios, provincias e **islas**: {c('LRBRL', 'Artículo 4', 'En su calidad de Administraciones públicas de carácter **territorial**')}."))}
 
 {resumen([
   "La potestad reglamentaria es del **Gobierno** «de acuerdo con la Constitución y las leyes» (97 CE), con las reglas del Título VI de la Ley 39/2015 (Ley 50/1997, art. 22).",
@@ -149,6 +149,12 @@ T.ap("s3", "II.1 Forma y jerarquía de los reglamentos del Gobierno (Ley 50/1997
 
 P3_129 = f"""El párrafo tercero del art. 129.4 se cita aquí **sin los incisos anulados** (nota del BOE, abajo): {c('L39', 'Artículo 129', 'Las habilitaciones para el desarrollo reglamentario de una ley serán conferidas, con carácter general, al Gobierno')} … {c('L39', 'Artículo 129', 'La atribución directa a los titulares de los departamentos ministeriales')} … {c('L39', 'Artículo 129', 'o a otros órganos dependientes o subordinados de ellos, tendrá carácter excepcional y deberá justificarse en la ley habilitante')}."""
 
+NOTA_129 = f"""> [[BOE|https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565]]
+> **Nota del BOE al artículo 129 de la Ley 39/2015 (texto consolidado) · fuente oficial, no es texto legal**
+> {nota('L39', 'a129', 'Se declara contrario al orden constitucional de competencias en los términos del f.j. 7 b), salvo los párrafos segundo y tercero del apartado 4, y la inconstitucionalidad y nulidad de los incisos destacados en negrita del párrafo tercero del apartado 4, por Sentencia del TC 55/2018, de 24 de mayo.')}
+
+*Los incisos destacados en el texto consolidado del BOE son «o Consejo de Gobierno respectivo» y «o de las consejerías del Gobierno»: por eso no se reproducen.*"""
+
 T.ap("s4", "II.2 Reglamentos ejecutivos y habilitaciones (LO 3/1980, art. 22; Ley 39/2015, art. 129.4)", f"""
 {unidad("2.1 Reglamentos que se dictan en ejecución de las leyes o de tratados: dictamen del Consejo de Estado (LO 3/1980, art. 22)",
   lit("LO3_1980", "aveintidos", ["Disposiciones reglamentarias que se dicten en ejecución, cumplimiento o desarrollo de tratados", "Reglamentos o disposiciones de carácter general que se dicten en ejecución de las Leyes, así como sus modificaciones"], solo=[1, 3, 4], titulo="Artículo veintidós, apartados Dos y Tres (LO 3/1980, del Consejo de Estado)"),
@@ -161,17 +167,12 @@ T.ap("s4", "II.2 Reglamentos ejecutivos y habilitaciones (LO 3/1980, art. 22; Le
 {unidad("2.2 A quién habilita la ley para desarrollarla (Ley 39/2015, art. 129.4, párrafos tercero y cuarto)",
   lit("L39", "Artículo 129", ["cuando la naturaleza de la materia así lo exija"], solo=[7], titulo="Artículo 129.4, párrafo cuarto (Ley 39/2015)"),
   P3_129,
+  NOTA_129,
   fichab("Habilitación legal para dictar reglamentos de desarrollo",
          ["Regla: el **Gobierno**", "Excepción: los **titulares de los departamentos ministeriales** u otros órganos dependientes o subordinados, si lo justifica la ley habilitante", "Autoridades Independientes u otros organismos con esta potestad, cuando la naturaleza de la materia lo exija"],
          "La habilitación la confiere **la ley** que se desarrolla",
          "—",
          "La atribución directa a los **Ministros** es **excepcional** y debe justificarse **en la ley habilitante**."))}
-
-> [[BOE|https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565]]
-> **Nota del BOE al artículo 129 de la Ley 39/2015 (texto consolidado) · fuente oficial, no es texto legal**
-> {nota('L39', 'a129', 'Se declara contrario al orden constitucional de competencias en los términos del f.j. 7 b), salvo los párrafos segundo y tercero del apartado 4, y la inconstitucionalidad y nulidad de los incisos destacados en negrita del párrafo tercero del apartado 4, por Sentencia del TC 55/2018, de 24 de mayo.')}
-
-*Los incisos destacados en el texto consolidado del BOE son «o Consejo de Gobierno respectivo» y «o de las consejerías del Gobierno»: por eso no se reproducen.*
 """, 2)
 
 T.ap("s5", "II.3 Cuadro de las clases de reglamentos (esquema)", f"""
@@ -184,7 +185,7 @@ T.ap("s5", "II.3 Cuadro de las clases de reglamentos (esquema)", f"""
 | Jerarquía (Estado) | 1.º Reales Decretos · 2.º Órdenes Ministeriales | Ley 50/1997, art. 24.2 (→ II.1.2) |
 | Relación con la ley | «Reglamentos … que se dicten en ejecución de las Leyes» (dictamen del Consejo de Estado) y «demás disposiciones reglamentarias que procedan» | LO 3/1980, art. 22.Tres; Ley 50/1997, art. 5.1 h) (→ II.2.1) |
 | Ejecución de tratados y Derecho de la UE | Disposiciones reglamentarias en ejecución de tratados y del derecho comunitario europeo | LO 3/1980, art. 22.Dos (→ II.2.1) |
-| Normas organizativas | Las «normas presupuestarias u organizativas» pueden prescindir de la consulta pública | Ley 39/2015, art. 133.4; Ley 50/1997, art. 26.2 a) (→ III.2.3) |
+| Normas organizativas | Las «normas presupuestarias u organizativas» pueden prescindir de la consulta pública | Ley 39/2015, art. 133.4; Ley 50/1997, art. 26.2 a) (→ III.2.3 y III.3.3) |
 
 {resumen([
   "Formas (Ley 50/1997, art. 24.1): **Real Decreto** (del Presidente o acordado en Consejo de Ministros), **Acuerdo** del Consejo de Ministros, **Orden Ministerial**.",
@@ -197,32 +198,32 @@ T.ap("s5", "II.3 Cuadro de las clases de reglamentos (esquema)", f"""
 # =============================================================================
 T.ap("bIII", "III. ¿Qué límites tiene el reglamento y cómo se controla?", donde(
   "Tercera pregunta. El reglamento está **por debajo de la ley**: no puede contradecirla ni regular lo reservado a ella (límites **materiales**); se elabora por un **procedimiento** y se **publica** (límites **formales**); si los incumple es **nulo**, y lo controlan los **Tribunales**.",
-  ["1 Límites materiales y nulidad (Ley 39/2015, arts. 128.2, 47.2 y 37; Código Civil, art. 1.2)", "2 Principios de buena regulación, publicidad y participación (Ley 39/2015, arts. 129 a 133)", "3 Elaboración de los reglamentos del Gobierno (Ley 50/1997, arts. 23, 25 y 26)", "4 El control de los reglamentos (arts. 106.1 y 153 c) CE; LJCA, arts. 1.1, 26 y 27)"]))
+  ["1 Límites materiales y nulidad (Ley 39/2015, arts. 37, 47.2 y 128.2; Código Civil, art. 1.2)", "2 Principios de buena regulación, publicidad y participación (Ley 39/2015, arts. 129 y 131 a 133)", "3 Elaboración de los reglamentos del Gobierno (Ley 50/1997, arts. 23, 25 y 26)", "4 El control de los reglamentos (arts. 106.1 y 153 c) CE; LJCA, arts. 1.1, 26 y 27)"]))
 
-T.ap("s6", "III.1 Límites materiales y nulidad (Ley 39/2015, arts. 128.2, 47.2 y 37; Código Civil, art. 1.2)", f"""
-{unidad("1.1 Lo que un reglamento no puede hacer (Ley 39/2015, art. 128.2)",
-  lit("L39", "Artículo 128", ["no podrán vulnerar la Constitución o las leyes", "no podrán tipificar delitos, faltas o infracciones administrativas, establecer penas o sanciones, así como tributos, exacciones parafiscales u otras cargas o prestaciones personales o patrimoniales de carácter público"], solo=[2]),
-  fichab("Límites materiales de los reglamentos",
-         "Todos los titulares de la potestad reglamentaria (→ I.2.1)",
-         ["No vulnerar la **Constitución** ni las **leyes**", "No regular materias de la competencia de las **Cortes Generales** o de las **Asambleas Legislativas** de las CC. AA.", "No **tipificar** delitos, faltas o infracciones administrativas ni establecer **penas o sanciones**", "No establecer **tributos**, exacciones parafiscales u otras cargas o **prestaciones personales o patrimoniales** de carácter público"],
-         "—",
-         f"Todo ello {c('L39', 'Artículo 128', 'Sin perjuicio de su función de desarrollo o colaboración con respecto a la ley')}: el reglamento puede **desarrollar** o **colaborar**, pero no **tipificar** ni **crear** tributos."))}
-
-{unidad("1.2 Disposiciones nulas de pleno derecho (Ley 39/2015, art. 47.2)",
-  lit("L39", "Artículo 47", ["las que regulen materias reservadas a la Ley", "las que establezcan la retroactividad de disposiciones sancionadoras no favorables o restrictivas de derechos individuales"], solo=[9]),
-  fichab("Consecuencia de vulnerar los límites: nulidad de pleno derecho",
-         "—",
-         ["Vulnerar la Constitución, las leyes u otras disposiciones administrativas de **rango superior**", "Regular **materias reservadas a la Ley**", "Establecer la **retroactividad** de disposiciones **sancionadoras no favorables** o **restrictivas de derechos individuales**"],
-         "—",
-         "Para las disposiciones generales la sanción es la **nulidad de pleno derecho** (art. 47.2), no la anulabilidad. Concuerda con el Código Civil: «Carecerán de validez las disposiciones que contradigan otra de rango superior» (→ III.1.4)."))}
-
-{unidad("1.3 Inderogabilidad singular (Ley 39/2015, art. 37)",
+T.ap("s6", "III.1 Límites materiales y nulidad (Ley 39/2015, arts. 37, 47.2 y 128.2; Código Civil, art. 1.2)", f"""
+{unidad("1.1 Inderogabilidad singular (Ley 39/2015, art. 37)",
   lit("L39", "Artículo 37", ["aunque aquéllas procedan de un órgano de igual o superior jerarquía al que dictó la disposición general"]),
   fichab("El reglamento vincula también a quien lo dictó al resolver casos concretos",
          "Cualquier órgano, aunque sea **de igual o superior jerarquía** al que dictó la disposición",
          f"Las {c('L39', 'Artículo 37', 'resoluciones administrativas de carácter particular no podrán vulnerar lo establecido en una disposición de carácter general')}",
          "—",
          f"La sanción es la nulidad: {c('L39', 'Artículo 37', 'Son nulas las resoluciones administrativas que vulneren lo establecido en una disposición reglamentaria')}. Ni el órgano **superior** puede saltarse el reglamento en un caso concreto."))}
+
+{unidad("1.2 Disposiciones nulas de pleno derecho (Ley 39/2015, art. 47.2)",
+  lit("L39", "Artículo 47", ["las que regulen materias reservadas a la Ley", "las que establezcan la retroactividad de disposiciones sancionadoras no favorables o restrictivas de derechos individuales"], solo=[9]),
+  fichab("Disposiciones administrativas nulas de pleno derecho",
+         "—",
+         ["Vulnerar la Constitución, las leyes u otras disposiciones administrativas de **rango superior**", "Regular **materias reservadas a la Ley**", "Establecer la **retroactividad** de disposiciones **sancionadoras no favorables** o **restrictivas de derechos individuales**"],
+         "—",
+         "Para las disposiciones generales la sanción es la **nulidad de pleno derecho** (art. 47.2), no la anulabilidad. Concuerda con el Código Civil: «Carecerán de validez las disposiciones que contradigan otra de rango superior» (→ III.1.4)."))}
+
+{unidad("1.3 Lo que un reglamento no puede hacer (Ley 39/2015, art. 128.2)",
+  lit("L39", "Artículo 128", ["no podrán vulnerar la Constitución o las leyes", "no podrán tipificar delitos, faltas o infracciones administrativas, establecer penas o sanciones, así como tributos, exacciones parafiscales u otras cargas o prestaciones personales o patrimoniales de carácter público"], solo=[2]),
+  fichab("Límites materiales de los reglamentos",
+         "Todos los titulares de la potestad reglamentaria (→ I.2.1)",
+         ["No vulnerar la **Constitución** ni las **leyes**", "No regular materias de la competencia de las **Cortes Generales** o de las **Asambleas Legislativas** de las CC. AA.", "No **tipificar** delitos, faltas o infracciones administrativas ni establecer **penas o sanciones**", "No establecer **tributos**, exacciones parafiscales u otras cargas o **prestaciones personales o patrimoniales** de carácter público"],
+         "—",
+         f"Todo ello {c('L39', 'Artículo 128', 'Sin perjuicio de su función de desarrollo o colaboración con respecto a la ley')}: el reglamento puede **desarrollar** o **colaborar**, pero no **tipificar** ni **crear** tributos."))}
 
 {unidad("1.4 Jerarquía normativa en el Código Civil (art. 1.2)",
   lit("CC", "a1", ["Carecerán de validez las disposiciones que contradigan otra de rango superior"], solo=[2], titulo="Artículo 1.2 (Código Civil)"),
@@ -233,7 +234,7 @@ T.ap("s6", "III.1 Límites materiales y nulidad (Ley 39/2015, arts. 128.2, 47.2 
          "Es la misma regla que el art. 128.3 de la Ley 39/2015 (→ II.1.3) y el principio de **jerarquía normativa** que garantiza el art. 9.3 CE (→ IV.2.1)."))}
 """, 2)
 
-T.ap("s7", "III.2 Principios de buena regulación, publicidad y participación (Ley 39/2015, arts. 129 a 133)", f"""
+T.ap("s7", "III.2 Principios de buena regulación, publicidad y participación (Ley 39/2015, arts. 129 y 131 a 133)", f"""
 > [[BOE|https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565]]
 > **Notas del BOE a los artículos 130, 132 y 133 de la Ley 39/2015 (texto consolidado) · fuente oficial, no es texto legal**
 > Art. 130: «{nota('L39', 'a130', 'Se declara contrario al orden constitucional de competencias en los términos del f.j. 7 b) por Sentencia del TC 55/2018, de 24 de mayo.')}»
@@ -260,10 +261,10 @@ T.ap("s7", "III.2 Principios de buena regulación, publicidad y participación (
 
 {unidad("2.3 Plan Anual Normativo y participación de los ciudadanos (Ley 39/2015, arts. 132 y 133)",
   lit("L39", "Artículo 132", ["que vayan a ser elevadas para su aprobación en el año siguiente"]),
-  lit("L39", "Artículo 133", ["se sustanciará una consulta pública", "normas presupuestarias u organizativas"], solo=[1, 6, 8]),
+  lit("L39", "Artículo 133", ["se sustanciará una consulta pública", "normas presupuestarias u organizativas"], solo=[1, 2, 3, 4, 5, 6, 8]),
   fichab("Planificación y participación en la elaboración de las normas",
          "Las Administraciones Públicas; el **centro directivo competente** publica el texto para audiencia",
-         ["**Plan Anual Normativo**: iniciativas del año siguiente; se publica en el **Portal de la Transparencia** (132)", "**Consulta pública previa**, a través del portal web, antes de elaborar el texto (133.1)", "**Audiencia e información pública** del texto cuando afecte a derechos e intereses legítimos (133.2)"],
+         ["**Plan Anual Normativo**: iniciativas del año siguiente; se publica en el **Portal de la Transparencia** (132)", "**Consulta pública previa**, a través del portal web, antes de elaborar el texto, sobre los problemas, la necesidad y oportunidad, los objetivos y las alternativas (133.1)", "**Audiencia e información pública** del texto cuando afecte a derechos e intereses legítimos (133.2)"],
          "—",
          "Se puede prescindir de consulta, audiencia e información públicas en normas **presupuestarias u organizativas** o por **razones graves de interés público** (133.4)."))}
 """, 2)
@@ -286,10 +287,10 @@ T.ap("s8", "III.3 Elaboración de los reglamentos del Gobierno (Ley 50/1997, art
          "Si se tramita una norma **no incluida** en el Plan, hay que justificarlo en la **Memoria del Análisis de Impacto Normativo** (art. 25.3)."))}
 
 {unidad("3.3 Procedimiento de elaboración (Ley 50/1997, art. 26, extracto)",
-  lit("LGOB", "a26", ["que en ningún caso será inferior a quince días naturales", "deberán ser informados por la Secretaría General Técnica", "El plazo mínimo de esta audiencia e información públicas será de 15 días hábiles", "Se recabará el dictamen del Consejo de Estado u órgano consultivo equivalente cuando fuera preceptivo o se considere conveniente"], solo=[1, 3, 9, 16, 17, 30, 32, 36, 38, 39]),
+  lit("LGOB", "a26", ["que en ningún caso será inferior a quince días naturales", "deberán ser informados por la Secretaría General Técnica", "El plazo mínimo de esta audiencia e información públicas será de 15 días hábiles", "Se recabará el dictamen del Consejo de Estado u órgano consultivo equivalente cuando fuera preceptivo o se considere conveniente"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 29, 30, 32, 35, 36, 38, 39]),
   fichab("Pasos para aprobar un reglamento del Gobierno",
          ["El **centro directivo competente** (Memoria, informes, audiencia)", "**Secretaría General Técnica** del Ministerio proponente (informe preceptivo)", "**Consejo de Estado** (cuando sea preceptivo o conveniente)", "**Comisión General de Secretarios de Estado y Subsecretarios** y **Consejo de Ministros**"],
-         ["Consulta pública previa en el portal web (26.2)", "**Memoria del Análisis de Impacto Normativo**, preceptiva (26.3)", "Informes y dictámenes (26.5)", "Audiencia e información públicas (26.6)", "Dictamen del Consejo de Estado (26.7)", "Comisión General y Consejo de Ministros (26.8)"],
+         ["Estudios y consultas previos a la redacción (26.1)", "Consulta pública previa en el portal web (26.2)", "**Memoria del Análisis de Impacto Normativo**, preceptiva, con los apartados a) a h) (26.3)", "Informes y dictámenes (26.5)", "Audiencia e información públicas (26.6)", "Dictamen del Consejo de Estado (26.7)", "Comisión General y Consejo de Ministros (26.8)"],
          ["Consulta pública: **no inferior a quince días naturales**", "Informes preceptivos: **diez días**, o **un mes** si se piden a otra Administración o a un órgano con especial independencia", "Audiencia: mínimo **15 días hábiles**, reducible a **siete días hábiles** si está motivado o hay tramitación urgente"],
          "Consulta pública: días **naturales**; audiencia: días **hábiles**. La consulta pública puede omitirse, entre otros casos, en normas **presupuestarias u organizativas** de la AGE (26.2 a)."))}
 """, 2)
@@ -395,9 +396,9 @@ T.ap("s11", "IV.2 Principios que garantiza la Constitución (art. 9.3) y la juri
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Cómo se celebra un tratado y cómo entra en el ordenamiento? (arts. 93 a 96 CE; Ley 25/2014)", donde(
+T.ap("bV", "V. ¿Cómo se celebra un tratado y cómo entra en el ordenamiento? (arts. 63.2, 74.2 y 93 a 96 CE; Código Civil, art. 1.5; LOTC, arts. 27 y 78; Ley 25/2014)", donde(
   "Quinta pregunta. La Constitución regula **qué tratados necesitan autorización de las Cortes** (arts. 93 y 94), su **control previo** (art. 95) y su **eficacia interna** (art. 96). La Ley 25/2014 desarrolla la celebración, la publicación y la aplicación.",
-  ["1 Qué es un tratado y qué otros acuerdos hay (Ley 25/2014, arts. 2 y 43)", "2 Quién se obliga y cuándo hace falta autorización de las Cortes (arts. 63.2, 74.2, 93 y 94 CE; Ley 25/2014, arts. 15 y 17)", "3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, arts. 27.2 y 78; Ley 25/2014, art. 19)", "4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civil, art. 1.5; Ley 25/2014, arts. 23, 30 y 31)", "5 Denuncia (art. 96.2 CE; Ley 25/2014, art. 37)"]))
+  ["1 Qué es un tratado y qué otros acuerdos hay (Ley 25/2014, arts. 2 y 43)", "2 Quién se obliga y cuándo hace falta autorización de las Cortes (arts. 63.2, 74.2, 93 y 94 CE; Ley 25/2014, arts. 15 y 17)", "3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, arts. 27.2 y 78; Ley 25/2014, arts. 19 y 32)", "4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civil, art. 1.5; Ley 25/2014, arts. 23, 30 y 31)", "5 Denuncia (art. 96.2 CE; Ley 25/2014, art. 37)"]))
 
 T.ap("s12", "V.1 Qué es un tratado y qué otros acuerdos hay (Ley 25/2014, arts. 2 y 43)", f"""
 {unidad("1.1 Tratado, acuerdo internacional administrativo y acuerdo no normativo (Ley 25/2014, art. 2 a) a c)",
@@ -421,38 +422,45 @@ T.ap("s13", "V.2 Quién se obliga y cuándo hace falta autorización de las Cort
   lit("CE", "Artículo 63", ["manifestar el consentimiento del Estado para obligarse internacionalmente por medio de tratados"], solo=[2]),
   fichab("Manifestación del consentimiento",
          c("CE", "Artículo 63", "Al Rey"),
-         f"{c('CE', 'Artículo 63', 'de conformidad con la Constitución y las leyes')}; lo acuerda el **Consejo de Ministros** (Ley 25/2014, art. 16.1) y el Rey firma los instrumentos de ratificación y adhesión con el **refrendo del Ministro de Asuntos Exteriores** (art. 22)",
+         f"{c('CE', 'Artículo 63', 'de conformidad con la Constitución y las leyes')}; lo acuerda el **Consejo de Ministros** (Ley 25/2014, art. 16.1) y el Rey firma los instrumentos de ratificación y adhesión con el **refrendo del Ministro de Asuntos Exteriores y de Cooperación** (art. 22)",
          "—",
          "**Acuerda** el Consejo de Ministros; **manifiesta** el Rey."))}
 
-{unidad("2.2 Tratados que atribuyen competencias a una organización internacional (art. 93)",
+{unidad("2.2 Cómo deciden las Cortes la autorización del art. 94.1 (art. 74.2)",
+  lit("CE", "Artículo 74", ["se adoptarán por mayoría de cada una de las Cámaras", "En el primer caso, el procedimiento se iniciará por el Congreso"], solo=[2]),
+  fichab("Procedimiento de las decisiones de las Cortes Generales de los arts. 94.1, 145.2 y 158.2",
+         ["Las **Cortes Generales**: el **Congreso** y el **Senado**", "Si no hay acuerdo, una **Comisión Mixta** de igual número de Diputados y Senadores"],
+         ["El procedimiento del **94.1** (tratados) se inicia en el **Congreso**; los del 145.2 y 158.2, en el **Senado**", "Sin acuerdo: texto de la **Comisión Mixta**, votado por ambas Cámaras"],
+         ["Mayoría **de cada una de las Cámaras**", "Si el texto de la Comisión Mixta no se aprueba, decide el **Congreso por mayoría absoluta**"],
+         "La autorización de los tratados del 94.1 empieza en el **Congreso** (→ V.2.4); la del art. 93 es por **ley orgánica** (→ V.2.3)."))}
+
+{unidad("2.3 Tratados que atribuyen competencias a una organización internacional (art. 93)",
   lit("CE", "Artículo 93", ["Mediante ley orgánica", "el ejercicio de competencias derivadas de la Constitución"]),
   fichab("Cesión del ejercicio de competencias a organizaciones internacionales",
          ["Autorizan las **Cortes**, por **ley orgánica**", "Garantizan el cumplimiento **las Cortes Generales o el Gobierno**, según los casos"],
          "Tratados por los que se atribuye a una organización o institución internacional el **ejercicio** de competencias derivadas de la Constitución",
          "**Ley orgánica** (mayoría absoluta del Congreso en votación final: tema IV.2)",
-         "Se cede el **ejercicio** de competencias, no la titularidad. Estos tratados **no** admiten **aplicación provisional** (Ley 25/2014, art. 15.2, → V.2.4)."))}
+         "Se cede el **ejercicio** de competencias, no la titularidad. Estos tratados **no** admiten **aplicación provisional** (Ley 25/2014, art. 15.2, → V.2.5)."))}
 
-{unidad("2.3 Tratados que necesitan autorización previa de las Cortes (arts. 94 y 74.2)",
+{unidad("2.4 Tratados que necesitan autorización previa de las Cortes (art. 94)",
   lit("CE", "Artículo 94", ["requerirá la previa autorización de las Cortes Generales", "serán inmediatamente informados"]),
-  lit("CE", "Artículo 74", ["se adoptarán por mayoría de cada una de las Cámaras", "En el primer caso, el procedimiento se iniciará por el Congreso"], solo=[2]),
   fichab("Autorización parlamentaria para obligarse por un tratado",
          ["Autorizan las **Cortes Generales** (art. 94.1)", "Para los demás tratados, el Congreso y el Senado son **informados** (art. 94.2)"],
          ["::Casos del art. 94.1:", "a) Tratados de carácter **político**", "b) De carácter **militar**", "c) Que afecten a la **integridad territorial** o a los **derechos y deberes fundamentales** del Título I", "d) Que impliquen **obligaciones financieras** para la Hacienda Pública", "e) Que supongan **modificación o derogación de alguna ley** o exijan **medidas legislativas** para su ejecución"],
-         ["Mayoría **de cada una de las Cámaras**; el procedimiento empieza en el **Congreso** (74.2)", "Sin acuerdo: **Comisión Mixta**; si su texto no se aprueba, decide el **Congreso por mayoría absoluta**"],
-         "El 94.1 es **previo** («previa autorización»); el 94.2 solo exige **información inmediata**. En el art. 74.2 el procedimiento del 94.1 empieza en el **Congreso** (los del 145.2 y 158.2, en el Senado)."))}
+         "Mayoría **de cada una de las Cámaras**; el procedimiento empieza en el **Congreso** (art. 74.2 → V.2.2)",
+         "El 94.1 es **previo** («previa autorización»); el 94.2 solo exige **información inmediata**."))}
 
-{unidad("2.4 Trámites internos: Consejo de Estado y aplicación provisional (Ley 25/2014, arts. 15 y 17)",
+{unidad("2.5 Trámites internos: Consejo de Estado y aplicación provisional (Ley 25/2014, arts. 15 y 17)",
   lit("L25_2014", "a15", ["autorizará la aplicación provisional, total o parcial", "no podrá autorizarse respecto de los tratados internacionales a que se refiere el artículo 93"], solo=[1, 2]),
   lit("L25_2014", "a17", ["elevará al Consejo de Estado", "la consulta acerca de la necesidad de autorización de las Cortes Generales"], solo=[1, 2]),
   fichab("Pasos internos antes de obligarse",
-         ["**Consejo de Ministros** (autoriza la aplicación provisional; remite el tratado a las Cortes)", "**Ministerio de Asuntos Exteriores** (eleva la consulta al Consejo de Estado)", "**Consejo de Estado** (dictamen sobre la necesidad de autorización)"],
+         ["**Consejo de Ministros** (autoriza la aplicación provisional; remite el tratado a las Cortes)", "**Ministerio de Asuntos Exteriores y de Cooperación** (eleva la consulta al Consejo de Estado)", "**Consejo de Estado** (dictamen sobre la necesidad de autorización)"],
          ["Aplicación provisional, total o parcial, antes de la entrada en vigor; el Ministerio de la Presidencia la comunica a las Cortes (15.1)", "Consulta al **Consejo de Estado** sobre si hace falta autorización de las Cortes (17.2)"],
          "—",
          "**No** cabe aplicación provisional de los tratados del **art. 93**. La consulta sobre la necesidad de autorización va a la **Comisión Permanente** del Consejo de Estado (LO 3/1980, art. 22.Uno)."))}
 """, 2)
 
-T.ap("s14", "V.3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, arts. 27.2 y 78; Ley 25/2014, art. 19)", f"""
+T.ap("s14", "V.3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, arts. 27.2 y 78; Ley 25/2014, arts. 19 y 32)", f"""
 {unidad("3.1 Tratado contrario a la Constitución: revisión previa (art. 95)",
   lit("CE", "Artículo 95", ["exigirá la previa revisión constitucional", "El Gobierno o cualquiera de las Cámaras"]),
   fichab("Control previo de constitucionalidad",
@@ -461,23 +469,30 @@ T.ap("s14", "V.3 Control de constitucionalidad del tratado (art. 95 CE; LOTC, ar
          "—",
          "No legitima a 50 Diputados ni al Defensor del Pueblo: solo **Gobierno** o **cualquiera de las Cámaras**."))}
 
-{unidad("3.2 El requerimiento al Tribunal Constitucional (LOTC, art. 78; Ley 25/2014, art. 19)",
-  lit("LOTC", "asetentayocho", ["cuyo texto estuviera ya definitivamente fijado, pero al que no se hubiere prestado aún el consentimiento del Estado", "tendrá carácter vinculante"], solo=[1, 2]),
-  lit("L25_2014", "a19", ["artículo 78 de la Ley Orgánica 2/1979"]),
+{unidad("3.2 Control posterior: el tratado como objeto de declaración de inconstitucionalidad (LOTC, art. 27.2 c)",
+  lit("LOTC", "aveintisiete", ["Los Tratados Internacionales"], solo=[2, 5], titulo="Artículo veintisiete, apartado Dos c) (LOTC)"),
+  fichab("Control de constitucionalidad del tratado ya celebrado",
+         "El **Tribunal Constitucional**",
+         f"Los tratados están entre las normas {c('LOTC', 'aveintisiete', 'susceptibles de declaración de inconstitucionalidad')}; el procedimiento, el del título II de la LOTC (Ley 25/2014, art. 32 → V.3.4)",
+         "—",
+         "Los tratados son **susceptibles de declaración de inconstitucionalidad**; una ordenanza local, no (pregunta oficial X 9, → Cierre 1)."))}
+
+{unidad("3.3 El requerimiento previo al Tribunal Constitucional (LOTC, art. 78)",
+  lit("LOTC", "asetentayocho", ["cuyo texto estuviera ya definitivamente fijado, pero al que no se hubiere prestado aún el consentimiento del Estado", "tendrá carácter vinculante", "que no podrá exceder de treinta días"], solo=[1, 2, 3]),
   fichab("Procedimiento del control previo",
          "Gobierno o cualquiera de ambas Cámaras; el **Tribunal Constitucional**",
          "Requerimiento sobre un tratado con texto **definitivamente fijado** y **sin** consentimiento prestado",
          ["Opiniones de los órganos legitimados: **un mes**", "Declaración del TC: **dentro del mes siguiente**", "Ampliación por aclaraciones: hasta **treinta días**"],
          "La declaración del TC es **vinculante**. El control es **previo** al consentimiento."))}
 
-{unidad("3.3 Control posterior: el tratado como objeto de declaración de inconstitucionalidad (LOTC, art. 27.2 c)",
-  lit("LOTC", "aveintisiete", ["Los Tratados Internacionales"], solo=[2, 5], titulo="Artículo veintisiete, apartado Dos c) (LOTC)"),
+{unidad("3.4 La Ley de Tratados remite a la LOTC (Ley 25/2014, arts. 19 y 32)",
+  lit("L25_2014", "a19", ["artículo 78 de la Ley Orgánica 2/1979"]),
   lit("L25_2014", "a32", ["título II de la Ley Orgánica 2/1979"]),
-  fichab("Control de constitucionalidad del tratado ya celebrado",
+  fichab("Cauce procesal de los dos controles",
          "El **Tribunal Constitucional**",
-         "Por el procedimiento de declaración de inconstitucionalidad del título II de la LOTC",
+         ["Control **previo** (art. 95 CE): art. 78 LOTC y Reglamentos del Congreso y del Senado (art. 19)", "Declaración de **inconstitucionalidad**: título II de la LOTC (art. 32)"],
          "—",
-         "Los tratados son **susceptibles de declaración de inconstitucionalidad**; una ordenanza local, no (pregunta oficial X 9, → Cierre 1)."))}
+         "Previo (→ V.3.3) y posterior (→ V.3.2) son dos vías distintas: la primera antes de prestar el consentimiento; la segunda, sobre el tratado ya celebrado."))}
 """, 2)
 
 T.ap("s15", "V.4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civil, art. 1.5; Ley 25/2014, arts. 23, 30 y 31)", f"""
@@ -503,7 +518,7 @@ T.ap("s15", "V.4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civ
          "—",
          ["Publicación **íntegra** en el BOE, al tiempo de la entrada en vigor para España o **antes**", "Con aplicación provisional: publicación **inmediata**"],
          "—",
-         "Tres normas dicen lo mismo con palabras distintas: art. 96.1 CE («publicados oficialmente en España»), CC 1.5 («publicación íntegra en el BOE») y Ley 25/2014, art. 23.3."))}
+         f"Tres normas dicen lo mismo con palabras distintas: art. 96.1 CE («publicados oficialmente en España»), CC 1.5 ({c('CC', 'a1', 'publicación íntegra en el «Boletín Oficial del Estado»')}) y Ley 25/2014, art. 23.3."))}
 
 {unidad("4.4 Aplicación directa, ejecución y prevalencia (Ley 25/2014, arts. 30 y 31)",
   lit("L25_2014", "a30", ["serán de aplicación directa, a menos que de su texto se desprenda"]),
@@ -512,7 +527,7 @@ T.ap("s15", "V.4 Publicación, eficacia y prevalencia (art. 96.1 CE; Código Civ
          ["El **Gobierno** remite a las Cortes los proyectos de ley necesarios", "Gobierno, Comunidades Autónomas y Ciudades de Ceuta y Melilla, en sus competencias, adoptan las medidas de ejecución"],
          ["**Aplicación directa**, salvo que el texto la condicione a leyes o reglamentos", "**Prevalencia** sobre cualquier norma interna en caso de conflicto, **salvo** las de **rango constitucional**"],
          "—",
-         "Prevalecen sobre las **leyes**, pero **no** sobre la **Constitución** (por eso el art. 95 exige reformarla antes)."))}
+         "Prevalecen sobre las **leyes**, pero **no** sobre la **Constitución**: un tratado contrario a ella exige la **previa revisión constitucional** (art. 95 → V.3.1)."))}
 """, 2)
 
 T.ap("s16", "V.5 Denuncia (art. 96.2 CE; Ley 25/2014, art. 37)", f"""
@@ -527,7 +542,7 @@ T.ap("s16", "V.5 Denuncia (art. 96.2 CE; Ley 25/2014, art. 37)", f"""
 {unidad("5.2 Denuncia y suspensión en la Ley 25/2014 (art. 37)",
   lit("L25_2014", "a37", ["podrá acordar la denuncia o la suspensión", "solo podrán ser denunciados previa autorización de las Cortes Generales", "informará inmediatamente a las Cortes Generales"], solo=[1, 3, 4]),
   fichab("Quién denuncia o suspende un tratado",
-         ["El **Consejo de Ministros**, a propuesta del Ministro de Asuntos Exteriores", "Las **Cortes Generales** autorizan la denuncia de los tratados de los arts. 93 y 94.1"],
+         ["El **Consejo de Ministros**, a propuesta del Ministro de Asuntos Exteriores y de Cooperación", "Las **Cortes Generales** autorizan la denuncia de los tratados de los arts. 93 y 94.1"],
          "Conforme a las normas del propio tratado o a las normas generales de Derecho Internacional",
          "—",
          "Los tratados de los arts. **93 y 94.1** solo se denuncian **previa autorización** de las Cortes. Del resto, el Gobierno **informa inmediatamente**."))}
@@ -545,7 +560,7 @@ EX_P50 = examen("P", 50, {
   "a": f"La adopción solo expresa el acuerdo sobre el **texto** (Ley 25/2014, art. 2 h: {c('L25_2014', 'a2', 'acto por el que España expresa su acuerdo sobre el texto de un tratado internacional')}); no lo incorpora al ordenamiento.",
   "b": f"Literal del art. 1.5 CC: no son de aplicación directa {c('CC', 'a1', 'en tanto no hayan pasado a formar parte del ordenamiento interno mediante su publicación íntegra en el «Boletín Oficial del Estado»')}.",
   "c": f"Cambia el acto y el órgano: el Congreso no ratifica; las Cortes **autorizan** en los casos del art. 94.1 CE ({c('CE', 'Artículo 94', 'requerirá la previa autorización de las Cortes Generales')}), y lo que integra el tratado es su **publicación**.",
-  "d": f"Cambia el diario: es el {c('CC', 'a1', '«Boletín Oficial del Estado»')}, no el Boletín Oficial de las Cortes Generales."},
+  "d": f"Cambia el diario: es el {c('CC', 'a1', 'Boletín Oficial del Estado')}, no el Boletín Oficial de las Cortes Generales."},
   [("Oficial del Estado", "CC", "a1", "mediante su publicación íntegra en el «Boletín Oficial del Estado»"),
    ("publicado", "L25_2014", "a23", "Los tratados internacionales formarán parte del ordenamiento jurídico interno una vez publicados en el «Boletín Oficial del Estado»")])
 EX_L46 = examen("L", 46, {
@@ -579,7 +594,7 @@ T.ap("s17", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-L 2025, pregunta 46 · Fuentes del ordenamiento (relacionada; → IV.1.1)", EX_L46,
   "### GACE-P 2025, pregunta 49 · Forma de las decisiones del Consejo de Ministros (relacionada; → II.1.1)", EX_P49,
   "### GACE-L 2025 extraordinario, pregunta 65 · Control de los reglamentos autonómicos (relacionada; → III.4.2)", EX_X65,
-  "### GACE-L 2025 extraordinario, pregunta 9 · El tratado, objeto de declaración de inconstitucionalidad (relacionada; → V.3.3)", EX_X9,
+  "### GACE-L 2025 extraordinario, pregunta 9 · El tratado, objeto de declaración de inconstitucionalidad (relacionada; → V.3.2)", EX_X9,
   "### Cómo se pregunta",
   "!> Las preguntas citan el **artículo** (1.1 y 1.5 CC, 24 Ley 50/1997, 153 CE, 27 LOTC) y cambian **un órgano o un diario** (Congreso por Cortes, BOCG por BOE), **una fuente** (jurisprudencia o tratados por costumbre y principios) o meten en la lista una norma **sin rango de ley** (una ordenanza).",
 ]))
@@ -779,7 +794,7 @@ T.glos("Aplicación provisional", "Aplicación, total o parcial, de un tratado a
 T.glos("Control previo de los tratados", "Requerimiento al Tribunal Constitucional del Gobierno o de cualquiera de las Cámaras para que declare si un tratado contradice la Constitución; la declaración es vinculante (art. 95 CE; LOTC, art. 78).", "s14", "Tratados")
 
 # Cronología (fechas de los metadatos del BOE)
-T.hito("1889", "Real Decreto de 24 de julio de 1889 por el que se publica el Código Civil (BOE de 25-7-1889)", "Art. 1: fuentes del ordenamiento, principios generales del derecho y publicación de los tratados", "normativo", "s10")
+T.hito("1889", "Real Decreto de 24 de julio de 1889 por el que se publica el Código Civil (Gaceta de Madrid de 25-7-1889)", "Art. 1: fuentes del ordenamiento, principios generales del derecho y publicación de los tratados", "normativo", "s10")
 T.hito("1978", "Constitución Española (27-12-1978; BOE de 29-12-1978)", "Arts. 93 a 97: tratados y potestad reglamentaria del Gobierno; art. 106.1: control judicial", "normativo", "s1")
 T.hito("1979", "Ley Orgánica 2/1979, de 3 de octubre, del Tribunal Constitucional (BOE de 5-10-1979)", "Art. 78: control previo de los tratados", "normativo", "s14")
 T.hito("1997", "Ley 50/1997, de 27 de noviembre, del Gobierno (BOE de 28-11-1997)", "Art. 24: forma y jerarquía de los reglamentos del Gobierno", "normativo", "s3")

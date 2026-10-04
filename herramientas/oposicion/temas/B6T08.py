@@ -41,6 +41,10 @@ _L["anexoXV"] = ("Anexo XV", [("articulo", "Anexo XV. Indemnización por residen
     ("El personal que perciba su sueldo", "misma proporción."),
     ("Quienes vinieran percibiendo", "estas últimas.")]])
 assert _L["anexoXIV"][1][1][1].endswith("número 3.3 de la presente Resolución."), _L["anexoXIV"]
+# El anexo XIII (cuotas a MUFACE, ISFAS y MUGEJU) repite la frase de la cuota doble (se cita en la ficha de IV.2.2).
+_i13 = _T.index("ANEXO XIII")
+assert "MUTUALIDAD GENERAL DE FUNCIONARIOS CIVILES DEL ESTADO, AL INSTITUTO SOCIAL DE LAS FUERZAS ARMADAS Y A LA MUTUALIDAD GENERAL JUDICIAL" in _T[_i13:_i14]
+assert _trozo(_T, "En los meses de junio y diciembre se abonará", "presente Resolución.", _i13) == _L["anexoXIV"][1][1][1] and _T.index("En los meses de junio", _i13) < _i14
 
 # Resolución de 25-5-2010: el XML del diario no tiene artículos; los apartados son párrafos del bloque «preambulo».
 R = "preambulo"
@@ -50,7 +54,7 @@ def orden(ap, rub, resaltar=(), solo=None):
     return lit("ONOM1992", ap, resaltar, solo=solo, titulo=f"Orden de 30-7-1992 (confección de nóminas), apartado {ap[1:]}" + (f". {rub}" if rub else ""))
 
 T = Tema("B6T08",
-  "Cinco preguntas: I. Qué retribuciones lleva la nómina (TREBEP, arts. 22 y 23; Ley 30/1984, art. 23; régimen completo en el tema V.6) · II. Cómo es una nómina y cómo se confecciona y se paga (Orden de 30-7-1992, aps. 1 y 5 a 8; Instrucción de operatoria contable, reglas 66, 67 y 69) · III. Cómo se justifican las altas, las bajas y las modificaciones (Orden de 1992, aps. 2 a 4) · IV. Qué se descuenta y se ingresa en formalización (Orden de 1992, ap. 5.1.5 a 5.1.8; Resolución de 25-5-2010, ap. A.3; reglas 70 y 93) · V. Cómo se devengan y liquidan los derechos económicos (TREBEP, art. 30; Resolución de 25-5-2010). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué retribuciones lleva la nómina (TREBEP, arts. 22 y 23; Ley 30/1984, art. 23; régimen completo en el tema V.6) · II. Cómo es una nómina y cómo se confecciona y se paga (Orden de 30-7-1992, aps. 1 y 5 a 8; Instrucción de operatoria contable, reglas 66, 67 y 69) · III. Cómo se justifican las altas, las bajas y las modificaciones (Orden de 1992, aps. 2 a 4) · IV. Qué se descuenta y se ingresa en formalización (Orden de 1992, ap. 5.1.5 a 5.1.8; Resolución de 25-5-2010, aps. A.3 y A.4.4 y anexo XIV; reglas 70 y 93) · V. Cómo se devengan y liquidan los derechos económicos (TREBEP, art. 30; Resolución de 25-5-2010). Cada artículo: texto literal del BOE y ficha.",
   ["Nómina", "Orden de 30-7-1992", "Habilitado", "Cierre el día 5", "Altas en nómina", "Bajas en nómina", "Modificaciones", "Deducciones formalizables", "Ingreso en formalización", "Importe líquido", "Devengo", "Liquidación por días", "Valor hora", "Pagas extraordinarias", "Indemnización por residencia", "Resolución de 25-5-2010"])
 
 # =============================================================================
@@ -67,7 +71,7 @@ El epígrafe tiene **cinco frases**; cada una es un bloque de los apuntes:
 | **I** | ¿Qué retribuciones lleva la nómina? | TREBEP, arts. 22 y 23; Ley 30/1984, art. 23 (régimen completo: tema V.6) |
 | **II** | ¿Cómo es una nómina y cómo se confecciona y se paga? | Orden de 30-7-1992, aps. 1, 5, 6, 7 y 8; Instrucción de operatoria contable (Orden de 1-2-1996), reglas 66, 67 y 69 |
 | **III** | ¿Cómo se justifican las altas, las bajas y las modificaciones? | Orden de 30-7-1992, aps. 2, 3 y 4 |
-| **IV** | ¿Qué se descuenta en la nómina y se ingresa en formalización? | Orden de 30-7-1992, ap. 5.1.5 a 5.1.8; Resolución de 25-5-2010, ap. A.3 y anexo XIV; reglas 70 y 93 |
+| **IV** | ¿Qué se descuenta en la nómina y se ingresa en formalización? | Orden de 30-7-1992, ap. 5.1.5 a 5.1.8; Resolución de 25-5-2010, aps. A.3 y A.4.4 y anexo XIV; reglas 70 y 93 |
 | **V** | ¿Cómo se devengan y se liquidan los derechos económicos? | TREBEP, art. 30; Resolución de 25-5-2010, aps. A.2, A.4.3 y C.1 y anexo XV; Orden de 1992, ap. 8 |
 
 !> **La idea que une los cinco bloques:** el funcionario tiene derecho a unas **retribuciones** (I). Se le pagan **cada mes** a través de una **nómina** que confecciona el **habilitado** con una estructura fija (II). Cada **cambio** respecto de la nómina del mes anterior (alta, baja o modificación) se **justifica** con un documento (III). Del importe **íntegro** se **descuentan** deducciones; las **formalizables** se ingresan **en formalización** en el Tesoro (IV). Y las reglas de **devengo** dicen **cuánto** corresponde cada mes: mensualidad completa o por días, pagas extraordinarias, deducciones (V).
@@ -105,10 +109,10 @@ T.ap("s1", "I.1 Básicas, complementarias y pagas extraordinarias (TREBEP, arts.
          "Funcionarios de carrera (cuantías en la Ley de Presupuestos Generales del Estado)",
          ["Sueldo del Subgrupo o Grupo", "Trienios: cantidad igual por Subgrupo o Grupo por cada tres años de servicio"],
          "Trienio: cada **tres años** de servicio",
-         "«Única y exclusivamente» sueldo y trienios: el complemento de destino **no** es básico. Cayó en 2025 (→ Cierre 1)."))}
+         "Las básicas son «única y exclusivamente» sueldo y trienios: el complemento de destino **no** es básico. Cayó en 2025 (→ Cierre 1)."))}
 
 {unidad("1.3 La versión de la Ley 30/1984: devengo de las pagas extraordinarias (art. 23.2 c y 23.4)",
-  lit("L30", "aveintitres", ["se devengarán los meses de junio y diciembre", "Los funcionarios percibirán las indemnizaciones correspondientes por razón del servicio"], solo=[7, 15]),
+  lit("L30", "aveintitres", ["se devengarán los meses de junio y diciembre", "Los funcionarios percibirán las indemnizaciones correspondientes por razón del servicio"], solo=[2, 7, 15]),
   fichab("Cuándo se devengan las pagas extraordinarias y el derecho a indemnizaciones",
          "Funcionarios a los que se aplica el régimen retributivo de la Ley 30/1984 (Administración del Estado: tema V.6)",
          "Dos pagas al año, de **al menos** una mensualidad del sueldo y trienios",
@@ -310,7 +314,7 @@ T.ap("s9", "III.4 Cuadro de altas, bajas y modificaciones (esquema)", f"""
 # =============================================================================
 T.ap("bIV", "IV. ¿Qué se descuenta en la nómina y se ingresa en formalización?", donde(
   "Cuarta frase del epígrafe. De lo que se paga al funcionario se **retienen** cantidades (IRPF, derechos pasivos, mutualidades…). Las que se ingresan **en formalización** en el Tesoro Público son las **deducciones formalizables**.",
-  ["1 Deducciones formalizables y no formalizables; íntegro, líquido y neto (Orden, ap. 5.1.5 a 5.1.8)", "2 Lo que se retiene en la nómina: cuotas y anticipos (Resolución de 2010, ap. A.3 y anexo XIV; reglas 70 y 93)", "3 Pendiente (temario)"]))
+  ["1 Deducciones formalizables y no formalizables; íntegro, líquido y neto (Orden, ap. 5.1.5 a 5.1.8)", "2 Lo que se retiene en la nómina: cuotas y anticipos (Resolución de 2010, aps. A.3 y A.4.4 y anexo XIV; reglas 70 y 93)", "3 Pendiente (temario)"]))
 
 T.ap("s10", "IV.1 Deducciones formalizables y no formalizables; íntegro, líquido y neto (Orden de 1992, ap. 5.1.5 a 5.1.8)", f"""
 {unidad("1.1 Deducciones formalizables y no formalizables (ap. 5.1.5 y 5.1.6)",
@@ -338,7 +342,7 @@ T.ap("s10", "IV.1 Deducciones formalizables y no formalizables; íntegro, líqui
          "Íntegro → (−formalizables) → líquido → (−no formalizables) → neto. Al pagar la nómina en las Delegaciones se anticipa el importe **líquido** (→ II.4.2)."))}
 """, 2)
 
-T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resolución de 2010, ap. A.3 y anexo XIV; reglas 70 y 93)", f"""
+T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resolución de 2010, aps. A.3 y A.4.4 y anexo XIV; reglas 70 y 93)", f"""
 {unidad("2.1 Cuotas de mutualidades y de derechos pasivos (Resolución de 2010, ap. A.3.1 a 3.4)",
   res([56, 58, 62, 63, 64], "apartado A.3", ["que los habilitados de personal deben retener en nómina cada mes", "cualquiera que sea su antigüedad en el servicio del Estado, la cuota supone una cantidad única e idéntica", "no experimentarán reducción en su cuantía"]),
   fichab("Cuotas que el habilitado retiene a los funcionarios",
@@ -353,7 +357,7 @@ T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resoluci�
          "Todos los funcionarios",
          "Cuota doble en junio y diciembre",
          "—",
-         "Salvo las pagas reducidas por servicios parciales del ap. 3.3 (→ IV.2.1)."))}
+         "Salvo las pagas reducidas por servicios parciales del ap. 3.3 (→ IV.2.1). El anexo XIII (cuotas a MUFACE, ISFAS y MUGEJU, texto del PDF oficial del BOE) repite la misma frase: también la cuota de mutualidades es **doble** en junio y diciembre."))}
 
 {unidad("2.3 Cuotas obreras de la Seguridad Social (regla 70.4)",
   lit("OIOC", "regla70", ["junto con las retenciones de las cuotas obreras"], solo=[5, 6]),
@@ -363,14 +367,14 @@ T.ap("s11", "IV.2 Lo que se retiene en la nómina: cuotas y anticipos (Resoluci�
          "Los plazos del sistema de liquidación directa de cuotas",
          "El documento contable de las cuotas sociales se expide a favor de la **Habilitación**, no de la Tesorería General."))}
 
-{unidad("2.4 Reintegro de anticipos: descuento en nómina (regla 93.3; Resolución de 2010, ap. A.4.4)",
-  lit("OIOC", "regla93", ["se efectuará el oportuno descuento en la nómina de personal en activo"], solo=[3]),
+{unidad("2.4 Concesión y reintegro de anticipos: descuento en nómina (regla 93.1 y 3; Resolución de 2010, ap. A.4.4)",
+  lit("OIOC", "regla93", ["se efectuará el oportuno descuento en la nómina de personal en activo"], solo=[1, 3]),
   res([69], "apartado A.4.4", ["a las retribuciones básicas líquidas"]),
   fichab("Anticipos reintegrables a funcionarios",
          "El centro gestor concede; la nómina descuenta",
          "Reintegro mediante **descuento en la nómina** del mes en que toque devolver (código de deducción 20: → IV.1.2)",
          f"Límite de cálculo: los haberes líquidos se entienden referidos {c('RES2010N', R, 'a las retribuciones básicas líquidas')}",
-         "«Haberes líquidos» para el anticipo = **retribuciones básicas líquidas** (no todas las retribuciones)."))}
+         "Los «haberes líquidos» para el anticipo = **retribuciones básicas líquidas** (no todas las retribuciones)."))}
 """, 2)
 
 T.ap("s12", "IV.3 Pendiente (temario)", f"""

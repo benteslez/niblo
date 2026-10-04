@@ -83,7 +83,7 @@ def examen_web(cod, n, porque, apoyo):
 
 
 # Cuadros (fuera de los f-strings)
-TAB1 = "| Rasgo | Dónde se dice |\n|---|---|\n| Se crea **por Tratado** entre Estados («constituyen entre sí una Unión Europea») | TUE, art. 1 |\n| Tiene **competencias atribuidas** por los Estados; lo no atribuido es de los Estados | TUE, arts. 1, 4.1 y 5.2 |\n| Se fundamenta en **dos Tratados con el mismo valor jurídico** | TUE, art. 1; TFUE, art. 1.2 |\n| **Sustituye y sucede** a la Comunidad Europea | TUE, art. 1 |\n| Tiene **personalidad jurídica** | TUE, art. 47 |\n| Se basa en **valores** comunes a los Estados miembros | TUE, art. 2 |"
+TAB1 = "| Rasgo | Dónde se dice |\n|---|---|\n| Se crea **por Tratado** entre Estados (" + cT(1, "constituyen entre sí una UNIÓN EUROPEA") + ") | TUE, art. 1 |\n| Tiene **competencias atribuidas** por los Estados; lo no atribuido es de los Estados | TUE, arts. 1, 4.1 y 5.2 |\n| Se fundamenta en **dos Tratados con el mismo valor jurídico** | TUE, art. 1; TFUE, art. 1.2 |\n| **Sustituye y sucede** a la Comunidad Europea | TUE, art. 1 |\n| Tiene **personalidad jurídica** | TUE, art. 47 |\n| Se basa en **valores** comunes a los Estados miembros | TUE, art. 2 |"
 TAB2 = "| Tratado | Firma | Entrada en vigor | Lo esencial |\n|---|---|---|---|\n| París (CECA) | 18-4-1951 | 23-7-1952 | Carbón y acero; 50 años (expiró el 23-7-2002) |\n| Roma (CEE y Euratom) | 25-3-1957 | 1-1-1958 | Mercado común y energía atómica; duración indefinida |\n| Fusión | 8-4-1965 | 1967 | Consejo único y Comisión única |\n| Acta Única Europea | 17 y 28-2-1986 | 1-7-1987 | Mercado interior (1-1-1993); primera modificación sustancial |\n| Maastricht (TUE) | 7-2-1992 | 1-11-1993 | Nace la Unión Europea; tres pilares |\n| Ámsterdam | 2-10-1997 | 1-5-1999 | Cooperación reforzada; renumeración |\n| Niza | 26-2-2001 | 1-2-2003 | Reforma institucional ante la ampliación; Carta proclamada |\n| Constitución para Europa | — | No entró en vigor | Rechazada en Francia y Países Bajos (2005) |\n| Lisboa | 13-12-2007 | 1-12-2009 | TUE y TFUE actuales |\n\nFuente de las fechas: fichas temáticas 1.1.1 a 1.1.5 del Parlamento Europeo (citadas arriba)."
 TAB3 = "| Año | Estados | Particularidad (ficha 5.5.1 del Parlamento Europeo) |\n|---|---|---|\n| 1958 | Bélgica, Francia, Alemania, Italia, Luxemburgo, Países Bajos | Signatarios originales del Tratado de Roma de 1957 |\n| 1973 | Dinamarca, Irlanda, Reino Unido | Groenlandia, como parte de Dinamarca, se adhirió en 1973 y se retiró en 1985 |\n| 1981 | Grecia | Consolidó la democracia en el país |\n| 1986 | Portugal, España | Consolidó la democracia en España y Portugal |\n| 1995 | Austria, Finlandia, Suecia | Antes, miembros de la AELC; Noruega rechazó la adhesión en referéndum |\n| 2004 | Chipre, Chequia, Estonia, Hungría, Letonia, Lituania, Malta, Polonia, Eslovaquia, Eslovenia | Reunificar el continente tras la caída del muro de Berlín |\n| 2007 | Bulgaria, Rumanía | Mecanismo de cooperación y verificación |\n| 2013 | Croacia | Condiciones más estrictas del «consenso renovado sobre la ampliación» (2006) |"
 TAB4 = "| | Régimen general (329.1 y 331.1) | PESC (329.2 y 331.2) |\n|---|---|---|\n| Solicitud | A la **Comisión** | Al **Consejo** |\n| Propuesta o dictámenes | Propuesta de la **Comisión** | Dictámenes del **Alto Representante** y de la **Comisión** |\n| Parlamento Europeo | **Aprobación** | Solo **información** |\n| Autoriza | **Consejo** | **Consejo**, por **unanimidad** |\n| Incorporación posterior | Confirma la **Comisión** (4 meses) | Confirma el **Consejo** (unanimidad) |\n| Mínimo de Estados (art. 20.2 TUE) | **Nueve** | **Nueve** |"
@@ -174,10 +174,10 @@ T.ap("bII", "II. ¿Qué es la Unión y qué persigue? Naturaleza jurídica y obj
 
 T.ap("s3", "II.1 La creación de la Unión: preámbulo, art. 1 y personalidad jurídica (TUE, art. 47)", f"""
 {unidad("1.1 El preámbulo del TUE (fragmento)",
-  lit("TUEPRE", "Preámbulo", ["RESUELTOS a salvar una nueva etapa en el proceso de integración europea", "una unión cada vez más estrecha entre los pueblos de Europa", "de acuerdo con el principio de subsidiariedad", "HAN DECIDIDO crear una Unión Europea"], solo=[2, 3, 4, 14, 16], titulo="Preámbulo del TUE (fragmento)"),
+  lit("TUEPRE", "Preámbulo", ["RESUELTOS a salvar una nueva etapa en el proceso de integración europea", "una unión cada vez más estrecha entre los pueblos de Europa", "de acuerdo con el principio de subsidiariedad", "HAN DECIDIDO crear una Unión Europea"], solo=[2, 3, 4, 14, 16], titulo="Preámbulo del TUE (fragmento)") + chr(10) + "> (no se reproduce la lista de los plenipotenciarios)",
   fichab("Declaración de intenciones de las Altas Partes Contratantes al crear la Unión",
          "Los Jefes de Estado de los Estados firmantes (Altas Partes Contratantes)",
-         ["Continúa la integración «emprendida con la constitución de las Comunidades Europeas»", "Se inspira en la herencia cultural, religiosa y humanista de Europa", "Persigue una unión cada vez más estrecha, con decisiones lo más próximas posible a los ciudadanos (subsidiariedad)"],
+         ["Continúa el proceso de integración " + c("TUEPRE", "Preámbulo", "emprendido con la constitución de las Comunidades Europeas"), "Se inspira en la herencia cultural, religiosa y humanista de Europa", "Persigue una unión cada vez más estrecha, con decisiones lo más próximas posible a los ciudadanos (subsidiariedad)"],
          "—",
          f"El preámbulo cierra con {c('TUEPRE', 'Preámbulo', 'HAN DECIDIDO crear una Unión Europea')}. La Unión **no** sustituye a los Estados: se crea **entre** ellos."))}
 
@@ -312,6 +312,15 @@ T.ap("s8", "III.2 Los Tratados modificativos hasta Niza", f"""
   web("PE", PE2,
       "El 17 de febrero de 1986, procedieron a la firma del AUE nueve Estados miembros, a los que siguieron, el 28 de febrero de 1986, Dinamarca (tras celebrar un referéndum), Italia y Grecia. Ratificada por los respectivos Parlamentos de los Estados miembros a lo largo de 1986, el AUE entró en vigor el **1 de julio de 1987**, con seis meses de retraso debido a un recurso interpuesto ante los tribunales irlandeses por un particular. El Acta constituye la **primera modificación sustancial del Tratado de Roma**.",
       "La culminación de un mercado único plenamente operativo fue prevista para el **1 de enero de 1993**, lo que suponía la reactivación y ampliación del objetivo del mercado común ya introducido en 1958 (2.1.1).",
+      "Mediante el reconocimiento de nuevas competencias en los ámbitos siguientes:",
+      "política monetaria;",
+      "política social;",
+      "cohesión económica y social;",
+      "investigación y desarrollo tecnológico;",
+      "medio ambiente;",
+      "cooperación en materia de política exterior.",
+      "La votación por mayoría cualificada sustituyó a la unanimidad en cuatro competencias comunitarias…",
+      "Las competencias del Parlamento se vieron reforzadas:…",
       "al introducir un procedimiento de cooperación con el Consejo (1.2.3), que dio al Parlamento auténticas, aunque limitadas, competencias legislativas."),
   fichab("Primera modificación sustancial del Tratado de Roma",
          "Doce Estados miembros (nueve firmaron el 17-2-1986; Dinamarca, Italia y Grecia, el 28-2-1986)",
@@ -705,16 +714,16 @@ EX_X36 = examen("X", 36, {
   [("Subsidiariedad y proporcionalidad", "TUE", "Artículo 5", "se rige por los principios de subsidiariedad y proporcionalidad")])
 
 T.ap("s20", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join([
-  "En los primeros ejercicios de **2025** cayeron **seis** preguntas de este tema con respuesta coherente con la fuente (cuatro de cooperaciones reforzadas, revisión y ampliación; una del Día de Europa) y **dos** relacionadas (principios del art. 5 TUE). Aquí están **literales**. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto del Tratado o, en la del Día de Europa, contra la fuente oficial citada.",
+  "En los primeros ejercicios de **2025** cayeron **cinco** preguntas de este tema con respuesta coherente con la fuente (cuatro de cooperaciones reforzadas, revisión y ampliación; una del Día de Europa) y **dos** relacionadas (principios del art. 5 TUE). Aquí están **literales**. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto del Tratado o, en la del Día de Europa, contra la fuente oficial citada.",
   "### GACE-L 2025, pregunta 18 · Día de Europa (→ I.1.2)", EX_L18,
   "### GACE-P 2025, pregunta 9 · Solicitud de adhesión (→ V.1.1)", EX_P9,
-  "### GACE-X 2025, pregunta 28 · Información sobre las cooperaciones reforzadas (→ VI.2.3)", EX_X28,
-  "### GACE-X 2025, pregunta 29 · Requisitos de la cooperación reforzada (→ VI.1.1)", EX_X29,
-  "### GACE-X 2025, pregunta 30 · Revisión ordinaria de los Tratados (→ III.4.1)", EX_X30,
-  "### GACE-X 2025, pregunta 34 · Principio de atribución (relacionada; → II.3.2)", EX_X34,
-  "### GACE-X 2025, pregunta 36 · Principios del ejercicio de las competencias (relacionada; → II.3.2)", EX_X36,
+  "### GACE-L 2025 extraordinario, pregunta 28 · Información sobre las cooperaciones reforzadas (→ VI.2.3)", EX_X28,
+  "### GACE-L 2025 extraordinario, pregunta 29 · Requisitos de la cooperación reforzada (→ VI.1.1)", EX_X29,
+  "### GACE-L 2025 extraordinario, pregunta 30 · Revisión ordinaria de los Tratados (→ III.4.1)", EX_X30,
+  "### GACE-L 2025 extraordinario, pregunta 34 · Principio de atribución (relacionada; → II.3.2)", EX_X34,
+  "### GACE-L 2025 extraordinario, pregunta 36 · Principios del ejercicio de las competencias (relacionada; → II.3.2)", EX_X36,
   "### Pregunta oficial no incluida",
-  f"?> **GACE-X 2025, pregunta 31** («Las Comunidades Europeas pasaron a tener una única Comisión en virtud del:»). La plantilla da como correcta la a) «Tratado de Fusión del 1 de julio de 1967», pero la fuente oficial consultada fecha el Tratado de Fusión el **8 de abril de 1965** ({cw(PE2, 'el Tratado de Fusión, de 8 de abril de 1965, que fusionó los órganos ejecutivos de las tres comunidades. Entró en vigor en 1967')}), que es lo que dice la opción d). No se incluye en estos apuntes; en el test real se mantiene la respuesta de la plantilla con la marca **Discrepancia** (→ III.2.1).",
+  f"?> **GACE-L 2025 extraordinario, pregunta 31** («Las Comunidades Europeas pasaron a tener una única Comisión en virtud del:»). La plantilla da como correcta la a) «Tratado de Fusión del 1 de julio de 1967», pero la fuente oficial consultada fecha el Tratado de Fusión el **8 de abril de 1965** ({cw(PE2, 'el Tratado de Fusión, de 8 de abril de 1965, que fusionó los órganos ejecutivos de las tres comunidades. Entró en vigor en 1967')}), que es lo que dice la opción d). No se incluye en estos apuntes; en el test real se mantiene la respuesta de la plantilla con la marca **Discrepancia** (→ III.2.1).",
   "### Cómo se pregunta",
   "!> En cooperaciones reforzadas se cambian **órganos** (Comisión ↔ Consejo ↔ Consejo Europeo; Parlamento ↔ Alto Representante) y **números** (nueve Estados, cuatro meses). En adhesión y revisión, **quién inicia** y **quién decide** (Consejo por unanimidad; Gobierno, Parlamento o Comisión).",
 ]))
@@ -776,7 +785,7 @@ Q("TUE", "Artículo 5", "Principios", "Según el artículo 5.3 del Tratado de la
   "Art. 5.3 TUE, párrafo segundo.", "Los Parlamentos nacionales velarán por el respeto del principio de subsidiariedad")
 Q("TUE", "Artículo 5", "Principios", "Según el artículo 5.4 del Tratado de la Unión Europea, en virtud del principio de proporcionalidad:",
   ["El contenido y la forma de la acción de la Unión no excederán de lo necesario para alcanzar los objetivos de los Tratados.", "La Unión solo actuará en los ámbitos de su competencia exclusiva.", "Toda competencia no atribuida a la Unión corresponde a los Estados miembros.", "La Unión intervendrá solo si los Estados miembros no pueden alcanzar los objetivos de manera suficiente."],
-  "Art. 5.4 TUE. La c) es la atribución (5.2) y la d), la subsidiariedad (5.3).", "el contenido y la forma de la acción de la Unión no excederán de lo necesario para alcanzar los objetivos de los Tratados")
+  "Art. 5.4 TUE. Que toda competencia no atribuida corresponde a los Estados es la atribución (5.2); que la Unión intervenga solo si los Estados no pueden alcanzar los objetivos, la subsidiariedad (5.3).", "el contenido y la forma de la acción de la Unión no excederán de lo necesario para alcanzar los objetivos de los Tratados")
 Q("TUE", "Artículo 6", "Derechos fundamentales", "Según el artículo 6.1 del Tratado de la Unión Europea, la Carta de los Derechos Fundamentales de la Unión Europea tendrá:",
   ["El mismo valor jurídico que los Tratados.", "Un valor meramente declarativo.", "Un valor inferior a los Tratados y superior al Derecho derivado.", "El valor que le atribuya cada Estado miembro."],
   "Art. 6.1 TUE.", "la cual tendrá el mismo valor jurídico que los Tratados")

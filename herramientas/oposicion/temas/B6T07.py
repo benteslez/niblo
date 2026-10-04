@@ -12,7 +12,7 @@ from plantilla import *
 CORTO["L8_1989"] = "Ley 8/1989"
 
 T = Tema("B6T07",
-  "Cuatro preguntas: I. Qué son los ingresos públicos y cómo se clasifican (LGP, arts. 5, 10, 19, 27 y 41; CE, art. 31.3; LGT, disposición adicional primera) · II. Cómo es el sistema tributario español (CE, arts. 31.1, 133 y 134.7; LGT, arts. 1 a 4, 7, 8, 10, 20 a 22 y 36) · III. Qué son las tasas y cómo se regulan (Ley 8/1989, arts. 1 a 23) · IV. Qué son los precios públicos y en qué se diferencian de las tasas (Ley 8/1989, arts. 24 a 27). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué son los ingresos públicos y cómo se clasifican (LGP, arts. 5, 10, 19, 27 y 41; CE, art. 31.3; LGT, disposición adicional primera) · II. Cómo es el sistema tributario español (CE, arts. 31.1, 133 y 134.7; LGT, arts. 1 a 4, 7, 8, 10, 20 a 22 y 36) · III. Qué son las tasas y cómo se regulan (Ley 8/1989, arts. 1, 2 y 6 a 23) · IV. Qué son los precios públicos y en qué se diferencian de las tasas (Ley 8/1989, arts. 24 a 27 y disposición adicional séptima). Cada artículo: texto literal del BOE y ficha.",
   ["Ingresos públicos", "Hacienda Pública estatal", "Derechos de naturaleza pública", "Clasificación económica", "Prestaciones patrimoniales", "Tributo", "Tasas", "Contribuciones especiales", "Impuestos", "Potestad tributaria", "Reserva de ley tributaria", "Hecho imponible", "Devengo", "Exención", "Ley 8/1989", "Precios públicos", "Memoria económico-financiera"])
 
 # =============================================================================
@@ -28,7 +28,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 |---|---|---|
 | **I** | ¿Qué son los ingresos públicos y cómo se clasifican? | Ley 47/2003, General Presupuestaria (LGP), arts. 5, 10.1, 19.1, 27.3 y 4 y 41; CE, art. 31.3; Ley 58/2003, General Tributaria (LGT), disposición adicional primera |
 | **II** | ¿Cómo es el sistema tributario español? (régimen actual) | CE, arts. 31.1, 133 y 134.7; LGT, arts. 1, 2, 3, 4, 7, 8, 10, 20, 21, 22 y 36 |
-| **III** | ¿Qué son las tasas y cómo se regulan? | LGT, art. 2.2 a); Ley 8/1989, de Tasas y Precios Públicos, arts. 1 a 23 |
+| **III** | ¿Qué son las tasas y cómo se regulan? | Ley 8/1989, de Tasas y Precios Públicos, arts. 1, 2 y 6 a 23 |
 | **IV** | ¿Qué son los precios públicos y en qué se diferencian de las tasas? | Ley 8/1989, arts. 24 a 27 y disposición adicional séptima |
 
 !> **La idea que une los cuatro bloques:** la Hacienda Pública estatal tiene derechos de **naturaleza pública** (los tributos y los que derivan de **potestades administrativas**) y de **naturaleza privada** (I). Los **tributos** son el ingreso público típico: los crea la **ley**, se clasifican en **tasas, contribuciones especiales e impuestos** y se rigen por la **LGT** (II). Las **tasas** son tributos (III); los **precios públicos** no lo son: son **contraprestaciones** por servicios que también presta el **sector privado** y que se solicitan **voluntariamente** (IV).
@@ -105,7 +105,7 @@ T.ap("s3", "I.3 Las prestaciones patrimoniales de carácter público (CE, art. 3
 {unidad("3.1 Reserva de ley (CE, art. 31.3)",
   lit("CE", "Artículo 31", ["con arreglo a la ley"], solo=[3]),
   fichab("Reserva de ley de las prestaciones personales o patrimoniales de carácter público",
-         "Las Cortes, mediante ley",
+         "El legislador: solo «con arreglo a la ley»",
          "Solo pueden establecerse con arreglo a la ley",
          "—",
          "Es la base de la disposición adicional primera de la LGT (→ I.3.2): tributos y prestaciones **no tributarias** necesitan ley."))}
@@ -205,7 +205,7 @@ T.ap("s6", "II.3 Las clases de tributos: tasas, contribuciones especiales e impu
 
 | Tributo | Clave del hecho imponible | Palabra que lo delata |
 |---|---|---|
-| Tasa | Dominio público o servicio/actividad pública que beneficia **de modo particular** | «utilización privativa», «aprovechamiento especial», «no voluntaria» |
+| Tasa | Dominio público o servicio/actividad pública que beneficia **de modo particular** | «utilización privativa», «aprovechamiento especial», «no sean de solicitud o recepción voluntaria» |
 | Contribución especial | **Beneficio** o **aumento de valor** de los bienes por obras o servicios públicos | «obras públicas», «aumento de valor» |
 | Impuesto | Negocios, actos o hechos que muestran **capacidad económica** | «sin contraprestación» |
 """, 2)
@@ -232,7 +232,7 @@ T.ap("s7", "II.4 Potestad tributaria, fuentes, reserva de ley y vigencia (LGT, a
          "El legislador: «en todo caso por ley»",
          ["Hecho imponible, devengo, base, tipo y demás elementos de la cuantía (a)", "Pagos a cuenta (b); obligados del art. 35.2 y responsables (c)", "Beneficios fiscales (d); recargos e intereses de demora (e); prescripción y caducidad (f)", "Infracciones y sanciones (g); declaraciones y autoliquidaciones (h)", "Condonación, moratorias y quitas (k); actos reclamables en vía económico-administrativa (l)"],
          "—",
-         "«**En todo caso** por ley»: son trece letras (a a m). La **condonación** de deudas y sanciones también exige ley."))}
+         "«Se regularán **en todo caso** por ley»: son trece letras (a a m). La **condonación** de deudas y sanciones también exige ley."))}
 
 {unidad("4.4 Entrada en vigor y retroactividad (art. 10)",
   lit("LGT", "Artículo 10", ["a los veinte días naturales de su completa publicación", "no tendrán efecto retroactivo", "cuando su aplicación resulte más favorable para el interesado"]),
@@ -315,7 +315,7 @@ T.ap("s9", "III.1 Objeto de la ley, concepto y principios de las tasas (Ley 8/19
          "—",
          ["**Equivalencia** (7): tienden a cubrir el coste del servicio o actividad", "**Capacidad económica** (8): se tiene en cuenta cuando lo permitan las características del tributo"],
          "—",
-         "Las tasas «**tenderán** a cubrir» el coste (no «cubrirán como mínimo», que es lo de los **precios públicos**, art. 25.1 → IV.1.2)."))}
+         "Las tasas «**tenderán** a cubrir» el coste (no «que cubra, como mínimo, los costes», que es lo de los **precios públicos**, art. 25.1 → IV.1.2)."))}
 """, 2)
 
 T.ap("s10", "III.2 Fuentes, establecimiento por ley, previsión presupuestaria y devolución (Ley 8/1989, arts. 9 a 12)", f"""
@@ -402,7 +402,7 @@ T.ap("s12", "III.4 Cuantía, memoria económico-financiera, pago y gestión (Ley
   lit("L8_1989", "Artículo 22", ["corresponde al Ministerio de Economía y Hacienda", "los principios y procedimientos de la Ley General Tributaria"]),
   lit("L8_1989", "Artículo 23", ["cuando así se prevea reglamentariamente"]),
   fichab("Cómo se pagan y se gestionan las tasas",
-         "Gestión: Ministerio de Economía y Hacienda, con posible participación reglamentaria de otros departamentos y entes",
+         "Gestión: el «Ministerio de Economía y Hacienda» (denominación de la ley, de 1989), con posible participación reglamentaria de otros departamentos y entes",
          ["Pago en efectivo o con efectos timbrados (21)", "Gestión con los principios y procedimientos de la **LGT**: liquidación, recaudación, inspección y revisión (22.3)", "Autoliquidación e ingreso en el Tesoro cuando lo prevea un reglamento (23)"],
          "—",
          "Como son **tributos**, en su gestión se aplica **en todo caso** la LGT (en los precios públicos, en cambio, la LGP: art. 27.7 → IV.2.2)."))}
@@ -417,7 +417,7 @@ T.ap("s12", "III.4 Cuantía, memoria económico-financiera, pago y gestión (Ley
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Qué son los precios públicos y en qué se diferencian de las tasas? (Ley 8/1989, arts. 24 a 27)", donde(
+T.ap("bIV", "IV. ¿Qué son los precios públicos y en qué se diferencian de las tasas? (Ley 8/1989, arts. 24 a 27 y disposición adicional séptima)", donde(
   "Cuarta pregunta. El título III de la Ley 8/1989 regula los **precios públicos**: no son tributos, sino **contraprestaciones pecuniarias**. Por eso no exigen ley para establecerse y su cuantía busca **cubrir, como mínimo**, los costes.",
   ["1 Concepto y cuantía (arts. 24 y 25)", "2 Establecimiento, administración y cobro (arts. 26 y 27; disposición adicional séptima)", "3 Cuadro comparativo: tasas y precios públicos"]))
 

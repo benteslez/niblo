@@ -50,7 +50,7 @@ def cs(k, frag): return c(k, T_, frag)
 NOLEGAL = "*Esquema de elaboración propia: resume los artículos y documentos citados; no es texto legal.*"
 
 T = Tema("B3T07",
-  "Cinco preguntas: I. Qué es el Gobierno Abierto y qué principios lo informan (Portal de la Transparencia; RD 371/2026) · II. Qué planes de acción ha tenido España (I a V Plan) · III. Cómo se garantiza la transparencia: publicidad activa y derecho de acceso (Ley 19/2013, arts. 1 a 24) · IV. Qué exige el buen gobierno (arts. 25 a 32) · V. Quién vela por todo ello: el Consejo de Transparencia y Buen Gobierno (arts. 33 a 40 y Estatuto, RD 615/2024). Cada artículo: texto literal y ficha.",
+  "Cinco preguntas: I. Qué es el Gobierno Abierto y qué principios lo informan (Portal de la Transparencia; RD 371/2026) · II. Qué planes de acción ha tenido España (I a V Plan) · III. Cómo se garantiza la transparencia: publicidad activa y derecho de acceso (Ley 19/2013, arts. 1 a 24 y disp. adic. 4.ª; CE, art. 105 b) · IV. Qué exige el buen gobierno (arts. 25 a 32) · V. Quién vela por todo ello: el Consejo de Transparencia y Buen Gobierno (arts. 33 a 40 y Estatuto, RD 615/2024). Cada artículo: texto literal y ficha.",
   ["Gobierno Abierto", "OGP", "Planes de Gobierno Abierto", "V Plan 2025-2029", "Foro de Gobierno Abierto", "Ley 19/2013", "Publicidad activa", "Portal de la Transparencia", "Derecho de acceso", "Límites al acceso", "Silencio negativo", "Reclamación ante el CTBG", "Buen gobierno", "Infracciones y sanciones", "Consejo de Transparencia y Buen Gobierno", "RD 615/2024"])
 
 # =============================================================================
@@ -64,7 +64,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 
 | Bloque | Pregunta | Normas | Otras fuentes oficiales |
 |---|---|---|---|
-| **I** | ¿Qué es el Gobierno Abierto y qué principios lo informan? | RD 371/2026 (preámbulo y arts. 2, 3, 6, 12, 17 y 19); Ley 19/2013 (preámbulo) | Portal de la Transparencia: «¿Qué es y cómo se organiza el Gobierno Abierto?» |
+| **I** | ¿Qué es el Gobierno Abierto y qué principios lo informan? | RD 371/2026 (preámbulo y arts. 2, 3, 5, 6, 12, 17 y 19); Ley 19/2013 (preámbulo) | Portal de la Transparencia: «¿Qué es y cómo se organiza el Gobierno Abierto?» |
 | **II** | ¿Qué planes de acción ha tenido España? | RD 371/2026 (preámbulo) | Portal de la Transparencia: planes de acción; documento del V Plan 2025-2029 |
 | **III** | ¿Cómo se garantiza la transparencia? Publicidad activa y derecho de acceso | Ley 19/2013, arts. 1 a 24 y disp. adic. 4.ª; CE, art. 105 b) | — |
 | **IV** | ¿Qué exige el buen gobierno? | Ley 19/2013, arts. 25 a 32 | — |
@@ -229,7 +229,7 @@ T.ap("s5", "II.2 Los planes de Gobierno Abierto de España: del I al V", f"""
   lit("RD371", "pr", ["IX Cumbre Global de la Alianza para el Gobierno Abierto", "Compromiso 1"], solo=[5, 6], titulo="Preámbulo (Real Decreto 371/2026)"),
   fichab("Plan vigente de Gobierno Abierto de España (2025-2029)",
          "Aprobado por el **pleno del Foro de Gobierno Abierto**; iniciativas de la AGE, las comunidades autónomas y las entidades locales (a través de la FEMP)",
-         "**10 compromisos** y **218 iniciativas** (123 AGE, 82 autonómicas y 13 locales); el compromiso 10, «Estado Abierto», agrupa las autonómicas y locales",
+         f"**10 compromisos** y **218 iniciativas** (123 AGE, 82 autonómicas y 13 locales); el compromiso 10, {cs('GA_VPLAN', 'ESTADO ABIERTO')}, agrupa las autonómicas y locales",
          "Aprobado el **6 de octubre de 2025**; período **2025-2029**",
          "Cayeron en 2025 (→ Cierre 1): **diez** compromisos y **218** iniciativas. El compromiso 1 es **participación y espacio cívico**; el 9, el **Observatorio**."))}
 
@@ -242,9 +242,9 @@ T.ap("s5", "II.2 Los planes de Gobierno Abierto de España: del I al V", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se garantiza la transparencia? Publicidad activa y derecho de acceso (Ley 19/2013, arts. 1 a 24)", donde(
+T.ap("bIII", "III. ¿Cómo se garantiza la transparencia? Publicidad activa y derecho de acceso (Ley 19/2013, arts. 1 a 24 y disp. adic. 4.ª; CE, art. 105 b)", donde(
   "Tercera pregunta. La Ley 19/2013 hace dos cosas en su título I: obliga a **publicar** información sin que nadie la pida (**publicidad activa**) y reconoce a todas las personas el **derecho a pedirla** (**derecho de acceso**), con su procedimiento y su reclamación ante el Consejo de Transparencia y Buen Gobierno.",
-  ["1 Objeto y ámbito subjetivo (arts. 1 a 4)", "2 Publicidad activa (arts. 5 a 11)", "3 Derecho de acceso: régimen general y límites (arts. 12 a 16)", "4 Ejercicio del derecho: solicitud, inadmisión, tramitación y resolución (arts. 17 a 22)", "5 Impugnaciones: la reclamación ante el CTBG (arts. 23 y 24; disp. adic. 4.ª)"]))
+  ["1 Objeto y ámbito subjetivo (arts. 1 a 4)", "2 Publicidad activa (arts. 5 a 11)", "3 Derecho de acceso: régimen general y límites (CE, art. 105 b; arts. 12 a 16)", "4 Ejercicio del derecho: solicitud, inadmisión, tramitación y resolución (arts. 17 a 22)", "5 Impugnaciones: la reclamación ante el CTBG (arts. 23 y 24; disp. adic. 4.ª)"]))
 
 T.ap("s6", "III.1 Objeto y ámbito subjetivo de la Ley 19/2013 (arts. 1 a 4)", f"""
 {unidad("1.1 Objeto (art. 1)",
@@ -256,7 +256,7 @@ T.ap("s6", "III.1 Objeto y ámbito subjetivo de la Ley 19/2013 (arts. 1 a 4)", f
 {unidad("1.2 Sujetos del título I (art. 2)",
   lit(L, "Artículo 2", ["superior al 50 por 100", "en relación con sus actividades sujetas a Derecho Administrativo", "letras a) a d)"]),
   fichab("A quién se aplican la publicidad activa y el derecho de acceso",
-         ["Administraciones territoriales, Seguridad Social y mutuas, organismos y entidades de Derecho Público, universidades públicas", "Casa del Rey, Congreso, Senado, TC, CGPJ, Banco de España, Consejo de Estado, Defensor del Pueblo, Tribunal de Cuentas, CES (en su actividad administrativa)", "Sociedades mercantiles con participación **superior al 50 %**, fundaciones del sector público y asociaciones de Administraciones"],
+         ["Administraciones territoriales, Seguridad Social y mutuas, organismos y entidades de Derecho Público, universidades públicas, corporaciones de Derecho Público (en sus actividades sujetas a Derecho Administrativo)", "Casa del Rey, Congreso, Senado, TC, CGPJ, Banco de España, Consejo de Estado, Defensor del Pueblo, Tribunal de Cuentas, CES (en su actividad administrativa)", "Sociedades mercantiles con participación **superior al 50 %**, fundaciones del sector público y asociaciones de Administraciones"],
          "—", "—",
          "Para la ley, «Administraciones Públicas» son solo las letras **a) a d)** (art. 2.2). Los órganos de la letra f), solo **en sus actividades sujetas a Derecho Administrativo**."))}
 
@@ -301,7 +301,7 @@ T.ap("s7", "III.2 Publicidad activa (arts. 5 a 11)", f"""
          "Publicar un proyecto de reglamento **no supone necesariamente** abrir audiencia pública."))}
 
 {unidad("2.4 Información económica, presupuestaria y estadística (art. 8)",
-  lit(L, "Artículo 8", ["podrá realizarse trimestralmente", "Las subvenciones y ayudas públicas concedidas", "Las retribuciones percibidas anualmente por los altos cargos", "relación de los bienes inmuebles"], solo=[1, 2, 6, 7, 9, 13, 14]),
+  lit(L, "Artículo 8", ["podrá realizarse trimestralmente", "Las subvenciones y ayudas públicas concedidas", "Las retribuciones percibidas anualmente por los altos cargos", "relación de los bienes inmuebles"], solo=[1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]),
   fichab("Qué se publica, como mínimo, de la gestión económica", "Los sujetos del título I; los del art. 3, en lo que reciben de una Administración (8.2)",
          ["Contratos (los **menores**, trimestralmente)", "Convenios y encomiendas", "Subvenciones y ayudas", "Presupuestos y su ejecución", "Cuentas anuales e informes de auditoría y fiscalización", "Retribuciones de altos cargos e indemnizaciones por cese", "Compatibilidades", "Declaraciones de bienes de representantes locales", "Bienes inmuebles de las Administraciones (8.3)"],
          "Contratos menores: publicación que **podrá** ser trimestral",
@@ -325,7 +325,7 @@ T.ap("s7", "III.2 Publicidad activa (arts. 5 a 11)", f"""
          "Tres principios técnicos: **accesibilidad, interoperabilidad y reutilización**."))}
 """, 2)
 
-T.ap("s8", "III.3 Derecho de acceso a la información pública: régimen general y límites (arts. 12 a 16)", f"""
+T.ap("s8", "III.3 Derecho de acceso a la información pública: régimen general y límites (CE, art. 105 b; arts. 12 a 16)", f"""
 {unidad("3.1 Fundamento constitucional (CE, art. 105 b)",
   lit("CE", "Artículo 105", ["El acceso de los ciudadanos a los archivos y registros administrativos"], solo=[1, 3]),
   fichab("Mandato al legislador de regular el acceso a archivos y registros", "La ley (las Cortes)",
@@ -394,7 +394,7 @@ T.ap("s9", "III.4 Ejercicio del derecho de acceso (arts. 17 a 22)", f"""
          "El silencio es **negativo** (desestimación). El plazo cuenta desde la recepción **por el órgano competente para resolver**."))}
 
 {unidad("4.5 Unidades de información (art. 21)",
-  lit(L, "Artículo 21", ["unidades especializadas", "Llevar un registro de las solicitudes de acceso a la información"], solo=[1, 2, 3, 4, 7]),
+  lit(L, "Artículo 21", ["unidades especializadas", "Llevar un registro de las solicitudes de acceso a la información"], solo=[1, 2, 3, 4, 7, 9, 11]),
   fichab("Unidades especializadas que gestionan la transparencia en la AGE", "En la **Administración General del Estado**; el resto de entidades identifican el órgano competente (21.3)",
          ["Recabar y difundir la información de publicidad activa", "Recibir y tramitar las solicitudes", "Llevar un registro de solicitudes", "Mantener un mapa de contenidos"],
          "—", "Sus responsables forman el **Grupo Interministerial de Gobierno Abierto** (→ I.3.4)."))}
@@ -457,7 +457,7 @@ T.ap("s11", "IV.1 Ámbito y principios de buen gobierno (arts. 25 y 26)", f"""
          "Las personas del art. 25",
          ["::Dos grupos:", "**Generales** (7): transparencia, dedicación al servicio público, imparcialidad, igualdad de trato, diligencia, conducta digna, responsabilidad", "**De actuación** (9): plena dedicación e incompatibilidades, reserva, denuncia de irregularidades, uso de poderes para su fin, abstención, regalos, transparencia, gestión de recursos públicos, no obtener ventajas"],
          "—",
-         "Los principios **informan la interpretación y aplicación** del régimen sancionador (26.3). Su incumplimiento puede ser infracción **leve** (art. 29.3 b)."))}
+         "Los principios **informan la interpretación y aplicación** del régimen sancionador (26.3). El incumplimiento de los principios **de actuación** (26.2 b) puede ser infracción **leve** (art. 29.3 b), si no es grave o muy grave ni está tipificado en otra norma."))}
 """, 2)
 
 T.ap("s12", "IV.2 Infracciones (arts. 27 a 29)", f"""
@@ -468,14 +468,14 @@ T.ap("s12", "IV.2 Infracciones (arts. 27 a 29)", f"""
          "La Ley 19/2013 **no tipifica** estas infracciones: **remite**."))}
 
 {unidad("2.2 Gestión económico-presupuestaria (art. 28)",
-  lit(L, "Artículo 28", ["infracciones muy graves", "cuando sean culpables", "La incursión en alcance", "sin crédito suficiente", "La omisión del trámite de intervención previa"], solo=[1, 2, 4, 5, 18]),
+  lit(L, "Artículo 28", ["infracciones muy graves", "cuando sean culpables", "La incursión en alcance", "sin crédito suficiente", "La omisión del trámite de intervención previa"], solo=[1, 2, 4, 5, 7, 18]),
   fichab("Infracciones muy graves en la gestión de fondos públicos", "Los altos cargos del art. 25",
          ["Todas son **muy graves**", "Exigen culpa («cuando sean culpables»)", "Ej.: alcance, gastos sin crédito, omisión de la intervención previa, incumplimientos de la LO 2/2012, no rendir cuentas"],
          "—",
          "Todas las del art. 28 son **muy graves** y conllevan restituir e indemnizar a la Hacienda Pública (art. 30.8)."))}
 
 {unidad("2.3 Infracciones disciplinarias (art. 29)",
-  lit(L, "Artículo 29", ["Son infracciones muy graves:", "El acoso laboral.", "Son infracciones graves:", "El abuso de autoridad en el ejercicio del cargo.", "Son infracciones leves:"], solo=[1, 2, 12, 14, 15, 21, 22, 23]),
+  lit(L, "Artículo 29", ["Son infracciones muy graves:", "El acoso laboral.", "Son infracciones graves:", "El abuso de autoridad en el ejercicio del cargo.", "Son infracciones leves:"], solo=[1, 2, 3, 12, 13, 14, 15, 16, 20, 21, 22, 23]),
   fichab("Infracciones disciplinarias de los altos cargos", "Los altos cargos del art. 25",
          ["Muy graves: p. ej., incumplir el deber de respeto a la Constitución, discriminación y acoso, acoso laboral", "Graves: p. ej., abuso de autoridad, intervenir habiendo causa de abstención", "Leves: incorrección con superiores, compañeros o subordinados; descuido o negligencia"],
          "Reincidencia: dos infracciones graves (o leves) sancionadas en el año anterior elevan la siguiente",
@@ -484,7 +484,7 @@ T.ap("s12", "IV.2 Infracciones (arts. 27 a 29)", f"""
 
 T.ap("s13", "IV.3 Sanciones, procedimiento y prescripción (arts. 30 a 32)", f"""
 {unidad("3.1 Sanciones (art. 30)",
-  lit(L, "Artículo 30", ["amonestación", "su publicación en el «Boletín Oficial del Estado»", "durante un periodo de entre cinco y diez años", "Fiscal General del Estado"], solo=[1, 2, 3, 4, 5, 6, 15]),
+  lit(L, "Artículo 30", ["amonestación", "su publicación en el «Boletín Oficial del Estado»", "durante un periodo de entre cinco y diez años", "Fiscal General del Estado"], solo=[1, 2, 3, 4, 5, 6, 15, 17, 18, 19]),
   fichab("Qué sanción corresponde a cada infracción", "El órgano del art. 31.4",
          ["Leves: **amonestación**", "Graves: declaración del incumplimiento y su publicación en el BOE o diario oficial; no percepción de la indemnización por cese", "Muy graves: las de las graves + **destitución** + prohibición de ser alto cargo de **5 a 10 años**"],
          "Inhabilitación para alto cargo: **entre cinco y diez años**",
@@ -516,9 +516,9 @@ T.ap("s13", "IV.3 Sanciones, procedimiento y prescripción (arts. 30 a 32)", f""
 # =============================================================================
 T.ap("bV", "V. ¿Quién vela por la transparencia y el buen gobierno? El Consejo de Transparencia y Buen Gobierno (arts. 33 a 40; RD 615/2024)", donde(
   "Quinta pregunta. El título III crea el **Consejo de Transparencia y Buen Gobierno**. Su **Estatuto** vigente lo aprobó el Real Decreto 615/2024, que lo configura como **autoridad administrativa independiente**.",
-  ["1 Naturaleza y fines (arts. 33 y 34; Estatuto, arts. 1 y 2)", "2 Órganos: la Comisión y el Presidente (arts. 35 a 37; Estatuto, arts. 12, 18 y 20)", "3 Funciones, régimen jurídico y relaciones con las Cortes (arts. 38 a 40; Estatuto, art. 9)", "4 Cuadro de plazos y mayorías del tema"]))
+  ["1 Naturaleza y fines (arts. 33 y 34; Estatuto, art. 1)", "2 Órganos: la Comisión y el Presidente (arts. 35 a 37; Estatuto, arts. 12, 18 y 20)", "3 Funciones, régimen jurídico y relaciones con las Cortes (arts. 38 a 40; Estatuto, art. 9)", "4 Cuadro de plazos y mayorías del tema"]))
 
-T.ap("s14", "V.1 Naturaleza y fines del Consejo (arts. 33 y 34; Estatuto, arts. 1 y 2)", f"""
+T.ap("s14", "V.1 Naturaleza y fines del Consejo (arts. 33 y 34; Estatuto, art. 1)", f"""
 {unidad("1.1 Creación y naturaleza (Ley 19/2013, art. 33)",
   lit(L, "Artículo 33", ["Se crea el Consejo de Transparencia y Buen Gobierno", "personalidad jurídica propia y plena capacidad de obrar", "autonomía y plena independencia"]),
   fichab("Organismo público creado por la Ley 19/2013", "—",
@@ -579,7 +579,7 @@ T.ap("s16", "V.3 Funciones, régimen jurídico y relaciones con las Cortes (arts
          "Memoria anual presentada ante las Cortes Generales",
          "Las reclamaciones las conoce el **Presidente** (38.2 c). Si insta un sancionador y no se incoa, la decisión debe **motivarse**."))}
 
-{unidad("3.2 Régimen jurídico y Estatuto (art. 39.1 y 39.2)",
+{unidad("3.2 Régimen jurídico y Estatuto (art. 39.2)",
   lit(L, "Artículo 39", ["mediante Real Decreto el Estatuto del Consejo de Transparencia y Buen Gobierno"], solo=[7]),
   fichab("Habilitación para aprobar el Estatuto", "El **Consejo de Ministros**, mediante Real Decreto",
          "Organización, estructura, funcionamiento y demás aspectos necesarios", "—",
@@ -798,7 +798,7 @@ T.q(L, "Artículo 35", "CTBG", "Según el artículo 35 de la Ley 19/2013, el Con
     "Art. 35. Pleno, Comisión Permanente y grupos de trabajo son del Foro de Gobierno Abierto (RD 371/2026, art. 4).", "El Presidente del Consejo de Transparencia y Buen Gobierno que lo será también de su Comisión")
 T.q(L, "Artículo 36", "CTBG", "Según el artículo 36.2 de la Ley 19/2013, ¿cuál de los siguientes forma parte de la Comisión de Transparencia y Buen Gobierno?",
     ["Un representante de la Autoridad Independiente de Responsabilidad Fiscal.", "Un representante del Consejo General del Poder Judicial.", "Un representante del Consejo de Estado.", "Un representante de la Federación Española de Municipios y Provincias."],
-    "Art. 36.2 h). La FEMP solo puede ser convocada a la reunión anual con los órganos autonómicos (36.4).", "Un representante de la Autoridad Independiente de Responsabilidad Fiscal")
+    "Art. 36.2 h). A la reunión anual con los órganos autonómicos (36.4) solo «podrá ser convocado» un representante de la Administración Local propuesto por la FEMP; no es miembro de la Comisión.", "Un representante de la Autoridad Independiente de Responsabilidad Fiscal")
 T.q(L, "Artículo 37", "CTBG", "Según el artículo 37.1 de la Ley 19/2013, el Presidente del Consejo de Transparencia y Buen Gobierno será nombrado:",
     ["Por un período no renovable de cinco años mediante Real Decreto.", "Por un período de cinco años, renovable por una sola vez, mediante Real Decreto.", "Por un período no renovable de seis años por las Cortes Generales.", "Por un período de cuatro años mediante Orden ministerial."],
     "Art. 37.1.", "será nombrado por un período no renovable de cinco años mediante Real Decreto")

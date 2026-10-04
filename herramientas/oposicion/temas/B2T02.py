@@ -27,7 +27,7 @@ def frag(t): return t + " (fragmento)"
 
 
 T = Tema("B2T02",
-  "Cinco preguntas: I. Qué es el Consejo Europeo y qué hace (TUE, arts. 13 y 15; TFUE, arts. 235 y 236) · II. Qué es el Consejo y cómo decide (TUE, art. 16; TFUE, arts. 237 a 243) · III. Qué es la Comisión y cómo funciona (TUE, art. 17; TFUE, arts. 244 a 250) · IV. Cómo se decide: el procedimiento legislativo (TFUE, arts. 289 y 293 a 297) · V. Cómo participan los Estados miembros en cada fase (TUE, art. 12; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997). Cada artículo: texto literal (DOUE o BOE) y ficha.",
+  "Cinco preguntas: I. Qué es el Consejo Europeo y qué hace (TUE, arts. 13, 10.2 y 15; TFUE, arts. 235 y 236) · II. Qué es el Consejo y cómo decide (TUE, art. 16; TFUE, arts. 237 a 243; Decisiones 2009/878/UE y 2010/594/UE) · III. Qué es la Comisión y cómo funciona (TUE, arts. 17 y 18; TFUE, arts. 244 a 250; Decisión 2013/272/UE) · IV. Cómo se decide: el procedimiento legislativo (TFUE, arts. 289 y 293 a 297; TUE, art. 11.4) · V. Cómo participan los Estados miembros en cada fase (TUE, art. 12; TFUE, art. 291; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997; Acuerdos de la CARUE de 2004). Cada artículo: texto literal (DOUE o BOE) y ficha.",
   ["Consejo Europeo", "Presidente del Consejo Europeo", "Consejo", "Mayoría cualificada", "COREPER", "Formaciones del Consejo", "Comisión Europea", "Iniciativa legislativa", "Moción de censura", "Procedimiento legislativo ordinario", "Comité de Conciliación", "Art. 294 TFUE", "Parlamentos nacionales", "Subsidiariedad", "Comisión Mixta para la UE", "CARUE"])
 
 # =============================================================================
@@ -153,9 +153,9 @@ T.ap("s4", "I.4 Funcionamiento: votaciones y decisiones sobre el Consejo (TFUE, 
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Qué es el Consejo y cómo decide? (TUE, art. 16; TFUE, arts. 237 a 243)", donde(
+T.ap("bII", "II. ¿Qué es el Consejo y cómo decide? (TUE, art. 16; TFUE, arts. 237 a 243; Decisiones 2009/878/UE y 2010/594/UE)", donde(
   "Segunda pregunta. El **Consejo** (los ministros de los Estados) es, con el Parlamento Europeo, **colegislador** y autoridad **presupuestaria**. Hay que saber cómo se compone, en qué **formaciones** se reúne, quién prepara sus trabajos (**COREPER**) y, sobre todo, con qué **mayorías** decide.",
-  ["1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 a 5)", "2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9)", "3 Funcionamiento y mayorías (TFUE, arts. 237 a 243)"]))
+  ["1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 a 5)", "2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9; Decisiones 2009/878/UE y 2010/594/UE)", "3 Funcionamiento y mayorías (TFUE, arts. 237 a 243)"]))
 
 T.ap("s5", "II.1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 a 5)", f"""
 {unidad("1.1 Funciones y composición (art. 16.1 y 2)",
@@ -175,35 +175,37 @@ T.ap("s5", "II.1 Funciones, composición y mayoría cualificada (TUE, art. 16.1 
          "**55 % de Estados** (mínimo **quince**) + **65 % de población**. Minoría de bloqueo: **cuatro** miembros como mínimo. Regla general del **Consejo** = mayoría **cualificada**; del **Consejo Europeo** = **consenso** (→ I.2.2)."))}
 """, 2)
 
-T.ap("s6", "II.2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9)", f"""
+FORM_2009 = f"""> [[DOUE|{D2009}]]
+> **Decisión 2009/878/UE del Consejo (Asuntos Generales), de 1 de diciembre de 2009, por la que se establece la lista de formaciones del Consejo, además de las contempladas en los párrafos segundo y tercero del apartado 6 del artículo 16 del Tratado de la Unión Europea (DOUE L 315 de 2.12.2009) · anexo (texto de EUR-Lex, sin las notas al pie)**
+> ANEXO LISTA DE FORMACIONES DEL CONSEJO
+> 1. Asuntos Generales;
+> 2. Asuntos Exteriores;
+> 3. Asuntos Económicos y Financieros;
+> 4. Justicia y Asuntos de Interior;
+> 5. Empleo, Política Social, Sanidad y Consumidores;
+> 6. Competitividad (Mercado Interior, Industria e Investigación);
+> 7. Transporte, Telecomunicaciones y Energía;
+> 8. Agricultura y Pesca;
+> 9. Medio Ambiente;
+> 10. Educación, Juventud y Cultura."""
+FORM_2010 = f"""> [[DOUE|{D2010}]]
+> **Decisión 2010/594/UE del Consejo Europeo, de 16 de septiembre de 2010, por la que se modifica la lista de formaciones del Consejo (DOUE L 263 de 6.10.2010) · artículo 1 (texto de EUR-Lex)**
+> La lista de formaciones del Consejo que figura en el anexo de la Decisión 2009/878/UE y, por consiguiente, la lista de formaciones del Consejo que figura en el anexo I del Reglamento interno del Consejo se modifican como sigue:
+> 1) El punto 6 «Competitividad (Mercado Interior, Industria e Investigación)» se sustituye por el texto siguiente: «6. Competitividad (Mercado Interior, Industria, Investigación y Espacio)».
+> 2) El punto 10 «Educación, Juventud y Cultura» se sustituye por el texto siguiente: «10. Educación, Juventud, Cultura y Deporte».
+> Las notas a pie de página permanecen sin cambios."""
+
+T.ap("s6", "II.2 Formaciones, COREPER, sesiones públicas y presidencia (TUE, art. 16.6 a 9; Decisiones 2009/878/UE y 2010/594/UE)", f"""
 {unidad("2.1 Formaciones del Consejo (art. 16.6)",
   U(16, ["El Consejo se reunirá en diferentes formaciones", "El Consejo de Asuntos Generales velará por la coherencia de los trabajos de las diferentes formaciones del Consejo", "Preparará las reuniones del Consejo Europeo", "El Consejo de Asuntos Exteriores elaborará la acción exterior de la Unión"], solo=[8, 9, 10], titulo=frag("Artículo 16 (TUE)")),
+  FORM_2009, FORM_2010,
   fichab("El Consejo se reúne por materias",
          "Los ministros competentes en cada materia; la lista de formaciones la adopta el **Consejo Europeo** (TFUE 236 a, → I.4.2)",
          ["**Asuntos Generales**: coherencia entre formaciones; **prepara** las reuniones del Consejo Europeo y garantiza su actuación subsiguiente", "**Asuntos Exteriores**: elabora la **acción exterior** según las líneas del Consejo Europeo"],
          "—",
          "Quien **prepara** las reuniones del **Consejo Europeo** es el Consejo de **Asuntos Generales** (no el COREPER)."))}
 
-> [[DOUE|{D2009}]]
-> **Decisión 2009/878/UE del Consejo (Asuntos Generales), de 1 de diciembre de 2009, por la que se establece la lista de formaciones del Consejo (DOUE L 315 de 2.12.2009) · anexo (texto de EUR-Lex, sin las notas al pie)**
-> ANEXO LISTA DE FORMACIONES DEL CONSEJO
-> 1. Asuntos Generales
-> 2. Asuntos Exteriores
-> 3. Asuntos Económicos y Financieros
-> 4. Justicia y Asuntos de Interior
-> 5. Empleo, Política Social, Sanidad y Consumidores
-> 6. Competitividad (Mercado Interior, Industria e Investigación)
-> 7. Transporte, Telecomunicaciones y Energía
-> 8. Agricultura y Pesca
-> 9. Medio Ambiente
-> 10. Educación, Juventud y Cultura
-
-> [[DOUE|{D2010}]]
-> **Decisión 2010/594/UE del Consejo Europeo, de 16 de septiembre de 2010, por la que se modifica la lista de formaciones del Consejo (DOUE L 263 de 6.10.2010) · artículo 1 (texto de EUR-Lex)**
-> 1) El punto 6 «Competitividad (Mercado Interior, Industria e Investigación)» se sustituye por el texto siguiente: «6. Competitividad (Mercado Interior, Industria, Investigación y Espacio)».
-> 2) El punto 10 «Educación, Juventud y Cultura» se sustituye por el texto siguiente: «10. Educación, Juventud, Cultura y Deporte».
-
-?> **Diez formaciones.** Leídas las dos decisiones juntas, la lista tiene **diez** formaciones; la 6 es «Competitividad (Mercado Interior, Industria, Investigación y Espacio)» y la 10, «Educación, Juventud, Cultura y Deporte». La ficha de EUR-Lex de la Decisión 2009/878/UE no recoge más modificaciones que la de 2010.
+?> **Diez formaciones.** Leídas las dos decisiones juntas, la lista tiene **diez** formaciones; la 6 es «Competitividad (Mercado Interior, Industria, Investigación y Espacio)» y la 10, «Educación, Juventud, Cultura y Deporte». La lista de 2009 la adoptó el **Consejo (Asuntos Generales)** con la base transitoria que cita su considerando 1 (art. 4 del Protocolo sobre las disposiciones transitorias); la de 2010 ya es del **Consejo Europeo** (TUE 16.6 y TFUE 236 a). La ficha de EUR-Lex de la Decisión 2009/878/UE no recoge más modificaciones que la de 2010 ni fecha de fin de validez [[DOUE|https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=CELEX:32009D0878]].
 
 {unidad("2.2 COREPER, sesiones públicas y presidencia (art. 16.7 a 9)",
   U(16, ["Un Comité de Representantes Permanentes de los Gobiernos de los Estados miembros se encargará de preparar los trabajos del Consejo", "El Consejo se reunirá en público cuando delibere y vote sobre un proyecto de acto legislativo", "con excepción de la de Asuntos Exteriores", "sistema de rotación igual"], solo=[11, 12, 13], titulo=frag("Artículo 16 (TUE)")),
@@ -268,7 +270,7 @@ T.ap("s7", "II.3 Funcionamiento y mayorías del Consejo (TFUE, arts. 237 a 243)"
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Qué es la Comisión y cómo funciona? (TUE, arts. 17 y 18; TFUE, arts. 244 a 250)", donde(
+T.ap("bIII", "III. ¿Qué es la Comisión y cómo funciona? (TUE, arts. 17 y 18; TFUE, arts. 244 a 250; Decisión 2013/272/UE)", donde(
   "Tercera pregunta. La **Comisión** promueve el **interés general** de la Unión, tiene casi en exclusiva la **iniciativa legislativa** y actúa con **plena independencia** de los Gobiernos. Responde ante el **Parlamento Europeo**.",
   ["1 Funciones e iniciativa legislativa (TUE, art. 17.1 y 2)", "2 Mandato, composición e independencia (TUE, art. 17.3 a 5; Decisión 2013/272/UE; TFUE, arts. 244 y 245)", "3 Presidente, nombramiento y responsabilidad (TUE, arts. 17.6 a 8 y 18; TFUE, art. 248)", "4 Fin del mandato, cese y funcionamiento (TFUE, arts. 246, 247, 249 y 250)"]))
 
@@ -307,7 +309,7 @@ T.ap("s9", "III.2 Mandato, composición e independencia (TUE, art. 17.3 a 5; Dec
   fichab("Cuántos comisarios hay",
          "El **Consejo Europeo**, **por unanimidad**, puede modificar el número (17.5)",
          ["Regla del Tratado desde el 1-11-2014: **dos tercios** del número de Estados, con rotación **estrictamente igual** (17.5)", "Decisión 2013/272/UE: un número **igual al número de Estados miembros**, incluidos el Presidente y el Alto Representante"],
-         "Unanimidad del Consejo Europeo; revisión antes de la primera Comisión tras la adhesión del **trigésimo** Estado (art. 2 de la Decisión)",
+         "Unanimidad del Consejo Europeo; revisión con antelación suficiente al nombramiento de la primera Comisión tras la adhesión del **trigésimo** Estado o de la Comisión siguiente a la que debía asumir sus funciones el **1-11-2014**, si este fuera antes (art. 2 de la Decisión)",
          "El Tratado dice «**dos tercios**», pero el Consejo Europeo lo ha **modificado por unanimidad**: hoy, **un miembro por Estado** (Decisión 2013/272/UE, aplicable desde el **1-11-2014**)."))}
 
 {unidad("2.3 El sistema de rotación (TFUE, art. 244)",
@@ -504,7 +506,7 @@ T.ap("s15", "IV.4 Cooperación, motivación, firma y publicación (TFUE, arts. 2
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Cómo participan los Estados miembros en cada fase? (TUE, art. 12; TFUE, art. 291; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997)", donde(
+T.ap("bV", "V. ¿Cómo participan los Estados miembros en cada fase? (TUE, art. 12; TFUE, art. 291; Protocolos n.º 1 y 2; Ley 8/1994; Ley 2/1997; Acuerdos de la CARUE de 2004)", donde(
   "Quinta pregunta. Los Estados no están fuera del proceso: deciden en el **Consejo Europeo** y en el **Consejo**; sus **Parlamentos nacionales** reciben los proyectos y controlan la **subsidiariedad**; y, al final, los Estados **ejecutan** el Derecho de la Unión. En España, esa participación se articula en las **Cortes** (Comisión Mixta para la Unión Europea) y con las **Comunidades Autónomas** (CARUE).",
   ["1 Las fases del proceso y la ejecución por los Estados (esquema; TFUE, art. 291)", "2 Los Parlamentos nacionales (TUE, art. 12; Protocolos n.º 1 y 2)", "3 España: las Cortes Generales y la Comisión Mixta para la Unión Europea (Ley 8/1994)", "4 España: las Comunidades Autónomas (Ley 2/1997; Acuerdos de la CARUE de 2004)"]))
 
@@ -584,15 +586,13 @@ T.ap("s18", "V.3 España: las Cortes Generales y la Comisión Mixta para la Uni�
          ["Informe escrito del Gobierno **antes de cada Consejo Europeo ordinario** (e)", "Informe del Gobierno sobre subsidiariedad: **dos semanas** como máximo (j)"],
          "El dictamen de subsidiariedad lo emite la **Comisión Mixta en nombre de las Cortes** (no el Gobierno)."))}
 
-{unidad("3.3 Comparecencias del Gobierno (art. 4 y artículos 8 y 9 «nuevos»)",
+{unidad("3.3 Comparecencia tras el Consejo Europeo (art. 4)",
   lit("L8_1994", "a4", ["ante el Pleno del Congreso de los Diputados, con posterioridad a cada Consejo Europeo, ordinario o extraordinario"]),
-  lit("L8_1994", "a8-2", ["antes de la celebración de la reunión del Consejo"], titulo="Artículo 8 (nuevo) del capítulo tercero (Ley 8/1994)"),
-  lit("L8_1994", "a9-2", ["Al final de cada presidencia semestral del Consejo de la Unión Europea"], titulo="Artículo 9 (nuevo) del capítulo tercero (Ley 8/1994)"),
-  fichab("El Gobierno da cuenta antes y después",
-         ["**Gobierno**, ante el **Pleno del Congreso**: después de cada **Consejo Europeo**", "**Ministros o altos cargos** que decida la **Mesa** de la Comisión Mixta: antes de cada reunión del **Consejo**", "**Ministro de Asuntos Exteriores** o **Secretario de Estado para la UE**: al final de cada **presidencia semestral**"],
-         "Informar de lo decidido y debatir; manifestar la **posición del Gobierno** sobre el orden del día del Consejo; dar cuenta de los **progresos** de la presidencia",
-         ["Consejo Europeo: comparecencia **posterior** (ordinario o extraordinario), ante el **Pleno del Congreso**", "Consejo: comparecencia **previa**, ante la **Comisión Mixta**"],
-         "Consejo **Europeo** → **Pleno del Congreso**, **después**. Consejo (de ministros de la UE) → **Comisión Mixta**, **antes**. La ley tiene **dos** arts. 8 y 9: los añadidos en el capítulo tercero llevan «(nuevo)» en el BOE."))}
+  fichab("El Gobierno da cuenta del Consejo Europeo",
+         "El **Gobierno**, ante el **Pleno del Congreso de los Diputados**",
+         "Informa sobre lo decidido en el Consejo Europeo y mantiene un **debate** con los Grupos Parlamentarios",
+         "Comparecencia **posterior** a cada Consejo Europeo, **ordinario o extraordinario**",
+         "Consejo **Europeo** → **Pleno del Congreso**, **después**. Antes de cada Consejo Europeo **ordinario**, el Gobierno remite a las Cámaras un **informe escrito** (art. 3 e: → V.3.2)."))}
 
 {unidad("3.4 El control de la subsidiariedad (arts. 5 y 6)",
   lit("L8_1994", "a5", ["corresponderá con carácter general a la Comisión Mixta para la Unión Europea", "podrán avocar el debate y la votación", "en el plazo máximo de ocho semanas"]),
@@ -611,6 +611,15 @@ T.ap("s18", "V.3 España: las Cortes Generales y la Comisión Mixta para la Uni�
          ["Recurso de **anulación** ante el TJUE por infracción de la **subsidiariedad** (art. 8 del Protocolo n.º 2: → V.2.4)", f"Oposición a que el Consejo pase de unanimidad a **mayoría cualificada** o de procedimiento especial a **ordinario** (art. 48.7 TUE: {cU(48, 'En caso de oposición de un Parlamento nacional notificada en un plazo de seis meses')}, no se adopta la decisión)"],
          "Solicitud del recurso: **seis semanas** desde la publicación oficial del acto",
          "El Gobierno puede **descartar** el recurso **motivadamente** y lo justifica compareciendo ante la Comisión Mixta si esta lo pide."))}
+
+{unidad("3.6 Comparecencias ante la Comisión Mixta (artículos 8 y 9 «nuevos»)",
+  lit("L8_1994", "a8-2", ["antes de la celebración de la reunión del Consejo"], titulo="Artículo 8 (nuevo) del capítulo tercero (Ley 8/1994)"),
+  lit("L8_1994", "a9-2", ["Al final de cada presidencia semestral del Consejo de la Unión Europea"], titulo="Artículo 9 (nuevo) del capítulo tercero (Ley 8/1994)"),
+  fichab("El Gobierno da cuenta antes de cada Consejo y al final de cada presidencia",
+         ["**Ministros o altos cargos** que decida la **Mesa** de la Comisión Mixta: antes de cada reunión del **Consejo**", "**Ministro de Asuntos Exteriores** o **Secretario de Estado para la UE**: al final de cada **presidencia semestral**"],
+         "Manifestar la **posición del Gobierno** sobre el orden del día del Consejo; dar cuenta de los **progresos** de la presidencia",
+         ["Consejo: comparecencia **previa**, ante la **Comisión Mixta**", "Presidencia semestral: comparecencia **al final**, ante la **Comisión Mixta**"],
+         "Consejo **Europeo** → **Pleno del Congreso**, **después** (art. 4: → V.3.3). Consejo (de ministros de la UE) → **Comisión Mixta**, **antes**. La ley tiene **dos** arts. 8 y 9: los añadidos en el capítulo tercero llevan «(nuevo)» en el BOE."))}
 """, 2)
 
 T.ap("s19", "V.4 España: las Comunidades Autónomas (Ley 2/1997; Acuerdos de la CARUE de 2004)", f"""
@@ -634,7 +643,7 @@ T.ap("s19", "V.4 España: las Comunidades Autónomas (Ley 2/1997; Acuerdos de la
          ["Un miembro **con rango de Consejero** (o de un Consejo de Gobierno autonómico) que **representa al conjunto** de las Comunidades Autónomas", "Lo designa el **Pleno** de la **Conferencia Sectorial** correspondiente (apartado 3.1)"],
          ["Se integra en la **delegación española** como miembro de pleno derecho", "Asesora al **jefe de delegación** sobre la **posición común** autonómica", "Puede pedir la palabra si hay posición común; el jefe de delegación se la cede si lo estima oportuno"],
          "—",
-         "La **responsabilidad última** de la negociación es siempre del **jefe de delegación** (Estado). Texto publicado en el BOE (resolución de 28-2-2005, no consolidado); el propio Acuerdo previó su revisión tras aplicarse en 2005 (apartado 7.2)."))}
+         "La **responsabilidad última** de la negociación es siempre del **jefe de delegación** (Estado). Texto consolidado del BOE: los apartados 2.1 (formaciones) y 3.1 se modificaron por Acuerdos de 2 de julio de 2009 y de 7 de febrero de 2011, publicados por la Resolución de 22-7-2011 (BOE-A-2011-13747); el propio Acuerdo previó su revisión tras aplicarse en 2005 (apartado 7.2)."))}
 
 {resumen([
   "Los Estados están en todas las fases: **Consejo Europeo** y **Consejo** (decisión), **Parlamentos nacionales** (control de la propuesta) y **ejecución** (TFUE 291).",

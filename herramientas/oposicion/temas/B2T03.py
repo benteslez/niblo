@@ -6,6 +6,7 @@ cierre 1 (preguntas oficiales) y cierre 2 (repaso).
 Normas (EUR-Lex, etiqueta DOUE): TUE (versión consolidada, DO C 202 de 7-6-2016), arts. 14 y 19;
 TFUE, arts. 223 a 287; Protocolo n.º 3 sobre el Estatuto del TJUE (ESTJUE, texto de 2016:
 solo artículos que no han modificado los Reglamentos 2016/1192, 2019/629 y 2024/2019);
+Decisión 2013/336/UE del Consejo (número de abogados generales; bloque DOUE con su URL);
 Reglamento (UE, Euratom) 2024/2019 (art. 50 ter del Estatuto; REG2024_2019.json extraído del
 HTML de EUR-Lex agrupando cada artículo citado con sus párrafos).
 Otras fuentes oficiales (no BOE): Reglamento interno del Parlamento Europeo, arts. 15 y 16
@@ -32,11 +33,19 @@ boe._cache["PEWEB"] = {"portal": ("portal", [("parrafo", "Presidenta Roberta Met
 PE_BLOQUE = "\n".join([f"> [[PE|{URL_PE}]]", "> **Portal del Parlamento Europeo (consultado en octubre de 2026) · fuente oficial, no es texto legal**",
     "> Presidenta Roberta Metsola", "> La Presidenta es elegida por un periodo renovable de dos años y medio, equivalente a la mitad de la legislatura."])
 
+URL_AG = "https://eur-lex.europa.eu/legal-content/ES/TXT/HTML/?uri=CELEX:32013D0336"
+AG_2013 = "\n".join([f"> [[DOUE|{URL_AG}]]",
+    "> **Decisión 2013/336/UE del Consejo, de 25 de junio de 2013, por la que se aumenta el número de abogados generales del Tribunal de Justicia de la Unión Europea (DOUE L 179 de 29.6.2013) · artículo 1 (texto de EUR-Lex)**",
+    "> Artículo 1",
+    "> Se aumenta el número de abogados generales del Tribunal de Justicia de la Unión Europea a:",
+    "> — nueve, con efectos a partir del 1 de julio de 2013;",
+    "> — once, con efectos a partir del 7 de octubre de 2015."])
+
 def lit_pe(url, art, resaltar, rubrica):
     return f"> [[PE|{url}]]\n" + lit("RIPE", art, resaltar, titulo=f"{art} del Reglamento interno del Parlamento Europeo. {rubrica} · texto oficial publicado por el Parlamento Europeo (10.ª legislatura, versión de mayo de 2026); norma interna de la Cámara, no publicada en el BOE")
 
 T = Tema("B2T03",
-  "Cuatro preguntas: I. Qué es y cómo funciona el Parlamento Europeo (TUE, art. 14; TFUE, arts. 223 a 234) · II. Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea (TUE, art. 19; TFUE, arts. 251 a 281; Estatuto del TJUE) · III. Quién controla las cuentas de la Unión: el Tribunal de Cuentas (TFUE, arts. 285 a 287) · IV. Quién dirige la política monetaria: el Banco Central Europeo (TFUE, arts. 282 a 284). Cada artículo: texto literal de EUR-Lex y ficha.",
+  "Cuatro preguntas: I. Qué es y cómo funciona el Parlamento Europeo (TUE, art. 14; TFUE, arts. 223 a 234; Reglamento interno del Parlamento Europeo, arts. 15 y 16) · II. Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea (TUE, art. 19; TFUE, arts. 251 a 281; Estatuto del TJUE; Reglamento (UE, Euratom) 2024/2019; Decisión 2013/336/UE) · III. Quién controla las cuentas de la Unión: el Tribunal de Cuentas (TFUE, arts. 285 a 287) · IV. Quién dirige la política monetaria: el Banco Central Europeo (TFUE, arts. 282 a 284). Cada artículo: texto literal de EUR-Lex y ficha.",
   ["Parlamento Europeo", "TUE art. 14", "Moción de censura", "Defensor del Pueblo Europeo", "Derecho de petición", "TJUE", "TUE art. 19", "Abogados generales", "Tribunal General", "Comité del art. 255", "Recurso por incumplimiento", "Recurso de anulación", "Cuestión prejudicial", "Tribunal de Cuentas", "BCE", "Eurosistema"])
 
 # =============================================================================
@@ -51,7 +60,7 @@ El epígrafe nombra **cuatro instituciones** de la Unión. Cada una es un bloque
 | Bloque | Pregunta | Tratado de la Unión Europea (TUE) | Tratado de Funcionamiento (TFUE) y otras normas |
 |---|---|---|---|
 | **I** | ¿Qué es y cómo funciona el Parlamento Europeo? | Art. 14 | Arts. 223 a 234; Reglamento interno del Parlamento Europeo, arts. 15 y 16 |
-| **II** | ¿Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea? | Art. 19 | Arts. 251 a 281; Estatuto del TJUE (Protocolo n.º 3); Reglamento (UE, Euratom) 2024/2019 |
+| **II** | ¿Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea? | Art. 19 | Arts. 251 a 281; Estatuto del TJUE (Protocolo n.º 3); Reglamento (UE, Euratom) 2024/2019; Decisión 2013/336/UE (abogados generales) |
 | **III** | ¿Quién controla las cuentas de la Unión? El Tribunal de Cuentas | — | Arts. 285 a 287 |
 | **IV** | ¿Quién dirige la política monetaria? El Banco Central Europeo | — | Arts. 282 a 284 |
 
@@ -66,7 +75,7 @@ El epígrafe nombra **cuatro instituciones** de la Unión. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué es y cómo funciona el Parlamento Europeo? (TUE, art. 14; TFUE, arts. 223 a 234)", donde(
+T.ap("bI", "I. ¿Qué es y cómo funciona el Parlamento Europeo? (TUE, art. 14; TFUE, arts. 223 a 234; Reglamento interno, arts. 15 y 16)", donde(
   "Primera pregunta del tema. El Parlamento Europeo es la institución de **los ciudadanos de la Unión**: sus diputados se eligen por sufragio universal directo. Hay que saber qué funciones tiene, cómo se compone, qué poderes de impulso y control ejerce y cómo decide.",
   ["1 Funciones, composición, elección y Presidente (TUE, art. 14; TFUE, art. 223; Reglamento interno, arts. 15 y 16)", "2 Poderes de impulso y de control: partidos, iniciativa, investigación, peticiones y Defensor del Pueblo (TFUE, arts. 224 a 228)", "3 Funcionamiento y moción de censura (TFUE, arts. 229 a 234)"]))
 
@@ -100,13 +109,13 @@ T.ap("s1", "I.1 Funciones, composición, elección y Presidente (TUE, art. 14; T
   lit("TUE", "Artículo 14", ["elegirá a su Presidente y a la Mesa de entre sus diputados"], solo=[5]),
   lit_pe(URL_RIPE15, "Artículo 15", ["en votación secreta", "por aclamación", "representación equitativa de las fuerzas políticas, así como por un equilibrio geográfico y de género"], "Candidaturas y disposiciones generales"),
   lit_pe(URL_RIPE16, "Artículo 16", ["Si después de tres votaciones ningún candidato hubiera obtenido la mayoría absoluta de los votos emitidos", "en la cuarta votación las candidaturas de los dos diputados", "el candidato de más edad"], "Elección del presidente - Discurso de apertura"),
+  PE_BLOQUE,
   fichab("Elección del Presidente y de la Mesa del Parlamento Europeo",
          f"El propio Parlamento, {c('TUE', 'Artículo 14', 'de entre sus diputados')}",
          ["**Votación secreta** (Reglamento interno, art. 15.1); por **aclamación** si las candidaturas no superan los cargos, salvo que se pida votación secreta", "Representación equitativa de las fuerzas políticas y equilibrio geográfico y de género (art. 15.2)"],
          ["Tres votaciones: **mayoría absoluta de los votos emitidos**", "Cuarta votación: solo los **dos** más votados en la tercera", "Empate: el candidato **de más edad**"],
          "El Presidente lo elige el **Parlamento entre sus diputados** (no el Consejo ni los Estados). Empate en la cuarta votación: gana el **de más edad**."),
-  PE_BLOQUE,
-  "?> **Dato de actualidad (cayó en 2025, → Cierre 1):** la Presidenta del Parlamento Europeo es **Roberta Metsola**. No confundir con la Presidencia de la **Comisión** (tema II.2).")}
+  "?> **Dato de actualidad (cayó en 2025, → Cierre 1):** la Presidenta del Parlamento Europeo es **Roberta Metsola** (portal del Parlamento Europeo, comprobado el 4-10-2026). Es un dato que **caduca**: según el mismo portal, la Presidencia dura **dos años y medio**, renovables, así que hay que volver a comprobarlo antes del examen. No confundir con la Presidencia de la **Comisión** (tema II.2).")}
 """, 2)
 
 T.ap("s2", "I.2 Poderes de impulso y de control (TFUE, arts. 224 a 228)", f"""
@@ -216,11 +225,11 @@ T.ap("s3", "I.3 Funcionamiento y moción de censura (TFUE, arts. 229 a 234)", f"
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea? (TUE, art. 19; TFUE, arts. 251 a 281)", donde(
+T.ap("bII", "II. ¿Cómo está organizado y qué juzga el Tribunal de Justicia de la Unión Europea? (TUE, art. 19; TFUE, arts. 251 a 281; Estatuto del TJUE; Reglamento (UE, Euratom) 2024/2019; Decisión 2013/336/UE)", donde(
   "Segunda pregunta. El TJUE es la institución **jurisdiccional** de la Unión. Primero, **quiénes lo forman** (Tribunal de Justicia, Tribunal General y tribunales especializados); después, **qué recursos** conoce y **con qué límites**.",
-  ["1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255; Estatuto)", "2 Tribunal General y tribunales especializados (TFUE, arts. 256 y 257; Estatuto)", "3 Recurso por incumplimiento (arts. 258 a 260)", "4 Control de legalidad: anulación, omisión y excepción de ilegalidad (arts. 263 a 266 y 277)", "5 Cuestión prejudicial (art. 267)", "6 Otras competencias y límites (arts. 261, 262, 268 a 276)", "7 Disposiciones comunes y Estatuto (arts. 278 a 281; Estatuto, art. 20)"]))
+  ["1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255; Estatuto; Decisión 2013/336/UE)", "2 Tribunal General y tribunales especializados (TFUE, arts. 256 y 257; Estatuto; Reglamento (UE, Euratom) 2024/2019)", "3 Recurso por incumplimiento (arts. 258 a 260)", "4 Control de legalidad: anulación, omisión y excepción de ilegalidad (arts. 263 a 266 y 277)", "5 Cuestión prejudicial (art. 267)", "6 Otras competencias y límites (arts. 261, 262, 268 a 276)", "7 Disposiciones comunes y Estatuto (arts. 278 a 281; Estatuto, art. 20)"]))
 
-T.ap("s4", "II.1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255; Estatuto)", f"""
+T.ap("s4", "II.1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255; Estatuto; Decisión 2013/336/UE)", f"""
 {unidad("1.1 Qué comprende y para qué sirve (TUE, art. 19.1)",
   lit("TUE", "Artículo 19", ["comprenderá el Tribunal de Justicia, el Tribunal General y los tribunales especializados", "Garantizará el respeto del Derecho en la interpretación y aplicación de los Tratados", "tutela judicial efectiva"], solo=[1, 2]),
   fichab("La institución jurisdiccional de la Unión",
@@ -249,11 +258,12 @@ T.ap("s4", "II.1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255;
 
 {unidad("1.4 Los abogados generales (TFUE, art. 252)",
   lit("TFUE", "Artículo 252", ["ocho abogados generales", "el Consejo, por unanimidad, podrá aumentar el número de abogados generales", "conclusiones motivadas"]),
+  AG_2013,
   fichab("Miembros del Tribunal de Justicia que presentan conclusiones",
-         ["**Ocho** abogados generales según el Tratado", "Puede aumentarlos el **Consejo, por unanimidad**, si lo solicita el Tribunal de Justicia"],
+         ["**Ocho** abogados generales según el Tratado", "Puede aumentarlos el **Consejo, por unanimidad**, si lo solicita el Tribunal de Justicia", "Hoy son **once**: Decisión 2013/336/UE del Consejo (nueve desde el 1-7-2013; once desde el **7-10-2015**)"],
          f"{c('TFUE', 'Artículo 252', 'presentar públicamente, con toda imparcialidad e independencia, conclusiones motivadas')} en los asuntos que, según el Estatuto, requieran su intervención",
          "Aumento del número: **unanimidad** del Consejo, a petición del Tribunal",
-         "El abogado general **no juzga**: presenta **conclusiones motivadas**. Si el asunto no plantea cuestiones de derecho nuevas, puede juzgarse **sin conclusiones** (Estatuto, art. 20, → II.7.4)."))}
+         "El Tratado dice **ocho**, pero el Consejo los aumentó a **once** (Decisión 2013/336/UE). El abogado general **no juzga**: presenta **conclusiones motivadas**. Si el asunto no plantea cuestiones de derecho nuevas, puede juzgarse **sin conclusiones** (Estatuto, art. 20, → II.7.4)."))}
 
 {unidad("1.5 Jueces y abogados generales del Tribunal de Justicia (TFUE, art. 253; Estatuto, art. 9)",
   lit("TFUE", "Artículo 253", ["absolutas garantías de independencia", "las más altas funciones jurisdiccionales o que sean jurisconsultos de reconocida competencia", "de común acuerdo por los Gobiernos de los Estados miembros por un período de seis años, tras consultar al comité a que se refiere el artículo 255", "Cada tres años tendrá lugar una renovación parcial", "por un período de tres años. Su mandato será renovable", "requerirá la aprobación del Consejo"]),
@@ -291,7 +301,7 @@ T.ap("s4", "II.1 Estructura y composición (TUE, art. 19; TFUE, arts. 251 a 255;
          "La autorización la da el **Consejo** por **mayoría simple**, y solo con carácter **excepcional**; nunca para funciones **políticas o administrativas**."))}
 """, 2)
 
-T.ap("s5", "II.2 Tribunal General y tribunales especializados (TFUE, arts. 256 y 257; Estatuto, arts. 50 ter y 56)", f"""
+T.ap("s5", "II.2 Tribunal General y tribunales especializados (TFUE, arts. 256 y 257; Estatuto, arts. 50 ter y 56; Reglamento (UE, Euratom) 2024/2019, art. 4)", f"""
 {unidad("2.1 Competencias del Tribunal General (art. 256)",
   lit("TFUE", "Artículo 256", ["en primera instancia de los recursos contemplados en los artículos 263, 265, 268, 270 y 272", "limitado a las cuestiones de Derecho", "contra las resoluciones de los tribunales especializados", "en materias específicas determinadas por el Estatuto", "podrá remitir el asunto ante el Tribunal de Justicia"]),
   fichab("Qué juzga el Tribunal General y qué recurso cabe",
@@ -325,13 +335,6 @@ T.ap("s5", "II.2 Tribunal General y tribunales especializados (TFUE, arts. 256 y
          "Creación: procedimiento legislativo **ordinario**; miembros: **unanimidad** del Consejo",
          "Están **adjuntos al Tribunal General** (no al Tribunal de Justicia), y es el Tribunal General el que conoce de los recursos contra sus resoluciones."))}
 
-{resumen([
-  "El TJUE comprende **Tribunal de Justicia**, **Tribunal General** y **tribunales especializados** (TUE 19.1).",
-  "Tribunal de Justicia: **un juez por Estado**, **ocho abogados generales** (ampliables por el Consejo por unanimidad); Tribunal General: **dos jueces por Estado** (Estatuto, art. 48).",
-  "Nombran los **Gobiernos de común acuerdo**, por **seis años**, tras consultar al **comité de siete** del art. 255; renovación parcial cada **tres** años.",
-  "Formaciones: Salas de 3 y 5, **Gran Sala de 15** (quórum 11) y **Pleno** (quórum 17).",
-  "Tribunal General: primera instancia (263, 265, 268, 270, 272) con **casación** en dos meses; desde 2024, cuestiones prejudiciales en **seis materias**."],
-  "Siguiente: II.3, el recurso por incumplimiento")}
 """, 2)
 
 T.ap("s6", "II.3 El recurso por incumplimiento (TFUE, arts. 258 a 260)", f"""
@@ -448,7 +451,7 @@ T.ap("s10", "II.7 Disposiciones comunes y Estatuto (TFUE, arts. 278 a 281; Estat
 
 {unidad("7.2 Fuerza ejecutiva de las sentencias (art. 280)",
   lit("TFUE", "Artículo 280", ["tendrán fuerza ejecutiva en las condiciones que establece el artículo 299"]),
-  fichab("Ejecución forzosa de las sentencias", "—", "Según el art. 299 TFUE", "—", "Remite al **art. 299** (tema II.2)."))}
+  fichab("Ejecución forzosa de las sentencias", "—", f"Según el art. 299 TFUE: {c('TFUE', 'Artículo 299', 'La ejecución forzosa se regirá por las normas de procedimiento civil vigentes en el Estado en cuyo territorio se lleve a cabo')}", "—", f"Remite al **art. 299** TFUE (no se desarrolla en estos apuntes): la ejecución forzosa {c('TFUE', 'Artículo 299', 'sólo podrá ser suspendida en virtud de una decisión del Tribunal de Justicia de la Unión Europea')}."))}
 
 {unidad("7.3 El Estatuto del TJUE (art. 281)",
   lit("TFUE", "Artículo 281", ["en un protocolo independiente", "a excepción de su título I y su artículo 64"]),
@@ -466,9 +469,12 @@ T.ap("s10", "II.7 Disposiciones comunes y Estatuto (TFUE, arts. 278 a 281; Estat
          "—",
          "Sin cuestión de derecho nueva, el Tribunal puede juzgar **sin conclusiones** del Abogado General, **oído** el Abogado General."))}
 
-?> **Vigencia de los artículos del Estatuto citados.** El Estatuto se cita en el texto de la versión consolidada de los Tratados de 2016 (DO C 202 de 7-6-2016). Según la ficha de EUR-Lex del Protocolo n.º 3 (relaciones entre documentos) [[DOUE|https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=CELEX:12016E/PRO/03]], después lo han modificado tres reglamentos (2016/1192, 2019/629 y 2024/2019) en otros artículos (23, 50, 50 bis, 50 ter, 51, 54, 58 bis, 62 quater y 62 quinquies, y el anexo I). Por eso aquí solo se citan artículos **no modificados** (2, 4, 9, 16, 17, 20, 48 y 56) y el art. 50 ter en el texto del Reglamento 2024/2019.
+?> **Vigencia de los artículos del Estatuto citados.** El Estatuto se cita en el texto de la versión consolidada de los Tratados de 2016 (DO C 202 de 7-6-2016). Según la ficha de EUR-Lex del Protocolo n.º 3 (relaciones entre documentos) [[DOUE|https://eur-lex.europa.eu/legal-content/ES/ALL/?uri=CELEX:12016E/PRO/03]], después lo han modificado tres reglamentos (2016/1192, 2019/629 y 2024/2019) en otros artículos (23, 49 bis, 50, 50 bis, 50 ter, 51, 54, 58 bis, 62 quater y 62 quinquies, y el anexo I). Por eso aquí solo se citan artículos **no modificados** (2, 4, 9, 16, 17, 20, 48 y 56) y el art. 50 ter en el texto del Reglamento 2024/2019.
 
 {resumen([
+  "Organización: el TJUE comprende **Tribunal de Justicia** (un juez por Estado; **ocho** abogados generales en el Tratado, **once** desde el 7-10-2015 por la Decisión 2013/336/UE), **Tribunal General** (**dos jueces por Estado**: Estatuto, art. 48) y **tribunales especializados** (TUE 19.1; TFUE 252).",
+  "Nombran los **Gobiernos de común acuerdo**, por **seis años**, tras consultar al **comité de siete** del art. 255; renovación parcial cada **tres** años. Gran Sala de **15** (quórum 11) y **Pleno** (quórum 17).",
+  "Tribunal General: primera instancia (263, 265, 268, 270, 272) con **casación** en dos meses; desde 2024, cuestiones prejudiciales en **seis materias** (Estatuto, art. 50 ter).",
   "Incumplimiento: la **Comisión** (dictamen motivado) o **otro Estado** (previo paso por la Comisión, tres meses); sanciones de **suma a tanto alzado o multa coercitiva** (258 a 260).",
   "Anulación: plazo de **dos meses**; legitimados privilegiados (Estados, Parlamento, Consejo, Comisión) y, por sus prerrogativas, **Tribunal de Cuentas, BCE y Comité de las Regiones** (263).",
   "Omisión: **requerimiento previo** y plazos de **2 + 2 meses** (265); excepción de ilegalidad aunque haya vencido el plazo (277).",
@@ -571,7 +577,7 @@ T.ap("s15", "IV.3 Cuadro comparativo de las cuatro instituciones (esquema)", f""
 
 | | Parlamento Europeo | Tribunal de Justicia | Tribunal de Cuentas | BCE (Comité Ejecutivo) |
 |---|---|---|---|---|
-| Composición | Máx. 750 + Presidente; 6 a 96 por Estado (TUE 14.2) | Un juez por Estado + 8 abogados generales (TUE 19.2; TFUE 252) | Un nacional por Estado (285) | Presidente, vicepresidente y 4 miembros (283.2) |
+| Composición | Máx. 750 + Presidente; 6 a 96 por Estado (TUE 14.2) | Un juez por Estado + abogados generales: 8 en el Tratado, 11 desde 2015 (TUE 19.2; TFUE 252; Decisión 2013/336/UE) | Un nacional por Estado (285) | Presidente, vicepresidente y 4 miembros (283.2) |
 | Quién elige o nombra | Los ciudadanos, por sufragio universal directo (TUE 14.3) | Los Gobiernos de común acuerdo, tras el comité del 255 (253) | El Consejo, previa consulta al Parlamento (286.2) | El Consejo Europeo, por mayoría cualificada (283.2) |
 | Mandato | 5 años (TUE 14.3) | 6 años, renovable; renovación parcial cada 3 (253) | 6 años, renovable (286.2) | 8 años, no renovable (283.2) |
 | Presidente | Elegido por el Parlamento entre sus diputados (TUE 14.4) | Elegido por los jueces, 3 años renovables (253) | Elegido por los miembros, 3 años renovables (286.2) | Nombrado por el Consejo Europeo (283.2) |
@@ -607,7 +613,7 @@ EX_X33 = examen("X", 33, {
   "a": f"Es correcta (no es la que se pide): Reglamento interno del Parlamento Europeo, art. 16.1: {c('RIPE', 'Artículo 16', 'solamente se mantendrán en la cuarta votación las candidaturas de los dos diputados que hubieran obtenido en la tercera el mayor número de votos. En caso de empate, será proclamado electo el candidato de más edad')}.",
   "b": f"Es correcta (no es la que se pide): art. 15.2 del Reglamento interno: {c('RIPE', 'Artículo 15', 'debe velarse, en general, por una representación equitativa de las fuerzas políticas, así como por un equilibrio geográfico y de género')}.",
   "c": f"Es correcta (no es la que se pide): art. 15.1 del Reglamento interno: {c('RIPE', 'Artículo 15', 'El presidente y, a continuación, los vicepresidentes y los cuestores serán elegidos en votación secreta')}.",
-  "d": f"Es la INCORRECTA: según el portal oficial del Parlamento Europeo, {c('PEWEB', 'portal', 'Presidenta Roberta Metsola')}. Ursula von der Leyen preside la **Comisión** (tema II.2), no el Parlamento."},
+  "d": f"Es la INCORRECTA: según el portal oficial del Parlamento Europeo, {c('PEWEB', 'portal', 'Presidenta Roberta Metsola')}. Ursula von der Leyen preside la **Comisión** ([[COMISION|https://commission.europa.eu/about/organisation/college-commissioners_es]]: «La Presidenta Ursula von der Leyen»; tema II.2), no el Parlamento."},
   [("presidenta del Parlamento Europeo", "PEWEB", "portal", "Presidenta Roberta Metsola")])
 
 T.ap("s16", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\n".join([
@@ -673,7 +679,7 @@ Q = [
  ("TUE", "Artículo 19", "TJUE", "Según el artículo 19.2 del Tratado de la Unión Europea, los jueces y abogados generales del Tribunal de Justicia serán nombrados:",
   ["De común acuerdo por los Gobiernos de los Estados miembros para un período de seis años.", "Por el Consejo, por mayoría cualificada, para un período de seis años.", "Por el Parlamento Europeo, a propuesta de los Estados, para un período de cinco años.", "De común acuerdo por los Gobiernos de los Estados miembros para un período de nueve años."], "Art. 19.2 TUE.", "Serán nombrados de común acuerdo por los Gobiernos de los Estados miembros para un período de seis años"),
  ("TFUE", "Artículo 252", "TJUE", "Según el artículo 252 del TFUE, el Tribunal de Justicia estará asistido por:",
-  ["Ocho abogados generales.", "Seis abogados generales.", "Un abogado general por Estado miembro.", "Dos abogados generales por Estado miembro."], "Art. 252 TFUE (el Consejo, por unanimidad, puede aumentar su número).", "El Tribunal de Justicia estará asistido por ocho abogados generales"),
+  ["Ocho abogados generales.", "Seis abogados generales.", "Un abogado general por Estado miembro.", "Dos abogados generales por Estado miembro."], "Art. 252 TFUE (el Consejo, por unanimidad, puede aumentar su número: la Decisión 2013/336/UE los elevó a once desde el 7-10-2015).", "El Tribunal de Justicia estará asistido por ocho abogados generales"),
  ("TFUE", "Artículo 253", "TJUE", "Según el artículo 253 del TFUE, el Presidente del Tribunal de Justicia será elegido:",
   ["Por los jueces, de entre ellos, por un período de tres años renovable.", "Por los Gobiernos de los Estados miembros, por un período de seis años.", "Por el Consejo, por un período de tres años no renovable.", "Por los jueces y abogados generales, por un período de seis años."], "Art. 253 TFUE.", "Los jueces elegirán de entre ellos al Presidente del Tribunal de Justicia por un período de tres años. Su mandato será renovable"),
  ("TFUE", "Artículo 255", "TJUE", "Según el artículo 255 del TFUE, el comité que se pronuncia sobre la idoneidad de los candidatos a juez y abogado general estará compuesto por:",
@@ -740,7 +746,7 @@ for q_, a_, cat in [
   ("Moción de censura (TFUE 234)", "Votación pública tras tres días como mínimo; 2/3 de los votos emitidos que sean mayoría de los diputados; dimisión colectiva de la Comisión.", "Parlamento Europeo"),
   ("¿Qué comprende el TJUE? (TUE 19.1)", "El Tribunal de Justicia, el Tribunal General y los tribunales especializados.", "TJUE"),
   ("Nombramiento de jueces y abogados generales (TUE 19.2; TFUE 253)", "De común acuerdo por los Gobiernos de los Estados miembros, por seis años, tras consultar al comité del art. 255; renovación parcial cada tres años.", "TJUE"),
-  ("Abogados generales (TFUE 252)", "Ocho; el Consejo, por unanimidad y a petición del Tribunal, puede aumentar su número. Presentan conclusiones motivadas.", "TJUE"),
+  ("Abogados generales (TFUE 252)", "Ocho en el Tratado; el Consejo, por unanimidad y a petición del Tribunal, puede aumentar su número, y lo elevó a once desde el 7-10-2015 (Decisión 2013/336/UE). Presentan conclusiones motivadas.", "TJUE"),
   ("Comité del art. 255 TFUE", "Siete personalidades (una propuesta por el Parlamento); se pronuncia antes de los nombramientos; normas de funcionamiento y miembros: decisiones del Consejo.", "TJUE"),
   ("Gran Sala y Pleno del Tribunal de Justicia (Estatuto, arts. 16 y 17)", "Gran Sala: 15 jueces (quórum 11), si lo pide un Estado o institución parte. Pleno: quórum 17.", "TJUE"),
   ("Composición del Tribunal General (Estatuto, art. 48)", "Dos jueces por Estado miembro desde el 1 de septiembre de 2019.", "TJUE"),
@@ -775,7 +781,7 @@ T.glos("Comité Ejecutivo del BCE", "Órgano rector del BCE formado por el presi
 T.hito("2007", "Tratado de Lisboa, firmado el 13-12-2007 (título de la LO 1/2008)", "Redacción vigente del TUE (arts. 14 y 19) y del TFUE (arts. 223 a 287)", "normativo", "s1")
 T.hito("2008", "Ley Orgánica 1/2008, de 30 de julio, por la que se autoriza la ratificación por España del Tratado de Lisboa (BOE de 31-7-2008)", "Autorización de la ratificación española", "normativo", "s1")
 T.hito("2016", "Versiones consolidadas del TUE y del TFUE y Protocolo n.º 3 sobre el Estatuto del TJUE (DO C 202 de 7-6-2016)", "Texto que se cita en estos apuntes", "normativo", "s4")
-T.hito("2019", "Reglamento (UE) 2019/629, de 17 de abril de 2019 (DO L 111 de 25-4-2019)", "Modifica los arts. 51 y 58 bis del Estatuto del TJUE", "normativo", "s10")
+T.hito("2019", "Reglamento (UE) 2019/629, de 17 de abril de 2019 (DO L 111 de 25-4-2019)", "Sustituye el art. 51 y añade el art. 58 bis del Estatuto del TJUE", "normativo", "s10")
 T.hito("2024", "Reglamento (UE, Euratom) 2024/2019, de 11 de abril de 2024 (DO L de 12-8-2024; en vigor el 1-9-2024)", "Cuestiones prejudiciales al Tribunal General en seis materias (art. 50 ter del Estatuto)", "normativo", "s5")
 T.hito("2026", "Reglamento interno del Parlamento Europeo, 10.ª legislatura (versión de mayo de 2026)", "Arts. 15 y 16: elección del Presidente", "normativo", "s1")
 

@@ -18,7 +18,7 @@ CORTO["L30"] = "Ley 30/1984"
 CORTO["RD2169"] = "RD 2169/1984"
 
 T = Tema("B5T03",
-  "Cuatro preguntas: I. Cómo planifica la Administración sus recursos humanos (TREBEP, arts. 69 y 71; RDL 6/2023, arts. 106 a 110) · II. Qué es la oferta de empleo público y en qué plazos se ejecuta (TREBEP, art. 70; RDL 6/2023, art. 108; RD 364/1995, arts. 7 a 9) · III. Cómo se selecciona al personal (TREBEP, arts. 55 a 61; RDL 6/2023, arts. 112, 114 y 115; RD 364/1995) · IV. Quién tiene las competencias en materia de personal (TREBEP, art. 100; Ley 30/1984; RD 2169/1984). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Cómo planifica la Administración sus recursos humanos (TREBEP, arts. 69 y 71; RDL 6/2023, arts. 106, 107, 109 y 110; Ley 30/1984, art. 13) · II. Qué es la oferta de empleo público y en qué plazos se ejecuta (TREBEP, art. 70; RDL 6/2023, art. 108; RD 364/1995, arts. 7 a 9) · III. Cómo se selecciona al personal (TREBEP, arts. 10.2, 11.3 y 55 a 61; RDL 6/2023, arts. 112, 114 y 115; RD 364/1995) · IV. Quién tiene las competencias en materia de personal (TREBEP, art. 100; Ley 30/1984; RD 2169/1984). Cada artículo: texto literal del BOE y ficha.",
   ["Planificación", "RDL 6/2023", "Oferta de empleo público", "Tres años", "Promoción interna 30 %", "Selección", "Art. 55 TREBEP", "Órganos de selección", "Oposición", "Concurso-oposición", "RD 364/1995", "Personal laboral fijo", "Competencias en materia de personal", "RD 2169/1984"])
 
 AVISO_364 = "?> **Aviso de vigencia (RD 364/1995).** El Reglamento General de Ingreso es de **1995**: anterior al TREBEP (2015) y al Real Decreto-ley 6/2023. Se cita literal, tal como figura en el texto consolidado del BOE, y las denominaciones de órganos son las de su texto («Ministro para las Administraciones Públicas», «Secretario de Estado para la Administración Pública»…). Cuando la norma con rango de ley regula lo mismo de otra forma, la ficha lo señala."
@@ -36,8 +36,8 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 |---|---|---|---|
 | **I** | ¿Cómo planifica la Administración sus recursos humanos? | Arts. 69 y 71 | RDL 6/2023, arts. 106, 107, 109 y 110; Ley 30/1984, art. 13 |
 | **II** | ¿Qué es la oferta de empleo público y en qué plazos se ejecuta? | Art. 70 | RDL 6/2023, art. 108; RD 364/1995, arts. 7 a 9 |
-| **III** | ¿Cómo se selecciona al personal? | Arts. 10.2, 11.3, 55 a 61 | RDL 6/2023, arts. 112, 114 y 115; RD 364/1995, arts. 3 a 33 |
-| **IV** | ¿Quién tiene las competencias en materia de personal? | Art. 100 | Ley 30/1984, arts. 3, 4, 5 y 9; RD 2169/1984, arts. 3 a 13 |
+| **III** | ¿Cómo se selecciona al personal? | Arts. 10.2, 11.3, 55 a 61 | RDL 6/2023, arts. 112, 114 y 115; RD 364/1995, arts. 3 a 5, 10 a 13 y 15 a 33 |
+| **IV** | ¿Quién tiene las competencias en materia de personal? | Art. 100 | Ley 30/1984, arts. 3, 4, 5 y 9; RD 2169/1984, arts. 3 y 5 a 13 |
 
 !> **La idea que une los cuatro bloques:** la Administración **planifica** cuánto personal necesita (I); las plazas de nuevo ingreso con dotación se recogen en la **oferta de empleo público**, que obliga a convocar y fija plazos (II); las plazas se cubren con procesos **selectivos** abiertos, con publicidad, órganos de selección imparciales y sistemas tasados (III); y cada paso lo decide un **órgano** concreto: el Gobierno aprueba la oferta, los Departamentos convocan, el Secretario de Estado nombra (IV).
 
@@ -59,7 +59,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Cómo planifica la Administración sus recursos humanos? (TREBEP, arts. 69 y 71; RDL 6/2023, arts. 106 a 110)", donde(
+T.ap("bI", "I. ¿Cómo planifica la Administración sus recursos humanos? (TREBEP, arts. 69 y 71; RDL 6/2023, arts. 106, 107, 109 y 110; Ley 30/1984, art. 13)", donde(
   "Primera pregunta del tema. Antes de ofertar plazas o seleccionar a nadie, la Administración tiene que saber **cuánto personal necesita, con qué perfil y dónde**. El TREBEP fija los objetivos e instrumentos de la planificación para todas las Administraciones; el Real Decreto-ley 6/2023 la convierte en **planificación estratégica** para la Administración del Estado.",
   ["1 Objetivos, planes y registros de personal (TREBEP, arts. 69 y 71; Ley 30/1984, art. 13)", "2 La planificación estratégica en la Administración del Estado (RDL 6/2023, arts. 106, 107, 109 y 110)"]))
 
@@ -285,16 +285,16 @@ T.ap("s6", "III.2 Los órganos de selección (TREBEP, art. 60; RDL 6/2023, art. 
          ["::**No** pueden formar parte (115.2):", "Altos cargos (Ley 3/2015)", "Personal de elección o designación política", "Personal funcionario interino", "Personal laboral **no fijo**", "Personal eventual"],
          ["Actúan con sujeción a las Leyes 39/2015 y 40/2015 (115.1)", "Imparcialidad, profesionalidad y especialización; agilidad y celeridad; **presencia equilibrada** entre mujeres y hombres; se promueve la participación de personas con discapacidad (115.2)", "Pertenencia a título individual (115.3)", "Pueden crearse órganos o comités especializados, permanentes y renovables (115.4)", "Formación de sus miembros por el INAP y otros centros; se valora al conformarlos (115.5)"],
          "—",
-         "Frente al TREBEP, el RDL 6/2023 excluye también a los **altos cargos** y al **personal laboral no fijo**, y exige **presencia equilibrada** (no solo «tender a la paridad»)."))}
+         "Frente al TREBEP, el RDL 6/2023 excluye también a los **altos cargos** y al **personal laboral no fijo**, y exige **presencia equilibrada** (no solo «se tenderá, asimismo, a la paridad entre mujer y hombre»)."))}
 
 {AVISO_364}
 
 {unidad("2.3 Tribunales y Comisiones Permanentes de Selección (RD 364/1995, arts. 10 a 12)",
   lit("RD364", "Artículo 10", ["los Tribunales y las Comisiones Permanentes de Selección"]),
   lit("RD364", "Artículo 11", ["en cada orden de convocatoria", "número impar de miembros, funcionarios de carrera, no inferior a cinco", "el mismo número de miembros suplentes", "nivel de titulación igual o superior"]),
-  lit("RD364", "Artículo 12", ["el elevado número de aspirantes", "por Orden del Ministerio para las Administraciones Públicas"], solo=[1, 2]),
+  lit("RD364", "Artículo 12", ["el elevado número de aspirantes", "por Orden del Ministerio para las Administraciones Públicas"]),
   fichab("Las dos clases de órganos de selección de la AGE",
-         ["**Tribunales**: nombrados en cada orden de convocatoria (salvo excepción justificada)", "**Comisiones Permanentes de Selección**: para cuerpos con elevado número de aspirantes y nivel de titulación o especialización que lo aconseje; se crean por Orden ministerial (12.2)"],
+         ["**Tribunales**: nombrados en cada orden de convocatoria (salvo excepción justificada)", "**Comisiones Permanentes de Selección**: para cuerpos con elevado número de aspirantes y nivel de titulación o especialización que lo aconseje; se crean por Orden ministerial (12.2); número **impar** de miembros, funcionarios de carrera con titulación igual o superior, designados libremente según la Orden de creación (12.3)"],
          ["Tribunal: número **impar** de miembros, **funcionarios de carrera**, **no inferior a cinco**, con igual número de suplentes", "Todos con titulación **igual o superior** a la exigida para el ingreso", "Se vela por el principio de especialidad"],
          "Tribunal: mínimo **cinco** miembros, número impar",
          "Impar y **no inferior a cinco**; mismo número de **suplentes**; todos **funcionarios de carrera**."))}
@@ -305,7 +305,7 @@ T.ap("s6", "III.2 Los órganos de selección (TREBEP, art. 60; RDL 6/2023, art. 
          ["No pueden formarlos **mayoritariamente** funcionarios del mismo Cuerpo o Escala que se selecciona (13.1)", "No pueden formar parte quienes hayan preparado aspirantes en los **cinco años** anteriores a la convocatoria (13.2)", "Pueden incorporar **asesores especialistas**, que colaboran solo en sus especialidades técnicas (13.3)"],
          "—",
          "Preparación de aspirantes: **cinco años** anteriores a la publicación de la convocatoria",
-         "«Mayoritariamente» del mismo cuerpo: lo prohibido es la **mayoría**, no que haya alguno. Preparadores: **5 años**."))}
+         "«mayoritariamente» del mismo cuerpo: lo prohibido es la **mayoría**, no que haya alguno. Preparadores: **5 años**."))}
 """, 2)
 
 T.ap("s7", "III.3 Los sistemas selectivos (TREBEP, art. 61; RDL 6/2023, art. 114.1 a 9; RD 364/1995, arts. 4 y 5)", f"""
@@ -428,14 +428,15 @@ T.ap("s9", "III.5 Funcionarios interinos y personal laboral en la AGE (RD 364/19
          "—",
          "Al interino lo nombra el **Subsecretario**; al de carrera, el **Secretario de Estado** (→ III.4.7). La selección de interinos es pública (TREBEP, art. 10.2, → III.1.1)."))}
 
-{unidad("5.2 Personal laboral fijo: convocatoria, sistemas y órganos de selección (RD 364/1995, arts. 28 a 30)",
+{unidad("5.2 Personal laboral fijo: convocatoria, sistemas, órganos de selección y solicitudes (RD 364/1995, arts. 28 a 31)",
   lit("RD364", "Artículo 28", ["previo informe favorable de la Dirección General de la Función Pública", "se regirá por sus convenios colectivos"]),
   lit("RD364", "Artículo 29", ["Los sistemas selectivos serán la oposición, el concurso-oposición y el concurso"]),
   lit("RD364", "Artículo 30", ["se constituirán en cada convocatoria", "designado a propuesta de la representación de los trabajadores"]),
+  lit("RD364", "Artículo 31", ["En el plazo máximo de un mes"]),
   fichab("Selección del personal laboral fijo de nuevo ingreso",
          f"Convocan {c('RD364', 'Artículo 28', 'Los Departamentos ministeriales')}, con informe favorable de la Dirección General de la Función Pública",
          ["De acuerdo con la oferta de empleo público (28.1)", "Promoción interna y vacantes de quien no es de nuevo ingreso: por **convenio colectivo** o normativa específica (28.2)", "Convocatorias según el título I y los criterios generales de selección; en el BOE se anuncian, al menos, las plazas por categorías y el lugar de las bases (29)", "Sistemas: oposición, concurso-oposición y concurso (29)"],
-         "Órgano de selección: número **impar**, **al menos uno** a propuesta de la representación de los trabajadores (30)",
+         ["Órgano de selección: número **impar**, **al menos uno** a propuesta de la representación de los trabajadores (30)", "Solicitud en el modelo oficial; fecha, lugar y hora de las pruebas en el BOE en el plazo máximo de **un mes** desde que termina el plazo de instancias (31)"],
          "En el laboral, el órgano de selección tiene **al menos un miembro** propuesto por los **trabajadores**. Los tres sistemas coinciden con el art. 61.7 del TREBEP (→ III.3.2). El régimen del personal laboral se estudia en el tema V.7."))}
 
 {unidad("5.3 Propuesta de aprobados y adquisición de la condición de laboral fijo (RD 364/1995, arts. 32 y 33)",
@@ -504,11 +505,11 @@ T.ap("s12", "IV.3 El reparto de competencias: Gobierno, Ministros, Secretario de
 El **Real Decreto 2169/1984**, de atribución de competencias en materia de personal, desarrolla la Ley 30/1984 (art. 1). Se cita su texto consolidado del BOE, sin los apartados que figuran como «(Derogado)»; las denominaciones de órganos son las de su texto. Su art. 2 reproduce las competencias del Gobierno del art. 3 de la Ley 30/1984 (→ IV.2.1).
 
 {unidad("3.1 Lo que el Ministro propone al Gobierno (RD 2169/1984, art. 3) y Hacienda (art. 5)",
-  lit("RD2169", "Artículo 3", ["La aprobación de la Oferta de Empleo Público", "Las normas reguladoras del Registro Central de Personal", "La separación del servicio, previa la instrucción de expediente disciplinario", "Las convocatorias de pruebas unitarias de selección", "La convocatoria de concursos unitarios de traslados"], solo=[1, 2, 5, 6, 7, 9, 14, 15, 16]),
+  lit("RD2169", "Artículo 3", ["La aprobación de la Oferta de Empleo Público", "Las normas reguladoras del Registro Central de Personal", "La separación del servicio, previa la instrucción de expediente disciplinario", "Las convocatorias de pruebas unitarias de selección", "La convocatoria de concursos unitarios de traslados"]),
   lit("RD2169", "Artículo 5", ["autorizar cualquier medida relativa al personal que pueda suponer modificaciones en el gasto"]),
   fichab("Propuestas al Gobierno en materia de personal funcionario",
          "Propone el Ministro de la Presidencia (denominación del texto); decide el **Gobierno**",
-         ["Proyectos de normas de general aplicación a la Función Pública (3.1)", "**Aprobación de la Oferta de Empleo Público** (3.4)", "Grados e intervalos de niveles (3.5); adscripción de Cuerpos y Escalas (3.6)", "Normas del **Registro Central de Personal** (3.8)", "**Separación del servicio**, previo expediente, a iniciativa del Departamento (3.13)", "Convocatorias de **pruebas unitarias** de selección (3.14) y de **concursos unitarios** de traslados (3.15)"],
+         ["::Entre otras propuestas:", "Proyectos de normas de general aplicación a la Función Pública (3.1)", "**Aprobación de la Oferta de Empleo Público** (3.4)", "Grados e intervalos de niveles (3.5); adscripción de Cuerpos y Escalas (3.6)", "Normas del **Registro Central de Personal** (3.8)", "**Separación del servicio**, previo expediente, a iniciativa del Departamento (3.13)", "Convocatorias de **pruebas unitarias** de selección (3.14) y de **concursos unitarios** de traslados (3.15)"],
          "—",
          "La **separación del servicio** la acuerda el **Gobierno** a propuesta del Ministro: por eso los Ministros tienen la potestad disciplinaria **excepto la separación** (→ IV.4.2). Hacienda autoriza toda medida que modifique el gasto (art. 5)."))}
 
@@ -541,10 +542,10 @@ T.ap("s13", "IV.4 Departamentos, Ministros, Subsecretarios y personal laboral y 
 
 {unidad("4.3 Los Subsecretarios (RD 2169/1984, arts. 10 y 11)",
   lit("RD2169", "Artículo 10", ["Ejercer la jefatura y asumir la inspección de personal", "Reconocer la adquisición y cambio de grados personales", "Todos aquellos actos de administración y gestión ordinaria del personal"]),
-  lit("RD2169", "Artículo 11", ["Dar posesión y cese", "Declarar las jubilaciones forzosas y por incapacidad física", "La concesión de permisos o licencias", "El reconocimiento de trienios"], solo=[1, 2, 3, 4, 5, 6, 7, 8]),
+  lit("RD2169", "Artículo 11", ["Dar posesión y cese", "Declarar las jubilaciones forzosas y por incapacidad física", "La concesión de permisos o licencias", "El reconocimiento de trienios"]),
   fichab("Superior dirección y gestión ordinaria del personal del Ministerio",
          ["**Subsecretarios** (art. 10)", "Subsecretarios (servicios centrales) y Delegados del Gobierno y Gobernadores civiles (servicios periféricos) (art. 11, según el texto)"],
-         ["Art. 10: jefatura e inspección de personal; grados personales; servicios especiales y servicio en CC. AA.; comisión de servicios con cambio de localidad; asistencia a cursos; **gestión ordinaria** no atribuida a otros órganos", "Art. 11: comisión de servicios de menos de seis meses sin cambio de Ministerio ni de localidad; **toma de posesión y cese**; **jubilaciones** forzosas y por incapacidad; compatibilidades (propuesta e informe); **permisos y licencias**; **trienios**; excedencias voluntarias que no sean por interés particular"],
+         ["Art. 10: jefatura e inspección de personal; grados personales; servicios especiales y servicio en CC. AA.; comisión de servicios con cambio de localidad; asistencia a cursos; **gestión ordinaria** no atribuida a otros órganos", "Art. 11: comisión de servicios de menos de seis meses sin cambio de Ministerio ni de localidad; **toma de posesión y cese**; **jubilaciones** forzosas y por incapacidad; compatibilidades (propuesta e informe); **permisos y licencias**; **trienios**; excedencias voluntarias que no sean por interés particular; desempeño provisional de puestos en los casos del art. 21.2 c) de la Ley 30/1984 (en los Organismos Autónomos, sus Directores) (11.8)"],
          "Comisión de servicios del art. 11: **inferior a seis meses**",
          "El Subsecretario tiene la competencia **residual**: los actos de gestión ordinaria no atribuidos a otro órgano (10.6)."))}
 

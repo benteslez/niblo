@@ -21,16 +21,19 @@ cuerpo = viejas["s7-5"]["body"] + "\n\n" + resumen([
     "Fin del tema. Para fijarlo: Cierre 1 (preguntas reales de 2025) y Cierre 2 (repaso por bloques); después, el test.")
 S.append({"id": "s7-5", "title": "IV.8 La institución hoy (dato que caduca)", "body": cuerpo, "nivel": 2})
 
-from v4_examen import EX1, EX2, EX10, EX10_NOTA
+from v4_examen import EX1, EX2, EX10, EX10_NOTA, EX_X4, EX_X5, EX_X6
 cierre1 = "\n\n".join([
-    "En el primer ejercicio de **2025 (GACE-L, 100 preguntas + 5 de reserva)** cayeron **dos** preguntas de este tema y **una** relacionada. Aquí están **literales**. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal.",
-    "### Pregunta 1 · Título I (→ I.1.1)", EX1,
-    "### Pregunta 2 · Elección del Defensor del Pueblo (→ IV.2.1)", EX2,
-    "### Pregunta 10 · Jurisdicción militar y estado de sitio (relacionada; → III.6.2)", EX10, EX10_NOTA,
+    "En los primeros ejercicios de **2025** cayeron **cinco** preguntas de este tema y **una** relacionada: en el turno libre (GACE-L), **dos** (Título I y elección del Defensor del Pueblo) y la relacionada (jurisdicción militar y estado de sitio); en el extraordinario, **tres** (suspensión del art. 55.1, plazo de respuesta al Defensor del Pueblo y art. 54). Aquí están **literales**. Pulsa la opción que creas correcta: se marca en verde o en rojo y aparece el porqué de cada opción. La respuesta de la plantilla se ha comprobado contra el texto legal.",
+    "### GACE-L 2025, pregunta 1 · Título I (→ I.1.1)", EX1,
+    "### GACE-L 2025, pregunta 2 · Elección del Defensor del Pueblo (→ IV.2.1)", EX2,
+    "### GACE-L 2025, pregunta 10 · Jurisdicción militar y estado de sitio (relacionada; → III.6.2)", EX10, EX10_NOTA,
+    "### GACE-L extraordinario 2025, pregunta 4 · Derechos que no se suspenden (→ III.2)", EX_X4,
+    "### GACE-L extraordinario 2025, pregunta 5 · Plazo de respuesta al Defensor del Pueblo (→ IV.6.1)", EX_X5,
+    "### GACE-L extraordinario 2025, pregunta 6 · Qué institución supervisa la Administración (→ IV.1.1)", EX_X6,
     "### Cómo se pregunta",
     "Casi todas las preguntas empiezan por «Según el artículo X…». Las cuatro opciones comparten estructura y difieren en **un plazo, una mayoría, un órgano o una palabra** (en la 2: «un mes» frente a «quince días», «absoluta» frente a «simple»). Por eso hay que estudiar el **texto literal**.",
-    "**Plantilla:** *Plantilla definitiva de respuestas del primer ejercicio* (GACE-L 2025). Respecto a la provisional, solo cambia la pregunta 82, que queda **anulada**; las de este tema no cambian."])
-S.append({"id": "s8", "title": "Cierre 1. Preguntas del examen de 2025 sobre este tema", "body": cierre1, "nivel": 1})
+    "**Plantillas:** *Plantilla definitiva de respuestas del primer ejercicio* (GACE-L 2025): respecto a la provisional, solo cambia la pregunta 82, que queda **anulada**; las de este tema no cambian. Extraordinario: *plantilla definitiva de respuestas del primer ejercicio extraordinario*."])
+S.append({"id": "s8", "title": "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "body": cierre1, "nivel": 1})
 
 # Cierre 2: el repaso, agrupado por bloques
 filas = [l for l in viejas["s9"]["body"].split("\n") if l.startswith("| ") and not l.startswith("| Artículo")]
@@ -86,8 +89,20 @@ for t in data["timeline"]:
 for g in data["glossary"]: assert g["section"] in ids, g
 for t in data["timeline"]: assert t["target"] in ids, t
 # Test: las preguntas reales llevan en la corrección el porqué de cada opción
-from v4_util import CUEST, PLANT, PORQUE
+from v4_util import CUEST, PLANT, PORQUE, CUEST_X, PLANT_X, CONV_X
+# Preguntas del extraordinario (X4 a X6): literales del cuestionario, respuesta de la plantilla
+# definitiva y el mismo porqué de los apuntes; van detrás de las dos del turno libre.
+CAT_X = {4: "Art. 55.1 CE", 5: "Art. 30.1 LO 3/1981", 6: "Art. 54 CE"}
+nuevas = []
+for n, cat in CAT_X.items():
+    ok = PLANT_X[n]; P = PORQUE[("X", n)]
+    nuevas.append({"q": CUEST_X[n]["q"], "o": [CUEST_X[n]["o"][k] for k in "abcd"], "c": "abcd".index(ok),
+                   "e": f"Respuesta {ok}) según la plantilla definitiva. " + " ".join(("✅ " if k == ok else "✗ ") + f"{k}) " + P[k] for k in "abcd").replace("**", ""),
+                   "cat": cat, "real": f"Examen {CONV_X} · pregunta {n}"})
+assert not any("extraordinario" in q.get("real", "") for q in data["questions"])
+data["questions"] = data["questions"][:2] + nuevas + data["questions"][2:]
 for q in data["questions"]:
+    if "extraordinario" in q.get("real", ""): continue
     m = re.search(r"pregunta (\d+)$", q.get("real", ""))
     if not m: continue
     n = int(m.group(1)); assert n in PORQUE, n
@@ -95,6 +110,6 @@ for q in data["questions"]:
     assert q["c"] == "abcd".index(PLANT[n]), ("PLANTILLA", n)
     q["e"] = f"Respuesta {PLANT[n]}) según la plantilla definitiva. " + " ".join(
         ("✅ " if k == PLANT[n] else "✗ ") + f"{k}) " + PORQUE[n][k] for k in "abcd").replace("**", "")
-data["subtitle"] = "Cuatro preguntas: I. Qué derechos y deberes hay (arts. 10-52) · II. Cómo se protegen (art. 53, LJCA, habeas corpus y LOTC) · III. Cuándo pueden suspenderse (arts. 55 y 116, LO 4/1981 y LECrim) · IV. Quién vela por ellos (Defensor del Pueblo). Cada artículo: texto literal del BOE y ficha."
+data["subtitle"] = "Cuatro preguntas: I. Qué derechos y deberes hay (arts. 9.2 y 10-52) · II. Cómo se protegen (arts. 53, 17.4, 81, 86, 124.1, 161, 162 y 167-169, LJCA, habeas corpus y LOTC) · III. Cuándo pueden suspenderse (arts. 55 y 116, LO 4/1981, LECrim y art. 3.2 LOPJ) · IV. Quién vela por ellos (Defensor del Pueblo). Cada artículo: texto literal del BOE y ficha."
 print("apartados", len(S), "| preguntas", len(data["questions"]), "| glosario", len(data["glossary"]), "| fc", len(data["flashcards"]), file=sys.stderr)
 json.dump(data, open(sys.argv[1], "w", encoding="utf-8"), ensure_ascii=False)

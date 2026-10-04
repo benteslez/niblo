@@ -31,7 +31,7 @@ def cl(n, frag): return c(L, A[n], frag)
 def cc(n, frag): return c("CE", f"Artículo {n}", frag)
 
 T = Tema("B1T03",
-  "Cuatro preguntas: I. Qué es el Tribunal Constitucional (art. 165 CE; LOTC, arts. 1 a 4) · II. Quiénes lo componen (arts. 159 y 160 CE; LOTC, arts. 5, 9 y 16 a 26) · III. Cómo se organiza y funciona (LOTC, arts. 6 a 15, 90 y 96) · IV. Qué atribuciones tiene y cómo las ejerce (arts. 95 y 161 a 164 CE; LOTC). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué es el Tribunal Constitucional (art. 165 CE; LOTC, arts. 1 a 4 y 10.3) · II. Quiénes lo componen (arts. 159 y 160 CE; LOTC, arts. 5, 9, 16 a 24 y 26) · III. Cómo se organiza y funciona (LOTC, arts. 6 a 8, 10 a 15, 90 y 96) · IV. Qué atribuciones tiene y cómo las ejerce (arts. 95 y 161 a 164 CE; LOTC). Cada artículo: texto literal del BOE y ficha.",
   ["Título IX CE", "LOTC", "Art. 159", "12 Magistrados", "Nueve años", "Presidente del TC", "Pleno, Salas y Secciones", "Recurso de inconstitucionalidad", "Cuestión de inconstitucionalidad", "Amparo", "Conflictos de competencia", "Art. 161.2", "Autonomía local", "Tratados", "Recurso previo"])
 
 # =============================================================================
@@ -46,9 +46,9 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 | Bloque | Pregunta | Constitución | Ley Orgánica 2/1979, del Tribunal Constitucional (LOTC) |
 |---|---|---|---|
 | **I** | ¿Qué es el Tribunal Constitucional? | Art. 165 | Arts. 1 a 4 y 10.3 |
-| **II** | ¿Quiénes lo componen? (composición) | Arts. 159 y 160 | Arts. 5, 9 y 16 a 26 |
-| **III** | ¿Cómo se organiza y funciona? (organización) | — | Arts. 6 a 15, 90 y 96 |
-| **IV** | ¿Qué atribuciones tiene y cómo las ejerce? (atribuciones) | Arts. 95 y 161 a 164 | Arts. 2, 27 a 50, 59 a 79, 86, 87, 92 y 93 |
+| **II** | ¿Quiénes lo componen? (composición) | Arts. 159 y 160 | Arts. 5, 9, 16 a 24 y 26 |
+| **III** | ¿Cómo se organiza y funciona? (organización) | — | Arts. 6 a 8, 10 a 15, 90 y 96 |
+| **IV** | ¿Qué atribuciones tiene y cómo las ejerce? (atribuciones) | Arts. 95 y 161 a 164 | Arts. 2, 27, 29 a 35, 37 a 44, 48, 50, 59, 60, 62, 63, 73, 75 bis a 75 quater, 76 a 79, 86, 87, 92 y 93 |
 
 !> **La idea que une los cuatro bloques:** el Tribunal Constitucional es el **intérprete supremo de la Constitución** y está sometido solo a ella y a su ley orgánica (I). Por eso su **composición** busca la independencia: doce Magistrados propuestos por **cuatro** órganos distintos, con mandato largo y estatuto blindado (II). Trabaja en **Pleno, Salas y Secciones** (III) y sus **atribuciones** son tasadas: controla las leyes, protege los derechos en amparo y resuelve conflictos (IV).
 
@@ -61,7 +61,7 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué es el Tribunal Constitucional? (art. 165 CE; LOTC, arts. 1 a 4)", donde(
+T.ap("bI", "I. ¿Qué es el Tribunal Constitucional? (art. 165 CE; LOTC, arts. 1 a 4 y 10.3)", donde(
   "Primera pregunta del tema. Antes de ver quién lo compone o qué hace, hay que saber **qué es**: un órgano constitucional que la Constitución regula en su **Título IX** (arts. 159 a 165) y que una **ley orgánica** desarrolla.",
   ["1 Una ley orgánica propia (art. 165 CE)", "2 Intérprete supremo, independiente y único (LOTC, art. 1)", "3 Jurisdicción propia y autonomía (LOTC, arts. 2.2, 3, 4 y 10.3)"]))
 
@@ -128,7 +128,7 @@ T.ap("s3", "I.3 Jurisdicción propia y autonomía (LOTC, arts. 2.2, 3, 4 y 10.3)
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Quiénes lo componen? (arts. 159 y 160 CE; LOTC, arts. 5, 9 y 16 a 26)", donde(
+T.ap("bII", "II. ¿Quiénes lo componen? (arts. 159 y 160 CE; LOTC, arts. 5, 9, 16 a 24 y 26)", donde(
   "Segunda pregunta: la **composición**. Es la parte que más cae: cuántos Magistrados, quién los propone, con qué mayoría, por cuánto tiempo y con qué incompatibilidades.",
   ["1 Doce Magistrados: quién propone y quién nombra", "2 Requisitos", "3 Mandato y renovación", "4 Incompatibilidades e independencia", "5 Presidente y Vicepresidente", "6 Juramento, cese, suspensión y responsabilidad"]))
 
@@ -271,7 +271,7 @@ T.ap("s9", "II.6 Juramento, cese, suspensión y responsabilidad (LOTC, arts. 21,
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se organiza y funciona? (LOTC, arts. 6 a 15, 90 y 96)", donde(
+T.ap("bIII", "III. ¿Cómo se organiza y funciona? (LOTC, arts. 6 a 8, 10 a 15, 90 y 96)", donde(
   "Tercera pregunta: la **organización**. La Constitución no la regula: está en la LOTC. El Tribunal actúa en **Pleno**, en **dos Salas** y en **Secciones**, y cada formación tiene sus asuntos.",
   ["1 Pleno, Salas y Secciones", "2 Qué conoce el Pleno y qué las Salas", "3 Quórum, Presidente, votaciones y personal", "4 Cuadro de la organización"]))
 
@@ -291,7 +291,7 @@ T.ap("s10", "III.1 Pleno, Salas y Secciones (LOTC, arts. 6 a 8)", f"""
   ll(8, ["el respectivo Presidente o quien le sustituya y dos Magistrados", "asuntos de amparo"]),
   fichab("Las Secciones", "El Presidente del Pleno o de la Sala (o quien le sustituya) y dos Magistrados",
          ["Despacho ordinario y admisibilidad de los procesos", "Asuntos de amparo que les defiera la Sala"], "—",
-         "Las Secciones son de **tres** (Presidente y **dos** Magistrados). Deciden sobre la **admisión**; del Pleno se da cuenta de las propuestas de admisión de sus asuntos."))}
+         "Las Secciones son de **tres** (Presidente y **dos** Magistrados). Deciden o proponen sobre la **admisión**; de las propuestas de admisión o inadmisión de asuntos del Pleno se da cuenta al **Pleno** (art. 8.2)."))}
 """, 2)
 
 T.ap("s11", "III.2 Qué conoce el Pleno y qué las Salas (LOTC, arts. 10 a 13)", f"""
@@ -381,7 +381,7 @@ T.ap("s14", "IV.1 El catálogo de atribuciones (art. 161.1 CE; LOTC, art. 2.1)",
          "La LOTC añade a la Constitución: conflictos **entre órganos constitucionales**, conflictos **en defensa de la autonomía local**, **control previo** de Estatutos y verificación de nombramientos."))}
 """, 2)
 
-T.ap("s15", "IV.2 Recurso de inconstitucionalidad (arts. 161.1 a) y 162.1 a) CE; LOTC, arts. 27 a 34)", f"""
+T.ap("s15", "IV.2 Recurso de inconstitucionalidad (arts. 161.1 a) y 162.1 a) CE; LOTC, arts. 27 y 29 a 34)", f"""
 {unidad("2.1 Qué normas se controlan (LOTC, art. 27)",
   ll(27, ["garantiza la primacía de la Constitución", "Los Estatutos de Autonomía y las demás Leyes orgánicas", "Los Tratados Internacionales", "Los Reglamentos de las Cámaras y de las Cortes Generales", "Los Reglamentos de las Asambleas legislativas de las Comunidades Autónomas"]),
   fichab("Objeto del control de constitucionalidad",
@@ -390,13 +390,14 @@ T.ap("s15", "IV.2 Recurso de inconstitucionalidad (arts. 161.1 a) y 162.1 a) CE;
          "—",
          "Normas con **rango o fuerza de ley** y reglamentos **parlamentarios**. Un reglamento del Gobierno o una **ordenanza** local no están en la lista. Cayó en 2025 (→ Cierre 1)."))}
 
-{unidad("2.2 Dos vías y efecto no suspensivo (LOTC, arts. 29.1 y 30)",
+{unidad("2.2 Dos vías, efecto no suspensivo y desde cuándo cabe el recurso (LOTC, arts. 29.1, 30 y 31)",
   ll(29, ["El recurso de inconstitucionalidad", "La cuestión de inconstitucionalidad promovida por Jueces o Tribunales"], solo=[1, 2, 3]),
   ll(30, ["no suspenderá la vigencia ni la aplicación de la Ley", "excepto en el caso en que el Gobierno se ampare en lo dispuesto por el artículo ciento sesenta y uno, dos"]),
-  fichab("Cómo se promueve y qué efecto tiene la admisión",
+  ll(31, ["a partir de su publicación oficial"]),
+  fichab("Cómo se promueve, qué efecto tiene la admisión y desde cuándo cabe el recurso",
          "Recurso: los legitimados del art. 162.1 a) CE; cuestión: Jueces o Tribunales",
          "Recurso de inconstitucionalidad o cuestión de inconstitucionalidad",
-         "—",
+         "El recurso puede promoverse a partir de la publicación oficial de la norma (art. 31; plazo: → IV.2.4)",
          "La admisión **no suspende** la ley, **salvo** que el Gobierno invoque el **art. 161.2 CE** contra leyes de una Comunidad Autónoma."))}
 
 {unidad("2.3 Quién puede interponerlo (art. 162.1 a) CE; LOTC, art. 32)",
@@ -408,8 +409,7 @@ T.ap("s15", "IV.2 Recurso de inconstitucionalidad (arts. 161.1 a) y 162.1 a) CE;
          "—",
          "**Cincuenta** Diputados o **cincuenta** Senadores. **No** están legitimados los ciudadanos (ellos acuden en **amparo**) ni los jueces (plantean la **cuestión**). Cayó en 2025 (→ Cierre 1)."))}
 
-{unidad("2.4 Plazo (LOTC, arts. 31 y 33)",
-  ll(31, ["a partir de su publicación oficial"]),
+{unidad("2.4 Plazo (LOTC, art. 33)",
   ll(33, ["dentro del plazo de tres meses a partir de la publicación", "en el plazo de nueve meses", "Comisión Bilateral de Cooperación"], solo=[1, 2, 3, 4, 5, 6]),
   fichab("Plazo de interposición",
          "Los legitimados; el plazo ampliado, solo el **Presidente del Gobierno** y los **órganos colegiados ejecutivos** de las Comunidades Autónomas",
@@ -478,7 +478,7 @@ T.ap("s17", "IV.4 Sentencias de inconstitucionalidad (art. 164 CE; LOTC, arts. 3
          "Única excepción: lo **sancionador** (penal o contencioso) **favorable** al condenado o sancionado."))}
 """, 2)
 
-T.ap("s18", "IV.5 Recurso de amparo: lo esencial (arts. 161.1 b) y 162.1 b) CE; LOTC, arts. 41 a 50)", f"""
+T.ap("s18", "IV.5 Recurso de amparo: lo esencial (arts. 161.1 b) y 162.1 b) CE; LOTC, arts. 41 a 44, 48 y 50)", f"""
 El amparo se estudia a fondo en el tema I.2 (garantías de los derechos). Aquí, lo que lo sitúa entre las atribuciones del Tribunal.
 
 {unidad("5.1 Legitimación constitucional (art. 162.1 b)",
@@ -511,7 +511,7 @@ El amparo se estudia a fondo en el tema I.2 (garantías de los derechos). Aquí,
          "El amparo es de las **Salas** (no del Pleno). Sin **especial trascendencia constitucional** no se admite."))}
 """, 2)
 
-T.ap("s19", "IV.6 Conflictos de competencia (art. 161.1 c) CE; LOTC, arts. 59 a 63)", f"""
+T.ap("s19", "IV.6 Conflictos de competencia (art. 161.1 c) CE; LOTC, arts. 59, 60, 62 y 63)", f"""
 {unidad("6.1 Clases de conflictos (LOTC, art. 59)",
   ll(59, ["Al Estado con una o más Comunidades Autónomas", "A dos o más Comunidades Autónomas entre sí", "Al Gobierno con el Congreso de los Diputados, el Senado o el Consejo General del Poder Judicial", "conflictos en defensa de la autonomía local"]),
   fichab("Conflictos constitucionales",
@@ -587,12 +587,12 @@ T.ap("s22", "IV.9 Tratados internacionales y recurso previo contra Estatutos (ar
          "La declaración es **vinculante**. Es control **previo**: antes del consentimiento del Estado."))}
 
 {unidad("9.3 Recurso previo contra Estatutos de Autonomía (LOTC, art. 79)",
-  ll(79, ["con carácter previo", "una vez aprobado por las Cortes Generales", "tres días desde la publicación del texto aprobado", "suspenderá automáticamente todos los trámites subsiguientes", "en el plazo improrrogable de seis meses"], solo=[1, 2, 3, 4, 6]),
+  ll(79, ["con carácter previo", "una vez aprobado por las Cortes Generales", "tres días desde la publicación del texto aprobado", "suspenderá automáticamente todos los trámites subsiguientes", "no podrá convocarse hasta que haya resuelto el Tribunal Constitucional", "en el plazo improrrogable de seis meses"], solo=[1, 2, 3, 4, 5, 6]),
   fichab("Control previo de Estatutos",
          "Los legitimados para recurrir Estatutos de Autonomía (→ IV.2.3)",
          "Contra el texto definitivo del Proyecto o Propuesta de reforma de Estatuto aprobado por las Cortes Generales; suspende automáticamente los trámites siguientes",
          ["Interposición: **3 días** desde la publicación en el «Boletín Oficial de las Cortes Generales»", "Resolución: **6 meses** improrrogables"],
-         "**Tres días** para recurrir y **seis meses** para resolver. Si el Estatuto va a referéndum, no se convoca hasta que resuelva el Tribunal."))}
+         "**Tres días** para recurrir y **seis meses** para resolver. Si el Estatuto va a referéndum, este «no podrá convocarse hasta que haya resuelto el Tribunal Constitucional» (79.5)."))}
 """, 2)
 
 T.ap("s23", "IV.10 Resoluciones y su cumplimiento (LOTC, arts. 86, 87, 92 y 93)", f"""
@@ -808,7 +808,7 @@ for q_, a_, cat in [
   ("Legitimados para el recurso de inconstitucionalidad (art. 162.1 a)", "Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores, órganos colegiados ejecutivos de las CC. AA. y, en su caso, sus Asambleas.", "Recurso de inconstitucionalidad"),
   ("Plazo del recurso de inconstitucionalidad (LOTC, art. 33)", "Tres meses desde la publicación; nueve meses (Presidente del Gobierno y ejecutivos autonómicos) con acuerdo de la Comisión Bilateral.", "Recurso de inconstitucionalidad"),
   ("¿Cuándo plantea el juez la cuestión de inconstitucionalidad? (LOTC, art. 35.2)", "Concluso el procedimiento y dentro del plazo para dictar sentencia, tras oír 10 días a las partes y al Fiscal.", "Cuestión de inconstitucionalidad"),
-  ("Valor de las sentencias del TC (art. 164.1 CE)", "Cosa juzgada desde el día siguiente a su publicación en el BOE; sin recurso; plenos efectos frente a todos las de inconstitucionalidad.", "Sentencias"),
+  ("Valor de las sentencias del TC (art. 164.1 CE)", "Cosa juzgada desde el día siguiente a su publicación en el BOE; sin recurso; plenos efectos frente a todos las que declaren la inconstitucionalidad de una ley o norma con fuerza de ley y todas las que no se limiten a la estimación subjetiva de un derecho.", "Sentencias"),
   ("Plazos del amparo (LOTC, arts. 42, 43 y 44)", "Actos parlamentarios: 3 meses; Gobierno o Administración: 20 días; órganos judiciales: 30 días.", "Amparo"),
   ("Impugnación del art. 161.2 CE", "El Gobierno impugna disposiciones y resoluciones autonómicas (2 meses, LOTC 76); suspensión automática que el TC ratifica o levanta en no más de 5 meses.", "Art. 161.2"),
   ("Recurso previo contra Estatutos (LOTC, art. 79)", "3 días desde la publicación en el BOCG; suspende los trámites; se resuelve en 6 meses improrrogables.", "Tratados y recurso previo"),

@@ -20,7 +20,7 @@ def cifra(k, art, v):
 
 
 T = Tema("B5T06",
-  "Cinco preguntas: I. Cómo se ordena el sistema de retribuciones (TREBEP, arts. 21 y 22; Ley 30/1984) · II. Qué son las retribuciones básicas (sueldo, trienios y pagas extraordinarias) · III. Qué son las retribuciones complementarias (TREBEP, art. 24; Ley 30/1984, art. 23.3; RDL 6/2023) · IV. Qué reglas completan el sistema (interinos, prácticas, laborales, retribuciones diferidas y deducciones: arts. 25 a 30) · V. Las indemnizaciones por razón del servicio (art. 28 y Real Decreto 462/2002). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Cómo se ordena el sistema de retribuciones (TREBEP, arts. 21 y 22; Ley 30/1984) · II. Qué son las retribuciones básicas: sueldo, trienios y pagas extraordinarias (TREBEP, arts. 22 y 23; Ley 30/1984, arts. 23.2 y 24.1) · III. Qué son las retribuciones complementarias (TREBEP, arts. 22.3 y 24; Ley 30/1984, art. 23.3; RDL 6/2023) · IV. Qué reglas completan el sistema (interinos, prácticas, laborales, retribuciones diferidas y deducciones: arts. 25 a 27, 29 y 30) · V. Las indemnizaciones por razón del servicio (art. 28; Ley 30/1984, art. 23.4; Real Decreto 462/2002; Resolución de 20 de enero de 2014). Cada artículo: texto literal del BOE y ficha.",
   ["Retribuciones básicas", "Sueldo", "Trienios", "Pagas extraordinarias", "Retribuciones complementarias", "Complemento de destino", "Complemento específico", "Productividad", "Gratificaciones", "Complemento de desempeño", "Retribuciones diferidas", "Deducción de haberes", "RD 462/2002", "Comisión de servicio", "Dietas", "Residencia eventual", "Asistencias"])
 
 # =============================================================================
@@ -56,7 +56,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 # =============================================================================
 T.ap("bI", "I. ¿Cómo se ordena el sistema de retribuciones?", donde(
   "Primera pregunta del tema. Antes de ver cada concepto retributivo, hay que saber **quién fija las cuantías**, **en qué dos clases** se dividen las retribuciones y **qué norma** se aplica en la Administración del Estado.",
-  ["1 Cuantías e incrementos: la ley de presupuestos (art. 21)", "2 Básicas y complementarias; lo que nunca se puede cobrar (art. 22.1 y 5)", "3 TREBEP y Ley 30/1984: por qué conviven"]))
+  ["1 Cuantías e incrementos: la ley de presupuestos (TREBEP, art. 21; Ley 30/1984, art. 24.2)", "2 Básicas y complementarias; lo que nunca se puede cobrar (TREBEP, art. 22.1 y 5; Ley 30/1984, art. 23.1)", "3 TREBEP y Ley 30/1984: por qué conviven (disposición derogatoria única y disposición final cuarta)"]))
 
 T.ap("s1", "I.1 Cuantías e incrementos: la ley de presupuestos (TREBEP, art. 21; Ley 30/1984, art. 24.2)", f"""
 Las retribuciones de los funcionarios no se pactan individualmente: sus cuantías y sus incrementos se fijan **por ley**, cada año.
@@ -98,21 +98,21 @@ T.ap("s2", "I.2 Básicas y complementarias; lo que nunca se puede cobrar (TREBEP
 """, 2)
 
 T.ap("s3", "I.3 TREBEP y Ley 30/1984: por qué conviven (disposición derogatoria única y disposición final cuarta)", f"""
-{unidad("3.1 Efectos diferidos del capítulo de derechos retributivos (TREBEP, disposición final cuarta)",
-  lit("TREBEP", "dfcuaa", ["Lo establecido en los capítulos II y III del título III, excepto el artículo 25.2", "producirá efectos a partir de la entrada en vigor de las leyes de Función Pública que se dicten en desarrollo de este Estatuto", "se mantendrán en vigor en cada Administración Pública las normas vigentes sobre ordenación, planificación y gestión de recursos humanos"], solo=[1, 3]),
-  fichab("Entrada en vigor diferida de los derechos retributivos del TREBEP",
-         "Cada Administración, con sus leyes de Función Pública de desarrollo",
-         ["El **capítulo III del título III** (derechos retributivos: arts. 21 a 30), **salvo el art. 25.2**, produce efectos cuando entren en vigor las leyes de Función Pública de desarrollo (apartado 1)", "Hasta entonces se mantienen las normas vigentes en cada Administración, si no se oponen al Estatuto (apartado 2)"],
-         "—",
-         "La excepción es el **art. 25.2** (trienios de los interinos por servicios anteriores → IV.1). El capítulo II (carrera) también tiene efectos diferidos (tema V.4)."))}
-
-{unidad("3.2 La Ley 30/1984: derogación con alcance limitado (TREBEP, disposición derogatoria única, letra b)",
+{unidad("3.1 La Ley 30/1984: derogación con alcance limitado (TREBEP, disposición derogatoria única, letra b)",
   lit("TREBEP", "ddunica-2", ["con el alcance establecido en el apartado 2 de la disposición final cuarta", "23; 24"], solo=[1, 3], titulo="Disposición derogatoria única (TREBEP), párrafo inicial y letra b)"),
   fichab("Por qué los arts. 23 y 24 de la Ley 30/1984 siguen en el texto consolidado",
          "—",
          f"Los arts. 23 y 24 de la Ley 30/1984 figuran entre los derogados, pero {c('TREBEP', 'ddunica-2', 'con el alcance establecido en el apartado 2 de la disposición final cuarta')}: rigen mientras no se dicten las leyes de Función Pública y no se opongan al Estatuto",
          "—",
          "El texto consolidado del BOE de la Ley 30/1984 mantiene sus arts. 23 y 24, y el examen de 2025 preguntó por ellos (→ Cierre 1). Si el enunciado cita la **Ley 30/1984**, responde con su letra (→ II.3 y → III.2)."))}
+
+{unidad("3.2 Efectos diferidos del capítulo de derechos retributivos (TREBEP, disposición final cuarta)",
+  lit("TREBEP", "dfcuaa", ["Lo establecido en los capítulos II y III del título III, excepto el artículo 25.2", "producirá efectos a partir de la entrada en vigor de las leyes de Función Pública que se dicten en desarrollo de este Estatuto", "se mantendrán en vigor en cada Administración Pública las normas vigentes sobre ordenación, planificación y gestión de recursos humanos"], solo=[1, 3]),
+  fichab("Entrada en vigor diferida de los derechos retributivos del TREBEP",
+         "Cada Administración, con sus leyes de Función Pública de desarrollo",
+         ["El **capítulo III del título III** (derechos retributivos: arts. 21 a 30), **salvo el art. 25.2**, produce efectos cuando entren en vigor las leyes de Función Pública de desarrollo (apartado 1)", "Hasta entonces se mantienen las normas vigentes en cada Administración, si no se oponen al Estatuto (apartado 2)"],
+         "—",
+         "La excepción es el **art. 25.2** (trienios de los interinos por servicios anteriores → IV.1). El capítulo II (carrera) también tiene efectos diferidos (tema V.4)."))}
 
 *Esquema de elaboración propia: resume los artículos citados; no es texto legal.*
 
@@ -150,7 +150,7 @@ T.ap("s4", "II.1 Sueldo y trienios (TREBEP, arts. 22.2 y 23)", f"""
          "Las fija la **Ley de Presupuestos Generales del Estado**",
          ["**Sueldo**: el asignado a cada **Subgrupo** (o Grupo sin Subgrupo)", f"**Trienios**: {c('TREBEP', 'Artículo 23', 'una cantidad, que será igual para cada Subgrupo o Grupo de clasificación profesional')}, {c('TREBEP', 'Artículo 23', 'por cada tres años de servicio')}"],
          "Trienio: cada **tres** años de servicio",
-         "«**Única y exclusivamente**» sueldo y trienios: ni el complemento de destino ni el específico son básicos. Cayó en 2025 (→ Cierre 1)."))}
+         "Solo sueldo y trienios («**única y exclusivamente**»): ni el complemento de destino ni el específico son básicos. Cayó en 2025 (→ Cierre 1)."))}
 """, 2)
 
 T.ap("s5", "II.2 Las pagas extraordinarias (TREBEP, art. 22.4)", f"""
@@ -276,7 +276,7 @@ T.ap("s10", "IV.1 Interinos, funcionarios en prácticas y personal laboral (TREB
         ["Retribuciones **básicas** y **pagas extraordinarias** de su Subgrupo o Grupo", "Complementarias del art. 24 **b), c) y d)** (puesto, rendimiento y servicios extraordinarios)", "Las correspondientes a la **categoría de entrada** del cuerpo o escala", "**Trienios** por servicios prestados antes de la entrada en vigor del Estatuto (25.2)"],
         "No perciben las del art. 24 **a)** (progresión en la carrera); los trienios del 25.2 solo tienen efectos retributivos **desde la entrada en vigor** del Estatuto",
         "—",
-        "El **art. 25.2** es la única regla de este capítulo que **no** tiene efectos diferidos (disposición final cuarta → I.3.1)."))}
+        "El **art. 25.2** es la única regla de este capítulo que **no** tiene efectos diferidos (disposición final cuarta → I.3.2)."))}
 
 {unidad("1.2 Funcionarios en prácticas (art. 26)",
   lit("TREBEP", "Artículo 26", ["como mínimo", "a las del sueldo del Subgrupo o Grupo"]),
@@ -321,9 +321,9 @@ T.ap("s11", "IV.2 Retribuciones diferidas y deducción de retribuciones (TREBEP,
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Qué son las indemnizaciones por razón del servicio? (TREBEP, art. 28; Real Decreto 462/2002)", donde(
+T.ap("bV", "V. ¿Qué son las indemnizaciones por razón del servicio? (TREBEP, art. 28; Ley 30/1984, art. 23.4; Real Decreto 462/2002)", donde(
   "Quinta pregunta. Las indemnizaciones **no retribuyen** el trabajo: **resarcen** los gastos que el servicio ocasiona. El TREBEP y la Ley 30/1984 las reconocen; el **Real Decreto 462/2002** las regula en la Administración General del Estado.",
-  ["1 El derecho, los supuestos y el ámbito (TREBEP, art. 28; Ley 30/1984, art. 23.4; RD 462/2002, arts. 1 y 2)", "2 Comisiones de servicio (arts. 3 a 7)", "3 Dietas, residencia eventual y gastos de viaje (arts. 9 a 17 y anexo II)", "4 Desplazamientos en el término municipal y traslados de residencia (arts. 20, 22 y 23)", "5 Asistencias (arts. 27 a 33)", "6 Imputación presupuestaria (disposición final primera; Resolución de 20 de enero de 2014)"]))
+  ["1 El derecho, los supuestos y el ámbito (TREBEP, art. 28; Ley 30/1984, art. 23.4; RD 462/2002, arts. 1 y 2)", "2 Comisiones de servicio (arts. 3 a 7)", "3 Dietas, residencia eventual y gastos de viaje (arts. 9, 10, 12, 16 y 17 y anexos I y II)", "4 Desplazamientos en el término municipal y traslados de residencia (arts. 20, 22 y 23)", "5 Asistencias (arts. 27, 30, 32 y 33)", "6 Imputación presupuestaria (disposición final primera; Resolución de 20 de enero de 2014)"]))
 
 T.ap("s12", "V.1 El derecho, los supuestos y el ámbito (TREBEP, art. 28; Ley 30/1984, art. 23.4; RD 462/2002, arts. 1 y 2)", f"""
 {unidad("1.1 El derecho a las indemnizaciones (TREBEP, art. 28; Ley 30/1984, art. 23.4)",
@@ -397,7 +397,7 @@ T.ap("s13", "V.2 Comisiones de servicio (RD 462/2002, arts. 3 a 7)", f"""
 _D = {g: [cifra("RD462", "anii", v) for v in vs] for g, vs in
       {"Grupo 1": ["102,56", "53,34", "155,90"], "Grupo 2": ["65,97", "37,40", "103,37"], "Grupo 3": ["48,92", "28,21", "77,13"]}.items()}
 
-T.ap("s14", "V.3 Dietas, residencia eventual y gastos de viaje (RD 462/2002, arts. 9 a 17 y anexos I y II)", f"""
+T.ap("s14", "V.3 Dietas, residencia eventual y gastos de viaje (RD 462/2002, arts. 9, 10, 12, 16 y 17 y anexos I y II)", f"""
 {unidad("3.1 Las clases de indemnización (art. 9)",
   lit("RD462", "Artículo 9", ["la cantidad que se devenga diariamente para satisfacer los gastos que origina la estancia fuera de la residencia oficial", "plus", "la cantidad que se abona por la utilización de cualquier medio de transporte por razón de servicio"]),
   fichab("Conceptos: dieta, plus, residencia eventual y gastos de viaje",
@@ -414,7 +414,7 @@ T.ap("s14", "V.3 Dietas, residencia eventual y gastos de viaje (RD 462/2002, art
          "Lavado y planchado: si la comisión dura **más de cuatro días** y lo autoriza quien la ordena",
          "Las llamadas **oficiales** se pagan por su **importe exacto**, cualquiera que sea la duración de la comisión."))}
 
-*Cuantías del anexo II del Real Decreto 462/2002 (dietas en territorio nacional, en euros), copiadas del texto consolidado del BOE y comprobadas por programa:*
+*Cuantías del anexo II del Real Decreto 462/2002 (dietas en territorio nacional, en euros), copiadas del texto consolidado del BOE y comprobadas por programa; son las de la última redacción del anexo II que recoge el texto consolidado (BOE-A-2005-19988, publicada el 3-12-2005), vigente hoy:*
 
 | Grupo (anexo I) | Por alojamiento | Por manutención | Dieta entera |
 |---|---|---|---|
@@ -471,7 +471,7 @@ T.ap("s15", "V.4 Desplazamientos en el término municipal y traslados de residen
          "**No** es forzoso el traslado por **concurso o libre designación**; el traslado por **sanción** no da derecho a indemnización. Sí son forzosos, entre otros, los debidos a cambio de residencia oficial o **supresión** de unidades."))}
 """, 2)
 
-T.ap("s16", "V.5 Asistencias (RD 462/2002, arts. 27 a 33)", f"""
+T.ap("s16", "V.5 Asistencias (RD 462/2002, arts. 27, 30, 32 y 33)", f"""
 {unidad("5.1 Qué es una asistencia y límite conjunto (art. 27.1, 3 y 4)",
   lit("RD462", "Artículo 27", ["Concurrencia a las reuniones de órganos colegiados", "tribunales de oposiciones y concursos", "con carácter no permanente ni habitual", "superior al 50 por 100 de las retribuciones anuales", "serán compatibles con las dietas"], solo=[1, 2, 3, 4, 6, 7, 8]),
   fichab("Asistencias: concepto y límite global",
@@ -630,7 +630,7 @@ T.ap("s18", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-L 2025, pregunta 94 · Imputación presupuestaria (relacionada; → V.6.2)", EX_L94,
   "### GACE-P 2025, pregunta 96 · Imputación presupuestaria (relacionada; → V.6.2)", EX_P96,
   "### Cómo se pregunta",
-  "!> Dos patrones: (1) **qué ley** cita el enunciado (TREBEP o Ley 30/1984: cambian las palabras y el lugar de las pagas extraordinarias); (2) **plazos y horas** del RD 462/2002 cambiados en los distractores (un mes / tres meses; 14 y 22 horas; 100 % o 50 %). La pregunta de 2025 sobre el límite de los anticipos de caja fija del artículo 23 está **retenida** en el test real (la plantilla no casa con la Ley General Presupuestaria) y no se incluye aquí.",
+  "!> Dos patrones: (1) **qué ley** cita el enunciado (TREBEP o Ley 30/1984: cambian las palabras y el lugar de las pagas extraordinarias); (2) **plazos y horas** del RD 462/2002 cambiados en los distractores (un mes / tres meses; 14 y 22 horas; 100 % o 50 %). La pregunta de 2025 sobre el límite de los anticipos de caja fija del artículo 23 lleva en el test real la etiqueta **«⚠ Discrepancia»** (la plantilla no casa con el art. 78.3 de la Ley General Presupuestaria; se mantiene su respuesta) y no se incluye aquí.",
 ]))
 
 T.ap("s19", "Cierre 2. Repaso en 10 minutos (por bloques)", f"""

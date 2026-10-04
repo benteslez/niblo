@@ -13,7 +13,7 @@ Se estudia en cuatro grupos: esfera personal (15-19), comunicación y participac
   lit("CE", 15, ["Todos tienen derecho a la vida y a la integridad física y moral", "salvo lo que puedan disponer las leyes penales militares para tiempos de guerra"]),
   ficha(f"{c('CE', 15, 'Todos')} (no solo los españoles)",
         ["Vida", "Integridad **física y moral**", f"Prohibición absoluta, {c('CE', 15, 'en ningún caso')}, de la tortura y de las penas o tratos inhumanos o degradantes", "Abolición de la pena de muerte"],
-        "La única salvedad es la pena de muerte en las leyes penales militares para tiempos de guerra. *Dato, no texto legal: la LO 11/1995 la abolió también en tiempo de guerra; la salvedad sigue en la Constitución*",
+        "La única salvedad es la pena de muerte en las leyes penales militares para tiempos de guerra. *Dato, no texto legal: la LO 11/1995, de 27 de noviembre, de abolición de la pena de muerte en tiempo de guerra (BOE-A-1995-25714) [[BOE]], la abolió también en tiempo de guerra; la salvedad sigue en la Constitución*",
         [f"::{P_S1}", NO_SUSP],
         "«para **tiempos de guerra**», no «estado de sitio». Integridad «física **y moral**»."))}
 
@@ -49,7 +49,7 @@ Se estudia en cuatro grupos: esfera personal (15-19), comunicación y participac
   ficha(f"{c('CE', 19, 'Los españoles')} (los extranjeros, según el art. 13.1)",
         ["Elegir libremente la residencia", "Circular por el territorio nacional", "Entrar y salir libremente de España"],
         "Los términos de la ley; el derecho a entrar y salir no puede limitarse por motivos políticos o ideológicos",
-        [f"::{P_S1}", SUSP_EXC_SITIO, "En la alarma solo puede **limitarse** (STC 148/2021 → III.8)"],
+        [f"::{P_S1}", SUSP_EXC_SITIO, "En la alarma solo puede **limitarse** (STC 148/2021 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/26778]] → III.8)"],
         "«motivos políticos **o ideológicos**». Titulares: los **españoles**."))}
 
 !> **Idea clave del grupo.** Se pueden suspender **17, 18.2, 18.3 y 19**. Nunca: vida (15), libertad ideológica (16), honor e intimidad (18.1).

@@ -89,6 +89,12 @@ CUEST = _cuestionario()
 from examen25L import plant as _pl_def
 PLANT = {n: r for n, r in _pl_def.items() if r != "ANULADA"}
 PORQUE = {}
+# Examen EXTRAORDINARIO (GACE-L 2025): cuestionario y plantilla DEFINITIVA, ya verificada
+# (texto e imagen) en examen25X.py. Sus preguntas se identifican como ("X", n).
+from examen25X import qs as _qs_x
+CUEST_X = {q["n"]: {"q": q["q"], "o": q["o"]} for q in _qs_x}
+PLANT_X = {q["n"]: "abcd"[q["c"]] for q in _qs_x if not q["anulada"]}
+CONV_X = "GACE-L 2025 extraordinario · 1.er ejercicio"
 _CE_PLANO = " ".join(open("ce.txt", encoding="utf-8").read().split())
 
 def rub(division, frag):
@@ -102,7 +108,7 @@ def _plano(f, n):
     (f == "CE*", para rúbricas de títulos, capítulos y secciones)."""
     return _CE_PLANO if f == "CE*" else " ".join(texto(f, n).split())
 
-def examen(n, porque, apoyo, conv="GACE-L 2025 · 1.er ejercicio"):
+def examen(n, porque, apoyo, conv="GACE-L 2025 · 1.er ejercicio", cod="L"):
     """Pregunta real n, interactiva en los apuntes.
     porque: {letra: explicación}, una por opción.
     apoyo: COHERENCIA PLANTILLA ↔ LEY. Lista de (dato, fuente, artículo, fragmento):
@@ -111,7 +117,10 @@ def examen(n, porque, apoyo, conv="GACE-L 2025 · 1.er ejercicio"):
       · ningún distractor puede contener todos los datos.
     Si algo falla, el generador se detiene: o la plantilla no casa con la ley
     (posible error de la plantilla → avisar) o falta la fuente."""
-    q = CUEST[n]; ok = PLANT[n]; PORQUE[n] = dict(porque)
+    if cod == "X":
+        q = CUEST_X[n]; ok = PLANT_X[n]; PORQUE[("X", n)] = dict(porque); conv = CONV_X
+    else:
+        q = CUEST[n]; ok = PLANT[n]; PORQUE[n] = dict(porque)
     assert sorted(q["o"]) == list("abcd") and sorted(porque) == list("abcd"), n
     assert apoyo, ("SIN APOYO LEGAL PARA LA RESPUESTA DE LA PLANTILLA", n)
     norm = lambda x: " ".join(x.lower().split())

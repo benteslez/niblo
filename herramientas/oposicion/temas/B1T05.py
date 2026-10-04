@@ -14,7 +14,7 @@ CORTO["RS"] = "Reglamento del Senado"
 CORTO["LOREG"] = "LOREG"
 
 T = Tema("B1T05",
-  "Seis preguntas: I. Qué son las Cortes Generales (arts. 66 y 67 CE) · II. Cómo se compone el Congreso (art. 68; LOREG, art. 162; Reglamento del Congreso, arts. 1 a 5) · III. Cómo se compone el Senado (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5) · IV. Qué estatuto tienen Diputados y Senadores (arts. 70 y 71) · V. Cómo se organizan y funcionan las Cámaras (arts. 72 a 80 y Reglamentos) · VI. Qué atribuciones tienen (arts. 66.2 y 87 a 94). Cada artículo: texto literal del BOE y ficha.",
+  "Seis preguntas: I. Qué son las Cortes Generales (arts. 66 y 67 CE) · II. Cómo se compone el Congreso (art. 68; LOREG, art. 162; Reglamento del Congreso, arts. 1 a 5) · III. Cómo se compone el Senado (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5 y 7) · IV. Qué estatuto tienen Diputados y Senadores (arts. 70 y 71) · V. Cómo se organizan y funcionan las Cámaras (arts. 72 a 80 y Reglamentos) · VI. Qué atribuciones tienen (arts. 66.2, 87 a 90 y 92 a 94). Cada artículo: texto literal del BOE y ficha.",
   ["Cortes Generales", "Art. 66", "Bicameralismo", "Congreso: art. 68", "LOREG art. 162", "Senado: art. 69", "LOREG art. 165", "Inelegibilidad: art. 70", "Inviolabilidad e inmunidad", "Reglamentos de las Cámaras", "Mesa", "Grupos parlamentarios", "Junta de Portavoces", "Diputación Permanente", "Comisiones", "Iniciativa legislativa", "Veto del Senado", "Tratados: art. 94"])
 
 # =============================================================================
@@ -30,9 +30,9 @@ El epígrafe se lee como **seis preguntas encadenadas**. Cada una es un bloque d
 |---|---|---|---|
 | **I** | ¿Qué son las Cortes Generales? | Arts. 66.1 y 3 y 67 | — |
 | **II** | ¿Cómo se compone el Congreso? | Art. 68 | LOREG, art. 162; Reglamento del Congreso, arts. 1 a 5 |
-| **III** | ¿Cómo se compone el Senado? | Art. 69 | LOREG, art. 165; Reglamento del Senado, arts. 2 a 5 |
+| **III** | ¿Cómo se compone el Senado? | Art. 69 | LOREG, art. 165; Reglamento del Senado, arts. 2 a 5 y 7 |
 | **IV** | ¿Qué estatuto tienen Diputados y Senadores? | Arts. 70 y 71 | — |
-| **V** | ¿Cómo se organizan y funcionan las Cámaras? | Arts. 72 a 80 | Reglamento del Congreso, arts. 23 a 39, 46 y 57; Reglamento del Senado, arts. 7, 27, 35, 43, 45, 48 y 49 |
+| **V** | ¿Cómo se organizan y funcionan las Cámaras? | Arts. 72 a 80 | Reglamento del Congreso, arts. 23 a 25, 30, 37, 39, 46 y 57; Reglamento del Senado, arts. 27, 35, 43, 45, 48 y 49 |
 | **VI** | ¿Qué atribuciones tienen? | Arts. 66.2, 87 a 90 y 92 a 94 (y cuadro de las atribuciones repartidas por la Constitución) | — |
 
 !> **La idea que une los seis bloques:** las Cortes **representan al pueblo español** y son **dos Cámaras** (I). El **Congreso** se elige por provincias con criterios de **representación proporcional** (II); el **Senado** es la Cámara de **representación territorial**, con Senadores elegidos y Senadores **designados por las Comunidades Autónomas** (III). Sus miembros tienen un estatuto propio (IV) y las Cámaras se organizan con **autonomía** (V). Sus atribuciones: **legislar, aprobar los Presupuestos y controlar al Gobierno** (VI), con un claro **predominio del Congreso**.
@@ -116,7 +116,7 @@ T.ap("s3", "II.1 Composición y elección del Congreso (art. 68; LOREG, art. 162
 
 {unidad("1.2 Circunscripción, reparto y proporcionalidad (art. 68.2 y 3; LOREG, art. 162.2 y 3)",
   lit("CE", "Artículo 68", ["La circunscripción electoral es la provincia", "estarán representadas cada una de ellas por un Diputado", "asignando una representación mínima inicial a cada circunscripción"], solo=[2, 3]),
-  lit("LOREG", "acientosesentaydos", ["un mínimo inicial de dos Diputados", "en proporción a su población"], solo=[2, 3], titulo="Artículo 162.2 y 3 (LO 5/1985, del Régimen Electoral General)"),
+  lit("LOREG", "acientosesentaydos", ["un mínimo inicial de dos Diputados", "en proporción a su población"], solo=[2, 3, 4, 5, 6], titulo="Artículo 162.2 y 3 (LO 5/1985, del Régimen Electoral General)"),
   fichab("Cómo se reparten los escaños del Congreso entre circunscripciones",
          "La ley (LOREG) distribuye; el Decreto de convocatoria especifica los Diputados de cada circunscripción (art. 162.4 LOREG)",
          ["Circunscripción: la **provincia**", "Ceuta y Melilla: **un** Diputado cada una", "Mínimo inicial de **dos** por provincia; los **248** restantes, en proporción a la población", "Elección con criterios de **representación proporcional**"],
@@ -173,9 +173,9 @@ T.ap("s4", "II.2 La sesión constitutiva del Congreso (Reglamento del Congreso, 
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se compone el Senado? (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5)", donde(
+T.ap("bIII", "III. ¿Cómo se compone el Senado? (art. 69; LOREG, art. 165; Reglamento del Senado, arts. 2 a 5 y 7)", donde(
   "Tercera pregunta. El Senado es la Cámara de **representación territorial** y mezcla dos tipos de Senadores: los **elegidos** por los votantes (provincias, islas, Ceuta y Melilla) y los **designados** por las Comunidades Autónomas.",
-  ["1 Composición (art. 69; LOREG, art. 165)", "2 La constitución del Senado (Reglamento del Senado, arts. 2 a 5)", "3 Cuadro comparativo de la composición de las dos Cámaras"]))
+  ["1 Composición (art. 69; LOREG, art. 165)", "2 La constitución del Senado (Reglamento del Senado, arts. 2 a 5 y 7)", "3 Cuadro comparativo de la composición de las dos Cámaras"]))
 
 T.ap("s5", "III.1 Composición del Senado (art. 69; LOREG, art. 165)", f"""
 {unidad("1.1 Cámara de representación territorial (art. 69.1)",
@@ -218,7 +218,7 @@ T.ap("s5", "III.1 Composición del Senado (art. 69; LOREG, art. 165)", f"""
          "Misma regla que el Congreso (68.4 → II.1.3)."))}
 """, 2)
 
-T.ap("s6", "III.2 La constitución del Senado (Reglamento del Senado, arts. 2 a 5)", f"""
+T.ap("s6", "III.2 La constitución del Senado (Reglamento del Senado, arts. 2 a 5 y 7)", f"""
 {unidad("2.1 Junta Preparatoria y Mesa de edad (Reglamento del Senado, arts. 2 y 3)",
   lit("RS", "a2", ["Junta Preparatoria", "El que figure primero en la lista de presentación de credenciales"]),
   lit("RS", "a3", ["el Senador de más edad de entre los presentes", "los cuatro más jóvenes"]),
@@ -235,10 +235,13 @@ T.ap("s6", "III.2 La constitución del Senado (Reglamento del Senado, arts. 2 a 
          "Interinidad hasta que se confirme al menos el **80 %**; iniciativa para tratar otros temas: un Grupo parlamentario o **veinticinco** Senadores",
          "El 20 % se calcula sobre los Senadores **de elección directa**. Durante la interinidad, solo **incompatibilidades** (salvo lo indispensable)."))}
 
-{unidad("2.3 Composición de la Mesa del Senado (Reglamento del Senado, art. 5)",
+{unidad("2.3 Composición de la Mesa y elección del Presidente del Senado (Reglamento del Senado, arts. 5 y 7)",
   lit("RS", "a5", ["el Presidente, dos Vicepresidentes y cuatro Secretarios"]),
-  fichab("Mesa del Senado", "El Pleno la elige en la sesión de constitución", "Por papeletas (art. 6 RS)", "**1 + 2 + 4 = 7** miembros",
-         "Senado: **dos** Vicepresidentes; Congreso: **cuatro** Vicepresidencias (→ V.2.2)."))}
+  lit("RS", "a7", ["mayoría absoluta de los miembros de la Cámara acreditados hasta el momento", "las dos mayores votaciones"]),
+  fichab("Mesa del Senado y elección de su Presidente", "El Pleno la elige en la sesión de constitución",
+         ["Por papeletas (art. 6 RS)", "Presidente: un solo nombre por papeleta; **mayoría absoluta** de los miembros acreditados; si no, nueva votación entre los empatados con mayor número de votos o entre las **dos** mayores votaciones"],
+         ["**1 + 2 + 4 = 7** miembros", "Presidente: mayoría absoluta en la primera votación; en la segunda, **más votos**"],
+         "Senado: **dos** Vicepresidentes; Congreso: **cuatro** Vicepresidencias (→ V.2.2). La mayoría absoluta para elegir al Presidente se calcula sobre los miembros **acreditados hasta el momento** ante la Cámara."))}
 """, 2)
 
 T.ap("s7", "III.3 Cuadro comparativo: composición del Congreso y del Senado (esquema)", f"""
@@ -271,7 +274,7 @@ T.ap("bIV", "IV. ¿Qué estatuto tienen Diputados y Senadores? (arts. 70 y 71)",
 
 T.ap("s8", "IV.1 Inelegibilidad, incompatibilidad y control de las actas (art. 70)", f"""
 {unidad("1.1 Causas que la ley electoral comprenderá en todo caso (art. 70.1)",
-  lit("CE", "Artículo 70", ["en todo caso", "con la excepción de los miembros del Gobierno", "en activo", "Juntas Electorales"]),
+  lit("CE", "Artículo 70", ["en todo caso", "con la excepción de los miembros del Gobierno", "en activo", "Juntas Electorales"], solo=[1, 2, 3, 4, 5, 6, 7]),
   fichab("Causas mínimas de inelegibilidad e incompatibilidad",
          "Las determina **la ley electoral**; la Constitución fija un mínimo",
          ["::Comprenderán en todo caso a:", "Los componentes del Tribunal Constitucional", "Los altos cargos de la Administración del Estado que determine la ley, **salvo los miembros del Gobierno**", "El Defensor del Pueblo", "Los Magistrados, Jueces y Fiscales **en activo**", "Los militares profesionales y miembros de las Fuerzas y Cuerpos de Seguridad y Policía **en activo**", "Los miembros de las Juntas Electorales"],
@@ -354,7 +357,7 @@ La Constitución solo prevé que cada Cámara elija su Presidente y su Mesa (art
          f"Diputados {c('RCD', 'art23', 'en número no inferior a quince')} (art. 23.1)",
          ["Escrito a la **Mesa** dentro de los **cinco días** siguientes a la sesión constitutiva (art. 24.1)", "Quien no se integre en un grupo pasa al **Grupo Mixto** (art. 25.1)", "Nadie puede estar en más de un grupo (art. 25.2)"],
          "Mínimo general: **15** Diputados; plazo: **5 días**",
-         f"{c('RCD', 'art23', 'En ningún caso pueden constituir Grupo Parlamentario separado quienes pertenezcan a un mismo partido')} (art. 23.2). Congreso **15**; Senado **10** (→ V.2.4)."))}
+         f"{c('RCD', 'art23', 'En ningún caso pueden constituir grupo parlamentario separado quienes pertenezcan a un mismo partido')} (art. 23.2). Congreso **15**; Senado **10** (→ V.2.4)."))}
 
 {unidad("2.2 La Mesa del Congreso y la elección de su Presidencia (Reglamento del Congreso, arts. 30 y 37)",
   lit("RCD", "art30", ["órgano rector de la Cámara", "cuatro Vicepresidencias y cuatro Secretarías"]),
@@ -380,14 +383,13 @@ La Constitución solo prevé que cada Cámara elija su Presidente y su Mesa (art
          "Disolución si baja de **seis**, al final del período de sesiones",
          "Senado: **10** para constituir y disolución por debajo de **6**. Congreso: **15** (→ V.2.1)."))}
 
-{unidad("2.5 La Mesa y el Presidente del Senado (Reglamento del Senado, arts. 35 y 7)",
+{unidad("2.5 La Mesa del Senado (Reglamento del Senado, art. 35)",
   lit("RS", "a35", ["órgano rector del Senado", "Letrado Mayor"], solo=[1, 2]),
-  lit("RS", "a7", ["mayoría absoluta de los miembros de la Cámara acreditados hasta el momento", "las dos mayores votaciones"]),
   fichab("Órgano rector del Senado",
          "La Mesa (Presidente, dos Vicepresidentes y cuatro Secretarios → III.2.3), bajo la autoridad y dirección del **Presidente**; la asiste el **Letrado Mayor**",
-         "Presidente: un solo nombre por papeleta; **mayoría absoluta** de los miembros acreditados; si no, nueva votación",
-         "Presidente: mayoría absoluta en la primera votación; en la segunda, **más votos**",
-         "La mayoría absoluta se calcula sobre los miembros **acreditados hasta el momento** ante la Cámara."))}
+         "El **Letrado Mayor** la asiste y asesora: es el Jefe de los Servicios y responde ante el Presidente de la Cámara",
+         "—",
+         "La Mesa y su Presidente se eligen en la sesión de constitución (arts. 5 y 7 RS → III.2.3)."))}
 
 {unidad("2.6 Junta de Portavoces del Senado (Reglamento del Senado, art. 43)",
   lit("RS", "a43", ["el Presidente de la Cámara, que la convoca, preside y dirige"], solo=[1]),
@@ -434,7 +436,7 @@ T.ap("s13", "V.4 Pleno, Comisiones y peticiones (arts. 75 a 77; Reglamentos)", f
   lit("RS", "a49", ["Permanentes y de Investigación o Especiales", "la Comisión General de las Comunidades Autónomas, la Comisión General de las Entidades Locales"], solo=[1, 2, 12]),
   fichab("Clases de Comisiones",
          "Las forman los miembros que designen los grupos, en proporción a su importancia numérica (art. 40.1 RCD; art. 51.1 RS)",
-         ["Congreso: Comisiones Permanentes Legislativas (lista del art. 46.1) y no legislativas, entre ellas **Reglamento, Estatuto y Peticiones**; se constituyen en **diez días** desde la sesión constitutiva", "Senado: Permanentes (Legislativas y no Legislativas) y de Investigación o Especiales; son Legislativas la **Comisión General de las Comunidades Autónomas**, la **Comisión General de las Entidades Locales** y las que apruebe el Pleno"],
+         ["Congreso: Comisiones Permanentes Legislativas (lista del art. 46.1) y otras Comisiones Permanentes (art. 46.2), entre ellas **Reglamento, Estatuto y Peticiones**; se constituyen en **diez días** desde la sesión constitutiva", "Senado: Permanentes (Legislativas y no Legislativas) y de Investigación o Especiales; son Legislativas la **Comisión General de las Comunidades Autónomas**, la **Comisión General de las Entidades Locales** y las que apruebe el Pleno"],
          "Senado: el acuerdo del Pleno sobre las Comisiones Legislativas requiere **mayoría absoluta**",
          "La **Comisión General de las Comunidades Autónomas** es propia del **Senado** (Cámara territorial)."))}
 
@@ -593,9 +595,9 @@ T.ap("s20", "VI.5 Cuadro de atribuciones de cada Cámara (esquema)", f"""
 | **Congreso** | Moción de censura (art. 113.1; tema I.6) | {c('CE', 'Artículo 113', 'mediante la adopción por mayoría absoluta de la moción de censura')} |
 | **Congreso** | Convalidación o derogación de decretos-leyes (art. 86.2; tema IV.2) | {c('CE', 'Artículo 86', 'El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación')} |
 | **Congreso** | Autorizar el referéndum consultivo (art. 92.2 → VI.4.1) | {c('CE', 'Artículo 92', 'previamente autorizada por el Congreso de los Diputados')} |
-| **Congreso** | Estados de alarma (prórroga), excepción y sitio (art. 116; tema I.2) | {c('CE', 'Artículo 116', 'sin cuya autorización no podrá ser prorrogado dicho plazo')}; {c('CE', 'Artículo 116', 'previa autorización del Congreso de los Diputados')}; {c('CE', 'Artículo 116', 'El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados')} |
+| **Congreso** | Estados de alarma (prórroga), excepción y sitio (art. 116; temas I.2 y I.6) | {c('CE', 'Artículo 116', 'sin cuya autorización no podrá ser prorrogado dicho plazo')}; {c('CE', 'Artículo 116', 'previa autorización del Congreso de los Diputados')}; {c('CE', 'Artículo 116', 'El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados')} |
 | **Congreso** | Recibir los Presupuestos (art. 134.3) | {c('CE', 'Artículo 134', 'El Gobierno deberá presentar ante el Congreso de los Diputados los Presupuestos Generales del Estado')} |
-| **Senado** | Aprobar las medidas del art. 155 (organización territorial: temas I.10 y I.11) | {c('CE', 'Artículo 155', 'con la aprobación por mayoría absoluta del Senado')} |
+| **Senado** | Aprobar las medidas del art. 155 (organización territorial: tema I.10) | {c('CE', 'Artículo 155', 'con la aprobación por mayoría absoluta del Senado')} |
 | **Senado** | Iniciar el procedimiento de los arts. 145.2 y 158.2 (→ V.3.3) | {c('CE', 'Artículo 74', 'y en los otros dos, por el Senado')} |
 | **Las dos Cámaras** | Proponer Magistrados del Tribunal Constitucional (art. 159.1; tema I.3) | {c('CE', 'Artículo 159', 'cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría')} |
 | **Las dos Cámaras** | Proponer Vocales del CGPJ (art. 122.3; tema I.7) | {c('CE', 'Artículo 122', 'cuatro a propuesta del Congreso de los Diputados, y cuatro a propuesta del Senado, elegidos en ambos casos por mayoría de tres quintos de sus miembros')} |

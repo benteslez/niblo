@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Tema I.2 (v4) · Parte 6: bloque IV, el Defensor del Pueblo.
 from v4_util import *
-from v4_examen import EX2
+from v4_examen import EX2, EX_X5, EX_X6
 
 ap("bIV", "IV. ¿Quién vela por ellos? El Defensor del Pueblo (art. 54, LO 3/1981 y Ley 36/1985)", f"""
 {donde("Los bloques II y III han mostrado las garantías **normativas** y **jurisdiccionales** y su suspensión. Falta la garantía **institucional**: una institución que supervisa a la Administración y no se interrumpe ni siquiera en los estados de excepción y sitio.",
@@ -11,8 +11,8 @@ ap("bIV", "IV. ¿Quién vela por ellos? El Defensor del Pueblo (art. 54, LO 3/19
 """)
 
 # ---------------------------------------------------------------------------
-ap("s7", "IV.1 El art. 54 y la naturaleza del Defensor del Pueblo", f"""
-Sigue el modelo del *ombudsman* escandinavo: una institución independiente que recibe quejas y **supervisa a la Administración** (dato doctrinal, no texto legal).
+ap("s7", "IV.1 El art. 54 CE y la naturaleza del Defensor del Pueblo (art. 1 LO 3/1981)", f"""
+La garantía **institucional** de los derechos: una institución que recibe quejas y **supervisa a la Administración**, primero en la Constitución (art. 54) y después en su ley orgánica (art. 1 LO 3/1981).
 
 {unidad("1.1 El Defensor del Pueblo en la Constitución (art. 54)",
   lit("CE", 54, ["Una ley orgánica", "alto comisionado de las Cortes Generales", "los derechos comprendidos en este Título", "supervisar la actividad de la Administración", "dando cuenta a las Cortes Generales"]),
@@ -20,7 +20,9 @@ Sigue el modelo del *ombudsman* escandinavo: una institución independiente que 
          "**Alto comisionado de las Cortes Generales**, designado por ellas",
          ["Defiende los derechos del **Título I**", "Para ello, puede **supervisar la actividad de la Administración**", "Da cuenta a las **Cortes Generales**"],
          "Regulación por **ley orgánica**",
-         ["De las **Cortes Generales**, no solo del Congreso", "Está en el **Capítulo cuarto** (garantías), no en un título propio"]))}
+         ["De las **Cortes Generales**, no solo del Congreso", "Está en el **Capítulo cuarto** (garantías), no en un título propio", "Cayó en el extraordinario de 2025: pregunta real justo debajo"]))}
+
+{EX_X6}
 
 {unidad("1.2 Carácter y finalidad (art. 1 LO 3/1981)",
   lit("LO3", "primero", ["alto comisionado de las Cortes Generales", "Título I de la Constitución"]),
@@ -60,7 +62,7 @@ ap("s7-2", "IV.3 Estatuto: cese, prerrogativas, incompatibilidades y Adjuntos (a
   fichab("Por qué cesa y quién declara la vacante",
          ["**Presidente del Congreso**: vacante por muerte, renuncia o expiración del mandato", "**Cada Cámara**, en los demás casos", "**Adjuntos**: ejercen interinamente, en su propio orden, hasta el nuevo nombramiento"],
          ["::Cinco causas (5.1):", "renuncia", "expiración del plazo", "muerte o incapacidad sobrevenida", "**notoria negligencia** en el cumplimiento de sus obligaciones y deberes", "condena por **delito doloso** en sentencia firme"],
-         ["Negligencia o condena: **tres quintos** de los componentes de cada Cámara, con debate y audiencia del interesado (5.2)", "Nuevo nombramiento: iniciar en plazo **no superior a un mes** (5.3)"],
+         ["Demás casos (incapacidad sobrevenida, notoria negligencia o condena): **tres quintos** de los componentes de cada Cámara, con debate y audiencia del interesado (5.2)", "Nuevo nombramiento: iniciar en plazo **no superior a un mes** (5.3)"],
          "La pérdida de confianza de las Cortes **no** es causa de cese."))}
 
 {unidad("3.2 Independencia y prerrogativas (art. 6)",
@@ -159,7 +161,7 @@ ap("s7-7", "IV.5 La investigación y el deber de colaboración (arts. 18 a 27)",
   lit("LO3", "veintidós", ["deberá ser acordada por el Consejo de Ministros", "la más absoluta reserva"]),
   fichab("Acceso a documentos, incluidos los secretos",
          "El Defensor pide; el **Consejo de Ministros** puede denegar los secretos",
-         ["Puede pedir todos los documentos necesarios, también los **secretos** (22.1)", "La no remisión la acuerda el **Consejo de Ministros**, con certificación del acuerdo (22.2)", "Investigaciones con la **más absoluta reserva** (22.3)", "Si un secreto no remitido puede afectar decisivamente a la investigación, lo comunica a la **Comisión Mixta** (22.4)"],
+         ["Puede pedir todos los documentos necesarios, también los **secretos** (22.1)", "La no remisión la acuerda el **Consejo de Ministros**, con certificación del acuerdo (22.1)", "Investigaciones con la **más absoluta reserva** (22.2)", "Si un secreto no remitido puede afectar decisivamente a la investigación, lo comunica a la **Comisión Mixta** (22.3)"],
          "—",
          "Documentos secretos: decide el **Consejo de Ministros** (no un ministro)."))}
 
@@ -187,7 +189,9 @@ ap("s7-4", "IV.6 Resoluciones, informes y medios (arts. 28 a 37, DT y DF única)
          ["Autoridades y funcionarios, que deben responder", "El interesado, el parlamentario o comisión que lo pidió y la autoridad afectada reciben el resultado (31)"],
          ["**No** modifica ni anula actos; puede sugerir cambiar los criterios (28.1)", "Si una norma provoca situaciones injustas, sugiere su **modificación** (28.2)", "Servicios prestados por particulares: insta a las autoridades a inspeccionar y sancionar (28.3)", "Legitimado para los recursos de **inconstitucionalidad y amparo** (29 → II.2.3)", "Formula **advertencias, recomendaciones, recordatorios de sus deberes legales y sugerencias** (30.1)", "Sin respuesta: acude al **Ministro** o máxima autoridad y, si sigue sin justificación, lo incluye en su informe **con nombres** (30.2)"],
          "Respuesta a sus resoluciones: **un mes** como máximo (30.1)",
-         "Cuatro tipos de resolución: advertencias, recomendaciones, recordatorios y sugerencias. **Ninguna vinculante**."))}
+         "Cuatro tipos de resolución: advertencias, recomendaciones, recordatorios y sugerencias. **Ninguna vinculante**. Cayó en el extraordinario de 2025 (plazo de respuesta): pregunta real justo debajo."))}
+
+{EX_X5}
 
 {unidad("6.2 Los informes a las Cortes (arts. 32 y 33)",
   lit("LO3", "treinta y dos", ["cuando se hallen reunidas en periodo ordinario de sesiones", "Diputaciones Permanentes"]),

@@ -14,7 +14,7 @@ CORTO["LO1_2025"] = "LO 1/2025"
 L = "LOPJ"
 
 T = Tema("B1T07",
-  "Cuatro preguntas: I. Qué es el Poder Judicial y cómo actúa (arts. 117 a 127 CE; LOPJ, arts. 1, 2 y 182 a 185) · II. Qué significa el principio de unidad jurisdiccional (art. 117.5 y 6 CE; LOPJ, arts. 3, 4 y 9) · III. Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace (arts. 122 y 123 CE; LOPJ, Libro VIII) · IV. Cómo se organizan los Juzgados y Tribunales (LOPJ, arts. 26 a 103 y 439 ter; LO 1/2025). Cada artículo: texto literal del BOE y ficha.",
+  "Cuatro preguntas: I. Qué es el Poder Judicial y cómo actúa (arts. 117.1 a 4, 118 a 122.1 y 124 a 127 CE; LOPJ, arts. 1, 2, 182, 183 y 185) · II. Qué significa el principio de unidad jurisdiccional (arts. 117.5 y 6 y 136.2 CE; LOPJ, arts. 3, 4 y 9) · III. Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace (arts. 122.2 y 3 y 123.2 CE; LOPJ, Libro VIII) · IV. Cómo se organizan los Juzgados y Tribunales (arts. 123.1 y 152.1 CE; LOPJ, arts. 26, 29, 30, 32 a 34, 53 a 59, 61, 62 a 66, 70 a 74, 80 a 82, 84, 95, 99 a 102 y 439 ter; LO 1/2025). Cada artículo: texto literal del BOE y ficha.",
   ["Poder Judicial", "Arts. 117-127 CE", "LOPJ", "Unidad jurisdiccional", "Jurisdicción militar", "Órdenes jurisdiccionales", "CGPJ", "Art. 122 CE", "Vocales", "Tres quintos", "Tribunal Supremo", "Audiencia Nacional", "Tribunales Superiores de Justicia", "Audiencias Provinciales", "Tribunales de Instancia", "Tribunal Central de Instancia", "Jueces de paz", "LO 1/2025", "Ministerio Fiscal"])
 
 # Cuadros (esquemas) con citas literales
@@ -26,23 +26,15 @@ TAB2 = """| Orden | Conoce de | Apartado |
 |---|---|---|
 | Civil | Materias propias + todas las no atribuidas a otro orden (**residual**) | 9.2 |
 | Penal | Causas y juicios criminales (salvo jurisdicción militar) | 9.3 |
-| Contencioso-administrativo | Actuación administrativa sujeta al derecho administrativo, reglamentos, decretos legislativos ultra vires, inactividad, vía de hecho, responsabilidad patrimonial | 9.4 |
+| Contencioso-administrativo | Actuación administrativa sujeta al derecho administrativo, disposiciones generales de rango inferior a la ley, reales decretos legislativos (en los términos del art. 82.6 CE), inactividad, vía de hecho, responsabilidad patrimonial | 9.4 |
 | Social | Rama social del derecho y Seguridad Social | 9.5 |"""
 TAB3 = """| Órgano | Composición | Mandato | Rasgo que se pregunta |
 |---|---|---|---|
 | Pleno | Presidente + 20 Vocales | El del Consejo (5 años) | Nombramientos discrecionales; TC por tres quintos; quórum 12 / 10 + Presidente |
 | Comisión Permanente | Presidente + 7 Vocales (4 + 3) | Anual | Nombramientos reglados; alzada ante el Pleno |
-| Comisión Disciplinaria | 7 Vocales (4 + 3) | 5 años | Faltas graves y muy graves, salvo separación |
+| Comisión Disciplinaria | 7 Vocales (4 + 3) | 5 años | Infracciones graves y muy graves, salvo separación |
 | Asuntos Económicos | 3 Vocales | Anual | Control financiero y contable |
 | Igualdad | 3 Vocales | Anual | Impacto de género |"""
-TAB4 = f"""| Sala | Competencia principal (cita literal) |
-|---|---|
-| Civil (art. 56) | {c(L, 'acincuentayseis', 'De los recursos de casación, revisión y otros extraordinarios en materia civil que establezca la ley')} |
-| Penal (art. 57) | {c(L, 'acincuentaysiete', 'De los recursos de casación, revisión y otros extraordinarios en materia penal que establezca la ley')}; instrucción y enjuiciamiento de las causas contra los aforados que enumera |
-| Contencioso-administrativo (art. 58) | {c(L, 'acincuentayocho', 'En única instancia, de los recursos contencioso-administrativos contra actos y disposiciones del Consejo de Ministros, de las Comisiones Delegadas del Gobierno y del Consejo General del Poder Judicial')} |
-| Social (art. 59) | {c(L, 'acincuentaynueve', 'de los recursos de casación y revisión y otros extraordinarios que establezca la ley en materias propias de este orden jurisdiccional')} |
-| Sala del art. 61 | Formada por {c(L, 'asesentayuno', 'el Presidente del Tribunal Supremo, los Presidentes de Sala y el Magistrado más antiguo y el más moderno de cada una de ellas')}; conoce, entre otros, {c(L, 'asesentayuno', 'De los procesos de declaración de ilegalidad y consecuente disolución de los partidos políticos')} |"""
-
 # =============================================================================
 T.ap("s0", "Mapa del tema: cuatro preguntas", f"""
 **Epígrafe oficial** (BOE-A-2025-26262, anexo VII, Bloque I, tema 7):
@@ -54,10 +46,10 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 
 | Bloque | Pregunta | Constitución | LOPJ y otras normas |
 |---|---|---|---|
-| **I** | ¿Qué es el Poder Judicial y cómo actúa? | Arts. 117.1 a 4, 118 a 122.1 y 124 a 127 | LOPJ, arts. 1, 2 y 182 a 185 |
-| **II** | ¿Qué significa el principio de unidad jurisdiccional? | Art. 117.5 y 6 | LOPJ, arts. 3, 4 y 9 |
-| **III** | ¿Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace? | Arts. 122.2 y 3 y 123.2 | LOPJ, arts. 558 a 610 (Libro VIII) y 638 |
-| **IV** | ¿Cómo se organizan los Juzgados y Tribunales? | Arts. 123.1 y 152.1 | LOPJ, arts. 26 a 35, 53 a 103 y 439 ter; LO 1/2025 |
+| **I** | ¿Qué es el Poder Judicial y cómo actúa? | Arts. 117.1 a 4, 118 a 122.1 y 124 a 127 | LOPJ, arts. 1, 2, 182, 183 y 185 |
+| **II** | ¿Qué significa el principio de unidad jurisdiccional? | Arts. 117.5 y 6 y 136.2 | LOPJ, arts. 3, 4 y 9 |
+| **III** | ¿Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace? | Arts. 122.2 y 3 y 123.2 | LOPJ (Libro VIII), arts. 558, 560, 561, 566 a 570 bis, 578, 579, 581, 582, 585 a 587, 589, 595, 599 a 604, 609, 610 y 638 |
+| **IV** | ¿Cómo se organizan los Juzgados y Tribunales? | Arts. 123.1 y 152.1 | LOPJ, arts. 26, 29, 30, 32 a 34, 53 a 59, 61, 62 a 66, 70 a 74, 80 a 82, 84, 95, 99 a 102 y 439 ter; LO 1/2025 |
 
 !> **La idea que une los cuatro bloques:** la justicia la administran **Jueces y Magistrados** independientes, inamovibles, responsables y sometidos únicamente al imperio de la ley (I). Todos forman **una sola jurisdicción**, de la que solo se separa la militar en el ámbito estrictamente castrense (II). Ese Poder Judicial tiene un **órgano de gobierno** propio, el **CGPJ** (III), y se organiza en una **planta** de órganos que va de los jueces de paz al **Tribunal Supremo** (IV).
 
@@ -71,9 +63,9 @@ El epígrafe se lee como **cuatro preguntas encadenadas**. Cada una es un bloque
 """)
 
 # =============================================================================
-T.ap("bI", "I. ¿Qué es el Poder Judicial y cómo actúa? (arts. 117 a 127 CE; LOPJ, arts. 1, 2 y 182 a 185)", donde(
+T.ap("bI", "I. ¿Qué es el Poder Judicial y cómo actúa? (arts. 117.1 a 4, 118 a 122.1 y 124 a 127 CE; LOPJ, arts. 1, 2, 182, 183 y 185)", donde(
   "Primera pregunta del tema. El Título VI de la Constitución («Del Poder Judicial») dice **de dónde emana** la justicia, **quién** la administra, con qué **garantías** y con qué **reglas** de actuación. La LOPJ lo repite y lo desarrolla.",
-  ["1 La justicia, los jueces y la potestad jurisdiccional (art. 117.1 a 4; LOPJ, arts. 1 y 2)", "2 Principios de la actuación judicial (arts. 118 a 121; LOPJ, arts. 182 a 185)", "3 Cuerpo único, Ministerio Fiscal, participación ciudadana, policía judicial e incompatibilidades (arts. 122.1 y 124 a 127)"]))
+  ["1 La justicia, los jueces y la potestad jurisdiccional (art. 117.1 a 4; LOPJ, arts. 1 y 2)", "2 Principios de la actuación judicial (arts. 118 a 121; LOPJ, arts. 182, 183 y 185)", "3 Cuerpo único, Ministerio Fiscal, participación ciudadana, policía judicial e incompatibilidades (arts. 122.1 y 124 a 127)"]))
 
 T.ap("s1", "I.1 La justicia, los jueces y la potestad jurisdiccional (art. 117.1 a 4; LOPJ, arts. 1 y 2)", f"""
 {unidad("1.1 De dónde emana la justicia y quién la administra (art. 117.1; LOPJ, art. 1)",
@@ -102,7 +94,7 @@ T.ap("s1", "I.1 La justicia, los jueces y la potestad jurisdiccional (art. 117.1
          "La potestad incluye **ejecutar** lo juzgado. La LOPJ añade los Tribunales determinados **en los tratados internacionales**. Las funciones extra solo **por ley** y **en garantía de cualquier derecho**."))}
 """, 2)
 
-T.ap("s2", "I.2 Principios de la actuación judicial (arts. 118 a 121; LOPJ, arts. 182 a 185)", f"""
+T.ap("s2", "I.2 Principios de la actuación judicial (arts. 118 a 121; LOPJ, arts. 182, 183 y 185)", f"""
 {unidad("2.1 Obligación de cumplir las resoluciones y de colaborar (art. 118)",
   lit("CE", "Artículo 118", ["Es obligado cumplir las sentencias y demás resoluciones firmes", "prestar la colaboración requerida"]),
   fichab("Deber de cumplimiento y de colaboración", "Todos (la Constitución no distingue entre poderes públicos y particulares)",
@@ -189,11 +181,11 @@ T.ap("s3", "I.3 Cuerpo único, Ministerio Fiscal, participación ciudadana, poli
 """, 2)
 
 # =============================================================================
-T.ap("bII", "II. ¿Qué significa el principio de unidad jurisdiccional? (art. 117.5 y 6 CE; LOPJ, arts. 3, 4 y 9)", donde(
+T.ap("bII", "II. ¿Qué significa el principio de unidad jurisdiccional? (arts. 117.5 y 6 y 136.2 CE; LOPJ, arts. 3, 4 y 9)", donde(
   "Segunda pregunta. Ya sabemos quién administra la justicia; ahora, **cuántas jurisdicciones** hay. La Constitución responde con el **principio de unidad jurisdiccional**: una sola jurisdicción, con la única especialidad de la **militar** y la prohibición de **Tribunales de excepción**.",
-  ["1 Unidad jurisdiccional, jurisdicción militar y prohibición de Tribunales de excepción (art. 117.5 y 6; LOPJ, art. 3)", "2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOPJ, arts. 4 y 9)"]))
+  ["1 Unidad jurisdiccional, jurisdicción militar y prohibición de Tribunales de excepción (arts. 117.5 y 6 y 136.2; LOPJ, art. 3)", "2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOPJ, arts. 4 y 9)"]))
 
-T.ap("s4", "II.1 Unidad jurisdiccional, jurisdicción militar y prohibición de Tribunales de excepción (art. 117.5 y 6; LOPJ, art. 3)", f"""
+T.ap("s4", "II.1 Unidad jurisdiccional, jurisdicción militar y prohibición de Tribunales de excepción (arts. 117.5 y 6 y 136.2; LOPJ, art. 3)", f"""
 {unidad("1.1 El principio y la jurisdicción militar (art. 117.5)",
   lit("CE", "Artículo 117", ["El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales", "en el ámbito estrictamente castrense y en los supuestos de estado de sitio"], solo=[5]),
   fichab("Una sola jurisdicción como base de la organización y funcionamiento de los Tribunales",
@@ -215,12 +207,13 @@ T.ap("s4", "II.1 Unidad jurisdiccional, jurisdicción militar y prohibición de 
          "—",
          "Cayó en 2025 (→ Cierre 1): la jurisdicción militar actúa en el ámbito **estrictamente castrense** y, en su caso, en las materias de la declaración del **estado de sitio**; no en todo lo que afecte a militares."))}
 
-{unidad("1.4 Otras potestades jurisdiccionales que reconoce la Constitución (esquema)",
-  "*Esquema de elaboración propia: recoge las menciones literales de la Constitución a funciones jurisdiccionales fuera de los Juzgados y Tribunales; no es texto legal.*",
-  TAB1,
+{unidad("1.4 Otras potestades jurisdiccionales que reconoce la Constitución (art. 136.2 CE y esquema)",
+  lit("CE", "Artículo 136", ["sin perjuicio de su propia jurisdicción"], solo=[3, 4], titulo="Artículo 136.2"),
   fichab("Potestades jurisdiccionales reconocidas por la Constitución a otros órganos (art. 3.1 LOPJ)", "—",
-         "Las que la Constitución menciona expresamente (cuadro)", "—",
-         "La Constitución regula el Tribunal Constitucional aparte, en su Título IX (tema I.3), no en el Título VI."))}
+         "Las que la Constitución menciona expresamente: la «propia jurisdicción» del Tribunal de Cuentas (136.2) y los Tribunales consuetudinarios y tradicionales (125; → I.3.3). Cuadro de abajo", "—",
+         "La Constitución regula el Tribunal Constitucional aparte, en su Título IX (tema I.3), no en el Título VI."),
+  "*Esquema de elaboración propia: recoge las menciones literales de la Constitución a funciones jurisdiccionales fuera de los Juzgados y Tribunales; no es texto legal.*",
+  TAB1)}
 """, 2)
 
 T.ap("s5", "II.2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOPJ, arts. 4 y 9)", f"""
@@ -230,7 +223,7 @@ T.ap("s5", "II.2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOP
          "Tres «todas»: **personas**, **materias** y **territorio**, en la forma de la Constitución y las leyes."))}
 
 {unidad("2.2 Los órdenes jurisdiccionales y la improrrogabilidad (LOPJ, art. 9)",
-  lit(L, "anoveno", ["exclusivamente en aquellos casos en que les venga atribuida por esta u otra ley", "de todas aquellas que no estén atribuidas a otro orden jurisdiccional", "las causas y juicios criminales", "sujeta al derecho administrativo", "dentro de la rama social del derecho", "La jurisdicción es improrrogable"], solo=[1, 2, 4, 5, 8, 9]),
+  lit(L, "anoveno", ["exclusivamente en aquellos casos en que les venga atribuida por esta u otra ley", "de todas aquellas que no estén atribuidas a otro orden jurisdiccional", "las causas y juicios criminales", "sujeta al derecho administrativo", "dentro de la rama social del derecho", "La jurisdicción es improrrogable"], solo=list(range(1, 10))),
   fichab("Reparto de la jurisdicción única en cuatro órdenes",
          ["Civil (9.2)", "Penal (9.3)", "Contencioso-administrativo (9.4; tema IV.13)", "Social (9.5)"],
          ["El **civil** es el orden **residual**: conoce de lo suyo y de lo no atribuido a otro orden", "Penal: causas y juicios criminales, salvo los de la jurisdicción militar", "Contencioso: actuación de las Administraciones sujeta al derecho administrativo, reglamentos y decretos legislativos (82.6 CE)", "Social: rama social del derecho, conflictos individuales y colectivos y Seguridad Social"],
@@ -250,9 +243,9 @@ T.ap("s5", "II.2 Extensión de la jurisdicción y órdenes jurisdiccionales (LOP
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace? (arts. 122 y 123.2 CE; LOPJ, Libro VIII)", donde(
+T.ap("bIII", "III. ¿Qué es el Consejo General del Poder Judicial, cómo se compone y qué hace? (arts. 122.2 y 3 y 123.2 CE; LOPJ, Libro VIII)", donde(
   "Tercera pregunta. Los jueces son independientes al juzgar, pero alguien tiene que **gobernar** el Poder Judicial: nombramientos, ascensos, inspección, disciplina. La Constitución lo encarga al **Consejo General del Poder Judicial**, no al Gobierno.",
-  ["1 Naturaleza y atribuciones (art. 122.2; LOPJ, arts. 558, 560 y 561)", "2 Composición y designación de los Vocales (art. 122.3; LOPJ, arts. 566 a 570 bis y 578)", "3 Estatuto de los Vocales (LOPJ, arts. 579, 581 y 582)", "4 El Presidente y el Vicepresidente (art. 123.2; LOPJ, arts. 585 a 589)", "5 Órganos del Consejo y recursos contra sus actos (LOPJ, arts. 595 a 610 y 638)"]))
+  ["1 Naturaleza y atribuciones (art. 122.2; LOPJ, arts. 558, 560 y 561)", "2 Composición y designación de los Vocales (art. 122.3; LOPJ, arts. 566 a 570 bis y 578)", "3 Estatuto de los Vocales (LOPJ, arts. 579, 581 y 582)", "4 El Presidente y el Vicepresidente (art. 123.2; LOPJ, arts. 585 a 587 y 589)", "5 Órganos del Consejo y recursos contra sus actos (LOPJ, arts. 595, 599 a 604, 609, 610 y 638)"]))
 
 T.ap("s6", "III.1 Naturaleza y atribuciones (art. 122.2; LOPJ, arts. 558, 560 y 561)", f"""
 {unidad("1.1 Órgano de gobierno del Poder Judicial (art. 122.2)",
@@ -267,7 +260,7 @@ T.ap("s6", "III.1 Naturaleza y atribuciones (art. 122.2; LOPJ, arts. 558, 560 y 
   fichab("Ámbito territorial y sede", "El CGPJ", "Ejerce sus competencias en **todo el territorio nacional**", "—", "Sede: **villa de Madrid**."))}
 
 {unidad("1.3 Atribuciones (LOPJ, art. 560.1, 1.ª a 9.ª y 16.ª)",
-  lit(L, "aquinientossesenta", ["Proponer el nombramiento, en los términos previstos por la presente Ley Orgánica, de dos Magistrados del Tribunal Constitucional", "Ser oído por el Gobierno antes del nombramiento del Fiscal General del Estado", "Interponer el conflicto de atribuciones entre órganos constitucionales del Estado", "Ejercer la alta inspección de Tribunales"], solo=list(range(1, 11)), titulo="Artículo 560 (LOPJ), apartado 1, atribuciones 1.ª a 9.ª (fragmento)"),
+  lit(L, "aquinientossesenta", ["Proponer el nombramiento, en los términos previstos por la presente Ley Orgánica, de dos Magistrados del Tribunal Constitucional", "Ser oído por el Gobierno antes del nombramiento del Fiscal General del Estado", "Interponer el conflicto de atribuciones entre órganos constitucionales del Estado", "Ejercer la alta inspección de Tribunales"], solo=list(range(1, 11)) + list(range(18, 33)), titulo="Artículo 560 (LOPJ), apartado 1, atribuciones 1.ª a 9.ª y 16.ª (fragmento)"),
   fichab("Qué hace el CGPJ (selección de las 25 atribuciones del art. 560.1)", "El CGPJ",
          ["Propone el nombramiento del **Presidente del TS y del CGPJ**, de Jueces y Magistrados y de **dos Magistrados del TC**", "Es **oído** antes del nombramiento del **Fiscal General del Estado**", "Interpone el **conflicto de atribuciones** entre órganos constitucionales", "Formación, destinos, ascensos, situaciones y **régimen disciplinario** de los jueces; **alta inspección** de Tribunales", f"Potestad reglamentaria {c(L, 'aquinientossesenta', 'en el marco estricto de desarrollo de las previsiones de la Ley Orgánica del Poder Judicial')} (16.ª)"],
          "—",
@@ -306,7 +299,7 @@ T.ap("s7", "III.2 Composición y designación de los Vocales (art. 122.3; LOPJ, 
          "—", "3 + 3 + 6 = 12. Si falta candidato en una categoría, la vacante **acrece** la siguiente."))}
 
 {unidad("2.4 Renovación, nombramiento y constitución (LOPJ, arts. 568 y 569)",
-  lit(L, "aquinientossesentayocho", ["se renovará en su totalidad cada cinco años", "cuatro meses antes de la expiración del mencionado plazo"], solo=[1, 2]),
+  lit(L, "aquinientossesentayocho", ["se renovará en su totalidad cada cinco años", "cuatro meses antes de la expiración del mencionado plazo"], solo=[1, 2, 3, 4]),
   lit(L, "aquinientossesentaynueve", ["nombrados por el Rey mediante Real Decreto", "dentro de los cinco días posteriores a la expiración del anterior Consejo"]),
   fichab("Renovación del Consejo", ["Presidentes del Congreso y del Senado: adoptan las medidas para la renovación en plazo", "El **Rey** nombra a los Vocales por **Real Decreto**"],
          "Renovación **total** cada cinco años desde su constitución; juramento o promesa ante el Rey y sesión constitutiva",
@@ -342,7 +335,7 @@ T.ap("s8", "III.3 Estatuto de los Vocales (LOPJ, arts. 579, 581 y 582)", f"""
          f"Cesan {c(L, 'aquinientosochentaydos', 'sólo')} por estas causas; la incapacidad, incompatibilidad o incumplimiento la aprecia el **Pleno** por **tres quintos**."))}
 """, 2)
 
-T.ap("s9", "III.4 El Presidente y el Vicepresidente (art. 123.2; LOPJ, arts. 585 a 589)", f"""
+T.ap("s9", "III.4 El Presidente y el Vicepresidente (art. 123.2; LOPJ, arts. 585 a 587 y 589)", f"""
 {unidad("4.1 Nombramiento del Presidente del Tribunal Supremo (art. 123.2)",
   lit("CE", "Artículo 123", ["será nombrado por el Rey, a propuesta del Consejo General del Poder Judicial"], solo=[2]),
   fichab("Nombramiento del Presidente del TS", "El **Rey**, a propuesta del **CGPJ**", "En la forma que determine la ley", "—",
@@ -373,7 +366,7 @@ T.ap("s9", "III.4 El Presidente y el Vicepresidente (art. 123.2; LOPJ, arts. 585
          "Debe ser **Magistrado del TS** en servicio activo con requisitos para ser Presidente de Sala."))}
 """, 2)
 
-T.ap("s10", "III.5 Órganos del Consejo y recursos contra sus actos (LOPJ, arts. 595 a 610 y 638)", f"""
+T.ap("s10", "III.5 Órganos del Consejo y recursos contra sus actos (LOPJ, arts. 595, 599 a 604, 609, 610 y 638)", f"""
 {unidad("5.1 Pleno y Comisiones (LOPJ, art. 595)",
   lit(L, "aquinientosnoventaycinco", ["en Pleno o a través de las Comisiones", "Permanente, de Calificación, Disciplinaria, de Asuntos Económicos, de Igualdad y de Supervisión y Control de Protección de Datos"]),
   fichab("Cómo actúa el CGPJ", "Presidencia, Pleno y Comisiones",
@@ -431,11 +424,11 @@ T.ap("s10", "III.5 Órganos del Consejo y recursos contra sus actos (LOPJ, arts.
 """, 2)
 
 # =============================================================================
-T.ap("bIV", "IV. ¿Cómo se organizan los Juzgados y Tribunales? (LOPJ, arts. 26 a 103 y 439 ter; LO 1/2025)", donde(
+T.ap("bIV", "IV. ¿Cómo se organizan los Juzgados y Tribunales? (arts. 123.1 y 152.1 CE; LOPJ, arts. 26, 29, 30, 32 a 34, 53 a 59, 61, 62 a 66, 70 a 74, 80 a 82, 84, 95, 99 a 102 y 439 ter; LO 1/2025)", donde(
   "Cuarta pregunta. La **organización judicial española** es la **planta** de órganos que ejercen la potestad jurisdiccional y su reparto por el **territorio**. Tras la LO 1/2025, los antiguos Juzgados se han transformado en **Tribunales de Instancia**.",
-  ["1 Los órganos y el territorio (LOPJ, arts. 26 a 35)", "2 El Tribunal Supremo (art. 123.1 CE; LOPJ, arts. 53 a 61)", "3 La Audiencia Nacional (LOPJ, arts. 62 a 66)", "4 Los Tribunales Superiores de Justicia (art. 152.1 CE; LOPJ, arts. 70 a 74)", "5 Las Audiencias Provinciales (LOPJ, arts. 80 a 82)", "6 Los Tribunales de Instancia y el Tribunal Central de Instancia (LOPJ, arts. 84 y 95; LO 1/2025)", "7 Jueces de paz y Oficinas de Justicia en los municipios (LOPJ, arts. 99 a 102 y 439 ter)", "8 Cuadro de la organización judicial"]))
+  ["1 Los órganos y el territorio (LOPJ, arts. 26, 29, 30 y 32 a 34)", "2 El Tribunal Supremo (art. 123.1 CE; LOPJ, arts. 53 a 59 y 61)", "3 La Audiencia Nacional (LOPJ, arts. 62 a 66)", "4 Los Tribunales Superiores de Justicia (art. 152.1 CE; LOPJ, arts. 70 a 74)", "5 Las Audiencias Provinciales (LOPJ, arts. 80 a 82)", "6 Los Tribunales de Instancia y el Tribunal Central de Instancia (LOPJ, arts. 84 y 95; LO 1/2025)", "7 Jueces de paz y Oficinas de Justicia en los municipios (LOPJ, arts. 99 a 102 y 439 ter)", "8 Cuadro de la organización judicial"]))
 
-T.ap("s11", "IV.1 Los órganos y el territorio (LOPJ, arts. 26 a 35)", f"""
+T.ap("s11", "IV.1 Los órganos y el territorio (LOPJ, arts. 26, 29, 30 y 32 a 34)", f"""
 {unidad("1.1 Órganos que ejercen la potestad jurisdiccional (LOPJ, art. 26)",
   lit(L, "aveintiseis", ["Jueces y juezas de paz", "Tribunales de Instancia", "Tribunal Central de Instancia"]),
   fichab("Planta de la organización judicial",
@@ -460,7 +453,7 @@ T.ap("s11", "IV.1 Los órganos y el territorio (LOPJ, arts. 26 a 35)", f"""
          "—", "El partido nunca abarca municipios de **provincias distintas**; sí puede **coincidir** con la provincia."))}
 """, 2)
 
-T.ap("s12", "IV.2 El Tribunal Supremo (art. 123.1 CE; LOPJ, arts. 53 a 61)", f"""
+T.ap("s12", "IV.2 El Tribunal Supremo (art. 123.1 CE; LOPJ, arts. 53 a 59 y 61)", f"""
 {unidad("2.1 Órgano jurisdiccional superior (art. 123.1 CE; LOPJ, art. 53)",
   lit("CE", "Artículo 123", ["con jurisdicción en toda España, es el órgano jurisdiccional superior en todos los órdenes, salvo lo dispuesto en materia de garantías constitucionales"], solo=[1]),
   lit(L, "acincuentaytres", ["con sede en la villa de Madrid", "ningún otro podrá tener el título de Supremo"]),
@@ -476,9 +469,12 @@ T.ap("s12", "IV.2 El Tribunal Supremo (art. 123.1 CE; LOPJ, arts. 53 a 61)", f""
          ["Sala **Primera**: Civil", "Sala **Segunda**: Penal", "Sala **Tercera**: Contencioso-Administrativa", "Sala **Cuarta**: Social", "Sala **Quinta**: Militar (con su legislación específica)"],
          "—", "Numeración fija: **1.ª Civil, 2.ª Penal, 3.ª Contencioso, 4.ª Social, 5.ª Militar**."))}
 
-{unidad("2.3 Qué conoce cada Sala (esquema; LOPJ, arts. 56 a 59 y 61)",
-  "*Esquema de elaboración propia: recoge, con cita literal, la primera competencia de cada Sala; no es texto legal.*",
-  TAB4,
+{unidad("2.3 Qué conoce cada Sala (LOPJ, arts. 56 a 59 y 61; fragmentos)",
+  lit(L, "acincuentayseis", ["De los recursos de casación, revisión y otros extraordinarios en materia civil que establezca la ley"], solo=[1, 2], titulo="Artículo 56 (LOPJ), fragmento"),
+  lit(L, "acincuentaysiete", ["De los recursos de casación, revisión y otros extraordinarios en materia penal que establezca la ley", "De la instrucción y enjuiciamiento de las causas contra"], solo=[1, 2, 3, 4], titulo="Artículo 57.1 (LOPJ), fragmento"),
+  lit(L, "acincuentayocho", ["En única instancia, de los recursos contencioso-administrativos contra actos y disposiciones del Consejo de Ministros, de las Comisiones Delegadas del Gobierno y del Consejo General del Poder Judicial"], solo=[1, 2, 3], titulo="Artículo 58 (LOPJ), fragmento"),
+  lit(L, "acincuentaynueve", ["de los recursos de casación y revisión y otros extraordinarios que establezca la ley en materias propias de este orden jurisdiccional"]),
+  lit(L, "asesentayuno", ["el Presidente del Tribunal Supremo, los Presidentes de Sala y el Magistrado más antiguo y el más moderno de cada una de ellas", "De los procesos de declaración de ilegalidad y consecuente disolución de los partidos políticos"], solo=[1, 7], titulo="Artículo 61.1 (LOPJ), fragmento"),
   fichab("Reparto de asuntos entre las Salas del TS", "Cada Sala en su orden; la Sala del art. 61 en asuntos especiales",
          "Sobre todo, recursos de **casación** y **revisión**; en única instancia, los asuntos de aforados y del Consejo de Ministros", "—",
          "Los recursos contra el **Consejo de Ministros** y el **CGPJ** van a la **Sala Tercera** en única instancia. La ilegalización de partidos, a la **Sala del 61**."))}

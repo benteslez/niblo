@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # Tema I.2 (v4) · Parte 5: bloque III, la suspensión.
 from v4_util import *
-from v4_examen import EX10, EX10_NOTA
+from v4_examen import EX10, EX10_NOTA, EX_X4
 
-ap("bIII", "III. ¿Cuándo pueden suspenderse? (arts. 55 y 116 y su desarrollo)", f"""
+ap("bIII", "III. ¿Cuándo pueden suspenderse? (arts. 55 y 116, su desarrollo y art. 3.2 LOPJ)", f"""
 {donde("Los derechos están reconocidos (I) y protegidos (II). Pero la Constitución admite que, en situaciones extraordinarias, **algunos** queden temporalmente sin efecto. Este bloque responde a **cuáles**, **cuándo**, **quién lo decide** y **con qué controles**.",
        ["1 El art. 55: dos clases de suspensión", "2 Qué derechos se suspenden", "3 El art. 116 y las reglas comunes (LO 4/1981)", "4 Alarma", "5 Excepción", "6 Sitio", "7 Cuadro comparativo", "8 Práctica y jurisprudencia", "9 Suspensión individual: art. 55.2 y LECrim"])}
 
@@ -53,6 +53,10 @@ Es la consecuencia de la casilla «Protección» de las fichas del bloque I. Sol
 **La excepción del 17.3.** {c("CE", 55, "Se exceptúa de lo establecido anteriormente el apartado 3 del artículo 17 para el supuesto de declaración de estado de excepción")}. Las garantías del detenido (información inmediata, no declarar, abogado) se mantienen en la excepción y **solo** se suspenden en el **sitio**, como confirma el art. 32.3 LO 4/1981 (→ III.6).
 
 **Lo que nunca se suspende** (los distractores habituales): igualdad (14), vida (15), libertad ideológica (16), honor e intimidad (18.1), creación (20.1 b), cátedra (20.1 c), **asociación (22)**, participación (23), tutela judicial (24), legalidad penal (25), educación (27), **libertad sindical (28.1)** y petición (29).
+
+Cayó en el extraordinario de 2025: pregunta real justo debajo.
+
+{EX_X4}
 """, 2)
 
 # ---------------------------------------------------------------------------
@@ -117,7 +121,7 @@ El estado de las **catástrofes y emergencias**. No suspende derechos: solo perm
          "La Autoridad competente",
          ["11 a) limitar la circulación o permanencia de personas o vehículos en horas y lugares determinados", "11 b) requisas temporales y **prestaciones personales obligatorias**", "11 c) intervenir y ocupar transitoriamente industrias, fábricas, talleres, explotaciones o locales, **salvo domicilios privados**", "11 d) limitar o racionar servicios y artículos de primera necesidad", "11 e) órdenes para el abastecimiento de los mercados", "12.1, catástrofes y crisis sanitarias: medidas de las normas sobre enfermedades infecciosas, medio ambiente, aguas e incendios forestales", "12.2, paralización de servicios y desabastecimiento: **intervención de empresas** y **movilización de su personal**"],
          "—",
-         "Las ocupaciones excluyen los **domicilios privados**. Limitar la circulación no es suspenderla (STC 148/2021 → III.8)."))}
+         "Las ocupaciones excluyen los **domicilios privados**. Limitar la circulación no es suspenderla (STC 148/2021 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/26778]] → III.8)."))}
 """, 2)
 
 # ---------------------------------------------------------------------------
@@ -173,7 +177,7 @@ El estado de las **crisis de orden público**. Aquí sí se suspenden derechos, 
 """, 2)
 
 # ---------------------------------------------------------------------------
-ap("s6-6", "III.6 El estado de sitio (LO 4/1981, arts. 32 a 36)", f"""
+ap("s6-6", "III.6 El estado de sitio (LO 4/1981, arts. 32 a 36; art. 3.2 LOPJ)", f"""
 El estado de las **crisis que amenazan la existencia del Estado**. Suspende los derechos del 55.1, **incluido el 17.3**.
 
 {unidad("6.1 Supuesto, declaración y medidas (art. 32)",
@@ -184,20 +188,20 @@ El estado de las **crisis que amenazan la existencia del Estado**. Suspende los 
          "Mayoría absoluta del Congreso; duración la que fije",
          "Lo único que **solo** permite el sitio: suspender el **17.3**."))}
 
-{unidad("6.2 La Autoridad militar (arts. 33 a 36)",
+{unidad("6.2 La Autoridad militar (arts. 33 a 36; art. 3.2 LOPJ)",
   lit("LO4", "treinta y tres", ["designará la Autoridad militar"]),
   lit("LO4", "treinta y cuatro", ["bandos"]),
   lit("LO4", "treinta y cinco", ["Jurisdicción Militar"]),
   lit("LO4", "treinta y seis", []),
+  EX10_NOTA,
   fichab("Quién ejecuta las medidas del estado de sitio",
          ["El **Gobierno** dirige (33.1; art. 97 CE)", "Una **Autoridad militar** designada por el Gobierno ejecuta, bajo su dirección (33.2)", "Las **autoridades civiles** conservan las facultades no conferidas a la militar (36)"],
-         ["La Autoridad militar publica **bandos** con las medidas y prevenciones (34)", "El Congreso puede someter determinados delitos a la **Jurisdicción Militar** durante el estado (35)"],
+         ["La Autoridad militar publica **bandos** con las medidas y prevenciones (34)", "El Congreso puede someter determinados delitos a la **Jurisdicción Militar** durante el estado (35)",
+          f"La jurisdicción militar administra Justicia {c('LOPJ', 3, 'en el ámbito estrictamente castrense y, en su caso, en las materias que establezca la declaración del estado de sitio')} (art. 3.2 LOPJ; la LOPJ se estudia en el tema I.7)"],
          "—",
-         "La Jurisdicción Militar en el sitio la fija **el Congreso** en la declaración, no el Gobierno ni la Autoridad militar. Cayó en 2025, vía art. 3.2 LOPJ (tema I.7): pregunta real justo debajo."))}
+         "La Jurisdicción Militar en el sitio la fija **el Congreso** en la declaración, no el Gobierno ni la Autoridad militar. Cayó en 2025, vía art. 3.2 LOPJ: pregunta real justo debajo."))}
 
 {EX10}
-
-{EX10_NOTA}
 """, 2)
 
 # ---------------------------------------------------------------------------
@@ -218,24 +222,27 @@ ap("s6-7", "III.7 Cuadro comparativo de los tres estados", f"""
 - no se disuelve el Congreso y no se interrumpen los poderes del Estado (116.5 CE; art. 1.4 LO 4/1981);
 - se mantiene la responsabilidad del Gobierno (116.6);
 - no puede iniciarse la reforma constitucional (art. 169 → II.2.4);
-- los actos son impugnables y los daños, indemnizables (art. 3 LO 4/1981);
-- el Defensor del Pueblo sigue actuando (art. 11.3 LO 3/1981 → IV.4.3), igual que los defensores autonómicos en excepción y sitio (art. 1.4 Ley 36/1985 → IV.7).
+- los actos son impugnables y los daños, indemnizables (art. 3 LO 4/1981).
+
+**En excepción y sitio**, además, la ley dice expresamente que no se interrumpe la actividad del Defensor del Pueblo (art. 11.3 LO 3/1981 → IV.4.3) ni la de los defensores autonómicos (art. 1.4 Ley 36/1985 → IV.7).
 """, 2)
 
 # ---------------------------------------------------------------------------
 ap("s6-8", "III.8 Aplicación práctica y jurisprudencia", f"""
-*Este apartado no es texto legal: recoge hechos y sentencias, con su referencia.*
+*Este apartado no es texto legal: recoge hechos y sentencias, con su referencia (reales decretos: [[BOE]]; sentencias: [[TC]]).*
 
 - **Estados de excepción y de sitio:** **nunca se han declarado**.
-- **Estado de alarma de 2010:** **RD 1673/2010**, de 4 de diciembre, para normalizar el servicio público esencial del **transporte aéreo** (cierre del espacio aéreo por los controladores). Fue el primero.
-- **Estado de alarma de 2020:** **RD 463/2020**, de 14 de marzo, por la **COVID-19**, con varias prórrogas hasta junio de 2020.
-- **Estado de alarma de 2020-2021:** **RD 926/2020**, de 25 de octubre, con una **prórroga de seis meses** y delegación en los Presidentes autonómicos como autoridades competentes.
+- **Estado de alarma de 2010:** **RD 1673/2010**, de 4 de diciembre (BOE-A-2010-18683) [[BOE]], para normalizar el servicio público esencial del **transporte aéreo** (cierre del espacio aéreo por los controladores). Fue el primero.
+- **Estado de alarma de 2020:** **RD 463/2020**, de 14 de marzo (BOE-A-2020-3692) [[BOE]], por la **COVID-19**, con varias prórrogas hasta junio de 2020.
+- **Estado de alarma de 2020-2021:** **RD 926/2020**, de 25 de octubre (BOE-A-2020-12898) [[BOE]], con delegación en los Presidentes autonómicos como autoridades competentes; el Congreso autorizó una **prórroga de seis meses** (RD 956/2020, de 3 de noviembre).
 
 | Sentencia | Qué declaró |
 |---|---|
-| **STC 83/2016, de 28 de abril** | El decreto que declara la alarma tiene **rango o valor de ley**; su control corresponde al **Tribunal Constitucional** |
-| **STC 148/2021, de 14 de julio** | Inconstitucionales los **apartados 1, 3 y 5 del art. 7 del RD 463/2020**, porque **suspendían** (no limitaban) la libertad de circulación del **art. 19 CE**, algo que la alarma no permite. También anuló el inciso «modificar, ampliar o» de su art. 10.6 |
-| **STC 183/2021, de 27 de octubre** | Inconstitucionales la **prórroga de seis meses** y el régimen de **delegación** en los Presidentes autonómicos del RD 926/2020 |
+| **STC 83/2016, de 28 de abril** [[TC]] | El decreto que declara la alarma tiene **rango o valor de ley**; su control corresponde al **Tribunal Constitucional** |
+| **STC 148/2021, de 14 de julio** [[TC]] | Inconstitucionales los **apartados 1, 3 y 5 del art. 7 del RD 463/2020**, porque **suspendían** (no limitaban) la libertad de circulación del **art. 19 CE**, algo que la alarma no permite. También anuló el inciso «modificar, ampliar o» de su art. 10.6 |
+| **STC 183/2021, de 27 de octubre** [[TC]] | Inconstitucionales la **duración de seis meses** de la prórroga (acuerdo del Congreso de 29 de octubre de 2020 y art. 2 del RD 956/2020) y el régimen de **delegación** en los Presidentes autonómicos («autoridades competentes delegadas») del RD 926/2020 |
+
+Texto de las sentencias: STC 83/2016 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/24935]] · STC 148/2021 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/26778]] · STC 183/2021 [[TC|https://hj.tribunalconstitucional.es/es-ES/Resolucion/Show/26843]].
 
 !> **Idea clave.** La STC 148/2021 aplica directamente la distinción del bloque: **limitar** (posible en la alarma) frente a **suspender** (solo en excepción y sitio, art. 55.1).
 """, 2)

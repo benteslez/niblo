@@ -18,7 +18,7 @@ CORTO["RD1372"] = "Reglamento de Bienes de las Entidades Locales"
 BOE_Q = 'se publicará gratuitamente en el "Boletín Oficial del Estado"'
 
 T = Tema("B4T09",
-  "Cinco preguntas: I. Qué es el patrimonio de las Administraciones públicas, quién lo gestiona y cómo se defiende (art. 132 CE; Ley 33/2003, arts. 1 a 59) · II. Qué es el dominio público y cómo se usa (Ley 33/2003, arts. 5, 6, 30, 65 a 100) · III. Qué son los bienes patrimoniales del Estado y cómo se enajenan (arts. 7, 8, 30, 31, 131 a 153) · IV. Qué es el Patrimonio Nacional (Ley 23/1982) · V. Qué son los bienes comunales (Ley 7/1985, arts. 79 a 82; Reglamento de Bienes de las Entidades Locales). Cada artículo: texto literal del BOE y ficha.",
+  "Cinco preguntas: I. Qué es el patrimonio de las Administraciones públicas, quién lo gestiona y cómo se defiende (art. 132 CE; Ley 33/2003, arts. 1 a 4, 9, 10, 28, 32, 36, 41, 43, 45, 47, 50 a 53 y 55 a 59) · II. Qué es el dominio público y cómo se usa (Ley 33/2003, arts. 5, 6, 30.1, 65, 66, 69, 71, 84 a 86, 92, 93 y 100) · III. Qué son los bienes patrimoniales del Estado y cómo se enajenan (arts. 7, 8, 30.2 y 3, 31, 131, 137, 145 y 153) · IV. Qué es el Patrimonio Nacional (Ley 23/1982) · V. Qué son los bienes comunales (Ley 7/1985, arts. 79 a 82; Reglamento de Bienes de las Entidades Locales). Cada artículo: texto literal del BOE y ficha.",
   ["Art. 132 CE", "Ley 33/2003", "Dominio público", "Inalienabilidad", "Afectación", "Desafectación", "Mutación demanial", "Uso común", "Uso privativo", "Autorización", "Concesión demanial", "Bienes patrimoniales", "Deslinde", "Recuperación de oficio", "Desahucio administrativo", "Patrimonio Nacional", "Ley 23/1982", "Bienes comunales", "RD 1372/1986"])
 
 # =============================================================================
@@ -32,10 +32,10 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 
 | Bloque | Pregunta | Constitución | Otras normas |
 |---|---|---|---|
-| **I** | ¿Qué es el patrimonio de las Administraciones públicas, quién lo gestiona y cómo se defiende? | Art. 132 | Ley 33/2003, arts. 1 a 4, 9, 10, 28, 32, 36, 41, 43, 45, 47 y 50 a 59 |
+| **I** | ¿Qué es el patrimonio de las Administraciones públicas, quién lo gestiona y cómo se defiende? | Art. 132 | Ley 33/2003, arts. 1 a 4, 9, 10, 28, 32, 36, 41, 43, 45, 47, 50 a 53 y 55 a 59 |
 | **II** | ¿Qué es el dominio público y cómo se usa? | Art. 132.1 y 2 | Ley 33/2003, arts. 5, 6, 30.1, 65, 66, 69, 71, 84 a 86, 92, 93 y 100 |
 | **III** | ¿Qué son los bienes patrimoniales del Estado y cómo se enajenan? | — | Ley 33/2003, arts. 7, 8, 30.2 y 3, 31, 131, 137, 145 y 153 |
-| **IV** | ¿Qué es el Patrimonio Nacional? | Art. 132.3 | Ley 23/1982, arts. 1, 2, 4, 5, 6 y 8; Ley 33/2003, disposición adicional cuarta |
+| **IV** | ¿Qué es el Patrimonio Nacional? | Art. 132.3 | Ley 23/1982, arts. 1, 2, 4, 5, 6 y 8; Ley 33/2003, disposiciones adicional cuarta y derogatoria única |
 | **V** | ¿Qué son los bienes comunales? | Art. 132.1 | Ley 7/1985, arts. 79 a 82; Real Decreto 1372/1986, arts. 2, 8, 94, 98, 100, 102 y 103 |
 
 !> **La idea que une los cinco bloques:** la Constitución manda que una **ley** regule los bienes públicos (art. 132). La Ley 33/2003 divide el patrimonio de las Administraciones en **dos clases**: bienes de **dominio público** (afectados a un uso general o a un servicio público: **inalienables, imprescriptibles e inembargables**) y bienes **patrimoniales** (los demás: pueden enajenarse). Al lado hay dos regímenes especiales: el **Patrimonio Nacional** (bienes del Estado afectados al uso y servicio del **Rey** y de la Real Familia, Ley 23/1982) y los **bienes comunales** (de dominio público local, cuyo aprovechamiento corresponde al **común de los vecinos**).
@@ -51,7 +51,7 @@ El epígrafe se lee como **cinco preguntas encadenadas**. Cada una es un bloque 
 # =============================================================================
 T.ap("bI", "I. ¿Qué es el patrimonio de las Administraciones públicas, quién lo gestiona y cómo se defiende? (art. 132 CE; Ley 33/2003)", donde(
   "Primera pregunta del tema. Antes de distinguir dominio público y bienes patrimoniales, hay que saber **qué manda la Constitución**, **qué es** el patrimonio de una Administración, **quién** lo gestiona en el Estado y con qué **potestades** se defiende.",
-  ["1 El mandato constitucional (art. 132)", "2 Objeto, ámbito, concepto y clases (Ley 33/2003, arts. 1 a 4)", "3 El Patrimonio del Estado y sus órganos (arts. 9 y 10)", "4 Protección: inventario y Registro de la Propiedad (arts. 28, 32 y 36)", "5 Las prerrogativas: investigación, deslinde, recuperación y desahucio (arts. 41 a 59)", "6 Cuadro de las prerrogativas"]))
+  ["1 El mandato constitucional (art. 132)", "2 Objeto, ámbito, concepto y clases (Ley 33/2003, arts. 1 a 4)", "3 El Patrimonio del Estado y sus órganos (arts. 9 y 10)", "4 Protección: inventario y Registro de la Propiedad (arts. 28, 32 y 36)", "5 Las prerrogativas: investigación, deslinde, recuperación y desahucio (arts. 41, 43, 45, 47, 50 a 53 y 55 a 59)", "6 Cuadro de las prerrogativas"]))
 
 T.ap("s1", "I.1 El mandato constitucional (art. 132)", f"""
 La Constitución no regula los bienes públicos: **remite a la ley** y le marca los principios.
@@ -141,7 +141,7 @@ T.ap("s4", "I.4 Protección: inventario y Registro de la Propiedad (arts. 28, 32
          "También se inscriben los **demaniales**. Excepción: inscripción **potestativa** de los **arrendamientos** inscribibles."))}
 """, 2)
 
-T.ap("s5", "I.5 Las prerrogativas: investigación, deslinde, recuperación y desahucio (arts. 41 a 59)", f"""
+T.ap("s5", "I.5 Las prerrogativas: investigación, deslinde, recuperación y desahucio (arts. 41, 43, 45, 47, 50 a 53 y 55 a 59)", f"""
 {unidad("5.1 Las cuatro prerrogativas y su control judicial (arts. 41 y 43)",
   lit("LPAP", "a41", ["Investigar la situación de los bienes y derechos", "Deslindar en vía administrativa los inmuebles de su titularidad", "Recuperar de oficio la posesión indebidamente perdida", "Desahuciar en vía administrativa a los poseedores de los inmuebles demaniales", "sólo podrán ejercer las potestades enumeradas en el apartado 1 de este artículo para la defensa de bienes que tengan el carácter de demaniales"]),
   lit("LPAP", "a43", ["no cabrá la acción para la tutela sumaria de la posesión", "sólo podrán ser recurridos ante la jurisdicción contencioso-administrativa por infracción de las normas sobre competencia y procedimiento"], solo=[1, 2]),
@@ -153,7 +153,7 @@ T.ap("s5", "I.5 Las prerrogativas: investigación, deslinde, recuperación y des
 
 {unidad("5.2 Investigación (arts. 45 y 47)",
   lit("LPAP", "a45", ["a fin de determinar la titularidad de los mismos cuando ésta no les conste de modo cierto"]),
-  lit("LPAP", "a47", ["por iniciativa propia o por denuncia de particulares", BOE_Q, "en el plazo de dos años"], solo=[2, 3, 7]),
+  lit("LPAP", "a47", ["por iniciativa propia o por denuncia de particulares", BOE_Q, "en el plazo de dos años"], solo=[1, 2, 3, 7]),
   fichab("Averiguar si un bien es de la Administración cuando no le consta su titularidad",
          "Las Administraciones públicas; en el Estado, si hay denuncia, la **Dirección General del Patrimonio del Estado** decide sobre su admisibilidad",
          ["De oficio: por iniciativa propia o por **denuncia de particulares**", "El acuerdo de incoación se publica **gratuitamente** en el BOE"],
@@ -170,27 +170,27 @@ T.ap("s5", "I.5 Las prerrogativas: investigación, deslinde, recuperación y des
          "Cayó en 2025 (→ Cierre 1): incoa el **Director General**, instruyen los **Delegados**, resuelve el **Ministro**. Mientras dura el deslinde **no** puede instarse procedimiento judicial con igual pretensión."))}
 
 {unidad("5.4 Deslinde: procedimiento (art. 52)",
-  lit("LPAP", "a52", ["por iniciativa propia o a petición de los colindantes", "se comunicará al Registro de la Propiedad", BOE_Q + " y en el tablón de edictos del ayuntamiento", "previo informe de la Abogacía del Estado", "se procederá al amojonamiento", "El plazo máximo para resolver el procedimiento de deslinde será de 18 meses"], solo=[2, 3, 4, 6, 7, 8]),
+  lit("LPAP", "a52", ["por iniciativa propia o a petición de los colindantes", "se comunicará al Registro de la Propiedad", BOE_Q + " y en el tablón de edictos del ayuntamiento", "previo informe de la Abogacía del Estado", "se procederá al amojonamiento", "El plazo máximo para resolver el procedimiento de deslinde será de 18 meses"], solo=[1, 2, 3, 4, 6, 7, 8]),
   fichab("Cómo se tramita el deslinde",
          "La Administración titular; los **colindantes** pueden pedirlo (a su costa)",
          ["Inicio de oficio: por iniciativa propia o a petición de los colindantes", "Nota al margen en el **Registro de la Propiedad**", "Publicación gratuita en el **BOE** y en el **tablón de edictos del ayuntamiento**", "Resolución previo **informe de la Abogacía del Estado**", "Con el deslinde firme: **amojonamiento** e inscripción"],
          "Plazo máximo para resolver: **18 meses** desde el acuerdo de iniciación; si no, **caducidad** y archivo",
-         "Si lo piden los colindantes, los gastos son **a su costa** (cobro por vía de apremio). La resolución firme es título para **inmatricular** (art. 53.2)."))}
+         "Si lo piden los colindantes, los gastos son **a su costa** (cobro por vía de apremio). La resolución aprobatoria del deslinde es título suficiente para **inmatricular** (art. 53.2)."))}
 
 {unidad("5.5 Recuperación posesoria (arts. 55 y 56)",
   lit("LPAP", "a55", ["podrá ejercitarse en cualquier tiempo", "antes de que transcurra el plazo de un año, contado desde el día siguiente al de la usurpación", "ante los órganos del orden jurisdiccional civil"]),
-  lit("LPAP", "a56", ["un plazo no superior a ocho días", "multas coercitivas de hasta un cinco por 100 del valor de los bienes ocupados"], solo=[2, 3]),
+  lit("LPAP", "a56", ["un plazo no superior a ocho días", "multas coercitivas de hasta un cinco por 100 del valor de los bienes ocupados"], solo=[1, 2, 3, 4]),
   fichab("Recuperar por sí misma la posesión indebidamente perdida",
-         "Las Administraciones públicas (precepto básico); en la AGE, el **Delegado de Economía y Hacienda** o el **Director General del Patrimonio del Estado** (art. 57)",
+         "Las Administraciones públicas (art. 55, precepto básico); en la AGE, el **Delegado de Economía y Hacienda** o el **Director General del Patrimonio del Estado** (art. 57)",
          ["Audiencia al interesado y comprobación de la usurpación", "Requerimiento al ocupante para que cese", "Si resiste: ejecución forzosa, auxilio de las Fuerzas y Cuerpos de Seguridad o multas coercitivas"],
          ["Bienes **demaniales**: **en cualquier tiempo**", "Bienes **patrimoniales**: iniciación notificada antes de **un año** desde el día siguiente a la usurpación; después, vía **civil**", "Requerimiento: plazo **no superior a ocho días**", "Multas coercitivas: hasta el **5 %** del valor, reiteradas cada **ocho días**"],
          "Demaniales: **en cualquier tiempo**; patrimoniales: **un año**. Los gastos son **de cuenta del usurpador**."))}
 
 {unidad("5.6 Desahucio administrativo (arts. 58 y 59)",
   lit("LPAP", "a58", ["la posesión de sus bienes demaniales", "cuando decaigan o desaparezcan el título, las condiciones o las circunstancias que legitimaban su ocupación por terceros"]),
-  lit("LPAP", "a59", ["la previa declaración de extinción o caducidad del título", "un plazo no superior a ocho días"], solo=[1, 3, 5]),
+  lit("LPAP", "a59", ["la previa declaración de extinción o caducidad del título", "un plazo no superior a ocho días"], solo=[1, 2, 3, 4, 5]),
   fichab("Recuperar los bienes demaniales cuando se extingue el título del ocupante",
-         "Las Administraciones públicas (precepto básico)",
+         "Las Administraciones públicas (art. 58, precepto básico)",
          ["Previa **declaración de extinción o caducidad** del título, con audiencia al interesado", "Requerimiento para desocupar; si no lo atiende, ejecución forzosa"],
          "Desalojo: plazo **no superior a ocho días**",
          "Solo para bienes **demaniales** (no patrimoniales). Los gastos del desalojo son **a cargo del detentador**."))}
@@ -423,7 +423,7 @@ T.ap("s12", "III.2 Enajenación, cesión gratuita y permuta (arts. 131, 137, 145
 # =============================================================================
 T.ap("bIV", "IV. ¿Qué es el Patrimonio Nacional? (Ley 23/1982)", donde(
   "Cuarta pregunta. El art. 132.3 CE distingue el **Patrimonio del Estado** del **Patrimonio Nacional**. Este último lo forman bienes del Estado afectados al **uso y servicio del Rey** y de la Real Familia, y tiene ley propia.",
-  ["1 El Consejo de Administración y los bienes que lo integran (Ley 23/1982, arts. 1, 2, 4 y 5)", "2 Régimen jurídico y funciones del Consejo (art. 6 y 8; Ley 33/2003, disposición adicional cuarta)"]))
+  ["1 El Consejo de Administración y los bienes que lo integran (Ley 23/1982, arts. 1, 2, 4 y 5)", "2 Régimen jurídico y funciones del Consejo (arts. 6 y 8; Ley 33/2003, disposiciones adicional cuarta y derogatoria única)"]))
 
 T.ap("s13", "IV.1 El Consejo de Administración y los bienes del Patrimonio Nacional (Ley 23/1982, arts. 1, 2, 4 y 5)", f"""
 {unidad("1.1 El Consejo de Administración del Patrimonio Nacional (art. 1)",
@@ -459,7 +459,7 @@ T.ap("s13", "IV.1 El Consejo de Administración y los bienes del Patrimonio Naci
          "Lo que integra el Patrimonio Nacional son los **derechos de patronato**, no la propiedad de esas fundaciones."))}
 """, 2)
 
-T.ap("s14", "IV.2 Régimen jurídico y funciones del Consejo (Ley 23/1982, arts. 6 y 8; Ley 33/2003, disposición adicional cuarta)", f"""
+T.ap("s14", "IV.2 Régimen jurídico y funciones del Consejo (Ley 23/1982, arts. 6 y 8; Ley 33/2003, disposiciones adicional cuarta y derogatoria única)", f"""
 {unidad("2.1 Régimen jurídico: inalienables, imprescriptibles e inembargables (art. 6)",
   lit("L23_1982", "asexto", ["Se aplicará, con carácter supletorio, la Ley del Patrimonio del Estado", "inalienables, imprescriptibles e inembargables", "deberán ser inscritos en el Registro de la Propiedad como de titularidad estatal", "recuperación, investigación y deslinde"], titulo="Artículo sexto (Ley 23/1982, del Patrimonio Nacional)"),
   fichab("Régimen de los bienes del Patrimonio Nacional",
@@ -631,7 +631,7 @@ T.ap("s17", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
   "### GACE-P 2025, pregunta 70 · Gestión del Patrimonio del Estado (→ I.3.1)", EX_P70,
   "### GACE-L 2025, pregunta 55 · Órganos del deslinde (→ I.5.3)", EX_L55,
   "### GACE-L 2025 extraordinario, pregunta 60 · Norma supletoria del Patrimonio Nacional (→ IV.2.2)", EX_X60,
-  "?> **Nota sobre esta pregunta.** El enunciado dice «según la Ley 23/1982», cuyo art. 6 sigue remitiendo literalmente a la «Ley del Patrimonio del Estado» (la opción b la identifica con el Decreto 1022/1964). La plantilla da la a), que es lo vigente: ese texto de 1964 está derogado por la Ley 33/2003, cuya disposición adicional cuarta la declara supletoria para el Patrimonio Nacional. Conviene saber las dos cosas.",
+  "?> **Nota sobre esta pregunta.** El enunciado dice «Según la Ley 23/1982», cuyo art. 6 sigue remitiendo literalmente a la «Ley del Patrimonio del Estado» (la opción b la identifica con el Decreto 1022/1964). La plantilla da la a), que es lo vigente: ese texto de 1964 está derogado por la Ley 33/2003, cuya disposición adicional cuarta la declara supletoria para el Patrimonio Nacional. Conviene saber las dos cosas.",
   "### GACE-L 2025 extraordinario, pregunta 59 · Comunales no disfrutados (→ V.2.3)", EX_X59,
   "### Cómo se pregunta",
   "!> Las preguntas de la Ley 33/2003 cambian el **órgano** (Ministro, Director General, Delegados; Hacienda frente a Presidencia o Cultura) y las del Reglamento de Bienes, el **plazo**. Para el Patrimonio Nacional, distinguir **Patrimonio del Estado** (Hacienda) de **Patrimonio Nacional** (Consejo de Administración, Presidencia del Gobierno).",
