@@ -407,7 +407,7 @@ T.ap("s10", "II.4 Pacto de Estado y plan conjunto plurianual", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se garantiza la igualdad de trato y la de las personas LGTBI? (Ley 15/2022; Ley 4/2023)", donde(
+T.ap("bIII", "III. ¿Cómo se garantiza la igualdad de trato y la de las personas LGTBI? (Ley 15/2022; Ley 4/2023; RD 1026/2024)", donde(
   "Tercera pregunta. La **Ley 15/2022**, de 12 de julio, integral para la igualdad de trato y la no discriminación, es la ley general frente a **cualquier** causa de discriminación. La **Ley 4/2023**, de 28 de febrero, la concreta para las personas **LGTBI** y regula la rectificación registral del sexo.",
   ["1 Ley 15/2022: objeto, ámbito, derecho y definiciones", "2 Autoridad Independiente para la Igualdad de Trato y la No Discriminación", "3 Ley 4/2023: objeto, definiciones, Consejo de Participación y empresas", "4 Medidas LGTBI en las empresas (RD 1026/2024)", "5 Rectificación registral de la mención relativa al sexo"]))
 
@@ -635,7 +635,7 @@ T.ap("s19", "IV.4 Órganos y garantías (arts. 55, 56, 63 y 73)", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bV", "V. ¿Cómo se atiende la dependencia? (Ley 39/2006)", donde(
+T.ap("bV", "V. ¿Cómo se atiende la dependencia? (Ley 39/2006; RD 1051/2013)", donde(
   "Quinta pregunta. La **Ley 39/2006**, de 14 de diciembre, de Promoción de la Autonomía Personal y Atención a las personas en situación de dependencia, crea el **Sistema para la Autonomía y Atención a la Dependencia** (SAAD) y un derecho subjetivo de ciudadanía.",
   ["1 Objeto, definiciones, principios y titulares", "2 El Sistema y sus niveles", "3 Prestaciones y servicios", "4 Grados, valoración y procedimiento"]))
 

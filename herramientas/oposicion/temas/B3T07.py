@@ -50,7 +50,7 @@ def cs(k, frag): return c(k, T_, frag)
 NOLEGAL = "*Esquema de elaboración propia: resume los artículos y documentos citados; no es texto legal.*"
 
 T = Tema("B3T07",
-  "Cinco preguntas: I. Qué es el Gobierno Abierto y qué principios lo informan (Portal de la Transparencia; RD 371/2026) · II. Qué planes de acción ha tenido España (I a V Plan) · III. Cómo se garantiza la transparencia: publicidad activa y derecho de acceso (Ley 19/2013, arts. 1 a 24) · IV. Qué exige el buen gobierno (arts. 25 a 32) · V. Quién vela por todo ello: el Consejo de Transparencia y Buen Gobierno (arts. 33 a 40 y Estatuto, RD 615/2024). Cada artículo: texto literal y ficha.",
+  "Cinco preguntas: I. Qué es el Gobierno Abierto y qué principios lo informan (Portal de la Transparencia; RD 371/2026) · II. Qué planes de acción ha tenido España (I a V Plan) · III. Cómo se garantiza la transparencia: publicidad activa y derecho de acceso (Ley 19/2013, arts. 1 a 24 y disp. adic. 4.ª; CE, art. 105 b) · IV. Qué exige el buen gobierno (arts. 25 a 32) · V. Quién vela por todo ello: el Consejo de Transparencia y Buen Gobierno (arts. 33 a 40 y Estatuto, RD 615/2024). Cada artículo: texto literal y ficha.",
   ["Gobierno Abierto", "OGP", "Planes de Gobierno Abierto", "V Plan 2025-2029", "Foro de Gobierno Abierto", "Ley 19/2013", "Publicidad activa", "Portal de la Transparencia", "Derecho de acceso", "Límites al acceso", "Silencio negativo", "Reclamación ante el CTBG", "Buen gobierno", "Infracciones y sanciones", "Consejo de Transparencia y Buen Gobierno", "RD 615/2024"])
 
 # =============================================================================
@@ -242,9 +242,9 @@ T.ap("s5", "II.2 Los planes de Gobierno Abierto de España: del I al V", f"""
 """, 2)
 
 # =============================================================================
-T.ap("bIII", "III. ¿Cómo se garantiza la transparencia? Publicidad activa y derecho de acceso (Ley 19/2013, arts. 1 a 24)", donde(
+T.ap("bIII", "III. ¿Cómo se garantiza la transparencia? Publicidad activa y derecho de acceso (Ley 19/2013, arts. 1 a 24 y disp. adic. 4.ª; CE, art. 105 b)", donde(
   "Tercera pregunta. La Ley 19/2013 hace dos cosas en su título I: obliga a **publicar** información sin que nadie la pida (**publicidad activa**) y reconoce a todas las personas el **derecho a pedirla** (**derecho de acceso**), con su procedimiento y su reclamación ante el Consejo de Transparencia y Buen Gobierno.",
-  ["1 Objeto y ámbito subjetivo (arts. 1 a 4)", "2 Publicidad activa (arts. 5 a 11)", "3 Derecho de acceso: régimen general y límites (arts. 12 a 16)", "4 Ejercicio del derecho: solicitud, inadmisión, tramitación y resolución (arts. 17 a 22)", "5 Impugnaciones: la reclamación ante el CTBG (arts. 23 y 24; disp. adic. 4.ª)"]))
+  ["1 Objeto y ámbito subjetivo (arts. 1 a 4)", "2 Publicidad activa (arts. 5 a 11)", "3 Derecho de acceso: régimen general y límites (CE, art. 105 b; arts. 12 a 16)", "4 Ejercicio del derecho: solicitud, inadmisión, tramitación y resolución (arts. 17 a 22)", "5 Impugnaciones: la reclamación ante el CTBG (arts. 23 y 24; disp. adic. 4.ª)"]))
 
 T.ap("s6", "III.1 Objeto y ámbito subjetivo de la Ley 19/2013 (arts. 1 a 4)", f"""
 {unidad("1.1 Objeto (art. 1)",
@@ -325,7 +325,7 @@ T.ap("s7", "III.2 Publicidad activa (arts. 5 a 11)", f"""
          "Tres principios técnicos: **accesibilidad, interoperabilidad y reutilización**."))}
 """, 2)
 
-T.ap("s8", "III.3 Derecho de acceso a la información pública: régimen general y límites (arts. 12 a 16)", f"""
+T.ap("s8", "III.3 Derecho de acceso a la información pública: régimen general y límites (CE, art. 105 b; arts. 12 a 16)", f"""
 {unidad("3.1 Fundamento constitucional (CE, art. 105 b)",
   lit("CE", "Artículo 105", ["El acceso de los ciudadanos a los archivos y registros administrativos"], solo=[1, 3]),
   fichab("Mandato al legislador de regular el acceso a archivos y registros", "La ley (las Cortes)",
@@ -516,9 +516,9 @@ T.ap("s13", "IV.3 Sanciones, procedimiento y prescripción (arts. 30 a 32)", f""
 # =============================================================================
 T.ap("bV", "V. ¿Quién vela por la transparencia y el buen gobierno? El Consejo de Transparencia y Buen Gobierno (arts. 33 a 40; RD 615/2024)", donde(
   "Quinta pregunta. El título III crea el **Consejo de Transparencia y Buen Gobierno**. Su **Estatuto** vigente lo aprobó el Real Decreto 615/2024, que lo configura como **autoridad administrativa independiente**.",
-  ["1 Naturaleza y fines (arts. 33 y 34; Estatuto, arts. 1 y 2)", "2 Órganos: la Comisión y el Presidente (arts. 35 a 37; Estatuto, arts. 12, 18 y 20)", "3 Funciones, régimen jurídico y relaciones con las Cortes (arts. 38 a 40; Estatuto, art. 9)", "4 Cuadro de plazos y mayorías del tema"]))
+  ["1 Naturaleza y fines (arts. 33 y 34; Estatuto, art. 1)", "2 Órganos: la Comisión y el Presidente (arts. 35 a 37; Estatuto, arts. 12, 18 y 20)", "3 Funciones, régimen jurídico y relaciones con las Cortes (arts. 38 a 40; Estatuto, art. 9)", "4 Cuadro de plazos y mayorías del tema"]))
 
-T.ap("s14", "V.1 Naturaleza y fines del Consejo (arts. 33 y 34; Estatuto, arts. 1 y 2)", f"""
+T.ap("s14", "V.1 Naturaleza y fines del Consejo (arts. 33 y 34; Estatuto, art. 1)", f"""
 {unidad("1.1 Creación y naturaleza (Ley 19/2013, art. 33)",
   lit(L, "Artículo 33", ["Se crea el Consejo de Transparencia y Buen Gobierno", "personalidad jurídica propia y plena capacidad de obrar", "autonomía y plena independencia"]),
   fichab("Organismo público creado por la Ley 19/2013", "—",
