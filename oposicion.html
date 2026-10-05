@@ -376,20 +376,39 @@ mark { background:color-mix(in srgb, #facc15 45%, transparent); color:inherit; b
 
 .fc-ctrl { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin-bottom:12px; font-size:13px; color:var(--text-muted); }
 .fc-ctrl b { color:var(--text); font-feature-settings:"tnum"; }
-.fc { perspective:1200px; cursor:pointer; margin:6px 0 14px; }
-.fc-in { position:relative; min-height:230px; transition:transform .5s var(--ease); transform-style:preserve-3d; }
-.fc.volteada .fc-in { transform:rotateY(180deg); }
+.fc { cursor:pointer; margin:6px 0 10px; -webkit-tap-highlight-color:transparent; }
+.fc-in { display:grid; }
+/* Sin giro 3D (cortaba el desplazamiento en iPhone): cada cara crece con su contenido y se cambia con una animación corta. */
 .fc-cara {
-  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  grid-area:1 / 1; min-height:230px; animation:ce-gira .32s cubic-bezier(.2, .7, .2, 1);
   border-radius:var(--r-lg); padding:24px 22px; display:flex; flex-direction:column; justify-content:center; gap:10px;
-  border:1px solid var(--line); background:var(--bg-elev); box-shadow:var(--sh-2); overflow:auto;
+  border:1px solid var(--line); background:var(--bg-elev); box-shadow:var(--sh-2); min-width:0;
 }
-.fc-cara.atras { transform:rotateY(180deg); background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#fff; border:none; }
+.fc-cara.atras { background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#fff; border:none; display:none; }
+.fc.volteada .fc-cara:not(.atras) { display:none; }
+.fc.volteada .fc-cara.atras { display:flex; }
 .fc-q { font-size:19px; font-weight:700; letter-spacing:-.015em; line-height:1.35; }
 .fc-a { font-size:16px; line-height:1.55; }
 .fc-hint { font-size:12px; color:var(--text-muted); }
 .fc-btns { display:flex; gap:10px; }
 .fc-btns .btn { flex:1; }
+.fc-btns[hidden] { display:flex !important; visibility:hidden; }
+.fc-btns .btn.btn-dude { background:var(--warn-bg); border-color:var(--warn); color:var(--warn); }
+.fc-btns .btn { min-height:52px; border-radius:16px; font-weight:800; }
+.fc.desliz { position:relative; touch-action:pan-y; user-select:none; -webkit-user-select:none; transition:transform .2s ease; }
+.fc.desliz.fija { touch-action:none; }
+.fc.desliz.arrastra { transition:none; cursor:grabbing; }
+.fc.desliz.sale { transition:transform .22s ease-in; pointer-events:none; }
+.fc.desliz .fc-in { animation:ce-entra .28s ease-out; }
+.fc[data-dir="si"] .fc-cara { box-shadow:0 0 0 4px var(--ok), var(--sh-2); }
+.fc[data-dir="no"] .fc-cara { box-shadow:0 0 0 4px var(--hot), var(--sh-2); }
+.fc[data-dir="dude"] .fc-cara { box-shadow:0 0 0 4px var(--warn), var(--sh-2); }
+.fc[data-dir]::after { position:absolute; top:16px; padding:6px 14px; border-radius:12px; font-weight:800; font-size:16px; color:#fff; z-index:2; pointer-events:none; }
+.fc[data-dir="si"]::after { content:"✓ La sabía"; right:14px; background:var(--ok); transform:rotate(6deg); }
+.fc[data-dir="no"]::after { content:"✗ No la sabía"; left:14px; background:var(--hot); transform:rotate(-6deg); }
+.fc[data-dir="dude"]::after { content:"🤔 Dudé"; left:50%; background:var(--warn); transform:translateX(-50%); }
+.fc-desliz-hint { text-align:center; font-size:12.5px; margin:0 0 8px; color:var(--text-muted); }
+@media (prefers-reduced-motion: reduce) { .fc-cara, .fc.desliz .fc-in { animation:none; } }
 .btn-no { color:var(--danger); border-color:color-mix(in srgb, var(--danger) 40%, var(--line)); }
 .btn-si { color:var(--ok); border-color:color-mix(in srgb, var(--ok) 45%, var(--line)); }
 
@@ -4908,8 +4927,10 @@ function hubGlosario(c, ambito, temas) {
 }
 
 /* 4 · Flashcards. Progreso: claves "id:índice" de las que «la sabía». */
+const KEY_FCM = "gestion_hub_fc_modo_v1";
 function hubFc(c, ambito, temas) {
   const s = hl(ambito);
+  const desliz = leerJSON(KEY_FCM, "desliz") !== "botones";
   if (s.fcTema !== "todos" && !temas.some(t => t.id === s.fcTema)) { s.fcTema = "todos"; s.mazo = null; }
   const enFiltro = temas.filter(t => s.fcTema === "todos" || t.id === s.fcTema);
   const rehacer = () => {
@@ -4925,21 +4946,24 @@ function hubFc(c, ambito, temas) {
     <div class="fc-ctrl">
       <span><b>${total}</b> tarjetas</span><span>Dominadas: <b>${sabidas}</b></span><span>Pendientes: <b>${s.mazo.length}</b></span>
       <button class="chip peq" id="fc-mezclar">🔀 Mezclar</button><button class="chip peq" id="fc-reiniciar">♻ Reiniciar</button>
+      <button class="chip peq ${desliz ? "active" : ""}" id="fc-modo" title="Deslizar la tarjeta: derecha la sabía, izquierda no la sabía, arriba dudé">👆 Deslizar</button>
     </div>
     ${chipsTemas(temas, s.fcTema, "ft")}
     ${!total ? `<div class="empty"><div class="ico">🎴</div><h3>Sin flashcards</h3></div>`
       : !f ? `<div class="empty"><div class="ico">🏆</div><h3>¡Mazo dominado!</h3><p>Pulsa «Reiniciar» para repasar.</p></div>`
-      : `<div class="fc ${s.volteada ? "volteada" : ""}" id="fc" role="button" tabindex="0" aria-label="Voltear tarjeta">
+      : `${desliz ? `<div class="fc-desliz-hint">← <b>no</b> la sabes · <b>sí</b> → · ↑ <b>dudé</b> (vuelve a salir en unas tarjetas)</div>` : ""}
+        <div class="fc ${s.volteada ? "volteada" : ""} ${desliz ? "desliz fija" : ""}" id="fc" role="button" tabindex="0" aria-label="Voltear tarjeta">
           <div class="fc-in">
             <div class="fc-cara">
               <div class="tags"><span class="tag acc">${esc(codigoDe(f._id))}</span>${f.cat ? `<span class="tag">${esc(f.cat)}</span>` : ""}</div>
-              <div class="fc-q">${esc(f.q)}</div><div class="fc-hint">Pulsa para voltear</div>
+              <div class="fc-q">${esc(f.q)}</div><div class="fc-hint">Toca la tarjeta para ver la respuesta</div>
             </div>
             <div class="fc-cara atras"><div class="fc-a">${esc(f.a)}</div>${chipsConstelacion(f._id, f)}</div>
           </div>
         </div>
-        <div class="fc-btns" ${s.volteada ? "" : "hidden"} id="fc-btns">
+        <div class="fc-btns" ${s.volteada || desliz ? "" : "hidden"} id="fc-btns">
           <button class="btn btn-no" id="fc-no">✗ No la sabía</button>
+          <button class="btn btn-dude" id="fc-dude">🤔 Dudé</button>
           <button class="btn btn-si" id="fc-si">✓ La sabía</button>
         </div>`}`;
   const rep = () => hubFc(c, ambito, temas);
@@ -4951,18 +4975,32 @@ function hubFc(c, ambito, temas) {
     rehacer(); rep();
   });
   c.querySelectorAll("[data-ft]").forEach(x => x.addEventListener("click", () => { s.fcTema = x.dataset.ft; s.mazo = null; rep(); }));
+  document.getElementById("fc-modo").addEventListener("click", () => { escribirJSON(KEY_FCM, desliz ? "botones" : "desliz"); rep(); });
   const carta = document.getElementById("fc");
   if (carta) {
-    const voltear = () => { s.volteada = !s.volteada; carta.classList.toggle("volteada", s.volteada); document.getElementById("fc-btns").hidden = !s.volteada; };
-    carta.addEventListener("click", voltear);
-    carta.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); voltear(); } });
-    document.getElementById("fc-si").addEventListener("click", () => {
-      if (!sabida(f._k)) marcarFc(f._k, true);
-      s.mazo.splice(s.idx, 1); if (s.idx >= s.mazo.length) s.idx = 0; s.volteada = false; rep();
+    const voltear = () => { s.volteada = !s.volteada; carta.classList.toggle("volteada", s.volteada); document.getElementById("fc-btns").hidden = !s.volteada && !desliz; };
+    // Acciones: sí = dominada y sale del mazo; no = al final; dudé = vuelve a salir unas tarjetas más adelante.
+    const accion = dir => {
+      if (dir === "si") { if (!sabida(f._k)) marcarFc(f._k, true); s.mazo.splice(s.idx, 1); }
+      else if (dir === "no") s.mazo.push(s.mazo.splice(s.idx, 1)[0]);
+      else { const x = s.mazo.splice(s.idx, 1)[0]; s.mazo.splice(Math.min(s.idx + 4, s.mazo.length), 0, x); }
+      if (s.idx >= s.mazo.length) s.idx = 0; s.volteada = false; rep();
+    };
+    const sacar = dir => {
+      if (carta.classList.contains("sale")) return;
+      carta.dataset.dir = dir; carta.classList.add("sale");
+      carta.style.transform = dir === "dude" ? "translateY(-120vh) scale(.9)" : `translateX(${dir === "si" ? 130 : -130}vw) rotate(${dir === "si" ? 25 : -25}deg)`;
+      setTimeout(() => accion(dir), 200);
+    };
+    carta.addEventListener("click", e => { if (CT.arrastrado || e.target.closest("a, button")) return; voltear(); });
+    carta.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); voltear(); }
+      else if (desliz && (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "ArrowUp")) { e.preventDefault(); sacar(e.key === "ArrowRight" ? "si" : e.key === "ArrowLeft" ? "no" : "dude"); }
     });
-    document.getElementById("fc-no").addEventListener("click", () => {
-      s.mazo.push(s.mazo.splice(s.idx, 1)[0]); if (s.idx >= s.mazo.length) s.idx = 0; s.volteada = false; rep();
-    });
+    document.getElementById("fc-si").addEventListener("click", () => accion("si"));
+    document.getElementById("fc-no").addEventListener("click", () => accion("no"));
+    document.getElementById("fc-dude").addEventListener("click", () => accion("dude"));
+    if (desliz) ceDeslizar(carta, sacar);
   }
 }
 
