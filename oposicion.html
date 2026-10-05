@@ -1306,7 +1306,7 @@ mark.m103-lo { background:#f9a8d4; color:#500724; border-radius:3px; padding:0 2
 .m103-nota .m103-lim { border-left:none; }
 .m103-src { display:block; font-size:11px; color:var(--text-muted); margin-top:2px; }
 .m103-ley { margin:0 0 12px; padding:10px 14px; }
-.m103-tog { display:flex; gap:8px; align-items:center; font-size:14px; cursor:pointer; }
+.m103-tog { display:flex; gap:8px; align-items:center; flex-wrap:wrap; font-size:14px; } .m103-tog .btn { margin-left:auto; }
 .m103-ley summary { cursor:pointer; margin-top:6px; font-size:13px; font-weight:700; color:var(--text-muted); }
 .m103-lista, .m103-niv { margin:8px 0 0; padding-left:0; list-style:none; display:grid; gap:6px; font-size:13px; }
 .m103-niv li { padding-left:12px; border-left:3px solid var(--line); }
@@ -6460,8 +6460,9 @@ function ceArtHtml(A) {
 /** Leyenda del subrayado de la academia y interruptor. */
 function ceM103Leyenda() {
   const M = CE.m103; if (!M) return "";
-  return `<section class="m103-ley card"><label class="m103-tog"><input type="checkbox" id="m103-on" ${CEV.m103 ? "checked" : ""}> 🖍 <b>Subrayado y comentarios de la academia</b> (módulos M103 y M107)</label>
-    <details ${CEV.m103 ? "open" : ""}><summary>Código de colores y niveles de estudio</summary>
+  return `<section class="m103-ley card"><div class="m103-tog">🖍 <b>Subrayado y comentarios de la academia</b> <span class="muted">(módulos M103 y M107)</span><button type="button" class="btn btn-sm ${CEV.m103 ? "" : "btn-primary"}" id="m103-on" aria-pressed="${CEV.m103}" title="${CEV.m103 ? "Ver el texto limpio, sin subrayados, pills ni comentarios" : "Volver a ver los subrayados, pills y comentarios"}">${CEV.m103 ? "🚫 Apagar leyendas" : "🖍 Encender leyendas"}</button></div>
+    ${CEV.m103 ? "" : `<p class="muted" style="font-size:12.5px;margin:6px 0 0">Leyendas apagadas: texto sin subrayados, pills ni comentarios.</p>`}
+    <details ${CEV.m103 ? "open" : ""} ${CEV.m103 ? "" : "hidden"}><summary>Código de colores y niveles de estudio</summary>
       <ul class="m103-lista">${M.leyenda.map(([k, t, d]) => `<li><span class="m103-pill ${M103_PILL[k][0]}">${esc(M103_PILL[k][1])}</span> ${esc(d)}</li>`).join("")}
         <li><span class="m103-pill niv">🛡 Nivel de protección</span> Qué garantías tiene cada artículo del Título I según su ubicación (arts. 53 y 81): pasa el ratón por encima para ver el detalle.</li>
         <li>🧠 <b>Reglas para memorizar la estructura</b> (módulo M107): una nota en cada título, capítulo y sección.</li></ul>
@@ -6469,6 +6470,8 @@ function ceM103Leyenda() {
       <p class="muted" style="font-size:12px;margin:6px 0 0">${esc(M._fuente)}</p></details></section>`;
 }
 function ceBandHtml(key, k, nombre) { const u = CE_UNI[key]; return `<header class="ce-band" style="${ceSt(key)}"><span class="ce-band-k">${esc(k)}</span><span class="ce-band-n">${esc(nombre)}</span><span class="ce-band-r">${rangoU(u)}</span></header>${ceM107Unidad(key)}`; }
+/** Cuerpo del dorso de una tarjeta: pills, texto (con o sin subrayado) y comentario de la academia. */
+function ceDorsoLey(A) { return `${ceM103Pills(A.n)}<div class="ce-dorso-txt">${A.p.map(p => ceParr(p, ceM103(A.n) && CEV.m103 ? ceM103(A.n).marks : null)).join("")}</div>${ceM103Nota(A.n)}`; }
 function ceVerTexto(c, n) {
   const T = CE.titulos;
   const cuerpoT = t => {
@@ -6508,7 +6511,7 @@ function ceVerTexto(c, n) {
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
   const textos = arts.map(a => norm((a.querySelector(".ce-txt") || a).textContent));
   const tog = document.getElementById("m103-on");
-  if (tog) tog.addEventListener("change", () => { CEV.m103 = tog.checked; escribirJSON(KEY_M103, CEV.m103); const y = scrollY; ceVerTexto(c); scrollTo(0, y); });
+  if (tog) tog.addEventListener("click", () => { CEV.m103 = !CEV.m103; escribirJSON(KEY_M103, CEV.m103); const y = scrollY; ceVerTexto(c); scrollTo(0, y); });
   let t0;
   const filtrar = () => {
     const f = norm(q.value.trim()); CEV.q = q.value;
@@ -6726,8 +6729,8 @@ function cePintarSesion(c) {
         <div class="ce-cara ce-dorso">
           <div class="ce-dorso-cab"><span class="ce-numq col">Art. ${A.n}</span><span class="ce-rubq">${esc(A.t || "")}</span></div>
           <div class="ce-ruta">${A.path.map(p => `<span style="${ceSt(p.key)}" class="ce-miga">${esc(p.k)}${p.nombre ? " · " + esc(p.nombre) : ""}</span>`).join("")}</div>
-          ${ceM103Pills(A.n)}<div class="ce-dorso-txt">${A.p.map(p => ceParr(p, ceM103(A.n) && CEV.m103 ? ceM103(A.n).marks : null)).join("")}</div>${ceM103Nota(A.n)}
-          <button class="btn btn-sm" id="ce-volver" type="button">↩ Volver</button>
+          <div id="ce-ley-zona">${ceDorsoLey(A)}</div>
+          <div class="btn-row"><button class="btn btn-sm" id="ce-volver" type="button">↩ Volver</button>${CE.m103 ? `<button class="btn btn-sm" id="ce-ley-tog" type="button">${CEV.m103 ? "🚫 Apagar leyendas" : "🖍 Encender leyendas"}</button>` : ""}</div>
           <div class="ce-hint">Toca la tarjeta para volver</div>
         </div>
       </div>
@@ -6773,6 +6776,12 @@ function cePintarSesion(c) {
   frente.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); revelar(); } });
   document.getElementById("ce-ver").addEventListener("click", girar);
   document.getElementById("ce-volver").addEventListener("click", girar);
+  const lt = document.getElementById("ce-ley-tog");
+  if (lt && A) lt.addEventListener("click", () => {   // apagar o encender las leyendas sin salir de la tarjeta
+    CEV.m103 = !CEV.m103; escribirJSON(KEY_M103, CEV.m103);
+    document.getElementById("ce-ley-zona").innerHTML = ceDorsoLey(A);
+    lt.textContent = CEV.m103 ? "🚫 Apagar leyendas" : "🖍 Encender leyendas"; ceAjustaFija();
+  });
   c.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => calificarCE(c, +b.dataset.q)));
   if (desliz) { ceDeslizar(document.getElementById("ce-card"), sacar); ceAjustaFija(); }
 }

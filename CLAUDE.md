@@ -203,7 +203,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - **Módulo M103** (lectura y explicación de los arts. 1-52: PDF subrayado + vídeo): vive **solo en `temas/ce.json` → `m103`** (generado por
   `ce_datos.py` desde `herramientas/oposicion/m103_datos.py`; cada frase marcada tiene que ser literal del artículo): pills 🟧 examen oficial,
   🟨 importante, 🟩 coletilla, 🟦 se limita en excepción y sitio (completado con el art. 55.1), 🌸 ley orgánica, subrayado en el texto y comentario
-  de la academia por artículo. Se ve en `#/ce/texto` (interruptor) y en el reverso del Test Constitución; el tema I.1 (III.1, 1.1 y 1.2) solo
+  de la academia por artículo. Se ve en `#/ce/texto` (botón «🚫 Apagar leyendas» / «🖍 Encender leyendas»: texto limpio sin subrayados, pills ni comentarios; el mismo botón está en el dorso de las tarjetas del Test Constitución; se recuerda en `KEY_M103`) y en el reverso del Test Constitución; el tema I.1 (III.1, 1.1 y 1.2) solo
   explica los niveles y el código de colores y remite a la Constitución. No copiar estas anotaciones en los temas.
 - **Si la guía o el vídeo discrepan de la norma vigente, prevalece la norma** y se avisa en el mapa del tema
   (hoy: reforma del 69.3 «19 de mayo de 2026», LO 3/2007 solo parcialmente orgánica, capítulo II del Título I
