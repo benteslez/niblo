@@ -6553,21 +6553,22 @@ body { margin:0; font:10.5pt/1.62 Arial, Helvetica, sans-serif; color:#222; back
 @media print { .barra { display:none; } }
 .hoja { max-width:820px; margin:0 auto; padding:24px 28px 40px; }
 @media print { .hoja { max-width:none; padding:0; margin:0; } }
-.portada { min-height:240mm; page-break-after:always; break-after:page; }
-.portada .sup { margin-top:18mm; font-size:8.5pt; letter-spacing:.04em; text-transform:uppercase; color:#8a8a8a; text-align:center; }
-.portada h1 { margin:12mm 0 8mm; font-size:30pt; line-height:1.18; font-weight:800; color:#1c1c1c; letter-spacing:-.01em; }
+.portada { height:250mm; overflow:hidden; page-break-after:always; break-after:page; }
+.portada .sup { margin-top:8mm; font-size:8.5pt; letter-spacing:.04em; text-transform:uppercase; color:#8a8a8a; text-align:center; }
+.portada h1 { margin:8mm 0 6mm; font-size:28pt; line-height:1.18; font-weight:800; color:#1c1c1c; letter-spacing:-.01em; }
 .portada h1 .az { color:#0b4a9e; }
 .portada .regla { height:2.4px; background:#0b4a9e; margin:0 0 6mm; }
-.portada .sub { font-style:italic; color:#7a7a7a; font-size:10.5pt; line-height:1.8; text-align:justify; margin:0 0 10mm; }
+.portada .sub { font-style:italic; color:#7a7a7a; font-size:9.6pt; line-height:1.55; text-align:justify; margin:0 0 6mm; }
 .indice { margin:0 0 6mm; padding:0; list-style:none; }
-.indice li { display:flex; gap:14px; padding:6px 4px; border-bottom:1px solid #cfcfcf; font-size:9.5pt; }
+.indice li { display:flex; gap:12px; padding:3.2px 4px; border-bottom:1px solid #cfcfcf; font-size:9.2pt; line-height:1.35; }
 .indice li:first-child { border-top:1px solid #cfcfcf; }
 .indice .n { width:26px; color:#8a8a8a; }
-.pie-portada { margin-top:10mm; font-size:8pt; color:#9a9a9a; line-height:1.6; }
+.pie-portada { margin-top:6mm; font-size:8pt; color:#9a9a9a; line-height:1.6; }
 .seccion { page-break-before:always; break-before:page; }
 .seccion > .k { font-size:8.5pt; letter-spacing:.03em; color:#0b4a9e; text-transform:uppercase; margin:2mm 0 1mm; }
 .seccion > h2.t { margin:0 0 6mm; padding-bottom:3mm; font-size:19pt; line-height:1.22; font-weight:800; color:#1c1c1c; border-bottom:2.4px solid #0b4a9e; }
 .seccion > h2.t .az { color:#0b4a9e; }
+h3.sub2, .cuerpo h4.ap-h, .cuerpo h5.ap-h2, .cuerpo h3 { break-inside:avoid; orphans:2; widows:2; }
 h3.sub2 { margin:8mm 0 3mm; font-size:13pt; font-weight:800; color:#1c1c1c; page-break-after:avoid; break-after:avoid; }
 h3.sub2 .az { color:#0b4a9e; }
 .cuerpo p { margin:0 0 3.2mm; text-align:justify; }
@@ -6609,6 +6610,13 @@ blockquote.literal p:first-of-type strong:first-child { color:#0b4a9e; }
 .fi-fila.ojo { background:#fff4e0; }
 .fi-fila.ojo .fi-k { color:#a55a00; }
 .tabla-wrap { margin:3mm 0 5mm; }
+.tabla-wrap.corta { break-inside:avoid; }
+table.apuntes-tabla thead { display:table-header-group; }
+.cuerpo p, .cuerpo li { orphans:3; widows:3; }
+.cuerpo p:has(+ .tabla-wrap), .cuerpo p:has(+ blockquote), .cuerpo p:has(+ ul), .cuerpo p:has(+ ol), .cuerpo p:has(+ .ap-caja) { break-after:avoid; }
+.cuerpo > h4, .cuerpo > h5 { break-after:avoid; }
+.cuerpo h4.ap-h + *, .cuerpo h5.ap-h2 + * { break-before:avoid; }
+.cuerpo li { break-inside:avoid; }
 table.apuntes-tabla { width:100%; border-collapse:collapse; font-size:9.2pt; line-height:1.45; }
 table.apuntes-tabla th { background:#eef2f8; color:#0b3d91; text-align:left; font-weight:800; padding:2mm 2.4mm; border:1px solid #c5cddb; }
 table.apuntes-tabla td { padding:1.8mm 2.4mm; border:1px solid #d6d6d6; vertical-align:top; text-align:left; }
@@ -6640,6 +6648,8 @@ table.apuntes-tabla td:first-child { font-weight:700; }
 .preg .op.ok { color:#2e7d32; font-weight:700; }
 .preg .ex { display:block; margin-top:1.5mm; font-size:9.2pt; color:#555; font-style:italic; }
 `;
+// Tablas de hasta 14 filas: se marcan «corta» para que no se partan entre páginas (las largas repiten la cabecera).
+const apCuida = html => html.replace(/<div class="tabla-wrap">([\s\S]*?)<\/div>/g, (m, t) => (t.match(/<tr/g) || []).length <= 14 ? m.replace('class="tabla-wrap"', 'class="tabla-wrap corta"') : m);
 function apuntesHTML(id) {
   const t = estado.temas[id], p = TEMA_POR_ID[id], b = BLOQUE_POR_CODE[p.b];
   const fusion = Object.keys(FUSION).some(k => FUSION[k] === id);
@@ -6657,15 +6667,14 @@ function apuntesHTML(id) {
   const extra = [];
   if ((t.glossary || []).length) extra.push("Glosario");
   if ((t.timeline || []).length) extra.push("Cronología e hitos");
-  if ((t.questions || []).length) extra.push("Preguntas de repaso");
   const indice = bloques.map(x => x.s.title).concat(extra);
   const dosUltimas = s => { const w = s.trim().split(/\s+/); return w.length < 3 ? esc(s) : esc(w.slice(0, -1).join(" ")) + " <span class=\"az\">" + esc(w[w.length - 1]) + "</span>"; };
   let n = 0;
   const secHTML = bloques.map(x => {
     n++;
     return `<section class="seccion"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>
-      <div class="cuerpo">${formatear(x.s.body)}</div>
-      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${formatear(h.body)}</div>`).join("")}</section>`;
+      <div class="cuerpo">${apCuida(formatear(x.s.body))}</div>
+      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(h.body))}</div>`).join("")}</section>`;
   }).join("");
   const gl = (t.glossary || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Glosario de <span class="az">conceptos</span></h2>
       <p class="lead">Términos clave del tema, con su definición y la categoría a la que pertenecen.</p>
@@ -6673,9 +6682,6 @@ function apuntesHTML(id) {
   const cr = (t.timeline || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Cronología e <span class="az">hitos</span></h2>
       <p class="lead">Fechas y normas del tema, ordenadas cronológicamente.</p>
       ${[...t.timeline].sort((a, b2) => String(a.y).localeCompare(String(b2.y))).map(h => `<div class="fila"><div class="pi"><span>${esc(h.y)}</span></div><div class="tx"><b>${esc(h.txt)}</b>${h.cons ? `<i>${esc(h.cons)}</i>` : ""}</div></div>`).join("")}</section>` : "";
-  const pq = (t.questions || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Preguntas de <span class="az">repaso</span></h2>
-      <p class="lead">Preguntas tipo test del tema, con la respuesta correcta marcada y su explicación.</p>
-      ${t.questions.map((q, i) => `<div class="preg"><b class="q">${i + 1}. ${esc(q.q)}${q.cat ? ` <span class="tag-boe" style="background:#6b6b6b">${esc(q.cat)}</span>` : ""}</b>${q.o.map((o, j) => `<span class="op ${j === q.c ? "ok" : ""}">${"abcd"[j]}) ${esc(o)}${j === q.c ? " ✓" : ""}</span>`).join("")}${q.e ? `<span class="ex">${esc(String(q.e).replace(/\*\*/g, ""))}</span>` : ""}</div>`).join("")}</section>` : "";
   const hoy = new Date().toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
   const cabIzq = `${codigo} · ${titulo.length > 62 ? titulo.slice(0, 60) + "…" : titulo}`;
   const css = APUNTES_CSS + `:root { --cab-izq:${JSON.stringify(cabIzq)}; --cab-der:${JSON.stringify("Oposición GACE · Bloque " + b.rom)}; }`;
@@ -6688,7 +6694,7 @@ function apuntesHTML(id) {
         <ol class="indice">${indice.map((x, i) => `<li><span class="n">${i + 1}.</span><span>${esc(x)}</span></li>`).join("")}</ol>
         <div class="pie-portada">Apuntes generados desde la aplicación el ${esc(hoy)}. El texto de las normas es literal del BOE consolidado (etiqueta BOE); los esquemas, cuadros y reglas mnemotécnicas son material de estudio. Etiquetas: <span class="pill-imp">IMPORTANTE</span> lo que se pregunta mucho; <span class="pill-pre">PRESCINDIBLE</span> lo que no hace falta estudiar a fondo.</div>
       </section>
-      ${secHTML}${omitidos ? `<p class="lead" style="margin-top:14px">Los artículos de estudio van dentro de cada apartado. El texto completo de la Constitución y la lectura profunda de sus artículos están en la aplicación (botón «Constitución Española»).</p>` : ""}${gl}${cr}${pq}
+      ${secHTML}${omitidos ? `<p class="lead" style="margin-top:14px">Los artículos de estudio van dentro de cada apartado. El texto completo de la Constitución y la lectura profunda de sus artículos están en la aplicación (botón «Constitución Española»).</p>` : ""}${gl}${cr}
     </div>
     <script>addEventListener("load", () => setTimeout(() => { try { print(); } catch (_) {} }, 700));<\/script></body></html>`;
 }
