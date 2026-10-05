@@ -56,6 +56,19 @@ def _renum(body, n):
     def f(m): k[0] += 1; return f"### {n}.{k[0]} "
     return re.sub(r"^### \d+\.\d+ ", f, body, flags=re.M)
 
+def _con_mapa(body, raiz):
+    """Mapa conceptual (marcador «~>») sacado de la tabla «El hilo del tema»: raíz = el tema; una rama por bloque."""
+    m = re.search(r"^### El hilo del tema\n\n((?:\|.*\n?)+)", body, flags=re.M)
+    if not m: return body
+    filas = [[c.strip() for c in f.strip().strip("|").split("|")] for f in m.group(1).strip().split("\n")][2:]
+    ramas = []
+    for f in filas:
+        if len(f) < 3 or re.match(r"(?i)(preguntas|resumen)", f[1].replace("*", "")): continue
+        ramas.append(f"~> Bloque {f[0].replace('*', '')} | {f[1]}" + ("" if f[2] in ("—", "") else f" | {f[2]}"))
+    if not ramas: return body
+    mapa = "~> El hilo del tema\n~> # " + raiz + "\n" + "\n".join(ramas) + "\n\n"
+    return body[:m.start()] + mapa + body[m.start():]
+
 def _limpia(body, titulo):
     """Sin duplicados: el mapa no repite lo que ya dice su tabla, «Qué vas a ver» repite el índice lateral y un
     apartado «Cuadro…» ya es su propio resumen."""
@@ -303,6 +316,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
     X.meta["title"] = {1: "La Constitución de 1978: estructura, contenido y reforma", 2: "Derechos y deberes fundamentales: garantía, suspensión y Defensor del Pueblo", 3: "El Tribunal Constitucional"}[tema_n]
     for i, tit, body, nivel in ap:
         body = _limpia(body, tit)
+        if i == "s0": body = _con_mapa(body, X.meta["title"])
         if i == "s48" and tema_n == 1:
             body = re.sub(r"→ Siguiente: [^*\n]+", "→ Siguiente: IV.6 Cómo no confundir las mayorías", body)
         if i == ap[-1][0] and tema_n == 1:   # último apartado de I.1: enlace al tema siguiente
