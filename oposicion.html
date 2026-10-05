@@ -203,6 +203,7 @@ h3.card-title { font-size:16px; font-weight:700; letter-spacing:-.01em; margin:0
 }
 .chip-row::-webkit-scrollbar { display:none; }
 .chip-row.wrap { flex-wrap:wrap; overflow:visible; }
+.ce-tabs { flex-wrap:wrap !important; overflow:visible !important; }
 .chip {
   flex-shrink:0; display:inline-flex; align-items:center; gap:7px;
   height:34px; padding:0 14px; background:var(--bg-elev); border:1px solid var(--line); color:var(--text-muted);
@@ -1159,7 +1160,10 @@ body.real-abierto .cr { display:none; }
 .pl-guia .fuente { font-size:12.5px; color:var(--text-muted); margin:0 0 12px; }
 
 /* ---- Registro ------------------------------------------------------------- */
-.rg-kpis { display:grid; gap:10px; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); margin:0 0 16px; }
+.rg-kpis { display:grid; gap:10px; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); margin:0 0 16px; align-items:stretch; }
+.rg-kpis > .rg-kpi { margin:0; display:flex; flex-direction:column; }
+.rg-kpis.cuatro { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+@media (min-width:760px) { .rg-kpis.cuatro { grid-template-columns:repeat(4, minmax(0, 1fr)); } }
 .rg-kpi { padding:12px 14px; }
 .rg-kpi .k { font-size:12px; font-weight:700; color:var(--text-muted); }
 .rg-kpi .v { font-size:24px; font-weight:800; letter-spacing:-.02em; margin-top:2px; font-variant-numeric:tabular-nums; }
@@ -6248,7 +6252,7 @@ function renderCE(tab, n) {
   vista().innerHTML = `
     <h1 class="titulo-grande">📜 Constitución Española</h1>
     <p class="view-sub">Texto literal del <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229" target="_blank" rel="noopener">BOE consolidado vigente</a>, con su estructura, un color por título y capítulo, el organigrama y el test de repaso por artículos.</p>
-    <div class="pl-tabs" role="tablist" aria-label="Constitución">${CE_TABS.map(t => `<button class="chip ${t.id === CEV.tab ? "active" : ""}" role="tab" data-cet="${t.id}">${t.txt}</button>`).join("")}</div>
+    <div class="pl-tabs ce-tabs" role="tablist" aria-label="Constitución">${CE_TABS.map(t => `<button class="chip ${t.id === CEV.tab ? "active" : ""}" role="tab" data-cet="${t.id}">${t.txt}</button>`).join("")}</div>
     <div id="ce-cuerpo"><div class="empty"><div class="ico">⏳</div><h3>Cargando la Constitución…</h3></div></div>`;
   vista().querySelectorAll("[data-cet]").forEach(b => b.addEventListener("click", () => ir("#/ce/" + b.dataset.cet)));
   ceCargar().then(() => {
@@ -6417,11 +6421,11 @@ function ceVerTest(c) {
   const nNuevas = todas.filter(n => !ceSrs(n)).length, nHoy = todas.filter(n => ceSrs(n) && (ceVenc(n) || ceReb(n))).length, nReb = todas.filter(ceReb).length;
   const nDom = todas.filter(n => { const s = ceSrs(n); return s && s.i >= 21 && !ceReb(n); }).length;
   c.innerHTML = `
-    <div class="rg-kpis">
-      <div class="card rg-kpi"><div class="k">🆕 Nuevas</div><div class="v">${nNuevas}</div></div>
+    <div class="rg-kpis cuatro">
+      <div class="card rg-kpi"><div class="k">🆕 Nuevas</div><div class="v">${nNuevas}</div><div class="s">sin ver aún</div></div>
       <div class="card rg-kpi"><div class="k">🔄 Para hoy</div><div class="v">${nHoy}</div><div class="s">repasos vencidos</div></div>
-      <div class="card rg-kpi"><div class="k">🔥 Rebeldes</div><div class="v">${nReb}</div></div>
-      <div class="card rg-kpi"><div class="k">✓ Dominadas</div><div class="v">${nDom}</div><div class="s">de 55</div></div>
+      <div class="card rg-kpi"><div class="k">🔥 Rebeldes</div><div class="v">${nReb}</div><div class="s">3 o más fallos</div></div>
+      <div class="card rg-kpi"><div class="k">✓ Dominadas</div><div class="v">${nDom}</div><div class="s">de ${CE_TEST_HASTA}</div></div>
     </div>
     <section class="card">
       <h3 style="margin:0 0 6px">🧭 Test Constitución</h3>
