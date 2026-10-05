@@ -659,19 +659,6 @@ U_IV2_3 = unidad("2.3 Cuadro: delimitar las competencias frente a ejercerlas",
   "!> Las preguntas de 2025 sobre este artículo (X 34 y X 36, → Cierre 1) juegan exactamente con esa frontera: el **principio de atribución** (5.2) frente a la **subsidiariedad** (5.3) y a los principios que rigen el **ejercicio** (5.1).")
 
 # --- Art. 7: esquemas, mayoría cualificada ---------------------------------------------------------------
-F_7_1 = flujo("Art. 7.1 TUE · Alerta temprana: riesgo claro de violación grave de los valores del art. 2",
-  "1/3 Estados miembros + Parlamento Europeo + Comisión | Cualquiera de los tres presenta al Consejo una **propuesta motivada** | Iniciativa",
-  "Consejo + Estado miembro | El Consejo **oye** al Estado miembro afectado antes de decidir |",
-  "Parlamento Europeo | **Aprueba** la constatación | Previa aprobación (354 TFUE: dos tercios de los votos emitidos, que sean mayoría de sus miembros)",
-  "Consejo | **Constata** el riesgo claro de violación grave y puede dirigir **recomendaciones** al Estado | Mayoría de **cuatro quintos** de sus miembros",
-  "Consejo | Comprueba **periódicamente** si los motivos de la constatación siguen siendo válidos |")
-F_7_2 = flujo("Art. 7.2 a 7.4 TUE · Violación grave y persistente de los valores, suspensión de derechos",
-  "1/3 Estados miembros + Comisión | Proponen al **Consejo Europeo** (el Parlamento Europeo ya **no** tiene iniciativa) | Iniciativa",
-  "Consejo Europeo + Estado miembro | El Consejo Europeo invita al Estado a presentar **sus observaciones** |",
-  "Parlamento Europeo | **Aprueba** la constatación | Previa aprobación",
-  "Consejo Europeo | **Constata** la violación grave y persistente | **Unanimidad**",
-  "Consejo | Puede **suspender determinados derechos** del Estado (incluido el voto de su representante en el Consejo); sus **obligaciones** siguen vinculándole | **Mayoría cualificada** (art. 354 TFUE: 238.3.b)",
-  "Consejo | Si cambia la situación, **modifica o revoca** las medidas | **Mayoría cualificada**")
 
 TAB_MC = tabla(["Supuesto", "Mayoría cualificada del Consejo", "Dónde"],
   [["**Regla general** (votan todos los miembros)", "Al menos el **55 %** de los miembros del Consejo, **incluidos al menos quince**, que representen Estados con al menos el **65 %** de la población de la Unión. Minoría de bloqueo: al menos **cuatro** miembros", "Art. 16.4 TUE"],
@@ -691,9 +678,6 @@ U_7_3 = unidad("3.3 Cómo se calcula la mayoría cualificada (arts. 16.4 TUE, 23
   "!> **Cae en examen** (según el vídeo, una vez): las **cifras**. Memoriza que el **65 % es la población**, el **55 %** va con propuesta de la Comisión o del Alto Representante y el **72 %** con cualquier otra. Para el art. 7: el Parlamento Europeo se pronuncia por " + cF(354, "mayoría de dos tercios de los votos emitidos que represente la mayoría de los miembros que lo componen") + ".")
 
 # --- IV.4 Título II ---------------------------------------------------------------------------------------------------
-F_11 = flujo("Art. 11.4 TUE · Iniciativa ciudadana europea (ICE)",
-  "Ciudadanos de la Unión | **Un millón** de ciudadanos, nacionales de un número significativo de Estados miembros, toman la iniciativa | Al menos **un millón**",
-  "Comisión | Se les invita a presentar una propuesta adecuada «en el marco de sus atribuciones» | La Comisión **decide** si propone")
 
 U_IV4_1 = unidad("4.1 La ciudadanía de la Unión (art. 9)",
   LT(9, ["Será ciudadano de la Unión toda persona que tenga la nacionalidad de un Estado miembro", "se añade a la ciudadanía nacional sin sustituirla"]),
@@ -718,7 +702,6 @@ U_IV4_2 = unidad("4.2 La democracia representativa (art. 10)",
 U_IV4_3 = unidad("4.3 Participación ciudadana e iniciativa ciudadana europea (art. 11)",
   LT(11, ["un millón de ciudadanos de la Unión", "párrafo primero del artículo 24 del Tratado de Funcionamiento de la Unión Europea"]),
   "@@esquema art11_4@@",
-  F_11,
   fichab("Cauces de participación de los ciudadanos", "Ciudadanos y asociaciones; la **Comisión** (consultas e iniciativa)",
          ["Diálogo abierto, transparente y regular con las asociaciones representativas y la sociedad civil (11.1-11.2)", "La Comisión mantiene **amplias consultas** (11.3)", "**ICE**: un millón de ciudadanos invitan a la Comisión a presentar una propuesta (11.4)"],
          "Mínimo: **un millón** de ciudadanos de un número significativo de Estados",
@@ -746,24 +729,6 @@ U_IV4_4 = unidad("4.4 Los Parlamentos nacionales (art. 12)",
          "Apenas se ha preguntado, pero conviene saber **dónde** participan. **Europol** es la agencia de policía y **Eurojust** la de justicia. En el art. 48.7 un solo Parlamento nacional **bloquea** la pasarela (→ IV.5.2)."))
 
 # --- IV.5 Disposiciones finales y revisión de los Tratados ------------------------------------------
-F_48_ORD = flujo("Art. 48.2 a 5 TUE · Revisión ordinaria de los Tratados",
-  "Gobierno de un Estado miembro + Parlamento Europeo + Comisión | Cualquiera presenta al **Consejo** un proyecto de revisión | Iniciativa",
-  "Consejo | **Remite** el proyecto al Consejo Europeo y lo **notifica** a los Parlamentos nacionales |",
-  "Consejo Europeo | Adopta una decisión **favorable a examinar** las modificaciones, previa consulta al Parlamento Europeo y a la Comisión (y al BCE si es monetario) | **Mayoría simple**",
-  "Presidente del Consejo Europeo | **Convoca la Convención** (representantes de los Parlamentos nacionales, de los Jefes de Estado o de Gobierno, del Parlamento Europeo y de la Comisión), que adopta una recomendación | **Consenso**",
-  "↳ Consejo Europeo | Puede decidir **no convocar Convención** si la importancia de las modificaciones no lo justifica y fija un mandato para la Conferencia | Mayoría simple + **aprobación** del Parlamento Europeo",
-  "Presidente del Consejo | **Convoca la Conferencia** de representantes de los Gobiernos de los Estados miembros: **aquí se aprueba la modificación** | **Común acuerdo**",
-  "Estados miembros | **Ratifican** según sus normas constitucionales; el Tratado entra en vigor cuando lo han ratificado todos | **Todos** los Estados",
-  "Consejo Europeo | Si a los **dos años** de la firma han ratificado **cuatro quintas** partes y alguno tiene dificultades, **examina** la cuestión | 2 años · 4/5")
-F_48_6 = flujo("Art. 48.6 TUE · Revisión simplificada de la tercera parte del TFUE",
-  "Gobierno de un Estado miembro + Parlamento Europeo + Comisión | Presentan al **Consejo Europeo** un proyecto de revisión (la tercera parte del TFUE: políticas y acciones internas) | Iniciativa",
-  "Consejo Europeo | Adopta la **decisión** que modifica la tercera parte del TFUE, previa consulta al Parlamento Europeo y a la Comisión (y al BCE si es monetario) | **Unanimidad**",
-  "Estados miembros | **Aprueban** la decisión según sus normas constitucionales; solo entonces entra en vigor | **No puede aumentar** las competencias de la Unión")
-F_48_7 = flujo("Art. 48.7 TUE · Revisión simplificada: las «pasarelas»",
-  "Consejo Europeo | Toma la **iniciativa** de autorizar un cambio: del Consejo por **unanimidad** a **mayoría cualificada** (TFUE o título V TUE) o del procedimiento legislativo **especial** al **ordinario** | Sin propuesta de otra institución; no vale para decisiones **militares o de defensa**",
-  "Parlamentos nacionales | Reciben la iniciativa; si **uno solo** se opone en **seis meses**, no se adopta | **Seis meses**",
-  "Parlamento Europeo | **Aprueba** | Mayoría de los miembros que lo componen",
-  "Consejo Europeo | Adopta la decisión, si no hay oposición | **Unanimidad**")
 
 TAB_INI = tabla(["Procedimiento", "Quién tiene la iniciativa", "A quién se presenta"],
   [["**Alerta temprana** (art. 7.1)", "Un tercio de los Estados miembros, el Parlamento Europeo o la Comisión", "Consejo"],
@@ -771,12 +736,12 @@ TAB_INI = tabla(["Procedimiento", "Quién tiene la iniciativa", "A quién se pre
    ["**Revisión ordinaria** (art. 48.2)", "El **Gobierno de cualquier Estado miembro**, el Parlamento Europeo o la Comisión", "Consejo"],
    ["**Revisión simplificada** (art. 48.6)", "El **Gobierno de cualquier Estado miembro**, el Parlamento Europeo o la Comisión", "Consejo Europeo"]])
 
-U_48_ORD = "\n\n".join(["@@esquema art48_ordinario@@", F_48_ORD,
+U_48_ORD = "\n\n".join(["@@esquema art48_ordinario@@",
   "?> **Convención y Conferencia no son lo mismo.** La **Convención** (la convoca el Presidente del **Consejo Europeo**) solo **examina** los proyectos y adopta una recomendación por consenso. La **Conferencia intergubernamental** (la convoca el Presidente del **Consejo**) es donde se **aprueba** la modificación y se firma; se celebra **aunque no haya Convención**. Después hay que **ratificar**. [[M108]]",
   "Lo único que ha caído de este artículo (según el vídeo, una vez) es **quién tiene la iniciativa** y **a quién se presenta**, y lo hacen jugar con los procedimientos del art. 7. Distíngue los:",
   TAB_INI,
   ESQ])
-U_48_SIMP = "\n\n".join(["@@esquema art48_6@@", F_48_6, "@@esquema art48_7@@", F_48_7,
+U_48_SIMP = "\n\n".join(["@@esquema art48_6@@", "@@esquema art48_7@@",
   "!> **Regla del «pez gordo»** (vídeo M108): en la revisión **simplificada** decide el **Consejo Europeo**, porque ahí están los Jefes de Estado o de Gobierno, y el **Consejo ni aparece**. En la ordinaria el Consejo solo **informa, remite, notifica y convoca la Conferencia**; quien decide dar el paso es el Consejo Europeo. [[M108]]",
   "Tres usos de la revisión simplificada, que la guía resume así: (1) modificar la **tercera parte del TFUE**, sin aumentar competencias; (2) pasar de **unanimidad** a **mayoría cualificada** (no en el ámbito militar o de defensa); (3) pasar del procedimiento legislativo **especial** al **ordinario**."])
 
@@ -898,11 +863,7 @@ T.ap("s6", "IV.3 Derechos fundamentales, defensa de los valores y vecindad (TUE,
 
 @@esquema art7_1@@
 
-{F_7_1}
-
 @@esquema art7_2@@
-
-{F_7_2}
 
 {U_7_3}
 
@@ -996,21 +957,6 @@ T.ap("s11", "IV.6 El Tratado de Funcionamiento de la Unión Europea (TFUE)", f""
 
 # =============================================================================
 # --- V. Ampliación y retirada ------------------------------------------------------------------------------
-F_49 = flujo("Art. 49 TUE · Adhesión a la Unión",
-  "Estado solicitante | **Dirige su solicitud al Consejo** | Cualquier Estado europeo que respete los valores del art. 2 y se comprometa a promoverlos",
-  "Consejo | **Informa** de la solicitud al Parlamento Europeo y a los Parlamentos nacionales |",
-  "Comisión | Es **consultada** por el Consejo | Solo consulta",
-  "Parlamento Europeo | **Aprueba** la adhesión | Mayoría de los miembros que lo componen",
-  "Consejo | Se pronuncia sobre la adhesión, teniendo en cuenta los criterios de elegibilidad del Consejo Europeo | **Unanimidad**",
-  "Estados miembros + Estado solicitante | Acuerdo sobre las **condiciones de admisión** y las adaptaciones de los Tratados | **Ratificación** por todos los Estados contratantes")
-F_50 = flujo("Art. 50 TUE · Retirada de la Unión",
-  "Estado miembro | Decide retirarse según sus normas constitucionales y **notifica su intención al Consejo Europeo** |",
-  "Consejo Europeo | Da **orientaciones** para la negociación |",
-  "Consejo + Estado miembro | La Unión **negocia** con el Estado el acuerdo de retirada (art. 218.3 TFUE); el Estado que se retira no participa en las decisiones que le afecten |",
-  "Parlamento Europeo | **Aprueba** el acuerdo | Previa aprobación",
-  "Consejo | **Celebra** el acuerdo de retirada en nombre de la Unión | **Mayoría cualificada** (art. 50.4: 238.3.b TFUE)",
-  "↳ Estado miembro | **Sin acuerdo**, los Tratados dejan de aplicarse a los **dos años** de la notificación | Dos años",
-  "↳ Consejo Europeo | Puede **prorrogar** ese plazo, de acuerdo con el Estado | **Unanimidad**")
 
 TAB_ADH = tabla(["Año de entrada en vigor", "Tratado", "Países"],
   [["1973", "Tratado de Bruselas", "Dinamarca, Irlanda y Reino Unido"],
@@ -1024,7 +970,6 @@ TAB_ADH = tabla(["Año de entrada en vigor", "Tratado", "Países"],
 
 U_V1_4 = unidad("1.4 Esquema y reglas de memoria de la adhesión",
   "@@esquema art49@@",
-  F_49,
   L("**A quién se dirige:** en la adhesión la solicitud va **al Consejo**; en la retirada, la notificación va **al Consejo Europeo** (→ V.3). Es lo que más se ha preguntado: «quién toma la decisión de adhesión o la retirada». [[M108]]",
     "**Ratificación siempre:** si un solo Estado miembro no ratifica el acuerdo de adhesión, el solicitante **no entra**.",
     "**Unanimidad** del Consejo, tras **consultar** a la Comisión y con **aprobación** del Parlamento Europeo (mayoría de sus miembros)."))
@@ -1042,7 +987,6 @@ U_V2_3 = unidad("2.3 Los tratados de adhesión y las candidaturas que no prosper
 
 U_V3_3 = unidad("3.3 Esquema de la retirada y reglas de memoria",
   "@@esquema art50@@",
-  F_50,
   L("**La notificación se dirige al Consejo Europeo** (adhesión: al Consejo): la retirada es «algo más grave». [[M108]]",
     "**Con acuerdo:** el Consejo lo celebra por **mayoría cualificada**, previa aprobación del Parlamento Europeo. **Sin acuerdo:** los Tratados dejan de aplicarse a los **dos años** de la notificación, prorrogables por **unanimidad** del Consejo Europeo.",
     "**Caso real:** el Reino Unido notificó su salida, negoció y la Unión pasó a tener **27 Estados** (→ V.3.2)."))
@@ -1061,34 +1005,13 @@ U_VI1_3 = unidad("1.3 Cómo se entienden: acervo, ejemplos y quién interviene",
      ["Miembros del Consejo de los Estados **participantes**", "**Votan**"]]),
   ESQ)
 
-F_329_1 = flujo("Art. 329.1 TFUE · Inicio de una cooperación reforzada general",
-  "Estados miembros | **Al menos nueve** dirigen una solicitud a la **Comisión**, con el ámbito y los objetivos | Mínimo nueve (art. 20.2 TUE)",
-  "Comisión | **Estudia** la solicitud y puede **proponer** al Consejo; si no propone, comunica los motivos a los Estados |",
-  "Parlamento Europeo | **Aprueba** | Previa aprobación",
-  "Consejo | **Autoriza** la cooperación reforzada, a propuesta de la Comisión | Mayoría cualificada (regla general del art. 16.3 TUE)")
-F_331_1 = flujo("Art. 331.1 TFUE · Participación posterior en una cooperación reforzada general",
-  "Estado miembro | **Notifica** al Consejo y a la Comisión su deseo de participar |",
-  "Comisión | **Confirma** la participación, comprueba las condiciones y adopta las medidas transitorias | **Cuatro meses** desde la notificación",
-  "↳ Comisión | Si no se cumplen las condiciones, **indica lo necesario** y fija un plazo; al término, reconsidera |",
-  "Consejo + Estado miembro | Si la Comisión sigue sin ver cumplidas las condiciones, el Estado puede **someter la cuestión al Consejo**, que se pronuncia (art. 330) |")
-F_329_2 = flujo("Art. 329.2 TFUE · Inicio de una cooperación reforzada en la PESC",
-  "Estados miembros | **Al menos nueve** dirigen la solicitud al **Consejo** |",
-  "Consejo | La **transmite** al Alto Representante, a la Comisión y, a título informativo, al Parlamento Europeo |",
-  "Alto Representante | **Dictamina** sobre la coherencia con la **PESC** |",
-  "Comisión | **Dictamina** sobre la coherencia con las **demás políticas** de la Unión |",
-  "Parlamento Europeo | Solo es **informado** | A título informativo",
-  "Consejo | **Autoriza** mediante decisión | **Unanimidad**")
-F_331_2 = flujo("Art. 331.2 TFUE · Participación posterior en una cooperación reforzada en la PESC",
-  "Estado miembro | **Notifica** al Consejo, al Alto Representante y a la Comisión |",
-  "Consejo + Alto Representante | El Consejo **confirma** la participación, **previa consulta** al Alto Representante y tras comprobar las condiciones; a propuesta del Alto Representante, puede adoptar medidas transitorias | **Unanimidad** (arts. 330 y 331.2)",
-  "↳ Consejo | Si no se cumplen las condiciones, indica lo necesario y **fija un plazo** para reconsiderar la solicitud |")
 
 U_VI3_4 = unidad("3.4 Esquemas del procedimiento (guía M108)",
   "Los cuatro procedimientos de los arts. 329 y 331, uno por esquema. La diferencia está en **a quién se dirige** la solicitud, **quién interviene** y la **mayoría**: en la PESC, el Consejo decide por **unanimidad** y el Parlamento Europeo solo es informado. [[M108]]",
-  "@@esquema art329_1@@", F_329_1,
-  "@@esquema art331_1@@", F_331_1,
-  "@@esquema art329_2@@", F_329_2,
-  "@@esquema art331_2@@", F_331_2, ESQ)
+  "@@esquema art329_1@@",
+  "@@esquema art331_1@@",
+  "@@esquema art329_2@@",
+  "@@esquema art331_2@@")
 
 T.ap("bV", "V. ¿Cómo se entra y cómo se sale? Ampliación y retirada (TUE, arts. 49 y 50)", donde(
   "Quinta pregunta. La Unión ha pasado de seis a veintisiete Estados mediante sucesivas **ampliaciones** (art. 49) y ha conocido una **retirada** (art. 50). Los requisitos y el procedimiento están en el TUE; los criterios de Copenhague y la historia de las ampliaciones, en la ficha del Parlamento Europeo.",
