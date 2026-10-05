@@ -93,6 +93,30 @@ T.ap("s9", "III.1 Cómo estudiar los artículos 1 a 55", f"""
 - Segunda meta, en vueltas posteriores: la **lectura profunda** de los 55 artículos hasta captar la «música», de modo que una palabra cambiada te haga saltar la alarma. **No hace falta saberlos literalmente.**
 - Para entrenarlo, usa el {ir("#/ce/test", "🧭 Test Constitución")}: te sale el número y tienes que decir de qué trata.
 
+### 1.1 Los tres niveles de estudio y dónde se pregunta más
+
+Estudia los artículos 1 a 52 **por capas**, y no empieces por la última [[M101]]:
+
+1. **Estructura:** a qué título, capítulo y sección pertenece cada artículo. Es lo primero porque de ello depende qué mecanismos de garantía tiene (defensa por el Defensor del Pueblo, desarrollo por ley orgánica, procedimiento de reforma…).
+2. **Contenido:** asociar cada artículo con su materia, «al pistón» (el 3 es la lengua, el 8 las Fuerzas Armadas, el 33 la propiedad privada y la herencia). Es el cuadro del apartado siguiente.
+3. **Lectura profunda** (último nivel y, en conjunto, pocas preguntas): la lectura con los puntos calientes subrayados.
+
+Un dato que ayuda a repartir el esfuerzo: en los exámenes oficiales analizados, la **mayoría de las preguntas se concentra hasta el art. 29** (derechos fundamentales y libertades públicas). De la sección 2.ª (arts. 30 a 38) solo hay **una** pregunta (art. 34) y del capítulo III (arts. 39 a 52) solo **una** (art. 41). Prioriza el 1 al 29 sobre el 30 al 52.
+
+### 1.2 El subrayado de la academia (módulo M103)
+
+Los artículos 1 a 52 están anotados con un **código de colores** que verás en la {ir("#/ce/texto", "📜 Constitución completa")} (interruptor «Subrayado y comentarios de la academia») y en el **reverso** de las tarjetas del Test Constitución. Así tienes todo en el mismo lugar, sin duplicar apuntes:
+
+| Marca | Qué señala | Cómo usarla |
+|---|---|---|
+| 🟧 **Examen oficial** | Artículo que ya ha caído en un examen del INAP | Léelo con más cuidado |
+| 🟨 **Importante** | Cuestión importante, preguntada o susceptible de serlo | Grábatela |
+| 🟩 **Coletilla** | Con qué se regula o limita un derecho: *ley, tratado, resolución judicial…* | Pregunta muy fácil de manipular: cambian la palabra |
+| 🟦 **Se limita (excepción y sitio)** | Aparece en el cuadro de suspensión (arts. 55 y 116) | Domínalo un poco más (→ tema I.2 · IV) |
+| 🌸 **Ley orgánica** | Materia que se regula expresamente por ley orgánica (art. 8, además del art. 81) | Es la excepción |
+
+Las **marcas azules** se completan con el art. 55.1 de la Constitución (en el PDF de la academia no están subrayadas en todos los artículos): prevalece la norma. {ir("#/ce/texto", "🖍 Ver el subrayado en la Constitución")}
+
 {ir("#/ce/texto", "📜 Constitución completa")} {ir("#/ce/organigrama", "🗺 Organigrama")}
 """, 2)
 

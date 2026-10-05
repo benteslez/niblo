@@ -197,6 +197,11 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   estudiarlo a fondo; con nota). `{{c:<clave>~texto}}` pinta con el color de un título/capítulo de la CE;
   `{{ir:#/ruta|texto}}` es un botón. Fuente nueva `[[M101]]` = guía y vídeo del módulo (no es texto legal).
 - **Vídeo M101-02** (TC, Defensor, reforma; transcripción aportada por el usuario): sus reglas de memoria están en I.1 · IV.1.4 y IV.6, I.2 · V.1 (2.4) y I.3 · I.3 y II.2; las notas del propio documento mandan: el PDF/la ley prevalecen sobre el vídeo (Defensor: mayoría **absoluta** del Senado; reforma agravada: la del PDF) y el art. 49 del PDF «con epígrafes» está sin actualizar (se usa el BOE consolidado).
+- **Módulo M103** (lectura y explicación de los arts. 1-52: PDF subrayado + vídeo): vive **solo en `temas/ce.json` → `m103`** (generado por
+  `ce_datos.py` desde `herramientas/oposicion/m103_datos.py`; cada frase marcada tiene que ser literal del artículo): pills 🟧 examen oficial,
+  🟨 importante, 🟩 coletilla, 🟦 se limita en excepción y sitio (completado con el art. 55.1), 🌸 ley orgánica, subrayado en el texto y comentario
+  de la academia por artículo. Se ve en `#/ce/texto` (interruptor) y en el reverso del Test Constitución; el tema I.1 (III.1, 1.1 y 1.2) solo
+  explica los niveles y el código de colores y remite a la Constitución. No copiar estas anotaciones en los temas.
 - **Si la guía o el vídeo discrepan de la norma vigente, prevalece la norma** y se avisa en el mapa del tema
   (hoy: reforma del 69.3 «19 de mayo de 2026», LO 3/2007 solo parcialmente orgánica, capítulo II del Título I
   = arts. 14 a 38, reelección del Defensor no regulada).

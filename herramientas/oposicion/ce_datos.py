@@ -84,9 +84,21 @@ assert nums == list(range(1, 170)), nums[:5]
 assert [len(d["p"]) > 0 for d in disp] and len(disp) == 15
 assert sum(1 for d in disp if "adicional" in d["t"]) == 4 and sum(1 for d in disp if "transitoria" in d["t"]) == 9
 
+# Anotaciones del módulo M103 (marcas y comentarios de la academia sobre los arts. 1-52); cada frase marcada tiene que ser literal.
+from m103_datos import M103, LEYENDA, NIVELES
+_txt = {A["n"]: " ".join(" ".join(A["p"]).split()) for t in titulos for A in todos(t)}
+for _n, _d in M103.items():
+    assert _n in _txt, _n
+    for _f, _c in _d.get("marks", []):
+        assert _f in _txt[_n], ("M103: la frase no es literal", _n, _f)
+        assert _c in ("am", "vd", "az", "lo"), (_n, _c)
+M103_OUT = {"_fuente": "Módulo M103 «Artículos CE · Lectura y explicación» (documento subrayado y vídeo): marcas y comentarios de la academia, no texto de la CE. Las marcas azules se completan con el art. 55.1 CE.",
+            "leyenda": [list(x) for x in LEYENDA], "niveles": NIVELES,
+            "arts": {str(n): {k: v for k, v in d.items() if k != "marks"} | ({"marks": [list(m) for m in d["marks"]]} if d.get("marks") else {}) for n, d in M103.items()}}
+
 sello = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
 out = {"_format": "ce_v1", "_exportedAt": sello, "_fuente": "BOE-A-1978-31229 (texto consolidado vigente)", "preambulo": preambulo,
-       "titulos": titulos, "disposiciones": disp, "firma": firma}
+       "titulos": titulos, "disposiciones": disp, "firma": firma, "m103": M103_OUT}
 open(os.path.join(RAIZ, "temas", "ce.json"), "w", encoding="utf-8").write(json.dumps(out, ensure_ascii=False, separators=(",", ":")))
 ip = os.path.join(RAIZ, "temas", "indice.json"); idx = json.load(open(ip, encoding="utf-8")); idx["ce"] = sello
 json.dump(idx, open(ip, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
