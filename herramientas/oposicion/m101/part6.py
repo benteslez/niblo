@@ -130,4 +130,18 @@ Hay **tres estados**, de menor a mayor gravedad: **alarma < excepción < sitio**
 !> {IMP} **Fíjate bien en «quién declara» y «cómo»:** **alarma** → Gobierno, *dando cuenta* al Congreso; **excepción** → Gobierno, *con autorización previa* del Congreso; **sitio** → Congreso, *mayoría absoluta*, *a propuesta exclusiva* del Gobierno. Todo se mueve **entre Gobierno y Congreso**.
 
 **Regla mnemotécnica: 15 – 30 – lo decide el Congreso.** Alarma, 15 días; excepción, 30 días (+30); sitio, el tiempo que decida el Congreso.
+
+### La gradación: el peso pasa del Gobierno al Congreso [[M107]]
+
+La clave para ordenar los tres estados es verlos como una **escala de gravedad** (alarma < excepción < sitio) en la que **el poder de decidir se desplaza** del Gobierno al Congreso. Y siempre es un **diálogo entre Gobierno y Congreso**: ni el **Senado** ni las **Cortes Generales** en su conjunto intervienen en la declaración (los apartados 2 a 4 del art. 116 solo nombran al Gobierno y al Congreso).
+
+{tabla(["", "Alarma", "Excepción", "Sitio"], [
+  ["**Quién decide**", "**Gobierno**; el Congreso solo recibe **cuenta**", "**Gobierno**, con **autorización previa** del Congreso", "**Congreso** (mayoría absoluta), a propuesta exclusiva del Gobierno"],
+  ["**Duración**", "**15 días**; dentro del tope, la fija el Gobierno", "**30 días**: el **doble**, porque el problema es más grave", "La que **determine el Congreso**"],
+  ["**Prórroga**", "Con **autorización del Congreso**; la Constitución no fija el plazo de la prórroga", "**Otro plazo igual** (30 días) y con los **mismos requisitos**: es más rígida", "La del propio Congreso"],
+  ["**Dependencia del Gobierno**", "Mínima: solo necesita al Congreso para **prorrogar**", "Mayor: necesita al Congreso **desde el principio** y cada 30 días", "Total: **decide el Congreso**"]])}
+
+?> **Comentario del vídeo (no es texto legal).** Como la prórroga del estado de alarma solo exige la autorización del Congreso y no un plazo máximo propio, el vídeo recuerda que la **pandemia** se gestionó con la alarma y no con la excepción, aunque esta fuera «más apropiada» para limitar ciertos derechos: así el Gobierno no dependía del Congreso **cada 30 días**. El propio vídeo advierte de que es una **especulación**: lo que hay que retener es el cuadro.
+
+{IMP} **Alarma = limitar, no suspender.** El vídeo recuerda que el decreto del estado de alarma de la pandemia fue **recurrido ante el Tribunal Constitucional** y que se declararon **inconstitucionales** algunas de sus medidas, sobre todo las que afectaban a la **libertad de circulación** y al **derecho de reunión**, porque en la práctica equivalían a una **suspensión** de esos derechos, que la alarma no permite (solo caben **limitaciones**). [[M107]] *(Comentario del vídeo, sin cita de sentencia: la referencia exacta de las resoluciones del Tribunal queda pendiente de la fuente oficial.)*
 """, 2)

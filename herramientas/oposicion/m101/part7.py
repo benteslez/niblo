@@ -23,6 +23,16 @@ El art. 55.1 enumera los derechos **suspendibles** y el art. 116 dice que solo e
 Dos ideas para ayudarte a recordar la lista: **tiene sentido** que se puedan restringir justo estas libertades (circulación, reunión, huelga, comunicaciones, domicilio…) cuando el problema es de **orden público**; no se limitan «a tochomocho».
 
 *Alarma no suspende derechos:* el decreto de alarma solo permite **limitaciones**, como limitar la circulación, requisar bienes o racionar servicios (→ VI.2, art. 11 LO 4/1981).
+
+### Reglas de memoria de los arts. 17, 18, 19, 20, 21, 28 y 37 [[M107]]
+
+Es un trabajo de **memoria**, y el vídeo avisa de que hay que cuidar sobre todo la redacción de los arts. **17, 18 y 20**:
+
+- **17.3, la excepción dentro de la excepción.** Es lo único del art. 17 que **no** se suspende en el estado de excepción: solo en el **sitio**. Tiene sentido si se lee el apartado: {c("CE", "a17", "no pudiendo ser obligada a declarar")} y debe ser informada «de forma inmediata». Suspenderlo supondría poder **obligar a declarar a alguien sin informarle de sus derechos**: la mayor gravedad del artículo, por eso solo cabe en el sitio.
+- **18.2 y 18.3.** La **inviolabilidad del domicilio** y el **secreto de las comunicaciones** sí pueden suspenderse en excepción y sitio (y, para personas determinadas, por la ley orgánica del art. 55.2).
+- **19 y 21: circulación y reunión.** Son los derechos que más se tocaron en la pandemia y los que dieron problema al decreto de alarma (→ VI.2).
+- **El «laberinto» del art. 20.** De todo el art. 20 solo se suspenden **tres cosas**: el **20.1.a)** ({c("CE", "a20", "A expresar y difundir libremente los pensamientos, ideas y opiniones")}), el **20.1.d)** ({c("CE", "a20", "A comunicar o recibir libremente información veraz por cualquier medio de difusión")}) y el **20.5** (el secuestro de publicaciones, grabaciones y otros medios de información, solo por **resolución judicial**). **No** se suspenden la creación literaria, artística, científica y técnica (20.1.b), la libertad de cátedra (20.1.c) ni los apartados 2, 3 y 4.
+- **28.2 y 37.2: huelga y conflicto colectivo.** Los dos pueden suspenderse, pero **no están en el mismo nivel**: la **huelga** (28.2) está en la **sección 1.ª** (máxima protección) y el **conflicto colectivo** (37.2), en la **sección 2.ª**, sin esa protección reforzada. Tiene lógica que vayan juntos: la huelga es la **máxima expresión** del conflicto colectivo.
 """, 2)
 
 T.ap("s30", "VI.4 Puntos en común de los tres estados", f"""
