@@ -1310,6 +1310,7 @@ mark.m103-lo { background:#f9a8d4; color:#500724; border-radius:3px; padding:0 2
 .m103-ley summary { cursor:pointer; margin-top:6px; font-size:13px; font-weight:700; color:var(--text-muted); }
 .m103-lista, .m103-niv { margin:8px 0 0; padding-left:0; list-style:none; display:grid; gap:6px; font-size:13px; }
 .m103-niv li { padding-left:12px; border-left:3px solid var(--line); }
+.ce-acciones { margin:-4px 0 10px; }
 .ce-foco { animation:ce-foco 2.2s ease; }
 @keyframes ce-foco { 0%, 60% { background:color-mix(in srgb, var(--c) 22%, transparent); } 100% { background:transparent; } }
 .ce-pream p { margin:0 0 8px; font-size:15px; line-height:1.6; }
@@ -6353,6 +6354,7 @@ function renderCE(tab, n) {
   if (CEV.tab === "test" && CT.ses && CE) { ceSesion(); return; }
   vista().innerHTML = `
     <h1 class="titulo-grande">📜 Constitución Española</h1>
+    <div class="ce-acciones"><button type="button" class="btn" data-ce-apuntes>⬇ Descargar apuntes</button></div>
     <p class="view-sub">Texto literal del <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229" target="_blank" rel="noopener">BOE consolidado vigente</a>, con su estructura, un color por título y capítulo, el organigrama y el test de repaso por artículos.</p>
     <div class="pl-tabs ce-tabs" role="tablist" aria-label="Constitución">${CE_TABS.map(t => `<button class="chip ${t.id === CEV.tab ? "active" : ""}" role="tab" data-cet="${t.id}">${t.txt}</button>`).join("")}</div>
     <div id="ce-cuerpo"><div class="empty"><div class="ico">⏳</div><h3>Cargando la Constitución…</h3></div></div>`;
@@ -6967,15 +6969,137 @@ function descargarApuntes(id) {
   if (!estado.temas[id]) { toast("Este tema aún no tiene apuntes desarrollados", "error"); return; }
   let html;
   try { html = apuntesHTML(id); } catch (e) { console.error(e); toast("No se pudieron generar los apuntes", "error"); return; }
+  abrirApuntes(html, "apuntes-" + TEMA_POR_ID[id].c.replace(/\./g, "-") + ".html");
+}
+/** Abre el documento de apuntes en una pestaña (y lanza «Imprimir»); si el navegador la bloquea, lo baja como .html. */
+function abrirApuntes(html, nombre) {
   const w = window.open("", "_blank");
   if (w) { w.document.open(); w.document.write(html); w.document.close(); toast("En el cuadro de impresión elige «Guardar como PDF»", "", 4500); return; }
-  // Ventanas emergentes bloqueadas: se baja el documento como archivo HTML (ábrelo e imprímelo).
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([html], { type:"text/html" })); a.download = "apuntes-" + TEMA_POR_ID[id].c.replace(/\./g, "-") + ".html";
+  a.href = URL.createObjectURL(new Blob([html], { type:"text/html" })); a.download = nombre;
   document.body.appendChild(a); a.click(); a.remove();
   toast("Se ha descargado el archivo: ábrelo y elige «Imprimir → Guardar como PDF»", "", 5000);
 }
 document.addEventListener("click", e => { const bt = e.target.closest("[data-apuntes]"); if (bt) { e.preventDefault(); descargarApuntes(bt.dataset.apuntes); } });
+
+/* ---- Descargar apuntes de la Constitución -----------------------------------------------------------------------
+   Documento A4 con TODO lo que la app tiene anotado sobre la Constitución (se genera de los datos, así que lo que se vaya
+   añadiendo —ce.json → m103, temas I.1 a I.3— entra solo): guía de la academia, estructura y reglas de memoria, organigrama,
+   niveles de protección, arts. 1 a 55 con subrayado, pills y comentarios, y los cuadros/esquemas de los temas. */
+const CE_APUNTES_CSS = `
+:root { --line:#cfcfcf; --line-soft:#e4e4e4; --text:#222; --text-muted:#666; --bg-elev:#fff; --bg:#fff; --accent:#0b4a9e; --r-sm:6px; --r-md:8px; --r-lg:10px; }
+.cab-bloque { margin:5mm 0 2mm; padding:2mm 3mm; border-radius:3px; background:var(--c); color:var(--ct); display:flex; gap:3mm; align-items:baseline; break-after:avoid; }
+.cab-bloque b { font-size:10pt; text-transform:uppercase; letter-spacing:.03em; } .cab-bloque span { font-size:9.4pt; font-weight:700; flex:1; } .cab-bloque small { font-size:8pt; font-weight:700; }
+.ca { display:grid; grid-template-columns:34mm 1fr; gap:1mm 4mm; padding:2.4mm 0; border-top:1px solid #e1e1e1; break-inside:avoid; }
+.ca-h { align-self:start; } .ca-num { display:inline-block; background:var(--c); color:var(--ct); font-weight:800; font-size:9pt; padding:.4mm 2.4mm; border-radius:2px; }
+.ca-rub { display:block; margin-top:1mm; font-weight:800; font-size:8pt; line-height:1.25; color:#444; }
+.ca-t p { margin:0 0 1.4mm; font-size:9pt; line-height:1.38; text-align:left; } .ca-t p.ce-li { margin-left:4mm; }
+.ca-n { grid-column:1 / -1; }
+.m103-pills { display:flex; flex-wrap:wrap; gap:1mm; margin-top:1.4mm; }
+.m103-pill { display:inline-flex; padding:0 1.8mm; border-radius:10mm; font-size:6.4pt; font-weight:800; line-height:1.6; border:.3mm solid transparent; }
+.m103-pill.ex { background:#fed7aa; color:#7c2d12; border-color:#fb923c; } .m103-pill.am { background:#fef08a; color:#713f12; border-color:#facc15; }
+.m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; } .m103-pill.az { background:#bae6fd; color:#0c4a6e; border-color:#38bdf8; }
+.m103-pill.lo { background:#fbcfe8; color:#831843; border-color:#f472b6; } .m103-pill.niv { background:#e9d5ff; color:#581c87; border-color:#c084fc; }
+mark.m103-am { background:#fef08a; color:inherit; padding:0 .3mm; } mark.m103-vd { background:#86efac; color:inherit; padding:0 .3mm; }
+mark.m103-az { background:#7dd3fc; color:inherit; padding:0 .3mm; } mark.m103-lo { background:#f9a8d4; color:inherit; padding:0 .3mm; }
+.m103-nota { margin:1mm 0; padding:1.6mm 2.6mm; border-left:1.2mm solid #f59e0b; background:#fff6e3; font-size:8.4pt; line-height:1.38; }
+.m103-nota p { margin:0 0 1mm; font-size:8.4pt; text-align:left; } .m103-src { display:block; font-size:6.6pt; color:#777; }
+.leyenda-ul { list-style:none; padding:0; margin:0 0 3mm; display:grid; gap:1.2mm; font-size:8.8pt; } .leyenda-ul li { display:flex; gap:2mm; align-items:baseline; }
+table.ce-t { width:100%; border-collapse:collapse; font-size:8.4pt; margin:2mm 0 4mm; } table.ce-t th { background:#eef2f8; color:#0b3d91; padding:1.4mm 2mm; border:1px solid #c5cddb; text-align:left; }
+table.ce-t td { padding:1.2mm 2mm; border:1px solid #d6d6d6; vertical-align:top; } table.ce-t tr { break-inside:avoid; }
+.ce-chip { display:inline-block; background:var(--c); color:var(--ct); font-weight:800; font-size:7.6pt; padding:0 1.8mm; border-radius:2px; white-space:nowrap; }
+.og { display:grid; gap:2mm; margin:2mm 0 4mm; font-size:7.6pt; } .og a { text-decoration:none; color:inherit; }
+.og-parte { break-after:avoid; } .og-fila { break-inside:avoid; }
+.seccion.nueva { break-before:page; } .seccion.junta { break-inside:avoid; }
+.m103-pill.niv { white-space:normal; }
+.og-tit { flex:0 0 32mm !important; } .og-capc { flex:0 0 38mm !important; } .og-fila, .og-cap { gap:2.4mm !important; }
+.og-tit, .og-capc, .og-sec, .og-art14 { padding:1.2mm 2mm !important; font-size:7.4pt !important; }
+.og-pie { grid-template-columns:36mm 1fr !important; font-size:7.4pt; }
+`;
+function ogCssApp() {
+  let out = "";
+  for (const hoja of Array.from(document.styleSheets)) { let reglas; try { reglas = hoja.cssRules; } catch (_) { continue; } for (const r of Array.from(reglas)) { if (r.selectorText && /(^|,)\s*\.og(-|\b)/.test(r.selectorText)) out += r.cssText + "\n"; } }
+  return out;
+}
+function ceApuntesHTML() {
+  const M = CE.m103 || {}, R = (M.m107 && M.m107.unidades) || {};
+  const par = (p, marks) => ceParr(p, marks);
+  const inl = t => m103Inline(t);
+  const pillsDe = n => { const h = ceM103Pills(n); return h; };
+  // --- Sección 1: guía de la academia
+  const ley = (M.leyenda || []).map(([k, t, d]) => `<li><span class="m103-pill ${M103_PILL[k][0]}">${esc(M103_PILL[k][1])}</span><span>${esc(d)}</span></li>`).join("")
+    + `<li><span class="m103-pill niv">🛡 Nivel de protección</span><span>Qué garantías tiene cada artículo del Título I según su ubicación (arts. 53 y 81).</span></li>`;
+  const niveles = (M.niveles || []).map(x => `<li>${inl(x)}</li>`).join("");
+  const s1 = `<section class="seccion primera"><div class="k">Sección 1</div><h2 class="t">Cómo estudiar los <span class="az">artículos 1 a 52</span></h2>
+    <p class="lead">Código de colores del subrayado de la academia (módulo M103) y niveles de estudio. ${esc(M._fuente || "")}</p>
+    <ul class="leyenda-ul">${ley}</ul><ul class="leyenda-ul">${niveles}</ul></section>`;
+  // --- Sección 2: estructura y reglas de memoria
+  const filaU = (key, etq, rango) => `<tr><td><span class="ce-chip" style="${ceSt(key)}">${esc(etq)}</span></td><td>${esc(rango)}</td><td>${R[key] ? inl(R[key]) : ""}</td></tr>`;
+  const unidades = [["P", "Título preliminar"], ["I", "Título I"], ["I.1", "Cap. I"], ["I.2", "Cap. II"], ["I.2.1", "Secc. 1.ª"], ["I.2.2", "Secc. 2.ª"], ["I.3", "Cap. III"], ["I.4", "Cap. IV"], ["I.5", "Cap. V"], ...["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"].map(i => [i, "Título " + i])];
+  const rangoMas = key => { const u = CE_UNI[key]; if (!u) return ""; const base = rangoU(u); return /^(III|IV|V|VI|VII|VIII|IX|X)$/.test(key) ? `${base} (${u.desde} + ${u.hasta - u.desde})` : base; };
+  const s2 = `<section class="seccion"><div class="k">Sección 2</div><h2 class="t">Estructura y <span class="az">reglas de memoria</span></h2>
+    <p class="lead">Dos partes (dogmática 1-55, orgánica 56-169), el preámbulo, 10 títulos, 169 artículos y 15 disposiciones. Reglas del módulo M107 (repaso de la estructura): no son texto de la Constitución.</p>
+    <table class="ce-t"><thead><tr><th>Unidad</th><th>Artículos</th><th>Regla de memoria</th></tr></thead><tbody>
+      <tr><td><span class="ce-chip" style="${ceSt("D")}">Preámbulo</span></td><td>—</td><td>${R.preambulo ? inl(R.preambulo) : ""}</td></tr>
+      ${unidades.filter(([k]) => CE_UNI[k]).map(([k, e]) => filaU(k, e, rangoMas(k))).join("")}
+      <tr><td><span class="ce-chip" style="${ceSt("D")}">Disposiciones</span></td><td>15</td><td>${R.D ? inl(R.D) : ""}</td></tr></tbody></table></section>`;
+  // --- Sección 3: organigrama (el mismo de la app)
+  const caja = document.createElement("div"); ceVerOrg(caja);
+  const og = (caja.querySelector(".og") || caja).outerHTML.replace(/ href="[^"]*"/g, "");
+  const s3 = `<section class="seccion nueva"><div class="k">Sección 3</div><h2 class="t">Organigrama de la <span class="az">Constitución</span></h2>
+    <style>${ogCssApp()}</style>${og}</section>`;
+  // --- Sección 4: niveles de protección
+  const tramos = [[10, 13, "Fuera de las garantías del art. 53"], [14, 14, null], [15, 29, null], [30, 30, null], [31, 38, null], [39, 52, null]];
+  const s4 = `<section class="seccion junta"><div class="k">Sección 4</div><h2 class="t">Niveles de <span class="az">protección</span> del Título I</h2>
+    <p class="lead">Qué garantías tiene cada artículo según su ubicación (arts. 53, 54 y 81). El Defensor del Pueblo protege todo el Título I.</p>
+    <table class="ce-t"><thead><tr><th>Artículos</th><th>Nivel</th><th>Qué significa</th></tr></thead><tbody>${tramos.map(([a, b]) => { const nv = ceNivel(a); return `<tr><td>${a === b ? "Art. " + a : "Arts. " + a + "–" + b}</td><td><span class="m103-pill niv">🛡 ${esc(nv[0])}</span></td><td>${esc(nv[1])}</td></tr>`; }).join("")}</tbody></table></section>`;
+  // --- Sección 5: artículos 1 a 55 anotados
+  const art = A => { const d = ceM103(A.n) || {}, marks = d.marks || null;
+    return `<div class="ca" style="${ceSt(A.key)}"><div class="ca-h"><span class="ca-num">Art. ${A.n}</span>${A.t ? `<span class="ca-rub">${esc(A.t)}</span>` : ""}${ceM103Pills(A.n)}</div>
+      <div class="ca-t">${A.p.map(p => par(p, marks)).join("")}</div>${ceM103Nota(A.n) ? `<div class="ca-n">${ceM103Nota(A.n)}</div>` : ""}</div>`; };
+  const banda = (key, k, nombre) => `<div class="cab-bloque" style="${ceSt(key)}"><b>${esc(k)}</b><span>${esc(nombre)}</span><small>${rangoU(CE_UNI[key])}</small></div>`;
+  let cuerpo = "";
+  CE.titulos.filter(t => t.id === "P" || t.id === "I").forEach(t => {
+    cuerpo += banda(t.id, t.id === "P" ? "Título preliminar" : "Título " + t.id, t.nombre) + t.arts.map(a => art(CE_ART[a.n])).join("");
+    t.caps.forEach((cp, i) => { const kc = t.id + "." + (i + 1);
+      cuerpo += banda(kc, cap1(cp.num), cp.nombre) + cp.arts.map(a => art(CE_ART[a.n])).join("");
+      cp.secs.forEach((sc, j) => { const ks = kc + "." + (j + 1), m = sc.nombre.match(/^(Sección \d\.ª)\s+(.*)$/); cuerpo += banda(ks, m ? m[1] : "Sección", m ? m[2] : sc.nombre) + sc.arts.map(a => art(CE_ART[a.n])).join(""); }); });
+  });
+  const s5 = `<section class="seccion nueva"><div class="k">Sección 5</div><h2 class="t">Artículos 1 a 55 <span class="az">anotados</span></h2>
+    <p class="lead">Texto literal del BOE consolidado con el subrayado, los pills y los comentarios de la academia (módulos M103 y M107). Los títulos junto al número son los de la guía M101, no de la Constitución. El resto del articulado (56 a 169) está en la aplicación.</p>${cuerpo}</section>`;
+  // --- Sección 6: cuadros y esquemas de los temas I.1 a I.3 (todos los apartados «Cuadro…» y los de estructura)
+  let esq = "";
+  ["B1T01", "B1T02", "B1T03"].forEach(id => { const t = estado.temas[id]; if (!t) return;
+    (t.sections || []).filter(x => /^(?:[IVX]+\.\d+ )(?:Cuadro|Los títulos y sus artículos|El Título I por dentro)/.test(x.title)).forEach(x => {
+      esq += `<h3 class="sub2">${esc(TEMA_POR_ID[id].c)} · ${esc(x.title)}</h3><div class="cuerpo">${apCuida(formatear(apLimpia(x.body, x.title)))}</div>`; }); });
+  const s6 = esq ? `<section class="seccion"><div class="k">Sección 6</div><h2 class="t">Cuadros y esquemas de los <span class="az">temas I.1 a I.3</span></h2>${esq}</section>` : "";
+  const nSec = s6 ? 6 : 5;
+  const indice = ["Cómo estudiar los artículos 1 a 52 (código de colores y niveles)", "Estructura y reglas de memoria", "Organigrama de la Constitución", "Niveles de protección del Título I", "Artículos 1 a 55 anotados"].concat(s6 ? ["Cuadros y esquemas de los temas I.1 a I.3"] : []);
+  const hoy = new Date().toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
+  const css = APUNTES_CSS + CE_APUNTES_CSS + `:root { --cab-izq:${JSON.stringify("Constitución Española · apuntes")}; --cab-der:${JSON.stringify("Oposición GACE · Bloque I")}; }`;
+  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Constitución Española · apuntes</title><style>${css}</style></head><body>
+    <div class="barra"><button type="button" class="volver" onclick="volver()">← Volver a la app</button><button type="button" onclick="print()">⬇ Guardar como PDF / Imprimir</button><span>En el cuadro de impresión elige «Guardar como PDF» (A4, márgenes predeterminados, activa «Gráficos de fondo» si no se ven los colores).</span></div>
+    <div class="hoja">
+      <section class="portada"><div class="sup">Oposición · Gestión de la Administración Civil del Estado (A2) · Bloque I · Organización del Estado y de la Administración Pública</div>
+        <h1>Constitución Española <span class="az">de 1978</span></h1><div class="regla"></div>
+        <p class="sub">Apuntes de la academia sobre la Constitución: estructura y reglas de memoria, organigrama, niveles de protección, artículos 1 a 55 con subrayado y comentarios, y los cuadros y esquemas de los temas I.1 a I.3.</p>
+        <ol class="indice">${indice.map((x, i) => `<li><span class="n">${i + 1}.</span><span>${esc(x)}</span></li>`).join("")}</ol>
+        <div class="pie-portada">Apuntes generados desde la aplicación el ${esc(hoy)}. El texto de los artículos es literal del BOE consolidado; las anotaciones son material de la academia (módulos M101, M103 y M107), no texto legal.</div>
+      </section>
+      ${s1}${s2}${s3}${s4}${s5}${s6}
+    </div>
+    <script>
+      function volver() { const url = ${JSON.stringify(location.href.split("#")[0] + "#/ce/texto")}; if (window.opener && !window.opener.closed) { try { window.opener.focus(); } catch (_) {} window.close(); setTimeout(() => { location.href = url; }, 300); } else location.href = url; }
+      addEventListener("load", () => setTimeout(() => { try { print(); } catch (_) {} }, 900));<\/script></body></html>`;
+}
+async function descargarApuntesCE() {
+  let html;
+  const m = CEV.m103; CEV.m103 = true;   // el documento lleva siempre las anotaciones
+  try { await ceCargar(); html = ceApuntesHTML(); } catch (e) { console.error(e); toast("No se pudieron generar los apuntes de la Constitución", "error"); return; }
+  finally { CEV.m103 = m; }
+  abrirApuntes(html, "apuntes-constitucion.html");
+}
+document.addEventListener("click", e => { const bt = e.target.closest("[data-ce-apuntes]"); if (bt) { e.preventDefault(); descargarApuntesCE(); } });
 
 (async function arrancar() {
   leerSesion();
