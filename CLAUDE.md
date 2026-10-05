@@ -202,7 +202,11 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 
 - Botón «⬇ Descargar apuntes» en la ficha y en el lector de cada tema desarrollado (`data-apuntes`).
   `apuntesHTML(id)` genera un documento A4 (sin los bloques «Lectura profunda de los artículos…», para no incluir la Constitución completa: los artículos de estudio van en cada apartado y la lectura profunda sigue en la app) con el estilo de los temas de ejemplo (portada, índice,
-  «SECCIÓN n», recuadros, tablas, glosario, cronología e hitos, preguntas de repaso con la solución) usando
+  «SECCIÓN n», recuadros, tablas, glosario, cronología e hitos; **sin** preguntas de repaso, a petición del usuario) usando
   `formatear()`; se abre en una pestaña y lanza «Imprimir → Guardar como PDF» (sin librerías). Si el
   navegador bloquea la ventana, baja un `.html`. Cabecera y pie con `@page` (Chrome/Edge).
+- **Maquetación del PDF** (petición del usuario): el índice ocupa **solo la portada** (altura fija, índice compacto);
+  **nunca** títulos ni tablas huérfanos: los títulos van con lo que sigue, los párrafos que introducen una tabla, cita o
+  lista no se separan de ella, las tablas de hasta 14 filas no se parten (`apCuida`) y las largas repiten la cabecera.
+  Al tocar el CSS (`APUNTES_CSS`), regenerar los PDF con `pruebas/apuntes.js` y revisar portada y saltos de página.
 - Prueba: `herramientas/oposicion/pruebas/apuntes.js` (genera también el PDF con Chromium).
