@@ -6653,6 +6653,15 @@ table.apuntes-tabla td:first-child { font-weight:700; }
 // Tablas de hasta 14 filas: se marcan «corta» para que no se partan entre páginas (las largas repiten la cabecera).
 // En papel sobran las ayudas de navegación de la app: «Dónde estamos», «Qué vas a ver» y «→ Siguiente».
 const apSinNav = md => md.replace(/^@> \*\*▸ (?:Dónde estamos|Qué vas a ver)\.\*\*.*\n?/gm, "").replace(/^(?:@> )?\*\*→ (?:Siguiente|Fin del tema)[:\s].*\n?/gm, "");
+// Duplicados: en el PDF el «Repaso por bloques» y las preguntas de la guía repiten lo que ya dicen los cuadros y los «En resumen»;
+// un «Cuadro…» ya es el resumen de su apartado (se quita su «En resumen»); los botones de la app y las etiquetas no pintan nada en papel.
+const apDuplicado = s => /Repaso por bloques|Preguntas de la guía/i.test(s.title);
+const apLimpia = (md, titulo) => {
+  md = apSinNav(md).replace(/^(?:- )?(?:\{\{ir:[^}]*\}\} ?)+\s*\n?/gm, "");
+  if (/^[IVX]+\.\d+ Cuadro/.test(titulo)) md = md.replace(/^@> \*\*▸ En resumen\.\*\*[\s\S]*?(?=\n(?!@>)|$)/m, "");
+  if (/^Mapa del tema/.test(titulo)) md = md.replace(/^\| \*\*[IVX]+\*\* \| (?:Repaso|Preguntas y repaso|Lectura profunda)[^\n]*\n?/gm, "").replace(/^### Las etiquetas de los apuntes[\s\S]*?(?=^### |(?![\s\S]))/m, "");
+  return md.replace(/\n{3,}/g, "\n\n").trim();
+};
 const apCuida = html => html.replace(/<div class="tabla-wrap">([\s\S]*?)<\/div>/g, (m, t) => (t.match(/<tr/g) || []).length <= 14 ? m.replace('class="tabla-wrap"', 'class="tabla-wrap corta"') : m);
 function apuntesHTML(id) {
   const t = estado.temas[id], p = TEMA_POR_ID[id], b = BLOQUE_POR_CODE[p.b];
@@ -6666,8 +6675,9 @@ function apuntesHTML(id) {
   const todos = [];
   secs.forEach(s => { if (!todos.length || (s.nivel || 1) === 1) todos.push({ s, hijos:[] }); else todos[todos.length - 1].hijos.push(s); });
   // El PDF no lleva la Constitución completa: se omiten las «Lectura profunda de los artículos…» (siguen en la app).
-  const bloques = todos.filter(x => !/Lectura profunda de los art/i.test(x.s.title));
-  const omitidos = todos.length - bloques.length;
+  todos.forEach(x => { x.hijos = x.hijos.filter(h => !apDuplicado(h)); });
+  const bloques = todos.filter(x => !/Lectura profunda de los art/i.test(x.s.title) && !apDuplicado(x.s) && (x.hijos.length || apLimpia(x.s.body, x.s.title)));
+  const omitidos = todos.filter(x => /Lectura profunda de los art/i.test(x.s.title)).map(x => x.s.title.split(".")[0]);
   const extra = [];
   if ((t.glossary || []).length) extra.push("Glosario");
   if ((t.timeline || []).length) extra.push("Cronología e hitos");
@@ -6677,8 +6687,8 @@ function apuntesHTML(id) {
   const secHTML = bloques.map(x => {
     n++;
     return `<section class="seccion${n === 1 ? " primera" : ""}"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>
-      <div class="cuerpo">${apCuida(formatear(apSinNav(x.s.body)))}</div>
-      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(apSinNav(h.body)))}</div>`).join("")}</section>`;
+      <div class="cuerpo">${apCuida(formatear(apLimpia(x.s.body, x.s.title)))}</div>
+      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(apLimpia(h.body, h.title)))}</div>`).join("")}</section>`;
   }).join("");
   const gl = (t.glossary || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Glosario de <span class="az">conceptos</span></h2>
       <p class="lead">Términos clave del tema, con su definición y la categoría a la que pertenecen.</p>
@@ -6698,7 +6708,7 @@ function apuntesHTML(id) {
         <ol class="indice">${indice.map((x, i) => `<li><span class="n">${i + 1}.</span><span>${esc(x)}</span></li>`).join("")}</ol>
         <div class="pie-portada">Apuntes generados desde la aplicación el ${esc(hoy)}. El texto de las normas es literal del BOE consolidado (etiqueta BOE); los esquemas, cuadros y reglas mnemotécnicas son material de estudio. Etiquetas: <span class="pill-imp">IMPORTANTE</span> lo que se pregunta mucho; <span class="pill-pre">PRESCINDIBLE</span> lo que no hace falta estudiar a fondo.</div>
       </section>
-      ${secHTML}${omitidos ? `<p class="lead" style="margin-top:14px">Los artículos de estudio van dentro de cada apartado. El texto completo de la Constitución y la lectura profunda de sus artículos están en la aplicación (botón «Constitución Española»).</p>` : ""}${gl}${cr}
+      ${secHTML}${omitidos.length ? `<p class="lead" style="margin-top:14px">No se incluye el bloque ${omitidos.join(", ")} (lectura profunda): los artículos de estudio van dentro de cada apartado. El texto completo de la Constitución y la lectura profunda de sus artículos están en la aplicación (botón «Constitución Española»).</p>` : ""}${gl}${cr}
     </div>
     <script>addEventListener("load", () => setTimeout(() => { try { print(); } catch (_) {} }, 700));<\/script></body></html>`;
 }

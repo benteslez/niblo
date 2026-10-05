@@ -210,5 +210,8 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   lista no se separan de ella, las tablas de hasta 14 filas no se parten (`apCuida`) y las largas repiten la cabecera.
   Para ahorrar páginas, las secciones **no** empiezan en página nueva (solo la 1.ª) y el PDF omite las ayudas de navegación
   de la app («Dónde estamos», «Qué vas a ver», «→ Siguiente», `apSinNav`).
+  **Sin duplicados** (`apLimpia`): no entran «Repaso por bloques» ni «Preguntas de la guía» (repiten los cuadros y los
+  «En resumen»); un apartado «Cuadro…» pierde su «En resumen» (el cuadro ya es el resumen); se quitan los botones de la
+  app y «Las etiquetas de los apuntes» del mapa. En la app todo se mantiene.
   Al tocar el CSS (`APUNTES_CSS`), regenerar los PDF con `pruebas/apuntes.js` y revisar portada y saltos de página.
 - Prueba: `herramientas/oposicion/pruebas/apuntes.js` (genera también el PDF con Chromium).
