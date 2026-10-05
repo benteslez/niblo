@@ -5116,10 +5116,14 @@ document.addEventListener("keydown", e => {
   const panel = document.getElementById("panel"), carta = document.getElementById("fc");
   if (!carta || !panel || panel.hidden || panel.dataset.herramienta !== "fc") return;
   if (e.target.closest && e.target.closest("input, textarea, select, [contenteditable]")) return;
-  e.preventDefault();
-  if (e.target === carta) return;   // la propia tarjeta ya lo gestiona
+  e.preventDefault(); espacioFc = true;
+  if (e.target === carta || carta.contains(e.target)) return;   // la propia tarjeta ya lo gestiona
+  if (e.target.blur) e.target.blur();   // si el foco estaba en un botón, el espacio no debe pulsarlo
   carta.click();
 });
+// En un botón el espacio se activa al SOLTAR la tecla: se anula para que no repita la acción del botón enfocado.
+let espacioFc = false;
+document.addEventListener("keyup", e => { if (e.key === " " && espacioFc) { espacioFc = false; e.preventDefault(); } });
 /* 4 · Flashcards. Progreso: claves "id:índice" de las que «la sabía». */
 const KEY_FCM = "gestion_hub_fc_modo_v1";
 function hubFc(c, ambito, temas) {
