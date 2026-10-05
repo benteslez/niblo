@@ -542,11 +542,8 @@ details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-mu
       linear-gradient(135deg, color-mix(in srgb, var(--accent) 42%, #0b1220) 0%, color-mix(in srgb, var(--accent) 18%, #0b1220) 100%);
   }
 }
-/* Cabecera del tema: fondo blanco y texto en el color del bloque (petición del usuario) */
-.hero-tema, :root[data-tema="oscuro"] .hero-tema, :root:not([data-tema]) .hero-tema { background:var(--bg-elev) !important; color:var(--accent) !important; border:1px solid var(--line); box-shadow:var(--sh-1) !important; }
-.hero-tema h1 { color:var(--accent); }
-.hero-btn { background:transparent; color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--line)); }
-.hero-btn:hover { background:var(--accent-bg); }
+.hero-btn { background:rgba(255,255,255,.14); color:#fff; border-color:rgba(255,255,255,.3); }
+.hero-btn:hover { background:rgba(255,255,255,.24); }
 .hero-sup { font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.85; }
 .hero-num { font-size:13px; font-weight:600; opacity:.9; margin-top:6px; }
 .hero-tema h1 + .hero-acc { margin-top:16px; }
@@ -592,7 +589,12 @@ details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-mu
 .lat-indice .n { color:var(--accent); font-weight:700; margin-right:2px; }
 .ok-mini { color:var(--ok); font-weight:800; }
 /* ---- Barra lateral del tema: diseño actual (lista limpia, iconos en cápsulas, sin cajas pesadas) ---- */
-.estudio-lateral { padding:22px 18px; border-radius:20px; }
+.estudio-lateral { padding:22px 18px; border-radius:20px; border:1px solid color-mix(in srgb, var(--accent) 22%, var(--line)); background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent-2) 16%, transparent) 0%, transparent 60%),
+    linear-gradient(160deg, color-mix(in srgb, var(--accent) 12%, var(--bg-elev)) 0%, color-mix(in srgb, var(--accent) 5%, var(--bg-elev)) 100%); }
+.estudio-lateral .herr-ico { background:color-mix(in srgb, var(--accent) 10%, var(--bg-elev)); }
+.estudio-lateral .herr:hover { background:color-mix(in srgb, var(--accent) 12%, var(--bg-elev)); }
+.estudio-lateral .buscar-tema .input { background-color:color-mix(in srgb, var(--bg-elev) 80%, transparent); }
 .lat-cab { border-bottom:none; padding-bottom:4px; margin-bottom:0; }
 .lat-sup { font-size:10.5px; letter-spacing:.12em; font-weight:700; line-height:1.4; }
 .lat-tit { font-size:24px; font-weight:800; letter-spacing:-.03em; margin-top:4px; }
@@ -637,7 +639,7 @@ details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-mu
 .card.ap + .card.ap { margin-top:12px; }
 .ap-cab { display:flex; align-items:center; gap:12px; padding:16px 18px; cursor:pointer; }
 .ap-num { font-size:13px; font-weight:800; color:var(--text-muted); font-feature-settings:"tnum"; min-width:20px; }
-.ap-tit { flex:1; min-width:0; margin:0; font-size:18px; font-weight:700; letter-spacing:-.015em; line-height:1.3; color:var(--accent); }
+.ap-tit { flex:1; min-width:0; margin:0; font-size:18px; font-weight:800; letter-spacing:-.03em; line-height:1.3; color:var(--accent); }
 @media (min-width:720px) { .ap-tit { font-size:20px; } }
 .ap-rep {
   flex-shrink:0; border:1px solid var(--line); background:var(--bg-soft); color:var(--text-muted);
@@ -6939,7 +6941,6 @@ const CJ_CSS = `
 @media (max-width:640px) { .cmap-ramas { grid-template-columns:1fr; } .cmap-ramas::before, .cmap-r::before { display:none; } .cmap-s { margin-top:.4em; } .cmap-s::before { display:none; } }
 .ap-cuerpo h4.ap-h { font-family:inherit; font-size:17px; font-weight:700; color:var(--accent); border:none; padding:0; margin:22px 0 4px; }
 .cuerpo h4.ap-h { font-family:inherit; border:none; padding:0; }
-.ap-tit { font-family:Georgia,"Times New Roman",serif; }
 .apuntes-tabla { border-collapse:separate; border-spacing:0; }
 .apuntes-tabla th { background:#2f62b8 !important; color:#fff !important; font-weight:700; padding:.7em .9em; }
 .ap-cuerpo .tabla-wrap, .cuerpo .tabla-wrap { border-radius:12px; overflow:hidden; }
