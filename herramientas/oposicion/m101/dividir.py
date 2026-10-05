@@ -187,7 +187,7 @@ Es el **segundo tema del bloque I** (el primero estudia la estructura de la Cons
 - **Defensor del Pueblo.** La guía anota «5 años. Reelegible»; la ley orgánica fija 5 años y **no regula** la reelección (→ V.2).
 - **Capítulo II.** Comprende los arts. **14 a 38**: el art. 14 queda fuera de las dos secciones.
 """, 1)
-        A("bIV", "I. Derechos y deberes fundamentales: los niveles de protección", S["bIV"]["body"], 1)
+        A("bIV", "I. Derechos y deberes fundamentales: los niveles de protección", S["bIV"]["body"].replace("apartado IV.2", "apartado I.2"), 1)
         for i, n in (("s16", 1), ("s17", 2), ("s18", 3)): A(i, f"I.{n}" + S[i]["title"][4:], S[i]["body"])
         A("bLP", "II. Lectura profunda de los artículos 10 a 52", donde(
           "Segunda pregunta. Para **dominar la «música»** de cada artículo, léelos con calma, uno a uno, cada vez que repases. Tienes el **texto literal** con las palabras clave en negrita y una nota por artículo. El resto del tema te dice **qué garantiza cada nivel** y **cómo se suspenden** los derechos.",

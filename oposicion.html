@@ -6542,11 +6542,11 @@ function calificarCE(c, q) {
    pills, colores de la CE…). Las preguntas interactivas salen con la solución marcada.
    ====================================================================== */
 const APUNTES_CSS = `
-@page { size:A4; margin:22mm 18mm 20mm; @top-left { content:var(--cab-izq); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @top-right { content:var(--cab-der); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @bottom-center { content:counter(page); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } }
+@page { size:A4; margin:20mm 16mm 18mm; @top-left { content:var(--cab-izq); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @top-right { content:var(--cab-der); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @bottom-center { content:counter(page); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } }
 @page :first { @top-left { content:""; } @top-right { content:""; } @bottom-center { content:""; } }
 * { box-sizing:border-box; }
 html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-body { margin:0; font:10.5pt/1.62 Arial, Helvetica, sans-serif; color:#222; background:#fff; }
+body { margin:0; font:10pt/1.5 Arial, Helvetica, sans-serif; color:#222; background:#fff; }
 .barra { position:sticky; top:0; z-index:5; display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:10px 18px; background:#0b3d91; color:#fff; font-size:14px; }
 .barra button { border:0; border-radius:20px; padding:8px 18px; font-weight:700; background:#fff; color:#0b3d91; cursor:pointer; font-size:14px; }
 .barra span { opacity:.9; }
@@ -6564,7 +6564,9 @@ body { margin:0; font:10.5pt/1.62 Arial, Helvetica, sans-serif; color:#222; back
 .indice li:first-child { border-top:1px solid #cfcfcf; }
 .indice .n { width:26px; color:#8a8a8a; }
 .pie-portada { margin-top:6mm; font-size:8pt; color:#9a9a9a; line-height:1.6; }
-.seccion { page-break-before:always; break-before:page; }
+.seccion { margin-top:9mm; }
+.seccion.primera { page-break-before:always; break-before:page; margin-top:0; }
+.seccion > .k, .seccion > h2.t { break-after:avoid; }
 .seccion > .k { font-size:8.5pt; letter-spacing:.03em; color:#0b4a9e; text-transform:uppercase; margin:2mm 0 1mm; }
 .seccion > h2.t { margin:0 0 6mm; padding-bottom:3mm; font-size:19pt; line-height:1.22; font-weight:800; color:#1c1c1c; border-bottom:2.4px solid #0b4a9e; }
 .seccion > h2.t .az { color:#0b4a9e; }
@@ -6649,6 +6651,8 @@ table.apuntes-tabla td:first-child { font-weight:700; }
 .preg .ex { display:block; margin-top:1.5mm; font-size:9.2pt; color:#555; font-style:italic; }
 `;
 // Tablas de hasta 14 filas: se marcan «corta» para que no se partan entre páginas (las largas repiten la cabecera).
+// En papel sobran las ayudas de navegación de la app: «Dónde estamos», «Qué vas a ver» y «→ Siguiente».
+const apSinNav = md => md.replace(/^@> \*\*▸ (?:Dónde estamos|Qué vas a ver)\.\*\*.*\n?/gm, "").replace(/^(?:@> )?\*\*→ (?:Siguiente|Fin del tema)[:\s].*\n?/gm, "");
 const apCuida = html => html.replace(/<div class="tabla-wrap">([\s\S]*?)<\/div>/g, (m, t) => (t.match(/<tr/g) || []).length <= 14 ? m.replace('class="tabla-wrap"', 'class="tabla-wrap corta"') : m);
 function apuntesHTML(id) {
   const t = estado.temas[id], p = TEMA_POR_ID[id], b = BLOQUE_POR_CODE[p.b];
@@ -6672,9 +6676,9 @@ function apuntesHTML(id) {
   let n = 0;
   const secHTML = bloques.map(x => {
     n++;
-    return `<section class="seccion"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>
-      <div class="cuerpo">${apCuida(formatear(x.s.body))}</div>
-      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(h.body))}</div>`).join("")}</section>`;
+    return `<section class="seccion${n === 1 ? " primera" : ""}"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>
+      <div class="cuerpo">${apCuida(formatear(apSinNav(x.s.body)))}</div>
+      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(apSinNav(h.body)))}</div>`).join("")}</section>`;
   }).join("");
   const gl = (t.glossary || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Glosario de <span class="az">conceptos</span></h2>
       <p class="lead">Términos clave del tema, con su definición y la categoría a la que pertenecen.</p>
