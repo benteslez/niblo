@@ -197,6 +197,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   estudiarlo a fondo; con nota). `{{c:<clave>~texto}}` pinta con el color de un título/capítulo de la CE;
   `{{ir:#/ruta|texto}}` es un botón. Fuente nueva `[[M101]]` = guía y vídeo del módulo (no es texto legal).
 - **Vídeo M101-02** (TC, Defensor, reforma; transcripción aportada por el usuario): sus reglas de memoria están en I.1 · IV.1.4 y IV.6, I.2 · V.1 (2.4) y I.3 · I.3 y II.2; las notas del propio documento mandan: el PDF/la ley prevalecen sobre el vídeo (Defensor: mayoría **absoluta** del Senado; reforma agravada: la del PDF) y el art. 49 del PDF «con epígrafes» está sin actualizar (se usa el BOE consolidado).
+- **Módulo M106** (ampliación del Defensor del Pueblo; PDF aportado por el usuario): ya estaba casi todo en I.2 · V; se añadió la admisión y rechazo de quejas (art. 17 LO 3/1981, I.2 · V.2 apartado 2.7) y dos flashcards. El PDF dice «reelegible»: la LO 3/1981 no lo regula (prevalece la ley, aviso en el mapa de I.2).
 - **Módulo M103** (lectura y explicación de los arts. 1-52: PDF subrayado + vídeo): vive **solo en `temas/ce.json` → `m103`** (generado por
   `ce_datos.py` desde `herramientas/oposicion/m103_datos.py`; cada frase marcada tiene que ser literal del artículo): pills 🟧 examen oficial,
   🟨 importante, 🟩 coletilla, 🟦 se limita en excepción y sitio (completado con el art. 55.1), 🌸 ley orgánica, subrayado en el texto y comentario

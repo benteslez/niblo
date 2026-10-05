@@ -78,6 +78,16 @@ T.ap("s42", "VIII.4 Funciones y actuación", f"""
   lx("LODP", "aveintinueve", 29, ["recursos de inconstitucionalidad y de amparo"]),
   lx("LODP", "aquince", 15, ["en el plazo máximo de un año"], solo=[1]))}
 
+{unidad("4.2 Admisión y rechazo de las quejas (art. 17 LO 3/1981)",
+  "Una vez registrada la queja, el Defensor decide si **la tramita o la rechaza**. Si la rechaza, debe hacerlo **en escrito motivado** y puede orientar al interesado sobre las vías que considere más oportunas. Lo que más se pregunta es **qué quejas rechaza**: las **anónimas** las rechaza **siempre** («rechazará»); las demás, si lo estima oportuno («podrá rechazar»), cuando advierta **mala fe**, **carencia de fundamento**, **inexistencia de pretensión** o cuando su tramitación **perjudique el legítimo derecho de un tercero**. Y una regla de cierre que no conviene olvidar: **sus decisiones no son recurribles**. [[M106]]",
+  lx("LODP", "adiecisiete", 17, ["registrará y acusará recibo de las quejas", "en escrito motivado", "rechazará las quejas anónimas", "mala fe, carencia de fundamento, inexistencia de pretensión", "tercera persona", "Sus decisiones no serán susceptibles de recurso"], solo=[1, 3]),
+  tabla(["Queja", "Qué hace el Defensor", "Cómo se recuerda"], [
+    ["**Anónima**", "**La rechaza** (obligatorio)", "«Rechazará»"],
+    ["Mala fe · sin fundamento · sin pretensión · perjuicio a un tercero", "**Puede rechazarla**", "«Podrá rechazar»: cuatro supuestos"],
+    ["Pendiente de resolución judicial", "No entra en el examen individual y lo **suspende** si luego se acude a los tribunales (sí puede investigar los problemas generales)", "Art. 17.2"],
+    ["Cualquier decisión de admisión o rechazo", "**No cabe recurso**", "Art. 17.3"]]),
+  f"?> **Trampa típica:** «el Defensor **podrá** rechazar las quejas anónimas» (falso: las **rechaza siempre**) o «sus decisiones son recurribles ante…» (falso: **no son susceptibles de recurso**).")}
+
 !> {IMP} **Para el examen:** el Defensor puede interponer **a la vez** amparo e inconstitucionalidad; su investigación es **sumaria e informal**; supervisa también a las **CCAA**; los **estados de excepción o sitio no interrumpen** su actividad (art. 11.3, sin perjuicio del art. 55 CE).
 """, 2)
 
@@ -85,4 +95,5 @@ T.ap("s43", "VIII.5 Resumen del Defensor del Pueblo", resumen([
   "**Alto comisionado** de las Cortes Generales; defiende los derechos del **Título I** y supervisa la **Administración** (estatal y autonómica); ley orgánica.",
   "**Requisitos:** español, mayor de edad, pleno disfrute de derechos civiles y políticos.",
   "**Elección:** Comisión Mixta propone → **3/5 Congreso** y ratificación **3/5 Senado** (20 días) → si no, **3/5 Congreso + mayoría absoluta Senado** → firma conjunta de los Presidentes y **BOE**.",
-  "**5 años**; **dos adjuntos** nombrados por él; **investigación sumaria e informal**; puede interponer **amparo e inconstitucionalidad**."], "Siguiente: IX. La reforma de la Constitución (Título X)"), 2)
+  "**5 años**; **dos adjuntos** nombrados por él; **investigación sumaria e informal**; puede interponer **amparo e inconstitucionalidad**.",
+  "**Quejas:** plazo de **1 año**; **rechaza siempre las anónimas** y puede rechazar las de mala fe, sin fundamento, sin pretensión o que perjudiquen a un tercero; **sus decisiones no son recurribles**."], "Siguiente: IX. La reforma de la Constitución (Título X)"), 2)
