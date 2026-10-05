@@ -235,6 +235,10 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   otro. Corregido: L1 (nombre del Título I) y P51 (art. 9.3) pasan a I.1.
 - Prueba: `herramientas/oposicion/pruebas/test_academia.js`.
 
+## Abrir un tema
+
+- Un tema **desarrollado** (con apuntes) se abre **directamente en el lector** (`#/tema/<id>` redirige a `#/tema/<id>/leer`); la ficha con el programa, las fuentes y la vigencia queda aparte, en el botón «Ficha y fuentes» del lector (`#/tema/<id>/ficha`), para que no meta ruido al entrar (petición del usuario). Un tema sin apuntes sigue abriendo la ficha. «Atrás» en el lector vuelve al bloque.
+
 ## Descargar apuntes (botón en cada tema)
 
 - Botón «⬇ Descargar apuntes» en la ficha y en el lector de cada tema desarrollado (`data-apuntes`).

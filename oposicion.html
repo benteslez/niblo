@@ -2969,7 +2969,7 @@ function ruta() {
   const h = location.hash.replace(/^#\/?/, "");
   const p = h.split("/").filter(Boolean);
   if (p[0] === "bloque" && BLOQUE_POR_CODE[p[1]]) return { v:"bloque", b:p[1], hub:p[2] === "hub" };
-  if (p[0] === "tema" && TEMA_POR_ID[p[1]]) return { v:p[2] === "editar" ? "editar" : p[2] === "leer" ? "leer" : "tema", id:p[1] };
+  if (p[0] === "tema" && TEMA_POR_ID[p[1]]) return { v:p[2] === "editar" ? "editar" : p[2] === "leer" ? "leer" : "tema", id:p[1], ficha:p[2] === "ficha" };
   if (p[0] === "global") return { v:"global" };
   if (p[0] === "real") return { v:"real" };
   if (p[0] === "guia") return { v:"guia" };
@@ -2984,6 +2984,8 @@ function render() {
   S.renderPendiente = false;
   const r = ruta();
   if ((r.v === "tema" || r.v === "leer" || r.v === "editar") && FUSION[r.id]) { location.replace("#/tema/" + FUSION[r.id] + (r.v === "tema" ? "" : "/" + r.v)); return; }
+  // Un tema desarrollado se abre directamente en sus apuntes; la ficha (programa, fuentes, vigencia) queda en «Ficha y fuentes» (#/tema/ID/ficha).
+  if (r.v === "tema" && !r.ficha && estado.temas[r.id] && tieneApuntes(estado.temas[r.id])) { location.replace("#/tema/" + r.id + "/leer"); return; }
   cerrarPanel(true);
   if (r.v !== "leer") vozParar();
   if (r.v !== "real" && !(r.v === "ce" && CT.ses) && typeof salirPantallaCompleta === "function") { if (r.v !== "ce") CT.ses = false; salirPantallaCompleta(); }
@@ -2996,7 +2998,7 @@ function render() {
     titulo.textContent = "Oposición";
     renderInicio();
   } else {
-    const destino = r.v === "tema" ? "#/bloque/" + TEMA_POR_ID[r.id].b : (r.v === "editar" || r.v === "leer") ? "#/tema/" + r.id : r.v === "ce" ? "#/bloque/B1" : "#/";
+    const destino = r.v === "tema" ? "#/bloque/" + TEMA_POR_ID[r.id].b : r.v === "editar" ? "#/tema/" + r.id : r.v === "leer" ? "#/bloque/" + TEMA_POR_ID[r.id].b : r.v === "ce" ? "#/bloque/B1" : "#/";
     atras.href = destino; atras.setAttribute("aria-label", "Volver"); atras.title = "Volver";
     if (r.v === "bloque") { document.body.dataset.b = r.b; titulo.textContent = "Bloque " + BLOQUE_POR_CODE[r.b].rom; renderBloque(r.b, r.hub); }
     else if (r.v === "tema") { document.body.dataset.b = TEMA_POR_ID[r.id].b; titulo.textContent = "Tema " + TEMA_POR_ID[r.id].c; renderTema(r.id); }
@@ -3766,7 +3768,7 @@ function renderLeer(id) {
       ${chips.length ? `<div class="hero-chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
       <div class="hero-acc">
         <a class="btn btn-sm hero-btn" href="#/tema/${id}/editar">✏️ Editar</a>
-        <a class="btn btn-sm hero-btn" href="#/tema/${id}">Ficha y fuentes</a>
+        <a class="btn btn-sm hero-btn" href="#/tema/${id}/ficha">Ficha y fuentes</a>
         <button class="btn btn-sm hero-btn" data-apuntes="${id}" title="Descargar los apuntes en PDF">⬇ Descargar apuntes</button>
         ${t.html ? `<button class="btn btn-sm hero-btn" id="btn-original">Archivo original ↗</button>` : ""}
       </div>
