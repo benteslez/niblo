@@ -52,14 +52,14 @@ Los títulos tienen **rúbrica propia** salvo el **Título preliminar**, que no 
 
 | Título | Primer artículo | + N | Último artículo |
 |---|---|---|---|
-| {{c:III~III · Cortes Generales}} | 66 | **+30** | 96 |
-| {{c:IV~IV · Gobierno y Administración}} | 97 | **+10** | 107 |
-| {{c:V~V · Relaciones Gobierno–Cortes}} | 108 | **+8** | 116 |
-| {{c:VI~VI · Poder Judicial}} | 117 | **+10** | 127 |
-| {{c:VII~VII · Economía y Hacienda}} | 128 | **+8** | 136 |
-| {{c:VIII~VIII · Organización territorial}} | 137 | **+21** | 158 |
-| {{c:IX~IX · Tribunal Constitucional}} | 159 | **+6** | 165 |
-| {{c:X~X · Reforma constitucional}} | 166 | **+3** | 169 |
+| {{{{c:III~III · Cortes Generales}}}} | 66 | **+30** | 96 |
+| {{{{c:IV~IV · Gobierno y Administración}}}} | 97 | **+10** | 107 |
+| {{{{c:V~V · Relaciones Gobierno–Cortes}}}} | 108 | **+8** | 116 |
+| {{{{c:VI~VI · Poder Judicial}}}} | 117 | **+10** | 127 |
+| {{{{c:VII~VII · Economía y Hacienda}}}} | 128 | **+8** | 136 |
+| {{{{c:VIII~VIII · Organización territorial}}}} | 137 | **+21** | 158 |
+| {{{{c:IX~IX · Tribunal Constitucional}}}} | 159 | **+6** | 165 |
+| {{{{c:X~X · Reforma constitucional}}}} | 166 | **+3** | 169 |
 
 Los números se retienen mejor con una idea: **30, 10 y 8** son los «sumandos» de los primeros bloques (las Cortes se llevan el 30; el Gobierno y el Poder Judicial, un 10 cada uno; las relaciones y Economía, el «8 comodín»), y lo que queda desde el art. 137 hasta el 169 —**21 + 6 + 3**— suma otro **30**. Recuerda que «+ N» significa que el título tiene **N + 1** artículos (el Título III tiene 31).
 
