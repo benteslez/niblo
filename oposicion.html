@@ -1330,6 +1330,17 @@ body.real-abierto .cr { display:none; }
 .ce-ver { margin-top:6px; }
 .ce-hint { color:var(--text-muted); font-size:13px; margin-top:14px; text-align:center; }
 .ce-hint-rev { display:none; }
+.ce-card.desliz { position:relative; touch-action:pan-y; user-select:none; -webkit-user-select:none; transition:transform .2s ease; }
+.ce-card.desliz.arrastra { transition:none; cursor:grabbing; }
+.ce-card.desliz.sale { transition:transform .22s ease-in; pointer-events:none; }
+.ce-card.desliz .ce-in { animation:ce-entra .28s ease-out; }
+@keyframes ce-entra { from { transform:translateY(16px) scale(.97); opacity:.3; } to { transform:none; opacity:1; } }
+.ce-card[data-dir="si"] .ce-cara { box-shadow:0 0 0 4px var(--ok), var(--sh-2); }
+.ce-card[data-dir="no"] .ce-cara { box-shadow:0 0 0 4px var(--hot), var(--sh-2); }
+.ce-card[data-dir]::after { position:absolute; top:22px; padding:6px 14px; border-radius:12px; font-weight:800; font-size:16px; color:#fff; z-index:2; pointer-events:none; }
+.ce-card[data-dir="si"]::after { content:"✓ La sabía"; right:18px; background:var(--ok); transform:rotate(6deg); }
+.ce-card[data-dir="no"]::after { content:"✗ No la sabía"; left:18px; background:var(--hot); transform:rotate(-6deg); }
+.ce-desliz-hint { text-align:center; font-size:12.5px; margin-top:6px; }
 .ce-card.rev .ce-hint-rev { display:block; }
 .ce-hint kbd, .srs-teclas kbd { font:inherit; font-size:11px; padding:1px 5px; border:1px solid var(--line); border-radius:4px; background:var(--bg-elev); }
 .ce-dorso-cab { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:0 0 8px; }
@@ -6397,7 +6408,7 @@ function ceVerOrg(c) {
    modo aleatorio) → sesión en PANTALLA COMPLETA. Configuración recordada en localStorage. */
 const KEY_CT = "gestion_hub_ce_test_v1";
 const CT = Object.assign({ cola:[], idx:0, rev:false, flip:false, hechas:0, ses:false, total:0 },
-  { cfg:Object.assign({ que:"hoy", unidades:[], barajar:false, max:0 }, leerJSON(KEY_CT, {})) });
+  { cfg:Object.assign({ que:"hoy", unidades:[], barajar:false, max:0, modo:"botones" }, leerJSON(KEY_CT, {})) });
 const ceSrs = n => { const v = progreso("CEQ:" + n); return v && v.d && v.d.nx ? v.d : null; };
 /* Repaso de los artículos: más corto que el del test real (son solo 55 y hay que tenerlos siempre frescos).
    Sabía: 2, 4, 8, 14 y 21 días y después ×1,3 hasta un máximo de 30; dudé: la mitad del intervalo (mín. 2); no la sabía: mañana. */
@@ -6488,6 +6499,9 @@ function ceAbrirSeleccion() {
         <button type="button" class="chip peq" data-u-todas>Todas</button></div>
       <h3>Cuántos y en qué orden</h3>
       <div class="chip-row wrap">${[[0, "Todos"], [10, "10"], [20, "20"], [30, "30"]].map(([v, t]) => `<button type="button" class="chip ${cfg.max === v ? "active" : ""}" data-max="${v}">${t}</button>`).join("")}</div>
+      <h3>Modo</h3>
+      <div class="chip-row wrap">${[["botones", "🔘 SRS con botones"], ["desliz", "👆 Flashcards: deslizar"]].map(([v, t]) => `<button type="button" class="chip ${cfg.modo === v ? "active" : ""}" data-modo="${v}">${t}</button>`).join("")}</div>
+      <p class="muted" style="font-size:12.5px;margin:4px 0 0">${cfg.modo === "desliz" ? "Desliza la tarjeta a la <b>derecha</b> si te la sabes y a la <b>izquierda</b> si no: las de la izquierda vuelven a salir. Mismo calendario de repaso." : "Revela la tarjeta y elige con los botones: no la sabía, dudé o la sabía."}</p>
       <label class="real-tog"><input type="checkbox" data-barajar ${cfg.barajar || cfg.que === "azar" ? "checked" : ""} ${cfg.que === "azar" ? "disabled" : ""}> 🔀 Barajar el orden (si no, por número de artículo o por antigüedad del repaso)</label>
       <div class="real-pills"><span class="big">Disponibles: <b>${hay}</b> · se estudiarán <b>${n}</b></span></div>
       <div class="real-dlg-pie">
@@ -6498,6 +6512,7 @@ function ceAbrirSeleccion() {
     dlg.querySelectorAll("[data-que]").forEach(b => b.addEventListener("click", () => { cfg.que = b.dataset.que; re(); }));
     dlg.querySelectorAll("[data-u]").forEach(b => b.addEventListener("click", () => { const k = b.dataset.u; cfg.unidades = (cfg.unidades || []).includes(k) ? cfg.unidades.filter(x => x !== k) : (cfg.unidades || []).concat(k); re(); }));
     dlg.querySelector("[data-u-todas]").addEventListener("click", () => { cfg.unidades = []; re(); });
+    dlg.querySelectorAll("[data-modo]").forEach(b => b.addEventListener("click", () => { cfg.modo = b.dataset.modo; re(); }));
     dlg.querySelectorAll("[data-max]").forEach(b => b.addEventListener("click", () => { cfg.max = +b.dataset.max; re(); }));
     const bz = dlg.querySelector("[data-barajar]"); bz.addEventListener("change", () => { cfg.barajar = bz.checked; re(); });
     dlg.querySelector("[data-empezar]").addEventListener("click", () => {
@@ -6523,6 +6538,7 @@ function ceSesion() {
 function cePintarSesion(c) {
   const n = CT.cola[CT.idx], A = n ? CE_ART[n] : null;
   const intv = q => fmtIntervalo(ceSiguiente(n ? ceSrs(n) : null, q).i);
+  const desliz = CT.cfg.modo === "desliz";
   const barra = `
     <div class="card srs-barra" style="position:static">
       <button class="btn btn-sm" id="ce-salir" type="button">✕ Salir</button>
@@ -6531,7 +6547,7 @@ function cePintarSesion(c) {
       <span class="muted">${CT.hechas} repasadas</span>
     </div>`;
   const cara = A ? `
-    <div class="ce-card ${CT.rev ? "rev" : ""} ${CT.flip ? "flip" : ""}" id="ce-card" style="${ceSt(A.key)}">
+    <div class="ce-card ${CT.rev ? "rev" : ""} ${CT.flip ? "flip" : ""} ${desliz ? "desliz" : ""}" id="ce-card" style="${ceSt(A.key)}">
       <div class="ce-in">
         <div class="ce-cara ce-frente" id="ce-frente" ${CT.rev ? "" : 'role="button" tabindex="0" aria-label="Ver de qué trata el artículo"'}>
           <div class="ce-ruta">${A.path.map(p => `<span style="${ceSt(p.key)}" class="ce-miga ${CT.rev ? "" : "oculta"}">${esc(p.k)}</span>`).join("")}</div>
@@ -6549,12 +6565,13 @@ function cePintarSesion(c) {
         </div>
       </div>
     </div>
-    <div class="srs-rate" id="ce-rate" ${CT.rev ? "" : "hidden"}>
+    <div class="srs-rate" id="ce-rate" ${CT.rev || desliz ? "" : "hidden"}>
       <button class="btn srs-r no" data-q="0"><span class="ic" aria-hidden="true">✗</span><span class="tx">No la sabía</span><small>ahora · ${intv(0)}</small></button>
       <button class="btn srs-r mid" data-q="3"><span class="ic" aria-hidden="true">🤔</span><span class="tx">Dudé</span><small>${intv(3)}</small></button>
       <button class="btn srs-r si" data-q="5"><span class="ic" aria-hidden="true">✓</span><span class="tx">La sabía</span><small>${intv(5)}</small></button>
     </div>
-    <div class="srs-teclas muted" style="margin-top:8px"><kbd>espacio</kbd> ver · <kbd>V</kbd> ver artículo · <kbd>1</kbd> no · <kbd>2</kbd> dudé · <kbd>3</kbd> sí · <kbd>Esc</kbd> salir</div>` :
+    ${desliz ? `<div class="ce-desliz-hint muted">← desliza si <b>no</b> la sabes · desliza → si <b>sí</b></div>` : ""}
+    <div class="srs-teclas muted" style="margin-top:8px"><kbd>espacio</kbd> ver · <kbd>V</kbd> ver artículo · ${desliz ? `<kbd>←</kbd> no · <kbd>→</kbd> sí · ` : ""}<kbd>1</kbd> no · <kbd>2</kbd> dudé · <kbd>3</kbd> sí · <kbd>Esc</kbd> salir</div>` :
     `<div class="empty"><div class="ico">🏆</div><h3>¡Sesión terminada!</h3><p>Has repasado ${plural(CT.hechas, "artículo")}.</p><button class="btn btn-primary" id="ce-fin" type="button">Volver al test</button></div>`;
   c.innerHTML = barra + cara;
   document.getElementById("ce-salir").addEventListener("click", ceSalirSesion);
@@ -6565,16 +6582,24 @@ function cePintarSesion(c) {
     if (!A) return;
     if (e.key === " ") { e.preventDefault(); if (!CT.rev) revelar(); else girar(); }
     else if (e.key === "v" || e.key === "V") girar();
-    else if (CT.rev && "123".includes(e.key) && e.key) calificarCE(c, [0, 3, 5]["123".indexOf(e.key)]);
+    else if (desliz && (e.key === "ArrowRight" || e.key === "ArrowLeft")) { e.preventDefault(); sacar(e.key === "ArrowRight"); }
+    else if ((CT.rev || desliz) && "123".includes(e.key) && e.key) calificarCE(c, [0, 3, 5]["123".indexOf(e.key)]);
   };
   document.removeEventListener("keydown", CT._k); CT._k = tecla; document.addEventListener("keydown", CT._k);
   if (!A) return;
   const revelar = () => { if (CT.rev) return; CT.rev = true; const card = document.getElementById("ce-card"); card.classList.add("rev"); document.getElementById("ce-rate").hidden = false; document.getElementById("ce-frente").removeAttribute("role"); card.querySelectorAll(".ce-miga.oculta").forEach(m => m.classList.remove("oculta")); const h = card.querySelector(".ce-hint-ver"); if (h) h.remove(); card.querySelector(".ce-numq").classList.add("col"); };
   const girar = () => { if (!CT.rev) revelar(); CT.flip = !CT.flip; document.getElementById("ce-card").classList.toggle("flip", CT.flip); };
+  // Saca la tarjeta volando hacia un lado y la califica: derecha = la sabía (5), izquierda = no la sabía (0, vuelve a la cola).
+  const sacar = (derecha) => {
+    const card = document.getElementById("ce-card"); if (!card || card.classList.contains("sale")) return;
+    card.dataset.dir = derecha ? "si" : "no"; card.classList.add("sale");
+    card.style.transform = `translateX(${derecha ? 130 : -130}vw) rotate(${derecha ? 25 : -25}deg)`;
+    setTimeout(() => calificarCE(c, derecha ? 5 : 0), 200);
+  };
   const frente = document.getElementById("ce-frente");
   // Toda la tarjeta es pulsable: la primera vez muestra de qué trata; después gira entre frente y artículo.
   document.getElementById("ce-card").addEventListener("click", e => {
-    if (e.target.closest("button, a")) return;
+    if (e.target.closest("button, a") || CT.arrastrado) return;
     const sel = window.getSelection && window.getSelection(); if (sel && String(sel).trim()) return;   // si está seleccionando texto, no gira
     if (!CT.rev) revelar(); else girar();
   });
@@ -6582,6 +6607,28 @@ function cePintarSesion(c) {
   document.getElementById("ce-ver").addEventListener("click", girar);
   document.getElementById("ce-volver").addEventListener("click", girar);
   c.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => calificarCE(c, +b.dataset.q)));
+  if (desliz) ceDeslizar(document.getElementById("ce-card"), sacar);
+}
+/** Modo flashcards: la tarjeta se arrastra; a la derecha «la sabía», a la izquierda «no la sabía» (vuelve a salir). */
+function ceDeslizar(card, sacar) {
+  let x0 = null, y0 = 0, dx = 0, drag = false, id = null;
+  card.addEventListener("pointerdown", e => { if (e.target.closest("button, a")) return; x0 = e.clientX; y0 = e.clientY; dx = 0; drag = false; id = e.pointerId; });
+  card.addEventListener("pointermove", e => {
+    if (x0 == null || e.pointerId !== id) return;
+    const ax = e.clientX - x0, ay = e.clientY - y0;
+    if (!drag) { if (Math.abs(ax) > 10 && Math.abs(ax) > Math.abs(ay) * 1.2) { drag = true; try { card.setPointerCapture(id); } catch (_) {} card.classList.add("arrastra"); } else return; }
+    dx = ax; card.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`;
+    card.dataset.dir = dx > 40 ? "si" : dx < -40 ? "no" : "";
+  });
+  const fin = () => {
+    if (x0 == null) return; x0 = null;
+    if (!drag) return;
+    drag = false; CT.arrastrado = true; setTimeout(() => { CT.arrastrado = false; }, 80);
+    card.classList.remove("arrastra");
+    if (Math.abs(dx) > Math.min(110, innerWidth * 0.28)) sacar(dx > 0, dx);
+    else { card.style.transform = ""; delete card.dataset.dir; }
+  };
+  card.addEventListener("pointerup", fin); card.addEventListener("pointercancel", fin);
 }
 function calificarCE(c, q) {
   const n = CT.cola[CT.idx]; if (!n) return;
