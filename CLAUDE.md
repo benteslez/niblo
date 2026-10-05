@@ -218,5 +218,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   **Sin duplicados** (`apLimpia`): no entran «Repaso por bloques» ni «Preguntas de la guía» (repiten los cuadros y los
   «En resumen»); un apartado «Cuadro…» pierde su «En resumen» (el cuadro ya es el resumen); se quitan los botones de la
   app y «Las etiquetas de los apuntes» del mapa. En la app todo se mantiene.
+  La portada **no** lleva altura fija ni hay dos saltos de página seguidos: con otro papel o márgenes del cuadro de impresión
+  una altura fija desbordaba y dejaba páginas en blanco. Probar también con `Letter` y márgenes grandes.
   Al tocar el CSS (`APUNTES_CSS`), regenerar los PDF con `pruebas/apuntes.js` y revisar portada y saltos de página.
 - Prueba: `herramientas/oposicion/pruebas/apuntes.js` (genera también el PDF con Chromium).
