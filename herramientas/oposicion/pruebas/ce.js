@@ -33,6 +33,7 @@ const OUT = process.env.SHOTS || '.';
     console.log(nombre, 'tras fallar (vuelve a la cola):', (await p.locator('.srs-barra').innerText()).replace(/\s+/g, ' '));
     await p.keyboard.press('Escape'); await p.waitForTimeout(500);
     console.log(nombre, 'tras salir: capa', await p.locator('.real-full').count(), '· botón elegir', await p.locator('#ce-elegir').count());
+    console.log(nombre, 'tarjetas tras estudiar (Nuevas, Para hoy, Rebeldes, Dominadas):', JSON.stringify(await p.evaluate(() => [...document.querySelectorAll('.rg-kpis .rg-kpi')].map(e => { const r = e.getBoundingClientRect(); return e.querySelector('.v').textContent + '@' + Math.round(r.top); }))));
   }
   console.log('ERRORES', errs); await b.close();
 })();
