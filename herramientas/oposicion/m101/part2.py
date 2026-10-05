@@ -100,6 +100,18 @@ La Constitución se ha reformado **cuatro veces**, siempre por el procedimiento 
   lit("CE", "a69", ["Ibiza, Formentera, Menorca"], solo=[3]),
   lit("REF2026", "preambulo", ["19 de mayo de 2026"], solo=[ix("REF2026", "preambulo", "Artículo único") + j for j in (0, 1)] + [ix("REF2026", "preambulo", "Madrid,")], titulo="Reforma de la Constitución de 2026 (artículo único y fecha)"))}
 
+### 2.5 Por qué se reformó cada artículo
+
+Las cuatro reformas tienen una **causa externa o social** que explica su contenido, y la propia reforma la cuenta en su **exposición de motivos** o preámbulo (citas literales):
+
+{tabla(["Reforma", "Por qué se hizo", "Lo dice así la reforma"], [
+  ["**1992** · art. 13.2", "Para poder **ratificar el Tratado de la Unión Europea (Maastricht)**: reconocía a los ciudadanos de la Unión el derecho a ser **elegibles** en las elecciones municipales del Estado en que residan, y el Tribunal Constitucional declaró que **chocaba con el art. 13.2** (que solo permitía el sufragio activo).", f"{c('REF1992', 'preambulo', 'es contraria al artículo 13.2 de la Constitución')} … {c('REF1992', 'preambulo', 'exige, pues, la reforma previa del citado precepto constitucional')}"],
+  ["**2011** · art. 135", "La **crisis económica** y la pertenencia a la **Unión Económica y Monetaria**: se quiso llevar a la Constitución la **estabilidad presupuestaria** para reforzar la confianza en la economía española y el compromiso con la UE.", f"{c('REF2011', 'preambulo', 'no ha hecho sino reforzar la conveniencia de llevar el principio de referencia a nuestra Constitución')}"],
+  ["**2024** · art. 49", "Adaptar el artículo a la **Convención sobre los derechos de las personas con discapacidad** (Nueva York, 2006) y a la petición de las organizaciones del sector: **actualizar su lenguaje y su contenido**.", f"{c('REF2024', 'preambulo', 'precisa de una actualización en cuanto a su lenguaje y contenido')}"],
+  ["**2026** · art. 69.3", "Atender la **reivindicación histórica de Formentera**: que, al tener su propio Consejo Insular, **elija un senador propio** y no comparta el de la agrupación Ibiza-Formentera.", f"{c('REF2026', 'preambulo', 'ha ido ligada históricamente a la posibilidad de elección de un senador propio')}"]])}
+
+{IMP} **El texto que figura en cada reforma (2.1 a 2.4) es el redactado definitivo**: el artículo tal como **quedó** tras la reforma y como está **hoy en vigor** en el texto consolidado del BOE. Cada reforma sustituye el texto anterior; no se acumulan. Dos matices de eficacia: en el art. 135, los límites de déficit estructural del apartado 2 «entrarán en vigor a partir de 2020», y en el 69.3, las nuevas circunscripciones del Senado se aplican desde las **primeras elecciones al Senado posteriores** a la reforma.
+
 !> {IMP} **Para el examen:** artículos reformados **13.2, 135, 49 y 69.3**, y año de cada reforma (**1992, 2011, 2024, 2026**). La del 135 es la más «radical»: se reescribió entero, con ocasión de la crisis de la deuda.
 
 ?> La **guía M101** da el art. 69.3 el «20 de mayo de 2026»: es la fecha de **publicación y entrada en vigor**. La reforma es de **19 de mayo de 2026** (sanción).
