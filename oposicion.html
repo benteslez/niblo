@@ -3636,7 +3636,9 @@ function formatear(txt) {
     const m = cita[0].match(/^\[\[([A-Z0-9_]+)(?:\|(https?:[^\]\s]+))?\]\]$/);
     if (m) cita.shift();
     const codF = m ? m[1] : "BOE", larga = codF !== "BOE";   // etiqueta más ancha que «BOE»: va encima del texto
-    html += `<blockquote class="literal${larga ? " lit-larga" : ""}">${pillFuente(m ? m[1] : "BOE", m && m[2] ? m[2] : "", "lit-boe")}${cita.map(x => x ? `<p>${enLinea(x)}</p>` : "").join("")}</blockquote>`;
+    // Texto de una reforma (exposición de motivos, preámbulo o artículo único): otro color que el artículo definitivo.
+    const esRef = /^\*\*(Exposición de motivos|Preámbulo de la Reforma|Reforma de la Constitución)/.test(cita[0] || "");
+    html += `<blockquote class="literal${larga ? " lit-larga" : ""}${esRef ? " lit-ref" : ""}">${pillFuente(m ? m[1] : "BOE", m && m[2] ? m[2] : "", "lit-boe")}${cita.map(x => x ? `<p>${enLinea(x)}</p>` : "").join("")}</blockquote>`;
     cita = [];
   };
   /* Recuadros: líneas seguidas que empiezan por «!>» (idea clave), «?>» (trampa),
@@ -3676,6 +3678,7 @@ function formatear(txt) {
       if (caja.tipo === "clave") { cls = "ex"; etq = "⚠ Atención examen"; L[0] = L[0].replace(/^\{\{IMPORTANTE\}\}\s*/, ""); }
       else if (caja.tipo === "trampa") { cls = "nota"; etq = "Ojo"; L[0] = L[0].replace(/^\{\{PRESCINDIBLE\}\}\s*/, ""); }
       else if (caja.tipo === "concepto") { cls = "cc"; etq = "Concepto clave"; }
+      else if (caja.tipo === "anterior") { cls = "ant"; etq = "Cómo era antes · resumen propio, no es texto legal"; }
       else { const m = (L[0] || "").match(/^\*\*▸\s*([^.*]+?)\.?\*\*\s*(.*)$/); etq = m ? m[1] : "Guía"; if (m) L[0] = m[2]; cls = /resumen/i.test(etq) ? "sin" : "guia"; if (cls === "sin") etq = "Síntesis"; }
       html += `<div class="cj cj-${cls}"><div class="cj-k">${esc(etq)}</div>${L.filter(x => x.trim()).map(x => `<p>${enLinea(x)}</p>`).join("")}</div>`;
     }
@@ -3683,10 +3686,10 @@ function formatear(txt) {
   };
   String(txt || "").replace(/\r/g, "").split("\n").forEach(l => {
     const t = l.trim();
-    const k = t.match(/^([!?@=%+~])>\s?(.*)$/);
+    const k = t.match(/^([!?@=%+~^])>\s?(.*)$/);
     if (k) {
       cerrarP(); cerrarL(); cerrarT(); cerrarC();
-      const tipo = { "!":"clave", "?":"trampa", "@":"ap-guia", "=":"ficha", "%":"quiz", "+":"concepto", "~":"mapa" }[k[1]];
+      const tipo = { "!":"clave", "?":"trampa", "@":"ap-guia", "=":"ficha", "%":"quiz", "+":"concepto", "~":"mapa", "^":"anterior" }[k[1]];
       if (caja && caja.tipo !== tipo) cerrarK();
       if (!caja) caja = { tipo, lineas:[] };
       caja.lineas.push(k[2]); return;
@@ -6835,7 +6838,10 @@ const CJ_CSS = `
 .cj-sin { background:#fcf6cc; border-color:#f0ad3e; color:#62440b; } .cj-sin .cj-k, .cj-sin strong { color:#5c3d05; }
 .cj-nota { background:#fff3e0; border-color:#e08a1e; color:#6a4310; } .cj-nota .cj-k, .cj-nota strong { color:#8a4e08; }
 .cj-guia { background:#eef1f6; border-color:#8a97ad; color:#2c3a52; } .cj-guia .cj-k, .cj-guia strong { color:#33496b; }
+.cj-ant { background:#f3f1f8; border-color:#9b8bc4; border-left-style:dashed; color:#41355f; } .cj-ant .cj-k, .cj-ant strong { color:#4b3a7d; }
 .cj-nota .pill-pre, .cj-nota .pill-imp { display:none; }
+.ap-cuerpo blockquote.literal.lit-ref, blockquote.literal.lit-ref { border-left-color:#7c4dbd; background:#f4effb; }
+.ap-cuerpo blockquote.literal.lit-ref p:first-child strong:first-child, blockquote.literal.lit-ref p:first-of-type strong:first-child { color:#5b34a0; }
 .cmap { margin:1.2em 0 1.5em; padding:1em 1.2em 1.3em; border:1px solid #dcdcd4; border-radius:18px; background:#f9f9f6; break-inside:avoid-page; }
 .cmap-k { font-size:.72em; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#777; }
 .cmap-t { text-align:center; font-family:Georgia,"Times New Roman",serif; font-size:1.25em; margin:.6em 0 .9em; color:#222; }
