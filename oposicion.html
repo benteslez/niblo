@@ -1310,13 +1310,14 @@ body.real-abierto .cr { display:none; }
 }
 
 /* ---- Test Constitución ------------------------------------------------------ */
-.ce-card { perspective:1600px; margin:14px 0 6px; }
-.ce-in { display:grid; transition:transform .6s cubic-bezier(.2, .7, .2, 1); transform-style:preserve-3d; }
-.ce-card.flip .ce-in { transform:rotateY(180deg); }
-.ce-cara { grid-area:1 / 1; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:var(--bg-elev); border:1px solid var(--line); border-top:7px solid var(--c); border-radius:var(--r-lg); box-shadow:var(--sh-1); padding:22px 22px 20px; min-width:0; }
-.ce-frente { text-align:center; cursor:pointer; }
-.ce-card.rev .ce-frente { cursor:default; }
-.ce-dorso { transform:rotateY(180deg); }
+.ce-card { margin:12px 0 8px; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.ce-in { display:grid; }
+/* Sin giro 3D (en iPhone cortaba el desplazamiento): se cambia de cara con una animación corta. */
+.ce-cara { grid-area:1 / 1; background:var(--bg-elev); border:1px solid var(--line); border-top:7px solid var(--c); border-radius:var(--r-lg); box-shadow:var(--sh-2); padding:22px 22px 20px; min-width:0; animation:ce-gira .32s cubic-bezier(.2, .7, .2, 1); }
+@keyframes ce-gira { from { transform:rotateY(-80deg) scale(.96); opacity:.2; } to { transform:none; opacity:1; } }
+.ce-frente { text-align:center; display:flex; flex-direction:column; align-items:center; }
+.ce-card.flip .ce-frente, .ce-dorso { display:none; }
+.ce-card.flip .ce-dorso { display:flex; flex-direction:column; }
 .ce-numq { display:inline-block; font-size:46px; font-weight:800; letter-spacing:-.02em; border-radius:14px; padding:2px 22px; border:2px dashed var(--line); color:var(--text-muted); transition:background .35s, color .35s, border-color .35s; font-variant-numeric:tabular-nums; }
 .ce-numq.col { background:var(--c); color:var(--ct); border:2px solid var(--c); }
 .ce-ruta { display:flex; gap:5px; flex-wrap:wrap; justify-content:center; margin:0 0 10px; min-height:22px; }
@@ -1327,15 +1328,37 @@ body.real-abierto .cr { display:none; }
 .ce-baja-in { overflow:hidden; min-height:0; }
 .ce-rubq { font-weight:800; font-size:21px; line-height:1.3; margin:14px 0 10px; color:color-mix(in srgb, var(--c) 82%, var(--text)); display:block; }
 .ce-ver { margin-top:6px; }
-.ce-hint { color:var(--text-muted); font-size:13px; margin-top:14px; }
+.ce-hint { color:var(--text-muted); font-size:13px; margin-top:14px; text-align:center; }
+.ce-hint-rev { display:none; }
+.ce-card.rev .ce-hint-rev { display:block; }
 .ce-hint kbd, .srs-teclas kbd { font:inherit; font-size:11px; padding:1px 5px; border:1px solid var(--line); border-radius:4px; background:var(--bg-elev); }
 .ce-dorso-cab { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:0 0 8px; }
 .ce-dorso-cab .ce-numq { font-size:26px; padding:0 14px; border-radius:10px; }
 .ce-dorso-cab .ce-rubq { margin:0; font-size:18px; }
-.ce-dorso-txt { margin:10px 0 14px; max-height:min(52vh, 480px); overflow-y:auto; }
+.ce-dorso-txt { margin:10px 0 14px; }
 .ce-dorso-txt p { margin:0 0 7px; font-size:15px; line-height:1.55; }
 .ce-dorso-txt p.ce-li { margin-left:18px; }
-@media (prefers-reduced-motion: reduce) { .ce-in, .ce-baja { transition:none; } }
+.ce-dorso > .btn { align-self:flex-start; }
+/* Sesión a pantalla completa: barra arriba, tarjeta que ocupa lo que queda (cada cara se desplaza por dentro, nunca se corta)
+   y botones de respuesta siempre visibles abajo. */
+.ce-pc { overflow:hidden; }
+.ce-pc .real-full-in { height:100%; max-width:760px; display:flex; flex-direction:column; padding-bottom:calc(12px + env(safe-area-inset-bottom)); }
+.ce-pc #ce-ses { flex:1; min-height:0; display:flex; flex-direction:column; }
+.ce-pc .srs-barra { flex:none; }
+.ce-pc .ce-card { flex:1; min-height:0; display:flex; }
+.ce-pc .ce-in { flex:1; min-height:0; width:100%; }
+.ce-pc .ce-cara { min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.ce-pc .ce-frente::before, .ce-pc .ce-frente::after { content:""; flex:1 0 0; }
+.ce-pc .srs-rate { flex:none; margin-top:0; gap:10px; }
+.ce-pc .srs-rate[hidden] { display:flex !important; visibility:hidden; }
+.ce-pc .srs-r { min-height:76px; padding:8px 4px; justify-content:center; border-width:2px; border-radius:18px; font-size:15px; font-weight:800; gap:3px; box-shadow:0 2px 0 color-mix(in srgb, currentColor 22%, transparent); transition:transform .08s, box-shadow .08s, filter .15s; }
+.ce-pc .srs-r .ic { font-size:20px; line-height:1; }
+.ce-pc .srs-r .tx { white-space:nowrap; font-size:14.5px; }
+.ce-pc .srs-r small { font-size:11.5px; font-weight:600; opacity:.8; line-height:1.2; }
+.ce-pc .srs-r:hover { filter:brightness(.97); }
+.ce-pc .srs-r:active { transform:translateY(2px); box-shadow:none; }
+.ce-pc .srs-teclas { flex:none; }
+@media (prefers-reduced-motion: reduce) { .ce-cara { animation:none; } .ce-baja { transition:none; } }
 
 </style>
 </head>
@@ -6482,7 +6505,7 @@ function ceSalirSesion() {
 }
 function ceSesion() {
   document.body.classList.add("real-abierto");
-  vista().innerHTML = `<div class="real-full" role="dialog" aria-modal="true" aria-label="Test Constitución"><div class="real-full-in" id="ce-ses"></div></div>`;
+  vista().innerHTML = `<div class="real-full ce-pc" role="dialog" aria-modal="true" aria-label="Test Constitución"><div class="real-full-in" id="ce-ses"></div></div>`;
   cePintarSesion(document.getElementById("ce-ses"));
 }
 function cePintarSesion(c) {
@@ -6502,20 +6525,22 @@ function cePintarSesion(c) {
           <div class="ce-ruta">${A.path.map(p => `<span style="${ceSt(p.key)}" class="ce-miga ${CT.rev ? "" : "oculta"}">${esc(p.k)}</span>`).join("")}</div>
           <div class="ce-numq ${CT.rev ? "col" : ""}">Art. ${A.n}</div>
           <div class="ce-baja"><div class="ce-baja-in"><div class="ce-rubq">${esc(A.t || "")}</div>${A.propio ? `<div class="muted" style="font-size:12px">Rótulo propio: no figura en la tabla de la guía.</div>` : ""}<button class="btn btn-sm ce-ver" id="ce-ver" type="button">📖 Ver artículo</button></div></div>
-          ${CT.rev ? "" : `<div class="ce-hint">Pulsa para ver de qué trata · <kbd>espacio</kbd></div>`}
+          <div class="ce-hint ce-hint-rev">Toca la tarjeta para ver el artículo</div>
+          ${CT.rev ? "" : `<div class="ce-hint ce-hint-ver">Toca la tarjeta para ver de qué trata · <kbd>espacio</kbd></div>`}
         </div>
         <div class="ce-cara ce-dorso">
           <div class="ce-dorso-cab"><span class="ce-numq col">Art. ${A.n}</span><span class="ce-rubq">${esc(A.t || "")}</span></div>
           <div class="ce-ruta">${A.path.map(p => `<span style="${ceSt(p.key)}" class="ce-miga">${esc(p.k)}${p.nombre ? " · " + esc(p.nombre) : ""}</span>`).join("")}</div>
           <div class="ce-dorso-txt">${A.p.map(ceParr).join("")}</div>
           <button class="btn btn-sm" id="ce-volver" type="button">↩ Volver</button>
+          <div class="ce-hint">Toca la tarjeta para volver</div>
         </div>
       </div>
     </div>
     <div class="srs-rate" id="ce-rate" ${CT.rev ? "" : "hidden"}>
-      <button class="btn srs-r no" data-q="0">✗ No la sabía<small>vuelve ahora y ${intv(0)}</small></button>
-      <button class="btn srs-r mid" data-q="3">🤔 Dudé<small>${intv(3)}</small></button>
-      <button class="btn srs-r si" data-q="5">✓ La sabía<small>${intv(5)}</small></button>
+      <button class="btn srs-r no" data-q="0"><span class="ic" aria-hidden="true">✗</span><span class="tx">No la sabía</span><small>ahora · ${intv(0)}</small></button>
+      <button class="btn srs-r mid" data-q="3"><span class="ic" aria-hidden="true">🤔</span><span class="tx">Dudé</span><small>${intv(3)}</small></button>
+      <button class="btn srs-r si" data-q="5"><span class="ic" aria-hidden="true">✓</span><span class="tx">La sabía</span><small>${intv(5)}</small></button>
     </div>
     <div class="srs-teclas muted" style="margin-top:8px"><kbd>espacio</kbd> ver · <kbd>V</kbd> ver artículo · <kbd>1</kbd> no · <kbd>2</kbd> dudé · <kbd>3</kbd> sí · <kbd>Esc</kbd> salir</div>` :
     `<div class="empty"><div class="ico">🏆</div><h3>¡Sesión terminada!</h3><p>Has repasado ${plural(CT.hechas, "artículo")}.</p><button class="btn btn-primary" id="ce-fin" type="button">Volver al test</button></div>`;
@@ -6532,10 +6557,15 @@ function cePintarSesion(c) {
   };
   document.removeEventListener("keydown", CT._k); CT._k = tecla; document.addEventListener("keydown", CT._k);
   if (!A) return;
-  const revelar = () => { if (CT.rev) return; CT.rev = true; const card = document.getElementById("ce-card"); card.classList.add("rev"); document.getElementById("ce-rate").hidden = false; document.getElementById("ce-frente").removeAttribute("role"); card.querySelectorAll(".ce-miga.oculta").forEach(m => m.classList.remove("oculta")); const h = card.querySelector(".ce-hint"); if (h) h.remove(); card.querySelector(".ce-numq").classList.add("col"); };
+  const revelar = () => { if (CT.rev) return; CT.rev = true; const card = document.getElementById("ce-card"); card.classList.add("rev"); document.getElementById("ce-rate").hidden = false; document.getElementById("ce-frente").removeAttribute("role"); card.querySelectorAll(".ce-miga.oculta").forEach(m => m.classList.remove("oculta")); const h = card.querySelector(".ce-hint-ver"); if (h) h.remove(); card.querySelector(".ce-numq").classList.add("col"); };
   const girar = () => { if (!CT.rev) revelar(); CT.flip = !CT.flip; document.getElementById("ce-card").classList.toggle("flip", CT.flip); };
   const frente = document.getElementById("ce-frente");
-  frente.addEventListener("click", e => { if (e.target.closest("button")) return; revelar(); });
+  // Toda la tarjeta es pulsable: la primera vez muestra de qué trata; después gira entre frente y artículo.
+  document.getElementById("ce-card").addEventListener("click", e => {
+    if (e.target.closest("button, a")) return;
+    const sel = window.getSelection && window.getSelection(); if (sel && String(sel).trim()) return;   // si está seleccionando texto, no gira
+    if (!CT.rev) revelar(); else girar();
+  });
   frente.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); revelar(); } });
   document.getElementById("ce-ver").addEventListener("click", girar);
   document.getElementById("ce-volver").addEventListener("click", girar);
