@@ -168,6 +168,10 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - **Guía de estudio**: resumen estructurado de la transcripción, **sin** lo relativo a cómo era y cómo es
   el examen (petición del usuario).
 - **Pill «IMPORTANCIA CRÍTICA»** (`CRITICOS`): los temas con recuadro rojo en el orden sugerido.
+- **Flashcards de cada tema** (`hubFc`, pestaña Flashcards): por defecto se **deslizan** como en el Test Constitución (derecha = la sabía →
+  dominada y sale del mazo; izquierda = no la sabía → al final; arriba = dudé → vuelve a salir 4 tarjetas más adelante), con botones
+  ✗ / 🤔 / ✓ siempre visibles y toda la tarjeta pulsable para voltear; el chip «👆 Deslizar» cambia al modo clásico de botones
+  (`gestion_hub_fc_modo_v1`). Sin giro 3D: cada cara crece con su contenido. Reutiliza `ceDeslizar`.
 - **Constelaciones** en las flashcards: los «art. N» de una tarjeta se enlazan, en el cliente, con el
   texto literal de ese artículo en los apuntes del mismo tema (si el número existe en varias normas,
   hace falta que la tarjeta cite la norma); `CONSTELACIONES` añade artículos relacionados de otros temas.
