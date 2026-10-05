@@ -233,6 +233,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   no anuladas ni retenidas) entran en «📋 De examen real» y en «Todas», con su texto legal y su discrepancia. Su progreso es **propio
   del tema** (`B1T0n:q:<hash>`), independiente del test real global (`R:<examen>:<n>`): lo que se conteste en un sitio no cambia el
   otro. Corregido: L1 (nombre del Título I) y P51 (art. 9.3) pasan a I.1.
+- El test de un tema (herramienta «Test» del lector) se abre en **pantalla completa** (`.panel.completo`, petición del usuario; oculta el cronómetro mientras está abierto).
 - Prueba: `herramientas/oposicion/pruebas/test_academia.js`.
 
 ## Estética de los apuntes (lector y PDF)

@@ -729,6 +729,12 @@ mark.res[data-col="morado"], [data-col="morado"] { --rc:#a855f7; }
   .panel { left:auto; top:0; bottom:0; width:min(520px, 92vw); max-height:none; border-radius:22px 0 0 22px; transform:translateX(100%); }
   .panel-asa { display:none; }
 }
+/* El test del tema ocupa toda la pantalla (petición del usuario) */
+.panel.completo, .panel.completo.on { left:0; right:0; top:0; bottom:0; width:100%; max-height:none; height:100dvh; border-radius:0; padding-top:env(safe-area-inset-top); }
+.panel.completo .panel-asa { display:none; }
+.panel.completo .panel-cuerpo { width:100%; max-width:820px; margin:0 auto; }
+body.panel-completo { overflow:hidden; }
+body.panel-completo .cr, body.panel-completo .fab-herr { display:none; }
 .panel-asa { width:42px; height:5px; border-radius:99px; background:var(--line); margin:8px auto 0; }
 .panel-cab { display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--line-soft); }
 .panel-cab h3 { flex:1; margin:0; font-size:17px; font-weight:800; letter-spacing:-.02em; }
@@ -3976,6 +3982,7 @@ function abrirPanel(herr) {
   document.getElementById("panel-volver").hidden = herr === "menu" || matchMedia("(min-width:1000px)").matches;
   const c = document.getElementById("panel-cuerpo");
   panel.dataset.b = TEMA_POR_ID[id].b; panel.dataset.herramienta = herr;
+  panel.classList.toggle("completo", herr === "test"); document.body.classList.toggle("panel-completo", herr === "test");
   fondo.hidden = false; panel.hidden = false;
   requestAnimationFrame(() => { fondo.classList.add("on"); panel.classList.add("on"); });
   c.scrollTop = 0;
@@ -3994,7 +4001,7 @@ function abrirPanel(herr) {
 function cerrarPanel(desdeRender) {
   const fondo = document.getElementById("panel-fondo"), panel = document.getElementById("panel");
   if (!panel || panel.hidden) return;
-  fondo.classList.remove("on"); panel.classList.remove("on");
+  fondo.classList.remove("on"); panel.classList.remove("on"); document.body.classList.remove("panel-completo");
   // Un test a medias en el panel no se pierde: se retoma al volver a abrirlo.
   setTimeout(() => { fondo.hidden = true; panel.hidden = true; document.getElementById("panel-cuerpo").innerHTML = ""; }, desdeRender ? 0 : 220);
   if (!desdeRender && S.renderPendiente) setTimeout(render, 230);
