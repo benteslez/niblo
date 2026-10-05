@@ -5120,6 +5120,7 @@ function hubGlosario(c, ambito, temas, actual) {
 }
 
 /* Escritorio: la barra espaciadora gira la tarjeta de las flashcards abiertas (si no se está escribiendo en un campo). */
+let flechaT = { t:0, bloqueo:0 };
 document.addEventListener("keydown", e => {
   /* Flechas: en las flashcards, → la sabía, ← no la sabía, ↑ dudé; en el test, → pasa a la siguiente pregunta (ya contestada). */
   if ((e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "ArrowUp") && !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey) {
@@ -5128,8 +5129,14 @@ document.addEventListener("keydown", e => {
     if (FC_ACT && document.getElementById("fc") && panel && !panel.hidden && panel.dataset.herramienta === "fc") {
       e.preventDefault(); FC_ACT.dir(e.key === "ArrowRight" ? "si" : e.key === "ArrowLeft" ? "no" : "dude"); return;
     }
-    const sig = document.getElementById("t-sig");
-    if (sig && e.key === "ArrowRight") { e.preventDefault(); sig.click(); }
+    if (e.key !== "ArrowRight") return;
+    const sig = document.getElementById("t-sig"), blanco = document.getElementById("t-blanco"), ahora = Date.now();
+    if (sig) { e.preventDefault(); sig.click(); flechaT = { t:0, bloqueo:ahora + 500 }; return; }
+    // Sin contestar: doble pulsación rápida de → = «Dejar en blanco» (la 1.ª pulsación no hace nada).
+    if (blanco && !blanco.hidden && ahora > flechaT.bloqueo) {
+      e.preventDefault();
+      if (ahora - flechaT.t < 500) { flechaT = { t:0, bloqueo:ahora + 500 }; blanco.click(); } else flechaT.t = ahora;
+    }
     return;
   }
   if (e.key !== " " || e.ctrlKey || e.metaKey || e.altKey) return;
