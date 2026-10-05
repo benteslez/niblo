@@ -238,7 +238,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 ## Estética de los apuntes (lector y PDF)
 
 - Petición del usuario: apuntes limpios y visuales, con conceptos en escala de colores. Recuadros con etiqueta (`CJ_CSS` en `oposicion.html`, común al lector y al PDF): `+>` **Concepto clave** (azul), `!>` **Atención examen** (rojo), `@> **▸ En resumen.**` **Síntesis** (amarillo), `?>` **Ojo** (ámbar), `@> **▸ Dónde estamos.**` guía (gris). `~>` = **mapa conceptual** (`~> Título`, `~> # Raíz`, una rama por línea `Rama | descripción | subcaja`); I.1-I.3 lo generan solo de la tabla «El hilo del tema» (`_con_mapa` en `m101/dividir.py`).
-- Los términos del glosario salen solos como «Concepto clave» al empezar su apartado (`conConceptos`, máx. 2 por apartado). Tablas con cabecera azul y filas alternas; subtítulos en serif con barra azul.
+- Los términos del glosario salen solos como «Concepto clave» al empezar su apartado (`conConceptos`, máx. 2 por apartado). Tablas con cabecera azul y filas alternas; subtítulos de artículo (`###`) con la misma tipografía que los subapartados (petición del usuario).
 - Los códigos de fuente pueden llevar dígitos (`[[M101]]`).
 
 ## Abrir un tema
