@@ -88,21 +88,29 @@ La Constitución se ha reformado **cuatro veces**, siempre por el procedimiento 
   lit("CE", "a13", ["sufragio activo y pasivo"], solo=[2]),
   lit("REF1992", "preambulo", ["27 de agosto de 1992"], solo=[ix("REF1992", "preambulo", "Artículo único") + j for j in (0, 1, 2)] + [ix("REF1992", "preambulo", "Madrid,")], titulo="Reforma de la Constitución de 1992 (artículo único)"))}
 
+^> **Antes de 1992.** El apartado ya permitía, por reciprocidad, una excepción a que solo los españoles sean titulares de los derechos del art. 23, pero **solo para el derecho de voto (sufragio activo)** en las elecciones municipales: un extranjero podía votar, no ser elegido. La reforma añadió el **sufragio pasivo** (poder ser elegido).
+
 {unidad("2.2 Reforma del art. 135 (2011)",
   lit("CE", "a135", ["principio de estabilidad presupuestaria"], solo=[1]),
   lit("REF2011", "preambulo", ["garantizar el principio de estabilidad presupuestaria"], solo=[9], titulo="Exposición de motivos de la Reforma de 2011 (extracto)"))}
+
+^> **Antes de 2011.** El art. 135 era mucho más corto y trataba solo de la **deuda pública**: el Gobierno necesitaba autorización por ley para emitirla o contraer crédito, y los créditos para pagar los intereses y el capital de la deuda del Estado se consideraban siempre incluidos en los presupuestos de gastos y quedaban protegidos frente a enmiendas mientras cumplieran la ley de emisión. **No decía nada de estabilidad presupuestaria ni de déficit estructural**: la reforma reescribió el artículo entero.
 
 {unidad("2.3 Reforma del art. 49 (2024)",
   lit("CE", "a49", ["Las personas con discapacidad ejercen los derechos previstos en este Título en condiciones de libertad e igualdad reales y efectivas"], solo=[1, 2]),
   lit("REF2024", "preambulo", ["precisa de una actualización en cuanto a su lenguaje y contenido"], solo=[10], titulo="Preámbulo de la Reforma de 2024 (extracto)"))}
 
+^> **Antes de 2024.** El art. 49 era un solo párrafo, con enfoque **asistencial**: ordenaba a los poderes públicos una política de previsión, tratamiento, rehabilitación e integración de los **«disminuidos»** físicos, sensoriales y psíquicos, con atención especializada y amparo para disfrutar de los derechos del Título I. La reforma cambió el término por **«personas con discapacidad»** y el enfoque por el de derechos en **libertad e igualdad reales y efectivas**, con autonomía personal, inclusión social y participación de sus organizaciones.
+
 {unidad("2.4 Reforma del art. 69.3 (2026)",
   lit("CE", "a69", ["Ibiza, Formentera, Menorca"], solo=[3]),
   lit("REF2026", "preambulo", ["19 de mayo de 2026"], solo=[ix("REF2026", "preambulo", "Artículo único") + j for j in (0, 1)] + [ix("REF2026", "preambulo", "Madrid,")], titulo="Reforma de la Constitución de 2026 (artículo único y fecha)"))}
 
+^> **Antes de 2026.** El apartado tenía ya una circunscripción por **isla o agrupación de islas** con Cabildo o Consejo Insular, con tres senadores para las islas mayores y uno para cada una de las demás, pero **Ibiza y Formentera figuraban unidas como una agrupación** que elegía **un solo senador**. La reforma las separó: cada una elige el suyo y desaparece la referencia a las «agrupaciones».
+
 ### 2.5 Por qué se reformó cada artículo
 
-Las cuatro reformas tienen una **causa externa o social** que explica su contenido, y la propia reforma la cuenta en su **exposición de motivos** o preámbulo (citas literales):
+Las cuatro reformas tienen una **causa externa o social** que explica su contenido, y la propia reforma la cuenta en su **exposición de motivos** o preámbulo (citas literales, en **color violeta** como todos los textos de las reformas, para distinguirlos del artículo definitivo, que va en el color normal de los textos legales):
 
 {tabla(["Reforma", "Por qué se hizo", "Lo dice así la reforma"], [
   ["**1992** · art. 13.2", "Para poder **ratificar el Tratado de la Unión Europea (Maastricht)**: reconocía a los ciudadanos de la Unión el derecho a ser **elegibles** en las elecciones municipales del Estado en que residan, y el Tribunal Constitucional declaró que **chocaba con el art. 13.2** (que solo permitía el sufragio activo).", f"{c('REF1992', 'preambulo', 'es contraria al artículo 13.2 de la Constitución')} … {c('REF1992', 'preambulo', 'exige, pues, la reforma previa del citado precepto constitucional')}"],
