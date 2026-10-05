@@ -248,6 +248,10 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - Cada tema está **encendido** (tarjeta en color) o **apagado** (tarjeta en gris, con la etiqueta «⏻ Apagado») en las tarjetas de los bloques; sirve para saber cuáles se han completado (petición del usuario). El usuario lo cambia con el botón de la parte de arriba de **Progreso** (herramienta del lector del tema); se guarda como `TON:<id>` en `prog.mapa` y se sincroniza.
 - **Estado por defecto** (lo que pide el usuario que se encienda o apague «en bloque»): `temas/indice.json` → `apagados` (lista de ids) y `apagadosSello` (ISO). Para encender o apagar temas a petición: editar `apagados` **y poner un `apagadosSello` nuevo** (así se descartan los interruptores del usuario anteriores a ese sello y el cambio llega a todos sus dispositivos); no tocar el sello de los temas. Hoy: todos apagados salvo B1T01, B1T02 y B1T03 (I.1 a I.3, los completos con BOE y temario; 5-10-2026). `temaEncendido`, `alternarTema`, `tarjetaTema` en `oposicion.html`.
 
+## Barra lateral del tema
+
+- Diseño actual (petición del usuario, 5-10-2026): título y eyebrow sin subrayado grueso, buscador en píldora con lupa, progreso fino, herramientas en **lista** (icono en cápsula + nombre + ›) en vez de tarjetas, «Práctica activa» como grupo con punto de color, índice con línea guía a la izquierda. Es el mismo HTML (`htmlLateral`) que la hoja «Buscar y herramientas» del móvil; solo cambia el CSS.
+
 ## Abrir un tema
 
 - Un tema **desarrollado** (con apuntes) se abre **directamente en el lector** (`#/tema/<id>` redirige a `#/tema/<id>/leer`); la ficha con el programa, las fuentes y la vigencia queda aparte, en el botón «Ficha y fuentes» del lector (`#/tema/<id>/ficha`), para que no meta ruido al entrar (petición del usuario). Un tema sin apuntes sigue abriendo la ficha. «Atrás» en el lector vuelve al bloque. La cabecera del lector (fondo blanco, texto en el color del bloque) lleva **solo el título oficial del tema** (epígrafe literal de la convocatoria, `epigrafeDe`) y los botones; sin bloque, código, subtítulo ni etiquetas (petición del usuario).
