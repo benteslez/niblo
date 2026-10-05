@@ -250,7 +250,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 
 ## Abrir un tema
 
-- Un tema **desarrollado** (con apuntes) se abre **directamente en el lector** (`#/tema/<id>` redirige a `#/tema/<id>/leer`); la ficha con el programa, las fuentes y la vigencia queda aparte, en el botón «Ficha y fuentes» del lector (`#/tema/<id>/ficha`), para que no meta ruido al entrar (petición del usuario). Un tema sin apuntes sigue abriendo la ficha. «Atrás» en el lector vuelve al bloque.
+- Un tema **desarrollado** (con apuntes) se abre **directamente en el lector** (`#/tema/<id>` redirige a `#/tema/<id>/leer`); la ficha con el programa, las fuentes y la vigencia queda aparte, en el botón «Ficha y fuentes» del lector (`#/tema/<id>/ficha`), para que no meta ruido al entrar (petición del usuario). Un tema sin apuntes sigue abriendo la ficha. «Atrás» en el lector vuelve al bloque. La cabecera degradada del lector lleva **solo el título oficial del tema** (epígrafe literal de la convocatoria, `epigrafeDe`) y los botones; sin bloque, código, subtítulo ni etiquetas (petición del usuario).
 
 ## Descargar apuntes (botón en cada tema)
 

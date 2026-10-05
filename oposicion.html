@@ -544,6 +544,7 @@ details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-mu
 }
 .hero-sup { font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.85; }
 .hero-num { font-size:13px; font-weight:600; opacity:.9; margin-top:6px; }
+.hero-tema h1 + .hero-acc { margin-top:16px; }
 .hero-tema h1 { font-size:28px; line-height:1.15; letter-spacing:-.03em; margin:6px 0 8px; font-weight:800; }
 @media (min-width:720px) { .hero-tema { padding:36px 34px 30px; } .hero-tema h1 { font-size:38px; } }
 .hero-epi { margin:-4px 0 10px; font-size:14px; line-height:1.5; font-weight:600; opacity:.95; max-width:760px; }
@@ -3814,12 +3815,7 @@ function renderLeer(id) {
   const chips = (t.etiquetas || []).length ? t.etiquetas : [];
   vista().innerHTML = `
     <header class="hero-tema">
-      <div class="hero-sup">Bloque ${b.rom} · ${esc(b.nombre)} ${pillCritica(id)}</div>
-      <div class="hero-num">Tema ${esc(p.c)}</div>
-      <h1>${esc(p.e)}</h1>
-      <p class="hero-epi" title="Epígrafe oficial · ${esc(PROGRAMA_REF)}, anexo VII">«${esc(epigrafeDe(p))}»</p>
-      ${lleno(t.subtitle) ? `<p class="hero-sub">${esc(t.subtitle)}</p>` : ""}
-      ${chips.length ? `<div class="hero-chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
+      <h1 title="Epígrafe oficial · ${esc(PROGRAMA_REF)}, anexo VII">${esc(epigrafeDe(p))}</h1>
       <div class="hero-acc">
         <a class="btn btn-sm hero-btn" href="#/tema/${id}/editar">✏️ Editar</a>
         <a class="btn btn-sm hero-btn" href="#/tema/${id}/ficha">Ficha y fuentes</a>
