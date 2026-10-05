@@ -966,11 +966,20 @@ body { padding-bottom:calc(76px + env(safe-area-inset-bottom)); }
 .tema2-cab .pill-critica, .hero-sup .pill-critica { margin-left:6px; }
 .hero-tema .pill-critica { margin:0 0 8px; }
 
-/* ---- Cronómetro (esquina inferior izquierda, siempre visible) ----------- */
+/* ---- Cronómetro (esquina inferior izquierda, discreto) ------------------------
+   Cerrado es un botón pequeño y tenue (si corre, solo un punto rojo); se abre al tocarlo y se cierra al tocar fuera.
+   En las sesiones a pantalla completa (tests) no se ve, aunque siga contando. */
 .cr {
-  position:fixed; left:12px; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:95;
+  position:fixed; left:8px; bottom:calc(8px + env(safe-area-inset-bottom)); z-index:95;
   display:flex; flex-direction:column; align-items:flex-start; gap:8px; max-width:calc(100vw - 24px);
 }
+.cr-mini { width:32px; height:32px; border-radius:50%; border:1px solid var(--line); background:color-mix(in srgb, var(--bg-elev) 82%, transparent); color:var(--text-muted);
+  font-size:14px; line-height:1; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; opacity:.5; padding:0; }
+.cr-mini:hover, .cr-mini:focus-visible { opacity:1; }
+.cr.run .cr-mini { background:transparent; border-color:transparent; font-size:0; opacity:.6; }
+.cr.run .cr-mini::before { content:""; width:8px; height:8px; border-radius:50%; background:#dc2626; }
+.cr.abierto .cr-mini, .cr:not(.abierto) .cr-pill, .cr:not(.abierto) .cr-panel { display:none; }
+body.real-abierto .cr { display:none; }
 .cr-pill {
   display:flex; align-items:center; gap:10px; padding:6px 6px 6px 14px; min-height:44px;
   background:var(--bg-elev); color:var(--text); border:1px solid var(--line); border-radius:var(--r-pill);
@@ -5462,6 +5471,7 @@ function crCrear() {
   el.className = "cr"; el.id = "cr";
   el.innerHTML = `
     <div class="cr-panel" id="cr-panel" hidden></div>
+    <button class="cr-mini" id="cr-mini" type="button" aria-label="Cronómetro de estudio" aria-expanded="false" title="Cronómetro de estudio">⏱</button>
     <div class="cr-pill">
       <span class="cr-punto" aria-hidden="true"></span>
       <button class="cr-txt" id="cr-txt" type="button" aria-label="Abrir el registro de estudio" aria-expanded="false"><span class="cr-t" id="cr-t">00:00:00</span><span class="cr-d" id="cr-d"></span></button>
@@ -5469,7 +5479,9 @@ function crCrear() {
     </div>`;
   document.body.appendChild(el);
   document.getElementById("cr-go").addEventListener("click", () => { if (CR.run) crParar(); else crIniciar(); crPanel(false); });
-  document.getElementById("cr-txt").addEventListener("click", () => crPanel());
+  document.getElementById("cr-mini").addEventListener("click", () => crPanel());
+  document.getElementById("cr-txt").addEventListener("click", () => crPanel(false));
+  document.addEventListener("pointerdown", e => { if (!el.classList.contains("abierto") || el.contains(e.target) || e.target.closest("dialog")) return; crPanel(false); });
   setInterval(crTick, 1000);
   window.addEventListener("storage", e => {
     if (e.key !== KEY_CRON || !e.newValue) return;
@@ -5499,7 +5511,8 @@ function crPintar() {
 }
 function crPanel(forzar) {
   const p = document.getElementById("cr-panel"); if (!p) return;
-  if (forzar !== true) { p.hidden = forzar === false ? true : !p.hidden; document.getElementById("cr-txt").setAttribute("aria-expanded", String(!p.hidden)); }
+  if (forzar !== true) { p.hidden = forzar === false ? true : !p.hidden; document.getElementById("cr-mini").setAttribute("aria-expanded", String(!p.hidden)); }
+  document.getElementById("cr").classList.toggle("abierto", !p.hidden);
   if (p.hidden) return;
   const cfg = plCfg(), v = CR.run ? CR.v : cfg.v, x = CR.run ? CR.x : cfg.x, f = crFila();
   const neg = f && f.neg.includes(v);

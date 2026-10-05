@@ -17,10 +17,10 @@ const OUT = process.env.SHOTS || '.';
     // abrir un tema desde plantilla, cronómetro cuenta ese tema
     await p.click('.pl-fila:has-text("La Corona") .pl-t a'); await p.waitForTimeout(400);
     console.log(nombre, 'destino crono:', await p.locator('#cr-d').innerText());
-    await p.click('#cr-go'); await p.waitForTimeout(2300);
+    await p.click('#cr-mini'); await p.click('#cr-go'); await p.waitForTimeout(2300);
     await p.goto('http://localhost:8765/oposicion.html#/tema/B4T04'); await p.waitForTimeout(500);
     console.log(nombre, 'tras cambiar de tema:', await p.locator('#cr-d').innerText(), await p.locator('#cr-t').innerText());
-    await p.click('#cr-go'); await p.waitForTimeout(300);
+    await p.click('#cr-mini'); await p.click('#cr-go'); await p.waitForTimeout(300);
     await p.goto('http://localhost:8765/oposicion.html#/plan'); await p.waitForTimeout(500);
     console.log(nombre, 'casillas con tiempo:', await p.locator('.pl-c.hecho').count(), (await p.locator('.pl-c.hecho').allInnerTexts()).join('|'));
     // pestañas
