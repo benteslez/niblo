@@ -238,10 +238,31 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 
 ## Estética de los apuntes (lector y PDF)
 
-- Petición del usuario: apuntes limpios y visuales, con conceptos en escala de colores. Recuadros con etiqueta (`CJ_CSS` en `oposicion.html`, común al lector y al PDF): `+>` **Concepto clave** (azul), `!>` **Atención examen** (rojo), `@> **▸ En resumen.**` **Síntesis** (amarillo), `?>` **Ojo** (ámbar), `@> **▸ Dónde estamos.**` guía (gris). `~>` = **mapa conceptual** (`~> Título`, `~> # Raíz`, una rama por línea `Rama | descripción | subcaja`); I.1-I.3 lo generan solo de la tabla «El hilo del tema» (`_con_mapa` en `m101/dividir.py`).
+- Petición del usuario: apuntes limpios y visuales, con conceptos en escala de colores. Recuadros con etiqueta (`CJ_CSS` en `oposicion.html`, común al lector y al PDF): `+>` **Concepto clave** (azul), `!>` **Atención examen** (rojo), `@> **▸ En resumen.**` **Síntesis** (amarillo), `?>` **Ojo** (ámbar), `@> **▸ Dónde estamos.**` guía (gris). `&>` = **esquema de procedimiento** (pasos numerados con un color por institución; véase «Tema II.1 y módulo M108»). `~>` = **mapa conceptual** (`~> Título`, `~> # Raíz`, una rama por línea `Rama | descripción | subcaja`); I.1-I.3 lo generan solo de la tabla «El hilo del tema» (`_con_mapa` en `m101/dividir.py`).
 - Los términos del glosario salen solos como «Concepto clave» al empezar su apartado (`conConceptos`, máx. 2 por apartado). Tablas con cabecera azul y filas alternas; subtítulos de artículo (`###`) con la misma tipografía que los subapartados; los títulos de apartado de la lista (01 Mapa del tema…) usan la tipografía del título de la cabecera, sin serif (peticiones del usuario).
 - Reformas de la CE (I.1 · I.2): los textos de cada reforma (exposición de motivos, preámbulo, artículo único) van en **violeta** (`lit-ref`, se detecta por el título del bloque) y el artículo definitivo en el color normal; `^>` = «Cómo era antes» (resumen propio, sin citar el texto anterior, para no confundirlo con el redactado vigente).
 - Los códigos de fuente pueden llevar dígitos (`[[M101]]`).
+
+## Tema II.1 (B2T01) y módulo M108
+
+- **Módulo M108** (guía de estudio y vídeo del tema II.1; PDF y transcripción aportados por el usuario): fuente `[[M108]]`
+  (no es texto legal). El texto del PDF está en `herramientas/oposicion/m108/guia.txt` y `temas/B2T01.py` comprueba contra él
+  cada cita (`cg()`) y cada celda de sus cuadros (`tabla(..., ver=...)`, `TRAT`). Ojo: el cuadro impreso dice «Procedimiento **de**
+  alerta temprana» y la capa de texto del PDF no; se compara con la variante sin «de».
+- **Orden de los apuntes = orden de la guía**: I antecedentes · II naturaleza y objetivos (arts. 1 a 3 y 47) · III Tratados (con el
+  **cuadro maestro**, III.4, reordenado Tratado a Tratado) · IV TUE y TFUE (arts. 4 a 12, 48 y 51 a 55; luego el TFUE) · V ampliación y
+  retirada · VI cooperaciones reforzadas. El art. 48 vive en IV.5 (no en III) y los arts. 4 a 8 en IV.2 y IV.3.
+- **Esquemas de procedimiento**: marcador `&>` (`&> Título` y un paso por línea `Actor + Actor | qué hace | regla`; `↳ Actor | …` es una
+  alternativa del paso anterior). Un color por institución (Consejo Europeo azul, Consejo verde, Comisión rojo, Parlamento Europeo morado,
+  Parlamentos nacionales azul oscuro, Estados gris, Alto Representante rosa, BCE naranja). Son de elaboración propia a partir de los artículos
+  y de los esquemas de la guía; en el generador, `flujo(titulo, *pasos)`. Salen también en el PDF.
+- **Si la guía o el vídeo discrepan de la norma, prevalece la norma** y va un `?>` con el aviso. Hoy: mayoría cualificada del art. 7
+  (art. 354 TFUE → 238.3.b, 72 %), Schengen (el cuadro y la ficha del PE lo sitúan en Ámsterdam; el vídeo, en Maastricht), «originarios»
+  (la guía cuenta París, Roma y Maastricht; la ficha 1.1.1 del PE, solo París y Roma), rúbrica de la 1.ª parte del TFUE («Principios», no
+  «Disposiciones comunes»), «candidato potencial» (Kosovo) y que los tratados de adhesión «no modifican» los Tratados (art. 49).
+  El estado de las candidaturas es **REVISAR** (cambia).
+- **Preguntas de la guía** (`QG` en `B2T01.py`; 3, que la guía da como de examen oficial pero sin convocatoria): van al test del tema con
+  `ac = "M108 · pregunta n"` (chip 🎓 Academia) y **no** al test real global (no hay convocatoria que citar).
 
 ## Temas encendidos y apagados
 

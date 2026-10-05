@@ -3646,6 +3646,7 @@ function actualizarContadores() {
    si lo hay), y un bloque literal «>» cuya primera línea es «[[COD]]» lleva esa
    etiqueta en lugar de BOE. */
 const FUENTES = {
+  M108:{ n:"Módulo M108", c:"#0369a1", t:"Material de la academia (guía y vídeo del módulo M108, tema II.1: antecedentes de la Unión Europea), aportado por el usuario: no es texto legal" },
   M107:{ n:"Módulo M107", c:"#0369a1", t:"Material de la academia (repaso de la estructura de la CE: PDF y vídeo), aportado por el usuario: no es texto legal" },
   M103:{ n:"Módulo M103", c:"#0369a1", t:"Material de la academia (lectura y explicación de los arts. 1-52 de la CE: documento subrayado y vídeo), aportado por el usuario: no es texto legal" },
   M106:{ n:"Módulo M106", c:"#0369a1", t:"Material de la academia (ampliación sobre el Defensor del Pueblo), aportado por el usuario: no es texto legal" },
@@ -3737,6 +3738,19 @@ function formatear(txt) {
         filas.push(kv ? { k:kv[1].trim(), v:kv[2], items:[] } : { k:"", v:x, items:[] });
       });
       html += `<div class="ap-caja ap-ficha">${filas.map(f => `<div class="fi-fila${/^⚠/.test(f.k) ? " ojo" : ""}"><span class="fi-k">${enLinea(f.k)}</span><div class="fi-v">${f.v ? enLinea(f.v) : ""}${f.items.length ? `<ul>${f.items.map(i => `<li>${enLinea(i)}</li>`).join("")}</ul>` : ""}</div></div>`).join("")}</div>`;
+    } else if (caja.tipo === "flujo") {
+      /* Esquema de procedimiento: «&> Título» y un paso por línea «Actor + Actor | qué hace | regla o mayoría».
+         Una línea «↳ Actor | qué hace | regla» es una alternativa del paso anterior. */
+      const L = caja.lineas.map(x => x.trim()).filter(Boolean), tit = L.find(x => !x.includes("|")) || "";
+      const clase = a => { const x = a.toLowerCase(); return /consejo europeo/.test(x) ? "ce" : /parlamentos? nacional/.test(x) ? "pn" : /parlamento europeo|^pe$/.test(x) ? "pe" : /consejo/.test(x) ? "co" : /comisi/.test(x) ? "cm" : /alto repres/.test(x) ? "ar" : /bce|banco central/.test(x) ? "bce" : /estado|gobierno|\bem\b/.test(x) ? "em" : "ot"; };
+      const chips = a => a.split(/\s\+\s/).map(x => `<span class="cflu-c cflu-${clase(x)}">${enLinea(x.trim())}</span>`).join("");
+      let n = 0;
+      const pasos = L.filter(x => x.includes("|")).map(x => {
+        const alt = x.startsWith("↳"), r = x.replace(/^↳\s*/, "").split("|").map(z => z.trim());
+        if (!alt) n++;
+        return `<li class="cflu-p${alt ? " alt" : ""}"><span class="cflu-n">${alt ? "o" : n}</span><div class="cflu-b"><div class="cflu-a">${chips(r[0])}</div>${r[1] ? `<div class="cflu-x">${enLinea(r[1])}</div>` : ""}${r[2] ? `<div class="cflu-r">${enLinea(r[2])}</div>` : ""}</div></li>`;
+      }).join("");
+      html += `<div class="cflu"><div class="cflu-k">⇢ Esquema del procedimiento · elaboración propia, no es texto legal</div>${tit ? `<div class="cflu-t">${enLinea(tit)}</div>` : ""}<ol class="cflu-l">${pasos}</ol></div>`;
     } else if (caja.tipo === "mapa") {
       /* Mapa conceptual: «~> Título», «~> # Raíz» y una rama por línea «Rama | descripción | subcaja». */
       const L = caja.lineas.map(x => x.trim()).filter(Boolean), tit = L.find(x => !x.startsWith("#") && !x.includes("|")) || "", raiz = (L.find(x => x.startsWith("#")) || "").replace(/^#\s*/, "");
@@ -3756,10 +3770,10 @@ function formatear(txt) {
   };
   String(txt || "").replace(/\r/g, "").split("\n").forEach(l => {
     const t = l.trim();
-    const k = t.match(/^([!?@=%+~^])>\s?(.*)$/);
+    const k = t.match(/^([!?@=%+~^&])>\s?(.*)$/);
     if (k) {
       cerrarP(); cerrarL(); cerrarT(); cerrarC();
-      const tipo = { "!":"clave", "?":"trampa", "@":"ap-guia", "=":"ficha", "%":"quiz", "+":"concepto", "~":"mapa", "^":"anterior" }[k[1]];
+      const tipo = { "!":"clave", "?":"trampa", "@":"ap-guia", "=":"ficha", "%":"quiz", "+":"concepto", "~":"mapa", "^":"anterior", "&":"flujo" }[k[1]];
       if (caja && caja.tipo !== tipo) cerrarK();
       if (!caja) caja = { tipo, lineas:[] };
       caja.lineas.push(k[2]); return;
@@ -4152,7 +4166,7 @@ function panelMapa(c, id) {
 
 /* ---- Lectura en voz (Web Speech API) ----------------------------------- */
 const VOZ = { cola:[], i:0, activo:false, pausa:false, vel:1 };
-function textoPlano(md) { return String(md || "").replace(/\[\[([A-Z0-9_]+)(?:\|[^\]]*)?\]\]/g, (m, c) => (FUENTES[c] ? FUENTES[c].n : c)).replace(/^\s*(#{3,4}|[!?@=%]>)\s*(\[[ x]\]\s*)?/gm, "").replace(/\s\|\|\s/g, ". ").replace(/^\s*\|?\s*:?-{2,}.*$/gm, "").replace(/\|/g, ", ").replace(/\*\*|\*/g, "").replace(/^\s*[-•]\s+/gm, "").replace(/BOE-A-(\d{4})-(\d+)/g, "BOE $1 $2"); }
+function textoPlano(md) { return String(md || "").replace(/\[\[([A-Z0-9_]+)(?:\|[^\]]*)?\]\]/g, (m, c) => (FUENTES[c] ? FUENTES[c].n : c)).replace(/^\s*(#{3,4}|[!?@=%+~^&]>)\s*(\[[ x]\]\s*)?/gm, "").replace(/\s\|\|\s/g, ". ").replace(/^\s*\|?\s*:?-{2,}.*$/gm, "").replace(/\|/g, ", ").replace(/\*\*|\*/g, "").replace(/^\s*[-•]\s+/gm, "").replace(/BOE-A-(\d{4})-(\d+)/g, "BOE $1 $2"); }
 function vozParar() {
   VOZ.activo = false; VOZ.pausa = false; VOZ.cola = [];
   try { speechSynthesis.cancel(); } catch (_) {}
@@ -6952,11 +6966,29 @@ const CJ_CSS = `
 :root[data-theme="dark"] .ap-cuerpo .cj-cc, :root[data-theme="dark"] .ap-cuerpo .cj-ex, :root[data-theme="dark"] .ap-cuerpo .cj-sin, :root[data-theme="dark"] .ap-cuerpo .cj-nota, :root[data-theme="dark"] .ap-cuerpo .cj-guia { background:#16213a; color:#d6e0f5; }
 :root[data-theme="dark"] .ap-cuerpo .cj-k, :root[data-theme="dark"] .ap-cuerpo .cj strong { color:inherit; }
 :root[data-theme="dark"] .ap-cuerpo .cmap, :root[data-theme="dark"] .ap-cuerpo .cmap-b, :root[data-theme="dark"] .ap-cuerpo .cmap-s { background:#16213a; color:#d6e0f5; } :root[data-theme="dark"] .ap-cuerpo .cmap-t { color:#e6ecfa; }
+.cflu { margin:1.2em 0 1.5em; padding:1em 1.2em 1.1em; border:1px solid #dcdcd4; border-radius:18px; background:#f9f9f6; break-inside:avoid-page; }
+.cflu-k { font-size:.72em; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#777; }
+.cflu-t { font-family:Georgia,"Times New Roman",serif; font-size:1.15em; margin:.5em 0 .8em; color:#222; }
+.cflu-l { list-style:none; margin:0; padding:0; position:relative; }
+.cflu-p { display:flex; gap:.7em; align-items:flex-start; position:relative; padding-bottom:.9em; }
+.cflu-p::before { content:""; position:absolute; left:.95em; top:2em; bottom:0; width:2px; background:#c9d4ea; }
+.cflu-p:last-child { padding-bottom:0; } .cflu-p:last-child::before { display:none; }
+.cflu-n { flex:none; width:1.9em; height:1.9em; border-radius:50%; background:#2f62b8; color:#fff; font-weight:800; font-size:.85em; display:flex; align-items:center; justify-content:center; position:relative; z-index:1; }
+.cflu-p.alt { margin-left:2.2em; } .cflu-p.alt .cflu-n { background:#9aa7c2; font-size:.75em; } .cflu-p.alt::before { display:none; }
+.cflu-b { flex:1; min-width:0; border:1px solid #dcdcd4; border-radius:12px; background:#fbfbf8; padding:.5em .7em; }
+.cflu-a { display:flex; flex-wrap:wrap; gap:.3em; margin-bottom:.25em; }
+.cflu-c { display:inline-block; padding:.14em .65em; border-radius:12px; line-height:1.35; color:#fff; font-weight:700; font-size:.82em; background:#64748b; }
+.cflu-ce { background:#0284c7; } .cflu-co { background:#65a30d; } .cflu-cm { background:#dc2626; } .cflu-pe { background:#7e22ce; } .cflu-pn { background:#2563eb; } .cflu-em { background:#475569; } .cflu-ar { background:#be185d; } .cflu-bce { background:#ea580c; }
+.cflu-x { font-size:.95em; line-height:1.4; }
+.cflu-r { margin-top:.3em; display:inline-block; font-size:.82em; font-weight:700; color:#8a5a00; background:#fff4d6; border-radius:8px; padding:.1em .6em; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ap-cuerpo .cflu, :root:not([data-theme="light"]) .ap-cuerpo .cflu-b { background:#16213a; color:#d6e0f5; } :root:not([data-theme="light"]) .ap-cuerpo .cflu-t { color:#e6ecfa; } :root:not([data-theme="light"]) .ap-cuerpo .cflu-r { background:#4a3a10; color:#ffe39a; } }
+:root[data-theme="dark"] .ap-cuerpo .cflu, :root[data-theme="dark"] .ap-cuerpo .cflu-b { background:#16213a; color:#d6e0f5; } :root[data-theme="dark"] .ap-cuerpo .cflu-t { color:#e6ecfa; } :root[data-theme="dark"] .ap-cuerpo .cflu-r { background:#4a3a10; color:#ffe39a; }
 `;
 const PDF_CJ = `
 .cj { margin:2.6mm 0 3.2mm; padding:2.2mm 3.6mm; border-radius:3mm; font-size:inherit; }
 .cj p { font-size:8.9pt; line-height:1.42; } .cj-k { font-size:6.8pt; }
 .cmap { padding:3mm 4mm 4mm; margin:3mm 0 4mm; } .cmap-t { font-size:11pt; } .cmap-root span { font-size:9.5pt; box-shadow:none; } .cmap-b b { font-size:8.6pt; } .cmap-b small, .cmap-s { font-size:7.4pt; }
+.cflu { padding:3mm 4mm; margin:3mm 0 4mm; } .cflu-t { font-size:10.5pt; } .cflu-b { padding:1.2mm 2.4mm; } .cflu-x { font-size:8.4pt; } .cflu-c { font-size:7.4pt; } .cflu-r { font-size:7.2pt; }
 .cuerpo h4.ap-h { font-size:10.5pt; }
 .apuntes-tabla th, .apuntes-tabla td { padding:1.5mm 2.4mm; }
 `;
