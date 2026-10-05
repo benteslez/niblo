@@ -196,6 +196,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   Pills: `{{IMPORTANTE}}` (la guía o el vídeo dicen «importante/atención») y `{{PRESCINDIBLE}}` (no hace falta
   estudiarlo a fondo; con nota). `{{c:<clave>~texto}}` pinta con el color de un título/capítulo de la CE;
   `{{ir:#/ruta|texto}}` es un botón. Fuente nueva `[[M101]]` = guía y vídeo del módulo (no es texto legal).
+- **Vídeo M101-02** (TC, Defensor, reforma; transcripción aportada por el usuario): sus reglas de memoria están en I.1 · IV.1.4 y IV.6, I.2 · V.1 (2.4) y I.3 · I.3 y II.2; las notas del propio documento mandan: el PDF/la ley prevalecen sobre el vídeo (Defensor: mayoría **absoluta** del Senado; reforma agravada: la del PDF) y el art. 49 del PDF «con epígrafes» está sin actualizar (se usa el BOE consolidado).
 - **Si la guía o el vídeo discrepan de la norma vigente, prevalece la norma** y se avisa en el mapa del tema
   (hoy: reforma del 69.3 «19 de mayo de 2026», LO 3/2007 solo parcialmente orgánica, capítulo II del Título I
   = arts. 14 a 38, reelección del Defensor no regulada).

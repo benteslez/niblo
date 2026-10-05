@@ -15,7 +15,7 @@ from plantilla import *
 
 CORTO.update({"LOEAS": "LO 4/1981", "LODP": "LO 3/1981, del Defensor del Pueblo", "LOTC": "LOTC", "RS": "Reglamento del Senado",
               "LO2_1980": "LO 2/1980, de referéndum", "LO3_2007": "LO 3/2007", "REF1992": "Reforma de 1992", "REF2011": "Reforma de 2011",
-              "REF2024": "Reforma de 2024", "REF2026": "Reforma de 2026", "RCD": "Reglamento del Congreso"})
+              "REF2024": "Reforma de 2024", "REF2026": "Reforma de 2026", "RCD": "Reglamento del Congreso", "LOTCu": "LO 2/1982, del Tribunal de Cuentas", "LOPJ": "LOPJ"})
 CEJ = json.load(open(os.path.join(RAIZ, "temas", "ce.json"), encoding="utf-8"))
 IMP, PRE = "{{IMPORTANTE}}", "{{PRESCINDIBLE}}"
 def tag(k, t): return "{{c:%s~%s}}" % (k, t)

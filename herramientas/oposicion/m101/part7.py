@@ -125,3 +125,26 @@ T.ap("s34", "VII.2 Composición y mandato", f"""
          "**3 años**; **reelegible por una sola vez**",
          "El Presidente lo nombra el Rey **a propuesta del propio Tribunal en pleno** (art. 160). El **Vicepresidente** lo elige el Pleno por el mismo procedimiento y periodo (art. 9.4 LOTC)."))}
 """, 2)
+
+T.ap("s34b", "VII.2b Claves para memorizar la composición", f"""
+La composición del Tribunal Constitucional es un puro trabajo de memoria, pero se puede **anclar** con unas cuantas ideas. [[M101]]
+
+{unidad("3.1 Todo va «en packs de tres»",
+  "Son **12** magistrados y se renuevan **por terceras partes cada tres años** (art. 159.3 CE): cada renovación afecta, por tanto, a **4** magistrados. Y **4** es justo el número que propone cada una de las dos Cámaras. Los **doce** se reparten así: **4 + 4** (Congreso y Senado) **+ 2 + 2** (Gobierno y Consejo General del Poder Judicial). En la práctica, las renovaciones se organizan **por bloques de quienes proponen** (los cuatro del Congreso, los cuatro del Senado y los cuatro del Gobierno y del CGPJ), aunque la Constitución solo exige el ritmo de **terceras partes cada tres años**.",
+  tabla(["Bloque", "Magistrados", "Quién propone", "Mayoría"], [
+    ["**1.º**", "**4**", "**Congreso**", "**3/5**"],
+    ["**2.º**", "**4**", "**Senado** (entre candidaturas de las Asambleas autonómicas)", "**3/5**"],
+    ["**3.º**", "**2 + 2**", "**Gobierno** (2) y **CGPJ** (2)", "—"]]))}
+
+{unidad("3.2 Los nueve años: uno de los mandatos más largos",
+  "El mandato de **9 años** es de los más largos entre los órganos constitucionales: sirve como referencia cuando «te bailen las cifras» (el Presidente del Tribunal, **3 años**; el Defensor del Pueblo, **5**). Ojo con la exactitud: el módulo lo presenta como el más largo de todos, pero la ley le pone un **empate**, porque los Consejeros de Cuentas del **Tribunal de Cuentas** también se designan «por un período de **nueve años**» y por **3/5** de cada Cámara (art. 30 LO 2/1982). Aprende «9 años = TC (y Tribunal de Cuentas)».",
+  lx("LOTCu", "atreinta", 30, ["por un período de nueve años"], solo=[1]))}
+
+{unidad("3.3 El Presidente es «uno más» y su voto dirime los empates",
+  "El Presidente **ya forma parte del Tribunal** (no llega «desde fuera»): el **Pleno** elige a su Presidente **de entre sus miembros** por votación secreta y lo propone al Rey, que lo nombra. Como los miembros son **12** (un número par), los empates son posibles, y para eso la ley atribuye al Presidente el voto que decide: *«En caso de empate, decidirá el voto del Presidente»* (art. 90.1 LOTC), lo que la academia llama el **voto de calidad**.",
+  lx("LOTC", "anoventa", 90, ["En caso de empate, decidirá el voto del Presidente"], solo=[1]))}
+
+{unidad("3.4 Los quince años, siempre quince",
+  "El requisito profesional es el mismo en todos los casos: **juristas de reconocida competencia con más de quince años de ejercicio** (art. 159.2 CE; art. 18 LOTC). Te servirá de patrón para otros órganos, como el Consejo General del Poder Judicial. La excepción que conviene conocer es la **Presidencia del Tribunal Supremo y del CGPJ**, donde el jurista debe acreditar **más de veinticinco años** de ejercicio (art. 586.1 LOPJ).",
+  lx("LOPJ", "aquinientosochentayseis", 586, ["más de veinticinco años de antigüedad en el ejercicio de su profesión"], solo=[1]))}
+""", 2)
