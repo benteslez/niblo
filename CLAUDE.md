@@ -153,7 +153,9 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   partidas en dos mitades horizontales. Las casillas guardan **tiempos**, nunca «visto». Los temas
   fusionados (I.1-3, IV.1-3, IV.5-6, IV.11-13, VI.1-2) **solo se fusionan en la plantilla**; el hub
   conserva los 58 temas del programa. No cambiar la matriz de vueltas sin cotejarla con el PDF.
-- **Cronómetro** fijo abajo a la izquierda (`crCrear`): cuenta el tema que abres (`cronSeguir`), se
+- **Cronómetro** discreto abajo a la izquierda (`crCrear`; petición del usuario): cerrado es un botón ⏱ pequeño y tenue, y
+  si corre solo un punto rojo; se abre al tocarlo (hora, Estudiar/Parar y ajustes) y se cierra al tocar fuera; **no se ve**
+  en las sesiones a pantalla completa (`body.real-abierto`) aunque siga contando. Cuenta el tema que abres (`cronSeguir`), se
   puede cambiar a mano (tema, vuelta, vuelta extra) y vuelca al registro cada 2 min y al parar o
   cambiar de tema. Estado en `localStorage` (`gestion_hub_cron_v1`); si nadie lo lleva, se cierra
   en el último latido.
