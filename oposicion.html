@@ -3736,14 +3736,16 @@ function cuadroHTML(clave) {
     let n = 1; while (r + n < gFin[r] && !ini[(r + n) + "," + k] && !ocupa[(r + n) + "," + k]) n++;
     hueco[r + "," + k] = n; for (let i = 1; i < n; i++) hueco[(r + i) + "," + k] = -1;
   }
+  const gCol = ["#64748b", "#64748b", "#7c3aed", "#0891b2", "#dc2626", "#ca8a04", "#16a34a", "#475569", "#ea580c", "#db2777", "#2563eb"], gIdx = {};
+  { let r2 = 0; D.grupos.forEach((g, i) => { for (let j = 0; j < g[1]; j++) gIdx[r2 + j] = i; r2 += g[1]; }); }
   let filas = "";
   for (let r = 0; r < nf; r++) {
     let tr = gIni[r] ? `<th class="cm-g" rowspan="${gIni[r][1]}">${gIni[r][0]}</th>` : "";
     for (let k = 1; k <= 7; k++) { const x = ini[r + "," + k]; if (x) tr += celda(x); else if (!ocupa[r + "," + k] && hueco[r + "," + k] > 0) tr += `<td class="cm-v" ${hueco[r + "," + k] > 1 ? `rowspan="${hueco[r + "," + k]}"` : ""}></td>`; }
-    filas += `<tr${gIni[r] && r ? ' class="cm-sep"' : ""}>${tr}</tr>`;
+    filas += `<tr style="--g:${gCol[gIdx[r]]}">${tr}</tr>`;
   }
   return `<figure class="cm"><div class="cm-bar"><span>${esc(D.titulo)}</span><button type="button" class="chip peq" data-cm-ampliar>⛶ Ampliar a pantalla completa</button></div>
-    <div class="cm-scroll"><table class="cm-t"><thead><tr><th></th>${D.cab.map((h, i) => `<th class="cm-h cm-ir" data-go="${D.cabGo[i]}" tabindex="0" role="link">${esc(h)}</th>`).join("")}</tr></thead><tbody>${filas}</tbody></table></div>
+    <div class="cm-scroll"><table class="cm-t"><thead><tr><th></th>${D.cab.map((h, i) => `<th class="cm-h cm-ir" style="--g:${PALETA[i % PALETA.length]}" data-go="${D.cabGo[i]}" tabindex="0" role="link">${esc(h)}</th>`).join("")}</tr></thead><tbody>${filas}</tbody></table></div>
     <figcaption>${esc(D.pie)}<br><i>${esc(D.fuente)}</i></figcaption></figure>`;
 }
 /* Clic en una casilla (también dentro de la pantalla completa) y botón «Ampliar» con zoom. */
@@ -7206,14 +7208,17 @@ const CJ_CSS = `
 :root[data-theme="dark"] .ap-cuerpo .cmap, :root[data-theme="dark"] .ap-cuerpo .cmap-b, :root[data-theme="dark"] .ap-cuerpo .cmap-s { background:#16213a; color:#d6e0f5; } :root[data-theme="dark"] .ap-cuerpo .cmap-t { color:#e6ecfa; }
 .cm { margin:1.1em 0 1.4em; }
 .cm-bar { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:.5em; font-weight:700; font-size:.92em; }
-.cm-scroll { overflow-x:auto; border:1px solid #cfcfc6; border-radius:12px; background:#fff; }
-.cm-t { border-collapse:collapse; min-width:1000px; width:100%; font-size:12.5px; line-height:1.3; color:#222; }
-.cm-t th, .cm-t td { border:1px solid #444; padding:5px 7px; text-align:center; vertical-align:middle; }
-.cm-t thead th { background:#f4f4f0; font-size:11.5px; position:sticky; top:0; }
-.cm-g { background:#f4f4f0; font-size:11px; font-weight:800; width:92px; }
+.cm-scroll { overflow-x:auto; border:1px solid #e2e2da; border-radius:16px; background:#fbfbf8; padding:4px; }
+.cm-t { border-collapse:separate; border-spacing:5px; min-width:1040px; width:100%; font-size:12.5px; line-height:1.3; color:#1f2937; }
+.cm-t th, .cm-t td { border:0; padding:7px 9px; text-align:center; vertical-align:middle; border-radius:10px; }
+.cm-t td { background:color-mix(in srgb, var(--g, #94a3b8) 9%, #fff); border-left:4px solid var(--g, #94a3b8); box-shadow:0 1px 2px rgba(15,23,42,.07); }
+.cm-t td.cm-v { background:transparent; border-left:0; box-shadow:none; }
+.cm-t thead th { background:var(--g, #64748b); color:#fff; font-size:11.5px; font-weight:800; letter-spacing:.02em; position:sticky; top:0; z-index:2; box-shadow:0 3px 8px rgba(15,23,42,.18); }
+.cm-t thead th:first-child { background:transparent; box-shadow:none; }
+.cm-g { background:var(--g, #64748b); color:#fff; font-size:11px; font-weight:800; letter-spacing:.04em; width:96px; box-shadow:0 2px 6px rgba(15,23,42,.18); }
 .cm-b { font-weight:700; }
-.cm-sep > * { border-top-width:2px; }
-.cm-ir { cursor:pointer; } .cm-ir:hover, .cm-ir:focus-visible { outline:3px solid #2563eb; outline-offset:-3px; filter:brightness(.96); }
+.cm-ir { cursor:pointer; transition:transform .12s, box-shadow .12s; }
+.cm-ir:hover, .cm-ir:focus-visible { transform:translateY(-2px); box-shadow:0 6px 14px rgba(15,23,42,.22) !important; outline:2px solid var(--g, #2563eb); outline-offset:1px; }
 .cm figcaption { font-size:.78em; color:#666; margin-top:.4em; }
 .fig { margin:1.1em 0 1.3em; } .fig img { display:block; width:100%; height:auto; background:#fff; border:1px solid #dcdcd4; border-radius:10px; }
 .fig figcaption { font-size:.75em; color:#777; margin-top:.3em; } .fig.ancha { overflow-x:auto; } .fig.ancha img { min-width:860px; }
@@ -7244,7 +7249,7 @@ const PDF_CJ = `
 .cmap-root span, .cflu-n { background:var(--ac, #2f62b8); }
 .cuerpo .tabla-wrap, .tabla-wrap { overflow:visible !important; border-radius:0 !important; }
 .cmap { padding:3mm 4mm 4mm; margin:3mm 0 4mm; } .cmap-t { font-size:11pt; } .cmap-root span { font-size:9.5pt; box-shadow:none; } .cmap-b b { font-size:8.6pt; } .cmap-b small, .cmap-s { font-size:7.4pt; }
-.cm-bar { display:none; } .cm-scroll { overflow:visible; border-radius:0; } .cm-t { min-width:0; font-size:6.4pt; } .cm-t th, .cm-t td { padding:.8mm 1mm; } .cm { break-inside:avoid; }
+.cm-bar { display:none; } .cm-scroll { overflow:visible; border-radius:0; } .cm-t { min-width:0; font-size:6.4pt; } .cm-t th, .cm-t td { padding:.8mm 1mm; box-shadow:none !important; } .cm-t { border-spacing:.8mm; } .cm { break-inside:avoid; }
 .fig { break-inside:avoid; margin:3mm 0 4mm; } .fig.ancha img { min-width:0; } .fig img { border-radius:2mm; }
 .cflu { padding:3mm 4mm; margin:3mm 0 4mm; } .cflu-t { font-size:10.5pt; } .cflu-b { padding:1.2mm 2.4mm; }  .cflu-c { font-size:7.4pt; } .cflu-r { font-size:7.2pt; }
 .cuerpo h4.ap-h { font-size:10.5pt; }
