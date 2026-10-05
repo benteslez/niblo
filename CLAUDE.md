@@ -202,7 +202,9 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   Constitución (SRS propio `ceSiguiente`, más corto que el del test real: sabía 2·4·8·14·21 días y luego ×1,3 con máximo de 30; dudé la mitad, mín. 2; no la sabía mañana; dominada = intervalo ≥ 14; lo guardado con más de 30 días vence a los 30 desde el último repaso; clave `CEQ:<n>` en `prog.mapa`; la tarjeta baja al pulsar y gira
   con «Ver artículo»). El test abre primero una **ventana de selección** (qué estudiar: hoy, todas, nuevas,
   rebeldes o 🎲 aleatorio; unidades por color; 10/20/30/todos; barajar) y la sesión va en **pantalla completa** (`.ce-pc`: barra arriba, tarjeta que ocupa el resto —cada cara se desplaza por dentro, nunca se corta— y botones de respuesta siempre visibles abajo; **toda la tarjeta** es pulsable: revela y luego gira entre frente y artículo, sin giro 3D por el iPhone)
-  (`CT.cfg` se recuerda en `gestion_hub_ce_test_v1`). Al regenerar el texto: `python3 ce_datos.py`.
+  La ventana de selección tiene **modo**: «SRS con botones» o «Flashcards: deslizar» (`cfg.modo`; arrastrar la tarjeta a la derecha =
+  la sabía, a la izquierda = no la sabía y vuelve a salir; mismos filtros, mismo SRS `ceSiguiente`, mismo revelar/girar al tocar; `ceDeslizar`;
+  también ← →).   (`CT.cfg` se recuerda en `gestion_hub_ce_test_v1`). Al regenerar el texto: `python3 ce_datos.py`.
 - Prueba: `herramientas/oposicion/pruebas/ce.js` y `m101.js`.
 
 ## Descargar apuntes (botón en cada tema)
