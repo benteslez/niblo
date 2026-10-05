@@ -261,6 +261,8 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   (la guía cuenta París, Roma y Maastricht; la ficha 1.1.1 del PE, solo París y Roma), rúbrica de la 1.ª parte del TFUE («Principios», no
   «Disposiciones comunes»), «candidato potencial» (Kosovo) y que los tratados de adhesión «no modifican» los Tratados (art. 49).
   El estado de las candidaturas es **REVISAR** (cambia).
+- **Imágenes originales de la guía**: los 12 esquemas de procedimiento y el cuadro maestro de la guía están también como recortes del PDF (200 ppp, `temas/img/m108/*.png`) con el marcador `![texto|ancha](ruta)` (`img()` en `B2T01.py`; clic = imagen completa; se desplazan en móvil), encima de su versión en pasos `&>` / tablas por Tratado.
+- **Teclado**: ← → ↑ en las flashcards (la sabía / no la sabía / dudé), → en el test (siguiente pregunta ya contestada) y espacio (gira la tarjeta) funcionan sin tener el foco en la tarjeta.
 - **Preguntas de la guía** (`QG` en `B2T01.py`; 3, que la guía da como de examen oficial pero sin convocatoria): van al test del tema con
   `ac = "M108 · pregunta n"` (chip 🎓 Academia) y **no** al test real global (no hay convocatoria que citar).
 
