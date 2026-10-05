@@ -180,6 +180,11 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   `temas/B1T0n.py` solo llama a `dividir.generar(n).publicar()`. Solo la **plantilla del plan** fusiona I.1-3 en una fila.
   `FUSION` (`oposicion.html`) está vacío, pero la lógica sigue por si hace falta; `indice.json` → `retirados` solo se usa
   para quitar temas de los dispositivos (no dejar ids vigentes).
+- **Sin duplicados en los apuntes** (petición del usuario; `_limpia` en `m101/dividir.py`): estos tres temas no llevan
+  «Repaso por bloques» ni «Preguntas de la guía» (las preguntas están en el test), el mapa no repite «Qué vas a aprender»
+  (lo dice su tabla «El hilo del tema»), no hay línea «Qué vas a ver» (el índice lateral ya la da) y un apartado
+  «Cuadro…» no lleva «En resumen». Cada bloque se cierra con su «En resumen» y el último enlaza con el tema siguiente.
+  Esto prevalece sobre «Cierre 1 / Cierre 2» de la plantilla general para estos temas.
 - **Estilo de estos temas** (petición del usuario): explicados, no solo esquemas; texto legal literal del BOE
   (`lit`/`c`, comprobado); cuadros comparativos; reglas mnemotécnicas; cierre con cronología e hitos.
   Pills: `{{IMPORTANTE}}` (la guía o el vídeo dicen «importante/atención») y `{{PRESCINDIBLE}}` (no hace falta

@@ -56,19 +56,22 @@ def _renum(body, n):
     def f(m): k[0] += 1; return f"### {n}.{k[0]} "
     return re.sub(r"^### \d+\.\d+ ", f, body, flags=re.M)
 
+def _limpia(body, titulo):
+    """Sin duplicados: el mapa no repite lo que ya dice su tabla, «Qué vas a ver» repite el índice lateral y un
+    apartado «Cuadro…» ya es su propio resumen."""
+    body = re.sub(r"^@> \*\*▸ Qué vas a ver\.\*\*.*\n?", "", body, flags=re.M)
+    if titulo == "Mapa del tema":
+        body = re.sub(r"^### Qué vas a aprender\n[\s\S]*?(?=^### )", "", body, flags=re.M)
+        body = re.sub(r"^\| \*\*[IVX]+\*\* \| (?:Repaso|Preguntas y repaso) \|[^\n]*\n?", "", body, flags=re.M)
+    if re.match(r"^[IVX]+\.\d+ Cuadro", titulo):
+        body = re.sub(r"^@> \*\*▸ En resumen\.\*\*\n(?:@> • .*\n?)*", "", body, flags=re.M)
+    return body.rstrip("\n")
+
 def generar(tema_n):
     ns = _cargar()
     Tema, donde, resumen, IMP, PRE, tag, tabla, ir, T = (ns[k] for k in ("Tema", "donde", "resumen", "IMP", "PRE", "tag", "tabla", "ir", "T"))
     S = {s["id"]: s for s in T.S}
     def cuerpo(*ids): return "\n\n".join(S[i]["body"] for i in ids)
-
-    # Filas de «Repaso por bloques» (de la tabla de s50), renombradas
-    filas = {l.split("|")[1].strip(): l for l in S["s50"]["body"].splitlines() if l.startswith("| **")}
-    def fila(clave, nuevo):
-        l = [v for k, v in filas.items() if k.startswith("**" + clave)][0]
-        c = l.split("|"); c[1] = f" **{nuevo}** "; return "|".join(c)
-    def repaso(rows, enlaces, resumen_lineas, sig):
-        return "\n".join(["| Bloque | Lo imprescindible |", "|---|---|"] + rows) + "\n\n" + enlaces + "\n\n" + resumen(resumen_lineas, sig)
 
     ap = []   # (id, título, cuerpo, nivel)
     def A(i, tit, body, nivel=2): ap.append((i, tit, body, nivel))
@@ -137,11 +140,6 @@ Este es el **primer tema del bloque I**. El módulo M101 lo estudia junto a los 
           ["1 La iniciativa (arts. 87 y 166)", "2 El procedimiento del art. 167", "3 El procedimiento del art. 168", "4 Límites y reglas comunes", "5 Cuadro comparativo"]), 1)
         for i, n in (("s44", 1), ("s45", 2), ("s46", 3), ("s47", 4), ("s48", 5)):
             A(i, f"IV.{n}" + S[i]["title"][4:], S[i]["body"])
-        A("bX", "V. Preguntas y repaso", donde("Para cerrar el tema: las **preguntas de examen** de la guía M101 (con su respuesta) y el **repaso por bloques**. El **Test Constitución** entrena los artículos 1 a 55.", ["1 Preguntas de la guía M101", "2 Repaso por bloques"]), 1)
-        A("s49", "V.1 Preguntas de la guía M101", S["s49"]["body"])
-        A("s50", "V.2 Repaso por bloques", repaso([fila("I ·", "I · Fechas y reformas"), fila("II ·", "II · Estructura"), fila("III ·", "III · Contenido (arts. 1 a 55)"), fila("IX ·", "IV · Reforma")],
-            ir("#/ce/test", "🧭 Hacer el Test Constitución") + " " + ir("#/ce/organigrama", "🗺 Organigrama") + " " + ir("#/ce/texto", "📜 Constitución completa"),
-            ["La Constitución es la **única norma** en que se estudia la **estructura y el contenido artículo por artículo**.", "**Fechas:** las Cortes aprueban, el pueblo ratifica, el Rey sanciona y el BOE publica; **cuatro** reformas.", "**Estructura:** 1-55 dogmática y 56-169 orgánica; 11 títulos, 169 artículos, disposiciones 4-9-1-1.", "**Reforma:** art. 167 (3/5) y art. 168 (2/3, disolución, referéndum)."], "Fin del tema I.1: sigue el tema I.2 (derechos y deberes fundamentales)"))
     elif tema_n == 2:
         A("s0", "Mapa del tema", f"""
 **Epígrafe oficial** (BOE-A-2025-26262, anexo VII, Bloque I, tema 2):
@@ -211,11 +209,7 @@ Es el **segundo tema del bloque I** (el primero estudia la estructura de la Cons
           ["1 Qué es, requisitos y elección", "2 Mandato, adjuntos, estatuto y funciones", "3 Resumen"]), 1)
         A("s39", "V.1 Qué es el Defensor del Pueblo, requisitos y elección", _renum(S["s39"]["body"] + "\n\n" + S["s40"]["body"], 1))
         A("s41", "V.2 Mandato, adjuntos, estatuto y funciones", _renum(S["s41"]["body"] + "\n\n### 2.5 Funciones y actuación\n\n" + S["s42"]["body"], 2))
-        A("s43", "V.3 Resumen del Defensor del Pueblo", re.sub(r"Siguiente: [^*\n]+", "Siguiente: VI. Repaso por bloques", S["s43"]["body"]))
-        A("bX", "VI. Repaso", donde("Para cerrar el tema: el **repaso por bloques** y los recursos de práctica (test, flashcards y Test Constitución).", ["1 Repaso por bloques"]), 1)
-        A("s50", "VI.1 Repaso por bloques", repaso([fila("IV ·", "I · Niveles de protección"), fila("V ·", "III · Garantías"), fila("VI ·", "IV · Suspensión"), fila("VIII ·", "V · Defensor del Pueblo")],
-            ir("#/ce/test", "🧭 Hacer el Test Constitución") + " " + ir("#/ce/texto", "📜 Constitución completa"),
-            ["**Niveles:** sección 1.ª todas las garantías; art. 14 todas menos la ley orgánica; sección 2.ª vinculan, ley e inconstitucionalidad (amparo solo 30.2); capítulo III informan.", "**Garantías:** LO (15-29) · tutela preferente y sumaria (14-29) · amparo (14-29 + 30.2) · Defensor (Título I) · inconstitucionalidad y vinculación (14-38).", "**Suspensión:** alarma 15 días (Gobierno), excepción 30 + 30 (Gobierno con autorización del Congreso), sitio (Congreso, mayoría absoluta); 17.3 solo en sitio.", "**Defensor:** 3/5 + 3/5, 5 años, 2 adjuntos, investigación sumaria e informal."], "Fin del tema I.2: sigue el tema I.3 (Tribunal Constitucional)"))
+        A("s43", "V.3 Resumen del Defensor del Pueblo", re.sub(r"→ Siguiente: [^*\n]+", "→ Fin del tema I.2: sigue el tema I.3 (Tribunal Constitucional)", S["s43"]["body"]))
     else:
         A("s0", "Mapa del tema", f"""
 **Epígrafe oficial** (BOE-A-2025-26262, anexo VII, Bloque I, tema 3):
@@ -236,7 +230,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
 | **I** | ¿Qué es y cómo se compone? | Arts. 159 y 160, 165 | LOTC arts. 1, 5, 9, 16, 18, 19 |
 | **II** | ¿Qué conoce? | Arts. 161 a 163 | LOTC arts. 32, 33, 35, 41 a 46, 59 a 63, 73 a 77 |
 | **III** | ¿Qué valor tienen las sentencias? | Art. 164 | LOTC arts. 38 y 39 |
-| **IV** | Repaso | — | — |
+| **IV** | Resumen | — | — |
 
 ### Cómo estudiarlo
 
@@ -301,6 +295,10 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
           3: ["Tribunal Constitucional", "LOTC", "Amparo", "Inconstitucionalidad", "Módulo M101"]}[tema_n]
     X = Tema(TEMA_DE[tema_n], sub, et)
     X.meta["title"] = {1: "La Constitución de 1978: estructura, contenido y reforma", 2: "Derechos y deberes fundamentales: garantía, suspensión y Defensor del Pueblo", 3: "El Tribunal Constitucional"}[tema_n]
-    for i, tit, body, nivel in ap: X.ap(i, tit, _remisiones(body, tema_n), nivel)
+    for i, tit, body, nivel in ap:
+        body = _limpia(body, tit)
+        if i == ap[-1][0] and tema_n == 1:   # último apartado de I.1: enlace al tema siguiente
+            body = re.sub(r"→ Siguiente: [^*\n]+", "→ Fin del tema I.1: sigue el tema I.2 (derechos y deberes fundamentales)", body)
+        X.ap(i, tit, _remisiones(body, tema_n), nivel)
     X.Q, X.FC, X.G, X.H = Q, FC, G, H
     return X
