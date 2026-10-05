@@ -572,8 +572,8 @@ U10_2 = unidad("4.2 Tratados originarios y Tratados modificativos",
 
 U10_3 = unidad("4.3 Qué aporta cada Tratado (cuadro de la guía)",
   "El cuadro de la guía, reordenado **Tratado a Tratado**. Cada tabla recoge lo que el Tratado **introduce o refuerza**; una celda vacía en el original es una fila que se omite aquí. [[M108]]",
-  img("tabla_maestra", "Cuadro maestro de los Tratados originarios y modificativos", True),
-  "Debajo, el mismo cuadro reordenado **Tratado a Tratado** para estudiarlo con comodidad en el móvil.",
+  "@@cuadro tratados_ue@@",
+  "El cuadro es **interactivo**: pulsa cualquier casilla para ir al apartado o al tema del que habla, y «Ampliar» lo abre a pantalla completa con zoom. Debajo, el mismo cuadro reordenado **Tratado a Tratado** para estudiarlo con comodidad en el móvil.",
   *[_cuadro_tratado(t) for t in TRAT],
   GUIA_NOTA + " Las fechas en formato día/mes/año son las de la guía. El asterisco (*) remite a la nota del Tratado de Fusión (→ III.4.1).")
 

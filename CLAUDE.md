@@ -263,6 +263,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   (la guía cuenta París, Roma y Maastricht; la ficha 1.1.1 del PE, solo París y Roma), rúbrica de la 1.ª parte del TFUE («Principios», no
   «Disposiciones comunes»), «candidato potencial» (Kosovo) y que los tratados de adhesión «no modifican» los Tratados (art. 49).
   El estado de las candidaturas es **REVISAR** (cambia).
+- **Cuadro maestro interactivo** (III.4 · 4.3): marcador `@@cuadro tratados_ue@@` → `cuadroHTML()` (datos en `CUADROS`, `oposicion.html`): réplica de la tabla de la guía con sus rowspans y colores; **cada casilla lleva al apartado o tema del que habla** (`data-go="TEMA:apartado"`, destinos en `CM_IR`) y «⛶ Ampliar» la abre a pantalla completa con zoom, arrastre y Esc. Sustituye a la imagen. Para otro cuadro: añadir su clave a `CUADROS` y usar el marcador.
 - **Imágenes originales de la guía**: los 12 esquemas de procedimiento y el cuadro maestro de la guía están también como recortes del PDF (200 ppp, `temas/img/m108/*.png`) con el marcador `![texto|ancha](ruta)` (`img()` en `B2T01.py`; clic = imagen completa; se desplazan en móvil), encima de su versión en pasos `&>` / tablas por Tratado.
 - **Teclado**: ← → ↑ en las flashcards (la sabía / no la sabía / dudé), → en el test (siguiente pregunta ya contestada) y espacio (gira la tarjeta) funcionan sin tener el foco en la tarjeta.
 - **Preguntas de la guía** (`QG` en `B2T01.py`; 3, que la guía da como de examen oficial pero sin convocatoria): van al test del tema con
@@ -283,7 +284,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - **Test** del tema: pantalla completa con la pregunta **centrada**, enunciado sobre tarjeta de color con texto blanco y opciones en tarjetas blancas.
 - **Glosario global** (`hubGlosario(c, ambito, temas, actual)`): en el panel de un tema muestra los términos de **todos** los temas con el filtro «Este tema / Todos los temas»; el botón **＋ Añadir** guarda términos propios en `prog.mapa` (`<tema>:glu:<marca>` con `{t, d}`; se sincronizan, se pueden quitar con 🗑). I.1-I.3 tienen glosario ampliado en `m101/part13.py` (cada definición se comprueba literal contra el artículo).
 - **Colores**: `PALETA`/`colorDe()` dan un color distinto por rama de los mapas conceptuales (`~>`, `panelMapa`) y por categoría en cronología y glosario (app y PDF).
-- **PDF de apuntes**: usa el **color del bloque** (`BAC`, mismo que `--accent`; `--ac`/`--ac-d`), cuerpo a 10 pt, Glosario y Cronología en **página nueva**, filas de tabla que no se parten (las tablas de más de 6 filas sí pueden partirse entre filas), sin `.cuerpo` vacío para que no queden títulos huérfanos (SECCIÓN n + título) al final de página.
+- **PDF de apuntes**: usa el **color del bloque** (`BAC`, mismo que `--accent`; `--ac`/`--ac-d`), cuerpo a 10 pt, Glosario y Cronología en **página nueva**, filas de tabla que no se parten (las tablas de más de 6 filas sí pueden partirse entre filas), sin `.cuerpo` vacío y con el título de bloque, «SECCIÓN n» y su primer subtítulo en un mismo bloque (`.enc`) para que no queden títulos huérfanos al final de página.
 
 ## Barra lateral del tema
 

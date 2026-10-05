@@ -765,6 +765,12 @@ mark.res[data-col="morado"], [data-col="morado"] { --rc:#a855f7; }
 .fab-herr span:first-child { font-size:20px; }
 
 /* Panel lateral / hoja inferior */
+.cm-full { position:fixed; inset:0; z-index:95; background:var(--bg); display:flex; flex-direction:column; }
+.cm-full-bar { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 14px; border-bottom:1px solid var(--line); background:var(--bg-elev); }
+.cm-full-bar b { font-size:15px; } .cm-full-z { display:flex; gap:6px; }
+.cm-full-sc { flex:1; overflow:auto; padding:10px; cursor:grab; -webkit-overflow-scrolling:touch; }
+.cm-full .cm-t { width:auto; min-width:1000px; background:#fff; }
+body.cm-abierto { overflow:hidden; } body.cm-abierto .cr, body.cm-abierto .fab-herr { display:none; }
 .panel-fondo { position:fixed; inset:0; z-index:70; background:rgba(2,6,23,.45); opacity:0; transition:opacity .2s; }
 .panel-fondo.on { opacity:1; }
 .panel {
@@ -3668,6 +3674,107 @@ function actualizarContadores() {
 /* Paleta para mapas conceptuales y cronologías: colores distintos y separados para memorizar por color */
 const PALETA = ["#2563eb", "#7c3aed", "#db2777", "#ea580c", "#16a34a", "#0891b2", "#ca8a04", "#dc2626", "#4f46e5", "#0d9488"];
 const colorDe = (txt, n) => PALETA[n !== undefined ? n % PALETA.length : [...String(txt)].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7) % PALETA.length];
+/* ---- Cuadros interactivos (marcador «@@cuadro <clave>@@» en los apuntes) ------------------------------------------------
+   Réplica navegable de un cuadro de la guía de la academia: celdas con rowspan, colores como el original, cada casilla lleva
+   al tema o apartado del que habla (data-go="TEMA:apartado") y el botón «Ampliar» lo abre a pantalla completa con zoom. */
+const CM_IR = { // destinos habituales
+  par:"B2T01:s7", roma:"B2T01:s7", aue:"B2T01:s8", maa:"B2T01:s8", ams:"B2T01:s8", niza:"B2T01:s8", lis:"B2T01:s9",
+  inst:"B2T02", tjue:"B2T03", pol:"B2T06", fondos:"B2T05", fuentes:"B2T04", art7:"B2T01:s6", cr:"B2T01:s16", ret:"B2T01:s15", rev:"B2T01:s10b", dem:"B2T01:s6b", prin:"B2T01:s5"
+};
+const CUADROS = (() => {
+  const R = { // filas finas: [grupo, nº de filas]
+    grupos:[["FIRMA",1],["RATIFICACIÓN",1],["OBJETIVO",1],["TRATADO",1],["INSTITUCIONES",6],["ÓRGANOS CONSULTIVOS",1],["POLÍTICAS",14],["POLÍTICA EXTERIOR",2],["HERRAMIENTAS JURÍDICAS",4],["JUSTICIA",2],["PRINCIPIOS",2]] };
+  const col = { rojo:"#e11d1d", mag:"#c0198c", verde:"#6f9a2f", mor:"#7030a0", azul:"#2e90e8", marron:"#8a4b14", nar:"#ed7d31" };
+  const bg = { am:"#fff2cc", az:"#dbe8f5", me:"#fbe5d6", ve:"#e2efda", gr:"#d9d9d9", gr2:"#f0f0f0", ro:"#f4c7c3", li:"#ead1f5" };
+  const X = [];
+  const c = (r, k, rs, t, o) => X.push(Object.assign({ r, k, rs:rs || 1, t }, o || {}));
+  const T = CM_IR;
+  const trat = [T.par, T.roma, T.aue, T.maa, T.ams, T.niza, T.lis];
+  ["18/04/1951","25/03/1957","17/2/1986 (9) & 28/2/1986 (3)","07/02/1992","02/10/1997","26/02/2001","13/12/2007"].forEach((t, i) => c(0, i + 1, 1, t, { go:trat[i] }));
+  ["23/07/1952","01/01/1958","01/07/1987","01/11/1993","01/05/1999","01/02/2003","01/12/2009"].forEach((t, i) => c(1, i + 1, 1, t, { go:trat[i] }));
+  ["Mercado del carbón y del acero","Mercado económico común","Mercado Interior europeo","UE sin personalidad jurídica<br>3 pilares: CCEE, PESC y CAJI","Cooperaciones reforzadas","Preparar UE para la gran adhesión","UE Personalidad jurídica propia"].forEach((t, i) => c(2, i + 1, 1, t, { go:trat[i] }));
+  c(3,1,1,"TCECA (duración 50 años)",{go:T.par}); c(3,2,1,"TCEE & TCEEA",{go:T.roma}); c(3,4,1,"TUE &nbsp; TCEE → TCE",{go:T.maa}); c(3,7,1,"TCE → TFUE<br>TUE & TFUE mismo valor jurídico",{go:"B2T01:s11"});
+  // instituciones
+  c(4,1,1,"Alta Autoridad CECA*",{tc:col.rojo,b:1,go:T.par}); c(4,2,1,"2 Comisiones*",{tc:col.rojo,b:1,go:T.roma}); c(4,6,1,"Nueva composición de la Comisión (1 / Estado Miembro)",{tc:col.rojo,b:1,go:T.inst});
+  c(5,1,1,"Tribunal de Justicia",{tc:col.mag,b:1,go:T.tjue}); c(5,2,1,"2 Tribunales de Justicia (unifica)",{tc:col.mag,b:1,go:T.tjue}); c(5,3,1,"Tribunal de Primera Instancia",{tc:col.mag,b:1,go:T.tjue}); c(5,6,1,"Gran Sala + Salas jurisdiccionales",{tc:col.mag,b:1,go:T.tjue}); c(5,7,1,"TJUE + Tgeneral + Tespecializados",{tc:col.mag,b:1,go:T.tjue});
+  c(6,1,1,"Consejo CECA*",{tc:col.verde,b:1,go:T.par}); c(6,2,1,"2 Consejos*",{tc:col.verde,b:1,go:T.roma}); c(6,6,1,"Consejo, nuevo cálculo mayoría cualificada",{tc:col.verde,b:1,go:"B2T01:s6"}); c(6,7,1,"Consejo doble mayoría",{tc:col.verde,b:1,go:"B2T01:s6"});
+  c(7,1,1,"Asamblea CECA",{tc:col.mor,b:1,go:T.par}); c(7,2,1,"2 Asambleas (unifica)",{tc:col.mor,b:1,go:T.roma}); c(7,3,1,"Asamblea → Parlamento",{tc:col.mor,b:1,go:T.tjue}); c(7,6,1,"Parlamento, nuevo reparto de escaños",{tc:col.mor,b:1,go:T.tjue});
+  c(8,3,1,"Consejo Europeo<br>(no institución)",{tc:col.azul,b:1,go:T.inst}); c(8,4,1,"Refuerza Consejo Europeo",{tc:col.azul,b:1,go:T.inst}); c(8,7,1,"Consejo Europeo (institución)<br>Presidencia 2 años y medio",{tc:col.azul,b:1,go:T.inst});
+  c(9,4,1,"Tribunal de Cuentas",{tc:col.marron,b:1,go:T.tjue}); c(9,7,1,"Banco Central Europeo",{tc:col.nar,b:1,go:T.tjue});
+  c(10,1,1,"Comité Consultivo CECA",{go:T.par}); c(10,2,1,"Comité Económico y Social",{go:T.roma}); c(10,4,1,"Comité de las Regiones",{go:T.maa});
+  // políticas (fila 11 = P1)
+  c(11,2,1,"Libre circulación",{bg:bg.am,go:T.pol}); c(12,2,1,"Libre competencia",{bg:bg.am,go:T.pol}); c(13,2,2,"Fondo Social Europeo",{bg:bg.az,go:T.fondos}); c(15,2,6,"Agricultura",{go:T.pol}); c(21,2,4,"Transporte",{go:T.pol});
+  c(11,3,2,"Objetivo 92",{bg:bg.gr2,go:T.pol}); c(13,3,2,"Cohesión Económica y Social",{bg:bg.az,go:T.fondos}); c(15,3,2,"Investigación y Desarrollo Tecnológico",{bg:bg.me,go:T.pol}); c(17,3,8,"Medio Ambiente",{go:T.pol});
+  c(11,4,2,"Defensa del Consumidor",{bg:bg.gr2,go:T.pol}); c(13,4,2,"Fondo de Cohesión",{bg:bg.az,go:T.fondos}); c(15,4,2,"Cooperación al desarrollo",{bg:bg.me,go:T.pol}); c(17,4,1,"Cultura",{go:T.maa}); c(18,4,1,"Industria",{go:T.pol}); c(19,4,2,"Educación",{bg:bg.ve,go:T.maa}); c(21,4,1,"Sanidad",{go:T.maa}); c(22,4,1,"Redes Transeuropeas",{go:T.pol}); c(23,4,2,"Calendario Unión Económica y Monetaria (UEM)",{go:T.pol});
+  c(11,5,7,"Espacio Schengen",{go:T.pol}); c(18,5,7,"Empleo",{go:T.pol});
+  c(11,7,1,"Energía",{go:T.pol}); c(12,7,1,"Turismo",{go:T.lis}); c(13,7,2,"Cohesión Económica, Social y Territorial",{bg:bg.az,go:T.fondos}); c(15,7,2,"I+D+ disposiciones en política espacial",{bg:bg.me,go:T.pol}); c(17,7,1,"Protección civil",{go:T.lis}); c(18,7,1,"Cooperación administrativa",{go:T.lis}); c(19,7,2,"Educación, Formación profesional, juventud y deporte",{bg:bg.ve,go:T.lis}); c(21,7,4,"Clasificación políticas UE:<br>compartidas, exclusivas y apoyo",{go:T.lis});
+  // política exterior
+  c(25,3,2,"Cooperación Política Europea",{bg:bg.gr,go:T.pol}); c(25,4,2,"Política Exterior y de Seguridad Común (PESC)",{bg:bg.gr,go:T.pol}); c(25,5,2,"Alto Representante en Política Exterior y de Seguridad Común",{bg:bg.ro,b:1,go:T.pol});
+  c(25,7,1,"Alto Representante en Asuntos Exteriores y Política de Seguridad",{bg:bg.ro,b:1,go:T.pol}); c(26,7,1,"Refuerza Parlamentos Nacionales (art. 12 TUE)",{tc:"#1f6fc5",b:1,go:T.dem});
+  // herramientas jurídicas (27..30)
+  c(30,2,1,"Procedimiento de consulta",{bg:bg.li,go:T.inst}); c(27,3,3,"Dictamen Conforme",{go:T.inst}); c(30,3,1,"Procedimiento de cooperación",{bg:bg.li,go:T.inst}); c(29,4,1,"Procedimiento Codecisión",{bg:bg.li,go:T.inst});
+  c(27,5,1,"Procedimiento de violación (art. 7.2 TUE)",{go:T.art7}); c(28,5,1,"Cooperaciones reforzadas CCEE y CPJP",{go:T.cr}); c(29,5,1,"% Mayoría cualificada",{go:T.art7}); c(30,5,1,"Abstención constructiva (PESC)",{go:T.pol});
+  c(27,6,1,"Procedimiento de alerta temprana (art. 7.1.3. TUE)",{go:T.art7}); c(28,6,1,"Cooperaciones reforzadas PESC",{go:T.cr}); c(30,6,1,"DOCE → DOUE",{go:T.fuentes});
+  c(27,7,1,"Procedimiento de retirada (art. 50 TUE)",{go:T.ret}); c(28,7,1,"Procedimiento simple de reforma de tratados (art. 48 TUE)",{go:T.rev}); c(29,7,1,"Procedimiento legislativo ordinario",{bg:bg.li,go:T.inst}); c(30,7,1,"Procedimiento legislativo especial",{bg:bg.li,go:T.inst});
+  // justicia y principios
+  c(31,4,1,"Cooperación Ámbito Justicia Interior (CAJI)",{bg:bg.me,go:T.pol}); c(32,4,1,"Defensor del Pueblo",{bg:bg.me,go:T.tjue}); c(31,5,2,"Cooperación Policial y Judicial en materia Penal (CPJP)",{bg:bg.me,go:T.pol}); c(31,6,2,"Eurojust",{go:T.pol}); c(31,7,2,"Espacio de Libertad, Seguridad y Justicia (ELSJ)",{bg:bg.me,go:T.pol});
+  c(33,4,1,"Subsidiariedad",{go:T.prin}); c(34,4,1,"Ciudadanía Europea → Sufragio",{go:T.dem}); c(33,5,2,"Protocolo principio de subsidiariedad",{go:T.dem}); c(33,7,1,"Atribución, proporcionalidad y subsidiariedad",{go:T.prin}); c(34,7,1,"Iniciativa Ciudadana Europea (ICE)",{go:T.dem});
+  return { tratados_ue: { titulo:"Cuadro maestro de los Tratados originarios y modificativos", cab:["TRATADO DE PARÍS (6)","TRATADO DE ROMA (6)","ACTA ÚNICA EUROPEA (12)","TRATADO MAASTRICHT (12)","TRATADO AMSTERDAM (15)","TRATADO DE NIZA (15)","TRATADO DE LISBOA (27)"], cabGo:trat, grupos:R.grupos, celdas:X,
+    pie:"*La Alta Autoridad CECA y las Comisiones y los Consejos se unifican en una Comisión y un Consejo con el Tratado de Fusión cuya firma fue el 8/4/1965 y entró en vigor el 1/7/1967", fuente:"Cuadro de la guía M108 (academia); no es texto legal. Cada casilla lleva al apartado o tema del que habla." } };
+})();
+function cuadroHTML(clave) {
+  const D = CUADROS[clave]; if (!D) return "";
+  const nf = D.grupos.reduce((n, g) => n + g[1], 0), ocupa = {}, ini = {};
+  D.celdas.forEach(x => { ini[x.r + "," + x.k] = x; for (let i = 0; i < x.rs; i++) ocupa[(x.r + i) + "," + x.k] = 1; });
+  const gIni = {}; let r0 = 0; D.grupos.forEach(g => { gIni[r0] = g; r0 += g[1]; });
+  const celda = x => `<td class="cm-c${x.go ? " cm-ir" : ""}${x.b ? " cm-b" : ""}" ${x.rs > 1 ? `rowspan="${x.rs}"` : ""} ${x.go ? `data-go="${x.go}" tabindex="0" role="link" title="Ir al apartado o tema"` : ""} style="${x.tc ? `color:${x.tc};` : ""}${x.bg ? `background:${x.bg};` : ""}">${x.t}</td>`;
+  // Los huecos vacíos seguidos dentro de un grupo se funden en una sola casilla (como en el original).
+  const gFin = {}; { let r1 = 0; D.grupos.forEach(g => { for (let i = 0; i < g[1]; i++) gFin[r1 + i] = r1 + g[1]; r1 += g[1]; }); }
+  const hueco = {};
+  for (let k = 1; k <= 7; k++) for (let r = 0; r < nf; r++) {
+    if (ini[r + "," + k] || ocupa[r + "," + k] || hueco[r + "," + k]) continue;
+    let n = 1; while (r + n < gFin[r] && !ini[(r + n) + "," + k] && !ocupa[(r + n) + "," + k]) n++;
+    hueco[r + "," + k] = n; for (let i = 1; i < n; i++) hueco[(r + i) + "," + k] = -1;
+  }
+  let filas = "";
+  for (let r = 0; r < nf; r++) {
+    let tr = gIni[r] ? `<th class="cm-g" rowspan="${gIni[r][1]}">${gIni[r][0]}</th>` : "";
+    for (let k = 1; k <= 7; k++) { const x = ini[r + "," + k]; if (x) tr += celda(x); else if (!ocupa[r + "," + k] && hueco[r + "," + k] > 0) tr += `<td class="cm-v" ${hueco[r + "," + k] > 1 ? `rowspan="${hueco[r + "," + k]}"` : ""}></td>`; }
+    filas += `<tr${gIni[r] && r ? ' class="cm-sep"' : ""}>${tr}</tr>`;
+  }
+  return `<figure class="cm"><div class="cm-bar"><span>${esc(D.titulo)}</span><button type="button" class="chip peq" data-cm-ampliar>⛶ Ampliar a pantalla completa</button></div>
+    <div class="cm-scroll"><table class="cm-t"><thead><tr><th></th>${D.cab.map((h, i) => `<th class="cm-h cm-ir" data-go="${D.cabGo[i]}" tabindex="0" role="link">${esc(h)}</th>`).join("")}</tr></thead><tbody>${filas}</tbody></table></div>
+    <figcaption>${esc(D.pie)}<br><i>${esc(D.fuente)}</i></figcaption></figure>`;
+}
+/* Clic en una casilla (también dentro de la pantalla completa) y botón «Ampliar» con zoom. */
+document.addEventListener("click", e => {
+  const ir = e.target.closest(".cm-ir[data-go]");
+  if (ir) { const [id, sec] = ir.dataset.go.split(":"); cuadroCerrar(); abrirTema(id, sec); return; }
+  const am = e.target.closest("[data-cm-ampliar]");
+  if (am) cuadroAmpliar(am.closest(".cm"));
+  const z = e.target.closest("[data-cm-z]");
+  if (z) { const o = document.getElementById("cm-full"); if (!o) return; const t = o.querySelector(".cm-t"); let v = parseFloat(t.dataset.z || "1"); v = z.dataset.cmZ === "0" ? 1 : Math.min(3, Math.max(.4, v + parseFloat(z.dataset.cmZ))); t.dataset.z = v; t.style.zoom = v; }
+  if (e.target.closest("[data-cm-cerrar]")) cuadroCerrar();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && document.getElementById("cm-full")) { cuadroCerrar(); return; }
+  if ((e.key === "Enter") && e.target.closest && e.target.closest(".cm-ir[data-go]")) e.target.click();
+});
+function cuadroAmpliar(fig) {
+  cuadroCerrar();
+  const o = document.createElement("div"); o.id = "cm-full"; o.className = "cm-full"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true");
+  o.innerHTML = `<div class="cm-full-bar"><b>${fig.querySelector(".cm-bar span").innerHTML}</b><span class="cm-full-z"><button class="chip peq" data-cm-z="-0.15" aria-label="Alejar">−</button><button class="chip peq" data-cm-z="0" aria-label="Tamaño original">100 %</button><button class="chip peq" data-cm-z="0.15" aria-label="Acercar">＋</button><button class="chip peq" data-cm-cerrar>✕ Cerrar</button></span></div>
+    <div class="cm-full-sc">${fig.querySelector(".cm-scroll").innerHTML}</div>`;
+  document.body.appendChild(o); document.body.classList.add("cm-abierto");
+  const t = o.querySelector(".cm-t"); t.dataset.z = "1.1"; t.style.zoom = 1.1;
+  // arrastrar para desplazarse
+  const sc = o.querySelector(".cm-full-sc"); let p0 = null;
+  sc.addEventListener("pointerdown", ev => { if (ev.target.closest(".cm-ir")) return; p0 = { x:ev.clientX, y:ev.clientY, l:sc.scrollLeft, t:sc.scrollTop }; });
+  sc.addEventListener("pointermove", ev => { if (!p0) return; sc.scrollLeft = p0.l - (ev.clientX - p0.x); sc.scrollTop = p0.t - (ev.clientY - p0.y); });
+  ["pointerup", "pointerleave"].forEach(n => sc.addEventListener(n, () => { p0 = null; }));
+}
+function cuadroCerrar() { const o = document.getElementById("cm-full"); if (o) o.remove(); document.body.classList.remove("cm-abierto"); }
+
 const FUENTES = {
   M108:{ n:"Módulo M108", c:"#0369a1", t:"Material de la academia (guía y vídeo del módulo M108, tema II.1: antecedentes de la Unión Europea), aportado por el usuario: no es texto legal" },
   M107:{ n:"Módulo M107", c:"#0369a1", t:"Material de la academia (repaso de la estructura de la CE: PDF y vídeo), aportado por el usuario: no es texto legal" },
@@ -3810,6 +3917,8 @@ function formatear(txt) {
       html += `<figure class="fig${cls ? " " + cls : ""}"><a href="${esc(src)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(src)}" alt="${esc(alt)}"></a><figcaption>${esc(alt)} · imagen original de la guía</figcaption></figure>`;
       return;
     }
+    const cu = t.match(/^@@cuadro (\w+)@@$/);
+    if (cu) { cerrarP(); cerrarL(); cerrarT(); cerrarC(); html += cuadroHTML(cu[1]); return; }
     if (t.startsWith(">")) { cerrarP(); cerrarL(); cerrarT(); cita.push(t.replace(/^>\s?/, "")); return; }
     cerrarC();
     /* Subtítulos: «### » y «#### » */
@@ -7090,6 +7199,17 @@ const CJ_CSS = `
 :root[data-theme="dark"] .ap-cuerpo .cj-cc, :root[data-theme="dark"] .ap-cuerpo .cj-ex, :root[data-theme="dark"] .ap-cuerpo .cj-sin, :root[data-theme="dark"] .ap-cuerpo .cj-nota, :root[data-theme="dark"] .ap-cuerpo .cj-guia { background:#16213a; color:#d6e0f5; }
 :root[data-theme="dark"] .ap-cuerpo .cj-k, :root[data-theme="dark"] .ap-cuerpo .cj strong { color:inherit; }
 :root[data-theme="dark"] .ap-cuerpo .cmap, :root[data-theme="dark"] .ap-cuerpo .cmap-b, :root[data-theme="dark"] .ap-cuerpo .cmap-s { background:#16213a; color:#d6e0f5; } :root[data-theme="dark"] .ap-cuerpo .cmap-t { color:#e6ecfa; }
+.cm { margin:1.1em 0 1.4em; }
+.cm-bar { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:.5em; font-weight:700; font-size:.92em; }
+.cm-scroll { overflow-x:auto; border:1px solid #cfcfc6; border-radius:12px; background:#fff; }
+.cm-t { border-collapse:collapse; min-width:1000px; width:100%; font-size:12.5px; line-height:1.3; color:#222; }
+.cm-t th, .cm-t td { border:1px solid #444; padding:5px 7px; text-align:center; vertical-align:middle; }
+.cm-t thead th { background:#f4f4f0; font-size:11.5px; position:sticky; top:0; }
+.cm-g { background:#f4f4f0; font-size:11px; font-weight:800; width:92px; }
+.cm-b { font-weight:700; }
+.cm-sep > * { border-top-width:2px; }
+.cm-ir { cursor:pointer; } .cm-ir:hover, .cm-ir:focus-visible { outline:3px solid #2563eb; outline-offset:-3px; filter:brightness(.96); }
+.cm figcaption { font-size:.78em; color:#666; margin-top:.4em; }
 .fig { margin:1.1em 0 1.3em; } .fig img { display:block; width:100%; height:auto; background:#fff; border:1px solid #dcdcd4; border-radius:10px; }
 .fig figcaption { font-size:.75em; color:#777; margin-top:.3em; } .fig.ancha { overflow-x:auto; } .fig.ancha img { min-width:860px; }
 @media (max-width:640px) { .fig { overflow-x:auto; } .fig img { min-width:640px; } .fig.ancha img { min-width:860px; } }
@@ -7119,6 +7239,7 @@ const PDF_CJ = `
 .cmap-root span, .cflu-n { background:var(--ac, #2f62b8); }
 .cuerpo .tabla-wrap, .tabla-wrap { overflow:visible !important; border-radius:0 !important; }
 .cmap { padding:3mm 4mm 4mm; margin:3mm 0 4mm; } .cmap-t { font-size:11pt; } .cmap-root span { font-size:9.5pt; box-shadow:none; } .cmap-b b { font-size:8.6pt; } .cmap-b small, .cmap-s { font-size:7.4pt; }
+.cm-bar { display:none; } .cm-scroll { overflow:visible; border-radius:0; } .cm-t { min-width:0; font-size:6.4pt; } .cm-t th, .cm-t td { padding:.8mm 1mm; } .cm { break-inside:avoid; }
 .fig { break-inside:avoid; margin:3mm 0 4mm; } .fig.ancha img { min-width:0; } .fig img { border-radius:2mm; }
 .cflu { padding:3mm 4mm; margin:3mm 0 4mm; } .cflu-t { font-size:10.5pt; } .cflu-b { padding:1.2mm 2.4mm; }  .cflu-c { font-size:7.4pt; } .cflu-r { font-size:7.2pt; }
 .cuerpo h4.ap-h { font-size:10.5pt; }
@@ -7152,6 +7273,7 @@ body { margin:0; font:10pt/1.45 Arial, Helvetica, sans-serif; color:#222; backgr
 .indice .n { width:26px; color:#8a8a8a; }
 .pie-portada { margin-top:6mm; font-size:8pt; color:#9a9a9a; line-height:1.6; }
 .seccion { margin-top:9mm; }
+.enc { break-inside:avoid; break-after:avoid; page-break-after:avoid; }
 .seccion.nueva { break-before:page; page-break-before:always; margin-top:0; }
 .seccion > h2.t + .cuerpo > :first-child, .seccion > h2.t + .lead { break-before:avoid; }
 .cuerpo:empty { display:none; }
@@ -7281,9 +7403,13 @@ function apuntesHTML(id) {
   let n = 0;
   const secHTML = bloques.map(x => {
     n++;
-    return `<section class="seccion${n === 1 ? " primera" : ""}"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>
-      ${(() => { const h0 = apCuida(formatear(conConceptos(t, x.s.id, apLimpia(x.s.body, x.s.title)))); return h0.trim() ? `<div class="cuerpo">${h0}</div>` : ""; })()}
-      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(conConceptos(t, h.id, apLimpia(h.body, h.title))))}</div>`).join("")}</section>`;
+    const h0 = apCuida(formatear(conConceptos(t, x.s.id, apLimpia(x.s.body, x.s.title)))).trim();
+    const sub = h => `<h3 class="sub2">${esc(h.title)}</h3>`, cuer = h => `<div class="cuerpo">${apCuida(formatear(conConceptos(t, h.id, apLimpia(h.body, h.title))))}</div>`;
+    // Si el bloque no tiene texto propio, su título, «SECCIÓN n» y el primer subtítulo van juntos (nunca un título huérfano al final de página).
+    const primero = !h0 && x.hijos.length ? x.hijos[0] : null;
+    return `<section class="seccion${n === 1 ? " primera" : ""}"><div class="enc"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>${primero ? sub(primero) : ""}</div>
+      ${h0 ? `<div class="cuerpo">${h0}</div>` : ""}${primero ? cuer(primero) : ""}
+      ${x.hijos.slice(primero ? 1 : 0).map(h => sub(h) + cuer(h)).join("")}</section>`;
   }).join("");
   const gl = (t.glossary || []).length ? `<section class="seccion nueva"><div class="k">Sección ${++n}</div><h2 class="t">Glosario de <span class="az">conceptos</span></h2>
       <p class="lead">Términos clave del tema, con su definición y la categoría a la que pertenecen.</p>
