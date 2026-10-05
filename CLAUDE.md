@@ -59,10 +59,12 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   - Ficha de **institución o procedimiento**: Qué · Quién · Cómo ·
     Plazos y mayorías · ⚠ Ojo en el examen.
   - Casilla sin contenido: «—». Nunca se cambia el orden de las casillas.
-- Al final: «Cierre 1» (preguntas de exámenes oficiales) y «Cierre 2» (repaso
-  por bloques).
+- Al final: el **Cierre** (repaso por bloques, con «Cómo se pregunta»). Las **preguntas de exámenes oficiales NO van en los apuntes**
+  (petición del usuario, 5-10-2026): viven en el **test** del tema («Práctica activa»). Los generadores pueden seguir escribiendo un
+  apartado «Cierre 1» con recuadros `%>`: `Tema._cierre1_al_test` (en `plantilla.py`, al publicar) lo quita, pasa al test las preguntas
+  que falten (con su `real` y el porqué de cada opción) y reescribe las remisiones «→ Cierre 1» («está en el test»).
 - **Preguntas de exámenes oficiales, siempre con el mismo formato** (en el
-  apartado del artículo y en «Cierre 1»): recuadro **interactivo** (`%>`) con
+  apartado del artículo; en «Cierre 1» solo en el generador, no se publica): recuadro **interactivo** (`%>`) con
   el enunciado y las cuatro opciones **literales** del cuestionario. La
   correcta **no se ve** hasta pulsar una opción: entonces la elegida sale en
   verde o rojo, la correcta en verde, y aparece el porqué de **cada** opción
