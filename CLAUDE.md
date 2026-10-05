@@ -208,5 +208,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - **Maquetación del PDF** (petición del usuario): el índice ocupa **solo la portada** (altura fija, índice compacto);
   **nunca** títulos ni tablas huérfanos: los títulos van con lo que sigue, los párrafos que introducen una tabla, cita o
   lista no se separan de ella, las tablas de hasta 14 filas no se parten (`apCuida`) y las largas repiten la cabecera.
+  Para ahorrar páginas, las secciones **no** empiezan en página nueva (solo la 1.ª) y el PDF omite las ayudas de navegación
+  de la app («Dónde estamos», «Qué vas a ver», «→ Siguiente», `apSinNav`).
   Al tocar el CSS (`APUNTES_CSS`), regenerar los PDF con `pruebas/apuntes.js` y revisar portada y saltos de página.
 - Prueba: `herramientas/oposicion/pruebas/apuntes.js` (genera también el PDF con Chromium).
