@@ -85,7 +85,7 @@ assert [len(d["p"]) > 0 for d in disp] and len(disp) == 15
 assert sum(1 for d in disp if "adicional" in d["t"]) == 4 and sum(1 for d in disp if "transitoria" in d["t"]) == 9
 
 # Anotaciones del módulo M103 (marcas y comentarios de la academia sobre los arts. 1-52); cada frase marcada tiene que ser literal.
-from m103_datos import M103, LEYENDA, NIVELES
+from m103_datos import M103, LEYENDA, NIVELES, M107_UNIDADES, M107_ARTS
 _txt = {A["n"]: " ".join(" ".join(A["p"]).split()) for t in titulos for A in todos(t)}
 for _n, _d in M103.items():
     assert _n in _txt, _n
@@ -94,6 +94,7 @@ for _n, _d in M103.items():
         assert _c in ("am", "vd", "az", "lo"), (_n, _c)
 M103_OUT = {"_fuente": "Módulo M103 «Artículos CE · Lectura y explicación» (documento subrayado y vídeo): marcas y comentarios de la academia, no texto de la CE. Las marcas azules se completan con el art. 55.1 CE.",
             "leyenda": [list(x) for x in LEYENDA], "niveles": NIVELES,
+            "m107": {"_fuente": "Módulo M107 «Contenido de repaso sobre la CE» (PDF y vídeo): reglas para memorizar la estructura; no es texto de la CE.", "unidades": M107_UNIDADES, "arts": {str(k): v for k, v in M107_ARTS.items()}},
             "arts": {str(n): {k: v for k, v in d.items() if k != "marks"} | ({"marks": [list(m) for m in d["marks"]]} if d.get("marks") else {}) for n, d in M103.items()}}
 
 sello = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")

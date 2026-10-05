@@ -1295,6 +1295,8 @@ body.real-abierto .cr { display:none; }
 .m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; }
 .m103-pill.az { background:#bae6fd; color:#0c4a6e; border-color:#38bdf8; }
 .m103-pill.lo { background:#fbcfe8; color:#831843; border-color:#f472b6; }
+.m103-pill.niv { background:#e9d5ff; color:#581c87; border-color:#c084fc; white-space:normal; }
+.m107-u { margin:6px 0 4px 8px; }
 mark.m103-am { background:#fef08a; color:#1c1917; border-radius:3px; padding:0 2px; }
 mark.m103-vd { background:#86efac; color:#14301f; border-radius:3px; padding:0 2px; }
 mark.m103-az { background:#7dd3fc; color:#082f49; border-radius:3px; padding:0 2px; }
@@ -3571,6 +3573,7 @@ function actualizarContadores() {
    si lo hay), y un bloque literal «>» cuya primera línea es «[[COD]]» lleva esa
    etiqueta en lugar de BOE. */
 const FUENTES = {
+  M107:{ n:"Módulo M107", c:"#0369a1", t:"Material de la academia (repaso de la estructura de la CE: PDF y vídeo), aportado por el usuario: no es texto legal" },
   M103:{ n:"Módulo M103", c:"#0369a1", t:"Material de la academia (lectura y explicación de los arts. 1-52 de la CE: documento subrayado y vídeo), aportado por el usuario: no es texto legal" },
   M106:{ n:"Módulo M106", c:"#0369a1", t:"Material de la academia (ampliación sobre el Defensor del Pueblo), aportado por el usuario: no es texto legal" },
   M101:{ n:"Módulo M101", c:"#0369a1", t:"Material de la academia (guía de estudio y vídeo del módulo M101), aportado por el usuario: no es texto legal" },
@@ -6378,15 +6381,35 @@ function ceParr(p, marks) {
   return `<p class="${cls}">${h + esc(p.slice(pos))}</p>`;
 }
 const M103_PILL = { exam:["ex", "🟧 Examen oficial"], am:["am", "🟨 Importante"], vd:["vd", "🟩 Coletilla"], az:["az", "🟦 Se limita (excepción y sitio)"], lo:["lo", "🌸 Ley orgánica"] };
-function ceM103Pills(n) {
-  const d = ceM103(n); if (!d || !CEV.m103) return "";
-  const k = []; if (d.exam) k.push("exam");
-  const cs = new Set((d.marks || []).map(m => m[1])); if (cs.has("am")) k.push("am"); if (cs.has("vd")) k.push("vd"); if (d.lim || cs.has("az")) k.push("az"); if (cs.has("lo")) k.push("lo");
-  return k.length ? `<div class="m103-pills">${k.map(x => `<span class="m103-pill ${M103_PILL[x][0]}">${M103_PILL[x][1]}</span>`).join("")}</div>` : "";
+/** Nivel de protección del artículo (arts. 53 y 81; módulo M107): dónde está y qué garantías tiene. */
+function ceNivel(n) {
+  if (n >= 10 && n <= 13) return ["Fuera de las garantías del art. 53", "Los arts. 10 a 13 no están en el capítulo II: no tienen las garantías del art. 53.1 ni del 53.2 (sí los protege el Defensor del Pueblo)."];
+  if (n === 14) return ["Garantías: todas menos ley orgánica", "El art. 14 tiene reserva de ley, tutela preferente y sumaria, amparo, inconstitucionalidad y vinculación, pero no reserva de ley orgánica."];
+  if (n >= 15 && n <= 29) return ["Máxima protección (sección 1.ª)", "Ley orgánica, tutela preferente y sumaria, amparo, inconstitucionalidad, reserva de ley y vinculación de los poderes públicos."];
+  if (n === 30) return ["Sección 2.ª · amparo solo en el 30.2", "Vinculan a los poderes públicos, reserva de ley e inconstitucionalidad; amparo únicamente la objeción de conciencia (30.2)."];
+  if (n >= 31 && n <= 38) return ["Sección 2.ª · sin amparo", "Vinculan a los poderes públicos, reserva de ley e inconstitucionalidad; no tienen amparo."];
+  if (n >= 39 && n <= 52) return ["Principios rectores: informan", "No son derechos fundamentales: orientan e informan la legislación y la práctica judicial; solo se pueden alegar según lo que dispongan las leyes que los desarrollan (art. 53.3)."];
+  return null;
 }
+function ceM103Pills(n) {
+  if (!CEV.m103) return "";
+  const d = ceM103(n) || {}, k = []; if (d.exam) k.push("exam");
+  const cs = new Set((d.marks || []).map(m => m[1])); if (cs.has("am")) k.push("am"); if (cs.has("vd")) k.push("vd"); if (d.lim || cs.has("az")) k.push("az"); if (cs.has("lo")) k.push("lo");
+  const nv = ceNivel(n);
+  const h = k.map(x => `<span class="m103-pill ${M103_PILL[x][0]}">${M103_PILL[x][1]}</span>`).join("") + (nv ? `<span class="m103-pill niv" title="${esc(nv[1])}">🛡 ${esc(nv[0])}</span>` : "");
+  return h ? `<div class="m103-pills">${h}</div>` : "";
+}
+const m103Inline = t => formatear(t).replace(/^<p[^>]*>|<\/p>\s*$/g, "");
 function ceM103Nota(n) {
-  const d = ceM103(n); if (!d || !CEV.m103 || !(d.nota || d.lim)) return "";
-  return `<div class="m103-nota">${d.lim ? `<p class="m103-lim">🟦 ${formatear(d.lim).replace(/^<p[^>]*>|<\/p>\s*$/g, "")}</p>` : ""}${d.nota ? `<p>🎓 ${formatear(d.nota).replace(/^<p[^>]*>|<\/p>\s*$/g, "")}</p>` : ""}<span class="m103-src">Comentario de la academia (módulo M103); no es texto de la CE.</span></div>`;
+  if (!CEV.m103) return "";
+  const d = ceM103(n) || {}, r = CE.m103 && CE.m103.m107 && CE.m103.m107.arts[n];
+  if (!(d.nota || d.lim || r)) return "";
+  return `<div class="m103-nota">${d.lim ? `<p class="m103-lim">🟦 ${m103Inline(d.lim)}</p>` : ""}${d.nota ? `<p>🎓 ${m103Inline(d.nota)}</p>` : ""}${r ? `<p>🧠 ${m103Inline(r)}</p>` : ""}<span class="m103-src">Comentario de la academia (módulos M103${r ? " y M107" : ""}); no es texto de la CE.</span></div>`;
+}
+/** Nota de la academia (módulo M107) sobre una unidad de la estructura: título, capítulo o sección. */
+function ceM107Unidad(key) {
+  const t = CEV.m103 && CE.m103 && CE.m103.m107 && CE.m103.m107.unidades[key];
+  return t ? `<div class="m103-nota m107-u">🧠 ${m103Inline(t)} <span class="m103-src">Módulo M107 (repaso de la estructura); no es texto de la CE.</span></div>` : "";
 }
 function ceArtHtml(A) {
   const d = ceM103(A.n), marks = d && CEV.m103 ? d.marks : null;
@@ -6397,13 +6420,15 @@ function ceArtHtml(A) {
 /** Leyenda del subrayado de la academia y interruptor. */
 function ceM103Leyenda() {
   const M = CE.m103; if (!M) return "";
-  return `<section class="m103-ley card"><label class="m103-tog"><input type="checkbox" id="m103-on" ${CEV.m103 ? "checked" : ""}> 🖍 <b>Subrayado y comentarios de la academia</b> (módulo M103, arts. 1 a 52)</label>
+  return `<section class="m103-ley card"><label class="m103-tog"><input type="checkbox" id="m103-on" ${CEV.m103 ? "checked" : ""}> 🖍 <b>Subrayado y comentarios de la academia</b> (módulos M103 y M107)</label>
     <details ${CEV.m103 ? "open" : ""}><summary>Código de colores y niveles de estudio</summary>
-      <ul class="m103-lista">${M.leyenda.map(([k, t, d]) => `<li><span class="m103-pill ${M103_PILL[k][0]}">${esc(M103_PILL[k][1])}</span> ${esc(d)}</li>`).join("")}</ul>
+      <ul class="m103-lista">${M.leyenda.map(([k, t, d]) => `<li><span class="m103-pill ${M103_PILL[k][0]}">${esc(M103_PILL[k][1])}</span> ${esc(d)}</li>`).join("")}
+        <li><span class="m103-pill niv">🛡 Nivel de protección</span> Qué garantías tiene cada artículo del Título I según su ubicación (arts. 53 y 81): pasa el ratón por encima para ver el detalle.</li>
+        <li>🧠 <b>Reglas para memorizar la estructura</b> (módulo M107): una nota en cada título, capítulo y sección.</li></ul>
       <ul class="m103-niv">${M.niveles.map(x => `<li>${formatear(x).replace(/^<p[^>]*>|<\/p>\s*$/g, "")}</li>`).join("")}</ul>
       <p class="muted" style="font-size:12px;margin:6px 0 0">${esc(M._fuente)}</p></details></section>`;
 }
-function ceBandHtml(key, k, nombre) { const u = CE_UNI[key]; return `<header class="ce-band" style="${ceSt(key)}"><span class="ce-band-k">${esc(k)}</span><span class="ce-band-n">${esc(nombre)}</span><span class="ce-band-r">${rangoU(u)}</span></header>`; }
+function ceBandHtml(key, k, nombre) { const u = CE_UNI[key]; return `<header class="ce-band" style="${ceSt(key)}"><span class="ce-band-k">${esc(k)}</span><span class="ce-band-n">${esc(nombre)}</span><span class="ce-band-r">${rangoU(u)}</span></header>${ceM107Unidad(key)}`; }
 function ceVerTexto(c, n) {
   const T = CE.titulos;
   const cuerpoT = t => {
@@ -6429,9 +6454,9 @@ function ceVerTexto(c, n) {
       <div class="ce-chips">${T.map(t => `<a class="ce-chip" href="#ce-u-${t.id}" data-ir="ce-u-${t.id}" style="${ceSt(t.id)}" title="${esc((t.id === "P" ? "Título preliminar" : "Título " + t.id) + " · " + t.nombre + " · " + rangoU(CE_UNI[t.id]))}">${t.id === "P" ? "Prel." : t.id}</a>`).join("")}<a class="ce-chip" href="#ce-disp" data-ir="ce-disp" style="${ceSt("D")}">Disp.</a></div>
       <div class="ce-migas" id="ce-migas" aria-live="off"></div>
     </div>
-    <section class="ce-u ce-pre" style="${ceSt("D")}"><header class="ce-band" style="${ceSt("D")}"><span class="ce-band-k">Preámbulo</span></header><div class="ce-u-body ce-pream">${CE.preambulo.map(([cl, t]) => `<p class="${/centro/.test(cl) ? "ce-c" : ""}">${esc(t)}</p>`).join("")}</div></section>
+    <section class="ce-u ce-pre" style="${ceSt("D")}"><header class="ce-band" style="${ceSt("D")}"><span class="ce-band-k">Preámbulo</span></header>${ceM107Unidad("preambulo")}<div class="ce-u-body ce-pream">${CE.preambulo.map(([cl, t]) => `<p class="${/centro/.test(cl) ? "ce-c" : ""}">${esc(t)}</p>`).join("")}</div></section>
     ${cuerpo}
-    <section class="ce-u" id="ce-disp" style="${ceSt("D")}"><header class="ce-band" style="${ceSt("D")}"><span class="ce-band-k">Disposiciones</span><span class="ce-band-n">4 adicionales · 9 transitorias · 1 derogatoria · 1 final</span></header><div class="ce-u-body">${disp}</div></section>
+    <section class="ce-u" id="ce-disp" style="${ceSt("D")}"><header class="ce-band" style="${ceSt("D")}"><span class="ce-band-k">Disposiciones</span><span class="ce-band-n">4 adicionales · 9 transitorias · 1 derogatoria · 1 final</span></header>${ceM107Unidad("D")}<div class="ce-u-body">${disp}</div></section>
     <section class="ce-u ce-pre" style="${ceSt("D")}"><div class="ce-u-body ce-pream">${CE.firma.map(([cl, t]) => `<p class="${/firma/.test(cl) ? "ce-f" : ""}">${esc(t)}</p>`).join("")}</div></section>
     <p class="muted" style="font-size:12.5px;margin-top:14px">Fuente: ${CE._fuente}. Los títulos que van junto al número de artículo son los de la guía de estudio M101 (arts. 1 a 52): son un recurso para estudiar, no texto de la Constitución. Los de los arts. 53 a 55 son un rótulo propio.</p>`;
   const arts = Array.from(c.querySelectorAll(".ce-art[data-n]"));

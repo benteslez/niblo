@@ -42,6 +42,27 @@ T.ap("s4", "II.2 Los títulos y sus artículos", f"""
 
 Los títulos tienen **rúbrica propia** salvo el **Título preliminar**, que no tiene nombre. En total: **11 títulos** (el preliminar y diez numerados), **169 artículos** y **15 disposiciones** (→ II.5).
 
+### 2.1 Cómo memorizar los límites de los títulos [[M107]]
+
+**1.º El orden de los títulos II a X.** Se aprende de lo más «alto» a lo más práctico: la **Corona** (Título II, la más solemne), después los poderes del Estado —**Cortes**, **Gobierno y Administración**, las **relaciones** entre ambos y el **Poder Judicial**—, luego **Economía y Hacienda**, la **organización territorial** (el gran asunto político, que ya asoma en los primeros artículos: lenguas, banderas, autonomía) y, al final, los dos «constitucionales»: el **Tribunal Constitucional** y la **reforma**. Saber qué es lo último ayuda: la reforma cierra la Constitución, como es lógico.
+
+**2.º Los dos «cincos».** El Título I acaba en el **55** (su único artículo final es el de la suspensión de los derechos) y el Título II en el **65**: **55, 65**.
+
+**3.º Desde el Título III, no memorices el final: suma.** Cada título termina en «su primer artículo + N»:
+
+| Título | Primer artículo | + N | Último artículo |
+|---|---|---|---|
+| {{c:III~III · Cortes Generales}} | 66 | **+30** | 96 |
+| {{c:IV~IV · Gobierno y Administración}} | 97 | **+10** | 107 |
+| {{c:V~V · Relaciones Gobierno–Cortes}} | 108 | **+8** | 116 |
+| {{c:VI~VI · Poder Judicial}} | 117 | **+10** | 127 |
+| {{c:VII~VII · Economía y Hacienda}} | 128 | **+8** | 136 |
+| {{c:VIII~VIII · Organización territorial}} | 137 | **+21** | 158 |
+| {{c:IX~IX · Tribunal Constitucional}} | 159 | **+6** | 165 |
+| {{c:X~X · Reforma constitucional}} | 166 | **+3** | 169 |
+
+Los números se retienen mejor con una idea: **30, 10 y 8** son los «sumandos» de los primeros bloques (las Cortes se llevan el 30; el Gobierno y el Poder Judicial, un 10 cada uno; las relaciones y Economía, el «8 comodín»), y lo que queda desde el art. 137 hasta el 169 —**21 + 6 + 3**— suma otro **30**. Recuerda que «+ N» significa que el título tiene **N + 1** artículos (el Título III tiene 31).
+
 {ir("#/ce/texto", "📜 Ver el texto completo, con un color por título")}
 """, 2)
 
@@ -65,6 +86,15 @@ T.ap("s5", "II.3 El Título I por dentro (lo más preguntable)", f"""
 !> {IMP} **Los dos «sueltos» del título I:** el **art. 10** queda fuera de los capítulos y el **art. 14** queda dentro del capítulo segundo pero **fuera de las secciones primera y segunda**. Si preguntan «¿qué artículos comprende la sección primera?», la respuesta es **15 a 29** (no el 14).
 
 !> {IMP} **La división de los 55 artículos de la parte dogmática, en una línea:** 1-9 · 10 · 11-13 · 14 · **15-29** · 30-38 · 39-52 · 53-54 · 55.
+
+### 3.1 Reglas para no perderse en el Título I [[M107]]
+
+- **Los dos artículos «colgantes».** En el Título I —el más importante— aparecen dos artículos que quedan fuera de la subdivisión siguiente: el **10**, fuera de los capítulos, y el **14**, dentro del capítulo II pero fuera de las secciones. Los dos son «de principios» (la dignidad de la persona; la igualdad y la no discriminación): lo más general abre cada nivel y lo más concreto viene después.
+- **Cómo saber dónde acaba.** El título I termina en el **55**: recuerda la rima del cinco. El capítulo V solo tiene ese artículo (la suspensión de los derechos, «el destructor»).
+- **El capítulo I, de «calentamiento».** Son tres artículos poco importantes pero muy tramposos: la **nacionalidad** (11), la **mayoría de edad** (12) y los **extranjeros** (13). No te olvides de que existe antes de llegar al capítulo II.
+- **«Los dos protectores».** El capítulo IV (arts. **53** y **54**) protege lo anterior: el 53, con la tutela y el amparo; el 54, con el Defensor del Pueblo.
+- **El capítulo III, por descarte.** Si ya sabes que la sección 2.ª acaba en el **38** y que los protectores empiezan en el **53**, el capítulo III es lo que queda: del **39 al 52**.
+- **Círculos concéntricos.** Cuanto más te alejas del centro, menos garantías y menos preguntas: **sección 1.ª** (máxima protección), **sección 2.ª** (vinculan a los poderes públicos, pero sin amparo salvo el 30.2) y **capítulo III** (solo informan). Si preguntan por el amparo, ubica el artículo: ¿está en 14, 15-29 o 30.2?
 
 **Truco:** de **15 a 29** es la sección primera del capítulo segundo del título I. Parece un trabalenguas, pero es la clave de muchas preguntas: los derechos de la sección primera son los que tienen **todas** las garantías, incluidas la reserva de ley orgánica (art. 81) y la reforma agravada (art. 168); el art. 14 y el 30.2 comparten solo algunas, como el amparo (→ IV).
 """, 2)

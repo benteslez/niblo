@@ -86,3 +86,37 @@ NIVELES = [
  "**Nivel 3 · Lectura profunda** (último nivel; pocas preguntas): esta lectura, para detectar los puntos calientes.",
  "**Dónde se pregunta más:** la mayoría de las preguntas oficiales se concentran **hasta el art. 29**; de la sección 2.ª solo hay una (art. 34) y del capítulo III solo una (art. 41).",
 ]
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Módulo M107 «Contenido de repaso sobre la CE» (PDF + vídeo): reglas para memorizar la estructura y ubicar el contenido.
+# Notas por unidad (clave de CE_UNI: P, I, I.1, I.2, I.2.1, I.2.2, I.3, I.4, I.5, II…X) y por artículo. No son texto de la CE.
+M107_UNIDADES = {
+ "preambulo": "Léelo: ha habido preguntas que aludían al Preámbulo (por ejemplo, quién ratifica la Constitución). Basta con estar familiarizado con el texto.",
+ "P": "**Los nueve artículos, con ganchos de memoria:** **1** España y la forma del Estado · **2** unidad y autonomía · **3** las lenguas (las «lenguas de fuego» del Espíritu Santo: el 3) · **4** la bandera · **5** la capital (la que está en el centro) · **6** partidos políticos · **7** sindicatos y asociaciones empresariales · **8** Fuerzas Armadas · **9** jerarquía normativa, legalidad y libertad e igualdad efectivas.",
+ "I": "**El título más importante.** Dos artículos «colgantes» que quedan fuera de la estructura posterior: el **10** (fuera de los capítulos) y el **14** (dentro del capítulo II, fuera de las secciones). Acaba en el **55**: la «rima del cinco».",
+ "I.1": "Capítulo de «calentamiento»: **11** nacionalidad, **12** mayoría de edad y **13** derechos de los extranjeros. Poco importantes, pero **muy tramposos**: no olvides que existe.",
+ "I.2": "Capítulo II (14 a 38): el 14 «colgante» y dos secciones. **Trampas típicas del amparo:** la propiedad privada (33) y el derecho al trabajo (35) **no** tienen amparo, y el conflicto colectivo (37.2) tampoco; la libertad sindical y la huelga (28) **sí**.",
+ "I.2.1": "**Sección 1.ª (15 a 29), la más importante:** ley orgánica, tutela preferente y sumaria (también el 14), amparo (también el 14 y el 30.2), vinculan a los poderes públicos, recurso de inconstitucionalidad y reserva de ley. Domina la redacción de los arts. **17, 18 y 20**.",
+ "I.2.2": "**Sección 2.ª (30 a 38):** derechos y deberes de los ciudadanos. Vinculan, reserva de ley e inconstitucionalidad; **amparo solo el 30.2** (objeción de conciencia). Se pregunta menos que la sección 1.ª.",
+ "I.3": "**Capítulo III (39 a 52), por descarte:** lo que queda tras el art. 38 y antes de los «protectores» (53 y 54). Son **principios** y no derechos: sin aplicabilidad inmediata, solo alegables según las leyes que los desarrollen (art. 53.3); orientan e informan la legislación, la práctica judicial y la actuación de los poderes públicos.",
+ "I.4": "**Los dos «protectores»:** el **53** (tutela y amparo) y el **54** (Defensor del Pueblo).",
+ "I.5": "**El «destructor»:** el **55** suspende los derechos. Es el único artículo del capítulo y el último del Título I.",
+ "II": "**56 a 65 · La Corona**, lo más «espiritual». Rima: **55, 65**, ambos terminan en cinco.",
+ "III": "**66 a 96 · Las Cortes Generales** (66 + **30**): el poder más extenso.",
+ "IV": "**97 a 107 · Gobierno y Administración** (97 + **10**).",
+ "V": "**108 a 116 · Relaciones Gobierno–Cortes** (108 + **8**): el número «comodín».",
+ "VI": "**117 a 127 · Poder Judicial** (117 + **10**).",
+ "VII": "**128 a 136 · Economía y Hacienda** (128 + **8**).",
+ "VIII": "**137 a 158 · Organización territorial** (137 + **21**). Acaba en el **158**: «el 8 siempre viene al rescate». La cuestión territorial ya se asoma en el Título preliminar (lenguas, banderas, autonomía).",
+ "IX": "**159 a 165 · Tribunal Constitucional** (159 + **6**).",
+ "X": "**166 a 169 · Reforma constitucional** (166 + **3**): 166 iniciativa, 167 reforma «light», 168 reforma agravada y 169 límites (cuándo no se puede reformar).",
+ "D": "**4 adicionales, 9 transitorias, 1 derogatoria y 1 final (4-9-1-1):** estamos en la Transición, por eso lo que más hay son transitorias.",
+}
+M107_ARTS = {
+ 14: "Tiene tutela preferente y sumaria y amparo, pero **no** reserva de ley orgánica. Es uno de los dos artículos «colgantes» del Título I.",
+ 30: "El **30.2** (objeción de conciencia) es el único precepto de la sección 2.ª con **amparo**.",
+ 33: "Trampa del amparo: la **propiedad privada** y la herencia **no** tienen recurso de amparo (está en la sección 2.ª).",
+ 35: "Trampa del amparo: el **derecho al trabajo** **no** tiene recurso de amparo (sección 2.ª).",
+ 37: "El **conflicto colectivo** (37.2) **no** es objeto de amparo, a diferencia de la libertad sindical y la huelga (art. 28, sección 1.ª).",
+}

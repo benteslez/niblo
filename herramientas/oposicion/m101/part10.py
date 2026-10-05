@@ -156,3 +156,15 @@ Q("CE", "a169", "Reforma", "No podrá iniciarse la reforma constitucional:", ["E
   "Art. 169: ni en **tiempo de guerra** ni durante los estados de **alarma, excepción o sitio** (art. 116).", ["en tiempo de guerra o de vigencia de alguno de los estados previstos en el artículo 116"])
 Q("CE", "a13", "Reforma", "La reforma constitucional de 1992 modificó el artículo 13.2 para:", ["Reconocer a los extranjeros, por reciprocidad, el derecho de sufragio activo y pasivo en las elecciones municipales.", "Establecer el principio de estabilidad presupuestaria.", "Sustituir el término «disminuidos» por «personas con discapacidad».", "Crear una circunscripción propia en el Senado para la isla de Formentera."],
   "La reforma de 1992 (art. 13.2) añadió el sufragio **pasivo** en las municipales. La de 2011 (135) es la estabilidad presupuestaria; la de 2024 (49), la discapacidad; la de 2026 (69.3), las islas del Senado.", ["sufragio activo y pasivo en las elecciones municipales"])
+
+# --- Preguntas oficiales GACE 2018 (módulo M107; texto del cuestionario y respuesta de la plantilla: 1 → A, 2 → D) ----------
+T.q("CE", "a168", "Reforma", "De acuerdo con el artículo 168 de la Constitución Española de 1978 se debe someter a referéndum una reforma de la Constitución que afectase al siguiente artículo:",
+    ["El artículo 3 que señala que «El castellano es la lengua oficial del Estado».", "El artículo 11.2 que señala que «Ningún español de origen podrá ser privado de su nacionalidad».", "El artículo 12 que señala que «Los españoles son mayores de edad a los 18 años».", "El artículo 43.1 que señala que «Se reconoce el derecho a la protección de la salud»."],
+    "Respuesta a) (plantilla oficial). El art. 168 se aplica a la revisión total o a la parcial que afecte al **Título preliminar**, a la **sección 1.ª del capítulo II del Título I** o al **Título II**: el art. 3 está en el Título preliminar. Los arts. 11 y 12 están en el capítulo I del Título I y el 43 en el capítulo III: se reformarían por el art. 167.",
+    ["Título preliminar"])
+T.Q[-1]["real"] = "GACE 2018 · pregunta oficial (plantilla: a)"
+T.q("CE", "a20", "Contenido", "De acuerdo con el artículo 20 de la Constitución Española, ¿podría acordarse el secuestro de publicaciones, grabaciones u otros medios de información?",
+    ["Sólo en virtud de resolución judicial.", "En ningún caso, por suponer una violación de las libertades reconocidas en el artículo 20 de la Constitución.", "Únicamente cuando se vulnere el derecho a la protección de la juventud y de la infancia.", "Sí, en virtud de resolución del Ministerio de la Presidencia."],
+    "Respuesta d) (plantilla oficial). El art. 20.5 dice que **sólo podrá acordarse el secuestro en virtud de resolución judicial**: a) es falsa, porque el 20.5 sí lo permite; b) confunde el secuestro con uno de los límites del 20.4 (la protección de la juventud y de la infancia); c) es falsa: no basta una resolución administrativa.",
+    ["en virtud de resolución judicial"])
+T.Q[-1]["real"] = "GACE 2018 · pregunta oficial (plantilla: d)"
