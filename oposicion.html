@@ -6399,10 +6399,22 @@ const KEY_CT = "gestion_hub_ce_test_v1";
 const CT = Object.assign({ cola:[], idx:0, rev:false, flip:false, hechas:0, ses:false, total:0 },
   { cfg:Object.assign({ que:"hoy", unidades:[], barajar:false, max:0 }, leerJSON(KEY_CT, {})) });
 const ceSrs = n => { const v = progreso("CEQ:" + n); return v && v.d && v.d.nx ? v.d : null; };
-const ceVenc = n => { const s = ceSrs(n); return !s || s.nx <= hoyISO(); };
+/* Repaso de los artículos: más corto que el del test real (son solo 55 y hay que tenerlos siempre frescos).
+   Sabía: 2, 4, 8, 14 y 21 días y después ×1,3 hasta un máximo de 30; dudé: la mitad del intervalo (mín. 2); no la sabía: mañana. */
+const CE_PASOS = [2, 4, 8, 14, 21], CE_MAX = 30, CE_DOMINADA = 14;
+function ceSiguiente(srs, q) {
+  const reps = srs ? srs.r : 0, iv = srs ? srs.i : 0, ease = srs ? srs.e : 2.5, l = srs ? (srs.l || 0) : 0, rs = srs ? (srs.rs || 0) : 0;
+  if (q === 0) return { r:0, i:1, e:Math.max(1.3, ease - 0.20), l:l + 1, rs:0 };
+  if (q <= 3) return { r:reps, i:reps === 0 ? 1 : Math.max(2, Math.round(iv * 0.5)), e:Math.max(1.3, ease - 0.15), l, rs:0 };
+  const i = reps < CE_PASOS.length ? CE_PASOS[reps] : Math.round(iv * 1.3);
+  return { r:reps + 1, i:Math.min(CE_MAX, Math.max(i, Math.min(iv + 1, CE_MAX))), e:Math.min(2.5, ease + 0.10), l, rs:rs + 1 };
+}
+// Lo ya guardado con intervalos largos se acorta: nunca pasan más de CE_MAX días desde el último repaso.
+const ceTope = s => { if (!s.lr) return null; const d = new Date(s.lr + "T12:00:00"); d.setDate(d.getDate() + CE_MAX); return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); };
+const ceVenc = n => { const s = ceSrs(n); if (!s) return true; const t = ceTope(s); return s.nx <= hoyISO() || (t != null && t <= hoyISO()); };
 const ceReb = n => { const s = ceSrs(n); return !!(s && (s.l || 0) >= 3 && (s.rs || 0) < 2); };
 function ceCalificar(n, cal) {
-  const prev = ceSrs(n), nx = srsSiguiente(prev, cal);
+  const prev = ceSrs(n), nx = ceSiguiente(prev, cal);
   const h = ((prev && prev.h) || []).concat([[hoyISO(), cal]]).slice(-30);
   marcarProg("CEQ:" + n, cal >= 3, { r:nx.r, i:nx.i, e:nx.e, l:nx.l, rs:nx.rs, lr:hoyISO(), nx:masDias(nx.i), h });
   return nx.i;
@@ -6442,7 +6454,7 @@ function ceArmarCola() {
 function ceVerTest(c) {
   const todas = Array.from({ length:CE_TEST_HASTA }, (_, i) => i + 1);
   const nNuevas = todas.filter(n => !ceSrs(n)).length, nHoy = todas.filter(n => ceSrs(n) && (ceVenc(n) || ceReb(n))).length, nReb = todas.filter(ceReb).length;
-  const nDom = todas.filter(n => { const s = ceSrs(n); return s && s.i >= 21 && !ceReb(n); }).length;
+  const nDom = todas.filter(n => { const s = ceSrs(n); return s && s.i >= CE_DOMINADA && !ceReb(n); }).length;
   c.innerHTML = `
     <div class="rg-kpis cuatro">
       <div class="card rg-kpi"><div class="k">🆕 Nuevas</div><div class="v">${nNuevas}</div><div class="s">sin ver aún</div></div>
@@ -6510,7 +6522,7 @@ function ceSesion() {
 }
 function cePintarSesion(c) {
   const n = CT.cola[CT.idx], A = n ? CE_ART[n] : null;
-  const intv = q => fmtIntervalo(srsSiguiente(n ? ceSrs(n) : null, q).i);
+  const intv = q => fmtIntervalo(ceSiguiente(n ? ceSrs(n) : null, q).i);
   const barra = `
     <div class="card srs-barra" style="position:static">
       <button class="btn btn-sm" id="ce-salir" type="button">✕ Salir</button>
