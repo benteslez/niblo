@@ -848,6 +848,10 @@ mark.res[data-col="morado"], [data-col="morado"] { --rc:#a855f7; }
 .tema2-stats span { font-size:11.5px; color:var(--text-muted); }
 .tema2-btn { margin-top:auto; width:100%; justify-content:center; border-radius:var(--r-md); }
 .tema2 .bar { margin-bottom:8px; }
+.tema2.tema-off { filter:grayscale(1); opacity:.55; }
+.tema2.tema-off:hover { opacity:.85; }
+.tema-off-tag { font-size:11px; font-weight:700; color:var(--text-muted); border:1px solid var(--line); border-radius:var(--r-pill); padding:1px 8px; margin-right:6px; }
+.tema-sw { display:flex; align-items:center; gap:10px; justify-content:space-between; padding:10px 12px; margin:0 0 12px; border:1px solid var(--line); border-radius:var(--r-md); background:var(--bg-soft); }
 .tema2.pendiente { border-style:dashed; background:transparent; box-shadow:none; }
 .tema2.pendiente .tema2-num, .tema2.pendiente .tema2-tit { color:var(--text-muted); }
 .tema2.pendiente .tema2-mod { background:transparent; color:var(--text-muted); border:1px solid var(--line); }
@@ -2888,6 +2892,17 @@ async function importarCopia(j, silencioso) {
    partir de ahí viven en el almacenamiento local y se sincronizan. Sin conexión
    no pasa nada: se usa lo ya guardado. */
 const KEY_SELLOS = "gestion_hub_temas_sellos_v1";
+/* Temas encendidos / apagados (tarjetas en color o en gris). Estado por defecto: `apagados` en temas/indice.json
+   (lo cambia quien mantiene el repositorio, con un `apagadosSello` nuevo); tu interruptor (clave TON:<id> en el
+   progreso, se sincroniza) manda mientras sea más reciente que ese sello. */
+const KEY_APAG = "gestion_hub_apagados_v1";
+let APAG = leerJSON(KEY_APAG, { ids:[], sello:0 });
+const temaEncendido = id => {
+  const v = progreso("TON:" + id);
+  if (v && v.m > APAG.sello) return !!v.s;
+  return !APAG.ids.includes(id);
+};
+function alternarTema(id, encender) { marcarProg("TON:" + id, encender); }
 async function cargarTemasPublicados() {
   let idx;
   try {
@@ -2896,6 +2911,10 @@ async function cargarTemasPublicados() {
     idx = await r.json();
   } catch (_) { return; }
   if (!idx || idx._format !== "temas_publicados_v1" || !idx.temas) return;
+  if (Array.isArray(idx.apagados)) {
+    const sello = Date.parse(idx.apagadosSello || "") || 0;
+    if (JSON.stringify(idx.apagados) !== JSON.stringify(APAG.ids) || sello !== APAG.sello) { APAG = { ids:idx.apagados, sello }; escribirJSON(KEY_APAG, APAG); render(); }
+  }
   for (const id of (idx.retirados || [])) if (estado.temas[id]) { try { await quitarTema(id, true); } catch (_) {} }
   const sellos = leerJSON(KEY_SELLOS, {});
   const antes = new Set(Object.keys(estado.temas));
@@ -3156,6 +3175,10 @@ function renderTemasBloque(panel, b) {
 const epigrafeDe = p => [p.l].concat(Object.keys(FUSION).filter(k => FUSION[k] === p.id).map(k => TEMA_POR_ID[k].l)).join(" ");
 const FUSION = {};   // temas fusionados en otro (id → id destino); hoy ninguno: I.1, I.2 e I.3 son temas separados
 function tarjetaTema(p) {
+  const html = tarjetaTema0(p);
+  return FUSION[p.id] || temaEncendido(p.id) ? html : html.replace('class="card ', 'class="card tema-off ').replace('<div class="tema2-cab">', '<div class="tema2-cab"><span class="tema-off-tag" title="Tema apagado: se enciende en Progreso → Tema encendido">⏻ Apagado</span>');
+}
+function tarjetaTema0(p) {
   if (FUSION[p.id]) {
     const d = TEMA_POR_ID[FUSION[p.id]];
     return `
@@ -4023,7 +4046,10 @@ function panelProgreso(c, id) {
   const tests = resultadosTest(d => d.amb === "t:" + id);
   const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
   const anillo = (v, txt) => `<div class="anillo" style="--p:${v}"><span>${v}%</span><small>${txt}</small></div>`;
+  const on = temaEncendido(id);
   c.innerHTML = `
+    <div class="tema-sw"><div><b>⏻ Tema ${on ? "encendido" : "apagado"}</b><div class="muted" style="font-size:12.5px">${on ? "Su tarjeta sale en color en el bloque." : "Su tarjeta sale en gris en el bloque."}</div></div>
+      <button class="btn btn-sm ${on ? "" : "btn-primary"}" data-tema-sw>${on ? "Apagar tema" : "Encender tema"}</button></div>
     <div class="anillos">
       ${anillo(pct(r.hechos, r.n), "lectura")}
       ${anillo(pct(sabidasDe(t), F.length), "flashcards")}
@@ -4048,6 +4074,8 @@ function panelProgreso(c, id) {
     })()}
     <h3 class="card-title" style="margin-top:18px">Tests de este tema</h3>
     ${historialTests(tests)}`;
+  const sw = c.querySelector("[data-tema-sw]");
+  if (sw) sw.addEventListener("click", () => { const nuevo = !temaEncendido(id); alternarTema(id, nuevo); toast(`Tema ${codigoDe(id)} ${nuevo ? "encendido" : "apagado"}`); panelProgreso(c, id); });
 }
 function historialTests(tests) {
   if (!tests.length) return `<p class="muted" style="font-size:13px;margin:0">Todavía no has hecho ningún test aquí.</p>`;
