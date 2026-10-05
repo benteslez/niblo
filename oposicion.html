@@ -6327,8 +6327,9 @@ function ceVerOrg(c) {
       const art14 = (t.id === "I" && i === 1) ? `<a class="og-art14" ${enlace(14)} style="${ceSt(kc)}" title="El art. 14 está en el capítulo II pero fuera de las dos secciones"><b>Art. 14</b><span>Igualdad ante la ley</span></a>` : "";
       return `<div class="og-cap"><a class="og-capc" ${enlace(uc.desde)} style="${ceSt(kc)}"><b>${esc(cap1(cp.num))}</b><span>${esc(cp.nombre)}</span><small>${rangoU(uc)}</small></a>${secs || art14 ? `<div class="og-secs">${art14}${secs}</div>` : ""}</div>`;
     }).join("");
-    const art10 = t.id === "I" ? `<span class="og-nota">Art. 10 (fuera de los capítulos)</span>` : "";
-    return `<div class="og-fila"><a class="og-tit" ${enlace(u.desde)} style="${ceSt(t.id)}"><b>${t.id === "P" ? "TÍTULO PRELIMINAR" : "TÍTULO " + t.id}</b>${t.nombre ? `<span>${esc(t.nombre)}</span>` : ""}<small>${rangoU(u)}</small>${art10}</a>${caps ? `<div class="og-caps">${caps}</div>` : ""}</div>`;
+    const art10 = "";
+    const caja10 = t.id === "I" ? `<div class="og-cap"><a class="og-art14" ${enlace(10)} style="${ceSt("I")}" title="El art. 10 está en el título I pero fuera de los capítulos"><b>Art. 10</b><span>Dignidad de la persona</span></a></div>` : "";
+    return `<div class="og-fila"><a class="og-tit" ${enlace(u.desde)} style="${ceSt(t.id)}"><b>${t.id === "P" ? "TÍTULO PRELIMINAR" : "TÍTULO " + t.id}</b>${t.nombre ? `<span>${esc(t.nombre)}</span>` : ""}<small>${rangoU(u)}</small>${art10}</a>${caps ? `<div class="og-caps">${caja10}${caps}</div>` : ""}</div>`;
   };
   c.innerHTML = `
     <p class="pl-nota">Estructura de la Constitución: dos partes, el preámbulo, 10 títulos, 169 artículos y 15 disposiciones. Pulsa cualquier recuadro para ir a su texto. El color de cada título y capítulo es el mismo en el texto y en el test.</p>
