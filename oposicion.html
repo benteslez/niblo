@@ -5110,6 +5110,16 @@ function hubGlosario(c, ambito, temas, actual) {
   pintar();
 }
 
+/* Escritorio: la barra espaciadora gira la tarjeta de las flashcards abiertas (si no se está escribiendo en un campo). */
+document.addEventListener("keydown", e => {
+  if (e.key !== " " || e.ctrlKey || e.metaKey || e.altKey) return;
+  const panel = document.getElementById("panel"), carta = document.getElementById("fc");
+  if (!carta || !panel || panel.hidden || panel.dataset.herramienta !== "fc") return;
+  if (e.target.closest && e.target.closest("input, textarea, select, [contenteditable]")) return;
+  e.preventDefault();
+  if (e.target === carta) return;   // la propia tarjeta ya lo gestiona
+  carta.click();
+});
 /* 4 · Flashcards. Progreso: claves "id:índice" de las que «la sabía». */
 const KEY_FCM = "gestion_hub_fc_modo_v1";
 function hubFc(c, ambito, temas) {
