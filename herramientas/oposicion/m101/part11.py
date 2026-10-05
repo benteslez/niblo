@@ -16,8 +16,8 @@ FC = [
  ("¿Qué garantías tiene el art. 14?", "**Todas menos la ley orgánica**: tutela preferente y sumaria y amparo (art. 53.2), inconstitucionalidad, vinculación y Defensor.", "Garantías"),
  ("¿Qué garantías tiene la sección 2.ª (arts. 30 a 38)?", "Vinculación, solo por ley e inconstitucionalidad (art. 53.1) y Defensor. **No** tiene ley orgánica, tutela preferente y sumaria ni amparo, **salvo el art. 30.2** (objeción de conciencia).", "Garantías"),
  ("¿Qué garantías tienen los principios rectores del capítulo III (arts. 39 a 52)?", "Solo **informan** la legislación, la práctica judicial y la actuación de los poderes públicos y se alegan ante la jurisdicción ordinaria **según las leyes** que los desarrollen (art. 53.3). Cuenta con el Defensor (art. 54).", "Garantías"),
- ("¿Qué derechos se regulan por ley orgánica según el art. 81.1?", "El desarrollo de los **derechos fundamentales y libertades públicas** (secc. 1.ª, 15-29), los Estatutos de Autonomía, el régimen electoral general **y las demás previstas en la Constitución** (art. 81.1). Mayoría absoluta del Congreso (art. 81.2).", "Garantías"),
- ("¿Qué derechos puede proteger el recurso de amparo?", "El **art. 14**, los de la **sección 1.ª (15-29)** y la **objeción de conciencia (art. 30.2)** (art. 53.2; art. 41 LOTC). Es el «último remedio»: tras agotar la vía judicial.", "Garantías"),
+ ("¿Qué se regula por ley orgánica según el art. 81.1?", "El desarrollo de los **derechos fundamentales y libertades públicas** (secc. 1.ª, 15-29), los Estatutos de Autonomía, el régimen electoral general **y las demás previstas en la Constitución** (art. 81.1). Mayoría absoluta del Congreso (art. 81.2).", "Garantías"),
+ ("¿Qué derechos puede proteger el recurso de amparo?", "El **art. 14**, los de la **sección 1.ª (15-29)** y la **objeción de conciencia (art. 30.2)** (art. 53.2; art. 41 LOTC). Es el «último remedio»: normalmente tras agotar la vía judicial (salvo actos parlamentarios sin valor de ley, art. 42 LOTC).", "Garantías"),
  ("¿Cuáles son los plazos del recurso de amparo?", "**3 meses** (Cortes y Asambleas, art. 42 LOTC) · **20 días** (Gobierno y órganos ejecutivos de las CCAA, art. 43) · **30 días** (órgano judicial, art. 44).", "Garantías"),
  ("¿Quién puede interponer el recurso de inconstitucionalidad y en qué plazo?", "**Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores** y órganos ejecutivos y Asambleas de las CCAA (art. 162.1.a). **3 meses** desde la publicación (art. 33 LOTC).", "Garantías"),
  ("¿Quién interpone el recurso de amparo?", "**Persona natural o jurídica con interés legítimo**, **Defensor del Pueblo** y **Ministerio Fiscal** (art. 162.1.b; art. 46 LOTC).", "Garantías"),
@@ -32,7 +32,7 @@ FC = [
  ("¿Cuánto dura el mandato en el TC y cómo se renueva?", "**9 años**, renovación **por terceras partes cada 3** (art. 159.3). El Presidente, **3 años**, reelegible una vez (art. 160; art. 9 LOTC).", "Tribunal Constitucional"),
  ("¿Qué requisitos tienen los miembros del TC?", "Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, **juristas de reconocida competencia con más de 15 años** de ejercicio (art. 159.2). Presencia equilibrada: al menos un **40 %** de cada sexo en las propuestas (art. 16 LOTC).", "Tribunal Constitucional"),
  ("¿Qué valor tienen las sentencias del TC (art. 164)?", "**BOE con votos particulares**, **cosa juzgada al día siguiente**, **sin recurso**, **plenos efectos frente a todos** (inconstitucionalidad y las que no se limiten a la estimación subjetiva de un derecho) y **vigencia de la parte no afectada** de la ley.", "Tribunal Constitucional"),
- ("¿Cuándo se plantea la cuestión de inconstitucionalidad?", "Por el **órgano judicial**, **una vez concluso el procedimiento** y dentro del plazo para dictar sentencia, si duda de una norma con rango de ley aplicable cuya validez dependa el fallo (art. 163; art. 35 LOTC).", "Tribunal Constitucional"),
+ ("¿Cuándo se plantea la cuestión de inconstitucionalidad?", "Por el **órgano judicial**, **una vez concluso el procedimiento** y dentro del plazo para dictar sentencia, si duda de que una norma con rango de ley aplicable al caso y de cuya validez dependa el fallo sea contraria a la Constitución (art. 163; art. 35 LOTC).", "Tribunal Constitucional"),
  ("¿Qué conflictos conoce el TC?", "De competencia (Estado-CCAA y CCAA entre sí: art. 161.1.c), **entre órganos constitucionales** (Gobierno, Congreso, Senado, CGPJ), **de defensa de la autonomía local** (art. 59 LOTC) y la impugnación del Gobierno de disposiciones de las CCAA (art. 161.2).", "Tribunal Constitucional"),
  ("¿Qué es y cómo se elige el Defensor del Pueblo?", "**Alto comisionado de las Cortes Generales** (art. 54). La Comisión Mixta propone; **3/5 del Congreso** y ratificación **3/5 del Senado** en 20 días; si no, **3/5 Congreso + mayoría absoluta Senado**. Firman los **dos Presidentes** y se publica en el BOE.", "Defensor del Pueblo"),
  ("¿Cuánto dura el mandato del Defensor del Pueblo y quién lo auxilia?", "**5 años** (art. 2.1 LO 3/1981). **Dos Adjuntos** nombrados por él con conformidad de las Cámaras (art. 8).", "Defensor del Pueblo"),
@@ -54,10 +54,10 @@ GL = [
  ("Reserva de ley orgánica", "Materias que solo pueden regularse por ley orgánica (art. 81.1): entre ellas, el desarrollo de los derechos fundamentales y libertades públicas.", "s19", "Garantías"),
  ("Contenido esencial", "Núcleo que la ley debe respetar al regular el ejercicio de los derechos y libertades del capítulo II (art. 53.1).", "s19", "Garantías"),
  ("Tutela preferente y sumaria", "Protección ante los tribunales ordinarios, por un procedimiento basado en los principios de preferencia y sumariedad (art. 53.2).", "s20", "Garantías"),
- ("Recurso de amparo", "Recurso ante el Tribunal Constitucional por violación de los derechos del art. 14, la sección 1.ª y el art. 30.2, tras agotar la vía judicial.", "s21", "Garantías"),
+ ("Recurso de amparo", "Recurso ante el Tribunal Constitucional por violación de los derechos del art. 14, la sección 1.ª y el art. 30.2, normalmente tras agotar la vía judicial.", "s21", "Garantías"),
  ("Recurso de inconstitucionalidad", "Recurso ante el Tribunal Constitucional contra leyes y normas con fuerza de ley (arts. 161.1.a y 162.1.a).", "s23", "Garantías"),
  ("Cuestión de inconstitucionalidad", "La plantea un órgano judicial ante el TC cuando duda de la constitucionalidad de una norma con rango de ley aplicable al caso (art. 163).", "s35", "Tribunal Constitucional"),
- ("Estado de alarma", "Declarado por el Gobierno por decreto, hasta 15 días, con cuenta al Congreso; no suspende derechos (art. 116.2).", "s28", "Suspensión"),
+ ("Estado de alarma", "Declarado por el Gobierno por decreto, hasta 15 días, con cuenta al Congreso; no suspende derechos (arts. 116.2 y 55.1: solo en excepción y sitio).", "s28", "Suspensión"),
  ("Estado de excepción", "Declarado por el Gobierno con autorización previa del Congreso, hasta 30 días prorrogables por otro plazo igual (art. 116.3).", "s28", "Suspensión"),
  ("Estado de sitio", "Declarado por el Congreso por mayoría absoluta a propuesta exclusiva del Gobierno; el Congreso fija su duración (art. 116.4).", "s28", "Suspensión"),
  ("Suspensión individual", "Suspensión de los derechos 17.2, 18.2 y 18.3 para personas determinadas, por actuación de bandas armadas o terroristas (art. 55.2).", "s31", "Suspensión"),
@@ -69,14 +69,14 @@ GL = [
  ("Comisión de composición paritaria", "Comisión de Diputados y Senadores que intenta un texto de acuerdo cuando las Cámaras no aprueban la reforma del art. 167.", "s45", "Reforma"),
  ("Referéndum de ratificación", "Votación del pueblo sobre una reforma ya aprobada: facultativo en el art. 167, obligatorio en el 168.", "s46", "Reforma"),
  ("Iniciativa legislativa popular", "La regula el art. 87.3; no puede ejercerse para reformar la Constitución (art. 166).", "s44", "Reforma"),
- ("Sanción y promulgación", "Actos del Rey que dan validez y publicidad a la norma; la Constitución se sancionó el 27-12-1978.", "s1", "Fechas"),
+ ("Sanción y promulgación", "La **sanción** es la conformidad del Rey con la ley aprobada por las Cortes (art. 91: «El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación»); la **promulgación**, su orden de publicación. La Constitución se sancionó el 27-12-1978.", "s1", "Fechas"),
 ]
 for t_, d_, s_, cat in GL: T.glos(t_, d_, s_, cat)
 
 # ---------------------------------------------------------------------------- HITOS
 T.hito("1978", "31-10-1978: las Cortes Generales aprueban la Constitución · 6-12-1978: referéndum de ratificación · 27-12-1978: sanción y promulgación · 29-12-1978: publicación en el BOE y entrada en vigor", "Aprobación, ratificación, sanción y entrada en vigor", "normativo", "s1")
 T.hito("1979", "LO 2/1979, de 3 de octubre, del Tribunal Constitucional (BOE de 5-10-1979)", "Desarrolla el Título IX: composición, competencias y procedimientos", "normativo", "s33")
-T.hito("1980", "LO 2/1980, de 18 de enero, de referéndum (BOE de 23-1-1980)", "Referéndum de reforma constitucional: arts. 2, 4 y 7", "normativo", "s45")
+T.hito("1980", "LO 2/1980, de 18 de enero, sobre regulación de las distintas modalidades de referéndum (BOE de 23-1-1980)", "Referéndum de reforma constitucional: arts. 2, 4 y 7", "normativo", "s45")
 T.hito("1981", "LO 3/1981, de 6 de abril, del Defensor del Pueblo (BOE de 7-5-1981)", "Desarrolla el art. 54: elección, mandato y funciones", "normativo", "s39")
 T.hito("1981", "LO 4/1981, de 1 de junio, de los estados de alarma, excepción y sitio (BOE de 5-6-1981)", "Desarrolla el art. 116", "normativo", "s28")
 T.hito("1992", "Reforma del art. 13.2 (27-8-1992; BOE de 28-8-1992)", "Primera reforma: sufragio pasivo en las elecciones municipales", "normativo", "s2")

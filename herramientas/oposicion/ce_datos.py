@@ -33,12 +33,13 @@ RUBRICAS = {
  34: "Derecho de fundación para fines de interés general", 35: "Derecho al trabajo y deber de trabajar", 36: "Colegios profesionales y agrupación de las profesiones tituladas",
  37: "Derecho a la negociación colectiva", 38: "Libertad de empresa en el marco de una economía de libre mercado", 39: "Protección de la familia e hijos",
  40: "Redistribución equitativa de la riqueza", 41: "Régimen público de la Seguridad Social para todos los ciudadanos",
- 42: "Salvaguardia de los derechos de los inmigrantes españoles en el extranjero", 43: "Derecho a la salud", 44: "Cultura e investigación científica",
+ 42: "Salvaguardia de los derechos de los trabajadores españoles en el extranjero", 43: "Derecho a la salud", 44: "Cultura e investigación científica",
  45: "Protección del medio ambiente", 46: "Protección del patrimonio histórico-artístico", 47: "Derecho a una vivienda digna y adecuada",
  48: "Fomentar la participación de la juventud",
  49: "Las personas con discapacidad ejercen los derechos previstos en este Título en condiciones de libertad e igualdad reales y efectivas",
  50: "Pensiones públicas, periódicas y actualizadas para la tercera edad", 51: "Consumidores y usuarios, defensores y protegidos",
  52: "Organizaciones profesionales cuya estructura interna y funcionamiento deberá ser democrático"}
+# Art. 42: la guía dice «inmigrantes españoles»; la CE habla de «trabajadores españoles en el extranjero» (prevalece la norma).
 # Los arts. 53 a 55 no están en la tabla de la guía: rótulo breve propio (marcado «propio»).
 PROPIAS = {53: "Vinculación, reserva de ley y tutela de los derechos", 54: "El Defensor del Pueblo", 55: "Suspensión de derechos y libertades"}
 

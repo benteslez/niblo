@@ -3,10 +3,11 @@ T.ap("s35", "VII.3 Competencias y procedimientos", f"""
 {unidad("3.1 Cuadro de las competencias (art. 161 CE; arts. 2 y 59 LOTC)",
   lit("CE", "a161", ["recurso de inconstitucionalidad contra leyes y disposiciones normativas con fuerza de ley", "recurso de amparo por violación de los derechos y libertades referidos en el artículo 53, 2", "conflictos de competencia entre el Estado y las Comunidades Autónomas o de los de éstas entre sí", "las disposiciones y resoluciones adoptadas por los órganos de las Comunidades Autónomas"], solo=[1, 2, 3, 4, 5, 6]),
   tabla(["Procedimiento", "Lo interpone", "Frente a", "Plazo", "Base"], [
-    [f"**Recurso de inconstitucionalidad**", "**50 Diputados**, **50 Senadores**, **Defensor del Pueblo**, **Presidente del Gobierno**, **órganos ejecutivos y Asambleas** de las CCAA", "**Leyes y normas con rango de ley** (decretos-leyes y decretos legislativos incluidos)", "**3 meses** desde la publicación; **9 meses** en los conflictos Estado-CCAA con Comisión Bilateral", "CE 161.1.a, 162.1.a; LOTC 32, 33"],
+    [f"**Recurso de inconstitucionalidad**", "**50 Diputados**, **50 Senadores**, **Defensor del Pueblo**, **Presidente del Gobierno**, **órganos ejecutivos y Asambleas** de las CCAA (estos, solo contra normas del Estado que afecten a su autonomía)", "**Leyes y normas con rango de ley** (decretos-leyes y decretos legislativos incluidos)", "**3 meses** desde la publicación (art. 33.1); **9 meses** para el Presidente del Gobierno y los ejecutivos autonómicos si se cumplen los requisitos de la Comisión Bilateral (art. 33.2)", "CE 161.1.a, 162.1.a; LOTC 32, 33"],
     [f"**Cuestión de inconstitucionalidad**", "El **órgano judicial** (jueces y tribunales) cuando deba dictar sentencia", "**Norma con rango de ley** aplicable al caso y de cuya validez dependa el fallo", "**Una vez concluso el procedimiento** y dentro del plazo para dictar sentencia", "CE 163; LOTC 35"],
     [f"**Recurso de amparo** (*«último remedio»*, tras el proceso preferente y sumario)", "**Persona natural o jurídica con interés legítimo**, **Ministerio Fiscal** y **Defensor del Pueblo**", "**Actuación de los poderes públicos** (derechos 14, 15 a 29 y 30.2)", "**3 meses · 20 días · 30 días** (→ V.3)", "CE 161.1.b, 162.1.b; LOTC 41 a 46"],
-    [f"**Conflicto de competencias**", "El **Gobierno** o el **órgano ejecutivo** de la CA", "Estado ↔ CCAA · CA ↔ CA · **Gobierno ↔ Congreso, Senado o CGPJ** (o entre estos)", "Requerimiento previo de **2 meses**; luego **1 mes**", "CE 161.1.c; LOTC 59 a 63, 73"]]))}
+    [f"**Conflicto de competencias** (Estado ↔ CCAA y CCAA entre sí)", "El **Gobierno** o el **órgano ejecutivo** de la CA", "**Estado ↔ CCAA** · **CA ↔ CA**", "Requerimiento previo de **2 meses**; luego **1 mes**", "CE 161.1.c; LOTC 59.1.a y b, 62 y 63"],
+    [f"**Conflicto entre órganos constitucionales**", "El **Gobierno**, el **Congreso**, el **Senado** o el **CGPJ**, por acuerdo de su **Pleno**", "**Gobierno ↔ Congreso, Senado o CGPJ** (o estos entre sí)", "Se lo hace saber en **1 mes** y, si no rectifica en 1 mes, lo plantea en **1 mes**", "LOTC 59.1.c y 73"]]))}
 
 {unidad("3.2 La cuestión de inconstitucionalidad (art. 163 CE; art. 35 LOTC)",
   lit("CE", "a163", ["Cuando un órgano judicial considere", "planteará la cuestión ante el Tribunal Constitucional"]),
@@ -28,7 +29,7 @@ T.ap("s35", "VII.3 Competencias y procedimientos", f"""
 
 {unidad("3.4 Los conflictos entre órganos constitucionales (arts. 59.1.c y 73 LOTC)",
   lx("LOTC", "asetentaytres", 73, ["dentro del mes siguiente a la fecha en que llegue a su conocimiento", "planteará el conflicto ante el Tribunal Constitucional dentro del mes siguiente"], solo=[1, 3]),
-  "Enfrentan al **Gobierno** con el **Congreso**, el **Senado** o el **Consejo General del Poder Judicial**, o a estos órganos **entre sí**. Antes hay que **comunicar** la discrepancia y pedir que se revoque (**1 mes**).")}
+  "Enfrentan al **Gobierno** con el **Congreso**, el **Senado** o el **Consejo General del Poder Judicial**, o a estos órganos **entre sí**. Antes hay que **comunicar** la discrepancia y pedir que se revoque (**1 mes**), por acuerdo del **Pleno** de cada órgano; si el otro no rectifica en **1 mes**, se plantea el conflicto en **1 mes**. (El art. 73 remite al «59.3»; el BOE aclara que hoy es el **art. 59.1.c**.)")}
 
 {unidad("3.5 Los conflictos en defensa de la autonomía local (arts. 59.2 y 75 bis a 75 quater LOTC)",
   lx("LOTC", "asetentaycincobis", "75 bis", ["normas del Estado con rango de ley", "disposiciones con rango de ley de las Comunidades Autónomas", "que lesionen la autonomía local constitucionalmente garantizada"], solo=[1]),
@@ -39,7 +40,7 @@ T.ap("s35", "VII.3 Competencias y procedimientos", f"""
 {unidad("3.6 La impugnación de disposiciones sin fuerza de ley de las CCAA (art. 161.2 CE; arts. 76 y 77 LOTC)",
   lit("CE", "a161", ["El Gobierno podrá impugnar ante el Tribunal Constitucional las disposiciones y resoluciones adoptadas por los órganos de las Comunidades Autónomas", "en un plazo no superior a cinco meses"], solo=[6]),
   lx("LOTC", "asetentayseis", 76, ["Dentro de los dos meses siguientes", "disposiciones normativas sin fuerza de Ley y resoluciones emanadas de cualquier órgano de las Comunidades Autónomas"]),
-  "Solo la plantea el **Gobierno**; produce la **suspensión** de la disposición o resolución recurrida, que el Tribunal ratifica o levanta en **menos de cinco meses**.")}
+  "Solo la plantea el **Gobierno**; produce la **suspensión** de la disposición o resolución recurrida, que el Tribunal ratifica o levanta en un plazo **no superior a cinco meses** (art. 161.2 CE).")}
 """, 2)
 
 T.ap("s36", "VII.4 Las sentencias y sus efectos", f"""
@@ -59,7 +60,7 @@ T.ap("s37", "VII.5 Recapitulación: amparo frente a inconstitucionalidad", f"""
   ["**Quién**", "**Afectado** (persona con interés legítimo) · **Ministerio Fiscal** · **Defensor del Pueblo**", "**Presidente del Gobierno** · **Defensor del Pueblo** · **50 Diputados** · **50 Senadores** · **órganos ejecutivos y Asambleas** de las CCAA (en su ámbito)"],
   ["**Contra qué**", "**Actos, omisiones o vía de hecho** de los poderes públicos que violen los derechos **14, 15 a 29 y 30.2**", "**Leyes y normas con rango de ley** (por infringir la Constitución)"],
   ["**Plazo**", "**3 meses · 20 días · 30 días**", "**3 meses** (9 en los casos del art. 33.2 LOTC)"],
-  ["**Particularidad**", "**«Último remedio»**: tras agotar la vía judicial", "Lo puede promover el **Defensor del Pueblo**: único legitimado en **ambos**"]])}
+  ["**Particularidad**", "**«Último remedio»**: normalmente tras agotar la vía judicial (art. 42: no hay vía previa)", "Lo puede promover el **Defensor del Pueblo**: único legitimado en **ambos**"]])}
 
 {IMP} El **Defensor del Pueblo** es el **único** legitimado a la vez para el **amparo** y para la **inconstitucionalidad** (arts. 162.1 CE; 32 y 46 LOTC; 29 LO 3/1981).
 """, 2)

@@ -18,13 +18,13 @@ La Constitución se abre con un **preámbulo** y su articulado se reparte en **d
 
 {tabla(["Parte", "Títulos", "Artículos", "De qué trata"], [
   [f"**Parte dogmática**", f"{tag('P', 'Título preliminar')} y {tag('I', 'Título I')}", "**1 a 55**", "Los principios y los **derechos y deberes**: qué es el Estado y qué se reconoce a las personas"],
-  [f"**Parte orgánica**", f"{tag('II', 'Títulos II')} a {tag('X', 'X')}", "**56 a 169**", "Cómo se **organiza** el Estado y sus instituciones: Corona, Cortes, Gobierno, Poder Judicial, territorio, Tribunal Constitucional y reforma"]])}
+  [f"**Parte orgánica**", f"{tag('II', 'Título II')} a {tag('X', 'Título X')}", "**56 a 169**", "Cómo se **organiza** el Estado y sus instituciones: Corona, Cortes, Gobierno, Poder Judicial, territorio, Tribunal Constitucional y reforma"]])}
 
 ### La lógica de «las muñecas rusas»
 
 Como muchas leyes, la Constitución va **de lo general a lo concreto**: lo primero que aparece es lo más **ideal e inespecífico**, y lo que viene después lo **concreta**. Si tienes esto en la cabeza, la estructura se asimila mejor:
 
-- El **preámbulo** dice a qué aspira el Estado; la Constitución desarrolla esas aspiraciones. Según el módulo, no tiene valor jurídico propio («papel mojado»), pero a la vez es lo más importante porque da el sentido a todo lo demás.
+- El **preámbulo** dice a qué aspira el Estado; la Constitución desarrolla esas aspiraciones. Según el módulo M101, no tiene valor jurídico propio («papel mojado»), pero a la vez es lo más importante porque da el sentido a todo lo demás.
 - El **Título preliminar** y el **Título I** son la parte dogmática: sientan las ideas que luego desarrolla la parte orgánica.
 - Dentro del Título I ocurre lo mismo: el **art. 10** (la dignidad de la persona, los derechos inviolables…) queda **fuera de los capítulos** y nutre «espiritualmente» todo lo demás; y el **art. 14** (la igualdad ante la ley) queda **fuera de las dos secciones** y se concreta en los derechos que vienen después.
 
@@ -66,7 +66,7 @@ T.ap("s5", "II.3 El Título I por dentro (lo más preguntable)", f"""
 
 !> {IMP} **La división de los 55 artículos de la parte dogmática, en una línea:** 1-9 · 10 · 11-13 · 14 · **15-29** · 30-38 · 39-52 · 53-54 · 55.
 
-**Truco:** de **15 a 29** es la sección primera del capítulo segundo del título I. Parece un trabalenguas, pero es la clave de muchas preguntas: los derechos de la sección primera son los únicos que tienen **todas** las garantías (→ IV).
+**Truco:** de **15 a 29** es la sección primera del capítulo segundo del título I. Parece un trabalenguas, pero es la clave de muchas preguntas: los derechos de la sección primera son los que tienen **todas** las garantías, incluidas la reserva de ley orgánica (art. 81) y la reforma agravada (art. 168); el art. 14 y el 30.2 comparten solo algunas, como el amparo (→ IV).
 """, 2)
 
 T.ap("s6", "II.4 Los capítulos de los Títulos III y VIII", f"""

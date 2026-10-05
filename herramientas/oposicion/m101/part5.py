@@ -5,7 +5,7 @@ def lx(k, idb, num, resaltar=(), solo=None, extra=""):
     return lit(k, idb, resaltar, solo=solo, titulo=f"Artículo {num}{extra} ({CORTO[k]})")
 SI, NO = "✔", "✘"
 T.ap("bIV", "IV. Derechos y deberes fundamentales: los niveles de protección", donde(
-  "Cuarta pregunta. El Título I no protege igual todos sus artículos: hay **niveles de protección**. Saber a qué artículo corresponde cada garantía es la clave del tema: **las preguntas se resuelven con el cuadro** del apartado IV.2.",
+  "Primera pregunta. El Título I no protege igual todos sus artículos: hay **niveles de protección**. Saber a qué artículo corresponde cada garantía es la clave del tema: **las preguntas se resuelven con el cuadro** del apartado IV.2.",
   ["1 Qué contiene el Título I", "2 Cuadro de contenido y garantías", "3 Los deberes"]))
 
 T.ap("s16", "IV.1 Qué contiene el Título I", f"""
@@ -111,7 +111,7 @@ T.ap("s20", "V.2 Tutela ante los tribunales ordinarios (procedimiento preferente
 """, 2)
 
 T.ap("s21", "V.3 El recurso de amparo", f"""
-Es **el último remedio**: se acude al Tribunal Constitucional **cuando ya se ha agotado la vía judicial** (el procedimiento preferente y sumario y los recursos que quepan).
+Es **el último remedio**: normalmente se acude al Tribunal Constitucional **cuando ya se ha agotado la vía judicial** (el procedimiento preferente y sumario y los recursos que quepan). La excepción son los actos sin valor de ley de las Cortes o de las Asambleas autonómicas (art. 42 LOTC), que no tienen vía judicial previa.
 
 {unidad("3.1 Qué derechos protege (arts. 53.2 y 161.1.b CE; art. 41 LOTC)",
   lit("CE", "a53", ["recurso de amparo ante el Tribunal Constitucional", "objeción de conciencia reconocida en el artículo 30"], solo=[2], titulo="Artículo 53.2 (amparo)"),
