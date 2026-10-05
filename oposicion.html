@@ -2892,7 +2892,7 @@ function render() {
   if ((r.v === "tema" || r.v === "leer" || r.v === "editar") && FUSION[r.id]) { location.replace("#/tema/" + FUSION[r.id] + (r.v === "tema" ? "" : "/" + r.v)); return; }
   cerrarPanel(true);
   if (r.v !== "leer") vozParar();
-  if (r.v !== "real" && typeof salirPantallaCompleta === "function") salirPantallaCompleta();
+  if (r.v !== "real" && !(r.v === "ce" && CT.ses) && typeof salirPantallaCompleta === "function") { if (r.v !== "ce") CT.ses = false; salirPantallaCompleta(); }
   const clave = JSON.stringify(r);
   const atras = document.getElementById("btn-atras");
   const titulo = document.getElementById("topbar-title");
@@ -6229,7 +6229,8 @@ const CE_TABS = [{ id:"texto", txt:"📜 Texto completo" }, { id:"organigrama", 
 
 function renderCE(tab, n) {
   CEV.tab = CE_TABS.some(t => t.id === tab) ? tab : "texto";
-  if (CEV.tab === "test") CT.armado = false;
+  if (CEV.tab !== "test" && CT.ses) { CT.ses = false; salirPantallaCompleta(); }
+  if (CEV.tab === "test" && CT.ses && CE) { ceSesion(); return; }
   vista().innerHTML = `
     <h1 class="titulo-grande">📜 Constitución Española</h1>
     <p class="view-sub">Texto literal del <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229" target="_blank" rel="noopener">BOE consolidado vigente</a>, con su estructura, un color por título y capítulo, el organigrama y el test de repaso por artículos.</p>
@@ -6350,7 +6351,11 @@ function ceVerOrg(c) {
 }
 
 /* ---- Test Constitución (SRS) ---------------------------------------------- */
-const CT = { filtro:"hoy", cola:[], idx:0, rev:false, flip:false, hechas:0, key:"" };
+/* Flujo: pestaña «Test» (resumen) → ventana de selección (qué estudiar, unidades, orden, número,
+   modo aleatorio) → sesión en PANTALLA COMPLETA. Configuración recordada en localStorage. */
+const KEY_CT = "gestion_hub_ce_test_v1";
+const CT = Object.assign({ cola:[], idx:0, rev:false, flip:false, hechas:0, ses:false, total:0 },
+  { cfg:Object.assign({ que:"hoy", unidades:[], barajar:false, max:0 }, leerJSON(KEY_CT, {})) });
 const ceSrs = n => { const v = progreso("CEQ:" + n); return v && v.d && v.d.nx ? v.d : null; };
 const ceVenc = n => { const s = ceSrs(n); return !s || s.nx <= hoyISO(); };
 const ceReb = n => { const s = ceSrs(n); return !!(s && (s.l || 0) >= 3 && (s.rs || 0) < 2); };
@@ -6361,32 +6366,116 @@ function ceCalificar(n, cal) {
   return nx.i;
 }
 const CE_TEST_HASTA = 55;
-function ceFiltrosTest() {
-  const us = ["P", "I", "I.1", "I.2", "I.2.1", "I.2.2", "I.3", "I.4", "I.5"].filter(k => CE_UNI[k]);
-  return [{ id:"hoy", txt:"Las que tocan hoy" }, { id:"todos", txt:"Todas (1-55)" }, { id:"nuevas", txt:"🆕 Nuevas" }, { id:"reb", txt:"🔥 Rebeldes" }].concat(us.map(k => ({ id:k, txt:(CE_UNI[k].k === "Título preliminar" ? "Prel." : CE_UNI[k].k.replace("Capítulo ", "Cap. ").replace("Título ", "Tít. ").replace("Sección ", "Secc. ")), k })));
-}
-function ceArmarCola() {
-  const f = CT.filtro; let l = [];
+const CE_QUE = [
+  { id:"hoy", txt:"🔄 Las que tocan hoy", d:"Rebeldes, repasos vencidos y nuevas" },
+  { id:"todos", txt:"📚 Todas", d:"Los artículos 1 a 55, sin mirar el repaso" },
+  { id:"nuevas", txt:"🆕 Nuevas", d:"Las que aún no has repasado" },
+  { id:"reb", txt:"🔥 Rebeldes", d:"Con 3 fallos o más y sin dos aciertos seguidos" },
+  { id:"azar", txt:"🎲 Aleatorio", d:"Artículos al azar, sin mirar el repaso" }
+];
+const ceUnidadesTest = () => ["P", "I", "I.1", "I.2", "I.2.1", "I.2.2", "I.3", "I.4", "I.5"].filter(k => CE_UNI[k]);
+const ceEtiquetaU = k => CE_UNI[k].k === "Título preliminar" ? "Prel." : CE_UNI[k].k.replace("Capítulo ", "Cap. ").replace("Título ", "Tít. ").replace("Sección ", "Secc. ");
+/** Artículos 1-55 que cumplen la selección (sin ordenar ni recortar). */
+function ceSeleccion(cfg) {
+  const us = cfg.unidades || [];
+  const out = [];
   for (let n = 1; n <= CE_TEST_HASTA; n++) {
     const A = CE_ART[n]; if (!A) continue;
-    const ok = f === "todos" ? true : f === "hoy" ? (ceReb(n) || ceVenc(n)) : f === "nuevas" ? !ceSrs(n) : f === "reb" ? ceReb(n)
-      : (A.path.some(p => p.key === f));
-    if (ok) l.push(n);
+    if (us.length && !A.path.some(p => us.includes(p.key))) continue;
+    const ok = cfg.que === "todos" || cfg.que === "azar" ? true : cfg.que === "hoy" ? (ceReb(n) || ceVenc(n)) : cfg.que === "nuevas" ? !ceSrs(n) : cfg.que === "reb" ? ceReb(n) : true;
+    if (ok) out.push(n);
   }
-  // rebeldes primero, luego vencidas más antiguas, luego nuevas por orden de artículo
-  const peso = n => ceReb(n) ? 0 : ceSrs(n) ? 1 : 2;
-  l.sort((a, b) => peso(a) - peso(b) || (peso(a) === 1 ? ceSrs(a).nx.localeCompare(ceSrs(b).nx) : a - b));
-  if (f !== "hoy" && f !== "reb") l = l.sort((a, b) => a - b);
-  CT.cola = l; CT.idx = 0; CT.rev = false; CT.flip = false; CT.hechas = 0;
+  return out;
 }
+function ceArmarCola() {
+  const cfg = CT.cfg; let l = ceSeleccion(cfg);
+  const peso = n => ceReb(n) ? 0 : ceSrs(n) ? 1 : 2;
+  if (cfg.que === "azar" || cfg.barajar) l = barajar(l);
+  else if (cfg.que === "hoy" || cfg.que === "reb") l.sort((a, b) => peso(a) - peso(b) || (peso(a) === 1 ? ceSrs(a).nx.localeCompare(ceSrs(b).nx) : a - b));
+  else l.sort((a, b) => a - b);
+  if (cfg.max > 0) l = l.slice(0, cfg.max);
+  CT.cola = l; CT.idx = 0; CT.rev = false; CT.flip = false; CT.hechas = 0; CT.total = l.length;
+}
+/** Pestaña «Test»: resumen y botón que abre la ventana de selección. */
 function ceVerTest(c) {
-  if (!CT.cola.length && !CT.armado) { ceArmarCola(); CT.armado = true; }
   const todas = Array.from({ length:CE_TEST_HASTA }, (_, i) => i + 1);
   const nNuevas = todas.filter(n => !ceSrs(n)).length, nHoy = todas.filter(n => ceSrs(n) && (ceVenc(n) || ceReb(n))).length, nReb = todas.filter(ceReb).length;
   const nDom = todas.filter(n => { const s = ceSrs(n); return s && s.i >= 21 && !ceReb(n); }).length;
+  c.innerHTML = `
+    <div class="rg-kpis">
+      <div class="card rg-kpi"><div class="k">🆕 Nuevas</div><div class="v">${nNuevas}</div></div>
+      <div class="card rg-kpi"><div class="k">🔄 Para hoy</div><div class="v">${nHoy}</div><div class="s">repasos vencidos</div></div>
+      <div class="card rg-kpi"><div class="k">🔥 Rebeldes</div><div class="v">${nReb}</div></div>
+      <div class="card rg-kpi"><div class="k">✓ Dominadas</div><div class="v">${nDom}</div><div class="s">de 55</div></div>
+    </div>
+    <section class="card">
+      <h3 style="margin:0 0 6px">🧭 Test Constitución</h3>
+      <p class="pl-nota">Repaso espaciado de los artículos <b>1 a 55</b>: te sale el número; pulsa para ver de qué trata (su título, con el color de su título o capítulo) y «Ver artículo» gira la tarjeta y muestra el texto literal. Lo que aciertas seguro sale cada vez más tarde; lo que fallas vuelve en la misma sesión. Eliges qué estudiar y se abre en <b>pantalla completa</b>.</p>
+      <button class="btn btn-primary" id="ce-elegir" type="button">Elegir qué estudiar y empezar →</button>
+    </section>`;
+  document.getElementById("ce-elegir").addEventListener("click", ceAbrirSeleccion);
+}
+/** Ventana de selección. */
+function ceAbrirSeleccion() {
+  const cfg = CT.cfg, dlg = document.createElement("dialog");
+  dlg.className = "real-dlg"; document.body.appendChild(dlg);
+  dlg.addEventListener("close", () => dlg.remove());
+  const pintar = () => {
+    const n = (() => { const l = ceSeleccion(cfg); return cfg.max > 0 ? Math.min(cfg.max, l.length) : l.length; })();
+    const hay = ceSeleccion(cfg).length;
+    const us = ceUnidadesTest();
+    dlg.innerHTML = `<form method="dialog" class="real-dlg-in">
+      <div class="real-dlg-cab"><h2>🧭 Test Constitución</h2><button class="btn btn-sm" value="cancel" aria-label="Cerrar">✕</button></div>
+      <h3>Qué estudiar</h3>
+      <div class="chip-row wrap">${CE_QUE.map(x => `<button type="button" class="chip ${cfg.que === x.id ? "active" : ""}" data-que="${x.id}" title="${esc(x.d)}">${x.txt}</button>`).join("")}</div>
+      <p class="muted" style="font-size:12.5px;margin:4px 0 0">${esc(CE_QUE.find(x => x.id === cfg.que).d)}</p>
+      <h3>Unidades <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:500">(sin marcar = todas)</span></h3>
+      <div class="chip-row wrap">${us.map(k => `<button type="button" class="chip ${(cfg.unidades || []).includes(k) ? "active" : ""}" data-u="${k}" style="${ceSt(k)}">${esc(ceEtiquetaU(k))}</button>`).join("")}
+        <button type="button" class="chip peq" data-u-todas>Todas</button></div>
+      <h3>Cuántos y en qué orden</h3>
+      <div class="chip-row wrap">${[[0, "Todos"], [10, "10"], [20, "20"], [30, "30"]].map(([v, t]) => `<button type="button" class="chip ${cfg.max === v ? "active" : ""}" data-max="${v}">${t}</button>`).join("")}</div>
+      <label class="real-tog"><input type="checkbox" data-barajar ${cfg.barajar || cfg.que === "azar" ? "checked" : ""} ${cfg.que === "azar" ? "disabled" : ""}> 🔀 Barajar el orden (si no, por número de artículo o por antigüedad del repaso)</label>
+      <div class="real-pills"><span class="big">Disponibles: <b>${hay}</b> · se estudiarán <b>${n}</b></span></div>
+      <div class="real-dlg-pie">
+        <button class="btn" value="cancel">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-empezar ${n ? "" : "disabled"}>${n ? "Empezar en pantalla completa" : "No hay artículos con esta selección"}</button>
+      </div></form>`;
+    const re = () => { escribirJSON(KEY_CT, cfg); pintar(); };
+    dlg.querySelectorAll("[data-que]").forEach(b => b.addEventListener("click", () => { cfg.que = b.dataset.que; re(); }));
+    dlg.querySelectorAll("[data-u]").forEach(b => b.addEventListener("click", () => { const k = b.dataset.u; cfg.unidades = (cfg.unidades || []).includes(k) ? cfg.unidades.filter(x => x !== k) : (cfg.unidades || []).concat(k); re(); }));
+    dlg.querySelector("[data-u-todas]").addEventListener("click", () => { cfg.unidades = []; re(); });
+    dlg.querySelectorAll("[data-max]").forEach(b => b.addEventListener("click", () => { cfg.max = +b.dataset.max; re(); }));
+    const bz = dlg.querySelector("[data-barajar]"); bz.addEventListener("change", () => { cfg.barajar = bz.checked; re(); });
+    dlg.querySelector("[data-empezar]").addEventListener("click", () => {
+      ceArmarCola(); if (!CT.cola.length) return;
+      CT.ses = true; dlg.close();
+      entrarPantallaCompleta();               // dentro del clic: el navegador lo permite
+      ceSesion();
+    });
+  };
+  pintar(); dlg.showModal();
+}
+/** Sesión en pantalla completa. */
+function ceSalirSesion() {
+  CT.ses = false; document.removeEventListener("keydown", CT._k); CT._k = null;
+  salirPantallaCompleta();
+  if (ruta().v === "ce") renderCE("test");
+}
+function ceSesion() {
+  document.body.classList.add("real-abierto");
+  vista().innerHTML = `<div class="real-full" role="dialog" aria-modal="true" aria-label="Test Constitución"><div class="real-full-in" id="ce-ses"></div></div>`;
+  cePintarSesion(document.getElementById("ce-ses"));
+}
+function cePintarSesion(c) {
   const n = CT.cola[CT.idx], A = n ? CE_ART[n] : null;
-  const filtros = ceFiltrosTest();
   const intv = q => fmtIntervalo(srsSiguiente(n ? ceSrs(n) : null, q).i);
+  const barra = `
+    <div class="card srs-barra" style="position:static">
+      <button class="btn btn-sm" id="ce-salir" type="button">✕ Salir</button>
+      <span class="muted"><b>${CT.cola.length}</b> en la cola</span>
+      <div class="bar"><div style="width:${CT.total ? Math.round(CT.hechas / Math.max(1, CT.hechas + CT.cola.length) * 100) : 0}%"></div></div>
+      <span class="muted">${CT.hechas} repasadas</span>
+    </div>`;
   const cara = A ? `
     <div class="ce-card ${CT.rev ? "rev" : ""} ${CT.flip ? "flip" : ""}" id="ce-card" style="${ceSt(A.key)}">
       <div class="ce-in">
@@ -6409,20 +6498,21 @@ function ceVerTest(c) {
       <button class="btn srs-r mid" data-q="3">🤔 Dudé<small>${intv(3)}</small></button>
       <button class="btn srs-r si" data-q="5">✓ La sabía<small>${intv(5)}</small></button>
     </div>
-    <div class="srs-teclas muted" style="margin-top:8px"><kbd>espacio</kbd> ver · <kbd>V</kbd> ver artículo · <kbd>1</kbd> no · <kbd>2</kbd> dudé · <kbd>3</kbd> sí</div>` :
-    `<div class="empty"><div class="ico">🏆</div><h3>${CT.hechas ? "¡Sesión terminada!" : "Nada que repasar con este filtro"}</h3><p>${CT.hechas ? "Has repasado " + plural(CT.hechas, "artículo") + "." : "Prueba con «Todas» o «Nuevas»."}</p></div>`;
-  c.innerHTML = `
-    <div class="card srs-barra" style="position:static">
-      <span class="muted"><b>${CT.cola.length}</b> en la cola</span>
-      <div class="bar"><div style="width:${CT.hechas + CT.cola.length ? Math.round(CT.hechas / (CT.hechas + CT.cola.length) * 100) : 0}%"></div></div>
-      <span class="muted">🆕 ${nNuevas} · 🔄 ${nHoy} · 🔥 ${nReb} · ✓ ${nDom}</span>
-    </div>
-    <p class="pl-nota">Repaso espaciado de los artículos <b>1 a 55</b>: te sale el número del artículo; pulsa para ver de qué trata (su título, con el color de su título o capítulo) y «Ver artículo» gira la tarjeta y muestra el texto literal. Lo que aciertas seguro sale cada vez más tarde; lo que fallas vuelve en la misma sesión.</p>
-    <div class="chip-row wrap">${filtros.map(x => `<button class="chip ${x.id === CT.filtro ? "active" : ""}" data-ctf="${x.id}" ${x.k ? `style="${ceSt(x.k)}"` : ""}>${esc(x.txt)}</button>`).join("")}</div>
-    ${cara}`;
-  c.querySelectorAll("[data-ctf]").forEach(b => b.addEventListener("click", () => { CT.filtro = b.dataset.ctf; ceArmarCola(); ceVerTest(c); }));
+    <div class="srs-teclas muted" style="margin-top:8px"><kbd>espacio</kbd> ver · <kbd>V</kbd> ver artículo · <kbd>1</kbd> no · <kbd>2</kbd> dudé · <kbd>3</kbd> sí · <kbd>Esc</kbd> salir</div>` :
+    `<div class="empty"><div class="ico">🏆</div><h3>¡Sesión terminada!</h3><p>Has repasado ${plural(CT.hechas, "artículo")}.</p><button class="btn btn-primary" id="ce-fin" type="button">Volver al test</button></div>`;
+  c.innerHTML = barra + cara;
+  document.getElementById("ce-salir").addEventListener("click", ceSalirSesion);
+  const fin = document.getElementById("ce-fin"); if (fin) fin.addEventListener("click", ceSalirSesion);
+  const tecla = e => {
+    if (!CT.ses) return;
+    if (e.key === "Escape") { ceSalirSesion(); return; }
+    if (!A) return;
+    if (e.key === " ") { e.preventDefault(); if (!CT.rev) revelar(); else girar(); }
+    else if (e.key === "v" || e.key === "V") girar();
+    else if (CT.rev && "123".includes(e.key) && e.key) calificarCE(c, [0, 3, 5]["123".indexOf(e.key)]);
+  };
+  document.removeEventListener("keydown", CT._k); CT._k = tecla; document.addEventListener("keydown", CT._k);
   if (!A) return;
-  const redo = () => ceVerTest(c);
   const revelar = () => { if (CT.rev) return; CT.rev = true; const card = document.getElementById("ce-card"); card.classList.add("rev"); document.getElementById("ce-rate").hidden = false; document.getElementById("ce-frente").removeAttribute("role"); card.querySelectorAll(".ce-miga.oculta").forEach(m => m.classList.remove("oculta")); const h = card.querySelector(".ce-hint"); if (h) h.remove(); card.querySelector(".ce-numq").classList.add("col"); };
   const girar = () => { if (!CT.rev) revelar(); CT.flip = !CT.flip; document.getElementById("ce-card").classList.toggle("flip", CT.flip); };
   const frente = document.getElementById("ce-frente");
@@ -6431,21 +6521,14 @@ function ceVerTest(c) {
   document.getElementById("ce-ver").addEventListener("click", girar);
   document.getElementById("ce-volver").addEventListener("click", girar);
   c.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => calificarCE(c, +b.dataset.q)));
-  CT.teclas = e => {
-    if (ruta().v !== "ce" || CEV.tab !== "test" || /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || "")) return;
-    if (e.key === " ") { e.preventDefault(); if (!CT.rev) revelar(); else girar(); }
-    else if (e.key === "v" || e.key === "V") girar();
-    else if (CT.rev && "123".includes(e.key) && e.key) calificarCE(c, [0, 3, 5]["123".indexOf(e.key)]);
-  };
-  document.removeEventListener("keydown", CT._k); CT._k = CT.teclas; document.addEventListener("keydown", CT._k);
 }
 function calificarCE(c, q) {
   const n = CT.cola[CT.idx]; if (!n) return;
   ceCalificar(n, q); CT.hechas++;
   CT.rev = false; CT.flip = false;
-  if (q === 0) { CT.cola.splice(CT.idx, 1); CT.cola.push(n); }          // fallada: vuelve en la misma sesión
-  else { CT.cola.splice(CT.idx, 1); }
-  ceVerTest(c);
+  CT.cola.splice(CT.idx, 1);
+  if (q === 0) CT.cola.push(n);          // fallada: vuelve en la misma sesión
+  cePintarSesion(c);
 }
 
 (async function arrancar() {

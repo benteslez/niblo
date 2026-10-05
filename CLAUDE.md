@@ -190,5 +190,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   son de la guía M101 (p. 10), NO de la CE; los de 53-55 son un rótulo propio (`propio`). Vistas: texto con
   epígrafes al margen y un color por título/capítulo (`CE_COL`), organigrama (escritorio y móvil) y Test
   Constitución (SRS reutilizando `srsSiguiente`; clave `CEQ:<n>` en `prog.mapa`; la tarjeta baja al pulsar y gira
-  con «Ver artículo»). Al regenerar el texto: `python3 ce_datos.py`.
+  con «Ver artículo»). El test abre primero una **ventana de selección** (qué estudiar: hoy, todas, nuevas,
+  rebeldes o 🎲 aleatorio; unidades por color; 10/20/30/todos; barajar) y la sesión va en **pantalla completa**
+  (`CT.cfg` se recuerda en `gestion_hub_ce_test_v1`). Al regenerar el texto: `python3 ce_datos.py`.
 - Prueba: `herramientas/oposicion/pruebas/ce.js` y `m101.js`.
