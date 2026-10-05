@@ -6,7 +6,7 @@ sys.argv = [sys.argv[0]]
 from examen25L import qs as Q25L
 import verif25L   # coherencia plantilla ↔ ley (se detiene si algo no casa)
 # Tema del programa de cada pregunta: solo cuando el epígrafe la cubre sin duda (None = sin clasificar).
-TEMA25L = {1:"I.2",2:"I.2",3:"I.3",4:"I.6",5:"I.4",6:"I.4",7:"I.5",8:"I.6",9:None,10:"I.7",11:"I.8",12:"I.9",13:"I.10",14:"I.10",15:"I.11",16:"I.11",
+TEMA25L = {1:"I.1",2:"I.2",3:"I.3",4:"I.6",5:"I.4",6:"I.4",7:"I.5",8:"I.6",9:None,10:"I.7",11:"I.8",12:"I.9",13:"I.10",14:"I.10",15:"I.11",16:"I.11",
   17:"II.6",18:"II.1",19:"II.2",20:"II.2",21:"II.2",22:"II.3",23:"II.3",24:"II.4",25:"II.4",26:"II.5",27:None,28:None,29:"II.6",30:"II.6",
   31:"III.1",32:"III.1",33:None,34:"III.3",35:"III.4",36:None,37:"III.5",38:"III.6",39:"III.7",40:"III.8",41:"III.8",42:None,43:"III.9",44:"III.10",45:"III.10",
   46:"IV.1",47:"IV.2",48:None,49:"IV.4",50:"IV.5",51:"IV.5",52:"IV.5",53:"IV.7",54:"IV.8",55:"IV.9",56:"IV.10",57:"IV.11",58:"IV.11",59:"IV.12",60:"IV.13",

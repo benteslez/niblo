@@ -13,7 +13,7 @@ y las preguntas, flashcards, glosario e hitos de cada uno.
 """
 import os, re, sys
 AQUI = os.path.dirname(os.path.abspath(__file__))
-PARTES = ["part1", "part2", "part3", "part4", "part5", "part6", "part7", "part8", "part9a", "part9b", "part10", "part11"]
+PARTES = ["part1", "part2", "part3", "part4", "part5", "part6", "part7", "part8", "part9a", "part9b", "part10", "part11", "part12"]
 
 def _cargar():
     ns = {}
@@ -262,6 +262,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
 
     # ----------------------------------------------------------------- preguntas, flashcards, glosario, hitos
     def tema_de_q(q):
+        if q.get("t"): return q["t"]
         c = q["cat"]; t = q["q"]
         if c in ("Estructura", "Reforma", "Fechas"): return 1
         if c == "Contenido": return 1 if re.search(r"valores superiores|lengua española oficial", t) else 2

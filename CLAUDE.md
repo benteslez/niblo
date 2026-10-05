@@ -220,6 +220,21 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   también ← → ↑).   (`CT.cfg` se recuerda en `gestion_hub_ce_test_v1`). Al regenerar el texto: `python3 ce_datos.py`.
 - Prueba: `herramientas/oposicion/pruebas/ce.js` y `m101.js`.
 
+## Test de cada tema: preguntas de la academia y de examen real
+
+- **Preguntas «Academia»** (módulos M104 «Test de repaso» y M105 «Test de tema», PDF aportados por el usuario): 52 preguntas en
+  `herramientas/oposicion/m101/part12.py` (`AC(...)`), repartidas por `t` entre I.1 (18), I.2 (23) e I.3 (11). Enunciado y opciones
+  literales del documento, respuesta de **su clave** (M104: tabla final; M105: tabla final y rojo en las soluciones) comprobada contra
+  el texto vigente (`T.q` exige fragmentos literales); la explicación es la solución del documento (artículo citado, literal
+  verificado) y sale **siempre**, acierte o falle. Campo `ac` = «M105 · pregunta 12»; chip **🎓 Academia** en la selección del test.
+  Si el documento cita mal un artículo o la clave se ha quedado corta, va un `⚠` en la explicación y **prevalece la norma**
+  (hoy: M104 14 y 16 citan 159.6 y 159.3, son 159.1 y 159.4; M105 27 y 32, tras la reforma de 2026 del art. 69.3).
+- **Preguntas del test real global en cada tema** (`realesDeTema`): las de `tests-reales` cuyo `tema` es el del tema (I.1, I.2, I.3;
+  no anuladas ni retenidas) entran en «📋 De examen real» y en «Todas», con su texto legal y su discrepancia. Su progreso es **propio
+  del tema** (`B1T0n:q:<hash>`), independiente del test real global (`R:<examen>:<n>`): lo que se conteste en un sitio no cambia el
+  otro. Corregido: L1 (nombre del Título I) y P51 (art. 9.3) pasan a I.1.
+- Prueba: `herramientas/oposicion/pruebas/test_academia.js`.
+
 ## Descargar apuntes (botón en cada tema)
 
 - Botón «⬇ Descargar apuntes» en la ficha y en el lector de cada tema desarrollado (`data-apuntes`).
