@@ -201,7 +201,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   epígrafes al margen y un color por título/capítulo (`CE_COL`), organigrama (escritorio y móvil) y Test
   Constitución (SRS reutilizando `srsSiguiente`; clave `CEQ:<n>` en `prog.mapa`; la tarjeta baja al pulsar y gira
   con «Ver artículo»). El test abre primero una **ventana de selección** (qué estudiar: hoy, todas, nuevas,
-  rebeldes o 🎲 aleatorio; unidades por color; 10/20/30/todos; barajar) y la sesión va en **pantalla completa**
+  rebeldes o 🎲 aleatorio; unidades por color; 10/20/30/todos; barajar) y la sesión va en **pantalla completa** (`.ce-pc`: barra arriba, tarjeta que ocupa el resto —cada cara se desplaza por dentro, nunca se corta— y botones de respuesta siempre visibles abajo; **toda la tarjeta** es pulsable: revela y luego gira entre frente y artículo, sin giro 3D por el iPhone)
   (`CT.cfg` se recuerda en `gestion_hub_ce_test_v1`). Al regenerar el texto: `python3 ce_datos.py`.
 - Prueba: `herramientas/oposicion/pruebas/ce.js` y `m101.js`.
 
