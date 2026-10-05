@@ -30,6 +30,9 @@ T.ap("s44", "IX.1 La iniciativa de reforma (arts. 87.1 y 2 y 166)", f"""
          "En el Congreso, por las normas de los proyectos y proposiciones de ley (art. 146.1); en el Senado, toma en consideración (art. 153)",
          "—",
          "Congreso: **2 grupos o 1/5**. Senado: **50 Senadores** que **no pertenezcan a un mismo Grupo**."))}
+
+{unidad("1.4 Por qué el Senado lo tiene más difícil (la asimetría)",
+  "Compara los dos requisitos y verás que **no pesan lo mismo**. En el **Congreso** basta con **dos grupos parlamentarios**, y un grupo puede ser muy pequeño: dos formaciones con pocos escaños ya suman firma suficiente (o, alternativamente, **una quinta parte** de los Diputados). En el **Senado** hacen falta **cincuenta Senadores** y, además, **de más de un Grupo**: es decir, el listón de partida es mucho más alto. Esa **asimetría entre las dos Cámaras** se repite en otros procedimientos de las Cortes Generales, y conviene tenerla en la cabeza porque ayuda a recordar cuál es cuál: **Congreso, la puerta más ancha; Senado, la más estrecha**. [[M101]]")}
 """, 2)
 
 T.ap("s45", "IX.2 El procedimiento del art. 167", f"""
@@ -143,4 +146,26 @@ T.ap("s48", "IX.5 Cuadro comparativo: art. 167 y art. 168", f"""
   "Art. 168: revisión total o del **Título preliminar**, **Sección 1.ª del Cap. II del Título I** o **Título II**: **2/3**, **disolución**, **2/3** de las nuevas Cámaras y **referéndum obligatorio**.",
   "No se puede **iniciar** en guerra ni en los estados del **art. 116**; no se delega en Comisiones (75.3)."],
   "Siguiente: X. Preguntas de examen y repaso")}
+""", 2)
+
+
+T.ap("s48b", "IX.6 Cómo no confundir las mayorías", f"""
+La reforma constitucional es, sobre todo, un **problema de mayorías**, y es donde el examen suele poner las trampas, porque se parecen mucho entre sí (y se parecen, además, a la elección del Defensor del Pueblo, que verás en el tema I.2). Estas son las reglas que conviene grabar. [[M101]]
+
+{unidad("6.1 Las dos reglas de oro",
+  "**1.ª regla: la mayoría cualificada «normal» es la de tres quintos (3/5).** Es la que se pide para el procedimiento ordinario de reforma (art. 167.1), para que las Cortes propongan a los Magistrados del Tribunal Constitucional (art. 159.1) y para elegir al Defensor del Pueblo (art. 2.4 LO 3/1981).",
+  "**2.ª regla: los dos tercios (2/3) son la excepción, y solo aparecen en dos sitios**: en la **reforma agravada** del art. 168 (principio de reforma y aprobación final, siempre de **cada Cámara**) y en el **«plan B» del art. 167.2**, donde se exigen al **Congreso** (y solo a él).")}
+
+{unidad("6.2 El «plan B»: tres procedimientos que se parecen",
+  tabla(["Procedimiento", "Primera vía", "Si falla (plan B)", "Norma"], [
+    ["**Reforma ordinaria**", "**3/5** de cada Cámara", "**Comisión paritaria** de Diputados y Senadores, nueva votación de 3/5 y, si no, **mayoría absoluta del Senado + 2/3 del Congreso**", "CE 167"],
+    ["**Reforma agravada**", "**2/3** de cada Cámara + disolución", "**No hay plan B**: o se alcanzan las mayorías o no hay reforma", "CE 168"],
+    ["**Elección del Defensor del Pueblo**", "**3/5** del Congreso y **3/5** del Senado", "**3/5 del Congreso** y **mayoría absoluta del Senado**", "LO 3/1981, art. 2.4 y 2.5"]]),
+  f"!> {IMP} **Dos ideas para no equivocarte:** (1) en **todos** los «planes B» el Senado se conforma con la **mayoría absoluta**; lo que cambia es lo que se pide al Congreso: **2/3** en la reforma ordinaria y solo **3/5** para el Defensor. (2) Una exigencia es **más dura** cuanto mayor es la fracción: 3/5 < 2/3, y la **mayoría absoluta** (la mitad más uno de los miembros) queda por debajo de ambas.",
+  f"?> **Cuidado con el vídeo:** el módulo dice en un momento que, en el plan B del Defensor, bastaría la mayoría simple del Senado. Lo correcto, según el **art. 2.5 de la LO 3/1981**, es la **mayoría absoluta**, como figura en la guía. Prevalece la ley.")}
+
+{unidad("6.3 Quién puede pedir el referéndum: «cualquiera de las Cámaras»",
+  "En el **art. 167** el referéndum es **facultativo**: lo pide **una décima parte de los miembros de cualquiera de las Cámaras** en los **quince días** siguientes a la aprobación. Fíjate en el «**cualquiera**»: con que lo solicite el **10 % de los Senadores** (la Cámara que, a otros efectos, parece «de segunda») ya hay que convocarlo. En el **art. 168**, en cambio, es **obligatorio** (*«ahora sí o sí»*). [[M101]]")}
+
+@> **→ Fin del tema I.1: sigue el tema I.2 (derechos y deberes fundamentales)**
 """, 2)

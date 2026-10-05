@@ -63,6 +63,10 @@ T.ap("s37", "VII.5 Recapitulación: amparo frente a inconstitucionalidad", f"""
   ["**Particularidad**", "**«Último remedio»**: normalmente tras agotar la vía judicial (art. 42: no hay vía previa)", "Lo puede promover el **Defensor del Pueblo**: único legitimado en **ambos**"]])}
 
 {IMP} El **Defensor del Pueblo** es el **único** legitimado a la vez para el **amparo** y para la **inconstitucionalidad** (arts. 162.1 CE; 32 y 46 LOTC; 29 LO 3/1981).
+
+
+{unidad("2.1 Los plazos del amparo: una regla para recordarlos",
+  "El plazo depende de **quién** haya vulnerado el derecho: **3 meses** si es una decisión o acto sin valor de ley de las **Cortes Generales** o de las **Asambleas legislativas** (art. 42 LOTC); **20 días** si procede del **Gobierno** o de la **Administración** (art. 43.2); **30 días** si procede de un **órgano judicial** (art. 44.2). Fíjate en que el plazo más **corto** es el del **poder ejecutivo**, precisamente el que con más frecuencia puede vulnerar derechos: la ley le da más facilidad para «sacudirse» la impugnación. Y recuerda que los legitimados son los **propios afectados** (persona natural o jurídica con interés legítimo), el **Ministerio Fiscal** y el **Defensor del Pueblo**: no puedes plantear un amparo por los derechos de tu vecino. [[M101]]")}
 """, 2)
 
 T.ap("s38", "VII.6 Resumen del Tribunal Constitucional", resumen([

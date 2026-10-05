@@ -141,6 +141,7 @@ Este es el **primer tema del bloque I**. El módulo M101 lo estudia junto a los 
           ["1 La iniciativa (arts. 87 y 166)", "2 El procedimiento del art. 167", "3 El procedimiento del art. 168", "4 Límites y reglas comunes", "5 Cuadro comparativo"]), 1)
         for i, n in (("s44", 1), ("s45", 2), ("s46", 3), ("s47", 4), ("s48", 5)):
             A(i, f"IV.{n}" + S[i]["title"][4:], S[i]["body"])
+        A("s48b", "IV.6 Cómo no confundir las mayorías", S["s48b"]["body"])
     elif tema_n == 2:
         A("s0", "Mapa del tema", f"""
 **Epígrafe oficial** (BOE-A-2025-26262, anexo VII, Bloque I, tema 2):
@@ -183,6 +184,7 @@ Es el **segundo tema del bloque I** (el primero estudia la estructura de la Cons
 ### Avisos: lo que dice la norma prevalece sobre la guía
 
 - **Ley de igualdad.** El vídeo dice que va «por ley orgánica». La LO 3/2007 lo es por su nombre, pero solo tienen carácter orgánico algunos preceptos (→ III.1).
+- **Defensor del Pueblo (elección).** El vídeo dice que, si no se alcanzan los 3/5 en el Senado, bastaría la **mayoría simple**; la LO 3/1981 (art. 2.5) exige la **mayoría absoluta del Senado** (con 3/5 en el Congreso): prevalece la ley (→ V.1).
 - **Defensor del Pueblo.** La guía anota «5 años. Reelegible»; la ley orgánica fija 5 años y **no regula** la reelección (→ V.2).
 - **Capítulo II.** Comprende los arts. **14 a 38**: el art. 14 queda fuera de las dos secciones.
 """, 1)
@@ -241,12 +243,14 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
 
 ### Aviso
 
+- **9 años de mandato.** El módulo los presenta como el mandato más largo de los órganos constitucionales; la LO 2/1982 (art. 30) fija también **9 años** para los Consejeros de Cuentas: es un **empate**, no un récord (→ I.3).
 - La **jurisprudencia** del Tribunal Constitucional no se incluye todavía: se añadirá cuando se aporte la fuente oficial.
 """, 1)
         A("bVII", "I. El Tribunal Constitucional: naturaleza y composición", donde(
           "Primera pregunta. Antes de ver qué hace el Tribunal Constitucional hay que saber **qué es** y **cómo se compone**: quién propone a sus 12 miembros, cuánto dura el mandato y quién puede serlo.",
           ["1 Qué es el Tribunal Constitucional", "2 Composición y mandato"]), 1)
         A("s33", "I.1" + S["s33"]["title"][5:], S["s33"]["body"]); A("s34", "I.2" + S["s34"]["title"][5:], S["s34"]["body"])
+        A("s34b", "I.3 Claves para memorizar la composición", S["s34b"]["body"])
         A("bII", "II. ¿Qué procesos conoce el Tribunal Constitucional?", donde(
           "Segunda pregunta. El Tribunal conoce de **inconstitucionalidad**, **cuestión de inconstitucionalidad**, **amparo**, **conflictos de competencia** (de tres clases) y la **impugnación del art. 161.2** del Gobierno. Aprende **quién** los interpone, **frente a qué** y en **qué plazo**.",
           ["1 Competencias y procedimientos", "2 Recapitulación: amparo frente a inconstitucionalidad"]), 1)
@@ -298,6 +302,8 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
     X.meta["title"] = {1: "La Constitución de 1978: estructura, contenido y reforma", 2: "Derechos y deberes fundamentales: garantía, suspensión y Defensor del Pueblo", 3: "El Tribunal Constitucional"}[tema_n]
     for i, tit, body, nivel in ap:
         body = _limpia(body, tit)
+        if i == "s48" and tema_n == 1:
+            body = re.sub(r"→ Siguiente: [^*\n]+", "→ Siguiente: IV.6 Cómo no confundir las mayorías", body)
         if i == ap[-1][0] and tema_n == 1:   # último apartado de I.1: enlace al tema siguiente
             body = re.sub(r"→ Siguiente: [^*\n]+", "→ Fin del tema I.1: sigue el tema I.2 (derechos y deberes fundamentales)", body)
         X.ap(i, tit, body if i == "s0" else _remisiones(body, tema_n), nivel)
