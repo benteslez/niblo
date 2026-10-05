@@ -363,7 +363,9 @@ mark { background:color-mix(in srgb, #facc15 45%, transparent); color:inherit; b
 .tl::before { content:""; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:var(--line); border-radius:2px; }
 .tl-item { position:relative; padding:10px 12px; margin-bottom:8px; border-radius:var(--r-md); background:var(--bg-elev); border:1px solid var(--line-soft); cursor:pointer; }
 .tl-item::before { content:""; position:absolute; left:-17px; top:16px; width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--bg); }
-.tl-y { font-weight:800; color:var(--accent); font-feature-settings:"tnum"; margin-right:8px; }
+.tl-y { font-weight:800; color:var(--tc, var(--accent)); font-feature-settings:"tnum"; margin-right:8px; }
+.tl-item { border-left:4px solid var(--tc, var(--accent)); }
+.tl-item::before { background:var(--tc, var(--accent)) !important; }
 .tl-cons { font-size:13px; color:var(--text-muted); margin-top:3px; }
 
 .letras { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:12px; }
@@ -384,7 +386,12 @@ mark { background:color-mix(in srgb, #facc15 45%, transparent); color:inherit; b
   border-radius:var(--r-lg); padding:24px 22px; display:flex; flex-direction:column; justify-content:center; gap:10px;
   border:1px solid var(--line); background:var(--bg-elev); box-shadow:var(--sh-2); min-width:0;
 }
-.fc-cara.atras { background:linear-gradient(135deg, var(--accent), var(--accent-2)); color:#fff; border:none; display:none; }
+.fc-cara.atras { background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 62%, #0b1020), color-mix(in srgb, var(--accent-2) 48%, #0b1020)); color:#fff; border:none; display:none; }
+.fc-cara.atras .fc-a strong { color:#fff; }
+.fc-cara.atras .fc-const { border-top-color:rgba(255,255,255,.35); }
+.fc-cara.atras .fc-const .k { color:rgba(255,255,255,.92); }
+.fc-cara.atras .fc-const .chip, .fc-cara.atras .fc-const button, .fc-cara.atras .fc-const a { background:rgba(255,255,255,.18); color:#fff; border-color:rgba(255,255,255,.45); }
+.fc-cara.atras .tag { background:rgba(255,255,255,.2); color:#fff; }
 .fc.volteada .fc-cara:not(.atras) { display:none; }
 .fc.volteada .fc-cara.atras { display:flex; }
 .fc-q { font-size:19px; font-weight:700; letter-spacing:-.015em; line-height:1.35; }
@@ -400,7 +407,10 @@ mark { background:color-mix(in srgb, #facc15 45%, transparent); color:inherit; b
 .fc.desliz.arrastra { transition:none; cursor:grabbing; }
 .fc.desliz.sale { transition:transform .22s ease-in; pointer-events:none; }
 .fc.desliz .fc-in { animation:ce-entra .28s ease-out; }
-.fc[data-dir="si"] .fc-cara { box-shadow:0 0 0 4px var(--ok), var(--sh-2); }
+.fc[data-dir="si"] .fc-cara { box-shadow:0 0 0 4px var(--ok), var(--sh-2); background:#15803d !important; color:#fff !important; }
+.fc[data-dir="no"] .fc-cara { background:#dc2626 !important; color:#fff !important; }
+.fc[data-dir="dude"] .fc-cara { background:#f59e0b !important; color:#1f1300 !important; }
+.fc[data-dir] .fc-cara .fc-hint, .fc[data-dir] .fc-cara .tag { color:inherit; }
 .fc[data-dir="no"] .fc-cara { box-shadow:0 0 0 4px var(--hot), var(--sh-2); }
 .fc[data-dir="dude"] .fc-cara { box-shadow:0 0 0 4px var(--warn), var(--sh-2); }
 .fc[data-dir]::after { position:absolute; top:16px; padding:6px 14px; border-radius:12px; font-weight:800; font-size:16px; color:#fff; z-index:2; pointer-events:none; }
@@ -415,7 +425,7 @@ mark { background:color-mix(in srgb, #facc15 45%, transparent); color:inherit; b
 .test-cfg { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
 .test-cfg select { border:1px solid var(--line); background:var(--bg-input); border-radius:var(--r-md); padding:8px 12px; font-size:15px; }
 .q-meta { display:flex; justify-content:space-between; gap:8px; font-size:12.5px; color:var(--text-muted); font-weight:600; margin-bottom:8px; }
-.q-txt { font-size:17px; font-weight:700; line-height:1.4; letter-spacing:-.01em; margin-bottom:14px; }
+.q-txt { font-size:17px; font-weight:700; line-height:1.45; letter-spacing:-.01em; margin-bottom:14px; padding:18px 20px; border-radius:var(--r-lg); color:#fff; background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 70%, #0b1020), color-mix(in srgb, var(--accent-2) 52%, #0b1020)); }
 .q-opts { display:flex; flex-direction:column; gap:8px; }
 .q-opt {
   display:flex; gap:12px; align-items:flex-start; text-align:left; width:100%;
@@ -767,7 +777,12 @@ mark.res[data-col="morado"], [data-col="morado"] { --rc:#a855f7; }
 /* El test del tema ocupa toda la pantalla (petición del usuario) */
 .panel.completo, .panel.completo.on { left:0; right:0; top:0; bottom:0; width:100%; max-height:none; height:100dvh; border-radius:0; padding-top:env(safe-area-inset-top); }
 .panel.completo .panel-asa { display:none; }
-.panel.completo .panel-cuerpo { width:100%; max-width:820px; margin:0 auto; }
+.panel.completo .panel-cuerpo { width:100%; max-width:820px; margin:0 auto; display:flex; flex-direction:column; }
+.panel.completo .panel-cuerpo > .card, .panel.completo .panel-cuerpo > .test-cfg, .panel.completo .panel-cuerpo > .empty { margin-top:auto; margin-bottom:auto; }
+/* Las flashcards se abren como una tarjeta centrada, no como barra lateral (petición del usuario) */
+.panel.centrado, .panel.centrado.on { left:50%; right:auto; top:50%; bottom:auto; width:min(580px, 94vw); height:auto; max-height:92dvh; border-radius:24px; padding-bottom:0; transform:translate(-50%, -46%) scale(.96); opacity:0; transition:transform .2s var(--ease), opacity .2s; }
+.panel.centrado.on { transform:translate(-50%, -50%); opacity:1; }
+.panel.centrado .panel-asa { display:none; }
 body.panel-completo { overflow:hidden; }
 body.panel-completo .cr, body.panel-completo .fab-herr { display:none; }
 .panel-asa { width:42px; height:5px; border-radius:99px; background:var(--line); margin:8px auto 0; }
@@ -800,12 +815,12 @@ body.panel-completo .cr, body.panel-completo .fab-herr { display:none; }
 .mapa ul::before { content:""; position:absolute; left:8px; top:0; bottom:14px; width:2px; background:var(--line); }
 .mapa li { position:relative; padding:5px 0; }
 .mapa li::before { content:""; position:absolute; left:-14px; top:20px; width:12px; height:2px; background:var(--line); }
-.mapa-nodo { display:inline-flex; align-items:center; gap:8px; border:1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background:var(--bg-elev); border-radius:var(--r-md); padding:7px 12px; font-weight:700; font-size:14px; cursor:pointer; color:var(--text); text-align:left; }
-.mapa-nodo .n { width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:var(--accent-bg); color:var(--accent); font-size:12px; }
+.mapa-nodo { border-left:4px solid var(--c, var(--accent)) !important; display:inline-flex; align-items:center; gap:8px; border:1px solid color-mix(in srgb, var(--accent) 35%, var(--line)); background:var(--bg-elev); border-radius:var(--r-md); padding:7px 12px; font-weight:700; font-size:14px; cursor:pointer; color:var(--text); text-align:left; }
+.mapa-nodo .n { width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:var(--c, var(--accent)); color:#fff; font-size:12px; }
 .mapa-nodo.sub { font-weight:600; font-size:13px; color:var(--text-muted); }
 .mapa-nodo.neutro { cursor:default; }
 .mapa-conceptos { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; }
-.mapa-conceptos span { font-size:12px; font-weight:600; padding:3px 10px; border-radius:var(--r-pill); background:var(--accent-bg); color:var(--accent); cursor:help; }
+.mapa-conceptos span { font-size:12px; font-weight:600; padding:3px 10px; border-radius:var(--r-pill); background:color-mix(in srgb, var(--c, var(--accent)) 16%, var(--bg-elev)); color:var(--c, var(--accent)); cursor:help; }
 
 /* Estado de sincronización (como la píldora de Viajes) */
 .sync-pill {
@@ -3645,6 +3660,9 @@ function actualizarContadores() {
    En los apuntes: «[[COD]]» o «[[COD|https://…]]» en línea (etiqueta, con enlace
    si lo hay), y un bloque literal «>» cuya primera línea es «[[COD]]» lleva esa
    etiqueta en lugar de BOE. */
+/* Paleta para mapas conceptuales y cronologías: colores distintos y separados para memorizar por color */
+const PALETA = ["#2563eb", "#7c3aed", "#db2777", "#ea580c", "#16a34a", "#0891b2", "#ca8a04", "#dc2626", "#4f46e5", "#0d9488"];
+const colorDe = (txt, n) => PALETA[n !== undefined ? n % PALETA.length : [...String(txt)].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7) % PALETA.length];
 const FUENTES = {
   M108:{ n:"Módulo M108", c:"#0369a1", t:"Material de la academia (guía y vídeo del módulo M108, tema II.1: antecedentes de la Unión Europea), aportado por el usuario: no es texto legal" },
   M107:{ n:"Módulo M107", c:"#0369a1", t:"Material de la academia (repaso de la estructura de la CE: PDF y vídeo), aportado por el usuario: no es texto legal" },
@@ -3755,7 +3773,7 @@ function formatear(txt) {
       /* Mapa conceptual: «~> Título», «~> # Raíz» y una rama por línea «Rama | descripción | subcaja». */
       const L = caja.lineas.map(x => x.trim()).filter(Boolean), tit = L.find(x => !x.startsWith("#") && !x.includes("|")) || "", raiz = (L.find(x => x.startsWith("#")) || "").replace(/^#\s*/, "");
       const ramas = L.filter(x => x.includes("|")).map(x => x.split("|").map(s => s.trim()));
-      html += `<div class="cmap"><div class="cmap-k">◇ Mapa conceptual</div>${tit ? `<div class="cmap-t">${enLinea(tit)}</div>` : ""}${raiz ? `<div class="cmap-root"><span>${enLinea(raiz)}</span></div>` : ""}<div class="cmap-ramas" style="--n:${ramas.length}">${ramas.map(r => `<div class="cmap-r"><div class="cmap-b"><b>${enLinea(r[0])}</b>${r[1] ? `<small>${enLinea(r[1])}</small>` : ""}</div>${r[2] ? `<div class="cmap-s">${enLinea(r[2])}</div>` : ""}</div>`).join("")}</div></div>`;
+      html += `<div class="cmap"><div class="cmap-k">◇ Mapa conceptual</div>${tit ? `<div class="cmap-t">${enLinea(tit)}</div>` : ""}${raiz ? `<div class="cmap-root"><span>${enLinea(raiz)}</span></div>` : ""}<div class="cmap-ramas" style="--n:${ramas.length}">${ramas.map(r => `<div class="cmap-r" style="--c:${colorDe("", ramas.indexOf(r) + 1)}"><div class="cmap-b"><b>${enLinea(r[0])}</b>${r[1] ? `<small>${enLinea(r[1])}</small>` : ""}</div>${r[2] ? `<div class="cmap-s">${enLinea(r[2])}</div>` : ""}</div>`).join("")}</div></div>`;
     } else {
       /* Recuadros con etiqueta de color: atención examen (!>), nota (?>), guía y síntesis (@>), concepto clave (+>). */
       const L = caja.lineas.slice(); let cls, etq;
@@ -4027,12 +4045,13 @@ function abrirPanel(herr) {
   const c = document.getElementById("panel-cuerpo");
   panel.dataset.b = TEMA_POR_ID[id].b; panel.dataset.herramienta = herr;
   panel.classList.toggle("completo", herr === "test"); document.body.classList.toggle("panel-completo", herr === "test");
+  panel.classList.toggle("centrado", herr === "fc");
   fondo.hidden = false; panel.hidden = false;
   requestAnimationFrame(() => { fondo.classList.add("on"); panel.classList.add("on"); });
   c.scrollTop = 0;
   const amb = "t:" + id;
   if (herr === "menu") { c.innerHTML = `<div class="lateral-movil">${htmlLateral(id)}</div>`; actualizarContadorBusq(); return; }
-  if (herr === "glosario") return t.glossary.some(g => lleno(g.t)) ? hubGlosario(c, amb, [t]) : vacioHerr(c, "📖", "Sin glosario", "Añade términos en la pestaña «Glosario» del editor.");
+  if (herr === "glosario") return hubGlosario(c, amb, temasDeAmbito("global"), id);
   if (herr === "crono") return t.timeline.length ? hubCrono(c, amb, [t]) : vacioHerr(c, "📅", "Sin cronología", "Añade hitos en la pestaña «Cronología» del editor.");
   if (herr === "fc") return hubFc(c, amb, [t]);
   if (herr === "test") return hubTest(c, amb, [t]);
@@ -4153,7 +4172,7 @@ function panelMapa(c, id) {
     <div class="mapa">
       <div class="mapa-raiz">${esc(p.c)} · ${esc(p.e)}</div>
       <ul class="mapa-ramas">
-        ${aps.map((a, i) => `<li><button class="mapa-nodo" data-ir-sec="${esc(a.s.id)}"><span class="n">${i + 1}</span>${esc(a.s.title || "(sin título)")}</button>
+        ${aps.map((a, i) => `<li style="--c:${colorDe("", i)}"><button class="mapa-nodo" data-ir-sec="${esc(a.s.id)}"><span class="n">${i + 1}</span>${esc(a.s.title || "(sin título)")}</button>
           ${(a.subs.length || conceptosDe(a.s.id).length || a.subs.some(x => conceptosDe(x.id).length)) ? `<ul>
             ${a.subs.map(x => `<li><button class="mapa-nodo sub" data-ir-sec="${esc(x.id)}">${esc(x.title || "")}</button>${conceptosDe(x.id).length ? `<div class="mapa-conceptos">${conceptosDe(x.id).map(g => `<span title="${esc(g.d || "")}">${esc(g.t)}</span>`).join("")}</div>` : ""}</li>`).join("")}
             ${conceptosDe(a.s.id).length ? `<li><div class="mapa-conceptos">${conceptosDe(a.s.id).map(g => `<span title="${esc(g.d || "")}">${esc(g.t)}</span>`).join("")}</div></li>` : ""}
@@ -5008,7 +5027,7 @@ function hubCrono(c, ambito, temas) {
     const res = document.getElementById("res");
     if (!pool.length) { res.innerHTML = `<div class="empty"><div class="ico">📅</div><h3>Sin hitos</h3></div>`; return; }
     res.innerHTML = pool.map(i => `
-      <div class="tl-item" data-id="${i._t.id}" data-ancla="${esc(i.target || "")}">
+      <div class="tl-item" style="--tc:${colorDe(i.cat || i.y)}" data-id="${i._t.id}" data-ancla="${esc(i.target || "")}">
         <div><span class="tl-y">${resaltar(i.y, q)}</span>${resaltar(i.txt, q)}</div>
         ${i.cons ? `<div class="tl-cons">→ ${resaltar(i.cons, q)}</div>` : ""}
         <div class="tags" style="margin-top:6px"><span class="tag acc">${esc(codigoDe(i._t.id))}</span>${i.cat ? `<span class="tag">${esc(i.cat)}</span>` : ""}</div>
@@ -5021,22 +5040,37 @@ function hubCrono(c, ambito, temas) {
   pintar();
 }
 
-/* 3 · Glosario */
-function hubGlosario(c, ambito, temas) {
+/* 3 · Glosario. En el panel de un tema es GLOBAL (todos los temas) con el filtro «Este tema» / «Todos»; los términos que
+   añade el usuario con «+» se guardan en prog.mapa (clave «<tema>:glu:<marca>») y se sincronizan. */
+const glosarioUsuario = () => Object.keys(prog.mapa).filter(k => /^[A-Z0-9]+:glu:/.test(k) && prog.mapa[k].s && prog.mapa[k].d && estado.temas[k.split(":")[0]])
+  .map(k => ({ k, t:prog.mapa[k].d.t, d:prog.mapa[k].d.d, cat:"Mío", id:k.split(":")[0] }));
+function hubGlosario(c, ambito, temas, actual) {
   const s = hl(ambito);
+  if (actual && !s._gini) { s._gini = 1; s.gtema = actual; }
   if (s.gtema !== "todos" && !temas.some(t => t.id === s.gtema)) s.gtema = "todos";
   const inicial = x => { const ch = String(x).trim().charAt(0).toUpperCase(); return ch === "Ñ" ? "Ñ" : norm(ch).toUpperCase(); };
-  const todos = temas.flatMap(t => t.glossary.map(g => Object.assign({ _t:t, _term:g.t || g.term || "", _def:g.d || g.def || "" }, g)));
+  const ids = new Set(temas.map(t => t.id));
+  const todos = temas.flatMap(t => t.glossary.filter(g => lleno(g.t)).map(g => Object.assign({ _t:t, _term:g.t || g.term || "", _def:String(g.d || g.def || "").replace(/\*\*/g, "") }, g)))
+    .concat(glosarioUsuario().filter(g => ids.has(g.id)).map(g => ({ _t:estado.temas[g.id], _term:g.t, _def:g.d, cat:"Mío", _k:g.k })));
   todos.forEach(g => { g._ini = inicial(g._term); });
   const presentes = new Set(todos.map(g => g._ini));
   const letras = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  const filtroTema = actual
+    ? `<div class="chip-row"><button class="chip peq ${s.gtema === actual ? "active" : ""}" data-gt="${actual}">Este tema</button><button class="chip peq ${s.gtema === "todos" ? "active" : ""}" data-gt="todos">Todos los temas</button><button class="chip peq" id="g-mas" title="Añadir un término o frase al glosario">＋ Añadir</button></div>`
+    : `${chipsTemas(temas, s.gtema, "gt")}<div class="chip-row"><button class="chip peq" id="g-mas" title="Añadir un término o frase al glosario">＋ Añadir</button></div>`;
   c.innerHTML = `
     <div class="toolbar"><input class="input" type="search" id="gq" placeholder="Buscar término o definición…" value="${esc(s.gq)}"></div>
     <div class="letras">
       <button class="letra ${!s.gletra ? "active" : ""}" data-l="">Todas</button>
       ${letras.map(L => `<button class="letra ${s.gletra === L ? "active" : ""}" data-l="${L}" ${presentes.has(L) ? "" : "disabled"}>${L}</button>`).join("")}
     </div>
-    ${chipsTemas(temas, s.gtema, "gt")}
+    ${filtroTema}
+    <form class="card" id="g-form" hidden style="margin:8px 0">
+      <input class="input" id="g-t" placeholder="Término o frase" maxlength="120" required>
+      <textarea class="input" id="g-d" rows="3" placeholder="Definición o explicación" style="margin-top:8px" required></textarea>
+      <select class="input" id="g-tema" style="margin-top:8px">${temas.map(t => `<option value="${t.id}" ${t.id === (actual || s.gtema) ? "selected" : ""}>${esc(codigoDe(t.id))} · ${esc(TEMA_POR_ID[t.id].e).slice(0, 60)}</option>`).join("")}</select>
+      <div class="btn-row" style="margin-top:8px"><button class="btn btn-primary btn-sm" type="submit">Guardar</button><button class="btn btn-sm" type="button" id="g-cancel">Cancelar</button></div>
+    </form>
     <div class="stats-line" id="st"></div><div id="res"></div>`;
   const pintar = () => {
     let pool = todos.filter(g => s.gtema === "todos" || g._t.id === s.gtema);
@@ -5048,15 +5082,29 @@ function hubGlosario(c, ambito, temas) {
     const res = document.getElementById("res");
     if (!pool.length) { res.innerHTML = `<div class="empty"><div class="ico">📖</div><h3>Sin entradas</h3></div>`; return; }
     res.innerHTML = pool.map(g => `
-      <div class="res" data-id="${g._t.id}" data-ancla="${esc(g.section || "")}">
-        <div class="res-row"><span class="res-tit">${resaltar(g._term, q)}</span><span class="tag acc">${esc(codigoDe(g._t.id))}</span>${g.cat ? `<span class="tag">${esc(g.cat)}</span>` : ""}${g.ref ? `<span class="tag">${esc(g.ref)}</span>` : ""}</div>
+      <div class="res" data-id="${g._t.id}" data-ancla="${esc(g.section || "")}" ${g._k ? `data-k="${esc(g._k)}"` : ""}>
+        <div class="res-row"><span class="res-tit">${resaltar(g._term, q)}</span><span class="tag acc">${esc(codigoDe(g._t.id))}</span>${g.cat ? `<span class="tag">${esc(g.cat)}</span>` : ""}${g.ref ? `<span class="tag">${esc(g.ref)}</span>` : ""}${g._k ? `<button class="chip peq" data-del="${esc(g._k)}" title="Quitar" style="margin-left:auto">🗑</button>` : ""}</div>
         <div class="res-txt">${resaltar(g._def, q)}</div>
       </div>`).join("");
-    res.querySelectorAll(".res").forEach(x => x.addEventListener("click", () => abrirTema(x.dataset.id, x.dataset.ancla)));
+    res.querySelectorAll(".res").forEach(x => x.addEventListener("click", e => {
+      if (e.target.closest("[data-del]")) { if (confirm("¿Quitar este término del glosario?")) { marcarProg(e.target.closest("[data-del]").dataset.del, false); hubGlosario(c, ambito, temas, actual); } return; }
+      if (!x.dataset.k) abrirTema(x.dataset.id, x.dataset.ancla);
+    }));
   };
   document.getElementById("gq").addEventListener("input", e => { s.gq = e.target.value; pintar(); });
-  c.querySelectorAll("[data-l]").forEach(x => x.addEventListener("click", () => { s.gletra = x.dataset.l; hubGlosario(c, ambito, temas); }));
-  c.querySelectorAll("[data-gt]").forEach(x => x.addEventListener("click", () => { s.gtema = x.dataset.gt; hubGlosario(c, ambito, temas); }));
+  c.querySelectorAll("[data-l]").forEach(x => x.addEventListener("click", () => { s.gletra = x.dataset.l; hubGlosario(c, ambito, temas, actual); }));
+  c.querySelectorAll("[data-gt]").forEach(x => x.addEventListener("click", () => { s.gtema = x.dataset.gt; hubGlosario(c, ambito, temas, actual); }));
+  const form = document.getElementById("g-form");
+  document.getElementById("g-mas").addEventListener("click", () => { form.hidden = !form.hidden; if (!form.hidden) document.getElementById("g-t").focus(); });
+  document.getElementById("g-cancel").addEventListener("click", () => { form.hidden = true; });
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const t = document.getElementById("g-t").value.trim(), d = document.getElementById("g-d").value.trim(), id = document.getElementById("g-tema").value;
+    if (!t || !d) return;
+    marcarProg(id + ":glu:" + Date.now().toString(36), true, { t, d });
+    toast("Término añadido al glosario");
+    hubGlosario(c, ambito, temas, actual);
+  });
   pintar();
 }
 
@@ -5090,9 +5138,9 @@ function hubFc(c, ambito, temas) {
           <div class="fc-in">
             <div class="fc-cara">
               <div class="tags"><span class="tag acc">${esc(codigoDe(f._id))}</span>${f.cat ? `<span class="tag">${esc(f.cat)}</span>` : ""}</div>
-              <div class="fc-q">${esc(f.q)}</div><div class="fc-hint">Toca la tarjeta para ver la respuesta</div>
+              <div class="fc-q">${negE(f.q)}</div><div class="fc-hint">Toca la tarjeta para ver la respuesta</div>
             </div>
-            <div class="fc-cara atras"><div class="fc-a">${esc(f.a)}</div>${chipsConstelacion(f._id, f)}</div>
+            <div class="fc-cara atras"><div class="fc-a">${negE(f.a)}</div>${chipsConstelacion(f._id, f)}</div>
           </div>
         </div>
         <div class="fc-btns" ${s.volteada || desliz ? "" : "hidden"} id="fc-btns">
@@ -6943,13 +6991,13 @@ const CJ_CSS = `
 .cmap-root span { display:inline-block; padding:.55em 1.8em; border-radius:999px; background:#2f62b8; color:#fff; font-weight:800; font-size:1.05em; box-shadow:0 6px 16px rgba(47,98,184,.28); }
 .cmap-root::after { content:""; display:block; width:2px; height:1em; margin:0 auto; background:#2f62b8; }
 .cmap-ramas { display:grid; grid-template-columns:repeat(var(--n,3), minmax(0,1fr)); gap:.9em; position:relative; padding-top:1em; }
-.cmap-ramas::before { content:""; position:absolute; top:0; left:calc(50% / var(--n,3)); right:calc(50% / var(--n,3)); height:2px; background:#2f62b8; }
+.cmap-ramas::before { content:""; position:absolute; top:0; left:calc(50% / var(--n,3)); right:calc(50% / var(--n,3)); height:2px; background:linear-gradient(90deg,#2563eb,#7c3aed,#db2777,#ea580c,#16a34a,#0891b2); }
 .cmap-r { position:relative; display:flex; flex-direction:column; align-items:stretch; }
-.cmap-r::before { content:""; position:absolute; top:-1em; left:50%; width:2px; height:1em; background:#2f62b8; }
-.cmap-b { border:2px solid #2f62b8; border-radius:14px; background:#fbfbf8; padding:.6em .7em; text-align:center; flex:1; }
-.cmap-b b { display:block; color:#2f62b8; font-size:1.02em; }
+.cmap-r::before { content:""; position:absolute; top:-1em; left:50%; width:2px; height:1em; background:var(--c,#2f62b8); }
+.cmap-b { border:2px solid var(--c,#2f62b8); border-radius:14px; background:color-mix(in srgb, var(--c,#2f62b8) 9%, #fff); padding:.6em .7em; text-align:center; flex:1; }
+.cmap-b b { display:block; color:var(--c,#2f62b8); font-size:1.02em; }
 .cmap-b small { display:block; margin-top:.25em; color:#666; font-size:.84em; line-height:1.35; }
-.cmap-s { position:relative; margin-top:1em; padding:.55em .6em; border:1px solid #dcdcd4; border-radius:12px; background:#f0f0ec; text-align:center; font-size:.86em; color:#444; }
+.cmap-s { position:relative; margin-top:1em; padding:.55em .6em; border:1px solid var(--c,#dcdcd4); border-radius:12px; background:color-mix(in srgb, var(--c,#888) 14%, #fff); text-align:center; font-size:.86em; color:#444; }
 .cmap-s::before { content:""; position:absolute; top:-1em; left:50%; width:1px; height:1em; background:#bbb; }
 @media (max-width:640px) { .cmap-ramas { grid-template-columns:1fr; } .cmap-ramas::before, .cmap-r::before { display:none; } .cmap-s { margin-top:.4em; } .cmap-s::before { display:none; } }
 .ap-cuerpo h4.ap-h { font-family:inherit; font-size:17px; font-weight:700; color:var(--accent); border:none; padding:0; margin:22px 0 4px; }
@@ -6986,21 +7034,27 @@ const CJ_CSS = `
 `;
 const PDF_CJ = `
 .cj { margin:2.6mm 0 3.2mm; padding:2.2mm 3.6mm; border-radius:3mm; font-size:inherit; }
-.cj p { font-size:8.9pt; line-height:1.42; } .cj-k { font-size:6.8pt; }
+.cj p { font-size:9.6pt; line-height:1.42; } .cj-k { font-size:7.2pt; }
+.apuntes-tabla th { background:var(--ac, #2f62b8) !important; }
+.cmap-root span, .cflu-n { background:var(--ac, #2f62b8); }
+.cuerpo .tabla-wrap, .tabla-wrap { overflow:visible !important; border-radius:0 !important; }
 .cmap { padding:3mm 4mm 4mm; margin:3mm 0 4mm; } .cmap-t { font-size:11pt; } .cmap-root span { font-size:9.5pt; box-shadow:none; } .cmap-b b { font-size:8.6pt; } .cmap-b small, .cmap-s { font-size:7.4pt; }
-.cflu { padding:3mm 4mm; margin:3mm 0 4mm; } .cflu-t { font-size:10.5pt; } .cflu-b { padding:1.2mm 2.4mm; } .cflu-x { font-size:8.4pt; } .cflu-c { font-size:7.4pt; } .cflu-r { font-size:7.2pt; }
+.cflu { padding:3mm 4mm; margin:3mm 0 4mm; } .cflu-t { font-size:10.5pt; } .cflu-b { padding:1.2mm 2.4mm; }  .cflu-c { font-size:7.4pt; } .cflu-r { font-size:7.2pt; }
 .cuerpo h4.ap-h { font-size:10.5pt; }
 .apuntes-tabla th, .apuntes-tabla td { padding:1.5mm 2.4mm; }
+.cflu-x { font-size:9pt; }
 `;
+/* Color de cada bloque (el mismo que --accent de la app) */
+const BAC = { B1:"#b45309", B2:"#2563eb", B3:"#15803d", B4:"#c2410c", B5:"#0e7490", B6:"#a21caf" };
 const APUNTES_CSS = `
 @page { size:A4; margin:18mm 15mm 16mm; @top-left { content:var(--cab-izq); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @top-right { content:var(--cab-der); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @bottom-center { content:counter(page); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } }
 @page :first { @top-left { content:""; } @top-right { content:""; } @bottom-center { content:""; } }
 * { box-sizing:border-box; }
 html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-body { margin:0; font:9.2pt/1.42 Arial, Helvetica, sans-serif; color:#222; background:#fff; }
-.barra { position:sticky; top:0; z-index:5; display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:10px 18px; background:#0b3d91; color:#fff; font-size:14px; }
+body { margin:0; font:10pt/1.45 Arial, Helvetica, sans-serif; color:#222; background:#fff; }
+.barra { position:sticky; top:0; z-index:5; display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:10px 18px; background:var(--ac-d); color:#fff; font-size:14px; }
 .barra button.volver { background:transparent; color:#fff; border:1.5px solid #fff; }
-.barra button { border:0; border-radius:20px; padding:8px 18px; font-weight:700; background:#fff; color:#0b3d91; cursor:pointer; font-size:14px; }
+.barra button { border:0; border-radius:20px; padding:8px 18px; font-weight:700; background:#fff; color:var(--ac-d); cursor:pointer; font-size:14px; }
 .barra span { opacity:.9; }
 @media print { .barra { display:none; } }
 .hoja { max-width:820px; margin:0 auto; padding:24px 28px 40px; }
@@ -7008,32 +7062,35 @@ body { margin:0; font:9.2pt/1.42 Arial, Helvetica, sans-serif; color:#222; backg
 .portada { page-break-after:always; break-after:page; }
 .portada .sup { margin-top:8mm; font-size:8.5pt; letter-spacing:.04em; text-transform:uppercase; color:#8a8a8a; text-align:center; }
 .portada h1 { margin:8mm 0 6mm; font-size:28pt; line-height:1.18; font-weight:800; color:#1c1c1c; letter-spacing:-.01em; }
-.portada h1 .az { color:#0b4a9e; }
-.portada .regla { height:2.4px; background:#0b4a9e; margin:0 0 6mm; }
+.portada h1 .az { color:var(--ac); }
+.portada .regla { height:2.4px; background:var(--ac); margin:0 0 6mm; }
 .portada .sub { font-style:italic; color:#7a7a7a; font-size:9.6pt; line-height:1.55; text-align:justify; margin:0 0 6mm; }
 .indice { margin:0 0 6mm; padding:0; list-style:none; }
-.indice li { display:flex; gap:12px; padding:3.2px 4px; border-bottom:1px solid #cfcfcf; font-size:9.2pt; line-height:1.35; }
+.indice li { display:flex; gap:12px; padding:3.2px 4px; border-bottom:1px solid #cfcfcf; font-size:9.6pt; line-height:1.35; }
 .indice li:first-child { border-top:1px solid #cfcfcf; }
 .indice .n { width:26px; color:#8a8a8a; }
 .pie-portada { margin-top:6mm; font-size:8pt; color:#9a9a9a; line-height:1.6; }
 .seccion { margin-top:9mm; }
+.seccion.nueva { break-before:page; page-break-before:always; margin-top:0; }
+.seccion > h2.t + .cuerpo > :first-child, .seccion > h2.t + .lead { break-before:avoid; }
+.cuerpo:empty { display:none; }
 .seccion.primera { margin-top:0; }
 .seccion > .k, .seccion > h2.t { break-after:avoid; }
-.seccion > .k { font-size:8.5pt; letter-spacing:.03em; color:#0b4a9e; text-transform:uppercase; margin:2mm 0 1mm; }
-.seccion > h2.t { margin:0 0 6mm; padding-bottom:3mm; font-size:16.5pt; line-height:1.2; font-weight:800; color:#1c1c1c; border-bottom:2.4px solid #0b4a9e; }
-.seccion > h2.t .az { color:#0b4a9e; }
+.seccion > .k { font-size:8.5pt; letter-spacing:.03em; color:var(--ac); text-transform:uppercase; margin:2mm 0 1mm; }
+.seccion > h2.t { margin:0 0 6mm; padding-bottom:3mm; font-size:17.5pt; line-height:1.2; font-weight:800; color:#1c1c1c; border-bottom:2.4px solid var(--ac); }
+.seccion > h2.t .az { color:var(--ac); }
 h3.sub2, .cuerpo h4.ap-h, .cuerpo h5.ap-h2, .cuerpo h3 { break-inside:avoid; orphans:2; widows:2; }
-h3.sub2 { margin:6mm 0 2.4mm; font-size:11.5pt; font-weight:800; color:#1c1c1c; page-break-after:avoid; break-after:avoid; }
-h3.sub2 .az { color:#0b4a9e; }
+h3.sub2 { margin:6mm 0 2.4mm; font-size:12.5pt; font-weight:800; color:#1c1c1c; page-break-after:avoid; break-after:avoid; }
+h3.sub2 .az { color:var(--ac); }
 .cuerpo p { margin:0 0 2.4mm; text-align:justify; }
 .cuerpo ul, .cuerpo ol { margin:0 0 3.4mm; padding-left:7mm; }
 .cuerpo li { margin:0 0 .8mm; text-align:justify; }
 .cuerpo li.sub { margin-left:6mm; list-style:circle; }
 .cuerpo strong { color:#111; }
 .cuerpo em { color:#333; }
-.cuerpo a { color:#0b4a9e; text-decoration:none; }
+.cuerpo a { color:var(--ac); text-decoration:none; }
 .cuerpo a.ce-ir-btn { display:none; }
-.cuerpo h4.ap-h { margin:4.5mm 0 1.6mm; font-size:10.3pt; font-weight:800; color:#0b4a9e; page-break-after:avoid; break-after:avoid; }
+.cuerpo h4.ap-h { margin:4.5mm 0 1.6mm; font-size:11pt; font-weight:800; color:var(--ac); page-break-after:avoid; break-after:avoid; }
 .cuerpo h5.ap-h2 { margin:3mm 0 1.2mm; font-size:9.4pt; font-weight:800; color:#333; page-break-after:avoid; break-after:avoid; }
 .tag-boe { display:inline-block; padding:0 7px; border-radius:20px; color:#fff; font-size:7.5pt; font-weight:700; line-height:1.7; vertical-align:middle; }
 .fuente-link { text-decoration:none; }
@@ -7041,38 +7098,43 @@ h3.sub2 .az { color:#0b4a9e; }
 .pill-imp { background:#c62828; color:#fff; }
 .pill-pre { background:#e8e8e8; color:#444; border:1px solid #9a9a9a; }
 .ce-tag { display:inline-block; padding:0 6px; border-radius:4px; font-weight:800; font-size:.95em; background:var(--c); color:var(--ct); }
-blockquote.literal { margin:2.4mm 0 3mm; padding:2.2mm 3.4mm 1.4mm; border-left:3px solid #8a6d3b; background:#f6f1e7; break-inside:avoid-page; }
-blockquote.literal p { margin:0 0 1.6mm; text-align:left; font-size:8.9pt; line-height:1.42; }
+blockquote.literal { margin:2.4mm 0 3mm; padding:2.2mm 3.4mm 1.4mm; border-left:3px solid #8a6d3b; background:#f6f1e7; }
+blockquote.literal p { break-inside:avoid; }
+blockquote.literal p { margin:0 0 1.6mm; text-align:left; font-size:9.6pt; line-height:1.42; }
 blockquote.literal .tag-boe { float:right; margin:0 0 0 6px; }
-blockquote.literal p:first-of-type strong:first-child { color:#0b4a9e; }
+blockquote.literal p:first-of-type strong:first-child { color:var(--ac); }
 .ap-caja { margin:2.4mm 0 3mm; padding:2mm 3.4mm; border-radius:2px; break-inside:avoid-page; }
 .ap-caja p { margin:0 0 1.6mm; text-align:left; }
 .ap-caja p:last-child { margin-bottom:0; }
-.ap-caja.clave { background:#eaf1fb; border-left:4px solid #0b4a9e; color:#0b3d91; font-style:italic; }
-.ap-caja.clave strong { color:#0b3d91; }
+.ap-caja.clave { background:#eaf1fb; border-left:4px solid var(--ac); color:var(--ac-d); font-style:italic; }
+.ap-caja.clave strong { color:var(--ac-d); }
 .ap-caja.trampa { background:#fff8e1; border:1px solid #f1b24a; border-left:4px solid #f1a02b; }
 .ap-caja.trampa strong:first-child { color:#a55a00; }
-.ap-caja.ap-guia { background:#f5f5f5; border-left:4px solid #0b4a9e; font-size:8.8pt; }
-.ap-caja.ap-guia strong:first-child { color:#0b4a9e; }
+.ap-caja.ap-guia { background:#f5f5f5; border-left:4px solid var(--ac); font-size:9.4pt; }
+.ap-caja.ap-guia strong:first-child { color:var(--ac); }
 .ap-caja.ap-ficha { padding:0; background:#faf9f6; border:1px solid #d6d2c8; overflow:hidden; break-inside:auto; }
 .ap-caja.ap-ficha::before { content:"FICHA"; display:block; padding:1.2mm 4mm; font-size:7.5pt; font-weight:800; letter-spacing:.08em; color:#555; background:#efece4; }
 .fi-fila { display:grid; grid-template-columns:28mm 1fr; gap:4mm; padding:2mm 4mm; border-top:1px solid #d6d2c8; break-inside:avoid; }
-.fi-k { font-weight:800; color:#0b4a9e; font-size:8.8pt; }
-.fi-v { font-size:9pt; }
+.fi-k { font-weight:800; color:var(--ac); font-size:9.4pt; }
+.fi-v { font-size:9.8pt; }
 .fi-v ul { margin:1mm 0 0; padding-left:5mm; }
 .fi-v li { margin:0 0 .8mm; text-align:left; }
 .fi-fila.ojo { background:#fff4e0; }
 .fi-fila.ojo .fi-k { color:#a55a00; }
 .tabla-wrap { margin:3mm 0 5mm; }
 .tabla-wrap.corta { break-inside:avoid; }
+.tabla-wrap { overflow:visible !important; border-radius:0 !important; }
+table.apuntes-tabla { table-layout:auto; overflow-wrap:break-word; word-break:normal; }
+table.apuntes-tabla th, table.apuntes-tabla td { overflow-wrap:break-word; }
+table.apuntes-tabla tr, table.apuntes-tabla tr > * { break-inside:avoid; page-break-inside:avoid; }
 table.apuntes-tabla thead { display:table-header-group; }
 .cuerpo p, .cuerpo li { orphans:3; widows:3; }
 .cuerpo p:has(+ .tabla-wrap), .cuerpo p:has(+ blockquote), .cuerpo p:has(+ ul), .cuerpo p:has(+ ol), .cuerpo p:has(+ .ap-caja) { break-after:avoid; }
 .cuerpo > h4, .cuerpo > h5 { break-after:avoid; }
 .cuerpo h4.ap-h + *, .cuerpo h5.ap-h2 + * { break-before:avoid; }
 .cuerpo li { break-inside:avoid; }
-table.apuntes-tabla { width:100%; border-collapse:collapse; font-size:8.4pt; line-height:1.38; }
-table.apuntes-tabla th { background:#eef2f8; color:#0b3d91; text-align:left; font-weight:800; padding:1.5mm 2mm; border:1px solid #c5cddb; }
+table.apuntes-tabla { width:100%; border-collapse:collapse; font-size:9.2pt; line-height:1.38; }
+table.apuntes-tabla th { background:#eef2f8; color:var(--ac-d); text-align:left; font-weight:800; padding:1.5mm 2mm; border:1px solid #c5cddb; }
 table.apuntes-tabla td { padding:1.3mm 2mm; border:1px solid #d6d6d6; vertical-align:top; text-align:left; }
 table.apuntes-tabla tr { break-inside:avoid; }
 table.apuntes-tabla tbody tr:nth-child(even) td { background:#fafafa; }
@@ -7088,13 +7150,13 @@ table.apuntes-tabla td:first-child { font-weight:700; }
 .qz-pista, .qz-otra { display:none !important; }
 .fila { display:flex; gap:12px; padding:3.2mm 0; border-bottom:1px solid #cfcfcf; break-inside:avoid; }
 .fila .pi { flex:none; width:23mm; }
-.fila .pi span { display:block; text-align:center; padding:1px 0; border-radius:20px; background:#0b4a9e; color:#fff; font-size:8pt; font-weight:700; }
-.fila .pi span.mar { background:#7b3f00; }
-.fila .tx b { display:block; font-size:10.4pt; color:#111; }
-.fila .tx i { display:block; margin-top:1mm; font-size:9.6pt; color:#0b3d91; line-height:1.55; }
-.fila .tx i::before { content:"■ "; color:#0b4a9e; font-style:normal; font-size:8pt; }
+.fila .pi span { display:block; text-align:center; padding:1px 0; border-radius:20px; background:var(--pc, var(--ac)); color:#fff; font-size:8pt; font-weight:700; }
+.fila .pi span.mar { background:var(--pc, #7b3f00); }
+.fila .tx b { display:block; font-size:11pt; color:#111; }
+.fila .tx i { display:block; margin-top:1mm; font-size:10pt; color:var(--ac-d); line-height:1.55; }
+.fila .tx i::before { content:"■ "; color:var(--pc, var(--ac)); font-style:normal; font-size:8pt; }
 .fila.gl .tx i { color:#6b6b6b; }
-.fila.gl .tx i::before { color:#7b3f00; }
+.fila.gl .tx i::before { color:var(--pc, #7b3f00); }
 .lead { font-style:italic; color:#7a7a7a; text-align:justify; margin:0 0 5mm; }
 .preg { break-inside:avoid; margin:0 0 4mm; padding:0 0 3mm; border-bottom:1px solid #cfcfcf; }
 .preg b.q { display:block; margin-bottom:1.5mm; }
@@ -7114,7 +7176,7 @@ const apLimpia = (md, titulo) => {
   if (/^Mapa del tema/.test(titulo)) md = md.replace(/^\| \*\*[IVX]+\*\* \| (?:Repaso|Preguntas y repaso|Lectura profunda)[^\n]*\n?/gm, "").replace(/^### Las etiquetas de los apuntes[\s\S]*?(?=^### |(?![\s\S]))/m, "");
   return md.replace(/\n{3,}/g, "\n\n").trim();
 };
-const apCuida = html => html.replace(/<div class="tabla-wrap">([\s\S]*?)<\/div>/g, (m, t) => (t.match(/<tr/g) || []).length <= 14 ? m.replace('class="tabla-wrap"', 'class="tabla-wrap corta"') : m);
+const apCuida = html => html.replace(/<div class="tabla-wrap">([\s\S]*?)<\/div>/g, (m, t) => (t.match(/<tr/g) || []).length <= 6 ? m.replace('class="tabla-wrap"', 'class="tabla-wrap corta"') : m);
 function apuntesHTML(id) {
   const t = estado.temas[id], p = TEMA_POR_ID[id], b = BLOQUE_POR_CODE[p.b];
   const fusion = Object.keys(FUSION).some(k => FUSION[k] === id);
@@ -7139,18 +7201,18 @@ function apuntesHTML(id) {
   const secHTML = bloques.map(x => {
     n++;
     return `<section class="seccion${n === 1 ? " primera" : ""}"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>
-      <div class="cuerpo">${apCuida(formatear(conConceptos(t, x.s.id, apLimpia(x.s.body, x.s.title))))}</div>
+      ${(() => { const h0 = apCuida(formatear(conConceptos(t, x.s.id, apLimpia(x.s.body, x.s.title)))); return h0.trim() ? `<div class="cuerpo">${h0}</div>` : ""; })()}
       ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(conConceptos(t, h.id, apLimpia(h.body, h.title))))}</div>`).join("")}</section>`;
   }).join("");
-  const gl = (t.glossary || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Glosario de <span class="az">conceptos</span></h2>
+  const gl = (t.glossary || []).length ? `<section class="seccion nueva"><div class="k">Sección ${++n}</div><h2 class="t">Glosario de <span class="az">conceptos</span></h2>
       <p class="lead">Términos clave del tema, con su definición y la categoría a la que pertenecen.</p>
-      ${(t.glossary).map(g => `<div class="fila gl"><div class="pi"><span class="mar">${esc(g.cat || "Concepto")}</span></div><div class="tx"><b>${esc(g.t)}</b><i>${esc(g.d)}</i></div></div>`).join("")}</section>` : "";
-  const cr = (t.timeline || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Cronología e <span class="az">hitos</span></h2>
+      ${(t.glossary).map(g => `<div class="fila gl" style="--pc:${colorDe(g.cat || g.t)}"><div class="pi"><span class="mar">${esc(g.cat || "Concepto")}</span></div><div class="tx"><b>${esc(g.t)}</b><i>${esc(g.d).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")}</i></div></div>`).join("")}</section>` : "";
+  const cr = (t.timeline || []).length ? `<section class="seccion nueva"><div class="k">Sección ${++n}</div><h2 class="t">Cronología e <span class="az">hitos</span></h2>
       <p class="lead">Fechas y normas del tema, ordenadas cronológicamente.</p>
-      ${[...t.timeline].sort((a, b2) => String(a.y).localeCompare(String(b2.y))).map(h => `<div class="fila"><div class="pi"><span>${esc(h.y)}</span></div><div class="tx"><b>${esc(h.txt)}</b>${h.cons ? `<i>${esc(h.cons)}</i>` : ""}</div></div>`).join("")}</section>` : "";
+      ${[...t.timeline].sort((a, b2) => String(a.y).localeCompare(String(b2.y))).map(h => `<div class="fila" style="--pc:${colorDe(h.cat || h.y)}"><div class="pi"><span>${esc(h.y)}</span></div><div class="tx"><b>${esc(h.txt)}</b>${h.cons ? `<i>${esc(h.cons)}</i>` : ""}</div></div>`).join("")}</section>` : "";
   const hoy = new Date().toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
   const cabIzq = `${codigo} · ${titulo.length > 62 ? titulo.slice(0, 60) + "…" : titulo}`;
-  const css = APUNTES_CSS + CJ_CSS + PDF_CJ + `:root { --cab-izq:${JSON.stringify(cabIzq)}; --cab-der:${JSON.stringify("Oposición GACE · Bloque " + b.rom)}; }`;
+  const css = APUNTES_CSS + CJ_CSS + PDF_CJ + `:root { --ac:${BAC[p.b] || "#0b4a9e"}; --ac-d:color-mix(in srgb, ${BAC[p.b] || "#0b4a9e"} 78%, #000); --cab-izq:${JSON.stringify(cabIzq)}; --cab-der:${JSON.stringify("Oposición GACE · Bloque " + b.rom)}; }`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(codigo + " · " + titulo)}</title><style>${css}</style></head><body>
     <div class="barra"><button type="button" class="volver" onclick="volver()">← Volver a la app</button><button type="button" onclick="print()">⬇ Guardar como PDF / Imprimir</button><span>En el cuadro de impresión elige «Guardar como PDF» (tamaño A4, márgenes predeterminados, activa «Gráficos de fondo» si no se ven los colores).</span></div>
     <div class="hoja">
@@ -7189,7 +7251,7 @@ document.addEventListener("click", e => { const bt = e.target.closest("[data-apu
    añadiendo —ce.json → m103, temas I.1 a I.3— entra solo): guía de la academia, estructura y reglas de memoria, organigrama,
    niveles de protección, arts. 1 a 55 con subrayado, pills y comentarios, y los cuadros/esquemas de los temas. */
 const CE_APUNTES_CSS = `
-:root { --line:#cfcfcf; --line-soft:#e4e4e4; --text:#222; --text-muted:#666; --bg-elev:#fff; --bg:#fff; --accent:#0b4a9e; --r-sm:6px; --r-md:8px; --r-lg:10px; }
+:root { --ac:#0b4a9e; --ac-d:#0b3d91; --line:#cfcfcf; --line-soft:#e4e4e4; --text:#222; --text-muted:#666; --bg-elev:#fff; --bg:#fff; --accent:#0b4a9e; --r-sm:6px; --r-md:8px; --r-lg:10px; }
 .cab-bloque { margin:5mm 0 2mm; padding:2mm 3mm; border-radius:3px; background:var(--c); color:var(--ct); display:flex; gap:3mm; align-items:baseline; break-after:avoid; }
 .cab-bloque b { font-size:10pt; text-transform:uppercase; letter-spacing:.03em; } .cab-bloque span { font-size:9.4pt; font-weight:700; flex:1; } .cab-bloque small { font-size:8pt; font-weight:700; }
 .ca { display:grid; grid-template-columns:34mm 1fr; gap:1mm 4mm; padding:2.4mm 0; border-top:1px solid #e1e1e1; break-inside:avoid; }

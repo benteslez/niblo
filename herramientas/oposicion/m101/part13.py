@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------- GLOSARIO AMPLIADO (I.1 a I.3)
+# Cada definición lleva el artículo y se comprueba contra el texto vigente: «lit» son fragmentos que tienen que estar literales.
+def _gl(term, d, sec, cat, art, *lit):
+    t = texto("CE", art)
+    for x in lit: assert x in t, ("GLOSARIO NO LITERAL", term, art, x)
+    T.glos(term, d, sec, cat)
+
+# --- I.1: estructura y reforma
+_gl("Título preliminar", "Arts. 1 a 9: Estado social y democrático de Derecho, soberanía nacional y Monarquía parlamentaria (1), unidad y autonomía (2), lenguas (3), bandera (4), capital (5), partidos (6), sindicatos y asociaciones empresariales (7), Fuerzas Armadas (8) y sujeción a la Constitución (9).", "s3", "Estructura", "a1", "Monarquía parlamentaria")
+_gl("Valores superiores", "Libertad, justicia, igualdad y pluralismo político: los valores superiores del ordenamiento jurídico (art. 1.1).", "s11", "Estructura", "a1", "la libertad, la justicia, la igualdad y el pluralismo político")
+_gl("Soberanía nacional", "Reside en el pueblo español, del que emanan los poderes del Estado (art. 1.2).", "s11", "Estructura", "a1", "La soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado")
+_gl("Monarquía parlamentaria", "Forma política del Estado español (art. 1.3).", "s11", "Estructura", "a1", "La forma política del Estado español es la Monarquía parlamentaria")
+_gl("Título X", "De la reforma constitucional: arts. 166 a 169, con dos procedimientos (el ordinario del art. 167 y el agravado del art. 168).", "s44", "Reforma", "a167", "tres quintos")
+_gl("Procedimiento ordinario de reforma", "Art. 167: aprobación por tres quintos de cada Cámara; si no hay acuerdo, comisión paritaria y, en su defecto, mayoría absoluta del Senado y dos tercios del Congreso; referéndum solo si lo piden una décima parte de los miembros de cualquiera de las Cámaras.", "s45", "Reforma", "a167", "tres quintos", "una décima parte")
+_gl("Procedimiento agravado de reforma", "Art. 168: revisión total o de los preceptos más protegidos (Título preliminar, sección 1.ª del capítulo II del Título I y Título II): dos tercios de cada Cámara, disolución inmediata de las Cortes, ratificación por las nuevas Cámaras y referéndum obligatorio.", "s46", "Reforma", "a168", "dos tercios de cada Cámara", "disolución inmediata de las Cortes")
+_gl("Límites temporales de la reforma", "No puede iniciarse en tiempo de guerra ni durante los estados de alarma, excepción o sitio del art. 116 (art. 169).", "s47", "Reforma", "a169", "tiempo de guerra", "artículo 116")
+_gl("Aprobación y ratificación de la Constitución", "Las Cortes Generales aprueban el texto el 31-10-1978 y el pueblo español lo ratifica en referéndum el 6-12-1978.", "s1", "Fechas", "a1", "pueblo español")
+_gl("Entrada en vigor de la Constitución", "Tras la sanción del Rey (27-12-1978), la Constitución se publica en el BOE y entra en vigor el 29-12-1978.", "s1", "Fechas", "a1", "pueblo español")
+
+# --- I.2: derechos, garantías, suspensión
+_gl("Dignidad de la persona", "Junto a los derechos inviolables que le son inherentes, el libre desarrollo de la personalidad y el respeto a la ley y a los derechos de los demás, es fundamento del orden político y de la paz social (art. 10.1).", "s16", "Garantías", "a10", "La dignidad de la persona, los derechos inviolables que le son inherentes")
+_gl("Interpretación conforme a los tratados", "Las normas sobre derechos y libertades se interpretan de conformidad con la Declaración Universal de Derechos Humanos y los tratados y acuerdos internacionales sobre las mismas materias ratificados por España (art. 10.2).", "s16", "Garantías", "a10", "Declaración Universal de Derechos Humanos")
+_gl("Principio de igualdad", "Los españoles son iguales ante la ley, sin que pueda prevalecer discriminación alguna por razón de nacimiento, raza, sexo, religión, opinión o cualquier otra condición o circunstancia personal o social (art. 14).", "s13", "Garantías", "a14", "Los españoles son iguales ante la ley")
+_gl("Detención preventiva", "No puede durar más del tiempo estrictamente necesario y, en todo caso, el plazo máximo es de setenta y dos horas: después, libertad o puesta a disposición de la autoridad judicial (art. 17.2).", "s13", "Garantías", "a17", "setenta y dos horas")
+_gl("Habeas corpus", "Procedimiento regulado por ley para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente (art. 17.4).", "s13", "Garantías", "a17", "habeas corpus")
+_gl("Vinculación de los poderes públicos", "Los derechos y libertades del capítulo segundo vinculan a todos los poderes públicos; solo por ley, que debe respetar su contenido esencial, puede regularse su ejercicio (art. 53.1).", "s24", "Garantías", "a53", "vinculan a todos los poderes públicos")
+_gl("Legitimación en el recurso de inconstitucionalidad", "Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores, órganos colegiados ejecutivos de las Comunidades Autónomas y, en su caso, sus Asambleas (art. 162.1.a).", "s23", "Garantías", "a162", "50 Diputados, 50 Senadores")
+_gl("Legitimación en el recurso de amparo", "Toda persona natural o jurídica que invoque un interés legítimo, el Defensor del Pueblo y el Ministerio Fiscal (art. 162.1.b).", "s21", "Garantías", "a162", "interés legítimo")
+
+# --- I.3: Tribunal Constitucional
+_gl("Composición del Tribunal Constitucional", "12 miembros nombrados por el Rey: cuatro a propuesta del Congreso (tres quintos), cuatro a propuesta del Senado (tres quintos), dos del Gobierno y dos del Consejo General del Poder Judicial (art. 159.1).", "s34", "Tribunal Constitucional", "a159", "12 miembros nombrados por el Rey")
+_gl("Requisitos de los magistrados", "Juristas de reconocida competencia con más de quince años de ejercicio profesional, entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados (art. 159.2).", "s34", "Tribunal Constitucional", "a159", "más de quince años de ejercicio profesional")
+_gl("Mandato de los magistrados", "Nueve años, con renovación por terceras partes cada tres (art. 159.3).", "s34", "Tribunal Constitucional", "a159", "nueve años", "terceras partes cada tres")
+_gl("Incompatibilidades de los magistrados", "Con todo mandato representativo, cargos políticos o administrativos, funciones directivas en partidos o sindicatos, carreras judicial y fiscal y cualquier actividad profesional o mercantil (art. 159.4).", "s34", "Tribunal Constitucional", "a159", "con todo mandato representativo")
+_gl("Independencia e inamovilidad", "Los miembros del Tribunal Constitucional son independientes e inamovibles en el ejercicio de su mandato (art. 159.5).", "s34", "Tribunal Constitucional", "a159", "independientes e inamovibles")
+_gl("Conflicto de competencia", "Proceso para resolver los conflictos de competencia entre el Estado y las Comunidades Autónomas o de estas entre sí (art. 161.1.c).", "s35", "Tribunal Constitucional", "a161", "conflictos de competencia")
+_gl("Impugnación del Gobierno (art. 161.2)", "El Gobierno puede impugnar ante el TC disposiciones y resoluciones de las Comunidades Autónomas; la impugnación suspende lo recurrido, pero el Tribunal debe ratificar o levantar la suspensión en cinco meses como máximo.", "s35", "Tribunal Constitucional", "a161", "cinco meses")
+_gl("Efectos erga omnes", "Las sentencias que declaran la inconstitucionalidad de una ley o norma con fuerza de ley, y las que no se limitan a la estimación subjetiva de un derecho, tienen plenos efectos frente a todos (art. 164.1).", "s36", "Tribunal Constitucional", "a164", "plenos efectos frente a todos")
+_gl("Votos particulares", "Las sentencias del TC se publican en el BOE con los votos particulares, si los hubiere (art. 164.1).", "s36", "Tribunal Constitucional", "a164", "votos particulares")

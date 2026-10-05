@@ -13,7 +13,7 @@ y las preguntas, flashcards, glosario e hitos de cada uno.
 """
 import os, re, sys
 AQUI = os.path.dirname(os.path.abspath(__file__))
-PARTES = ["part1", "part2", "part3", "part4", "part5", "part6", "part7", "part8", "part9a", "part9b", "part10", "part11", "part12"]
+PARTES = ["part1", "part2", "part3", "part4", "part5", "part6", "part7", "part8", "part9a", "part9b", "part10", "part11", "part12", "part13"]
 
 def _cargar():
     ns = {}
@@ -301,6 +301,8 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
         H = [dict(y="1978", txt="27-12-1978: la Constitución, en vigor desde el 29-12-1978, reconoce en el Título I (arts. 10 a 55) los derechos y deberes fundamentales y sus garantías", cons="Niveles de protección, garantías (arts. 53 y 54) y suspensión (art. 55)", cat="normativo", target="s16")] + [h for h in T.H if h["target"] in ("s39", "s28")]
     else:
         H = [dict(y="1978", txt="27-12-1978: sanción de la Constitución, que crea el Tribunal Constitucional (Título IX, arts. 159 a 165); BOE y entrada en vigor el 29-12-1978", cons="Composición, competencias y valor de las sentencias", cat="normativo", target="s33")] + [h for h in T.H if h["target"] == "s33"]
+    # hitos ya definidos en las partes (leyes orgánicas de desarrollo) que son de estos temas
+    H += [h for h in T.H if (tema_n == 2 and h["target"] in ("s39", "s28")) or (tema_n == 3 and h["target"] == "s33")]
     if tema_n == 3:
         FC += [dict(q="¿Qué es el Tribunal Constitucional según su ley orgánica?", a="**Intérprete supremo** de la Constitución, **independiente** de los demás órganos constitucionales, sometido **solo** a la Constitución y a su ley orgánica y **único en su orden** (art. 1 LOTC).", cat="Tribunal Constitucional"),
                dict(q="¿Quién legitima cada proceso ante el Tribunal Constitucional?", a="**Inconstitucionalidad**: Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores y ejecutivos y Asambleas de las CCAA. **Amparo**: persona con interés legítimo, Defensor del Pueblo y Ministerio Fiscal. **Cuestión**: el órgano judicial (arts. 162 y 163 CE).", cat="Tribunal Constitucional")]
