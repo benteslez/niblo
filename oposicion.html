@@ -819,6 +819,9 @@ mark.res[data-col="morado"], [data-col="morado"] { --rc:#a855f7; }
 .mod-acc .mod-hub { width:42px; padding:0; border-radius:var(--r-md); }
 .dash-card { display:flex; align-items:center; justify-content:flex-start; gap:14px; width:100%; margin:0 0 12px; padding:18px 16px 18px clamp(16px, 24%, 280px);
   border:2px dashed color-mix(in srgb, var(--accent) 55%, var(--line)); border-radius:var(--r-lg, 16px); background:transparent; color:var(--text); text-align:left; cursor:pointer; font:inherit; }
+.dash-fila { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:12px; margin:0 0 12px; }
+.dash-fila .dash-card { flex-direction:column; justify-content:flex-start; text-align:center; gap:8px; margin:0; padding:16px 12px; height:100%; }
+@media (max-width:860px) { .dash-fila { grid-template-columns:repeat(2, minmax(0, 1fr)); } }
 .dash-card:hover { background:color-mix(in srgb, var(--accent-bg) 45%, transparent); }
 .dash-card.real { border-color:color-mix(in srgb, var(--hot) 55%, var(--line)); }
 .dash-ico { font-size:24px; width:32px; flex:none; text-align:center; }
@@ -3054,6 +3057,7 @@ function renderInicio() {
       ${BLOQUES.map(tarjetaBloque).join("")}
     </div>
 
+    <div class="dash-fila">
     <button class="dash-card plan" data-ir="#/plan">
       <span class="dash-ico" aria-hidden="true">📅</span>
       <span><span class="dash-t">Plan de estudio</span><span class="dash-d">Plantilla de temas y vueltas con tus tiempos, orden sugerido, encaje con los supuestos y guía de estudio</span></span>
@@ -3070,6 +3074,7 @@ function renderInicio() {
       <span class="dash-ico" aria-hidden="true">📋</span>
       <span><span class="dash-t">Test real global</span><span class="dash-d">${nReales ? `${plural(nReales, "pregunta real", "preguntas reales")} de ${plural(TESTS_REALES.examenes.length, "examen oficial", "exámenes oficiales")}, con su plantilla` : "Preguntas literales de exámenes oficiales · se añadirán cuando aportes los cuestionarios y las plantillas"}</span></span>
     </button>
+    </div>
     <a class="guia-link" href="#/guia">📚 Guía de fuentes: niveles de fuente, recursos y qué fuente usar en cada tema →</a>`;
   vista().querySelectorAll("[data-ir]").forEach(b => b.addEventListener("click", e => { e.preventDefault(); ir(b.dataset.ir); }));
 }
