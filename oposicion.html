@@ -1286,6 +1286,28 @@ body.real-abierto .cr { display:none; }
 .ce-rub.propio { font-style:italic; font-weight:700; }
 .ce-txt p { margin:0 0 6px; font-size:15px; line-height:1.6; }
 .ce-txt p.ce-li { margin-left:18px; }
+/* Subrayado y comentarios de la academia (M103) */
+.ce-cu { min-width:0; }
+.m103-pills { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
+.m103-pill { display:inline-flex; align-items:center; padding:1px 8px; border-radius:99px; font-size:10.5px; font-weight:800; line-height:1.6; border:1px solid transparent; white-space:nowrap; }
+.m103-pill.ex { background:#fed7aa; color:#7c2d12; border-color:#fb923c; }
+.m103-pill.am { background:#fef08a; color:#713f12; border-color:#facc15; }
+.m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; }
+.m103-pill.az { background:#bae6fd; color:#0c4a6e; border-color:#38bdf8; }
+.m103-pill.lo { background:#fbcfe8; color:#831843; border-color:#f472b6; }
+mark.m103-am { background:#fef08a; color:#1c1917; border-radius:3px; padding:0 2px; }
+mark.m103-vd { background:#86efac; color:#14301f; border-radius:3px; padding:0 2px; }
+mark.m103-az { background:#7dd3fc; color:#082f49; border-radius:3px; padding:0 2px; }
+mark.m103-lo { background:#f9a8d4; color:#500724; border-radius:3px; padding:0 2px; }
+.m103-nota { margin:6px 0 4px; padding:8px 12px; border-left:4px solid #f59e0b; background:color-mix(in srgb, #f59e0b 10%, var(--bg-elev)); border-radius:0 var(--r-sm) var(--r-sm) 0; font-size:13.5px; line-height:1.5; }
+.m103-nota p { margin:0 0 4px; font-size:13.5px; }
+.m103-nota .m103-lim { border-left:none; }
+.m103-src { display:block; font-size:11px; color:var(--text-muted); margin-top:2px; }
+.m103-ley { margin:0 0 12px; padding:10px 14px; }
+.m103-tog { display:flex; gap:8px; align-items:center; font-size:14px; cursor:pointer; }
+.m103-ley summary { cursor:pointer; margin-top:6px; font-size:13px; font-weight:700; color:var(--text-muted); }
+.m103-lista, .m103-niv { margin:8px 0 0; padding-left:0; list-style:none; display:grid; gap:6px; font-size:13px; }
+.m103-niv li { padding-left:12px; border-left:3px solid var(--line); }
 .ce-foco { animation:ce-foco 2.2s ease; }
 @keyframes ce-foco { 0%, 60% { background:color-mix(in srgb, var(--c) 22%, transparent); } 100% { background:transparent; } }
 .ce-pream p { margin:0 0 8px; font-size:15px; line-height:1.6; }
@@ -6338,11 +6360,46 @@ function renderCE(tab, n) {
 }
 
 /* ---- Texto completo ------------------------------------------------------ */
-const ceParr = p => `<p class="${/^[a-zñ]\) /.test(p) ? "ce-li" : ""}">${esc(p)}</p>`;
+/* Anotaciones del módulo M103 (subrayado y comentarios de la academia sobre los arts. 1-52): vienen en ce.json → m103. */
+const KEY_M103 = "gestion_hub_ce_m103_v1";
+CEV.m103 = leerJSON(KEY_M103, true) !== false;
+const ceM103 = n => (CE && CE.m103 && CE.m103.arts[n]) || null;
+const M103_CLS = { am:"am", vd:"vd", az:"az", lo:"lo" };
+/** Párrafo con las frases marcadas (literales) envueltas en <mark>. */
+function ceParr(p, marks) {
+  const cls = /^[a-zñ]\) /.test(p) ? "ce-li" : "";
+  if (!marks || !marks.length) return `<p class="${cls}">${esc(p)}</p>`;
+  const hits = [];
+  marks.forEach(([f, c]) => { const i = p.indexOf(f); if (i >= 0) hits.push({ i, j:i + f.length, c }); });
+  hits.sort((a, b) => a.i - b.i); let pos = 0, h = "";
+  hits.forEach(m => { if (m.i < pos) return; h += esc(p.slice(pos, m.i)) + `<mark class="m103-${M103_CLS[m.c]}">${esc(p.slice(m.i, m.j))}</mark>`; pos = m.j; });
+  return `<p class="${cls}">${h + esc(p.slice(pos))}</p>`;
+}
+const M103_PILL = { exam:["ex", "🟧 Examen oficial"], am:["am", "🟨 Importante"], vd:["vd", "🟩 Coletilla"], az:["az", "🟦 Se limita (excepción y sitio)"], lo:["lo", "🌸 Ley orgánica"] };
+function ceM103Pills(n) {
+  const d = ceM103(n); if (!d || !CEV.m103) return "";
+  const k = []; if (d.exam) k.push("exam");
+  const cs = new Set((d.marks || []).map(m => m[1])); if (cs.has("am")) k.push("am"); if (cs.has("vd")) k.push("vd"); if (d.lim || cs.has("az")) k.push("az"); if (cs.has("lo")) k.push("lo");
+  return k.length ? `<div class="m103-pills">${k.map(x => `<span class="m103-pill ${M103_PILL[x][0]}">${M103_PILL[x][1]}</span>`).join("")}</div>` : "";
+}
+function ceM103Nota(n) {
+  const d = ceM103(n); if (!d || !CEV.m103 || !(d.nota || d.lim)) return "";
+  return `<div class="m103-nota">${d.lim ? `<p class="m103-lim">🟦 ${formatear(d.lim).replace(/^<p[^>]*>|<\/p>\s*$/g, "")}</p>` : ""}${d.nota ? `<p>🎓 ${formatear(d.nota).replace(/^<p[^>]*>|<\/p>\s*$/g, "")}</p>` : ""}<span class="m103-src">Comentario de la academia (módulo M103); no es texto de la CE.</span></div>`;
+}
 function ceArtHtml(A) {
+  const d = ceM103(A.n), marks = d && CEV.m103 ? d.marks : null;
   return `<article class="ce-art" id="ce-a${A.n}" data-n="${A.n}" style="${ceSt(A.key)}">
-    <div class="ce-marg"><span class="ce-num">Art. ${A.n}</span>${A.t ? `<span class="ce-rub ${A.propio ? "propio" : ""}" title="${A.propio ? "Rótulo propio: no figura en la tabla de la guía" : "Título de la guía M101 (no es texto de la CE)"}">${esc(A.t)}</span>` : ""}</div>
-    <div class="ce-txt">${A.p.map(ceParr).join("")}</div></article>`;
+    <div class="ce-marg"><span class="ce-num">Art. ${A.n}</span>${A.t ? `<span class="ce-rub ${A.propio ? "propio" : ""}" title="${A.propio ? "Rótulo propio: no figura en la tabla de la guía" : "Título de la guía M101 (no es texto de la CE)"}">${esc(A.t)}</span>` : ""}${ceM103Pills(A.n)}</div>
+    <div class="ce-cu"><div class="ce-txt">${A.p.map(p => ceParr(p, marks)).join("")}</div>${ceM103Nota(A.n)}</div></article>`;
+}
+/** Leyenda del subrayado de la academia y interruptor. */
+function ceM103Leyenda() {
+  const M = CE.m103; if (!M) return "";
+  return `<section class="m103-ley card"><label class="m103-tog"><input type="checkbox" id="m103-on" ${CEV.m103 ? "checked" : ""}> 🖍 <b>Subrayado y comentarios de la academia</b> (módulo M103, arts. 1 a 52)</label>
+    <details ${CEV.m103 ? "open" : ""}><summary>Código de colores y niveles de estudio</summary>
+      <ul class="m103-lista">${M.leyenda.map(([k, t, d]) => `<li><span class="m103-pill ${M103_PILL[k][0]}">${esc(M103_PILL[k][1])}</span> ${esc(d)}</li>`).join("")}</ul>
+      <ul class="m103-niv">${M.niveles.map(x => `<li>${formatear(x).replace(/^<p[^>]*>|<\/p>\s*$/g, "")}</li>`).join("")}</ul>
+      <p class="muted" style="font-size:12px;margin:6px 0 0">${esc(M._fuente)}</p></details></section>`;
 }
 function ceBandHtml(key, k, nombre) { const u = CE_UNI[key]; return `<header class="ce-band" style="${ceSt(key)}"><span class="ce-band-k">${esc(k)}</span><span class="ce-band-n">${esc(nombre)}</span><span class="ce-band-r">${rangoU(u)}</span></header>`; }
 function ceVerTexto(c, n) {
@@ -6360,7 +6417,7 @@ function ceVerTexto(c, n) {
   };
   const cuerpo = T.map(t => `<section class="ce-u ce-tit" style="${ceSt(t.id)}" id="ce-u-${t.id}">${ceBandHtml(t.id, t.id === "P" ? "Título preliminar" : "Título " + t.id, t.nombre)}<div class="ce-u-body">${cuerpoT(t)}</div></section>`).join("");
   const disp = CE.disposiciones.map(d => `<article class="ce-art ce-disp" style="${ceSt("D")}"><div class="ce-marg"><span class="ce-num">${esc(d.t.replace("Disposición ", "Disp. "))}</span></div><div class="ce-txt">${d.p.map(ceParr).join("")}</div></article>`).join("");
-  c.innerHTML = `
+  c.innerHTML = ceM103Leyenda() + `
     <div class="ce-nav">
       <div class="ce-nav-fila">
         <label class="ce-ir">Ir al artículo <input type="number" id="ce-ir" min="1" max="169" inputmode="numeric" placeholder="1-169"></label>
@@ -6382,7 +6439,9 @@ function ceVerTexto(c, n) {
   inputIr.addEventListener("change", () => { const v = parseInt(inputIr.value, 10); if (v >= 1 && v <= 169) { ir("ce-a" + v); const e = document.getElementById("ce-a" + v); e.classList.add("ce-foco"); setTimeout(() => e.classList.remove("ce-foco"), 2200); } });
   const q = document.getElementById("ce-q"), cuenta = document.getElementById("ce-cuenta");
   const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-  const textos = arts.map(a => norm(a.textContent));
+  const textos = arts.map(a => norm((a.querySelector(".ce-txt") || a).textContent));
+  const tog = document.getElementById("m103-on");
+  if (tog) tog.addEventListener("change", () => { CEV.m103 = tog.checked; escribirJSON(KEY_M103, CEV.m103); const y = scrollY; ceVerTexto(c); scrollTo(0, y); });
   let t0;
   const filtrar = () => {
     const f = norm(q.value.trim()); CEV.q = q.value;
@@ -6600,7 +6659,7 @@ function cePintarSesion(c) {
         <div class="ce-cara ce-dorso">
           <div class="ce-dorso-cab"><span class="ce-numq col">Art. ${A.n}</span><span class="ce-rubq">${esc(A.t || "")}</span></div>
           <div class="ce-ruta">${A.path.map(p => `<span style="${ceSt(p.key)}" class="ce-miga">${esc(p.k)}${p.nombre ? " · " + esc(p.nombre) : ""}</span>`).join("")}</div>
-          <div class="ce-dorso-txt">${A.p.map(ceParr).join("")}</div>
+          ${ceM103Pills(A.n)}<div class="ce-dorso-txt">${A.p.map(p => ceParr(p, ceM103(A.n) && CEV.m103 ? ceM103(A.n).marks : null)).join("")}</div>${ceM103Nota(A.n)}
           <button class="btn btn-sm" id="ce-volver" type="button">↩ Volver</button>
           <div class="ce-hint">Toca la tarjeta para volver</div>
         </div>
