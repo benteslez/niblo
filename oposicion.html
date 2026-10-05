@@ -3719,7 +3719,7 @@ const CUADROS = (() => {
   // justicia y principios
   c(31,4,1,"Cooperación Ámbito Justicia Interior (CAJI)",{bg:bg.me,go:T.pol}); c(32,4,1,"Defensor del Pueblo",{bg:bg.me,go:T.tjue}); c(31,5,2,"Cooperación Policial y Judicial en materia Penal (CPJP)",{bg:bg.me,go:T.pol}); c(31,6,2,"Eurojust",{go:T.pol}); c(31,7,2,"Espacio de Libertad, Seguridad y Justicia (ELSJ)",{bg:bg.me,go:T.pol});
   c(33,4,1,"Subsidiariedad",{go:T.prin}); c(34,4,1,"Ciudadanía Europea → Sufragio",{go:T.dem}); c(33,5,2,"Protocolo principio de subsidiariedad",{go:T.dem}); c(33,7,1,"Atribución, proporcionalidad y subsidiariedad",{go:T.prin}); c(34,7,1,"Iniciativa Ciudadana Europea (ICE)",{go:T.dem});
-  return { tratados_ue: { titulo:"Cuadro maestro de los Tratados originarios y modificativos", cab:["TRATADO DE PARÍS (6)","TRATADO DE ROMA (6)","ACTA ÚNICA EUROPEA (12)","TRATADO MAASTRICHT (12)","TRATADO AMSTERDAM (15)","TRATADO DE NIZA (15)","TRATADO DE LISBOA (27)"], cabGo:trat, grupos:R.grupos, celdas:X,
+  return { tratados_ue: { titulo:"Cuadro maestro de los Tratados originarios y modificativos", corto:"Cuadro maestro de los Tratados", cab:["TRATADO DE PARÍS (6)","TRATADO DE ROMA (6)","ACTA ÚNICA EUROPEA (12)","TRATADO MAASTRICHT (12)","TRATADO AMSTERDAM (15)","TRATADO DE NIZA (15)","TRATADO DE LISBOA (27)"], cabGo:trat, grupos:R.grupos, celdas:X,
     pie:"*La Alta Autoridad CECA y las Comisiones y los Consejos se unifican en una Comisión y un Consejo con el Tratado de Fusión cuya firma fue el 8/4/1965 y entró en vigor el 1/7/1967", fuente:"Cuadro de la guía M108 (academia); no es texto legal. Cada casilla lleva al apartado o tema del que habla." } };
 })();
 function cuadroHTML(clave) {
@@ -3750,6 +3750,8 @@ function cuadroHTML(clave) {
 document.addEventListener("click", e => {
   const ir = e.target.closest(".cm-ir[data-go]");
   if (ir) { const [id, sec] = ir.dataset.go.split(":"); cuadroCerrar(); abrirTema(id, sec); return; }
+  const cb = e.target.closest("[data-cuadro]");
+  if (cb) { e.preventDefault(); if (typeof cerrarPanel === "function") cerrarPanel(true); const d = document.createElement("div"); d.innerHTML = cuadroHTML(cb.dataset.cuadro); cuadroAmpliar(d.firstElementChild); return; }
   const am = e.target.closest("[data-cm-ampliar]");
   if (am) cuadroAmpliar(am.closest(".cm"));
   const z = e.target.closest("[data-cm-z]");
@@ -3970,6 +3972,8 @@ function guardarAbiertos(id) { try { sessionStorage.setItem("gestion_abiertos_" 
 function htmlLateral(id) {
   const t = estado.temas[id], p = TEMA_POR_ID[id], r = repasoDe(t);
   const pct = r.n ? Math.round(r.hechos / r.n * 100) : 0;
+  const cuadros = [...new Set(t.sections.flatMap(x => [...String(x.body).matchAll(/@@cuadro (\w+)@@/g)].map(m => m[1])))].filter(k => CUADROS[k]);
+  const botonCuadro = k => `<button class="herr" data-cuadro="${k}"><span class="herr-ico" aria-hidden="true">🧩</span><span>${esc(CUADROS[k].corto || CUADROS[k].titulo)}</span></button>`;
   const boton = h => `<button class="herr ${h.practica ? "prac" : ""}" data-herr="${h.id}"><span class="herr-ico" aria-hidden="true">${h.ico}</span><span>${h.txt}</span></button>`;
   return `
     <div class="lat-cab"><div class="lat-sup">Bloque ${BLOQUE_POR_CODE[p.b].rom} · ${esc(BLOQUE_POR_CODE[p.b].nombre)}</div><div class="lat-tit">Tema ${esc(p.c)}</div></div>
@@ -3984,6 +3988,7 @@ function htmlLateral(id) {
     <div class="lat-k">Herramientas</div>
     <div class="herr-grid">
       ${HERRAMIENTAS.filter(h => !h.practica).slice(0, 2).map(boton).join("")}
+      ${cuadros.map(botonCuadro).join("")}
       <div class="practica"><div class="practica-k">Práctica activa</div><div class="herr-grid">${HERRAMIENTAS.filter(h => h.practica).map(boton).join("")}</div></div>
       ${HERRAMIENTAS.filter(h => !h.practica).slice(2).map(boton).join("")}
     </div>
