@@ -1212,6 +1212,118 @@ body { padding-bottom:calc(76px + env(safe-area-inset-bottom)); }
 .art-lit .acc > summary { cursor:pointer; padding:9px 12px; font-weight:800; font-size:13.5px; background:var(--bg-soft); }
 .art-lit .acc > div { padding:6px 12px 10px; font-size:14px; }
 
+
+/* ===== Constitución · pills · organigrama · test ===== */
+/* ---- Pills del desarrollo del tema ----------------------------------------- */
+.pill-imp, .pill-pre { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.05em; padding:1px 8px; border-radius:var(--r-pill); vertical-align:middle; margin:0 4px 0 0; line-height:1.5; white-space:nowrap; }
+.pill-imp { background:#dc2626; color:#fff; }
+.pill-pre { background:#e2e8f0; color:#334155; border:1px solid #94a3b8; }
+:root[data-tema="oscuro"] .pill-pre { background:#334155; color:#e2e8f0; border-color:#64748b; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema]) .pill-pre { background:#334155; color:#e2e8f0; border-color:#64748b; } }
+.ce-tag { display:inline-block; background:var(--c); color:var(--ct); font-weight:800; font-size:.92em; padding:0 8px; border-radius:6px; white-space:nowrap; }
+.ce-botones { display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); margin:0 0 16px; }
+.ce-botones .dash-card { margin:0; padding:14px 14px; }
+.tema2-fus { font-size:11.5px; font-weight:800; color:var(--accent); margin:2px 0 6px; }
+.ce-ir-btn { margin:2px 4px 2px 0; }
+.fusion-nota { border-left:4px solid var(--accent); background:var(--accent-bg); padding:10px 14px; border-radius:8px; margin:10px 0 14px; font-size:14px; }
+
+/* ---- Constitución: texto -------------------------------------------------- */
+.ce-nav { position:sticky; top:64px; z-index:20; background:var(--bg); padding:8px 0 6px; margin:0 0 10px; border-bottom:1px solid var(--line); }
+.ce-nav-fila { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.ce-ir { font-size:13px; font-weight:700; display:flex; gap:6px; align-items:center; }
+.ce-ir input { width:84px; }
+#ce-q { flex:1; min-width:170px; }
+.ce-chips { display:flex; gap:5px; flex-wrap:wrap; margin:7px 0 0; }
+.ce-chip { background:var(--c); color:var(--ct); font-weight:800; font-size:12px; padding:2px 9px; border-radius:var(--r-pill); text-decoration:none; }
+.ce-migas { display:flex; gap:5px; align-items:center; flex-wrap:wrap; min-height:22px; margin-top:6px; }
+.ce-miga { background:var(--c); color:var(--ct); font-size:11.5px; font-weight:700; padding:1px 8px; border-radius:6px; }
+.ce-miga-n { font-weight:800; font-size:12.5px; margin-left:4px; }
+.ce-u { margin:0 0 16px; }
+.ce-u[hidden], .ce-art[hidden] { display:none; }
+.ce-band { display:flex; gap:4px 12px; align-items:baseline; flex-wrap:wrap; background:var(--c); color:var(--ct); padding:8px 14px; border-radius:8px; margin:0 0 6px; }
+.ce-band-k { font-weight:800; font-size:14px; letter-spacing:.03em; text-transform:uppercase; }
+.ce-band-n { font-weight:600; font-size:14px; flex:1; min-width:120px; }
+.ce-band-r { font-size:12px; font-weight:700; opacity:.9; white-space:nowrap; }
+.ce-u-body { border-left:5px solid var(--c); padding-left:12px; margin-left:3px; }
+.ce-u .ce-u { margin:10px 0 0; }
+.ce-art { display:grid; grid-template-columns:210px minmax(0, 1fr); gap:4px 18px; padding:12px 0; border-top:1px solid var(--line-soft); }
+.ce-art:first-child { border-top:none; }
+.ce-marg { align-self:start; position:sticky; top:150px; }
+.ce-num { display:inline-block; background:var(--c); color:var(--ct); font-weight:800; font-size:13.5px; padding:2px 10px; border-radius:6px; }
+.ce-rub { display:block; margin-top:6px; font-weight:800; font-size:13px; line-height:1.3; color:color-mix(in srgb, var(--c) 76%, var(--text)); }
+.ce-rub.propio { font-style:italic; font-weight:700; }
+.ce-txt p { margin:0 0 6px; font-size:15px; line-height:1.6; }
+.ce-txt p.ce-li { margin-left:18px; }
+.ce-foco { animation:ce-foco 2.2s ease; }
+@keyframes ce-foco { 0%, 60% { background:color-mix(in srgb, var(--c) 22%, transparent); } 100% { background:transparent; } }
+.ce-pream p { margin:0 0 8px; font-size:15px; line-height:1.6; }
+.ce-pream p.ce-c { text-align:center; font-weight:800; letter-spacing:.1em; margin:12px 0; }
+.ce-pream p.ce-f { text-align:right; font-weight:700; }
+@media (max-width:760px) {
+  .ce-art { grid-template-columns:1fr; }
+  .ce-marg { position:static; display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; }
+  .ce-rub { margin-top:0; }
+  .ce-u-body { padding-left:8px; }
+  .ce-nav { top:60px; }
+}
+
+/* ---- Organigrama ---------------------------------------------------------- */
+.og { display:grid; gap:10px; }
+.og-parte { background:var(--c); color:#fff; border-radius:8px; padding:8px 14px; display:flex; justify-content:space-between; gap:12px; font-size:14px; letter-spacing:.03em; }
+.og-fila { display:flex; gap:14px; align-items:stretch; }
+.og-tit, .og-capc, .og-sec, .og-art14 { display:flex; flex-direction:column; gap:2px; text-decoration:none; color:var(--text); border-left:8px solid var(--c); background:color-mix(in srgb, var(--c) 13%, var(--bg-elev)); border-radius:8px; padding:8px 12px; font-size:13.5px; line-height:1.3; border-top:1px solid var(--line-soft); border-right:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); }
+.og-tit:hover, .og-capc:hover, .og-sec:hover, .og-art14:hover { background:color-mix(in srgb, var(--c) 24%, var(--bg-elev)); }
+.og-tit { flex:0 0 250px; justify-content:center; }
+.og-tit b, .og-capc b, .og-sec b, .og-art14 b { color:color-mix(in srgb, var(--c) 78%, var(--text)); font-size:12.5px; letter-spacing:.03em; }
+.og-tit span, .og-capc span, .og-sec span, .og-art14 span { font-weight:600; }
+.og small { color:var(--text-muted); font-weight:700; font-size:11.5px; }
+.og-nota { font-size:11.5px; color:var(--text-muted); font-style:italic; }
+.og-caps { flex:1; min-width:0; display:flex; flex-direction:column; gap:8px; border-left:3px solid var(--line); border-radius:0 0 0 14px; padding:2px 0 2px 14px; justify-content:center; }
+.og-cap { display:flex; gap:12px; align-items:stretch; }
+.og-capc { flex:0 0 270px; justify-content:center; }
+.og-secs { flex:1; display:flex; flex-direction:column; gap:6px; border-left:3px solid var(--line); padding-left:12px; justify-content:center; min-width:0; }
+.og-pie { display:grid; gap:12px; grid-template-columns:minmax(180px, 230px) 1fr; margin-top:6px; }
+.og-disp, .og-fechas { border:2px solid var(--text); border-radius:6px; padding:8px 12px; font-size:13.5px; background:var(--bg-elev); }
+.og-disp ul, .og-fechas ul { margin:4px 0 0; padding-left:18px; }
+.og-fechas small { display:block; margin-top:6px; }
+@media (max-width:820px) {
+  .og-fila { flex-direction:column; gap:6px; }
+  .og-tit { flex:none; }
+  .og-caps { margin-left:14px; padding-left:10px; }
+  .og-cap { flex-direction:column; gap:6px; }
+  .og-capc { flex:none; }
+  .og-secs { margin-left:10px; padding-left:10px; }
+  .og-pie { grid-template-columns:1fr; }
+}
+
+/* ---- Test Constitución ------------------------------------------------------ */
+.ce-card { perspective:1600px; margin:14px 0 6px; }
+.ce-in { display:grid; transition:transform .6s cubic-bezier(.2, .7, .2, 1); transform-style:preserve-3d; }
+.ce-card.flip .ce-in { transform:rotateY(180deg); }
+.ce-cara { grid-area:1 / 1; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:var(--bg-elev); border:1px solid var(--line); border-top:7px solid var(--c); border-radius:var(--r-lg); box-shadow:var(--sh-1); padding:22px 22px 20px; min-width:0; }
+.ce-frente { text-align:center; cursor:pointer; }
+.ce-card.rev .ce-frente { cursor:default; }
+.ce-dorso { transform:rotateY(180deg); }
+.ce-numq { display:inline-block; font-size:46px; font-weight:800; letter-spacing:-.02em; border-radius:14px; padding:2px 22px; border:2px dashed var(--line); color:var(--text-muted); transition:background .35s, color .35s, border-color .35s; font-variant-numeric:tabular-nums; }
+.ce-numq.col { background:var(--c); color:var(--ct); border:2px solid var(--c); }
+.ce-ruta { display:flex; gap:5px; flex-wrap:wrap; justify-content:center; margin:0 0 10px; min-height:22px; }
+.ce-dorso .ce-ruta { justify-content:flex-start; }
+.ce-miga.oculta { visibility:hidden; }
+.ce-baja { display:grid; grid-template-rows:0fr; opacity:0; transition:grid-template-rows .5s ease, opacity .5s ease; }
+.ce-card.rev .ce-baja { grid-template-rows:1fr; opacity:1; }
+.ce-baja-in { overflow:hidden; min-height:0; }
+.ce-rubq { font-weight:800; font-size:21px; line-height:1.3; margin:14px 0 10px; color:color-mix(in srgb, var(--c) 82%, var(--text)); display:block; }
+.ce-ver { margin-top:6px; }
+.ce-hint { color:var(--text-muted); font-size:13px; margin-top:14px; }
+.ce-hint kbd, .srs-teclas kbd { font:inherit; font-size:11px; padding:1px 5px; border:1px solid var(--line); border-radius:4px; background:var(--bg-elev); }
+.ce-dorso-cab { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:0 0 8px; }
+.ce-dorso-cab .ce-numq { font-size:26px; padding:0 14px; border-radius:10px; }
+.ce-dorso-cab .ce-rubq { margin:0; font-size:18px; }
+.ce-dorso-txt { margin:10px 0 14px; max-height:min(52vh, 480px); overflow-y:auto; }
+.ce-dorso-txt p { margin:0 0 7px; font-size:15px; line-height:1.55; }
+.ce-dorso-txt p.ce-li { margin-left:18px; }
+@media (prefers-reduced-motion: reduce) { .ce-in, .ce-baja { transition:none; } }
+
 </style>
 </head>
 <body>
@@ -1327,7 +1439,7 @@ const BLOQUES = [
 
 const TEMAS_PROGRAMA = {
   B1: [
-    { c:"I.1", e:"CE: estructura y contenido; reforma",
+    { c:"I.1", e:"La Constitución: estructura, derechos, garantías, TC, Defensor y reforma",
       n:"CE BOE-A-1978-31229: Título preliminar y Título X (arts. 166-169). Reformas de 1992 (art. 13.2), 2011 (art. 135) y 2024 (art. 49).",
       i:"Sinopsis de la CE (Congreso) (comentario oficial por artículo).",
       p:"Preguntable: procedimientos ordinario (167) y agravado (168); reformas habidas y su contenido.",
@@ -2690,6 +2802,7 @@ async function cargarTemasPublicados() {
     idx = await r.json();
   } catch (_) { return; }
   if (!idx || idx._format !== "temas_publicados_v1" || !idx.temas) return;
+  for (const id of (idx.retirados || [])) if (estado.temas[id]) { try { await quitarTema(id, true); } catch (_) {} }
   const sellos = leerJSON(KEY_SELLOS, {});
   const antes = new Set(Object.keys(estado.temas));
   let nuevos = 0;
@@ -2768,6 +2881,7 @@ function ruta() {
   if (p[0] === "guia") return { v:"guia" };
   if (p[0] === "plan") return { v:"plan", tab:p[1] || "plantilla" };
   if (p[0] === "registro") return { v:"registro" };
+  if (p[0] === "ce") return { v:"ce", tab:p[1] || "texto", n:+p[2] || 0 };
   return { v:"inicio" };
 }
 let rutaPrevia = "";
@@ -2775,6 +2889,7 @@ function render() {
   edGuardarYa();                  // lo tecleado en el editor no se pierde al navegar
   S.renderPendiente = false;
   const r = ruta();
+  if ((r.v === "tema" || r.v === "leer" || r.v === "editar") && FUSION[r.id]) { location.replace("#/tema/" + FUSION[r.id] + (r.v === "tema" ? "" : "/" + r.v)); return; }
   cerrarPanel(true);
   if (r.v !== "leer") vozParar();
   if (r.v !== "real" && typeof salirPantallaCompleta === "function") salirPantallaCompleta();
@@ -2787,7 +2902,7 @@ function render() {
     titulo.textContent = "Oposición";
     renderInicio();
   } else {
-    const destino = r.v === "tema" ? "#/bloque/" + TEMA_POR_ID[r.id].b : (r.v === "editar" || r.v === "leer") ? "#/tema/" + r.id : "#/";
+    const destino = r.v === "tema" ? "#/bloque/" + TEMA_POR_ID[r.id].b : (r.v === "editar" || r.v === "leer") ? "#/tema/" + r.id : r.v === "ce" ? "#/bloque/B1" : "#/";
     atras.href = destino; atras.setAttribute("aria-label", "Volver"); atras.title = "Volver";
     if (r.v === "bloque") { document.body.dataset.b = r.b; titulo.textContent = "Bloque " + BLOQUE_POR_CODE[r.b].rom; renderBloque(r.b, r.hub); }
     else if (r.v === "tema") { document.body.dataset.b = TEMA_POR_ID[r.id].b; titulo.textContent = "Tema " + TEMA_POR_ID[r.id].c; renderTema(r.id); }
@@ -2798,6 +2913,7 @@ function render() {
     else if (r.v === "guia") { titulo.textContent = "Guía de fuentes"; renderGuia(); }
     else if (r.v === "plan") { titulo.textContent = "Plan de estudio"; renderPlan(r.tab); }
     else if (r.v === "registro") { titulo.textContent = "Registro de estudio"; renderRegistro(); }
+    else if (r.v === "ce") { titulo.textContent = "Constitución Española"; renderCE(r.tab, r.n); }
   }
   if (clave !== rutaPrevia) { window.scrollTo(0, 0); rutaPrevia = clave; }
   if (typeof cronSeguir === "function") cronSeguir(r);
@@ -2886,6 +3002,11 @@ function renderBloque(code, hub) {
       <div class="bloque-head-txt"><div class="bloque-sub">Bloque ${b.rom} · módulos ${b.modulos.join(", ")}</div><h1>${esc(b.nombre)}</h1></div>
       <span class="bloque-cargados">${cargados.length}/${b.total} temas cargados</span>
     </div>
+    ${code === "B1" ? `<div class="ce-botones">
+      <button class="dash-card" data-ir="#/ce/texto"><span class="dash-ico" aria-hidden="true">📜</span><span><span class="dash-t">Constitución Española</span><span class="dash-d">Texto completo y literal del BOE, con epígrafes y un color por título</span></span></button>
+      <button class="dash-card" data-ir="#/ce/organigrama"><span class="dash-ico" aria-hidden="true">🗺</span><span><span class="dash-t">Organigrama</span><span class="dash-d">Partes, títulos, capítulos y secciones de un vistazo</span></span></button>
+      <button class="dash-card real" data-ir="#/ce/test"><span class="dash-ico" aria-hidden="true">🧭</span><span><span class="dash-t">Test Constitución</span><span class="dash-d">Repaso espaciado de los artículos 1 a 55</span></span></button>
+    </div>` : ""}
     <div class="seg" role="tablist">
       <button role="tab" class="${hub ? "" : "on"}" data-ir="#/bloque/${code}">📚 Temas</button>
       <button role="tab" class="${hub ? "on" : ""}" data-ir="#/bloque/${code}/hub">🛠 Hub del bloque</button>
@@ -2934,13 +3055,29 @@ function renderTemasBloque(panel, b) {
   }));
   activarDrop(panel.querySelector(".drop"));
 }
+/** Temas cuyo contenido vive en otro (fusionados como en la plantilla del plan de estudio, módulos de la academia). */
+/** Epígrafe literal del tema; si reúne otros (fusionados), los de todos, en orden. */
+const epigrafeDe = p => [p.l].concat(Object.keys(FUSION).filter(k => FUSION[k] === p.id).map(k => TEMA_POR_ID[k].l)).join(" ");
+const FUSION = { B1T02:"B1T01", B1T03:"B1T01" };
 function tarjetaTema(p) {
+  if (FUSION[p.id]) {
+    const d = TEMA_POR_ID[FUSION[p.id]];
+    return `
+    <button class="card tema2 pendiente" data-tema="${d.id}">
+      <div class="tema2-cab"><span class="tema2-k">Tema ${p.num}</span>${p.m ? `<span class="tema2-mod" title="Módulo de la academia">${esc(p.m)}</span>` : ""}</div>
+      <div class="tema2-num">${String(p.num).padStart(2, "0")}</div>
+      <div class="tema2-tit">${esc(p.s)}</div>
+      <div class="tema2-epi" title="${esc(p.l)}">${esc(p.c)} · ${esc(p.l)}</div>
+      <div class="tema2-pend">Fusionado en el tema ${esc(d.c)}, como en la plantilla del plan de estudio</div>
+      <span class="btn btn-primary btn-sm tema2-btn">Ir al tema ${esc(d.c)} →</span>
+    </button>`;
+  }
   const t = estado.temas[p.id];
   const cab = `
       <div class="tema2-cab"><span class="tema2-k">Tema ${p.num}</span>${pillCritica(p.id)}${p.m ? `<span class="tema2-mod" title="Módulo de la academia">${esc(p.m)}</span>` : ""}</div>
       <div class="tema2-num">${String(p.num).padStart(2, "0")}</div>
       <div class="tema2-tit">${esc(p.s)}</div>
-      <div class="tema2-epi" title="${esc(p.l)}">${esc(p.c)} · ${esc(p.l)}</div>`;
+      <div class="tema2-epi" title="${esc(p.l)}">${esc(p.c)} · ${esc(p.l)}</div>${Object.keys(FUSION).filter(k => FUSION[k] === p.id).length ? `<div class="tema2-fus">Incluye ${Object.keys(FUSION).filter(k => FUSION[k] === p.id).map(k => esc(TEMA_POR_ID[k].c)).join(" y ")}</div>` : ""}`;
   if (!t) return `
     <button class="card tema2 pendiente ${p.tac ? "lila-borde" : ""}" data-tema="${p.id}">
       ${cab}
@@ -2977,7 +3114,7 @@ function renderTema(id) {
   vista().innerHTML = `
     <div class="bloque-sub" style="margin-top:6px">Bloque ${b.rom} · ${esc(b.nombre)}</div>
     <h1 class="titulo-grande">${esc(p.c)}. ${esc(p.e)}</h1>
-    <blockquote class="epi-oficial"><span>Epígrafe oficial · ${esc(PROGRAMA_REF)}, anexo VII</span>${esc(p.l)}</blockquote>
+    <blockquote class="epi-oficial"><span>Epígrafe oficial · ${esc(PROGRAMA_REF)}, anexo VII</span>${esc(epigrafeDe(p))}</blockquote>
     <div class="tags" style="margin:4px 0 20px">
       ${pillCritica(id)}${tagVigencia(p)}${tagFuente(p)}${tagTac(p)}
       ${sem === "verde" ? '<span class="tag ok" title="Solo BOE y estable: se puede preparar ya, de una vez">● Tema verde</span>' : ""}
@@ -3343,6 +3480,7 @@ function actualizarContadores() {
    si lo hay), y un bloque literal «>» cuya primera línea es «[[COD]]» lleva esa
    etiqueta en lugar de BOE. */
 const FUENTES = {
+  M101:{ n:"Módulo M101", c:"#0369a1", t:"Material de la academia (guía de estudio y vídeo del módulo M101), aportado por el usuario: no es texto legal" },
   BOE:{ n:"BOE", c:"#b91c1c", t:"Texto publicado en el Boletín Oficial del Estado (fuente oficial)" },
   DOUE:{ n:"DOUE", c:"#1d4ed8", t:"Diario Oficial de la Unión Europea, en EUR-Lex (fuente oficial)" },
   PE:{ n:"Parlamento Europeo", c:"#1e40af", t:"Parlamento Europeo (europarl.europa.eu)" },
@@ -3373,6 +3511,10 @@ const pillFuente = (cod, url, extra) => {
 function formatear(txt) {
   const enLinea = x => esc(x)
     .replace(/\[\[([A-Z_]+)(?:\|(https?:[^\]\s]+))?\]\]/g, (m, cod, url) => pillFuente(cod, url ? url.replace(/&amp;/g, "&") : ""))
+    .replace(/\{\{IMPORTANTE\}\}/g, '<span class="pill-imp">IMPORTANTE</span>')
+    .replace(/\{\{ir:(#\/[^|}]+)\|([^}]+)\}\}/g, '<a class="btn btn-sm ce-ir-btn" href="$1">$2</a>')
+    .replace(/\{\{PRESCINDIBLE\}\}/g, '<span class="pill-pre">PRESCINDIBLE</span>')
+    .replace(/\{\{c:([A-Z0-9.]+)~([^}]+)\}\}/g, (m, k, t) => `<span class="ce-tag" style="${ceSt(k)}">${t}</span>`)
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/(^|[^*\w])\*(?!\s)([^*]+?)\*(?!\w)/g, "$1<em>$2</em>")
     .replace(/(^|[^=\w-])(BOE-A-\d{4}-\d+)/g, (m, pre, id) => `${pre}<a href="https://www.boe.es/buscar/act.php?id=${id}" target="_blank" rel="noopener">${id}</a>`);
@@ -3522,7 +3664,7 @@ function renderLeer(id) {
       <div class="hero-sup">Bloque ${b.rom} · ${esc(b.nombre)} ${pillCritica(id)}</div>
       <div class="hero-num">Tema ${esc(p.c)}</div>
       <h1>${esc(p.e)}</h1>
-      <p class="hero-epi" title="Epígrafe oficial · ${esc(PROGRAMA_REF)}, anexo VII">«${esc(p.l)}»</p>
+      <p class="hero-epi" title="Epígrafe oficial · ${esc(PROGRAMA_REF)}, anexo VII">«${esc(epigrafeDe(p))}»</p>
       ${lleno(t.subtitle) ? `<p class="hero-sub">${esc(t.subtitle)}</p>` : ""}
       ${chips.length ? `<div class="hero-chips">${chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>` : ""}
       <div class="hero-acc">
@@ -5993,7 +6135,7 @@ function artsDeTarjeta(tid, f) {
     const cand = Object.values(idx).filter(E => E.n === n); if (!cand.length) return;
     const normas = [...new Set(cand.map(E => E.norma))];
     let ok = cand;
-    if (normas.length > 1) { ok = cand.filter(E => normaCita(E, txt)); if (!ok.length) return; }
+    if (normas.length > 1) { ok = cand.filter(E => normaCita(E, txt)); if (!ok.length) ok = cand.filter(E => !E.norma); if (!ok.length) return; }
     const E = ok[0]; if (!propios.some(p => p.n === E.n && p.norma === E.norma)) propios.push({ tid, n:E.n, norma:E.norma });
   });
   const rel = [];
@@ -6031,6 +6173,279 @@ function ligarChipsArt(raiz, antes) {
     e.stopPropagation();
     const [t, n, no] = b.dataset.art.split("|"); if (antes) antes(); abrirArt(t, n, no);
   }));
+}
+
+
+/* ========================================================================
+   (i) CONSTITUCIÓN ESPAÑOLA · organigrama · Test Constitución
+   Datos: temas/ce.json (herramientas/oposicion/ce_datos.py): texto literal
+   del BOE consolidado vigente (BOE-A-1978-31229). Los «títulos de artículo»
+   son los de la guía M101 (p. 10), no texto de la CE (la CE no los tiene).
+   Rutas: #/ce[/texto[/N]] · #/ce/organigrama · #/ce/test
+   Progreso del test (SRS, sin SQL nuevo): clave «CEQ:<n>» en prog.mapa.
+   ====================================================================== */
+/** Color de cada unidad de la CE (título, capítulo, sección). El título I tiene un color por capítulo. */
+const CE_COL = {
+  "P":"#64748b", "I":"#7c3aed", "I.1":"#0d9488", "I.2":"#be123c", "I.2.1":"#dc2626", "I.2.2":"#ea580c", "I.3":"#65a30d", "I.4":"#0284c7", "I.5":"#c026d3",
+  "II":"#92400e", "III":"#2563eb", "III.1":"#60a5fa", "III.2":"#1e3a8a", "III.3":"#0e7490", "IV":"#15803d", "V":"#db2777", "VI":"#ca8a04", "VII":"#0f766e",
+  "VIII":"#3f6212", "VIII.1":"#84cc16", "VIII.2":"#4d7c0f", "VIII.3":"#a3e635", "IX":"#581c87", "X":"#374151", "D":"#78716c"
+};
+const ceColor = k => CE_COL[k] || "#64748b";
+const ceTexto = hex => { const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255; return (0.299 * r + 0.587 * g + 0.114 * b) > 165 ? "#111827" : "#ffffff"; };
+const ceSt = k => `--c:${ceColor(k)};--ct:${ceTexto(ceColor(k))}`;
+let CE = null, cePromesa = null;
+const CE_ART = {}, CE_UNI = {};   // CE_ART[n] = {n, t, propio, p, key, path:[{key, k, nombre}]} · CE_UNI[key] = {key, k, nombre, desde, hasta}
+const cap1 = s => { s = String(s).toLowerCase(); return s.charAt(0).toUpperCase() + s.slice(1); };
+function ceIndexar() {
+  const reg = (key, k, nombre, A) => { const u = CE_UNI[key] || (CE_UNI[key] = { key, k, nombre, desde:999, hasta:0 }); A.forEach(a => { u.desde = Math.min(u.desde, a.n); u.hasta = Math.max(u.hasta, a.n); }); };
+  const rec = (arts, key, path) => arts.forEach(a => { CE_ART[a.n] = Object.assign({ key, path }, a); path.forEach(p => reg(p.key, p.k, p.nombre, [a])); });
+  CE.titulos.forEach(t => {
+    const pT = { key:t.id, k:t.id === "P" ? "Título preliminar" : "Título " + t.id, nombre:t.nombre };
+    rec(t.arts, t.id, [pT]);
+    t.caps.forEach((c, i) => {
+      const kc = t.id + "." + (i + 1), pC = { key:kc, k:cap1(c.num), nombre:c.nombre };
+      rec(c.arts, kc, [pT, pC]);
+      c.secs.forEach((s, j) => {
+        const ks = kc + "." + (j + 1), m = s.nombre.match(/^(Sección \d\.ª)\s+(.*)$/);
+        rec(s.arts, ks, [pT, pC, { key:ks, k:m ? m[1] : "Sección", nombre:m ? m[2] : s.nombre }]);
+      });
+    });
+  });
+}
+function ceCargar() {
+  if (CE) return Promise.resolve(CE);
+  if (!cePromesa) cePromesa = (async () => {
+    let v = "";
+    try { const i = await (await fetch("temas/indice.json", { cache:"no-cache" })).json(); v = i.ce || ""; } catch (_) {}
+    const r = await fetch("temas/ce.json" + (v ? "?v=" + encodeURIComponent(v) : ""));
+    if (!r.ok) throw new Error("ce.json " + r.status);
+    CE = await r.json(); ceIndexar(); return CE;
+  })().catch(e => { cePromesa = null; throw e; });
+  return cePromesa;
+}
+const rangoU = u => u ? (u.desde === u.hasta ? "art. " + u.desde : "arts. " + u.desde + "–" + u.hasta) : "";
+const CEV = { tab:"texto", q:"" };
+const CE_TABS = [{ id:"texto", txt:"📜 Texto completo" }, { id:"organigrama", txt:"🗺 Organigrama" }, { id:"test", txt:"🧭 Test Constitución" }];
+
+function renderCE(tab, n) {
+  CEV.tab = CE_TABS.some(t => t.id === tab) ? tab : "texto";
+  if (CEV.tab === "test") CT.armado = false;
+  vista().innerHTML = `
+    <h1 class="titulo-grande">📜 Constitución Española</h1>
+    <p class="view-sub">Texto literal del <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229" target="_blank" rel="noopener">BOE consolidado vigente</a>, con su estructura, un color por título y capítulo, el organigrama y el test de repaso por artículos.</p>
+    <div class="pl-tabs" role="tablist" aria-label="Constitución">${CE_TABS.map(t => `<button class="chip ${t.id === CEV.tab ? "active" : ""}" role="tab" data-cet="${t.id}">${t.txt}</button>`).join("")}</div>
+    <div id="ce-cuerpo"><div class="empty"><div class="ico">⏳</div><h3>Cargando la Constitución…</h3></div></div>`;
+  vista().querySelectorAll("[data-cet]").forEach(b => b.addEventListener("click", () => ir("#/ce/" + b.dataset.cet)));
+  ceCargar().then(() => {
+    const r = ruta(); if (r.v !== "ce") return;
+    const c = document.getElementById("ce-cuerpo"); if (!c) return;
+    if (CEV.tab === "texto") ceVerTexto(c, n); else if (CEV.tab === "organigrama") ceVerOrg(c); else ceVerTest(c);
+  }).catch(() => { const c = document.getElementById("ce-cuerpo"); if (c) c.innerHTML = `<div class="empty"><div class="ico">⚠️</div><h3>No se pudo cargar la Constitución</h3><p>Necesita conexión la primera vez; después queda guardada.</p></div>`; });
+}
+
+/* ---- Texto completo ------------------------------------------------------ */
+const ceParr = p => `<p class="${/^[a-zñ]\) /.test(p) ? "ce-li" : ""}">${esc(p)}</p>`;
+function ceArtHtml(A) {
+  return `<article class="ce-art" id="ce-a${A.n}" data-n="${A.n}" style="${ceSt(A.key)}">
+    <div class="ce-marg"><span class="ce-num">Art. ${A.n}</span>${A.t ? `<span class="ce-rub ${A.propio ? "propio" : ""}" title="${A.propio ? "Rótulo propio: no figura en la tabla de la guía" : "Título de la guía M101 (no es texto de la CE)"}">${esc(A.t)}</span>` : ""}</div>
+    <div class="ce-txt">${A.p.map(ceParr).join("")}</div></article>`;
+}
+function ceBandHtml(key, k, nombre) { const u = CE_UNI[key]; return `<header class="ce-band" style="${ceSt(key)}"><span class="ce-band-k">${esc(k)}</span><span class="ce-band-n">${esc(nombre)}</span><span class="ce-band-r">${rangoU(u)}</span></header>`; }
+function ceVerTexto(c, n) {
+  const T = CE.titulos;
+  const cuerpoT = t => {
+    let h = t.arts.map(ceArtHtml).join("");
+    t.caps.forEach((cp, i) => {
+      const kc = t.id + "." + (i + 1);
+      h += `<section class="ce-u" style="${ceSt(kc)}" id="ce-u-${kc}">${ceBandHtml(kc, cap1(cp.num), cp.nombre)}<div class="ce-u-body">${cp.arts.map(ceArtHtml).join("")}${cp.secs.map((s, j) => {
+        const ks = kc + "." + (j + 1), m = s.nombre.match(/^(Sección \d\.ª)\s+(.*)$/);
+        return `<section class="ce-u" style="${ceSt(ks)}">${ceBandHtml(ks, m ? m[1] : "Sección", m ? m[2] : s.nombre)}<div class="ce-u-body">${s.arts.map(ceArtHtml).join("")}</div></section>`;
+      }).join("")}</div></section>`;
+    });
+    return h;
+  };
+  const cuerpo = T.map(t => `<section class="ce-u ce-tit" style="${ceSt(t.id)}" id="ce-u-${t.id}">${ceBandHtml(t.id, t.id === "P" ? "Título preliminar" : "Título " + t.id, t.nombre)}<div class="ce-u-body">${cuerpoT(t)}</div></section>`).join("");
+  const disp = CE.disposiciones.map(d => `<article class="ce-art ce-disp" style="${ceSt("D")}"><div class="ce-marg"><span class="ce-num">${esc(d.t.replace("Disposición ", "Disp. "))}</span></div><div class="ce-txt">${d.p.map(ceParr).join("")}</div></article>`).join("");
+  c.innerHTML = `
+    <div class="ce-nav">
+      <div class="ce-nav-fila">
+        <label class="ce-ir">Ir al artículo <input type="number" id="ce-ir" min="1" max="169" inputmode="numeric" placeholder="1-169"></label>
+        <input type="search" id="ce-q" placeholder="Buscar en la Constitución…" aria-label="Buscar en la Constitución" value="${esc(CEV.q)}">
+        <span class="muted" id="ce-cuenta"></span>
+      </div>
+      <div class="ce-chips">${T.map(t => `<a class="ce-chip" href="#ce-u-${t.id}" data-ir="ce-u-${t.id}" style="${ceSt(t.id)}" title="${esc((t.id === "P" ? "Título preliminar" : "Título " + t.id) + " · " + t.nombre + " · " + rangoU(CE_UNI[t.id]))}">${t.id === "P" ? "Prel." : t.id}</a>`).join("")}<a class="ce-chip" href="#ce-disp" data-ir="ce-disp" style="${ceSt("D")}">Disp.</a></div>
+      <div class="ce-migas" id="ce-migas" aria-live="off"></div>
+    </div>
+    <section class="ce-u ce-pre" style="${ceSt("D")}"><header class="ce-band" style="${ceSt("D")}"><span class="ce-band-k">Preámbulo</span></header><div class="ce-u-body ce-pream">${CE.preambulo.map(([cl, t]) => `<p class="${/centro/.test(cl) ? "ce-c" : ""}">${esc(t)}</p>`).join("")}</div></section>
+    ${cuerpo}
+    <section class="ce-u" id="ce-disp" style="${ceSt("D")}"><header class="ce-band" style="${ceSt("D")}"><span class="ce-band-k">Disposiciones</span><span class="ce-band-n">4 adicionales · 9 transitorias · 1 derogatoria · 1 final</span></header><div class="ce-u-body">${disp}</div></section>
+    <section class="ce-u ce-pre" style="${ceSt("D")}"><div class="ce-u-body ce-pream">${CE.firma.map(([cl, t]) => `<p class="${/firma/.test(cl) ? "ce-f" : ""}">${esc(t)}</p>`).join("")}</div></section>
+    <p class="muted" style="font-size:12.5px;margin-top:14px">Fuente: ${CE._fuente}. Los títulos que van junto al número de artículo son los de la guía de estudio M101 (arts. 1 a 52): son un recurso para estudiar, no texto de la Constitución. Los de los arts. 53 a 55 son un rótulo propio.</p>`;
+  const arts = Array.from(c.querySelectorAll(".ce-art[data-n]"));
+  const ir = x => { const e = document.getElementById(x); if (e) e.scrollIntoView({ behavior:"smooth", block:"start" }); };
+  c.querySelectorAll("[data-ir]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); ir(a.dataset.ir); }));
+  const inputIr = document.getElementById("ce-ir");
+  inputIr.addEventListener("change", () => { const v = parseInt(inputIr.value, 10); if (v >= 1 && v <= 169) { ir("ce-a" + v); const e = document.getElementById("ce-a" + v); e.classList.add("ce-foco"); setTimeout(() => e.classList.remove("ce-foco"), 2200); } });
+  const q = document.getElementById("ce-q"), cuenta = document.getElementById("ce-cuenta");
+  const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const textos = arts.map(a => norm(a.textContent));
+  let t0;
+  const filtrar = () => {
+    const f = norm(q.value.trim()); CEV.q = q.value;
+    let n = 0;
+    arts.forEach((a, i) => { const ok = !f || textos[i].includes(f); a.hidden = !ok; if (ok) n++; });
+    c.querySelectorAll(".ce-u").forEach(u => { u.hidden = !!f && !u.querySelector(".ce-art:not([hidden])"); });
+    cuenta.textContent = f ? plural(n, "artículo", "artículos") : "";
+  };
+  q.addEventListener("input", () => { clearTimeout(t0); t0 = setTimeout(filtrar, 160); });
+  if (CEV.q) filtrar();
+  // Migas: dónde estás mientras lees
+  const migas = document.getElementById("ce-migas");
+  const pintarMigas = () => {
+    const tope = (document.querySelector(".ce-nav").getBoundingClientRect().bottom) + 4;
+    let cur = null;
+    for (const a of arts) { if (a.hidden) continue; const r = a.getBoundingClientRect(); if (r.bottom > tope) { cur = a; break; } }
+    if (!cur) { migas.innerHTML = ""; return; }
+    const A = CE_ART[cur.dataset.n]; if (!A) { migas.innerHTML = ""; return; }
+    migas.innerHTML = A.path.map(p => `<span class="ce-miga" style="${ceSt(p.key)}">${esc(p.k)}</span>`).join("") + `<span class="ce-miga-n">Art. ${A.n}</span>`;
+  };
+  let raf = 0; const onScroll = () => { if (raf) return; raf = requestAnimationFrame(() => { raf = 0; if (ruta().v === "ce" && CEV.tab === "texto") pintarMigas(); }); };
+  window.addEventListener("scroll", onScroll, { passive:true }); pintarMigas();
+  if (n && CE_ART[n]) setTimeout(() => { const e = document.getElementById("ce-a" + n); if (e) { e.scrollIntoView({ block:"center" }); e.classList.add("ce-foco"); setTimeout(() => e.classList.remove("ce-foco"), 2200); } }, 60);
+}
+
+/* ---- Organigrama ----------------------------------------------------------- */
+function ceVerOrg(c) {
+  const T = CE.titulos, T0 = id => T.find(t => t.id === id);
+  const enlace = (n) => `href="#/ce/texto/${n}"`;
+  const fila = t => {
+    const u = CE_UNI[t.id];
+    const caps = t.caps.map((cp, i) => {
+      const kc = t.id + "." + (i + 1), uc = CE_UNI[kc];
+      const secs = cp.secs.map((s, j) => { const ks = kc + "." + (j + 1), us = CE_UNI[ks], m = s.nombre.match(/^(Sección \d\.ª)\s+(.*)$/); return `<a class="og-sec" ${enlace(us.desde)} style="${ceSt(ks)}"><b>${esc(m[1])}</b><span>${esc(m[2])}</span><small>${rangoU(us)}</small></a>`; }).join("");
+      const art14 = (t.id === "I" && i === 1) ? `<a class="og-art14" ${enlace(14)} style="${ceSt(kc)}" title="El art. 14 está en el capítulo II pero fuera de las dos secciones"><b>Art. 14</b><span>Igualdad ante la ley</span></a>` : "";
+      return `<div class="og-cap"><a class="og-capc" ${enlace(uc.desde)} style="${ceSt(kc)}"><b>${esc(cap1(cp.num))}</b><span>${esc(cp.nombre)}</span><small>${rangoU(uc)}</small></a>${secs || art14 ? `<div class="og-secs">${art14}${secs}</div>` : ""}</div>`;
+    }).join("");
+    const art10 = t.id === "I" ? `<span class="og-nota">Art. 10 (fuera de los capítulos)</span>` : "";
+    return `<div class="og-fila"><a class="og-tit" ${enlace(u.desde)} style="${ceSt(t.id)}"><b>${t.id === "P" ? "TÍTULO PRELIMINAR" : "TÍTULO " + t.id}</b>${t.nombre ? `<span>${esc(t.nombre)}</span>` : ""}<small>${rangoU(u)}</small>${art10}</a>${caps ? `<div class="og-caps">${caps}</div>` : ""}</div>`;
+  };
+  c.innerHTML = `
+    <p class="pl-nota">Estructura de la Constitución: dos partes, el preámbulo, 10 títulos, 169 artículos y 15 disposiciones. Pulsa cualquier recuadro para ir a su texto. El color de cada título y capítulo es el mismo en el texto y en el test.</p>
+    <div class="og">
+      <div class="og-parte" style="--c:#7c3aed"><b>PARTE DOGMÁTICA</b><span>Del 1 al 55</span></div>
+      ${fila(T0("P"))}${fila(T0("I"))}
+      <div class="og-parte" style="--c:#475569"><b>PARTE ORGÁNICA</b><span>Del 56 al 169</span></div>
+      ${["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"].map(id => fila(T0(id))).join("")}
+      <div class="og-pie">
+        <div class="og-disp" style="${ceSt("D")}"><b>Disposiciones</b><ul><li><b>4</b> adicionales</li><li><b>9</b> transitorias</li><li><b>1</b> derogatoria</li><li><b>1</b> final</li></ul></div>
+        <div class="og-fechas"><ul>
+          <li><b>Aprobada</b> por las Cortes Generales en sesiones plenarias del Congreso de los Diputados y del Senado el <b>31 de octubre de 1978</b>.</li>
+          <li><b>Ratificada</b> por el pueblo español en referéndum el <b>6 de diciembre de 1978</b>.</li>
+          <li><b>Sancionada</b> por el Rey ante las Cortes el <b>27 de diciembre de 1978</b>.</li>
+          <li><b>Publicada</b> en el BOE el <b>29 de diciembre de 1978</b>; <b>entra en vigor</b> el mismo día de su publicación (disposición final). Se publicará también en las demás lenguas de España.</li>
+        </ul><small>Fechas del 31-10 y del 6-12: guía M101. Fórmula de sanción, publicación y entrada en vigor: texto de la CE y metadatos del BOE.</small></div>
+      </div>
+    </div>
+    <p class="pl-nota" style="margin-top:12px">Fiel al texto de la Constitución: el <b>capítulo II</b> del título I comprende los arts. <b>14 a 38</b> (el art. 14 queda fuera de las dos secciones) y el <b>art. 10</b> queda fuera de los capítulos. El organigrama de la guía rotula el capítulo II solo con «Art. 14» junto al cuadro de las secciones.</p>`;
+}
+
+/* ---- Test Constitución (SRS) ---------------------------------------------- */
+const CT = { filtro:"hoy", cola:[], idx:0, rev:false, flip:false, hechas:0, key:"" };
+const ceSrs = n => { const v = progreso("CEQ:" + n); return v && v.d && v.d.nx ? v.d : null; };
+const ceVenc = n => { const s = ceSrs(n); return !s || s.nx <= hoyISO(); };
+const ceReb = n => { const s = ceSrs(n); return !!(s && (s.l || 0) >= 3 && (s.rs || 0) < 2); };
+function ceCalificar(n, cal) {
+  const prev = ceSrs(n), nx = srsSiguiente(prev, cal);
+  const h = ((prev && prev.h) || []).concat([[hoyISO(), cal]]).slice(-30);
+  marcarProg("CEQ:" + n, cal >= 3, { r:nx.r, i:nx.i, e:nx.e, l:nx.l, rs:nx.rs, lr:hoyISO(), nx:masDias(nx.i), h });
+  return nx.i;
+}
+const CE_TEST_HASTA = 55;
+function ceFiltrosTest() {
+  const us = ["P", "I", "I.1", "I.2", "I.2.1", "I.2.2", "I.3", "I.4", "I.5"].filter(k => CE_UNI[k]);
+  return [{ id:"hoy", txt:"Las que tocan hoy" }, { id:"todos", txt:"Todas (1-55)" }, { id:"nuevas", txt:"🆕 Nuevas" }, { id:"reb", txt:"🔥 Rebeldes" }].concat(us.map(k => ({ id:k, txt:(CE_UNI[k].k === "Título preliminar" ? "Prel." : CE_UNI[k].k.replace("Capítulo ", "Cap. ").replace("Título ", "Tít. ").replace("Sección ", "Secc. ")), k })));
+}
+function ceArmarCola() {
+  const f = CT.filtro; let l = [];
+  for (let n = 1; n <= CE_TEST_HASTA; n++) {
+    const A = CE_ART[n]; if (!A) continue;
+    const ok = f === "todos" ? true : f === "hoy" ? (ceReb(n) || ceVenc(n)) : f === "nuevas" ? !ceSrs(n) : f === "reb" ? ceReb(n)
+      : (A.path.some(p => p.key === f));
+    if (ok) l.push(n);
+  }
+  // rebeldes primero, luego vencidas más antiguas, luego nuevas por orden de artículo
+  const peso = n => ceReb(n) ? 0 : ceSrs(n) ? 1 : 2;
+  l.sort((a, b) => peso(a) - peso(b) || (peso(a) === 1 ? ceSrs(a).nx.localeCompare(ceSrs(b).nx) : a - b));
+  if (f !== "hoy" && f !== "reb") l = l.sort((a, b) => a - b);
+  CT.cola = l; CT.idx = 0; CT.rev = false; CT.flip = false; CT.hechas = 0;
+}
+function ceVerTest(c) {
+  if (!CT.cola.length && !CT.armado) { ceArmarCola(); CT.armado = true; }
+  const todas = Array.from({ length:CE_TEST_HASTA }, (_, i) => i + 1);
+  const nNuevas = todas.filter(n => !ceSrs(n)).length, nHoy = todas.filter(n => ceSrs(n) && (ceVenc(n) || ceReb(n))).length, nReb = todas.filter(ceReb).length;
+  const nDom = todas.filter(n => { const s = ceSrs(n); return s && s.i >= 21 && !ceReb(n); }).length;
+  const n = CT.cola[CT.idx], A = n ? CE_ART[n] : null;
+  const filtros = ceFiltrosTest();
+  const intv = q => fmtIntervalo(srsSiguiente(n ? ceSrs(n) : null, q).i);
+  const cara = A ? `
+    <div class="ce-card ${CT.rev ? "rev" : ""} ${CT.flip ? "flip" : ""}" id="ce-card" style="${ceSt(A.key)}">
+      <div class="ce-in">
+        <div class="ce-cara ce-frente" id="ce-frente" ${CT.rev ? "" : 'role="button" tabindex="0" aria-label="Ver de qué trata el artículo"'}>
+          <div class="ce-ruta">${A.path.map(p => `<span style="${ceSt(p.key)}" class="ce-miga ${CT.rev ? "" : "oculta"}">${esc(p.k)}</span>`).join("")}</div>
+          <div class="ce-numq ${CT.rev ? "col" : ""}">Art. ${A.n}</div>
+          <div class="ce-baja"><div class="ce-baja-in"><div class="ce-rubq">${esc(A.t || "")}</div>${A.propio ? `<div class="muted" style="font-size:12px">Rótulo propio: no figura en la tabla de la guía.</div>` : ""}<button class="btn btn-sm ce-ver" id="ce-ver" type="button">📖 Ver artículo</button></div></div>
+          ${CT.rev ? "" : `<div class="ce-hint">Pulsa para ver de qué trata · <kbd>espacio</kbd></div>`}
+        </div>
+        <div class="ce-cara ce-dorso">
+          <div class="ce-dorso-cab"><span class="ce-numq col">Art. ${A.n}</span><span class="ce-rubq">${esc(A.t || "")}</span></div>
+          <div class="ce-ruta">${A.path.map(p => `<span style="${ceSt(p.key)}" class="ce-miga">${esc(p.k)}${p.nombre ? " · " + esc(p.nombre) : ""}</span>`).join("")}</div>
+          <div class="ce-dorso-txt">${A.p.map(ceParr).join("")}</div>
+          <button class="btn btn-sm" id="ce-volver" type="button">↩ Volver</button>
+        </div>
+      </div>
+    </div>
+    <div class="srs-rate" id="ce-rate" ${CT.rev ? "" : "hidden"}>
+      <button class="btn srs-r no" data-q="0">✗ No la sabía<small>vuelve ahora y ${intv(0)}</small></button>
+      <button class="btn srs-r mid" data-q="3">🤔 Dudé<small>${intv(3)}</small></button>
+      <button class="btn srs-r si" data-q="5">✓ La sabía<small>${intv(5)}</small></button>
+    </div>
+    <div class="srs-teclas muted" style="margin-top:8px"><kbd>espacio</kbd> ver · <kbd>V</kbd> ver artículo · <kbd>1</kbd> no · <kbd>2</kbd> dudé · <kbd>3</kbd> sí</div>` :
+    `<div class="empty"><div class="ico">🏆</div><h3>${CT.hechas ? "¡Sesión terminada!" : "Nada que repasar con este filtro"}</h3><p>${CT.hechas ? "Has repasado " + plural(CT.hechas, "artículo") + "." : "Prueba con «Todas» o «Nuevas»."}</p></div>`;
+  c.innerHTML = `
+    <div class="card srs-barra" style="position:static">
+      <span class="muted"><b>${CT.cola.length}</b> en la cola</span>
+      <div class="bar"><div style="width:${CT.hechas + CT.cola.length ? Math.round(CT.hechas / (CT.hechas + CT.cola.length) * 100) : 0}%"></div></div>
+      <span class="muted">🆕 ${nNuevas} · 🔄 ${nHoy} · 🔥 ${nReb} · ✓ ${nDom}</span>
+    </div>
+    <p class="pl-nota">Repaso espaciado de los artículos <b>1 a 55</b>: te sale el número del artículo; pulsa para ver de qué trata (su título, con el color de su título o capítulo) y «Ver artículo» gira la tarjeta y muestra el texto literal. Lo que aciertas seguro sale cada vez más tarde; lo que fallas vuelve en la misma sesión.</p>
+    <div class="chip-row wrap">${filtros.map(x => `<button class="chip ${x.id === CT.filtro ? "active" : ""}" data-ctf="${x.id}" ${x.k ? `style="${ceSt(x.k)}"` : ""}>${esc(x.txt)}</button>`).join("")}</div>
+    ${cara}`;
+  c.querySelectorAll("[data-ctf]").forEach(b => b.addEventListener("click", () => { CT.filtro = b.dataset.ctf; ceArmarCola(); ceVerTest(c); }));
+  if (!A) return;
+  const redo = () => ceVerTest(c);
+  const revelar = () => { if (CT.rev) return; CT.rev = true; const card = document.getElementById("ce-card"); card.classList.add("rev"); document.getElementById("ce-rate").hidden = false; document.getElementById("ce-frente").removeAttribute("role"); card.querySelectorAll(".ce-miga.oculta").forEach(m => m.classList.remove("oculta")); const h = card.querySelector(".ce-hint"); if (h) h.remove(); card.querySelector(".ce-numq").classList.add("col"); };
+  const girar = () => { if (!CT.rev) revelar(); CT.flip = !CT.flip; document.getElementById("ce-card").classList.toggle("flip", CT.flip); };
+  const frente = document.getElementById("ce-frente");
+  frente.addEventListener("click", e => { if (e.target.closest("button")) return; revelar(); });
+  frente.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); revelar(); } });
+  document.getElementById("ce-ver").addEventListener("click", girar);
+  document.getElementById("ce-volver").addEventListener("click", girar);
+  c.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => calificarCE(c, +b.dataset.q)));
+  CT.teclas = e => {
+    if (ruta().v !== "ce" || CEV.tab !== "test" || /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || "")) return;
+    if (e.key === " ") { e.preventDefault(); if (!CT.rev) revelar(); else girar(); }
+    else if (e.key === "v" || e.key === "V") girar();
+    else if (CT.rev && "123".includes(e.key) && e.key) calificarCE(c, [0, 3, 5]["123".indexOf(e.key)]);
+  };
+  document.removeEventListener("keydown", CT._k); CT._k = CT.teclas; document.addEventListener("keydown", CT._k);
+}
+function calificarCE(c, q) {
+  const n = CT.cola[CT.idx]; if (!n) return;
+  ceCalificar(n, q); CT.hechas++;
+  CT.rev = false; CT.flip = false;
+  if (q === 0) { CT.cola.splice(CT.idx, 1); CT.cola.push(n); }          // fallada: vuelve en la misma sesión
+  else { CT.cola.splice(CT.idx, 1); }
+  ceVerTest(c);
 }
 
 (async function arrancar() {
