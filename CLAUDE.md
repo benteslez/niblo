@@ -143,3 +143,30 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   tiene condiciones propias (decisión del usuario, 4-10-2026). Los blancos no
   penalizan. La calificación oficial (0-50) depende del mínimo que fije la
   Comisión: no se inventa una conversión.
+
+## Plan de estudio, Registro y cronómetro (`#/plan`, `#/registro`)
+
+Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y vídeo, aportados por el usuario).
+
+- **Plantilla** (`PLAN_DEF` en `oposicion.html`): 6 vueltas; los bloques I-III van en negro en las
+  vueltas 3 y 5; las casillas «barradas» (vuelta extra, que se da al terminar toda la vuelta) van
+  partidas en dos mitades horizontales. Las casillas guardan **tiempos**, nunca «visto». Los temas
+  fusionados (I.1-3, IV.1-3, IV.5-6, IV.11-13, VI.1-2) **solo se fusionan en la plantilla**; el hub
+  conserva los 58 temas del programa. No cambiar la matriz de vueltas sin cotejarla con el PDF.
+- **Cronómetro** fijo abajo a la izquierda (`crCrear`): cuenta el tema que abres (`cronSeguir`), se
+  puede cambiar a mano (tema, vuelta, vuelta extra) y vuelca al registro cada 2 min y al parar o
+  cambiar de tema. Estado en `localStorage` (`gestion_hub_cron_v1`); si nadie lo lleva, se cierra
+  en el último latido.
+- **Datos** (todo en `prog.mapa`, sin SQL nuevo; se sincroniza clave a clave): `REG:<fecha>:<dispositivo>`
+  (tiempos del día por casilla; un registro por día y dispositivo para no pisarse), `PLM:<casilla>`
+  (ajuste manual), `PLCFG` (vuelta en curso, extra, seguir tema, fecha del examen), `SIM:<n>:<c>`
+  (simulacros), `SUP:<examen>:<intento>:<I|II>` y `SUPA:<examen>:<I|II>` (tabla de supuestos).
+- **Orden sugerido, Encaje de vueltas y Supuestos** copian las páginas 2, 5 y 6 del PDF. En la tabla de
+  encaje, «Vuelta completa 6» dice «2016-15» (posible errata de «2014-15»): se mantiene literal.
+- **Guía de estudio**: resumen estructurado de la transcripción, **sin** lo relativo a cómo era y cómo es
+  el examen (petición del usuario).
+- **Pill «IMPORTANCIA CRÍTICA»** (`CRITICOS`): los temas con recuadro rojo en el orden sugerido.
+- **Constelaciones** en las flashcards: los «art. N» de una tarjeta se enlazan, en el cliente, con el
+  texto literal de ese artículo en los apuntes del mismo tema (si el número existe en varias normas,
+  hace falta que la tarjeta cite la norma); `CONSTELACIONES` añade artículos relacionados de otros temas.
+- Prueba: `herramientas/oposicion/pruebas/plan.js` (con `python3 -m http.server 8765` en la raíz).

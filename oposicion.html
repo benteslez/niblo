@@ -949,6 +949,269 @@ blockquote.literal > a.fuente-link .lit-boe { position:static; }
 .ley-lit p:last-child { margin-bottom:0; }
 .ley-lit .ley-t { font-size:13px; }
 .ley-lit .ley-t strong { color:var(--accent); }
+
+/* ===== Plan de estudio · Registro · Cronómetro · Constelaciones ===== */
+
+/* ========================================================================
+   Plan de estudio · Registro · Cronómetro · Constelaciones
+   ====================================================================== */
+body { padding-bottom:calc(76px + env(safe-area-inset-bottom)); }
+
+/* ---- Pill de importancia crítica ---------------------------------------- */
+.pill-critica {
+  display:inline-flex; align-items:center; gap:4px; padding:2px 9px; border-radius:var(--r-pill);
+  background:#dc2626; color:#fff; font-size:10.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+  line-height:1.5; white-space:nowrap; vertical-align:middle;
+}
+.tema2-cab .pill-critica, .hero-sup .pill-critica { margin-left:6px; }
+.hero-tema .pill-critica { margin:0 0 8px; }
+
+/* ---- Cronómetro (esquina inferior izquierda, siempre visible) ----------- */
+.cr {
+  position:fixed; left:12px; bottom:calc(14px + env(safe-area-inset-bottom)); z-index:95;
+  display:flex; flex-direction:column; align-items:flex-start; gap:8px; max-width:calc(100vw - 24px);
+}
+.cr-pill {
+  display:flex; align-items:center; gap:10px; padding:6px 6px 6px 14px; min-height:44px;
+  background:var(--bg-elev); color:var(--text); border:1px solid var(--line); border-radius:var(--r-pill);
+  box-shadow:var(--sh-3); max-width:100%;
+}
+.cr.run .cr-pill { background:color-mix(in srgb, #dc2626 12%, var(--bg-elev)); border-color:color-mix(in srgb, #dc2626 45%, var(--line)); }
+.cr-punto { flex:none; width:9px; height:9px; border-radius:50%; background:var(--text-muted); }
+.cr.run .cr-punto { background:#dc2626; animation:cr-latido 1.4s ease-in-out infinite; }
+@keyframes cr-latido { 0%, 100% { opacity:1 } 50% { opacity:.2 } }
+@media (prefers-reduced-motion: reduce) { .cr.run .cr-punto { animation:none; } }
+.cr-txt { display:flex; flex-direction:column; align-items:flex-start; min-width:0; cursor:pointer; background:none; border:none; padding:0; text-align:left; }
+.cr-t { font-variant-numeric:tabular-nums; font-weight:800; font-size:17px; letter-spacing:.01em; line-height:1.15; }
+.cr-d { font-size:11.5px; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:150px; line-height:1.2; }
+.cr.run .cr-d { color:color-mix(in srgb, #dc2626 70%, var(--text-muted)); }
+.cr-go {
+  flex:none; border:none; cursor:pointer; border-radius:var(--r-pill); height:34px; padding:0 14px; font-weight:800; font-size:13px;
+  background:linear-gradient(135deg, #16a34a, #22c55e); color:#fff; display:inline-flex; align-items:center; gap:6px;
+}
+.cr.run .cr-go { background:#dc2626; }
+.cr-go:hover { filter:brightness(1.08); }
+.cr-panel {
+  width:min(340px, calc(100vw - 24px)); background:var(--bg-elev); color:var(--text); border:1px solid var(--line);
+  border-radius:var(--r-lg); box-shadow:var(--sh-3); padding:14px 14px 12px; display:flex; flex-direction:column; gap:10px;
+}
+.cr-panel[hidden] { display:none; }
+.cr-panel label { display:flex; flex-direction:column; gap:3px; font-size:12px; font-weight:700; color:var(--text-muted); }
+.cr-panel select, .cr-panel input[type=number], .cr-panel input[type=date] {
+  height:38px; border:1px solid var(--line); border-radius:var(--r-sm); background:var(--bg-input); color:var(--text); padding:0 8px; font-weight:600; font-size:14px; width:100%;
+}
+.cr-fila { display:flex; gap:8px; }
+.cr-fila > * { flex:1; min-width:0; }
+.cr-chk { flex-direction:row !important; align-items:center; gap:8px !important; font-size:13px !important; color:var(--text) !important; font-weight:600 !important; }
+.cr-aviso { font-size:12px; color:var(--warn); background:var(--warn-bg); border-radius:var(--r-sm); padding:6px 8px; }
+.cr-hoy { font-size:12.5px; color:var(--text-muted); display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+.cr-hoy b { color:var(--text); }
+.cr-enl { display:flex; gap:8px; flex-wrap:wrap; }
+.cr-enl .btn { height:34px; font-size:13px; padding:0 14px; }
+
+/* ---- Diálogos del plan ---------------------------------------------------- */
+.pl-dlg { border:1px solid var(--line); border-radius:var(--r-lg); padding:0; background:var(--bg-elev); color:var(--text); width:min(420px, calc(100vw - 24px)); box-shadow:var(--sh-3); }
+.pl-dlg::backdrop { background:rgba(15,23,42,.45); }
+.pl-dlg form { padding:18px; display:flex; flex-direction:column; gap:12px; }
+.pl-dlg h3 { margin:0; font-size:17px; }
+.pl-dlg p { margin:0; font-size:13.5px; color:var(--text-muted); }
+.pl-dlg .pl-hm { display:flex; align-items:center; gap:8px; }
+.pl-dlg .pl-hm input { width:84px; height:42px; border:1px solid var(--line); border-radius:var(--r-sm); background:var(--bg-input); color:var(--text); font-size:18px; font-weight:700; text-align:center; }
+.pl-dlg .pl-hm span { font-weight:700; color:var(--text-muted); }
+.pl-dlg label { display:flex; flex-direction:column; gap:4px; font-size:12px; font-weight:700; color:var(--text-muted); }
+.pl-dlg select, .pl-dlg input[type=date], .pl-dlg input[type=text] { height:40px; border:1px solid var(--line); border-radius:var(--r-sm); background:var(--bg-input); color:var(--text); padding:0 8px; font-size:14px; }
+.pl-dlg .pl-botones { display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; }
+.pl-dlg.ancho { width:min(720px, calc(100vw - 24px)); }
+.pl-dlg.ancho form { max-height:82vh; overflow:auto; }
+
+/* ---- Plan de estudio ------------------------------------------------------ */
+.pl-tabs { display:flex; gap:6px; overflow-x:auto; margin:0 0 16px; padding-bottom:2px; scrollbar-width:none; }
+.pl-tabs::-webkit-scrollbar { display:none; }
+.pl-tabs button { flex:none; }
+.pl-nota { font-size:13px; color:var(--text-muted); margin:0 0 12px; line-height:1.55; }
+.pl-leyenda { display:flex; flex-wrap:wrap; gap:6px 16px; font-size:12.5px; color:var(--text-muted); margin:0 0 14px; align-items:center; }
+.pl-leyenda i { display:inline-block; width:18px; height:18px; border:1px solid var(--line); vertical-align:middle; margin-right:5px; position:relative; border-radius:3px; }
+.pl-leyenda i.neg { background:#262626; border-color:#262626; }
+.pl-leyenda i.par::after { content:""; position:absolute; left:0; right:0; top:50%; border-top:1px solid var(--text); }
+.pl-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.pl-tabla { --cw:36px; --sw:42px; min-width:calc(130px + 6 * var(--cw) + var(--sw)); margin:0 0 14px; }
+@media (min-width:720px) { .pl-tabla { --cw:50px; --sw:58px; } }
+.pl-bloque { margin:0 0 12px; border:2px solid var(--text); border-radius:6px; overflow:hidden; background:var(--bg-elev);
+  --ph:color-mix(in srgb, var(--p0) 72%, var(--bg-elev)); --pr:color-mix(in srgb, var(--p0) 26%, var(--bg-elev)); }
+.pl-fila { display:grid; grid-template-columns:minmax(0, 1fr) repeat(6, var(--cw)) var(--sw); align-items:stretch; border-top:1px solid color-mix(in srgb, var(--text) 55%, transparent); }
+.pl-fila:first-child { border-top:none; }
+.pl-bh { background:var(--ph); }
+.pl-bh .pl-t { font-weight:800; font-size:13.5px; color:var(--text); display:flex; align-items:center; padding:5px 8px; }
+.pl-bh .pl-vh { grid-column:2 / span 7; text-align:center; font-weight:800; font-size:12.5px; background:color-mix(in srgb, var(--text) 14%, var(--bg-elev)); display:flex; align-items:center; justify-content:center; border-left:1px solid color-mix(in srgb, var(--text) 55%, transparent); }
+.pl-nv { background:color-mix(in srgb, var(--text) 8%, var(--bg-elev)); font-size:11px; font-weight:800; color:var(--text-muted); }
+.pl-nv > div { text-align:center; padding:2px 0; border-left:1px solid color-mix(in srgb, var(--text) 30%, transparent); }
+.pl-nv > div:first-child { border-left:none; }
+.pl-t { background:var(--pr); padding:5px 8px; font-size:12.5px; line-height:1.3; display:flex; flex-wrap:wrap; align-items:center; gap:3px 6px; min-width:0; }
+.pl-t a { color:var(--text); font-weight:600; }
+.pl-t .pl-codigos { display:flex; gap:4px; }
+.pl-t .pl-codigos a { font-size:10.5px; font-weight:800; padding:0 5px; border-radius:4px; background:color-mix(in srgb, var(--text) 12%, transparent); color:var(--text); }
+.pl-c {
+  position:relative; border:none; border-left:1px solid color-mix(in srgb, var(--text) 55%, transparent); background:var(--bg-elev);
+  color:var(--text); padding:0; min-height:40px; cursor:pointer; display:flex; flex-direction:column; font-size:11px; font-weight:700; font-variant-numeric:tabular-nums;
+}
+.pl-c:hover { background:color-mix(in srgb, var(--accent) 12%, var(--bg-elev)); }
+.pl-c.v5 { border-left:3px double var(--text); }
+.pl-c .m { flex:1; display:flex; align-items:center; justify-content:center; min-height:19px; }
+.pl-c.par .m + .m { border-top:1px solid color-mix(in srgb, var(--text) 60%, transparent); }
+.pl-c.par .m { font-size:10px; }
+.pl-c.neg { background:#262626; color:#fff; cursor:default; }
+.pl-c.neg:hover { background:#262626; }
+.pl-c.hoy { outline:3px solid var(--accent); outline-offset:-3px; z-index:1; }
+.pl-c.hecho .m.t { color:var(--ok); }
+.pl-s { background:var(--pr); border-left:1px solid color-mix(in srgb, var(--text) 55%, transparent); display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:800; font-variant-numeric:tabular-nums; }
+.pl-tot { background:color-mix(in srgb, var(--text) 8%, var(--bg-elev)); font-weight:800; }
+.pl-tot .pl-t { background:transparent; }
+.pl-tot .pl-s, .pl-tot .pl-c { background:transparent; cursor:default; }
+.pl-cortes { max-width:320px; border:2px solid var(--text); border-radius:6px; overflow:hidden; margin:0 0 16px; text-align:center; }
+.pl-cortes div { padding:5px 10px; font-size:13.5px; border-top:1px solid color-mix(in srgb, var(--text) 40%, transparent); }
+.pl-cortes div:first-child { border-top:none; font-weight:800; background:color-mix(in srgb, var(--text) 10%, var(--bg-elev)); text-transform:uppercase; letter-spacing:.04em; }
+.pl-cortes b { font-weight:800; }
+.pl-sim { display:grid; grid-template-columns:44px repeat(4, minmax(0, 1fr)); min-width:520px; border:2px solid var(--text); border-radius:6px; overflow:hidden; }
+.pl-sim > div { border-top:1px solid color-mix(in srgb, var(--text) 45%, transparent); border-left:1px solid color-mix(in srgb, var(--text) 45%, transparent); min-height:48px; }
+.pl-sim .h { font-weight:800; text-align:center; padding:6px 4px; background:color-mix(in srgb, var(--text) 10%, var(--bg-elev)); min-height:0; }
+.pl-sim .n { display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; background:color-mix(in srgb, var(--text) 6%, var(--bg-elev)); }
+.pl-sim .c { display:flex; flex-direction:column; }
+.pl-sim .c input { flex:1; min-width:0; width:100%; border:none; background:transparent; color:var(--text); padding:1px 5px; font-size:12.5px; min-height:24px; }
+.pl-sim .c input + input { border-top:1px solid color-mix(in srgb, var(--text) 45%, transparent); }
+.pl-sim .c input::placeholder { color:var(--text-muted); opacity:.7; font-size:11px; }
+.pl-sim .c input:focus { outline:2px solid var(--accent); outline-offset:-2px; }
+
+/* Orden sugerido */
+.pl-mods { display:grid; gap:12px; grid-template-columns:repeat(auto-fill, minmax(290px, 1fr)); }
+.pl-mod { padding:0; overflow:hidden; }
+.pl-mod h3 { margin:0; padding:9px 14px; font-size:15px; background:var(--accent-bg); color:var(--accent); letter-spacing:.02em; }
+.pl-mod ul { list-style:none; margin:0; padding:6px 0; }
+.pl-mod li { padding:6px 14px; display:flex; flex-wrap:wrap; gap:3px 8px; align-items:center; font-size:13.5px; border-top:1px solid var(--line-soft); }
+.pl-mod li:first-child { border-top:none; }
+.pl-mod li a { color:var(--text); }
+.pl-mod li .bq { font-size:11px; font-weight:800; color:var(--text-muted); white-space:nowrap; }
+.pl-mod li.alta a { font-weight:800; }
+
+/* Encaje de vueltas */
+.pl-enc { border:3px solid var(--text); border-radius:4px; overflow:hidden; max-width:640px; margin:0 0 18px; }
+.pl-enc .r { display:grid; grid-template-columns:minmax(0, 1fr) 78px 96px; border-top:1px solid color-mix(in srgb, var(--text) 45%, transparent); font-size:14px; }
+.pl-enc .r:first-child { border-top:none; }
+.pl-enc .r > div { padding:6px 10px; display:flex; align-items:center; min-height:34px; }
+.pl-enc .r > div + div { justify-content:center; border-left:1px solid color-mix(in srgb, var(--text) 45%, transparent); text-align:center; font-weight:700; }
+.pl-enc .h { font-weight:800; background:var(--bg-elev); }
+.pl-enc .h > div { justify-content:center; text-transform:uppercase; letter-spacing:.03em; font-size:13px; }
+.pl-enc .comp { background:var(--bg-elev); color:var(--text); }
+.pl-enc .rep { background:#c55a11; color:#fff; font-variant:small-caps; font-weight:700; }
+.pl-enc .sin { background:#d0cece; color:#1f2937; }
+.pl-enc .lib { background:#b7eefb; color:#0f172a; font-variant:small-caps; font-weight:700; }
+.pl-enc .teo { grid-template-columns:1fr; background:#548235; color:#fff; font-variant:small-caps; font-weight:700; }
+.pl-enc .teo > div { justify-content:center !important; }
+.pl-enc .teo2 { background:#2f5597; }
+.pl-enc .y16 { background:#fff2cc; color:#1f2937; }
+.pl-enc .y19 { background:#00b0f0; color:#0f172a; }
+.pl-enc .y14 { background:#f8cbad; color:#1f2937; }
+.pl-enc .yall { background:#404040; color:#fff; }
+.pl-enc .yvac { background:transparent; }
+.pl-enc .r.hoy { box-shadow:inset 0 0 0 3px var(--accent); position:relative; z-index:1; }
+.pl-aet { max-width:640px; border:1px solid var(--line); border-radius:var(--r-md); background:var(--accent-bg); padding:12px 16px; }
+.pl-aet h4 { margin:0 0 6px; font-style:italic; }
+.pl-aet ul { margin:0; padding-left:20px; font-size:14px; }
+
+/* Supuestos */
+.pl-sup { display:grid; min-width:760px; border:2px solid var(--text); border-radius:6px; overflow:hidden; margin:0 0 20px; font-size:13px;
+  grid-template-columns:110px repeat(8, minmax(44px, 56px)) minmax(160px, 1fr) minmax(160px, 1fr); }
+.pl-sup > div { border-top:1px solid color-mix(in srgb, var(--text) 45%, transparent); border-left:1px solid color-mix(in srgb, var(--text) 45%, transparent); display:flex; min-height:44px; }
+.pl-sup .h { font-weight:800; justify-content:center; align-items:center; background:color-mix(in srgb, var(--text) 10%, var(--bg-elev)); min-height:34px; font-variant:small-caps; }
+.pl-sup .e { align-items:center; justify-content:center; font-weight:800; padding:2px 6px; text-align:center; }
+.pl-sup .e.g19 { background:#00b0f0; color:#0f172a; } .pl-sup .e.g16 { background:#fff2cc; color:#1f2937; }
+.pl-sup .e.g14 { background:#f8cbad; color:#1f2937; } .pl-sup .e.g05 { background:#f0dcdc; color:#1f2937; }
+.pl-sup .x { background:var(--bg-elev); }
+.pl-sup .x input { width:100%; min-width:0; border:none; background:transparent; color:var(--text); text-align:center; font-size:12px; padding:0 2px; }
+.pl-sup .x.vacio { background:color-mix(in srgb, var(--text) 5%, transparent); }
+.pl-sup .a { padding:0; }
+.pl-sup .a textarea { width:100%; border:none; background:transparent; color:var(--text); resize:vertical; min-height:44px; padding:6px 8px; font:inherit; font-size:12.5px; }
+.pl-sup input:focus, .pl-sup textarea:focus { outline:2px solid var(--accent); outline-offset:-2px; }
+.pl-sup .a textarea::placeholder { color:var(--text-muted); opacity:.6; }
+
+/* Guía */
+.pl-guia details { border:1px solid var(--line); border-radius:var(--r-md); background:var(--bg-elev); margin:0 0 10px; }
+.pl-guia summary { cursor:pointer; padding:12px 16px; font-weight:800; font-size:15.5px; list-style:none; display:flex; gap:10px; align-items:center; }
+.pl-guia summary::-webkit-details-marker { display:none; }
+.pl-guia summary::before { content:"▸"; color:var(--accent); transition:transform .15s; }
+.pl-guia details[open] > summary::before { transform:rotate(90deg); }
+.pl-guia .cuerpo { padding:2px 18px 14px; font-size:14.5px; line-height:1.6; }
+.pl-guia h4 { margin:14px 0 4px; font-size:14px; color:var(--accent); }
+.pl-guia ul, .pl-guia ol { margin:4px 0 8px; padding-left:22px; }
+.pl-guia li { margin:2px 0; }
+.pl-guia .clave { border-left:4px solid var(--accent); background:var(--accent-bg); padding:8px 12px; border-radius:6px; margin:8px 0; }
+.pl-guia table { border-collapse:collapse; margin:8px 0; font-size:13.5px; }
+.pl-guia th, .pl-guia td { border:1px solid var(--line); padding:5px 10px; text-align:left; }
+.pl-guia th { background:var(--bg-soft); }
+.pl-guia .fuente { font-size:12.5px; color:var(--text-muted); margin:0 0 12px; }
+
+/* ---- Registro ------------------------------------------------------------- */
+.rg-kpis { display:grid; gap:10px; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); margin:0 0 16px; }
+.rg-kpi { padding:12px 14px; }
+.rg-kpi .k { font-size:12px; font-weight:700; color:var(--text-muted); }
+.rg-kpi .v { font-size:24px; font-weight:800; letter-spacing:-.02em; margin-top:2px; font-variant-numeric:tabular-nums; }
+.rg-kpi .s { font-size:12px; color:var(--text-muted); }
+.rg-cab { display:flex; align-items:center; gap:10px; margin:0 0 10px; flex-wrap:wrap; }
+.rg-cab h2 { margin:0; font-size:18px; flex:1; min-width:140px; }
+.rg-cal { display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:4px; }
+.rg-dow { text-align:center; font-size:11.5px; font-weight:800; color:var(--text-muted); padding:2px 0; }
+.rg-dia {
+  aspect-ratio:1 / 1; min-height:44px; border:1px solid var(--line); border-radius:8px; background:var(--bg-elev); color:var(--text); cursor:pointer; padding:3px 4px;
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:space-between; font-size:12px; position:relative; text-align:left;
+}
+.rg-dia .d { font-weight:700; font-size:11.5px; color:var(--text-muted); }
+.rg-dia .h { font-weight:800; font-size:12px; font-variant-numeric:tabular-nums; align-self:flex-end; }
+.rg-dia.fuera { opacity:.35; }
+.rg-dia.hoy { outline:2px solid var(--accent); outline-offset:-1px; }
+.rg-dia.sel { box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 50%, transparent); }
+.rg-dia.n1 { background:color-mix(in srgb, var(--accent) 14%, var(--bg-elev)); }
+.rg-dia.n2 { background:color-mix(in srgb, var(--accent) 28%, var(--bg-elev)); }
+.rg-dia.n3 { background:color-mix(in srgb, var(--accent) 44%, var(--bg-elev)); }
+.rg-dia.n4 { background:color-mix(in srgb, var(--accent) 62%, var(--bg-elev)); }
+.rg-dia.n5 { background:color-mix(in srgb, var(--accent) 80%, var(--bg-elev)); color:var(--on-accent, #fff); }
+.rg-dia.n5 .d { color:inherit; opacity:.85; }
+.rg-dia.n4 .d, .rg-dia.n3 .d { color:var(--text); opacity:.75; }
+.rg-leyenda { display:flex; gap:5px; align-items:center; font-size:11.5px; color:var(--text-muted); margin:8px 0 0; }
+.rg-leyenda i { width:16px; height:16px; border-radius:4px; border:1px solid var(--line); }
+.rg-det h3 { margin:0 0 4px; font-size:16px; }
+.rg-cab h2::first-letter, .rg-det h3::first-letter { text-transform:uppercase; }
+.rg-lista { list-style:none; margin:8px 0 0; padding:0; }
+.rg-lista li { display:flex; gap:10px; align-items:center; justify-content:space-between; padding:7px 0; border-top:1px solid var(--line-soft); font-size:14px; }
+.rg-lista li:first-child { border-top:none; }
+.rg-lista .t { font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.rg-lista .m { color:var(--text-muted); font-size:12px; }
+.rg-barras { display:flex; align-items:flex-end; gap:3px; height:120px; margin:8px 0 4px; }
+.rg-barras > div { flex:1; min-width:0; background:linear-gradient(180deg, var(--accent-2), var(--accent)); border-radius:3px 3px 0 0; min-height:2px; position:relative; }
+.rg-barras > div.cero { background:var(--bg-soft); }
+.rg-ejes { display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); }
+.rg-tabla { width:100%; border-collapse:collapse; font-size:13.5px; }
+.rg-tabla th, .rg-tabla td { padding:7px 8px; border-top:1px solid var(--line-soft); text-align:right; font-variant-numeric:tabular-nums; }
+.rg-tabla th:first-child, .rg-tabla td:first-child { text-align:left; }
+.rg-tabla th { font-size:11.5px; color:var(--text-muted); font-weight:800; border-top:none; }
+.rg-scroll { overflow-x:auto; }
+.rg-est { display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); margin:10px 0 0; }
+.rg-est > div { background:var(--bg-soft); border-radius:var(--r-md); padding:9px 12px; }
+.rg-est b { display:block; font-size:19px; font-variant-numeric:tabular-nums; }
+.rg-est span { font-size:12px; color:var(--text-muted); }
+.rg-grid2 { display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); align-items:start; }
+.rg-grid2 > .card { margin-top:0; }
+
+/* ---- Constelaciones en flashcards ---------------------------------------- */
+.fc-const { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; padding-top:10px; border-top:1px dashed var(--line); align-items:center; }
+.fc-const .k { font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em; }
+.chip-art { border:1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); background:var(--accent-bg); color:var(--accent); border-radius:var(--r-pill); padding:3px 11px; font-size:12px; font-weight:800; cursor:pointer; }
+.chip-art:hover { filter:brightness(.96); }
+.chip-art small { font-weight:600; opacity:.85; margin-left:4px; }
+.chip-art.const { border-style:dashed; background:var(--lila-bg); color:var(--lila); border-color:var(--lila); }
+.art-lit { margin:10px 0; }
+.art-lit .acc { margin:0 0 8px; border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; }
+.art-lit .acc > summary { cursor:pointer; padding:9px 12px; font-weight:800; font-size:13.5px; background:var(--bg-soft); }
+.art-lit .acc > div { padding:6px 12px 10px; font-size:14px; }
+
 </style>
 </head>
 <body>
@@ -2503,6 +2766,8 @@ function ruta() {
   if (p[0] === "global") return { v:"global" };
   if (p[0] === "real") return { v:"real" };
   if (p[0] === "guia") return { v:"guia" };
+  if (p[0] === "plan") return { v:"plan", tab:p[1] || "plantilla" };
+  if (p[0] === "registro") return { v:"registro" };
   return { v:"inicio" };
 }
 let rutaPrevia = "";
@@ -2531,8 +2796,11 @@ function render() {
     else if (r.v === "global") { titulo.textContent = "Super Hub global"; renderGlobal(); }
     else if (r.v === "real") { titulo.textContent = "Test real global"; renderReal(); }
     else if (r.v === "guia") { titulo.textContent = "Guía de fuentes"; renderGuia(); }
+    else if (r.v === "plan") { titulo.textContent = "Plan de estudio"; renderPlan(r.tab); }
+    else if (r.v === "registro") { titulo.textContent = "Registro de estudio"; renderRegistro(); }
   }
   if (clave !== rutaPrevia) { window.scrollTo(0, 0); rutaPrevia = clave; }
+  if (typeof cronSeguir === "function") cronSeguir(r);
 }
 
 /* ---- Inicio: índice general ------------------------------------------- */
@@ -2555,6 +2823,14 @@ function renderInicio() {
       ${BLOQUES.map(tarjetaBloque).join("")}
     </div>
 
+    <button class="dash-card plan" data-ir="#/plan">
+      <span class="dash-ico" aria-hidden="true">📅</span>
+      <span><span class="dash-t">Plan de estudio</span><span class="dash-d">Plantilla de temas y vueltas con tus tiempos, orden sugerido, encaje con los supuestos y guía de estudio</span></span>
+    </button>
+    <button class="dash-card registro" data-ir="#/registro">
+      <span class="dash-ico" aria-hidden="true">⏱</span>
+      <span><span class="dash-t">Registro</span><span class="dash-d">Tiempo de estudio de cada día y en qué temas: calendario, estadísticas y cuántas vueltas te caben</span></span>
+    </button>
     <button class="dash-card" data-ir="#/global">
       <span class="dash-ico" aria-hidden="true">🌐</span>
       <span><span class="dash-t">Super Hub global</span><span class="dash-d">Búsqueda, cronología, glosario, flashcards, test y progreso a través de los ${BLOQUES.length} bloques</span></span>
@@ -2661,7 +2937,7 @@ function renderTemasBloque(panel, b) {
 function tarjetaTema(p) {
   const t = estado.temas[p.id];
   const cab = `
-      <div class="tema2-cab"><span class="tema2-k">Tema ${p.num}</span>${p.m ? `<span class="tema2-mod" title="Módulo de la academia">${esc(p.m)}</span>` : ""}</div>
+      <div class="tema2-cab"><span class="tema2-k">Tema ${p.num}</span>${pillCritica(p.id)}${p.m ? `<span class="tema2-mod" title="Módulo de la academia">${esc(p.m)}</span>` : ""}</div>
       <div class="tema2-num">${String(p.num).padStart(2, "0")}</div>
       <div class="tema2-tit">${esc(p.s)}</div>
       <div class="tema2-epi" title="${esc(p.l)}">${esc(p.c)} · ${esc(p.l)}</div>`;
@@ -2703,7 +2979,7 @@ function renderTema(id) {
     <h1 class="titulo-grande">${esc(p.c)}. ${esc(p.e)}</h1>
     <blockquote class="epi-oficial"><span>Epígrafe oficial · ${esc(PROGRAMA_REF)}, anexo VII</span>${esc(p.l)}</blockquote>
     <div class="tags" style="margin:4px 0 20px">
-      ${tagVigencia(p)}${tagFuente(p)}${tagTac(p)}
+      ${pillCritica(id)}${tagVigencia(p)}${tagFuente(p)}${tagTac(p)}
       ${sem === "verde" ? '<span class="tag ok" title="Solo BOE y estable: se puede preparar ya, de una vez">● Tema verde</span>' : ""}
       ${sem === "ambar" ? '<span class="tag warn" title="Solo BOE pero con cambios previsibles: dejar para la vuelta de revisión">● Tema ámbar</span>' : ""}
     </div>
@@ -3243,7 +3519,7 @@ function renderLeer(id) {
   const chips = (t.etiquetas || []).length ? t.etiquetas : [];
   vista().innerHTML = `
     <header class="hero-tema">
-      <div class="hero-sup">Bloque ${b.rom} · ${esc(b.nombre)}</div>
+      <div class="hero-sup">Bloque ${b.rom} · ${esc(b.nombre)} ${pillCritica(id)}</div>
       <div class="hero-num">Tema ${esc(p.c)}</div>
       <h1>${esc(p.e)}</h1>
       <p class="hero-epi" title="Epígrafe oficial · ${esc(PROGRAMA_REF)}, anexo VII">«${esc(p.l)}»</p>
@@ -3456,10 +3732,11 @@ function panelAleatorio(c, id) {
     const k = claveFc(id, e.x);
     c.innerHTML = `
       <div class="tags" style="margin-bottom:8px"><span class="tag acc">Flashcard</span>${e.x.cat ? `<span class="tag">${esc(e.x.cat)}</span>` : ""}${sabida(k) ? '<span class="tag ok">Dominada</span>' : ""}</div>
-      <div class="fc" id="al-fc" role="button" tabindex="0"><div class="fc-in"><div class="fc-cara"><div class="fc-q">${esc(e.x.q)}</div><div class="fc-hint">Pulsa para ver la respuesta</div></div><div class="fc-cara atras"><div class="fc-a">${esc(e.x.a)}</div></div></div></div>
+      <div class="fc" id="al-fc" role="button" tabindex="0"><div class="fc-in"><div class="fc-cara"><div class="fc-q">${esc(e.x.q)}</div><div class="fc-hint">Pulsa para ver la respuesta</div></div><div class="fc-cara atras"><div class="fc-a">${esc(e.x.a)}</div>${chipsConstelacion(id, e.x)}</div></div></div>
       <div class="fc-btns" id="al-btns" hidden><button class="btn btn-no" data-al="0">✗ No la sabía</button><button class="btn btn-si" data-al="1">✓ La sabía</button></div>
       <div class="btn-row" style="justify-content:flex-end;margin-top:12px"><button class="btn btn-sm" id="al-otra">Otra 🎲</button></div>`;
     const carta = document.getElementById("al-fc");
+    ligarChipsArt(c);
     carta.addEventListener("click", () => { carta.classList.toggle("volteada"); document.getElementById("al-btns").hidden = !carta.classList.contains("volteada"); });
     c.querySelectorAll("[data-al]").forEach(b => b.addEventListener("click", () => { marcarFc(k, b.dataset.al === "1"); olvidarMazos(); panelAleatorio(c, id); }));
   } else {
@@ -4465,7 +4742,7 @@ function hubFc(c, ambito, temas) {
               <div class="tags"><span class="tag acc">${esc(codigoDe(f._id))}</span>${f.cat ? `<span class="tag">${esc(f.cat)}</span>` : ""}</div>
               <div class="fc-q">${esc(f.q)}</div><div class="fc-hint">Pulsa para voltear</div>
             </div>
-            <div class="fc-cara atras"><div class="fc-a">${esc(f.a)}</div></div>
+            <div class="fc-cara atras"><div class="fc-a">${esc(f.a)}</div>${chipsConstelacion(f._id, f)}</div>
           </div>
         </div>
         <div class="fc-btns" ${s.volteada ? "" : "hidden"} id="fc-btns">
@@ -4473,6 +4750,7 @@ function hubFc(c, ambito, temas) {
           <button class="btn btn-si" id="fc-si">✓ La sabía</button>
         </div>`}`;
   const rep = () => hubFc(c, ambito, temas);
+  ligarChipsArt(c);
   document.getElementById("fc-mezclar").addEventListener("click", () => { s.mazo = barajar(s.mazo); s.idx = 0; s.volteada = false; rep(); });
   document.getElementById("fc-reiniciar").addEventListener("click", () => {
     if (!confirm("¿Reiniciar el progreso de flashcards de este ámbito?")) return;
@@ -4806,10 +5084,960 @@ document.addEventListener("visibilitychange", () => {
 // Red de seguridad por si se pierde algún aviso en vivo.
 setInterval(() => { if (document.visibilityState === "visible" && haySesion()) sincronizar(); }, 120000);
 
+
+/* ========================================================================
+   (h) PLAN DE ESTUDIO · REGISTRO · CRONÓMETRO
+   Fuente: «Guía de estudio del temario. El sistema» (módulo M100) y la
+   transcripción de su vídeo, aportados por el usuario.
+   Todo se guarda en el mapa de progreso (prog.mapa), así que se sincroniza
+   igual que las flashcards, clave a clave. Claves nuevas:
+     "REG:<aaaa-mm-dd>:<dispositivo>"  d: { t:{ "<fila>|<vuelta>|<mitad>": seg }, ses:[[inicioMs, seg, celda]] }
+     "PLM:<fila>|<vuelta>|<mitad>"     d: { s: seg }   ajuste manual de una casilla de la plantilla
+     "PLCFG"                           d: { v, x, seguir, examen }  vuelta actual, vuelta extra, seguir el tema abierto, fecha del examen
+     "SIM:<n>:<c>"                     d: { n, f }     simulacro n, intento c: nota y fecha
+     "SUP:<examen>:<intento>:<I|II>"   d: { x }        casilla de la tabla de supuestos
+     "SUPA:<examen>:<I|II>"            d: { x }        artículos del supuesto
+   ====================================================================== */
+
+/* ---- La plantilla de temas (página 1 de la guía) -------------------------
+   Cada fila puede reunir varios temas del programa (temas fusionados).
+   bar: vueltas en que la casilla va partida (vuelta extra o «barrada»).
+   Los bloques I a III van en negro en las vueltas 3 y 5: no se estudian. */
+const PLAN_VUELTAS = 6;
+const PLAN_DEF = [
+  { b:"B1", p0:"#ffd966", nombre:"Org. del Estado y de la Admón. Pública", neg:[3, 5], filas:[
+    ["1, 2 y 3. La CE de 1978 / Der. y Deb. / T. Constitucional.", [1, 2, 3], []],
+    ["4. La Corona.", [4], []], ["5. El poder legislativo.", [5], []], ["6. El poder ejecutivo.", [6], []],
+    ["7. El Poder Judicial.", [7], []], ["8. La Administración General del Estado.", [8], []],
+    ["9. El sector público institucional.", [9], []], ["10. Organización territorial (I).", [10], []],
+    ["11. Organización territorial (II).", [11], []] ] },
+  { b:"B2", p0:"#8faadc", nombre:"Unión Europea", neg:[3, 5], filas:[
+    ["1. La Unión Europea: Antecedentes.", [1], []], ["2. La organización de la Unión Europea (I).", [2], []],
+    ["3. La organización de la Unión Europea (II).", [3], []], ["4. Las fuentes del derecho de la Unión Europea.", [4], []],
+    ["5. El presupuesto comunitario. Los fondos europeos.", [5], []], ["6. Políticas de la Unión Europea.", [6], []] ] },
+  { b:"B3", p0:"#a9d18e", nombre:"Políticas Públicas", neg:[3, 5], filas:[
+    ["1. Políticas de modernización de la AGE.", [1], []], ["2. Política económica actual.", [2], []], ["3. Política ambiental.", [3], []],
+    ["4. La Seguridad Social", [4], []], ["5. La evolución del empleo en España.", [5], []], ["6. Política de inmigración.", [6], []],
+    ["7. El Gobierno Abierto. La Ley 19/2013.", [7], []], ["8. La protección de datos personales", [8], []],
+    ["9. Políticas de igualdad", [9], []], ["10. Otras políticas públicas.", [10], []] ] },
+  { b:"B4", p0:"#f4b183", nombre:"Derecho Administrativo General", neg:[], filas:[
+    ["1, 2 y 3. FF del Der. / Leyes / Reglamentos", [1, 2, 3], []], ["4. El acto administrativo.", [4], [1, 3, 5]],
+    ["5 y 6. Contratos del sector público I y II", [5, 6], [1, 2, 3, 4, 5]], ["7. Proc. y formas de la act. adtva. Subvenciones.", [7], []],
+    ["8. La expropiación forzosa.", [8], [1, 3]], ["9. El régimen patrimonial de las AAPP.", [9], [1, 3]],
+    ["10. La responsabilidad patrimonial de las AAPP", [10], [1, 2, 3, 5]], ["11, 12 y 13. Leyes 39 y 40 2015 I y II / Jur. CA", [11, 12, 13], [1, 2, 3, 4, 5]] ] },
+  { b:"B5", p0:"#92e3f9", nombre:"Administración de Recursos Humanos", neg:[], filas:[
+    ["1. El personal al servicio de las AAPP.", [1], [1, 2]], ["2. Derechos y deberes del personal.", [2], [1, 3, 5]],
+    ["3. Planificación de recursos humanos.", [3], [1, 5]], ["4. Provisión.", [4], [1, 2, 3, 5]],
+    ["5. Situaciones administrativas. Incompatibilidades.", [5], [1, 2, 3, 4, 5]], ["6. El sistema de retribuciones de los funcionarios.", [6], [1, 2, 3]],
+    ["7. El personal laboral.", [7], []], ["8. Negociación colectiva.", [8], [1, 3, 5]], ["9. Seguridad Social de los funcionarios.", [9], []],
+    ["10. Acceso y provisión personas con discapacidad.", [10], [1, 3, 5]] ] },
+  { b:"B6", p0:"#d67efa", nombre:"Gestión Financiera", neg:[], filas:[
+    ["1 y 2. El presupuesto: concepto y clases / Leyes Presup.", [1, 2], [1, 2]], ["3. Gastos plurianuales. Modificaciones de los créditos.", [3], [1, 2, 3, 4, 5]],
+    ["4. Control del gasto público en España.", [4], [1, 2, 4]], ["5. El proc. ejecución del presupuesto de gasto.", [5], [1, 2]],
+    ["6. Gastos para la compra de bienes y servicios.", [6], [1, 2, 3, 4]], ["7. Los ingresos públicos.", [7], [1, 5]],
+    ["8. Retribuciones de los funcionarios públicos.", [8], [1]] ] }
+];
+/** Filas con su bloque: { id (= primer tema), b, rom, t, temas:[ids], bar:[…], neg:[…] } */
+const PLAN = PLAN_DEF.map(bl => {
+  const B = BLOQUE_POR_CODE[bl.b];
+  return { b:bl.b, rom:B.rom, p0:bl.p0, nombre:bl.nombre, neg:bl.neg, filas:bl.filas.map(([t, nums, bar]) => {
+    const temas = nums.map(n => bl.b + "T" + String(n).padStart(2, "0"));
+    return { id:temas[0], b:bl.b, rom:B.rom, t, temas, bar, neg:bl.neg };
+  }) };
+});
+const PLAN_FILAS = PLAN.flatMap(b => b.filas);
+const PLAN_FILA = Object.fromEntries(PLAN_FILAS.map(f => [f.id, f]));
+const PLAN_DE_TEMA = {};
+PLAN_FILAS.forEach(f => f.temas.forEach(id => { PLAN_DE_TEMA[id] = f.id; }));
+if (Object.keys(PLAN_DE_TEMA).length !== TEMAS.length) console.error("PLAN no casa con el programa:", Object.keys(PLAN_DE_TEMA).length, TEMAS.length);
+const FILA_GENERAL = "G";         // estudio sin tema (supuestos, tests, repasos…): cuenta en el día, no en la plantilla
+
+/** Temas con recuadro rojo en el «orden sugerido»: importancia crítica de cara al supuesto. */
+const CRITICOS = new Set(["B5T05", "B6T02", "B6T03", "B4T05", "B4T06", "B4T11", "B4T12", "B5T02", "B6T05", "B4T10"]);
+const pillCritica = id => CRITICOS.has(id) ? `<span class="pill-critica" title="Tema decisivo de cara al supuesto práctico">IMPORTANCIA CRÍTICA</span>` : "";
+
+/** Código corto de una fila: «IV.5–6». */
+function codigoFila(f) {
+  if (!f) return "";
+  const a = TEMA_POR_ID[f.temas[0]].c;
+  if (f.temas.length === 1) return a;
+  const z = TEMA_POR_ID[f.temas[f.temas.length - 1]].c;
+  return a + "–" + z.split(".")[1];
+}
+/** Nombre de una fila sin su número: «Contratos del sector público I y II». */
+const nombreFila = f => f ? f.t.replace(/^[\d, y]+\.\s*/, "").replace(/\.$/, "") : "General / otros";
+const celdaKey = (fila, v, h) => fila + "|" + v + "|" + h;
+const partirCelda = c => { const [f, v, h] = c.split("|"); return { f, v:+v, h:+h }; };
+const etiquetaCelda = c => {
+  const { f, v, h } = partirCelda(c), fila = PLAN_FILA[f];
+  return (fila ? codigoFila(fila) + " · " + nombreFila(fila) : "General / otros") + (v ? " · vuelta " + v : "") + (h === 2 ? " (extra)" : "");
+};
+
+/* ---- Formatos de tiempo ------------------------------------------------- */
+const pad2 = n => String(n).padStart(2, "0");
+const fechaISO = ms => { const d = new Date(ms); return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); };
+const isoMs = iso => { const [y, m, d] = iso.split("-").map(Number); return new Date(y, m - 1, d).getTime(); };
+const sumarDias = (iso, n) => fechaISO(isoMs(iso) + n * 86400000 + 3600000);
+function hms(seg) { seg = Math.max(0, Math.round(seg)); return pad2(Math.floor(seg / 3600)) + ":" + pad2(Math.floor(seg % 3600 / 60)) + ":" + pad2(seg % 60); }
+/** «2:05» (horas:minutos) para las casillas. */
+function hm(seg) { seg = Math.max(0, Math.round(seg)); if (!seg) return ""; const m = Math.round(seg / 60); return Math.floor(m / 60) + ":" + pad2(m % 60); }
+/** «2 h 05 min» / «35 min». */
+function dur(seg) { seg = Math.max(0, Math.round(seg)); const m = Math.round(seg / 60); if (!m) return seg ? "<1 min" : "0 min"; return m < 60 ? m + " min" : Math.floor(m / 60) + " h " + pad2(m % 60) + " min"; }
+const horasDe = seg => Math.round(seg / 360) / 10;     // 1 decimal
+const KEY_DISP = "gestion_hub_disp_v1", KEY_CRON = "gestion_hub_cron_v1";
+const DISP = (() => { let d = ""; try { d = localStorage.getItem(KEY_DISP) || ""; } catch (_) {} if (!d) { d = Math.random().toString(36).slice(2, 7); try { localStorage.setItem(KEY_DISP, d); } catch (_) {} } return d; })();
+
+/* ---- Configuración (vuelta actual…) ------------------------------------- */
+function plCfg() {
+  const d = (prog.mapa["PLCFG"] && prog.mapa["PLCFG"].d) || {};
+  return { v:Math.min(PLAN_VUELTAS, Math.max(1, d.v || 1)), x:!!d.x, seguir:d.seguir !== false, examen:d.examen || "" };
+}
+function plCfgSet(p) { marcarProg("PLCFG", true, Object.assign(plCfg(), p)); }
+/** Mitad de la casilla en la que cuenta el tiempo ahora: la extra solo si esa fila tiene vuelta barrada. */
+function mitadActual(fila, cfg) { cfg = cfg || plCfg(); const f = PLAN_FILA[fila]; return cfg.x && f && f.bar.includes(cfg.v) ? 2 : 1; }
+
+/* ---- Registro: lectura ---------------------------------------------------- */
+/** Todo el tiempo registrado: por día y por casilla de la plantilla. */
+function regIndice() {
+  const dias = {}, celdas = {};
+  const casilla = c => celdas[c] || (celdas[c] = { s:0, m:0, f:"", l:"" });
+  for (const k in prog.mapa) {
+    if (k.startsWith("REG:")) {
+      const v = prog.mapa[k]; if (!v || !v.s || !v.d) continue;
+      const fecha = k.slice(4, 14);
+      const D = dias[fecha] || (dias[fecha] = { tot:0, t:{}, ses:[] });
+      const t = v.d.t || {};
+      for (const c in t) {
+        const s = t[c]; D.tot += s; D.t[c] = (D.t[c] || 0) + s;
+        const C = casilla(c); C.s += s; if (!C.f || fecha < C.f) C.f = fecha; if (!C.l || fecha > C.l) C.l = fecha;
+      }
+      (v.d.ses || []).forEach(x => D.ses.push(x));
+    } else if (k.startsWith("PLM:")) {
+      const v = prog.mapa[k]; if (v && v.s && v.d) casilla(k.slice(4)).m += v.d.s || 0;
+    }
+  }
+  Object.values(dias).forEach(D => D.ses.sort((a, b) => a[0] - b[0]));
+  return { dias, celdas };
+}
+const tiempoCelda = (idx, fila, v, h) => { const C = idx.celdas[celdaKey(fila, v, h)]; return C ? Math.max(0, C.s + C.m) : 0; };
+
+/* ---- Registro: escritura -------------------------------------------------- */
+/** Suma segundos a una casilla en el día indicado (en el registro de este dispositivo). */
+function regSumar(fecha, celda, seg, t0) {
+  const k = "REG:" + fecha + ":" + DISP;
+  const cur = (prog.mapa[k] && prog.mapa[k].d) || { t:{}, ses:[] };
+  const d = { t:Object.assign({}, cur.t), ses:(cur.ses || []).map(x => x.slice()) };
+  d.t[celda] = (d.t[celda] || 0) + seg;
+  if (d.t[celda] <= 0) delete d.t[celda];
+  if (t0) {
+    const last = d.ses[d.ses.length - 1];
+    if (last && last[2] === celda && Math.abs(last[0] + last[1] * 1000 - t0) < 5000) last[1] += seg; else d.ses.push([t0, seg, celda]);
+  }
+  marcarProg(k, Object.keys(d.t).length > 0, d);
+}
+/** Deja el total de un día y casilla en `seg` (resta lo que aportan otros dispositivos). */
+function regFijarDia(fecha, celda, seg) {
+  let otros = 0;
+  for (const k in prog.mapa) if (k.startsWith("REG:" + fecha + ":") && !k.endsWith(":" + DISP)) { const v = prog.mapa[k]; if (v && v.s && v.d && v.d.t && v.d.t[celda]) otros += v.d.t[celda]; }
+  const k = "REG:" + fecha + ":" + DISP, cur = (prog.mapa[k] && prog.mapa[k].d) || { t:{}, ses:[] };
+  const d = { t:Object.assign({}, cur.t), ses:(cur.ses || []).filter(x => x[2] !== celda) };
+  const mio = Math.max(0, Math.round(seg) - otros);
+  if (mio) d.t[celda] = mio; else delete d.t[celda];
+  if (mio) d.ses.push([isoMs(fecha) + 43200000, mio, celda]);
+  marcarProg(k, Object.keys(d.t).length > 0, d);
+}
+/** Ajuste manual de una casilla de la plantilla para que su total sea `seg`. */
+function plFijarCelda(fila, v, h, seg) {
+  const idx = regIndice(), c = celdaKey(fila, v, h), C = idx.celdas[c];
+  const reg = C ? C.s : 0;
+  marcarProg("PLM:" + c, seg !== reg, { s:Math.round(seg - reg) });
+}
+
+/* ---- Cronómetro ------------------------------------------------------------ */
+const TAB_ID = Math.random().toString(36).slice(2, 8);
+/* Estado compartido entre pestañas (localStorage): { run, t0 (inicio de la sesión),
+   comm (hasta cuándo está volcado al registro), fila, v, x, dueno (pestaña que cuenta), latido } */
+const CR = Object.assign({ run:false, t0:0, comm:0, fila:"", v:1, x:false, dueno:"", latido:0 }, leerJSON(KEY_CRON, {}));
+function crGuardar() { escribirJSON(KEY_CRON, CR); }
+function crPartirDias(desde, hasta) {          // [{fecha, seg, t0}] repartido por días naturales
+  const out = []; let a = desde;
+  while (a < hasta) {
+    const d = new Date(a); const finDia = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
+    const b = Math.min(hasta, finDia);
+    out.push({ fecha:fechaISO(a), seg:Math.round((b - a) / 1000), t0:a });
+    a = b;
+  }
+  return out;
+}
+/** Vuelca al registro lo contado desde el último volcado hasta `hasta`. */
+function crVolcar(hasta) {
+  if (!CR.run || !CR.comm || hasta - CR.comm < 1000) return;
+  const celda = celdaKey(CR.fila || FILA_GENERAL, CR.fila ? CR.v : 0, CR.fila ? (CR.x && PLAN_FILA[CR.fila] && PLAN_FILA[CR.fila].bar.includes(CR.v) ? 2 : 1) : 1);
+  crPartirDias(CR.comm, hasta).forEach(p => { if (p.seg >= 1) regSumar(p.fecha, celda, p.seg, p.t0); });
+  CR.comm = hasta; crGuardar();
+}
+function crIniciar() {
+  const cfg = plCfg(); const ahora = Date.now();
+  CR.run = true; CR.t0 = ahora; CR.comm = ahora; CR.v = cfg.v; CR.x = cfg.x; CR.dueno = TAB_ID; CR.latido = ahora; crGuardar();
+  crPintar(); toast("Cronómetro en marcha");
+}
+function crParar(silencioso) {
+  if (!CR.run) return;
+  const hasta = (Date.now() - CR.latido > 90000 && CR.dueno !== TAB_ID) ? CR.latido : Date.now();   // si nadie lo llevaba, hasta el último latido
+  const dur0 = hasta - CR.t0;
+  crVolcar(hasta);
+  CR.run = false; CR.dueno = ""; crGuardar(); crPintar();
+  if (!silencioso) { toast("Registrado: " + dur(dur0 / 1000)); if (typeof repintarPlan === "function") repintarPlan(); }
+}
+/** Cambia de tema sin parar la sesión: lo contado hasta ahora se queda en el tema anterior. */
+function crCambiar(fila, v, x) {
+  if (CR.run) crVolcar(Date.now());
+  CR.fila = fila; if (v != null) CR.v = v; if (x != null) CR.x = x; crGuardar(); crPintar();
+}
+function crTick() {
+  const ahora = Date.now();
+  if (CR.run) {
+    if (CR.dueno === TAB_ID) {
+      CR.latido = ahora;
+      if (ahora - CR.comm >= 120000) crVolcar(ahora); else if (ahora % 10000 < 1100) crGuardar();
+    } else if (ahora - CR.latido > 90000) {          // la pestaña que lo llevaba ya no está: se cierra en su último latido
+      crParar(true); toast("El cronómetro se detuvo (la pestaña que lo llevaba se cerró)");
+    }
+  }
+  crPintarHora();
+  if (CR.run && ahora % 30000 < 1000 && typeof repintarPlan === "function") repintarPlan();
+}
+function crSeg() { return CR.run ? (Date.now() - CR.t0) / 1000 : 0; }
+const crFila = () => (CR.fila && PLAN_FILA[CR.fila]) ? PLAN_FILA[CR.fila] : null;
+function crVueltaTxt() { const c = plCfg(); return "vuelta " + (CR.run ? CR.v : c.v) + ((CR.run ? CR.x : c.x) ? " · extra" : ""); }
+function crDestinoTxt() { const f = crFila(); return f ? codigoFila(f) + " · " + nombreFila(f) : "General / otros"; }
+function hoyTotal() { const D = regIndice().dias[hoyISO()]; return D ? D.tot : 0; }
+
+function crCrear() {
+  if (document.getElementById("cr")) return;
+  const el = document.createElement("div");
+  el.className = "cr"; el.id = "cr";
+  el.innerHTML = `
+    <div class="cr-panel" id="cr-panel" hidden></div>
+    <div class="cr-pill">
+      <span class="cr-punto" aria-hidden="true"></span>
+      <button class="cr-txt" id="cr-txt" type="button" aria-label="Abrir el registro de estudio" aria-expanded="false"><span class="cr-t" id="cr-t">00:00:00</span><span class="cr-d" id="cr-d"></span></button>
+      <button class="cr-go" id="cr-go" type="button"></button>
+    </div>`;
+  document.body.appendChild(el);
+  document.getElementById("cr-go").addEventListener("click", () => { if (CR.run) crParar(); else crIniciar(); crPanel(false); });
+  document.getElementById("cr-txt").addEventListener("click", () => crPanel());
+  setInterval(crTick, 1000);
+  window.addEventListener("storage", e => {
+    if (e.key !== KEY_CRON || !e.newValue) return;
+    try { Object.assign(CR, JSON.parse(e.newValue)); } catch (_) { return; }
+    crPintar();
+  });
+  window.addEventListener("pagehide", () => { if (CR.run && CR.dueno === TAB_ID) { crVolcar(Date.now()); CR.latido = Date.now(); crGuardar(); } });
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") crTick(); });
+  // Al abrir: si había uno en marcha pero nadie lo llevaba, se cierra en el último latido.
+  if (CR.run && Date.now() - CR.latido > 90000) { crParar(true); toast("El cronómetro se detuvo al cerrar la página: se registró hasta el último momento en que estaba abierta"); }
+  else if (CR.run) { CR.dueno = TAB_ID; crGuardar(); }
+  crPintar();
+}
+function crPintarHora() {
+  const t = document.getElementById("cr-t"); if (!t) return;
+  t.textContent = hms(CR.run ? crSeg() : 0);
+  const hoy = document.getElementById("cr-hoy-v"); if (hoy) hoy.textContent = dur(hoyTotal() + (CR.run ? Math.max(0, (Date.now() - CR.comm) / 1000) : 0));
+}
+function crPintar() {
+  const el = document.getElementById("cr"); if (!el) return;
+  el.classList.toggle("run", !!CR.run);
+  document.getElementById("cr-go").innerHTML = CR.run ? "■ Parar" : "▶ Estudiar";
+  document.getElementById("cr-d").textContent = crDestinoTxt() + " · " + crVueltaTxt();
+  document.getElementById("cr-d").title = crDestinoTxt() + " · " + crVueltaTxt();
+  crPintarHora();
+  if (!document.getElementById("cr-panel").hidden) crPanel(true);
+}
+function crPanel(forzar) {
+  const p = document.getElementById("cr-panel"); if (!p) return;
+  if (forzar !== true) { p.hidden = forzar === false ? true : !p.hidden; document.getElementById("cr-txt").setAttribute("aria-expanded", String(!p.hidden)); }
+  if (p.hidden) return;
+  const cfg = plCfg(), v = CR.run ? CR.v : cfg.v, x = CR.run ? CR.x : cfg.x, f = crFila();
+  const neg = f && f.neg.includes(v);
+  const sinExtra = x && f && !f.bar.includes(v);
+  p.innerHTML = `
+    <label>Tema que estás estudiando
+      <select id="cr-sel">
+        <option value="">General / otros (supuestos, tests, repaso…)</option>
+        ${PLAN.map(b => `<optgroup label="Bloque ${b.rom} · ${esc(b.nombre)}">${b.filas.map(fl => `<option value="${fl.id}" ${CR.fila === fl.id ? "selected" : ""}>${esc(codigoFila(fl))} · ${esc(nombreFila(fl))}</option>`).join("")}</optgroup>`).join("")}
+      </select>
+    </label>
+    <div class="cr-fila">
+      <label>Vuelta
+        <select id="cr-v">${[1, 2, 3, 4, 5, 6].map(n => `<option value="${n}" ${n === v ? "selected" : ""}>Vuelta ${n}</option>`).join("")}</select>
+      </label>
+      <label class="cr-chk"><input type="checkbox" id="cr-x" ${x ? "checked" : ""}> Vuelta extra (temas barrados)</label>
+    </div>
+    ${neg ? `<div class="cr-aviso">Este tema no se estudia en la vuelta ${v} (casilla en negro). Puedes registrarlo igualmente.</div>` : ""}
+    ${sinExtra ? `<div class="cr-aviso">Este tema no tiene vuelta extra en la vuelta ${v}: el tiempo irá a la casilla normal.</div>` : ""}
+    <label class="cr-chk"><input type="checkbox" id="cr-seguir" ${cfg.seguir ? "checked" : ""}> Contar el tema que abro (cambia solo al navegar)</label>
+    <div class="cr-hoy"><span>Hoy: <b id="cr-hoy-v">${dur(hoyTotal())}</b></span>${CR.run ? `<span>Sesión: <b>${dur(crSeg())}</b></span>` : ""}</div>
+    <div class="cr-enl"><a class="btn" href="#/plan">📅 Plan de estudio</a><a class="btn" href="#/registro">⏱ Registro</a></div>`;
+  document.getElementById("cr-sel").addEventListener("change", e => { crCambiar(e.target.value); });
+  document.getElementById("cr-v").addEventListener("change", e => { plCfgSet({ v:+e.target.value }); crCambiar(CR.fila, +e.target.value, plCfg().x); });
+  document.getElementById("cr-x").addEventListener("change", e => { plCfgSet({ x:e.target.checked }); crCambiar(CR.fila, plCfg().v, e.target.checked); });
+  document.getElementById("cr-seguir").addEventListener("change", e => { plCfgSet({ seguir:e.target.checked }); });
+  p.querySelectorAll("a.btn").forEach(a => a.addEventListener("click", () => crPanel(false)));
+}
+/** Se llama en cada render(): si abres un tema, el cronómetro pasa a contar ese tema. */
+function cronSeguir(r) {
+  if (!document.getElementById("cr")) return;
+  const id = r && (r.v === "tema" || r.v === "leer" || r.v === "editar") ? r.id : "";
+  const fila = id ? PLAN_DE_TEMA[id] : "";
+  if (!fila || !plCfg().seguir || fila === CR.fila) { crPintar(); return; }
+  if (CR.run) { crCambiar(fila, plCfg().v, plCfg().x); toast("Contando: " + codigoFila(PLAN_FILA[fila]), "", 1800); }
+  else { CR.fila = fila; CR.v = plCfg().v; CR.x = plCfg().x; crGuardar(); crPintar(); }
+}
+
+/* ---- Diálogos --------------------------------------------------------------- */
+function abrirDialogo(html, { ancho, alMostrar } = {}) {
+  const dlg = document.createElement("dialog");
+  dlg.className = "pl-dlg" + (ancho ? " ancho" : "");
+  dlg.innerHTML = html;
+  document.body.appendChild(dlg);
+  dlg.addEventListener("close", () => dlg.remove());
+  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+  dlg.showModal();
+  if (alMostrar) alMostrar(dlg);
+  return dlg;
+}
+/** Pide un tiempo en horas y minutos. Devuelve segundos o null. */
+function pedirTiempo(titulo, texto, segActual) {
+  return new Promise(res => {
+    const h0 = Math.floor(segActual / 3600), m0 = Math.round(segActual % 3600 / 60);
+    const dlg = abrirDialogo(`<form method="dialog">
+      <h3>${esc(titulo)}</h3>${texto ? `<p>${texto}</p>` : ""}
+      <div class="pl-hm"><input type="number" id="pt-h" min="0" max="999" value="${h0}" inputmode="numeric" aria-label="Horas"><span>h</span>
+        <input type="number" id="pt-m" min="0" max="59" value="${m0}" inputmode="numeric" aria-label="Minutos"><span>min</span></div>
+      <div class="pl-botones"><button class="btn" value="no" type="button" id="pt-no">Cancelar</button><button class="btn btn-primary" value="ok" id="pt-ok">Guardar</button></div></form>`);
+    let hecho = false;
+    dlg.querySelector("#pt-no").addEventListener("click", () => dlg.close());
+    dlg.querySelector("form").addEventListener("submit", e => {
+      e.preventDefault(); hecho = true;
+      res(Math.max(0, (parseInt(dlg.querySelector("#pt-h").value, 10) || 0) * 3600 + (parseInt(dlg.querySelector("#pt-m").value, 10) || 0) * 60)); dlg.close();
+    });
+    dlg.addEventListener("close", () => { if (!hecho) res(null); });
+    setTimeout(() => dlg.querySelector("#pt-h").select(), 30);
+  });
+}
+
+/* ---- Datos de la guía (página 2: orden sugerido; página 5: encaje; página 6: supuestos) ---- */
+/** Orden sugerido de los temas por módulo. «alta» = negrita en la guía; «crítica» = recuadro rojo. */
+const PLAN_ORDEN = [
+  ["M1", [["B1T01", "La Constitución Española de 1978"], ["B1T02", "Derechos y deberes fundamentales"], ["B1T03", "El Tribunal Constitucional"], ["B2T01", "La Unión Europea: Antecedentes"]]],
+  ["M2", [["B1T05", "El poder legislativo"], ["B4T01", "Las fuentes del derecho administrativo"], ["B4T02", "La ley. Tipos de leyes"], ["B4T03", "El reglamento"]]],
+  ["M3", [["B1T04", "La Corona"], ["B1T06", "El poder ejecutivo"], ["B4T04", "El acto administrativo"]]],
+  ["M4", [["B1T07", "El Poder Judicial"], ["B2T02", "La organización de la Unión Europea (I)"], ["B2T03", "La organización de la Unión Europea (II)"]]],
+  ["M5", [["B1T08", "La Administración General del Estado"], ["B5T01", "El personal al servicio de las AAPP"], ["B5T05", "Situaciones administrativas. Incompat."]]],
+  ["M6", [["B2T04", "Las fuentes del derecho de la UE."], ["B3T01", "Políticas de modernización de la AGE."], ["B6T01", "El presupuesto: concepto y clases"], ["B6T02", "Las leyes anuales de presupuestos"]]],
+  ["M7", [["B3T02", "Política económica actual."], ["B3T03", "Política ambiental."], ["B6T03", "Gastos plurianuales. Modif. de créditos"]]],
+  ["M8", [["B4T05", "Contratos del sector público I"], ["B4T06", "Contratos del sector público II"], ["B4T07", "Proc. y formas de la act. Adtva."]]],
+  ["M9", [["B4T11", "Leyes 39 y 40 2015 I"], ["B4T12", "Leyes 39 y 40 2015 II"], ["B4T13", "Contencioso-administrativo."]]],
+  ["M10", [["B5T02", "Derechos y deberes del personal"], ["B5T03", "Planificación de recursos humanos"], ["B5T04", "Provisión"], ["B5T08", "Negociación colectiva"]]],
+  ["M11", [["B4T08", "La expropiación forzosa"], ["B6T04", "Control del gasto público en España"], ["B6T05", "El proc. ejecución del presupuesto de gasto"]]],
+  ["M12", [["B3T04", "La Seguridad Social"], ["B3T05", "La evolución del empleo en España."], ["B5T09", "Seguridad Social de los funcionarios"]]],
+  ["M13", [["B2T05", "El presupuesto y fondos europeos"], ["B4T09", "El régimen patrimonial de las AAPP"], ["B6T06", "Gastos para la compra de bienes y servicios"]]],
+  ["M14", [["B1T09", "El sector público institucional"], ["B3T06", "Política de inmigración."], ["B3T07", "El Gobierno Abierto. La Ley 19/2013."]]],
+  ["M15", [["B3T08", "La protección de datos personales"], ["B4T10", "La responsabilidad patrim. de las AAPP"], ["B6T07", "Los ingresos públicos"]]],
+  ["M16", [["B1T10", "Organización territorial (I)"], ["B3T09", "Políticas de igualdad"], ["B5T06", "Retribuciones los funcionarios"], ["B6T08", "Retribuciones de los funcionarios públicos"]]],
+  ["M17", [["B1T11", "Organización territorial (II)"], ["B2T06", "Políticas de la Unión Europea"], ["B3T10", "Otras políticas públicas."], ["B5T07", "El personal laboral"], ["B5T10", "Acceso y provisión pers. con discapacidad"]]]
+];
+const ALTAS = new Set(["B4T04", "B5T05", "B6T01", "B6T02", "B6T03", "B4T05", "B4T06", "B4T11", "B4T12", "B4T13", "B5T02", "B5T04", "B5T08", "B4T08", "B6T05", "B4T09", "B6T06", "B4T10", "B6T07", "B5T06", "B6T08", "B5T10"]);
+if (PLAN_ORDEN.reduce((n, m) => n + m[1].length, 0) !== TEMAS.length) console.error("El orden sugerido no casa con el programa");
+
+/** Encaje de vueltas (página 5). k: c completa · r repaso de barrados · s sin bloques I-III · l libres · t repaso de la teoría acumulada.
+    v/x: vuelta y si es la «extra», para resaltar la vuelta en que estás. y: color del tramo de supuestos. */
+const ENCAJE = [
+  { k:"c", t:"Vuelta 1 – Completa", s:"-", v:1, x:false },
+  { k:"r", t:"Vuelta repaso 1 temas barrados", s:"-", v:1, x:true },
+  { k:"c", t:"Vuelta 2 - Completa", s:"2", a:"2016 - 18", y:"y16", v:2, x:false },
+  { k:"r", t:"Vuelta repaso 2 temas barrados", s:"2", a:"", y:"y16", v:2, x:true },
+  { k:"s", t:"Vuelta 3 – Sin BLQs. I-III", s:"4", a:"", y:"y16", v:3, x:false },
+  { k:"r", t:"Vuelta repaso 3 temas barrados", s:"4", a:"", y:"y16", v:3, x:true },
+  { k:"c", t:"Vuelta 4 - Completa", s:"8", a:"2019 - 22", y:"y19", v:4, x:false },
+  { k:"t" },
+  { k:"r", t:"Vuelta repaso 4 temas barrados", s:"8", a:"2014-15", y:"y14", v:4, x:true },
+  { k:"t" },
+  { k:"s", t:"Vuelta 5 – Sin BLQs. I-III", s:"12", a:"2016 - 18", y:"y16", v:5, x:false },
+  { k:"t" },
+  { k:"r", t:"Vuelta repaso 5 temas barrados", s:"8", a:"2019 - 22", y:"y19", v:5, x:true },
+  { k:"t" },
+  { k:"c", t:"Vuelta completa 6", s:"20", a:"2016-15", y:"y14", v:6, x:false },
+  { k:"t2" },
+  { k:"l", t:"Vuelta repaso 6 temas libres", s:"28", a:"2014 - 22", y:"yall", v:6, x:true },
+  { k:"t2" }
+];
+/** Exámenes de la tabla de supuestos (página 6): [clave, etiqueta, grupo de color]. */
+const SUP_TL = [["TL2022X", "2022 TL EXT.", "g19"], ["TL2022", "2022 TL", "g19"], ["TL2019X", "2019 TL EXT ESTAB.", "g19"], ["TL2019", "2019 TL ESTA", "g19"],
+  ["TL2018", "2018 TL", "g16"], ["TL2017", "2017 TL", "g16"], ["TL2016", "2016 TL", "g16"], ["TL2015", "2015 TL", "g14"], ["TL2014", "2014 TL", "g14"],
+  ["TL2012", "2012-2013 TL", "g05"], ["TL2011", "2011 TL", "g05"], ["TL2010", "2010 TL", "g05"], ["TL2009", "2009 TL", "g05"], ["TL2008", "2008 TL", "g05"], ["TL2005", "2005 TL", "g05"]];
+const SUP_PI = [["PI2018", "2018 PI", "g16"], ["PI2017", "2017 PI", "g16"], ["PI2016", "2016 PI", "g16"], ["PI2015", "2015 PI", "g14"], ["PI2014", "2014 PI", "g14"],
+  ["PI2012", "2012-2013 PI", "g05"], ["PI2011", "2011 PI", "g05"], ["PI2010", "2010 PI", "g05"], ["PI2009", "2009 PI", "g05"], ["PI2008", "2008 PI", "g05"]];
+const N_SIM = 24;
+
+/* ---- Registro «vivo»: incluye lo que el cronómetro lleva contado y aún no se ha volcado ---- */
+function celdaCR() {
+  const f = crFila(), cfg = plCfg(), v = CR.run ? CR.v : cfg.v, x = CR.run ? CR.x : cfg.x;
+  return f ? celdaKey(f.id, v, x && f.bar.includes(v) ? 2 : 1) : celdaKey(FILA_GENERAL, 0, 1);
+}
+function regIndiceVivo() {
+  const idx = regIndice();
+  if (CR.run && CR.comm && Date.now() - CR.comm >= 1000) {
+    const c = celdaCR();
+    crPartirDias(CR.comm, Date.now()).forEach(p => {
+      const D = idx.dias[p.fecha] || (idx.dias[p.fecha] = { tot:0, t:{}, ses:[] });
+      D.tot += p.seg; D.t[c] = (D.t[c] || 0) + p.seg;
+      const C = idx.celdas[c] || (idx.celdas[c] = { s:0, m:0, f:"", l:"" });
+      C.s += p.seg; if (!C.f || p.fecha < C.f) C.f = p.fecha; if (!C.l || p.fecha > C.l) C.l = p.fecha;
+    });
+  }
+  return idx;
+}
+const $id = id => document.getElementById(id);
+const PL = { tab:"plantilla", mes:"", dia:"" };
+function repintarPlan() {
+  const r = ruta();
+  if (r.v !== "plan" && r.v !== "registro") return;
+  const a = document.activeElement;
+  if (document.querySelector("dialog[open]") || (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.closest("#vista"))) return;
+  if (r.v === "plan") pintarPlan(); else pintarRegistro();
+}
+const guardado = (k, def) => { const v = prog.mapa[k]; return v && v.s && v.d ? v.d : def; };
+
+/* ======================================================================
+   Vista: Plan de estudio
+   ==================================================================== */
+const PLAN_TABS = [
+  { id:"plantilla", txt:"📋 Plantilla" }, { id:"orden", txt:"🧭 Orden sugerido" }, { id:"encaje", txt:"🔗 Encaje de vueltas" },
+  { id:"supuestos", txt:"✍️ Supuestos" }, { id:"guia", txt:"📖 Guía de estudio" }
+];
+function renderPlan(tab) {
+  PL.tab = PLAN_TABS.some(t => t.id === tab) ? tab : "plantilla";
+  vista().innerHTML = `
+    <h1 class="titulo-grande">📅 Plan de estudio</h1>
+    <p class="view-sub">El sistema de vueltas y el registro de tiempos del módulo M100: plantilla de temas, orden sugerido, encaje con los supuestos y guía de estudio. El cronómetro de abajo a la izquierda rellena la plantilla solo.</p>
+    <div class="pl-tabs" role="tablist" aria-label="Plan de estudio">${PLAN_TABS.map(t => `<button class="chip ${t.id === PL.tab ? "active" : ""}" role="tab" data-plt="${t.id}">${t.txt}</button>`).join("")}</div>
+    <div id="pl-cuerpo"></div>`;
+  vista().querySelectorAll("[data-plt]").forEach(b => b.addEventListener("click", () => ir("#/plan/" + b.dataset.plt)));
+  pintarPlan();
+}
+function pintarPlan() {
+  const c = $id("pl-cuerpo"); if (!c) return;
+  ({ plantilla:plTabla, orden:plOrden, encaje:plEncaje, supuestos:plSupuestos, guia:plGuia })[PL.tab](c);
+}
+
+/* ---- Plantilla ----------------------------------------------------------- */
+function plTabla(c) {
+  const idx = regIndiceVivo(), cfg = plCfg();
+  const act = crFila() ? celdaCR() : "";
+  const total = Array(PLAN_VUELTAS + 1).fill(0);
+  const filaSeg = f => { let s = 0; for (let v = 1; v <= PLAN_VUELTAS; v++) for (const h of [1, 2]) s += tiempoCelda(idx, f.id, v, h); return s; };
+  const celda = (f, v) => {
+    const par = f.bar.includes(v), neg = f.neg.includes(v);
+    const t1 = tiempoCelda(idx, f.id, v, 1), t2 = tiempoCelda(idx, f.id, v, 2);
+    total[v] += t1 + t2;
+    const cls = "pl-c" + (v === 5 ? " v5" : "") + (par ? " par" : "") + (neg ? " neg" : "") + (t1 + t2 ? " hecho" : "");
+    const hoy = [celdaKey(f.id, v, 1), celdaKey(f.id, v, 2)].includes(act) ? " hoy" : "";
+    if (neg && !(t1 + t2)) return `<div class="${cls}" role="img" aria-label="${esc(codigoFila(f))}, vuelta ${v}: no se estudia"></div>`;
+    const m = (t, h) => `<span class="m ${t ? "t" : ""}">${hm(t)}</span>`;
+    const lab = `${codigoFila(f)} · vuelta ${v}: ${hm(t1) || "sin tiempo"}${par ? ` / extra ${hm(t2) || "sin tiempo"}` : ""}`;
+    return `<button type="button" class="${cls}${hoy}" data-c="${celdaKey(f.id, v, 1)}" aria-label="${esc(lab)}" title="${esc(lab)}">${par ? m(t1, 1) + m(t2, 2) : m(t1, 1)}</button>`;
+  };
+  const bloques = PLAN.map(b => {
+    const sub = Array(PLAN_VUELTAS + 1).fill(0); let subT = 0;
+    const filas = b.filas.map(f => {
+      const antes = total.slice();
+      const celdas = Array.from({ length:PLAN_VUELTAS }, (_, i) => celda(f, i + 1)).join("");
+      for (let v = 1; v <= PLAN_VUELTAS; v++) sub[v] += total[v] - antes[v];
+      const s = filaSeg(f); subT += s;
+      const t1 = f.temas[0];
+      return `<div class="pl-fila"><div class="pl-t"><a href="#/tema/${t1}">${esc(f.t)}</a>${f.temas.length > 1 ? `<span class="pl-codigos">${f.temas.map(id => `<a href="#/tema/${id}" title="Tema ${esc(TEMA_POR_ID[id].c)}">${esc(TEMA_POR_ID[id].c)}</a>`).join("")}</span>` : ""}${pillCritica(f.temas.find(id => CRITICOS.has(id)) || "")}</div>${celdas}<div class="pl-s">${hm(s)}</div></div>`;
+    }).join("");
+    return `<div class="pl-bloque" style="--p0:${b.p0}">
+      <div class="pl-fila pl-bh"><div class="pl-t">${b.rom}. ${esc(b.nombre.toUpperCase())}</div><div class="pl-vh">VUELTAS</div></div>
+      <div class="pl-fila pl-nv"><div></div>${[1, 2, 3, 4, 5, 6].map(n => `<div>${n}</div>`).join("")}<div>Σ</div></div>
+      ${filas}
+      <div class="pl-fila pl-tot"><div class="pl-t">Total del bloque</div>${[1, 2, 3, 4, 5, 6].map(v => `<div class="pl-c"><span class="m">${hm(sub[v])}</span></div>`).join("")}<div class="pl-s">${hm(subT)}</div></div>
+    </div>`;
+  }).join("");
+  const gen = (idx.celdas[celdaKey(FILA_GENERAL, 0, 1)] || { s:0, m:0 });
+  const totTemas = total.reduce((a, b) => a + b, 0);
+  const sims = Array.from({ length:N_SIM }, (_, i) => `<div class="n">${i + 1}</div>` + [1, 2, 3, 4].map(cc => {
+    const d = guardado("SIM:" + (i + 1) + ":" + cc, { n:"", f:"" });
+    return `<div class="c"><input type="text" inputmode="decimal" placeholder="nota" value="${esc(d.n || "")}" data-sim="${i + 1}|${cc}" aria-label="Simulacro ${i + 1}, intento ${cc}: nota"><input type="text" placeholder="fecha" value="${esc(d.f || "")}" data-sim="${i + 1}|${cc}" aria-label="Simulacro ${i + 1}, intento ${cc}: fecha"></div>`;
+  }).join("")).join("");
+  c.innerHTML = `
+    <div class="card" style="margin-top:0">
+      <div class="cr-fila" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+        <label style="font-weight:700;font-size:14px">Vuelta en curso
+          <select id="pl-v" style="margin-left:6px">${[1, 2, 3, 4, 5, 6].map(n => `<option value="${n}" ${n === cfg.v ? "selected" : ""}>Vuelta ${n}</option>`).join("")}</select></label>
+        <label class="cr-chk" style="font-size:14px"><input type="checkbox" id="pl-x" ${cfg.x ? "checked" : ""}> Estoy en la vuelta extra (temas barrados)</label>
+      </div>
+      <p class="pl-nota" style="margin:8px 0 0">El cronómetro suma el tiempo a la casilla de <b>el tema que tienes abierto</b> en la vuelta en curso. Pulsa cualquier casilla para ver o corregir su tiempo, o para ponerte a estudiar ahí.</p>
+    </div>
+    <div class="pl-leyenda"><span><i></i>Vuelta normal: pon el <b>tiempo</b>, no «visto»</span><span><i class="par"></i>Casilla partida: arriba la vuelta, abajo la vuelta extra (tema «barrado»), que se da <b>al terminar toda la vuelta</b></span><span><i class="neg"></i>No se estudia en esa vuelta (bloques I-III en las vueltas 3 y 5)</span></div>
+    <div class="pl-scroll"><div class="pl-tabla">${bloques}
+      <div class="pl-bloque" style="--p0:#d9d9d9"><div class="pl-fila pl-tot"><div class="pl-t">TOTAL DE LOS TEMAS</div>${[1, 2, 3, 4, 5, 6].map(v => `<div class="pl-c"><span class="m">${hm(total[v])}</span></div>`).join("")}<div class="pl-s">${hm(totTemas)}</div></div>
+      <div class="pl-fila pl-tot"><div class="pl-t">General / otros (supuestos, tests, repasos…)</div><div class="pl-c" style="grid-column:2 / span 6;justify-content:center;align-items:center;flex-direction:row">${hm(gen.s + gen.m) || "—"}</div><div class="pl-s">${hm(gen.s + gen.m)}</div></div></div></div></div>
+    <div class="rg-grid2" style="margin-top:14px">
+      <div>
+        <h3 style="margin:0 0 8px">Simulacros</h3>
+        <p class="pl-nota">Plantilla flexible. La recomendación básica es hacer los exámenes oficiales de años anteriores de A2, C1 y C2: apunta cuál has hecho, la nota y la fecha.</p>
+        <div class="pl-scroll"><div class="pl-sim"><div class="h">SIM.</div><div class="h" style="grid-column:2 / span 4">NOTA / FECHA</div>${sims}</div></div>
+      </div>
+      <div>
+        <h3 style="margin:0 0 8px">Cortes</h3>
+        <div class="pl-cortes"><div>Cortes</div><div>T≈54seg/preg.</div><div>Examen 2023</div><div><b>30/100</b></div><div>Examen 2021</div><div><b>61,33/100</b></div></div>
+        <p class="pl-nota">Referencia, tal como figura en la guía, de por dónde andan los resultados cuando hagas tests.</p>
+      </div>
+    </div>`;
+  $id("pl-v").addEventListener("change", e => { plCfgSet({ v:+e.target.value }); if (!CR.run) { CR.v = +e.target.value; crGuardar(); } crPintar(); });
+  $id("pl-x").addEventListener("change", e => { plCfgSet({ x:e.target.checked }); if (!CR.run) { CR.x = e.target.checked; crGuardar(); } crPintar(); });
+  c.querySelectorAll("[data-c]").forEach(b => b.addEventListener("click", () => dialogoCelda(b.dataset.c)));
+  c.querySelectorAll("input[data-sim]").forEach(inp => inp.addEventListener("change", () => {
+    const [n, cc] = inp.dataset.sim.split("|"), par = c.querySelectorAll(`input[data-sim="${inp.dataset.sim}"]`);
+    const d = { n:par[0].value.trim(), f:par[1].value.trim() };
+    marcarProg("SIM:" + n + ":" + cc, !!(d.n || d.f), d);
+  }));
+}
+function dialogoCelda(celda) {
+  const { f, v } = partirCelda(celda), fila = PLAN_FILA[f];
+  const idx = regIndiceVivo();
+  const h1 = tiempoCelda(idx, f, v, 1), h2 = fila.bar.includes(v) ? tiempoCelda(idx, f, v, 2) : 0;
+  const fila2 = h => { const C = idx.celdas[celdaKey(f, v, h)]; return C && C.f ? `<br><span class="muted" style="font-size:12.5px">del ${esc(C.f)} al ${esc(C.l)}${C.m ? ` · incluye un ajuste manual de ${dur(C.m)}` : ""}</span>` : ""; };
+  const bloque = h => `<div style="margin:8px 0"><b>${h === 1 ? (fila.bar.includes(v) ? "Vuelta " + v + " (arriba)" : "Vuelta " + v) : "Vuelta extra " + v + " (abajo)"}:</b> ${dur(h === 1 ? h1 : h2)}${fila2(h)}
+      <div class="pl-botones" style="justify-content:flex-start;margin-top:6px"><button type="button" class="btn btn-sm" data-ed="${h}">✎ Poner tiempo</button><button type="button" class="btn btn-sm btn-primary" data-go="${h}">▶ Estudiar esto</button></div></div>`;
+  const dlg = abrirDialogo(`<form method="dialog"><h3>${esc(codigoFila(fila))} · ${esc(nombreFila(fila))}</h3>
+    ${fila.neg.includes(v) ? `<p class="muted">En la vuelta ${v} este tema no se estudia (casilla en negro), pero puedes registrar tiempo igualmente.</p>` : ""}
+    ${bloque(1)}${fila.bar.includes(v) ? bloque(2) : ""}
+    <div class="pl-botones"><button class="btn" value="no" id="dc-no" type="button">Cerrar</button></div></form>`);
+  dlg.querySelector("#dc-no").addEventListener("click", () => dlg.close());
+  dlg.querySelectorAll("[data-ed]").forEach(b => b.addEventListener("click", async () => {
+    const h = +b.dataset.ed, actual = tiempoCelda(idx, f, v, h);
+    dlg.close();
+    const seg = await pedirTiempo("Tiempo de la casilla", "Total que quieres que figure en esta casilla (lo registrado más un ajuste manual).", actual);
+    if (seg == null) return;
+    plFijarCelda(f, v, h, seg); toast("Casilla actualizada"); repintarPlan();
+  }));
+  dlg.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => {
+    const h = +b.dataset.go;
+    plCfgSet({ v, x:h === 2 });
+    if (CR.run) crCambiar(f, v, h === 2); else { CR.fila = f; CR.v = v; CR.x = h === 2; crGuardar(); crIniciar(); }
+    dlg.close(); repintarPlan();
+  }));
+}
+
+/* ---- Orden sugerido ----------------------------------------------------- */
+function plOrden(c) {
+  c.innerHTML = `
+    <p class="pl-nota">Orden de estudio de los temas, coherente con el orden de los módulos. <b>Negrita</b> = importancia media-alta de cara al supuesto práctico. ${pillCritica("B4T05")} = importancia crítica: pueden ser decisivos en el supuesto. Los temas de la lista que están fusionados en la plantilla se estudian juntos.</p>
+    <div class="pl-mods">${PLAN_ORDEN.map(([m, ts]) => `
+      <section class="card pl-mod"><h3>${m}</h3><ul>${ts.map(([id, txt]) => `
+        <li class="${ALTAS.has(id) ? "alta" : ""}"><span class="bq">BLQ. ${esc(BLOQUE_POR_CODE[TEMA_POR_ID[id].b].rom)}: T${TEMA_POR_ID[id].num}</span><a href="#/tema/${id}">${esc(txt)}</a>${pillCritica(id)}</li>`).join("")}</ul></section>`).join("")}</div>`;
+}
+
+/* ---- Encaje de vueltas --------------------------------------------------- */
+function plEncaje(c) {
+  const cfg = plCfg();
+  const fila = e => {
+    if (e.k === "t") return `<div class="r teo"><div>Repaso de la teoría acumulada de los supuestos</div></div>`;
+    if (e.k === "t2") return `<div class="r teo teo2"><div>Repaso de la teoría acumulada de los supuestos</div></div>`;
+    const cls = { c:"comp", r:"rep", s:"sin", l:"lib" }[e.k], hoy = e.v === cfg.v && e.x === cfg.x;
+    if (!e.y) return `<div class="r ${hoy ? "hoy" : ""}"><div class="${cls}">${esc(e.t)}</div><div style="grid-column:2 / span 2" class="yvac">${esc(e.s)}</div></div>`;
+    return `<div class="r ${hoy ? "hoy" : ""}"><div class="${cls}">${esc(e.t)}</div><div class="${e.y}">${esc(e.s)}</div><div class="${e.y}">${esc(e.a)}</div></div>`;
+  };
+  c.innerHTML = `
+    <p class="pl-nota">Ruta de encaje entre las vueltas de los temas y las vueltas de los supuestos (supeditadas a los propios supuestos de exámenes oficiales). La fila de tu <b>vuelta en curso</b> (${cfg.x ? "vuelta extra" : "vuelta normal"} ${cfg.v}) va marcada. «Temas barrados» = los que llevan casilla partida en la plantilla.</p>
+    <div class="pl-enc">
+      <div class="r h"><div>Vueltas</div><div style="grid-column:2 / span 2">Supuestos</div></div>
+      ${ENCAJE.map(fila).join("")}
+    </div>
+    <div class="pl-aet"><h4>In aeternum</h4><ul><li>El opositor ya tiene criterio para elegir.</li><li>Se intercalan vueltas completas con repasos y supuestos.</li><li>Conviene ir ampliando con supuestos más antiguos.</li></ul></div>
+    <p class="pl-nota" style="margin-top:14px">Los números son los supuestos que se hacen <b>durante</b> esa vuelta y los años de los exámenes oficiales de los que se toman. En la tabla de la guía, la «Vuelta completa 6» figura con el tramo «2016-15»: se reproduce tal cual, pero lo más probable es una errata de «2014-15».</p>`;
+}
+
+/* ---- Supuestos (página 6) ------------------------------------------------ */
+function plSupuestos(c) {
+  const tabla = (titulo, lista) => {
+    const cab = `<div class="h">${esc(titulo)}</div>${[1, 2, 3, 4].map(n => `<div class="h" style="grid-column:span 2">Intento ${n}</div>`).join("")}<div class="h" style="grid-column:span 2">Artículos</div>
+      <div class="h"></div>${[1, 2, 3, 4].map(() => `<div class="h">I</div><div class="h">II</div>`).join("")}<div class="h">I</div><div class="h">II</div>`;
+    const filas = lista.map(([k, et, g]) => `<div class="e ${g}">${esc(et)}</div>` + [1, 2, 3, 4].map(n => ["I", "II"].map(s => {
+      const d = guardado(`SUP:${k}:${n}:${s}`, { x:"" });
+      return `<div class="x ${d.x ? "" : "vacio"}"><input type="text" value="${esc(d.x || "")}" data-sup="${k}|${n}|${s}" aria-label="${esc(et)}, intento ${n}, supuesto ${s}"></div>`;
+    }).join("")).join("") + ["I", "II"].map(s => `<div class="a"><textarea rows="2" data-supa="${k}|${s}" placeholder="Artículos (siglas)" aria-label="${esc(et)}: artículos del supuesto ${s}">${esc(guardado(`SUPA:${k}:${s}`, { x:"" }).x)}</textarea></div>`).join("")).join("");
+    return `<h3 style="margin:18px 0 8px">${esc(titulo)}</h3><div class="pl-scroll"><div class="pl-sup">${cab}${filas}</div></div>`;
+  };
+  c.innerHTML = `
+    <p class="pl-nota">Tabla de los supuestos de exámenes oficiales (I y II = primer y segundo supuesto de cada examen) y de los intentos con que los vas haciendo. En cada casilla apunta lo que te sirva (nota, fecha, «ok»…). En «Artículos» anota, con siglas, los artículos que intervienen en cada supuesto: son los que luego se repasan en la «teoría acumulada de los supuestos». Se guarda solo.</p>
+    ${tabla("Turno libre", SUP_TL)}${tabla("Promoción interna", SUP_PI)}`;
+  c.querySelectorAll("input[data-sup]").forEach(i => i.addEventListener("change", () => {
+    const [k, n, s] = i.dataset.sup.split("|"), x = i.value.trim();
+    marcarProg(`SUP:${k}:${n}:${s}`, !!x, { x }); i.parentNode.classList.toggle("vacio", !x);
+  }));
+  c.querySelectorAll("textarea[data-supa]").forEach(t => t.addEventListener("change", () => {
+    const [k, s] = t.dataset.supa.split("|"), x = t.value.trim();
+    marcarProg(`SUPA:${k}:${s}`, !!x, { x });
+  }));
+}
+
+/* ---- Guía de estudio: resumen estructurado del vídeo y de la guía M100 ---- */
+const GUIA_ESTUDIO = [
+  { t:"1. Qué es el sistema y para qué sirve", abierta:true, h:`
+    <p>El sistema se apoya en una <b>plantilla de seguimiento</b> (la pestaña «Plantilla») en la que se registra el <b>tiempo</b> dedicado a cada tema en cada vuelta. Es el eje del que cuelgan todas las demás ideas del módulo.</p>
+    <div class="clave"><b>Idea clave:</b> en la casilla no se pone «visto»: se pone el <b>tiempo</b> que has tardado en despachar el tema.</div>
+    <h4>Qué se registra (registro dual)</h4>
+    <ul><li><b>El tiempo de cada tema</b>, desde que lo empiezas hasta que lo cierras.</li><li><b>El tiempo de estudio de cada día</b>, en global.</li></ul>
+    <p>En esta app lo hace el cronómetro de la esquina inferior izquierda (tiempo del tema que tienes abierto) y la pantalla «Registro» (tiempo por día y calendario).</p>` },
+  { t:"2. Cómo se rellena la plantilla", h:`
+    <ol><li><b>Cada columna es una vuelta.</b> Se rellena a medida que se avanza: al terminar un tema, su tiempo en la columna de la vuelta en curso.</li>
+    <li><b>Casillas partidas (temas «barrados»):</b> son temas en los que esa vuelta es <b>doble</b>. El primer tramo es la vuelta normal y el segundo la <b>vuelta extra</b> (en la app, la mitad de abajo).</li>
+    <li><b>La vuelta extra no se da a continuación</b>, sino cuando se completa <b>toda</b> la vuelta: primero se termina la vuelta entera (todos los temas, con el primer tramo de los barrados) y, antes de pasar a la siguiente, se da la segunda pasada a los temas barrados. Ejemplo: el acto administrativo se estudia una vez en la vuelta 1; al acabar toda la vuelta 1, se vuelve a estudiar (segundo tramo) y solo entonces se pasa a la vuelta 2.</li>
+    <li><b>Casillas en negro:</b> en las vueltas 3 y 5 <b>no se estudian</b> los bloques I a III.</li>
+    <li>A partir de la <b>vuelta 6</b> las barras las eliges tú, según tus carencias.</li></ol>
+    <h4>Por qué estas barras y estos negros</h4>
+    <p>Se sobreponderan los temas barrados (los más importantes de cara al supuesto práctico) y se infraponderan los de los bloques I-III, que además se anulan en algunas vueltas. Los temas que no caen en el supuesto se estudian con vueltas lo más rápidas posible.</p>` },
+  { t:"3. Los tiempos: flexibles, y cada vez menores", h:`
+    <ul><li>Los tiempos <b>no son rígidos</b>: no hay que obsesionarse con que sean unos u otros.</li>
+    <li>Se adecúan a la exigencia del contenido: un tema que se avisa como «sencillo» se despacha rápido; un tema con la mitad de vídeos lleva aproximadamente la mitad de tiempo. Los temas de los tres primeros bloques, con mucha más rapidez.</li>
+    <li><b>En general, a medida que avanzan las vueltas el tiempo por tema va menguando</b>, porque ya se sabe más. Ver pasar un tema de, por ejemplo, 6 h a 5 h o a 4 h y pico da confianza: se ve que queda algo.</li>
+    <li>Excepciones sanas: un tema en que sacas mal nota en el test puede pedir más tiempo en la vuelta siguiente; si al hacer supuestos descubres que un bloque (p. ej. contratos) pesa más de lo que creías, puede haber un repunte momentáneo. En el conjunto, las vueltas deben ir acelerándose.</li></ul>` },
+  { t:"4. Orden sugerido e importancia de los temas", h:`
+    <ul><li>La pestaña «Orden sugerido» ordena los temas por módulos y funde los que tiene sentido ver juntos (p. ej. los de Seguridad Social, en el módulo 12). Compensa los desajustes del programa oficial.</li>
+    <li><b>Negrita</b> = importancia media-alta, sobre todo de cara al supuesto práctico.</li>
+    <li><b>Importancia crítica</b> (recuadro rojo en la guía; aquí, la etiqueta roja): pueden ser verdaderamente decisivos en el supuesto.</li>
+    <li>Sirve para saber, antes de tener criterio o de haber hecho supuestos, cómo se reparte la importancia. Cada módulo avisa además de sus temas especialmente delicados.</li></ul>` },
+  { t:"5. Temas fusionados y «dislates» del programa", h:`
+    <ul><li><b>Temas fusionados</b> en la plantilla: fuentes del derecho, leyes y reglamentos (no tiene sentido verlos por separado); los tres primeros temas del bloque I; los contratos (I y II); los temas 11-13 del bloque IV (Leyes 39 y 40 de 2015 y jurisdicción contencioso-administrativa).</li>
+    <li><b>Turno libre:</b> el programa pone la responsabilidad patrimonial junto al régimen patrimonial, cuando lo lógico es verla <b>después del procedimiento administrativo</b>, porque es una especialidad de él. Y separa en un tema aparte la provisión de personas con discapacidad, cuando esas cuestiones están integradas en los artículos de acceso y selección de los funcionarios.</li>
+    <li><b>Promoción interna:</b> un único tema de personal acumula cuestiones (preguntables de cara al supuesto) que deberían repartirse en tres o cuatro temas como mínimo.</li></ul>` },
+  { t:"6. Por qué llevar el registro (dual)", h:`
+    <table><tr><th>Motivo</th><th>En qué consiste</th></tr>
+    <tr><td>Evita las fugas de tiempo</td><td>Sin contarlo, «ocho horas» suelen ser seis, cuatro o menos: el teléfono, las distracciones… Con registro no puedes engañarte.</td></tr>
+    <tr><td>Compromiso y motivación</td><td>Ver que has llegado a un nivel de horas con esfuerzo te ata a mantenerlo. Y ver bajar el tiempo de un tema entre vueltas da moral.</td></tr>
+    <tr><td>Confianza en el proceso</td><td>Sin un sistema, hay que decidir todo el tiempo, y decidir gasta energía y atención. Con él, basta despachar temas y seguir la ruta.</td></tr>
+    <tr><td>Control y decisiones</td><td>Cuando salga la fecha del examen, con las horas diarias y lo que te cuesta una vuelta puedes calcular <b>cuántas vueltas te caben</b> y saber cuántas veces más verás cada tema. En la pantalla «Registro» tienes la calculadora.</td></tr></table>` },
+  { t:"7. Ideas para manejarse con el programa", h:`
+    <ul><li>Hay una <b>enorme descompensación de importancia</b> entre los bloques (y, dentro de ellos, ciertos temas) susceptibles de caer en el supuesto y el resto del programa.</li>
+    <li>El supuesto pesa mucho más y es una prueba mucho más difícil (exige más dominio y otro método) que el test, que suele ser sencillo en comparación.</li>
+    <li><b>Nunca equiponderar los temas.</b> Estudiarlos todos por igual sobredimensiona temas de importancia mínima.</li>
+    <li><b>Dosificar el tiempo de test:</b> no hay que ultraespecializarse en hacer tests (a diferencia de otras oposiciones donde todo es test).</li>
+    <li>Aun así, los temas que solo caen en el test <b>hay que estudiarlos con un nivel razonable</b>: la planificación busca un punto de equilibrio entre no hacer nada con ellos y perjudicar el supuesto.</li>
+    <li>Con apuro de tiempo, la recomendación es <b>atenuar</b> el estudio de esos temas (sintetizarlos, esquematizarlos), no abandonarlos. Dejarlos del todo solo en situación de desesperación y tras analizar los supuestos oficiales.</li></ul>` },
+  { t:"8. Encaje con los supuestos prácticos", h:`
+    <p>El sistema de vueltas es una de las dos caras de la moneda (preparar el test y adquirir la base); la otra es el <b>trabajo con los supuestos</b>, que debe ir en paralelo y retroalimentarse.</p>
+    <ul><li><b>Hay que trabajar supuestos de exámenes oficiales</b>, no otros: la calidad es inmejorable y la cantidad es enorme (más de 30 supuestos). Haciéndolos dos veces, y los más recientes hasta cuatro, salen unos <b>70 supuestos</b> y del orden de <b>400-500 horas</b> de trabajo básico entre hacerlos y analizarlos.</li>
+    <li>Por eso <b>las vueltas teóricas deben ser lo más rápidas posible</b>, sobre todo en los temas que no caen en el supuesto: el tiempo hay que sacarlo de ahí.</li>
+    <li>La idea general: partir de un estudio para el test y la base, y <b>pivotar poco a poco hacia los supuestos</b>. Como las vueltas son cada vez más rápidas, aunque se mantenga el número de supuestos por vuelta, el tiempo relativo dedicado a ellos crece.</li>
+    <li>Los supuestos se hacen <b>en los puntos que convenga</b> (no de forma rígida): mejor repartidos, ni todos al principio ni todos al final de la vuelta.</li></ul>
+    <p>La pestaña «Encaje de vueltas» muestra la ruta: cuántos supuestos en cada vuelta y de qué años.</p>
+    <h4>Cómo leer la tabla de encaje</h4>
+    <ul><li>Vueltas 1 y repaso 1: ningún supuesto. Vuelta 2 y su repaso: 2 supuestos en cada una (años 2016-18). Vuelta 3 y su repaso: 4 y 4. Vuelta 4: 8 (2019-22); su repaso: 8 (2014-15), cuyo tramo es muy corto (contratos, procedimiento, situaciones administrativas y parte del bloque VI). Vuelta 5: 12; su repaso: 8. Vuelta 6: 20; repaso 6: 28.</li>
+    <li>Entre vueltas aparece el <b>repaso de la teoría acumulada de los supuestos</b>: los artículos que se han ido localizando al analizarlos.</li>
+    <li>En turno libre hay que hacer todos los años; el cómputo cuadra con dos intentos de los de 2014-15 y cuatro de los de 2016 en adelante.</li>
+    <li>Desde la <b>vuelta 6</b> las barras («temas libres») las eliges tú, con criterio, según tus carencias. «In aeternum»: se intercalan vueltas completas con repasos y supuestos.</li>
+    <li>Conviene ampliar con supuestos anteriores a 2012: aunque muchas normas estén derogadas, la cuestión preguntada suele seguir existiendo en la norma actual (con otro nombre o en otro artículo). Si no hay tiempo, mejor repetir los más recientes que hacer estos; pero conviene al menos analizarlos.</li></ul>` },
+  { t:"9. Cómo trabajar la teoría de los supuestos (constelaciones)", h:`
+    <ol><li><b>Resolver</b> el supuesto.</li><li><b>Analizar</b>: localizar, por cada pregunta, los artículos implicados y su importancia.</li>
+    <li><b>Clasificarlos por bloques «reales»</b> (no los de la convocatoria): contratos · derecho administrativo · personal · gestión financiera · subvenciones y otros (el cajón de lo que no tiene nexo claro).</li>
+    <li><b>Agruparlos en «constelaciones»</b> de artículos, o circuitos habituales, que hay que ver interconectados.</li>
+    <li><b>Trabajar cada bloque con tarjetas</b> para ir identificando las debilidades. Ese material es el objeto de los repasos de «teoría acumulada».</li></ol>
+    <h4>Ejemplos de constelaciones (de la guía)</h4>
+    <ul><li><b>Permisos y situaciones administrativas</b> (TREBEP): una pregunta sobre los derechos de una funcionaria que ha sido madre exige conocer con profundidad y conectar los artículos de <b>permisos</b> y los de <b>situaciones administrativas</b>, en concreto la excedencia por cuidado de hijo menor de tres años.</li>
+    <li><b>Contrato menor</b> (LCSP): si piden, en abierto, cómo se tramita, hay que saber el <b>art. 118</b> casi literalmente y su relación, entre otros, con el art. 63.4 (publicación). <span class="muted">El art. 63.4 no está en los apuntes desarrollados de esta app: pendiente de añadir si lo necesitas.</span></li>
+    <li><b>Modificaciones presupuestarias</b>: el tramo de las modificaciones, con los artículos sobre vinculación y los de competencias.</li>
+    <li>Otro ejemplo citado en el vídeo: en la LCSP hay artículos (como el 159) que caen casi todos los años.</li></ul>
+    <p>En las <b>flashcards</b> de la app, los artículos citados son pulsables y abren su texto literal; las constelaciones curadas enlazan, además, los artículos relacionados de otros temas.</p>
+    <h4>Valoración de los artículos</h4>
+    <p>Hay que evaluar la <b>importancia</b> de cada artículo, <b>con qué exactitud</b> lo exigen (el art. 118 LCSP casi de memoria) y <b>con qué otros se conecta</b>. Los artículos más recurrentes suelen ser los que más se exigen: <b>en relativamente pocos artículos se concentra la mayoría de las preguntas</b> (principio de Pareto). Eso solo se ve al hacer muchos supuestos.</p>
+    <h4>El sistema de tarjetas de artículos</h4>
+    <table><tr><th>Pros</th><th>Contras</th></tr>
+    <tr><td><b>Ágil</b>: estudio muy «punteado», no se hace tedioso.<br><b>Ameno</b>: se puede gamificar (saber de qué trata cada artículo).<br><b>Efectivo</b>: active recall, contra la curva del olvido, sobre lo que más preguntan.</td>
+    <td>Inicialmente lento.<br>Sin contenido específico hay que trabajar directamente con la ley.<br>Requiere nivel medio-alto: con un nivel bajo no es ágil, ni ameno, ni efectivo.</td></tr></table>
+    <p class="muted">No hay que intentarlo antes de la vuelta 4; antes, sin agobios. Cuando el nivel es muy avanzado se puede ir directamente por tarjetas (p. ej. «48-49 permisos» y «89 excedencia») y ser capaz de decir de qué trata cada artículo y cómo se engarzan.</p>` },
+  { t:"10. Cuándo y cómo hacer los supuestos", h:`
+    <h4>Cuándo</h4>
+    <ul><li>La idea es «jugar» con ellos: oxigenar el estudio, alternar y poder subir las horas.</li>
+    <li>Cuando convenga: por ejemplo, al acabar un tema a media jornada. El tiempo necesario varía mucho: un opositor novel puede tardar un día entero; uno con buen nivel, pocas horas.</li>
+    <li>Como motivación: «el supuesto me espera cuando acabe este tema largo y complejo».</li>
+    <li>Dosificarlos y repartirlos con equilibrio entre las vueltas (no hacerlos todos seguidos). Como los tests oficiales, sirven de <b>guía</b> de qué es importante y de qué anotar en el tema.</li></ul>
+    <h4>Cómo: dos momentos bien diferenciados</h4>
+    <ol><li><b>La realización</b>, con el tiempo del examen (2 h 30 min o 3 h), a mano y obligándote a redactar. Al principio no te obsesiones con el tiempo ni con la elección del supuesto: tus primeros supuestos (4, 5, 6… 10) serán penosos y no importa. Es mejor hacerlos pronto, aunque estés verde, para ir tomando conciencia de qué preguntan.</li>
+    <li><b>El análisis</b>: corrección y clarificación del caso · localización de los artículos implicados · recopilación, clasificación y valoración de los artículos por bloques.</li></ol>
+    <h4>Hacerlos y repetirlos escribiendo</h4>
+    <ul><li>Para acostumbrarte a escribir en tiempo, interiorizar las expresiones y repasar lo más importante (redactar interconectando artículos es active recall en estado puro).</li>
+    <li>Cumplir el mínimo (cuatro veces los más recientes y dos los anteriores) son unas <b>250 h</b> de realización; sumando un tiempo parecido de análisis, unas <b>500 h</b>. No todos los supuestos son de 5 preguntas y 2 h 30 min: los hay de 10 preguntas y 3 h.</li>
+    <li>Solo con mucho apuro de tiempo y habiéndolos hecho ya, o con un problema físico (espalda…), se puede sustituir la escritura por releer la última versión.</li></ul>` },
+  { t:"11. Recomendación final", h:`
+    <ul><li>Vuelve a ver el vídeo en una fase media de la preparación: hay muchos puntos (registro, importancia del tiempo de los temas…) que conviene reforzar.</li>
+    <li>Sigue lo fundamental y flexibiliza solo donde el sistema es flexible: los tiempos, el momento de hacer los supuestos, las barras desde la vuelta 6 y los simulacros.</li></ul>` }
+];
+function plGuia(c) {
+  c.innerHTML = `
+    <div class="pl-guia">
+      <p class="fuente">Resumen estructurado del vídeo «Guía de estudio del temario. El sistema» y de su documento (módulo M100), aportados por ti. Sin repeticiones ni muletillas, y sin lo relativo a cómo era y cómo es el examen. Material de la academia: <b>no es texto legal</b>.</p>
+      ${GUIA_ESTUDIO.map(s => `<details ${s.abierta ? "open" : ""}><summary>${esc(s.t)}</summary><div class="cuerpo">${s.h}</div></details>`).join("")}
+    </div>`;
+}
+
+/* ======================================================================
+   Vista: Registro (calendario y estadísticas)
+   ==================================================================== */
+const MESES_ES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const DIAS_ES = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"];
+const fechaLarga = iso => { const d = new Date(isoMs(iso)); return DIAS_ES[(d.getDay() + 6) % 7] + ", " + d.getDate() + " de " + MESES_ES[d.getMonth()] + " de " + d.getFullYear(); };
+const fechaCorta = iso => { const [y, m, d] = iso.split("-"); return d + "/" + m + "/" + y; };
+const nivelDia = seg => { const h = seg / 3600; return h <= 0 ? 0 : h < 1 ? 1 : h < 2.5 ? 2 : h < 4 ? 3 : h < 6 ? 4 : 5; };
+const diasEntre = (a, b) => Math.round((isoMs(b) - isoMs(a)) / 86400000);
+function renderRegistro() {
+  vista().innerHTML = `<h1 class="titulo-grande">⏱ Registro de estudio</h1>
+    <p class="view-sub">Tiempo dedicado cada día y a qué temas. Se alimenta del cronómetro de la esquina inferior izquierda; también puedes añadir o corregir tiempos a mano.</p>
+    <div id="rg-cuerpo"></div>`;
+  if (!PL.mes) PL.mes = hoyISO().slice(0, 7);
+  if (!PL.dia) PL.dia = hoyISO();
+  pintarRegistro();
+}
+function pintarRegistro() {
+  const c = $id("rg-cuerpo"); if (!c) return;
+  const idx = regIndiceVivo(), hoy = hoyISO();
+  const lista = Object.keys(idx.dias).filter(f => idx.dias[f].tot >= 1).sort();
+  const total = lista.reduce((n, f) => n + idx.dias[f].tot, 0);
+  const primero = lista[0], nat = primero ? diasEntre(primero, hoy) + 1 : 0;
+  const mejor = lista.reduce((m, f) => (!m || idx.dias[f].tot > idx.dias[m].tot) ? f : m, "");
+  let racha = 0; { let d = idx.dias[hoy] && idx.dias[hoy].tot >= 1 ? hoy : sumarDias(hoy, -1); while (idx.dias[d] && idx.dias[d].tot >= 1) { racha++; d = sumarDias(d, -1); } }
+  let rachaMax = 0, cur = 0, prev = "";
+  lista.forEach(f => { cur = prev && diasEntre(prev, f) === 1 ? cur + 1 : 1; rachaMax = Math.max(rachaMax, cur); prev = f; });
+  const ult = n => { let s = 0, dd = 0; for (let i = 0; i < n; i++) { const f = sumarDias(hoy, -i); if (primero && f < primero) break; dd++; s += (idx.dias[f] ? idx.dias[f].tot : 0); } return dd ? s / dd : 0; };
+  const suma7 = Array.from({ length:7 }, (_, i) => (idx.dias[sumarDias(hoy, -i)] || { tot:0 }).tot).reduce((a, b) => a + b, 0);
+  const kpi = (k, v, s) => `<div class="card rg-kpi"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s || ""}</div></div>`;
+  // Calendario
+  const [ay, am] = PL.mes.split("-").map(Number);
+  const primeroMes = new Date(ay, am - 1, 1), ini = (primeroMes.getDay() + 6) % 7, nDias = new Date(ay, am, 0).getDate();
+  const celdas = [];
+  for (let i = 0; i < ini; i++) celdas.push("");
+  for (let d = 1; d <= nDias; d++) celdas.push(ay + "-" + pad2(am) + "-" + pad2(d));
+  while (celdas.length % 7) celdas.push("");
+  const cal = celdas.map(f => {
+    if (!f) return `<div></div>`;
+    const D = idx.dias[f], seg = D ? D.tot : 0;
+    return `<button type="button" class="rg-dia n${nivelDia(seg)} ${f === hoy ? "hoy" : ""} ${f === PL.dia ? "sel" : ""}" data-dia="${f}" aria-label="${esc(fechaLarga(f))}: ${seg ? dur(seg) : "sin estudio"}"><span class="d">${+f.slice(8)}</span><span class="h">${seg >= 60 ? hm(seg) : ""}</span></button>`;
+  }).join("");
+  // Detalle del día
+  const D = idx.dias[PL.dia] || { tot:0, t:{}, ses:[] };
+  const filasDia = Object.keys(D.t).sort((a, b) => D.t[b] - D.t[a]).map(k => `<li><span>${esc(etiquetaCelda(k))}<br><span class="m">${hm(D.t[k])} h</span></span><span><span class="t">${dur(D.t[k])}</span> <button class="btn btn-sm" data-edd="${esc(k)}" aria-label="Corregir el tiempo de ${esc(etiquetaCelda(k))}">✎</button></span></li>`).join("");
+  const sesiones = D.ses.filter(x => x[1] >= 60).map(x => {
+    const man = x[0] === isoMs(PL.dia) + 43200000, a = new Date(x[0]);
+    return man ? `<li><span>Ajuste manual · ${esc(etiquetaCelda(x[2]))}</span><span class="t">${dur(x[1])}</span></li>`
+      : `<li><span>${pad2(a.getHours())}:${pad2(a.getMinutes())}–${(() => { const z = new Date(x[0] + x[1] * 1000); return pad2(z.getHours()) + ":" + pad2(z.getMinutes()); })()} · ${esc(etiquetaCelda(x[2]))}</span><span class="t">${dur(x[1])}</span></li>`;
+  }).join("");
+  // Últimos 30 días
+  const dias30 = Array.from({ length:30 }, (_, i) => sumarDias(hoy, i - 29));
+  const max30 = Math.max(3600, ...dias30.map(f => idx.dias[f] ? idx.dias[f].tot : 0));
+  const barras = dias30.map(f => { const s = idx.dias[f] ? idx.dias[f].tot : 0; return `<div class="${s < 60 ? "cero" : ""}" style="height:${Math.max(2, s / max30 * 100)}%" title="${esc(fechaCorta(f))}: ${s >= 60 ? dur(s) : "sin estudio"}"></div>`; }).join("");
+  // Por vuelta y por bloque
+  const porV = Array.from({ length:PLAN_VUELTAS + 1 }, () => ({ s:0, filas:new Set(), f:"", l:"" }));
+  const porB = {}; const filasPorV = Array.from({ length:PLAN_VUELTAS + 1 }, () => new Set());
+  for (const k in idx.celdas) {
+    const C = idx.celdas[k], seg = C.s + C.m; if (seg <= 0) continue;
+    const { f, v } = partirCelda(k), P = porV[v] || porV[0];
+    P.s += seg; if (f !== FILA_GENERAL) { P.filas.add(f); }
+    if (C.f && (!P.f || C.f < P.f)) P.f = C.f; if (C.l && (!P.l || C.l > P.l)) P.l = C.l;
+    const b = PLAN_FILA[f] ? PLAN_FILA[f].rom : "—"; porB[b] = (porB[b] || 0) + seg;
+  }
+  const vueltaCompleta = v => PLAN_FILAS.filter(f => !f.neg.includes(v)).every(f => tiempoCelda(idx, f.id, v, 1) > 0);
+  const filasV = [1, 2, 3, 4, 5, 6].map(v => {
+    const P = porV[v], n = P.filas.size, comp = vueltaCompleta(v);
+    return `<tr><td>Vuelta ${v}${comp ? " ✓" : ""}</td><td>${P.s ? dur(P.s) : "—"}</td><td>${n || "—"}</td><td>${n ? hm(P.s / n) + " h" : "—"}</td><td>${P.f ? fechaCorta(P.f) : "—"}</td><td>${P.l ? fechaCorta(P.l) : "—"}</td><td>${P.f ? diasEntre(P.f, P.l) + 1 : "—"}</td></tr>`;
+  }).join("");
+  // Calculadora de vueltas
+  const examen = plCfg().examen, cfg = plCfg();
+  const compl = [1, 2, 3, 4, 5, 6].filter(vueltaCompleta);
+  let hVuelta = 0, baseVuelta = "";
+  if (compl.length) { const v = compl[compl.length - 1]; hVuelta = porV[v].s; baseVuelta = `lo que te llevó la vuelta ${v} (completada)`; }
+  else { const v = cfg.v, P = porV[v], nTot = PLAN_FILAS.filter(f => !f.neg.includes(v)).length; if (P.filas.size >= 3) { hVuelta = P.s / P.filas.size * nTot; baseVuelta = `una estimación a partir de la media por tema de la vuelta ${v} (${P.filas.size} temas con tiempo)`; } }
+  const mediaDia = ult(30), rest = examen ? diasEntre(hoy, examen) : null;
+  const calc = !examen ? `<p class="pl-nota">Pon la fecha del examen para calcular cuántas vueltas te caben.</p>`
+    : rest < 0 ? `<p class="pl-nota">Esa fecha ya ha pasado.</p>`
+    : !hVuelta || !mediaDia ? `<p class="pl-nota">Faltan días ${mediaDia ? "" : "de estudio "}y tiempos de vuelta para calcularlo: quedan <b>${rest}</b> días. Se calculará en cuanto haya datos suficientes.</p>`
+    : (() => { const disp = rest * mediaDia; return `<div class="rg-est"><div><b>${rest}</b><span>días hasta el examen</span></div><div><b>${hm(mediaDia)} h/día</b><span>media de los últimos 30 días (con registro)</span></div><div><b>${Math.round(disp / 3600)} h</b><span>disponibles a ese ritmo</span></div><div><b>${hm(hVuelta)} h</b><span>por vuelta (${esc(baseVuelta)})</span></div><div><b>≈ ${(disp / hVuelta).toFixed(1).replace(".", ",")}</b><span>vueltas completas posibles</span></div></div><p class="pl-nota" style="margin-top:8px">Orientativo: las vueltas se acortan a medida que avanzas y los supuestos también consumen horas.</p>`; })();
+  c.innerHTML = `
+    <div class="rg-kpis">
+      ${kpi("Días estudiados", lista.length, nat ? `de ${nat} desde el primer registro` : "aún sin registro")}
+      ${kpi("Tiempo total", dur(total), lista.length ? `${hm(total / lista.length)} h por día estudiado` : "")}
+      ${kpi("Hoy", dur((idx.dias[hoy] || { tot:0 }).tot), CR.run ? "cronómetro en marcha" : "")}
+      ${kpi("Últimos 7 días", dur(suma7), `${hm(suma7 / 7) || "0"} h de media al día`)}
+      ${kpi("Racha", racha + (racha === 1 ? " día" : " días"), `máxima: ${rachaMax}`)}
+      ${kpi("Mejor día", mejor ? dur(idx.dias[mejor].tot) : "—", mejor ? fechaCorta(mejor) : "")}
+    </div>
+    <div class="rg-grid2">
+      <section class="card">
+        <div class="rg-cab"><button class="btn btn-sm" id="rg-ant" aria-label="Mes anterior">←</button><h2>${MESES_ES[am - 1]} de ${ay}</h2><button class="btn btn-sm" id="rg-hoy">Hoy</button><button class="btn btn-sm" id="rg-sig" aria-label="Mes siguiente">→</button></div>
+        <div class="rg-cal">${DIAS_ES.map(d => `<div class="rg-dow">${d.slice(0, 1).toUpperCase()}</div>`).join("")}${cal}</div>
+        <div class="rg-leyenda">Menos <i style="background:var(--bg-elev)"></i><i class="rg-dia n1" style="aspect-ratio:auto;min-height:0"></i><i class="rg-dia n2" style="aspect-ratio:auto;min-height:0"></i><i class="rg-dia n3" style="aspect-ratio:auto;min-height:0"></i><i class="rg-dia n4" style="aspect-ratio:auto;min-height:0"></i><i class="rg-dia n5" style="aspect-ratio:auto;min-height:0"></i> Más (1 h · 2,5 h · 4 h · 6 h)</div>
+      </section>
+      <section class="card rg-det">
+        <h3>${esc(fechaLarga(PL.dia))}</h3>
+        <div class="muted">${D.tot >= 1 ? `Total: <b>${dur(D.tot)}</b>` : "Sin estudio registrado este día."}</div>
+        ${filasDia ? `<ul class="rg-lista">${filasDia}</ul>` : ""}
+        ${sesiones ? `<details style="margin-top:10px"><summary class="muted" style="cursor:pointer">Sesiones del día</summary><ul class="rg-lista">${sesiones}</ul></details>` : ""}
+        <div style="margin-top:12px"><button class="btn btn-sm btn-primary" id="rg-add">+ Añadir tiempo a este día</button></div>
+      </section>
+    </div>
+    <section class="card"><h3 style="margin:0">Últimos 30 días</h3><div class="rg-barras" role="img" aria-label="Horas estudiadas cada día de los últimos 30 días">${barras}</div><div class="rg-ejes"><span>${fechaCorta(dias30[0])}</span><span>máx. ${hm(max30)} h</span><span>${fechaCorta(hoy)}</span></div></section>
+    <div class="rg-grid2">
+      <section class="card"><h3 style="margin:0 0 6px">Cuánto se tarda en dar cada vuelta</h3>
+        <div class="rg-scroll"><table class="rg-tabla"><thead><tr><th>Vuelta</th><th>Tiempo</th><th>Temas</th><th>Media/tema</th><th>Primer día</th><th>Último día</th><th>Días</th></tr></thead><tbody>${filasV}</tbody></table></div>
+        <p class="pl-nota" style="margin-top:8px">✓ = vuelta completada (todos los temas que se estudian en ella tienen tiempo). «Días» son días naturales entre el primer y el último registro de la vuelta. El tiempo de cada tema en cada vuelta está en la plantilla.</p></section>
+      <section class="card"><h3 style="margin:0 0 6px">Por bloque</h3>
+        <div class="rg-scroll"><table class="rg-tabla"><thead><tr><th>Bloque</th><th>Tiempo</th><th>%</th></tr></thead><tbody>${[...PLAN.map(b => b.rom), "—"].filter(b => porB[b]).map(b => { const n = PLAN.find(x => x.rom === b); return `<tr><td>${b === "—" ? "General / otros" : "Bloque " + b + " · " + esc(n.nombre)}</td><td>${dur(porB[b])}</td><td>${total ? Math.round(porB[b] / Math.max(1, Object.values(porB).reduce((a, x) => a + x, 0)) * 100) : 0}%</td></tr>`; }).join("") || `<tr><td colspan="3" class="muted">Sin datos todavía.</td></tr>`}</tbody></table></div></section>
+    </div>
+    <section class="card"><h3 style="margin:0 0 6px">¿Cuántas vueltas me caben hasta el examen?</h3>
+      <label style="font-size:14px;font-weight:700">Fecha del examen <input type="date" id="rg-examen" value="${esc(examen)}" style="margin-left:6px"></label>
+      ${calc}</section>`;
+  c.querySelectorAll("[data-dia]").forEach(b => b.addEventListener("click", () => { PL.dia = b.dataset.dia; pintarRegistro(); }));
+  const mover = n => { const d = new Date(ay, am - 1 + n, 1); PL.mes = d.getFullYear() + "-" + pad2(d.getMonth() + 1); pintarRegistro(); };
+  $id("rg-ant").addEventListener("click", () => mover(-1)); $id("rg-sig").addEventListener("click", () => mover(1));
+  $id("rg-hoy").addEventListener("click", () => { PL.mes = hoy.slice(0, 7); PL.dia = hoy; pintarRegistro(); });
+  $id("rg-examen").addEventListener("change", e => { plCfgSet({ examen:e.target.value }); pintarRegistro(); });
+  $id("rg-add").addEventListener("click", () => dialogoAnadir(PL.dia));
+  c.querySelectorAll("[data-edd]").forEach(b => b.addEventListener("click", async () => {
+    const k = b.dataset.edd, seg = await pedirTiempo("Corregir el tiempo", esc(etiquetaCelda(k)) + " · " + esc(fechaCorta(PL.dia)), D.t[k] || 0);
+    if (seg == null) return;
+    regFijarDia(PL.dia, k, seg); toast("Tiempo actualizado"); pintarRegistro();
+  }));
+}
+/** Añade tiempo a mano a un día (estudio que no pasó por el cronómetro). */
+function dialogoAnadir(fecha) {
+  const dlg = abrirDialogo(`<form method="dialog"><h3>Añadir tiempo · ${esc(fechaCorta(fecha))}</h3>
+    <label>Tema
+      <select id="an-f"><option value="">General / otros (supuestos, tests, repaso…)</option>
+      ${PLAN.map(b => `<optgroup label="Bloque ${b.rom} · ${esc(b.nombre)}">${b.filas.map(fl => `<option value="${fl.id}">${esc(codigoFila(fl))} · ${esc(nombreFila(fl))}</option>`).join("")}</optgroup>`).join("")}</select></label>
+    <label>Vuelta <select id="an-v">${[1, 2, 3, 4, 5, 6].map(n => `<option value="${n}" ${n === plCfg().v ? "selected" : ""}>Vuelta ${n}</option>`).join("")}</select></label>
+    <label class="cr-chk"><input type="checkbox" id="an-x"> Vuelta extra (si el tema tiene casilla partida en esa vuelta)</label>
+    <div class="pl-hm"><input type="number" id="an-h" min="0" max="24" value="1" inputmode="numeric" aria-label="Horas"><span>h</span><input type="number" id="an-m" min="0" max="59" value="0" inputmode="numeric" aria-label="Minutos"><span>min</span></div>
+    <div class="pl-botones"><button class="btn" type="button" id="an-no">Cancelar</button><button class="btn btn-primary" id="an-ok">Añadir</button></div></form>`);
+  dlg.querySelector("#an-no").addEventListener("click", () => dlg.close());
+  dlg.querySelector("form").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = dlg.querySelector("#an-f").value, v = +dlg.querySelector("#an-v").value, x = dlg.querySelector("#an-x").checked;
+    const seg = (parseInt(dlg.querySelector("#an-h").value, 10) || 0) * 3600 + (parseInt(dlg.querySelector("#an-m").value, 10) || 0) * 60;
+    if (!seg) { dlg.close(); return; }
+    const celda = f ? celdaKey(f, v, x && PLAN_FILA[f].bar.includes(v) ? 2 : 1) : celdaKey(FILA_GENERAL, 0, 1);
+    regSumar(fecha, celda, seg, 0);
+    dlg.close(); toast("Tiempo añadido"); pintarRegistro();
+  });
+}
+
+/* ======================================================================
+   Constelaciones de artículos en las flashcards
+   Los «arts. N» que cita una tarjeta se enlazan, en el cliente, con el texto
+   literal de ese artículo en los apuntes del mismo tema; las constelaciones
+   curadas añaden los artículos relacionados de otros temas.
+   ==================================================================== */
+const _idxArt = {};
+function indiceArt(tid) {
+  const t = estado.temas[tid]; if (!t) return null;
+  const c = _idxArt[tid]; if (c && c.m === t.modificado && c.n === t.sections.length) return c.v;
+  const mapa = {};          // "48|TREBEP" → { n, norma, tit, partes:[{sec, lineas}] }
+  t.sections.forEach(s => {
+    const L = String(s.body || "").split("\n");
+    for (let i = 0; i < L.length; i++) {
+      const m = L[i].match(/^>\s*\*\*Art[íi]culo\s+(\d+(?:\s?bis)?)\b([^*]*)\*\*\s*$/);
+      if (!m) continue;
+      const n = m[1].replace(/\s+/g, " "), nm = m[2].match(/\(([^)]+)\)/), norma = nm ? nm[1].trim() : "";
+      const cuerpo = [L[i]];
+      let j = i + 1;
+      while (j < L.length && /^>/.test(L[j]) && !/^>\s*\*\*Art[íi]culo\s/.test(L[j])) cuerpo.push(L[j++]);
+      const k = n + "|" + norma;
+      const E = mapa[k] || (mapa[k] = { n, norma, tit:m[0].replace(/^>\s*\*\*|\*\*\s*$/g, ""), partes:[] });
+      E.partes.push({ sec:s.title || "", txt:cuerpo.join("\n") });
+      i = j - 1;
+    }
+  });
+  _idxArt[tid] = { m:t.modificado, n:t.sections.length, v:mapa };
+  return mapa;
+}
+/** Números de artículo citados en un texto: «arts. 14 y 15», «art. 47 bis», «arts. 61 a 63». */
+function refsArt(txt) {
+  const out = [], re = /\barts?\.\s*(\d+(?:\s?bis)?(?:\s*(?:,|y|e|a|–|-)\s*\d+(?:\s?bis)?)*)/gi;
+  let m;
+  while ((m = re.exec(txt))) {
+    const partes = m[1].split(/\s*(,|y|e|a|–|-)\s*(?=\d)/i);
+    for (let i = 0; i < partes.length; i += 2) {
+      const n = partes[i].replace(/\s+/g, " ").trim(), sep = (partes[i - 1] || "").toLowerCase();
+      if (sep && /^(a|–|-)$/.test(sep) && /^\d+$/.test(n) && /^\d+$/.test(partes[i - 2] || "")) {
+        const a = +partes[i - 2], b = +n; if (b > a && b - a <= 12) for (let x = a + 1; x < b; x++) out.push(String(x));
+      }
+      if (!out.includes(n)) out.push(n);
+    }
+  }
+  return out;
+}
+/** Constelaciones curadas entre temas (todos los artículos existen en los apuntes desarrollados). */
+const CONSTELACIONES = [
+  { nombre:"Permisos y excedencia por cuidado de hijos (TREBEP)", arts:[["B5T02", "48", "TREBEP"], ["B5T02", "49", "TREBEP"], ["B5T05", "89", "TREBEP"]] },
+  { nombre:"Contrato menor (LCSP)", arts:[["B4T05", "118", "LCSP"], ["B4T05", "131", "LCSP"]] },
+  { nombre:"Modificaciones presupuestarias (LGP)", arts:[["B6T02", "43", "LGP"], ["B6T03", "51", "LGP"], ["B6T03", "52", "LGP"], ["B6T03", "53", "LGP"], ["B6T03", "54", "LGP"], ["B6T03", "55", "LGP"], ["B6T03", "58", "LGP"], ["B6T03", "61", "LGP"], ["B6T03", "62", "LGP"], ["B6T03", "63", "LGP"]] }
+];
+const normaCita = (E, txt) => E.norma && txt.toUpperCase().includes(E.norma.toUpperCase());
+/** Artículos de una tarjeta: { propios:[{tid,n,norma}], rel:[{tid,n,norma,c}] } */
+function artsDeTarjeta(tid, f) {
+  const txt = (f.q || "") + " " + (f.a || ""), idx = indiceArt(tid), propios = [];
+  if (!idx) return { propios, rel:[] };
+  refsArt(txt).forEach(n => {
+    const cand = Object.values(idx).filter(E => E.n === n); if (!cand.length) return;
+    const normas = [...new Set(cand.map(E => E.norma))];
+    let ok = cand;
+    if (normas.length > 1) { ok = cand.filter(E => normaCita(E, txt)); if (!ok.length) return; }
+    const E = ok[0]; if (!propios.some(p => p.n === E.n && p.norma === E.norma)) propios.push({ tid, n:E.n, norma:E.norma });
+  });
+  const rel = [];
+  CONSTELACIONES.forEach(C => {
+    if (!C.arts.some(([t, n, no]) => propios.some(p => p.tid === t && p.n === n && p.norma === no))) return;
+    C.arts.forEach(([t, n, no]) => {
+      if (propios.some(p => p.tid === t && p.n === n && p.norma === no) || rel.some(r => r.tid === t && r.n === n && r.norma === no)) return;
+      const I = indiceArt(t); if (I && I[n + "|" + no]) rel.push({ tid:t, n, norma:no, c:C.nombre });
+    });
+  });
+  return { propios, rel };
+}
+function chipsConstelacion(tid, f) {
+  const { propios, rel } = artsDeTarjeta(tid, f);
+  if (!propios.length && !rel.length) return "";
+  const chip = (a, cls) => `<button type="button" class="chip-art ${cls}" data-art="${esc(a.tid + "|" + a.n + "|" + a.norma)}" title="Ver el texto literal${a.c ? " · " + esc(a.c) : ""}">art. ${esc(a.n)}${a.norma ? `<small>${esc(a.norma)}</small>` : ""}</button>`;
+  return `<div class="fc-const">${propios.length ? `<span class="k">Texto literal</span>${propios.map(a => chip(a, "")).join("")}` : ""}${rel.length ? `<span class="k">Relacionados</span>${rel.map(a => chip(a, "const")).join("")}` : ""}</div>`;
+}
+function abrirArt(tid, n, norma) {
+  const E = (indiceArt(tid) || {})[n + "|" + norma]; if (!E) { toast("Ese artículo no está en los apuntes de este tema", "error"); return; }
+  const C = CONSTELACIONES.find(c => c.arts.some(([t, nn, no]) => t === tid && nn === n && no === norma));
+  const otros = C ? C.arts.filter(([t, nn, no]) => !(t === tid && nn === n && no === norma) && (indiceArt(t) || {})[nn + "|" + no]) : [];
+  const dlg = abrirDialogo(`<form method="dialog"><h3>Art. ${esc(n)}${norma ? " " + esc(norma) : ""}</h3>
+    <p class="muted" style="font-size:12.5px">Tema ${esc(codigoDe(tid))} · texto literal de los apuntes <a href="#/tema/${tid}/leer" id="art-ir">abrir el tema</a></p>
+    <div class="art-lit">${E.partes.map(p => formatear(p.txt)).join("")}</div>
+    ${otros.length ? `<div class="fc-const" style="border-top:1px dashed var(--line)"><span class="k">${esc(C.nombre)}</span>${otros.map(([t, nn, no]) => `<button type="button" class="chip-art const" data-art="${esc(t + "|" + nn + "|" + no)}">art. ${esc(nn)}${no ? `<small>${esc(no)}</small>` : ""}</button>`).join("")}</div>` : ""}
+    <div class="pl-botones"><button class="btn" id="art-no" type="button">Cerrar</button></div></form>`, { ancho:true });
+  dlg.querySelector("#art-no").addEventListener("click", () => dlg.close());
+  dlg.querySelector("#art-ir").addEventListener("click", () => dlg.close());
+  ligarChipsArt(dlg, () => dlg.close());
+}
+function ligarChipsArt(raiz, antes) {
+  raiz.querySelectorAll("[data-art]").forEach(b => b.addEventListener("keydown", e => e.stopPropagation()));
+  raiz.querySelectorAll("[data-art]").forEach(b => b.addEventListener("click", e => {
+    e.stopPropagation();
+    const [t, n, no] = b.dataset.art.split("|"); if (antes) antes(); abrirArt(t, n, no);
+  }));
+}
+
 (async function arrancar() {
   leerSesion();
   cargarProgreso(SUPA.uid);
   pintarSync();
+  crCrear();
   // El programa se ve ya; el contenido llega después. Los apuntes esperan a
   // tenerlo: si no, recargar en #/tema/X/leer devolvería a la ficha.
   if (ruta().v !== "leer") render();
