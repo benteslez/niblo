@@ -1331,15 +1331,18 @@ body.real-abierto .cr { display:none; }
 .ce-hint { color:var(--text-muted); font-size:13px; margin-top:14px; text-align:center; }
 .ce-hint-rev { display:none; }
 .ce-card.desliz { position:relative; touch-action:pan-y; user-select:none; -webkit-user-select:none; transition:transform .2s ease; }
+.ce-card.desliz.fija { touch-action:none; }
 .ce-card.desliz.arrastra { transition:none; cursor:grabbing; }
 .ce-card.desliz.sale { transition:transform .22s ease-in; pointer-events:none; }
 .ce-card.desliz .ce-in { animation:ce-entra .28s ease-out; }
 @keyframes ce-entra { from { transform:translateY(16px) scale(.97); opacity:.3; } to { transform:none; opacity:1; } }
 .ce-card[data-dir="si"] .ce-cara { box-shadow:0 0 0 4px var(--ok), var(--sh-2); }
 .ce-card[data-dir="no"] .ce-cara { box-shadow:0 0 0 4px var(--hot), var(--sh-2); }
+.ce-card[data-dir="dude"] .ce-cara { box-shadow:0 0 0 4px var(--warn), var(--sh-2); }
 .ce-card[data-dir]::after { position:absolute; top:22px; padding:6px 14px; border-radius:12px; font-weight:800; font-size:16px; color:#fff; z-index:2; pointer-events:none; }
 .ce-card[data-dir="si"]::after { content:"✓ La sabía"; right:18px; background:var(--ok); transform:rotate(6deg); }
 .ce-card[data-dir="no"]::after { content:"✗ No la sabía"; left:18px; background:var(--hot); transform:rotate(-6deg); }
+.ce-card[data-dir="dude"]::after { content:"🤔 Dudé"; left:50%; top:16px; background:var(--warn); transform:translateX(-50%); }
 .ce-desliz-hint { text-align:center; font-size:12.5px; margin-top:6px; }
 .ce-card.rev .ce-hint-rev { display:block; }
 .ce-hint kbd, .srs-teclas kbd { font:inherit; font-size:11px; padding:1px 5px; border:1px solid var(--line); border-radius:4px; background:var(--bg-elev); }
@@ -6501,7 +6504,7 @@ function ceAbrirSeleccion() {
       <div class="chip-row wrap">${[[0, "Todos"], [10, "10"], [20, "20"], [30, "30"]].map(([v, t]) => `<button type="button" class="chip ${cfg.max === v ? "active" : ""}" data-max="${v}">${t}</button>`).join("")}</div>
       <h3>Modo</h3>
       <div class="chip-row wrap">${[["botones", "🔘 SRS con botones"], ["desliz", "👆 Flashcards: deslizar"]].map(([v, t]) => `<button type="button" class="chip ${cfg.modo === v ? "active" : ""}" data-modo="${v}">${t}</button>`).join("")}</div>
-      <p class="muted" style="font-size:12.5px;margin:4px 0 0">${cfg.modo === "desliz" ? "Desliza la tarjeta a la <b>derecha</b> si te la sabes y a la <b>izquierda</b> si no: las de la izquierda vuelven a salir. Mismo calendario de repaso." : "Revela la tarjeta y elige con los botones: no la sabía, dudé o la sabía."}</p>
+      <p class="muted" style="font-size:12.5px;margin:4px 0 0">${cfg.modo === "desliz" ? "Desliza la tarjeta a la <b>derecha</b> si te la sabes, a la <b>izquierda</b> si no (vuelve a salir) y hacia <b>arriba</b> si dudas. Mismo calendario de repaso." : "Revela la tarjeta y elige con los botones: no la sabía, dudé o la sabía."}</p>
       <label class="real-tog"><input type="checkbox" data-barajar ${cfg.barajar || cfg.que === "azar" ? "checked" : ""} ${cfg.que === "azar" ? "disabled" : ""}> 🔀 Barajar el orden (si no, por número de artículo o por antigüedad del repaso)</label>
       <div class="real-pills"><span class="big">Disponibles: <b>${hay}</b> · se estudiarán <b>${n}</b></span></div>
       <div class="real-dlg-pie">
@@ -6570,8 +6573,8 @@ function cePintarSesion(c) {
       <button class="btn srs-r mid" data-q="3"><span class="ic" aria-hidden="true">🤔</span><span class="tx">Dudé</span><small>${intv(3)}</small></button>
       <button class="btn srs-r si" data-q="5"><span class="ic" aria-hidden="true">✓</span><span class="tx">La sabía</span><small>${intv(5)}</small></button>
     </div>
-    ${desliz ? `<div class="ce-desliz-hint muted">← desliza si <b>no</b> la sabes · desliza → si <b>sí</b></div>` : ""}
-    <div class="srs-teclas muted" style="margin-top:8px"><kbd>espacio</kbd> ver · <kbd>V</kbd> ver artículo · ${desliz ? `<kbd>←</kbd> no · <kbd>→</kbd> sí · ` : ""}<kbd>1</kbd> no · <kbd>2</kbd> dudé · <kbd>3</kbd> sí · <kbd>Esc</kbd> salir</div>` :
+    ${desliz ? `<div class="ce-desliz-hint muted">← <b>no</b> la sabes · <b>sí</b> →  · ↑ <b>dudé</b></div>` : ""}
+    <div class="srs-teclas muted" style="margin-top:8px"><kbd>espacio</kbd> ver · <kbd>V</kbd> ver artículo · ${desliz ? `<kbd>←</kbd> no · <kbd>→</kbd> sí · <kbd>↑</kbd> dudé · ` : ""}<kbd>1</kbd> no · <kbd>2</kbd> dudé · <kbd>3</kbd> sí · <kbd>Esc</kbd> salir</div>` :
     `<div class="empty"><div class="ico">🏆</div><h3>¡Sesión terminada!</h3><p>Has repasado ${plural(CT.hechas, "artículo")}.</p><button class="btn btn-primary" id="ce-fin" type="button">Volver al test</button></div>`;
   c.innerHTML = barra + cara;
   document.getElementById("ce-salir").addEventListener("click", ceSalirSesion);
@@ -6582,19 +6585,19 @@ function cePintarSesion(c) {
     if (!A) return;
     if (e.key === " ") { e.preventDefault(); if (!CT.rev) revelar(); else girar(); }
     else if (e.key === "v" || e.key === "V") girar();
-    else if (desliz && (e.key === "ArrowRight" || e.key === "ArrowLeft")) { e.preventDefault(); sacar(e.key === "ArrowRight"); }
+    else if (desliz && (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "ArrowUp")) { e.preventDefault(); sacar(e.key === "ArrowRight" ? "si" : e.key === "ArrowLeft" ? "no" : "dude"); }
     else if ((CT.rev || desliz) && "123".includes(e.key) && e.key) calificarCE(c, [0, 3, 5]["123".indexOf(e.key)]);
   };
   document.removeEventListener("keydown", CT._k); CT._k = tecla; document.addEventListener("keydown", CT._k);
   if (!A) return;
   const revelar = () => { if (CT.rev) return; CT.rev = true; const card = document.getElementById("ce-card"); card.classList.add("rev"); document.getElementById("ce-rate").hidden = false; document.getElementById("ce-frente").removeAttribute("role"); card.querySelectorAll(".ce-miga.oculta").forEach(m => m.classList.remove("oculta")); const h = card.querySelector(".ce-hint-ver"); if (h) h.remove(); card.querySelector(".ce-numq").classList.add("col"); };
-  const girar = () => { if (!CT.rev) revelar(); CT.flip = !CT.flip; document.getElementById("ce-card").classList.toggle("flip", CT.flip); };
-  // Saca la tarjeta volando hacia un lado y la califica: derecha = la sabía (5), izquierda = no la sabía (0, vuelve a la cola).
-  const sacar = (derecha) => {
+  const girar = () => { if (!CT.rev) revelar(); CT.flip = !CT.flip; document.getElementById("ce-card").classList.toggle("flip", CT.flip); ceAjustaFija(); };
+  // Saca la tarjeta volando y la califica: derecha = la sabía (5), izquierda = no la sabía (0, vuelve a la cola), arriba = dudé (3).
+  const sacar = (dir) => {
     const card = document.getElementById("ce-card"); if (!card || card.classList.contains("sale")) return;
-    card.dataset.dir = derecha ? "si" : "no"; card.classList.add("sale");
-    card.style.transform = `translateX(${derecha ? 130 : -130}vw) rotate(${derecha ? 25 : -25}deg)`;
-    setTimeout(() => calificarCE(c, derecha ? 5 : 0), 200);
+    card.dataset.dir = dir; card.classList.add("sale");
+    card.style.transform = dir === "dude" ? "translateY(-120vh) scale(.9)" : `translateX(${dir === "si" ? 130 : -130}vw) rotate(${dir === "si" ? 25 : -25}deg)`;
+    setTimeout(() => calificarCE(c, dir === "si" ? 5 : dir === "dude" ? 3 : 0), 200);
   };
   const frente = document.getElementById("ce-frente");
   // Toda la tarjeta es pulsable: la primera vez muestra de qué trata; después gira entre frente y artículo.
@@ -6607,25 +6610,39 @@ function cePintarSesion(c) {
   document.getElementById("ce-ver").addEventListener("click", girar);
   document.getElementById("ce-volver").addEventListener("click", girar);
   c.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => calificarCE(c, +b.dataset.q)));
-  if (desliz) ceDeslizar(document.getElementById("ce-card"), sacar);
+  if (desliz) { ceDeslizar(document.getElementById("ce-card"), sacar); ceAjustaFija(); }
+}
+/** Si la cara visible cabe sin desplazarse, el gesto vertical es nuestro (dudé); si no, el dedo desplaza el texto. */
+function ceAjustaFija() {
+  setTimeout(() => {
+    const card = document.getElementById("ce-card"); if (!card || !card.classList.contains("desliz")) return;
+    const cara = [...card.querySelectorAll(".ce-cara")].find(e => getComputedStyle(e).display !== "none");
+    card.classList.toggle("fija", !!cara && cara.scrollHeight <= cara.clientHeight + 1);
+  }, 360);
 }
 /** Modo flashcards: la tarjeta se arrastra; a la derecha «la sabía», a la izquierda «no la sabía» (vuelve a salir). */
 function ceDeslizar(card, sacar) {
-  let x0 = null, y0 = 0, dx = 0, drag = false, id = null;
-  card.addEventListener("pointerdown", e => { if (e.target.closest("button, a")) return; x0 = e.clientX; y0 = e.clientY; dx = 0; drag = false; id = e.pointerId; });
+  let x0 = null, y0 = 0, dx = 0, dy = 0, eje = "x", drag = false, id = null;
+  card.addEventListener("pointerdown", e => { if (e.target.closest("button, a")) return; x0 = e.clientX; y0 = e.clientY; dx = 0; dy = 0; drag = false; id = e.pointerId; });
   card.addEventListener("pointermove", e => {
     if (x0 == null || e.pointerId !== id) return;
     const ax = e.clientX - x0, ay = e.clientY - y0;
-    if (!drag) { if (Math.abs(ax) > 10 && Math.abs(ax) > Math.abs(ay) * 1.2) { drag = true; try { card.setPointerCapture(id); } catch (_) {} card.classList.add("arrastra"); } else return; }
-    dx = ax; card.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`;
-    card.dataset.dir = dx > 40 ? "si" : dx < -40 ? "no" : "";
+    if (!drag) {
+      if (Math.abs(ax) > 10 && Math.abs(ax) > Math.abs(ay) * 1.2) eje = "x";
+      else if (ay < -10 && Math.abs(ay) > Math.abs(ax) * 1.2) eje = "y";
+      else return;
+      drag = true; try { card.setPointerCapture(id); } catch (_) {} card.classList.add("arrastra");
+    }
+    if (eje === "x") { dx = ax; card.style.transform = `translateX(${dx}px) rotate(${dx / 18}deg)`; card.dataset.dir = dx > 40 ? "si" : dx < -40 ? "no" : ""; }
+    else { dy = Math.min(0, ay); card.style.transform = `translateY(${dy}px) scale(${1 + dy / 2500})`; card.dataset.dir = dy < -40 ? "dude" : ""; }
   });
   const fin = () => {
     if (x0 == null) return; x0 = null;
     if (!drag) return;
     drag = false; CT.arrastrado = true; setTimeout(() => { CT.arrastrado = false; }, 80);
     card.classList.remove("arrastra");
-    if (Math.abs(dx) > Math.min(110, innerWidth * 0.28)) sacar(dx > 0, dx);
+    if (eje === "x" && Math.abs(dx) > Math.min(110, innerWidth * 0.28)) sacar(dx > 0 ? "si" : "no");
+    else if (eje === "y" && dy < -Math.min(110, innerHeight * 0.16)) sacar("dude");
     else { card.style.transform = ""; delete card.dataset.dir; }
   };
   card.addEventListener("pointerup", fin); card.addEventListener("pointercancel", fin);
