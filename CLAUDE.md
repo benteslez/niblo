@@ -170,3 +170,25 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   texto literal de ese artículo en los apuntes del mismo tema (si el número existe en varias normas,
   hace falta que la tarjeta cite la norma); `CONSTELACIONES` añade artículos relacionados de otros temas.
 - Prueba: `herramientas/oposicion/pruebas/plan.js` (con `python3 -m http.server 8765` en la raíz).
+
+## Constitución (`#/ce`) y temas fusionados del módulo M101
+
+- **Tema I.1-3 (B1T01) fusionado**: reúne los temas I.1, I.2 e I.3 como la plantilla del plan de estudio y el
+  módulo M101 de la academia. `FUSION` (`oposicion.html`) redirige I.2 e I.3 a I.1; `temas/indice.json` lleva
+  `retirados` para quitar I.2/I.3 de los dispositivos. Se genera con `herramientas/oposicion/temas/B1T01.py`.
+  Los demás temas se irán rehaciendo módulo a módulo igual (apuntes explicados, solo lo que entra, pills).
+- **Estilo de estos temas** (petición del usuario): explicados, no solo esquemas; texto legal literal del BOE
+  (`lit`/`c`, comprobado); cuadros comparativos; reglas mnemotécnicas; cierre con cronología e hitos.
+  Pills: `{{IMPORTANTE}}` (la guía o el vídeo dicen «importante/atención») y `{{PRESCINDIBLE}}` (no hace falta
+  estudiarlo a fondo; con nota). `{{c:<clave>~texto}}` pinta con el color de un título/capítulo de la CE;
+  `{{ir:#/ruta|texto}}` es un botón. Fuente nueva `[[M101]]` = guía y vídeo del módulo (no es texto legal).
+- **Si la guía o el vídeo discrepan de la norma vigente, prevalece la norma** y se avisa en el mapa del tema
+  (hoy: reforma del 69.3 «19 de mayo de 2026», LO 3/2007 solo parcialmente orgánica, capítulo II del Título I
+  = arts. 14 a 38, reelección del Defensor no regulada).
+- **Constitución**: `temas/ce.json` (texto literal del BOE consolidado, generado por
+  `herramientas/oposicion/ce_datos.py`; su sello va en `indice.json` → `ce`). Los títulos de artículo (arts. 1-52)
+  son de la guía M101 (p. 10), NO de la CE; los de 53-55 son un rótulo propio (`propio`). Vistas: texto con
+  epígrafes al margen y un color por título/capítulo (`CE_COL`), organigrama (escritorio y móvil) y Test
+  Constitución (SRS reutilizando `srsSiguiente`; clave `CEQ:<n>` en `prog.mapa`; la tarjeta baja al pulsar y gira
+  con «Ver artículo»). Al regenerar el texto: `python3 ce_datos.py`.
+- Prueba: `herramientas/oposicion/pruebas/ce.js` y `m101.js`.
