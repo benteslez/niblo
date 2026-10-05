@@ -7028,6 +7028,9 @@ table.ce-t td { padding:1.2mm 2mm; border:1px solid #d6d6d6; vertical-align:top;
 .og { display:grid; gap:2mm; margin:2mm 0 4mm; font-size:7.6pt; } .og a { text-decoration:none; color:inherit; }
 .og-parte { break-after:avoid; } .og-fila { break-inside:avoid; }
 .seccion.nueva { break-before:page; } .seccion.junta { break-inside:avoid; }
+.cab-parte { margin:2mm 0 3mm; padding:2.4mm 4mm; border-radius:4px; background:#3f4a5a; color:#fff; display:flex; justify-content:space-between; font-size:10.5pt; font-weight:800; letter-spacing:.04em; text-transform:uppercase; break-after:avoid; } .cab-parte span { font-size:8.5pt; font-weight:600; text-transform:none; letter-spacing:0; }
+.parte-org { break-before:page; } .og-fit { width:100%; } .og-fit.org2 { break-before:page; }
+.ce-t.estr { font-size:7.8pt; } .ce-t.estr td, .ce-t.estr th { padding:1mm 1.6mm; } .ce-t.estr td:nth-child(2) { white-space:nowrap; } .ce-t.estr tr { break-inside:avoid; }
 .m103-pill.niv { white-space:normal; }
 .og-tit { flex:0 0 32mm !important; } .og-capc { flex:0 0 38mm !important; } .og-fila, .og-cap { gap:2.4mm !important; }
 .og-tit, .og-capc, .og-sec, .og-art14 { padding:1.2mm 2mm !important; font-size:7.4pt !important; }
@@ -7054,16 +7057,19 @@ function ceApuntesHTML() {
   const filaU = (key, etq, rango) => `<tr><td><span class="ce-chip" style="${ceSt(key)}">${esc(etq)}</span></td><td>${esc(rango)}</td><td>${R[key] ? inl(R[key]) : ""}</td></tr>`;
   const unidades = [["P", "Título preliminar"], ["I", "Título I"], ["I.1", "Cap. I"], ["I.2", "Cap. II"], ["I.2.1", "Secc. 1.ª"], ["I.2.2", "Secc. 2.ª"], ["I.3", "Cap. III"], ["I.4", "Cap. IV"], ["I.5", "Cap. V"], ...["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"].map(i => [i, "Título " + i])];
   const rangoMas = key => { const u = CE_UNI[key]; if (!u) return ""; const base = rangoU(u); return /^(III|IV|V|VI|VII|VIII|IX|X)$/.test(key) ? `${base} (${u.desde} + ${u.hasta - u.desde})` : base; };
-  const s2 = `<section class="seccion"><div class="k">Sección 2</div><h2 class="t">Estructura y <span class="az">reglas de memoria</span></h2>
+  const s2 = `<section class="seccion nueva junta"><div class="k">Sección 2</div><h2 class="t">Estructura y <span class="az">reglas de memoria</span></h2>
     <p class="lead">Dos partes (dogmática 1-55, orgánica 56-169), el preámbulo, 10 títulos, 169 artículos y 15 disposiciones. Reglas del módulo M107 (repaso de la estructura): no son texto de la Constitución.</p>
-    <table class="ce-t"><thead><tr><th>Unidad</th><th>Artículos</th><th>Regla de memoria</th></tr></thead><tbody>
+    <table class="ce-t estr"><thead><tr><th>Unidad</th><th>Artículos</th><th>Regla de memoria</th></tr></thead><tbody>
       <tr><td><span class="ce-chip" style="${ceSt("D")}">Preámbulo</span></td><td>—</td><td>${R.preambulo ? inl(R.preambulo) : ""}</td></tr>
       ${unidades.filter(([k]) => CE_UNI[k]).map(([k, e]) => filaU(k, e, rangoMas(k))).join("")}
       <tr><td><span class="ce-chip" style="${ceSt("D")}">Disposiciones</span></td><td>15</td><td>${R.D ? inl(R.D) : ""}</td></tr></tbody></table></section>`;
   // --- Sección 3: organigrama (el mismo de la app)
   const caja = document.createElement("div"); ceVerOrg(caja);
-  const og = (caja.querySelector(".og") || caja).outerHTML.replace(/ href="[^"]*"/g, "");
-  const s3 = `<section class="seccion nueva"><div class="k">Sección 3</div><h2 class="t">Organigrama de la <span class="az">Constitución</span></h2>
+  // Dos páginas: parte dogmática y, en página nueva, parte orgánica (con las disposiciones); cada una se ajusta a su hoja.
+  const ogEl = caja.querySelector(".og") || caja, hijos = Array.from(ogEl.children), iOrg = hijos.map(x => x.classList.contains("og-parte")).lastIndexOf(true);
+  const mitad = a => `<div class="og">${a.map(x => x.outerHTML).join("")}</div>`;
+  const og = (iOrg > 0 ? `<div class="og-fit" data-max="760">${mitad(hijos.slice(0, iOrg))}</div><div class="og-fit org2" data-max="930">${mitad(hijos.slice(iOrg))}</div>` : `<div class="og-fit" data-max="760">${ogEl.outerHTML}</div>`).replace(/ href="[^"]*"/g, "");
+  const s3 = `<section class="seccion nueva junta"><div class="k">Sección 3</div><h2 class="t">Organigrama de la <span class="az">Constitución</span></h2>
     <style>${ogCssApp()}</style>${og}</section>`;
   // --- Sección 4: niveles de protección
   const tramos = [[10, 13, "Fuera de las garantías del art. 53"], [14, 14, null], [15, 29, null], [30, 30, null], [31, 38, null], [39, 52, null]];
@@ -7075,15 +7081,22 @@ function ceApuntesHTML() {
     return `<div class="ca" style="${ceSt(A.key)}"><div class="ca-h"><span class="ca-num">Art. ${A.n}</span>${A.t ? `<span class="ca-rub">${esc(A.t)}</span>` : ""}${ceM103Pills(A.n)}</div>
       <div class="ca-t">${A.p.map(p => par(p, marks)).join("")}</div>${ceM103Nota(A.n) ? `<div class="ca-n">${ceM103Nota(A.n)}</div>` : ""}</div>`; };
   const banda = (key, k, nombre) => `<div class="cab-bloque" style="${ceSt(key)}"><b>${esc(k)}</b><span>${esc(nombre)}</span><small>${rangoU(CE_UNI[key])}</small></div>`;
-  let cuerpo = "";
-  CE.titulos.filter(t => t.id === "P" || t.id === "I").forEach(t => {
+  const parr = x => `<p>${esc(Array.isArray(x) ? x[1] : x)}</p>`;
+  const bandaP = (txt, rango) => `<div class="cab-parte"><b>${esc(txt)}</b><span>${esc(rango)}</span></div>`;
+  let cuerpo = bandaP("Parte dogmática", "Del Preámbulo al art. 55");
+  cuerpo += `<div class="cab-bloque" style="${ceSt("D")}"><b>Preámbulo</b></div><div class="ca"><div class="ca-t">${(CE.preambulo || []).map(parr).join("")}</div></div>`;
+  CE.titulos.forEach(t => {
+    if (t.id === "II") cuerpo += `<div class="parte-org">${bandaP("Parte orgánica", "Arts. 56 a 169")}</div>`;
     cuerpo += banda(t.id, t.id === "P" ? "Título preliminar" : "Título " + t.id, t.nombre) + t.arts.map(a => art(CE_ART[a.n])).join("");
     t.caps.forEach((cp, i) => { const kc = t.id + "." + (i + 1);
       cuerpo += banda(kc, cap1(cp.num), cp.nombre) + cp.arts.map(a => art(CE_ART[a.n])).join("");
       cp.secs.forEach((sc, j) => { const ks = kc + "." + (j + 1), m = sc.nombre.match(/^(Sección \d\.ª)\s+(.*)$/); cuerpo += banda(ks, m ? m[1] : "Sección", m ? m[2] : sc.nombre) + sc.arts.map(a => art(CE_ART[a.n])).join(""); }); });
   });
-  const s5 = `<section class="seccion nueva"><div class="k">Sección 5</div><h2 class="t">Artículos 1 a 55 <span class="az">anotados</span></h2>
-    <p class="lead">Texto literal del BOE consolidado con el subrayado, los pills y los comentarios de la academia (módulos M103 y M107). Los títulos junto al número son los de la guía M101, no de la Constitución. El resto del articulado (56 a 169) está en la aplicación.</p>${cuerpo}</section>`;
+  cuerpo += `<div class="cab-bloque" style="${ceSt("D")}"><b>Disposiciones</b><span>Adicionales, transitorias, derogatoria y final</span></div>`
+    + (CE.disposiciones || []).map(d => `<div class="ca"><div class="ca-h"><span class="ca-rub">${esc(d.t)}</span></div><div class="ca-t">${(d.p || []).map(parr).join("")}</div></div>`).join("")
+    + ((CE.firma || []).length ? `<div class="ca"><div class="ca-t">${CE.firma.map(parr).join("")}</div></div>` : "");
+  const s5 = `<section class="seccion nueva"><div class="k">Sección 5</div><h2 class="t">Constitución completa <span class="az">con los apuntes</span></h2>
+    <p class="lead">Texto literal del BOE consolidado (Preámbulo, arts. 1 a 169 y disposiciones) con el subrayado, los pills y los comentarios de la academia allí donde los hay (hoy, arts. 1 a 55: módulos M103 y M107); lo que se vaya añadiendo entra solo. Los títulos junto al número (arts. 1-52) son los de la guía M101, no de la Constitución.</p>${cuerpo}</section>`;
   // --- Sección 6: cuadros y esquemas de los temas I.1 a I.3 (todos los apartados «Cuadro…» y los de estructura)
   let esq = "";
   ["B1T01", "B1T02", "B1T03"].forEach(id => { const t = estado.temas[id]; if (!t) return;
@@ -7091,7 +7104,7 @@ function ceApuntesHTML() {
       esq += `<h3 class="sub2">${esc(TEMA_POR_ID[id].c)} · ${esc(x.title)}</h3><div class="cuerpo">${apCuida(formatear(apLimpia(x.body, x.title)))}</div>`; }); });
   const s6 = esq ? `<section class="seccion"><div class="k">Sección 6</div><h2 class="t">Cuadros y esquemas de los <span class="az">temas I.1 a I.3</span></h2>${esq}</section>` : "";
   const nSec = s6 ? 6 : 5;
-  const indice = ["Cómo estudiar los artículos 1 a 52 (código de colores y niveles)", "Estructura y reglas de memoria", "Organigrama de la Constitución", "Niveles de protección del Título I", "Artículos 1 a 55 anotados"].concat(s6 ? ["Cuadros y esquemas de los temas I.1 a I.3"] : []);
+  const indice = ["Cómo estudiar los artículos 1 a 52 (código de colores y niveles)", "Estructura y reglas de memoria", "Organigrama de la Constitución", "Niveles de protección del Título I", "Constitución completa con los apuntes (Preámbulo, arts. 1 a 169 y disposiciones)"].concat(s6 ? ["Cuadros y esquemas de los temas I.1 a I.3"] : []);
   const hoy = new Date().toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
   const css = APUNTES_CSS + CE_APUNTES_CSS + `:root { --cab-izq:${JSON.stringify("Constitución Española · apuntes")}; --cab-der:${JSON.stringify("Oposición GACE · Bloque I")}; }`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Constitución Española · apuntes</title><style>${css}</style></head><body>
@@ -7099,7 +7112,7 @@ function ceApuntesHTML() {
     <div class="hoja">
       <section class="portada"><div class="sup">Oposición · Gestión de la Administración Civil del Estado (A2) · Bloque I · Organización del Estado y de la Administración Pública</div>
         <h1>Constitución Española <span class="az">de 1978</span></h1><div class="regla"></div>
-        <p class="sub">Apuntes de la academia sobre la Constitución: estructura y reglas de memoria, organigrama, niveles de protección, artículos 1 a 55 con subrayado y comentarios, y los cuadros y esquemas de los temas I.1 a I.3.</p>
+        <p class="sub">Apuntes de la academia sobre la Constitución: estructura y reglas de memoria, organigrama, niveles de protección, la Constitución completa (Preámbulo, arts. 1 a 169 y disposiciones) con subrayado y comentarios, y los cuadros y esquemas de los temas I.1 a I.3.</p>
         <ol class="indice">${indice.map((x, i) => `<li><span class="n">${i + 1}.</span><span>${esc(x)}</span></li>`).join("")}</ol>
         <div class="pie-portada">Apuntes generados desde la aplicación el ${esc(hoy)}. El texto de los artículos es literal del BOE consolidado; las anotaciones son material de la academia (módulos M101, M103 y M107), no texto legal.</div>
       </section>
@@ -7107,7 +7120,9 @@ function ceApuntesHTML() {
     </div>
     <script>
       function volver() { const url = ${JSON.stringify(location.href.split("#")[0] + "#/ce/texto")}; if (window.opener && !window.opener.closed) { try { window.opener.focus(); } catch (_) {} window.close(); setTimeout(() => { location.href = url; }, 300); } else location.href = url; }
-      addEventListener("load", () => setTimeout(() => { try { print(); } catch (_) {} }, 900));<\/script></body></html>`;
+      function ajustaOrg() { document.querySelectorAll(".og-fit").forEach(e => { e.style.zoom = ""; const h = e.scrollHeight, max = +e.dataset.max || 800; if (h > max) e.style.zoom = String(max / h); }); }
+      addEventListener("load", () => { ajustaOrg(); setTimeout(() => { try { print(); } catch (_) {} }, 900); });
+      addEventListener("beforeprint", ajustaOrg);<\/script></body></html>`;
 }
 async function descargarApuntesCE() {
   let html;
