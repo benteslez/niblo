@@ -267,11 +267,19 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 ## Temas encendidos y apagados
 
 - Cada tema está **encendido** (tarjeta en color) o **apagado** (tarjeta en gris, con la etiqueta «⏻ Apagado») en las tarjetas de los bloques; sirve para saber cuáles se han completado (petición del usuario). El usuario lo cambia con el botón de la parte de arriba de **Progreso** (herramienta del lector del tema); se guarda como `TON:<id>` en `prog.mapa` y se sincroniza.
-- **Estado por defecto** (lo que pide el usuario que se encienda o apague «en bloque»): `temas/indice.json` → `apagados` (lista de ids) y `apagadosSello` (ISO). Para encender o apagar temas a petición: editar `apagados` **y poner un `apagadosSello` nuevo** (así se descartan los interruptores del usuario anteriores a ese sello y el cambio llega a todos sus dispositivos); no tocar el sello de los temas. Hoy: todos apagados salvo B1T01, B1T02 y B1T03 (I.1 a I.3, los completos con BOE y temario; 5-10-2026). `temaEncendido`, `alternarTema`, `tarjetaTema` en `oposicion.html`.
+- **Estado por defecto** (lo que pide el usuario que se encienda o apague «en bloque»): `temas/indice.json` → `apagados` (lista de ids) y `apagadosSello` (ISO). Para encender o apagar temas a petición: editar `apagados` **y poner un `apagadosSello` nuevo** (así se descartan los interruptores del usuario anteriores a ese sello y el cambio llega a todos sus dispositivos); no tocar el sello de los temas. Hoy: todos apagados salvo B1T01, B1T02, B1T03 (I.1 a I.3) y B2T01 (II.1) (5-10-2026). `temaEncendido`, `alternarTema`, `tarjetaTema` en `oposicion.html`.
 
 ## Marcar apartados como repasados
 
 - En la lista de apartados del lector, cada uno lleva solo un **tic redondo** (gris; verde y relleno al marcarlo; vuelve a gris al pulsar de nuevo), sin el texto «Marcar como repasada», para no ocupar espacio (petición del usuario). Misma función: `data-rep`, clave `id:sec:<apartado>`.
+
+## Flashcards, test, glosario, mapas y cronología (petición del usuario, 5-10-2026)
+
+- **Flashcards** del tema: se abren como **tarjeta centrada** (`.panel.centrado`, no barra lateral); cara trasera oscurecida para el texto blanco; `**negrita**` se pinta (`negE`); al deslizar, la tarjeta se tiñe de **rojo** (izquierda), **verde** (derecha) o **ámbar** (arriba).
+- **Test** del tema: pantalla completa con la pregunta **centrada**, enunciado sobre tarjeta de color con texto blanco y opciones en tarjetas blancas.
+- **Glosario global** (`hubGlosario(c, ambito, temas, actual)`): en el panel de un tema muestra los términos de **todos** los temas con el filtro «Este tema / Todos los temas»; el botón **＋ Añadir** guarda términos propios en `prog.mapa` (`<tema>:glu:<marca>` con `{t, d}`; se sincronizan, se pueden quitar con 🗑). I.1-I.3 tienen glosario ampliado en `m101/part13.py` (cada definición se comprueba literal contra el artículo).
+- **Colores**: `PALETA`/`colorDe()` dan un color distinto por rama de los mapas conceptuales (`~>`, `panelMapa`) y por categoría en cronología y glosario (app y PDF).
+- **PDF de apuntes**: usa el **color del bloque** (`BAC`, mismo que `--accent`; `--ac`/`--ac-d`), cuerpo a 10 pt, Glosario y Cronología en **página nueva**, filas de tabla que no se parten (las tablas de más de 6 filas sí pueden partirse entre filas), sin `.cuerpo` vacío para que no queden títulos huérfanos (SECCIÓN n + título) al final de página.
 
 ## Barra lateral del tema
 
