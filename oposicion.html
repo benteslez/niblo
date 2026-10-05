@@ -3609,7 +3609,7 @@ const pillFuente = (cod, url, extra) => {
 };
 function formatear(txt) {
   const enLinea = x => esc(x)
-    .replace(/\[\[([A-Z_]+)(?:\|(https?:[^\]\s]+))?\]\]/g, (m, cod, url) => pillFuente(cod, url ? url.replace(/&amp;/g, "&") : ""))
+    .replace(/\[\[([A-Z0-9_]+)(?:\|(https?:[^\]\s]+))?\]\]/g, (m, cod, url) => pillFuente(cod, url ? url.replace(/&amp;/g, "&") : ""))
     .replace(/\{\{IMPORTANTE\}\}/g, '<span class="pill-imp">IMPORTANTE</span>')
     .replace(/\{\{ir:(#\/[^|}]+)\|([^}]+)\}\}/g, '<a class="btn btn-sm ce-ir-btn" href="$1">$2</a>')
     .replace(/\{\{PRESCINDIBLE\}\}/g, '<span class="pill-pre">PRESCINDIBLE</span>')
@@ -3633,7 +3633,7 @@ function formatear(txt) {
      párrafo tal cual (sin convertir «1.» en lista, para no alterar la letra). */
   const cerrarC = () => {
     if (!cita.length) return;
-    const m = cita[0].match(/^\[\[([A-Z_]+)(?:\|(https?:[^\]\s]+))?\]\]$/);
+    const m = cita[0].match(/^\[\[([A-Z0-9_]+)(?:\|(https?:[^\]\s]+))?\]\]$/);
     if (m) cita.shift();
     const codF = m ? m[1] : "BOE", larga = codF !== "BOE";   // etiqueta más ancha que «BOE»: va encima del texto
     html += `<blockquote class="literal${larga ? " lit-larga" : ""}">${pillFuente(m ? m[1] : "BOE", m && m[2] ? m[2] : "", "lit-boe")}${cita.map(x => x ? `<p>${enLinea(x)}</p>` : "").join("")}</blockquote>`;
@@ -3665,17 +3665,28 @@ function formatear(txt) {
         filas.push(kv ? { k:kv[1].trim(), v:kv[2], items:[] } : { k:"", v:x, items:[] });
       });
       html += `<div class="ap-caja ap-ficha">${filas.map(f => `<div class="fi-fila${/^⚠/.test(f.k) ? " ojo" : ""}"><span class="fi-k">${enLinea(f.k)}</span><div class="fi-v">${f.v ? enLinea(f.v) : ""}${f.items.length ? `<ul>${f.items.map(i => `<li>${enLinea(i)}</li>`).join("")}</ul>` : ""}</div></div>`).join("")}</div>`;
+    } else if (caja.tipo === "mapa") {
+      /* Mapa conceptual: «~> Título», «~> # Raíz» y una rama por línea «Rama | descripción | subcaja». */
+      const L = caja.lineas.map(x => x.trim()).filter(Boolean), tit = L.find(x => !x.startsWith("#") && !x.includes("|")) || "", raiz = (L.find(x => x.startsWith("#")) || "").replace(/^#\s*/, "");
+      const ramas = L.filter(x => x.includes("|")).map(x => x.split("|").map(s => s.trim()));
+      html += `<div class="cmap"><div class="cmap-k">◇ Mapa conceptual</div>${tit ? `<div class="cmap-t">${enLinea(tit)}</div>` : ""}${raiz ? `<div class="cmap-root"><span>${enLinea(raiz)}</span></div>` : ""}<div class="cmap-ramas" style="--n:${ramas.length}">${ramas.map(r => `<div class="cmap-r"><div class="cmap-b"><b>${enLinea(r[0])}</b>${r[1] ? `<small>${enLinea(r[1])}</small>` : ""}</div>${r[2] ? `<div class="cmap-s">${enLinea(r[2])}</div>` : ""}</div>`).join("")}</div></div>`;
     } else {
-      html += `<div class="ap-caja ${caja.tipo}">${caja.lineas.map(x => `<p>${enLinea(x)}</p>`).join("")}</div>`;
+      /* Recuadros con etiqueta de color: atención examen (!>), nota (?>), guía y síntesis (@>), concepto clave (+>). */
+      const L = caja.lineas.slice(); let cls, etq;
+      if (caja.tipo === "clave") { cls = "ex"; etq = "⚠ Atención examen"; L[0] = L[0].replace(/^\{\{IMPORTANTE\}\}\s*/, ""); }
+      else if (caja.tipo === "trampa") { cls = "nota"; etq = "Ojo"; L[0] = L[0].replace(/^\{\{PRESCINDIBLE\}\}\s*/, ""); }
+      else if (caja.tipo === "concepto") { cls = "cc"; etq = "Concepto clave"; }
+      else { const m = (L[0] || "").match(/^\*\*▸\s*([^.*]+?)\.?\*\*\s*(.*)$/); etq = m ? m[1] : "Guía"; if (m) L[0] = m[2]; cls = /resumen/i.test(etq) ? "sin" : "guia"; if (cls === "sin") etq = "Síntesis"; }
+      html += `<div class="cj cj-${cls}"><div class="cj-k">${esc(etq)}</div>${L.filter(x => x.trim()).map(x => `<p>${enLinea(x)}</p>`).join("")}</div>`;
     }
     caja = null;
   };
   String(txt || "").replace(/\r/g, "").split("\n").forEach(l => {
     const t = l.trim();
-    const k = t.match(/^([!?@=%])>\s?(.*)$/);
+    const k = t.match(/^([!?@=%+~])>\s?(.*)$/);
     if (k) {
       cerrarP(); cerrarL(); cerrarT(); cerrarC();
-      const tipo = { "!":"clave", "?":"trampa", "@":"ap-guia", "=":"ficha", "%":"quiz" }[k[1]];
+      const tipo = { "!":"clave", "?":"trampa", "@":"ap-guia", "=":"ficha", "%":"quiz", "+":"concepto", "~":"mapa" }[k[1]];
       if (caja && caja.tipo !== tipo) cerrarK();
       if (!caja) caja = { tipo, lineas:[] };
       caja.lineas.push(k[2]); return;
@@ -3700,6 +3711,11 @@ function formatear(txt) {
   cerrarP(); cerrarL(); cerrarT(); cerrarC(); cerrarK();
   return html;
 }
+/** Conceptos del glosario del tema que pertenecen a un apartado: salen como «Concepto clave» al empezar el apartado (máximo 2). */
+function conceptosAl(t, secId) {
+  return ((t && t.glossary) || []).filter(g => g.section === secId && lleno(g.t) && lleno(g.d)).slice(0, 2).map(g => `+> **${g.t}:** ${g.d}`).join("\n");
+}
+const conConceptos = (t, secId, body) => { const c = conceptosAl(t, secId); return c ? c + "\n\n" + (body || "") : (body || ""); };
 /* ---- Página de estudio del tema -----------------------------------------
    La misma estructura que las páginas de tema de estudio: cabecera, índice,
    apartados plegables con «Marcar como repasada» y, al lado, buscador,
@@ -3811,8 +3827,8 @@ function tarjetaApartado(id, a, i, abierto) {
         <button class="ap-tog" data-toggle-btn aria-expanded="${abierto}" aria-label="${abierto ? "Plegar" : "Desplegar"}">▸</button>
       </div>
       <div class="ap-cuerpo" data-cuerpo="${esc(a.s.id)}">
-        ${formatear(a.s.body)}
-        ${a.subs.map(x => `<div class="ap-sub" id="sec-${esc(x.id)}" data-cuerpo="${esc(x.id)}"><h3>${esc(x.title || "")}</h3>${formatear(x.body)}</div>`).join("")}
+        ${formatear(conConceptos(estado.temas[id], a.s.id, a.s.body))}
+        ${a.subs.map(x => `<div class="ap-sub" id="sec-${esc(x.id)}" data-cuerpo="${esc(x.id)}"><h3>${esc(x.title || "")}</h3>${formatear(conConceptos(estado.temas[id], x.id, x.body))}</div>`).join("")}
       </div>
     </section>`;
 }
@@ -4062,7 +4078,7 @@ function panelMapa(c, id) {
 
 /* ---- Lectura en voz (Web Speech API) ----------------------------------- */
 const VOZ = { cola:[], i:0, activo:false, pausa:false, vel:1 };
-function textoPlano(md) { return String(md || "").replace(/\[\[([A-Z_]+)(?:\|[^\]]*)?\]\]/g, (m, c) => (FUENTES[c] ? FUENTES[c].n : c)).replace(/^\s*(#{3,4}|[!?@=%]>)\s*(\[[ x]\]\s*)?/gm, "").replace(/\s\|\|\s/g, ". ").replace(/^\s*\|?\s*:?-{2,}.*$/gm, "").replace(/\|/g, ", ").replace(/\*\*|\*/g, "").replace(/^\s*[-•]\s+/gm, "").replace(/BOE-A-(\d{4})-(\d+)/g, "BOE $1 $2"); }
+function textoPlano(md) { return String(md || "").replace(/\[\[([A-Z0-9_]+)(?:\|[^\]]*)?\]\]/g, (m, c) => (FUENTES[c] ? FUENTES[c].n : c)).replace(/^\s*(#{3,4}|[!?@=%]>)\s*(\[[ x]\]\s*)?/gm, "").replace(/\s\|\|\s/g, ". ").replace(/^\s*\|?\s*:?-{2,}.*$/gm, "").replace(/\|/g, ", ").replace(/\*\*|\*/g, "").replace(/^\s*[-•]\s+/gm, "").replace(/BOE-A-(\d{4})-(\d+)/g, "BOE $1 $2"); }
 function vozParar() {
   VOZ.activo = false; VOZ.pausa = false; VOZ.cola = [];
   try { speechSynthesis.cancel(); } catch (_) {}
@@ -6809,6 +6825,55 @@ function calificarCE(c, q) {
    lleva exactamente lo que se ve en los apuntes (literales con su etiqueta de fuente, fichas,
    pills, colores de la CE…). Las preguntas interactivas salen con la solución marcada.
    ====================================================================== */
+const CJ_CSS = `
+.cj { margin:1.1em 0 1.3em; padding:.95em 1.2em 1em; border-radius:12px; border-left:5px solid; break-inside:avoid-page; }
+.cj-k { font-size:.72em; font-weight:800; letter-spacing:.16em; text-transform:uppercase; margin:0 0 .55em; }
+.cj p { margin:0 0 .5em; text-align:left; font-size:.97em; line-height:1.62; }
+.cj p:last-child { margin-bottom:0; }
+.cj-cc { background:#e4f1fb; border-color:#3b73c9; color:#1f4694; } .cj-cc .cj-k, .cj-cc strong { color:#1c3f8f; }
+.cj-ex { background:#fbe9ea; border-color:#b4302f; color:#8f2322; } .cj-ex .cj-k, .cj-ex strong { color:#8f2322; }
+.cj-sin { background:#fcf6cc; border-color:#f0ad3e; color:#62440b; } .cj-sin .cj-k, .cj-sin strong { color:#5c3d05; }
+.cj-nota { background:#fff3e0; border-color:#e08a1e; color:#6a4310; } .cj-nota .cj-k, .cj-nota strong { color:#8a4e08; }
+.cj-guia { background:#eef1f6; border-color:#8a97ad; color:#2c3a52; } .cj-guia .cj-k, .cj-guia strong { color:#33496b; }
+.cj-nota .pill-pre, .cj-nota .pill-imp { display:none; }
+.cmap { margin:1.2em 0 1.5em; padding:1em 1.2em 1.3em; border:1px solid #dcdcd4; border-radius:18px; background:#f9f9f6; break-inside:avoid-page; }
+.cmap-k { font-size:.72em; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#777; }
+.cmap-t { text-align:center; font-family:Georgia,"Times New Roman",serif; font-size:1.25em; margin:.6em 0 .9em; color:#222; }
+.cmap-root { text-align:center; position:relative; }
+.cmap-root span { display:inline-block; padding:.55em 1.8em; border-radius:999px; background:#2f62b8; color:#fff; font-weight:800; font-size:1.05em; box-shadow:0 6px 16px rgba(47,98,184,.28); }
+.cmap-root::after { content:""; display:block; width:2px; height:1em; margin:0 auto; background:#2f62b8; }
+.cmap-ramas { display:grid; grid-template-columns:repeat(var(--n,3), minmax(0,1fr)); gap:.9em; position:relative; padding-top:1em; }
+.cmap-ramas::before { content:""; position:absolute; top:0; left:calc(50% / var(--n,3)); right:calc(50% / var(--n,3)); height:2px; background:#2f62b8; }
+.cmap-r { position:relative; display:flex; flex-direction:column; align-items:stretch; }
+.cmap-r::before { content:""; position:absolute; top:-1em; left:50%; width:2px; height:1em; background:#2f62b8; }
+.cmap-b { border:2px solid #2f62b8; border-radius:14px; background:#fbfbf8; padding:.6em .7em; text-align:center; flex:1; }
+.cmap-b b { display:block; color:#2f62b8; font-size:1.02em; }
+.cmap-b small { display:block; margin-top:.25em; color:#666; font-size:.84em; line-height:1.35; }
+.cmap-s { position:relative; margin-top:1em; padding:.55em .6em; border:1px solid #dcdcd4; border-radius:12px; background:#f0f0ec; text-align:center; font-size:.86em; color:#444; }
+.cmap-s::before { content:""; position:absolute; top:-1em; left:50%; width:1px; height:1em; background:#bbb; }
+@media (max-width:640px) { .cmap-ramas { grid-template-columns:1fr; } .cmap-ramas::before, .cmap-r::before { display:none; } .cmap-s { margin-top:.4em; } .cmap-s::before { display:none; } }
+.ap-cuerpo h4.ap-h, .cuerpo h4.ap-h { font-family:Georgia,"Times New Roman",serif; color:#2250a8; border-bottom:none; border-left:4px solid #3b73c9; padding:.1em 0 .1em .6em; font-weight:700; }
+.ap-tit { font-family:Georgia,"Times New Roman",serif; }
+.apuntes-tabla { border-collapse:separate; border-spacing:0; }
+.apuntes-tabla th { background:#2f62b8 !important; color:#fff !important; font-weight:700; padding:.7em .9em; }
+.ap-cuerpo .tabla-wrap, .cuerpo .tabla-wrap { border-radius:12px; overflow:hidden; }
+.apuntes-tabla td { padding:.7em .9em; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ap-cuerpo .cj-cc, :root:not([data-theme="light"]) .ap-cuerpo .cj-ex, :root:not([data-theme="light"]) .ap-cuerpo .cj-sin, :root:not([data-theme="light"]) .ap-cuerpo .cj-nota, :root:not([data-theme="light"]) .ap-cuerpo .cj-guia { background:#16213a; color:#d6e0f5; }
+  :root:not([data-theme="light"]) .ap-cuerpo .cj-k, :root:not([data-theme="light"]) .ap-cuerpo .cj strong { color:inherit; }
+  :root:not([data-theme="light"]) .ap-cuerpo .cmap, :root:not([data-theme="light"]) .ap-cuerpo .cmap-b, :root:not([data-theme="light"]) .ap-cuerpo .cmap-s { background:#16213a; color:#d6e0f5; } :root:not([data-theme="light"]) .ap-cuerpo .cmap-t { color:#e6ecfa; }
+}
+:root[data-theme="dark"] .ap-cuerpo .cj-cc, :root[data-theme="dark"] .ap-cuerpo .cj-ex, :root[data-theme="dark"] .ap-cuerpo .cj-sin, :root[data-theme="dark"] .ap-cuerpo .cj-nota, :root[data-theme="dark"] .ap-cuerpo .cj-guia { background:#16213a; color:#d6e0f5; }
+:root[data-theme="dark"] .ap-cuerpo .cj-k, :root[data-theme="dark"] .ap-cuerpo .cj strong { color:inherit; }
+:root[data-theme="dark"] .ap-cuerpo .cmap, :root[data-theme="dark"] .ap-cuerpo .cmap-b, :root[data-theme="dark"] .ap-cuerpo .cmap-s { background:#16213a; color:#d6e0f5; } :root[data-theme="dark"] .ap-cuerpo .cmap-t { color:#e6ecfa; }
+`;
+const PDF_CJ = `
+.cj { margin:2.6mm 0 3.2mm; padding:2.2mm 3.6mm; border-radius:3mm; font-size:inherit; }
+.cj p { font-size:8.9pt; line-height:1.42; } .cj-k { font-size:6.8pt; }
+.cmap { padding:3mm 4mm 4mm; margin:3mm 0 4mm; } .cmap-t { font-size:11pt; } .cmap-root span { font-size:9.5pt; box-shadow:none; } .cmap-b b { font-size:8.6pt; } .cmap-b small, .cmap-s { font-size:7.4pt; }
+.cuerpo h4.ap-h { font-size:10.5pt; }
+.apuntes-tabla th, .apuntes-tabla td { padding:1.5mm 2.4mm; }
+`;
 const APUNTES_CSS = `
 @page { size:A4; margin:18mm 15mm 16mm; @top-left { content:var(--cab-izq); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @top-right { content:var(--cab-der); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @bottom-center { content:counter(page); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } }
 @page :first { @top-left { content:""; } @top-right { content:""; } @bottom-center { content:""; } }
@@ -6956,8 +7021,8 @@ function apuntesHTML(id) {
   const secHTML = bloques.map(x => {
     n++;
     return `<section class="seccion${n === 1 ? " primera" : ""}"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>
-      <div class="cuerpo">${apCuida(formatear(apLimpia(x.s.body, x.s.title)))}</div>
-      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(apLimpia(h.body, h.title)))}</div>`).join("")}</section>`;
+      <div class="cuerpo">${apCuida(formatear(conConceptos(t, x.s.id, apLimpia(x.s.body, x.s.title))))}</div>
+      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${apCuida(formatear(conConceptos(t, h.id, apLimpia(h.body, h.title))))}</div>`).join("")}</section>`;
   }).join("");
   const gl = (t.glossary || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Glosario de <span class="az">conceptos</span></h2>
       <p class="lead">Términos clave del tema, con su definición y la categoría a la que pertenecen.</p>
@@ -6967,7 +7032,7 @@ function apuntesHTML(id) {
       ${[...t.timeline].sort((a, b2) => String(a.y).localeCompare(String(b2.y))).map(h => `<div class="fila"><div class="pi"><span>${esc(h.y)}</span></div><div class="tx"><b>${esc(h.txt)}</b>${h.cons ? `<i>${esc(h.cons)}</i>` : ""}</div></div>`).join("")}</section>` : "";
   const hoy = new Date().toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
   const cabIzq = `${codigo} · ${titulo.length > 62 ? titulo.slice(0, 60) + "…" : titulo}`;
-  const css = APUNTES_CSS + `:root { --cab-izq:${JSON.stringify(cabIzq)}; --cab-der:${JSON.stringify("Oposición GACE · Bloque " + b.rom)}; }`;
+  const css = APUNTES_CSS + CJ_CSS + PDF_CJ + `:root { --cab-izq:${JSON.stringify(cabIzq)}; --cab-der:${JSON.stringify("Oposición GACE · Bloque " + b.rom)}; }`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(codigo + " · " + titulo)}</title><style>${css}</style></head><body>
     <div class="barra"><button type="button" class="volver" onclick="volver()">← Volver a la app</button><button type="button" onclick="print()">⬇ Guardar como PDF / Imprimir</button><span>En el cuadro de impresión elige «Guardar como PDF» (tamaño A4, márgenes predeterminados, activa «Gráficos de fondo» si no se ven los colores).</span></div>
     <div class="hoja">
@@ -7108,7 +7173,7 @@ function ceApuntesHTML() {
   const nSec = s6 ? 6 : 5;
   const indice = ["Cómo estudiar los artículos 1 a 52 (código de colores y niveles)", "Estructura y reglas de memoria", "Organigrama de la Constitución", "Niveles de protección del Título I", "Constitución completa con los apuntes (Preámbulo, arts. 1 a 169 y disposiciones)"].concat(s6 ? ["Cuadros y esquemas de los temas I.1 a I.3"] : []);
   const hoy = new Date().toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
-  const css = APUNTES_CSS + CE_APUNTES_CSS + `:root { --cab-izq:${JSON.stringify("Constitución Española · apuntes")}; --cab-der:${JSON.stringify("Oposición GACE · Bloque I")}; }`;
+  const css = APUNTES_CSS + CE_APUNTES_CSS + CJ_CSS + PDF_CJ + `:root { --cab-izq:${JSON.stringify("Constitución Española · apuntes")}; --cab-der:${JSON.stringify("Oposición GACE · Bloque I")}; }`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Constitución Española · apuntes</title><style>${css}</style></head><body>
     <div class="barra"><button type="button" class="volver" onclick="volver()">← Volver a la app</button><button type="button" onclick="print()">⬇ Guardar como PDF / Imprimir</button><span>En el cuadro de impresión elige «Guardar como PDF» (A4, márgenes predeterminados, activa «Gráficos de fondo» si no se ven los colores).</span></div>
     <div class="hoja">
@@ -7136,6 +7201,7 @@ async function descargarApuntesCE() {
 document.addEventListener("click", e => { const bt = e.target.closest("[data-ce-apuntes]"); if (bt) { e.preventDefault(); descargarApuntesCE(); } });
 
 (async function arrancar() {
+  { const st = document.createElement("style"); st.id = "cj-css"; st.textContent = CJ_CSS; document.head.appendChild(st); }
   leerSesion();
   cargarProgreso(SUPA.uid);
   pintarSync();
