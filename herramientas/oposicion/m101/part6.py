@@ -24,7 +24,7 @@ T.ap("s23", "V.5 El recurso de inconstitucionalidad", f"""
 
 {unidad("5.2 El plazo (art. 33 LOTC)",
   lx("LOTC", "atreintaytres", 33, ["tres meses", "nueve meses", "Comisión Bilateral de Cooperación"], solo=[1, 2, 3, 4, 5]),
-  f"!> {IMP} **Plazo: 3 meses**, y **9 meses** si el Presidente del Gobierno o el ejecutivo autonómico han activado la **Comisión Bilateral** para negociar (conflictos Estado-CCAA). Se cuenta desde la **publicación** de la norma.")}
+  f"!> {IMP} **Plazo: 3 meses**, y **9 meses** si el Presidente del Gobierno o el ejecutivo autonómico han activado la **Comisión Bilateral** para negociar (art. 33.2 LOTC). Se cuenta desde la **publicación** de la norma.")}
 """, 2)
 
 T.ap("s24", "V.6 Vinculación de los poderes públicos", f"""
@@ -35,7 +35,7 @@ T.ap("s24", "V.6 Vinculación de los poderes públicos", f"""
          "**Todos los poderes públicos** (legislativo, ejecutivo, judicial y administraciones)",
          "Los derechos del **capítulo II** tienen **eficacia inmediata**: no necesitan una ley que los desarrolle para poder invocarse",
          "—",
-         f"{IMP} **Vinculan** los derechos del **capítulo II (14 a 38)**. Los del **capítulo III** no vinculan igual: **informan** (→ V.7)."))}
+         f"{IMP} **Vinculan** los derechos del **capítulo II (14 a 38)**. Los del **capítulo III** no vinculan igual: **informan** (→ V.7.2)."))}
 """, 2)
 
 T.ap("s25", "V.7 La paradoja del capítulo III: principios rectores", f"""
@@ -68,7 +68,7 @@ T.ap("s26", "V.8 Cuadro resumen de las garantías", f"""
 # =============================================================================
 # VI. SUSPENSIÓN
 T.ap("bVI", "VI. ¿Cómo se suspenden los derechos? Estados de alarma, excepción y sitio (arts. 55 y 116)", donde(
-  "Sexta pregunta. La Constitución protege los derechos, pero **se reserva la carta de poder suspenderlos** en situaciones graves. Es el art. 55 (capítulo V, el último del Título I). " + IMP + " **Es muy preguntable: se pregunta por palabras clave y hay que dominarlo bien.**",
+  "Cuarta pregunta. La Constitución protege los derechos, pero **se reserva la carta de poder suspenderlos** en situaciones graves. Es el art. 55 (capítulo V, el último del Título I). " + IMP + " **Es muy preguntable: se pregunta por palabras clave y hay que dominarlo bien.**",
   ["1 El art. 55, ordenado", "2 Los tres estados: quién declara y cuánto dura", "3 Qué derechos se pueden suspender", "4 Puntos en común", "5 La suspensión individual (art. 55.2)", "6 Cuadro resumen"]))
 
 T.ap("s27", "VI.1 El art. 55, ordenado", f"""
@@ -109,7 +109,7 @@ Hay **tres estados**, de menor a mayor gravedad: **alarma < excepción < sitio**
          ["**15 días**", "Prórroga **solo con autorización expresa del Congreso**, que puede fijar el alcance y las condiciones"],
          f"{IMP} En el alarma el Gobierno **da cuenta** al Congreso, pero **la prórroga necesita su autorización**. **Ningún derecho se suspende**: solo se **limitan** algunos."))}
 
-{unidad("2.2 Estado de excepción (art. 116.3 CE; arts. 13 y 14 LO 4/1981)",
+{unidad("2.2 Estado de excepción (art. 116.3 CE; art. 13 LO 4/1981)",
   lit("CE", "a116", ["previa autorización del Congreso de los Diputados", "que no podrá exceder de treinta días, prorrogables por otro plazo igual, con los mismos requisitos"], solo=[3], titulo="Artículo 116.3"),
   lx("LOEAS", "atrece", 13, ["solicitar del Congreso de los Diputados autorización para declarar el estado de excepción", "que no podrá exceder de treinta días"], solo=[1, 2, 3, 4, 5, 6, 7]),
   fichab("Estado de excepción",

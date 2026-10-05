@@ -121,6 +121,7 @@ Este es el **primer tema del bloque I**. El módulo M101 lo estudia junto a los 
 - **Reforma del art. 69.3.** La guía M101 la sitúa el «20 de mayo de 2026». La reforma es **de 19 de mayo de 2026** (sanción del Rey) y se publicó y entró en vigor el **20 de mayo de 2026**.
 - **Reformas.** En el vídeo solo se citan las de los arts. 13.2 y 135; la guía añade la del 49 (2024) y la del 69.3 (2026): en total, **cuatro**.
 - **Organigrama.** El de la guía rotula el capítulo II del Título I con «Art. 14». Aquí se sigue el texto de la CE: el capítulo II comprende los **arts. 14 a 38**.
+- **Art. 42.** La guía lo titula «inmigrantes españoles en el extranjero»; el art. 42 habla de los **trabajadores españoles en el extranjero** (emigrantes): se usa el término de la norma.
 """, 1)
         A("bI", "I. ¿Cuándo nace la Constitución y cuándo se ha reformado?", S["bI"]["body"], 1)
         A("s1", S["s1"]["title"], S["s1"]["body"]); A("s2", S["s2"]["title"], S["s2"]["body"])
@@ -192,7 +193,7 @@ Es el **segundo tema del bloque I** (el primero estudia la estructura de la Cons
           ["1 Art. 10 y capítulo primero (10 a 13)", "2 Art. 14 y sección 1.ª (14 a 29)", "3 Sección 2.ª (30 a 38)", "4 Capítulo tercero (39 a 52)"]), 1)
         for i, n, M in (("s12", 1, 4), ("s13", 2, 5), ("s14", 3, 6), ("s15", 4, 7)):
             A(i, f"II.{n}" + S[i]["title"][len(f"III.{M}"):], _renum(S[i]["body"], n))
-        A("bV", "III. ¿Cómo se garantizan los derechos? Los mecanismos (arts. 53, 54 y 81)", donde(
+        A("bV", "III. ¿Cómo se garantizan los derechos? Los mecanismos (arts. 53, 81, 161 y 162)", donde(
           "Tercera pregunta. La Constitución no se limita a reconocer los derechos: dispone **mecanismos para protegerlos**. Se estudian **en este orden**, y después se relaciona cada mecanismo con los artículos que protege (cuadro I.2).",
           ["1 Reserva de ley (orgánica y ordinaria)", "2 Tutela ante los tribunales ordinarios", "3 Recurso de amparo", "4 Recurso de inconstitucionalidad", "5 Vinculación de los poderes públicos y paradoja del capítulo III", "6 Cuadro resumen"]), 1)
         A("s19", "III.1" + S["s19"]["title"][3:], S["s19"]["body"]); A("s20", "III.2" + S["s20"]["title"][3:], S["s20"]["body"]); A("s21", "III.3" + S["s21"]["title"][3:], S["s21"]["body"])
@@ -247,7 +248,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
           ["1 Qué es el Tribunal Constitucional", "2 Composición y mandato"]), 1)
         A("s33", "I.1" + S["s33"]["title"][5:], S["s33"]["body"]); A("s34", "I.2" + S["s34"]["title"][5:], S["s34"]["body"])
         A("bII", "II. ¿Qué procesos conoce el Tribunal Constitucional?", donde(
-          "Segunda pregunta. El Tribunal conoce de **cuatro grandes procesos**: inconstitucionalidad, cuestión de inconstitucionalidad, amparo y conflictos. Aprende **quién** los interpone, **frente a qué** y en **qué plazo**.",
+          "Segunda pregunta. El Tribunal conoce de **inconstitucionalidad**, **cuestión de inconstitucionalidad**, **amparo**, **conflictos de competencia** (de tres clases) y la **impugnación del art. 161.2** del Gobierno. Aprende **quién** los interpone, **frente a qué** y en **qué plazo**.",
           ["1 Competencias y procedimientos", "2 Recapitulación: amparo frente a inconstitucionalidad"]), 1)
         A("s35", "II.1 Competencias y procedimientos", _renum(_remisiones(S["s35"]["body"], 3), 1)); A("s37", "II.2" + S["s37"]["title"][5:], S["s37"]["body"])
         A("bIII", "III. ¿Qué valor tienen las sentencias?", donde("Tercera pregunta. Las sentencias del Tribunal Constitucional tienen un valor especial: se publican en el BOE, no tienen recurso y, en ciertos casos, tienen efectos frente a todos.", ["1 Las sentencias y sus efectos"]), 1)
@@ -258,7 +259,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
     # ----------------------------------------------------------------- preguntas, flashcards, glosario, hitos
     def tema_de_q(q):
         c = q["cat"]; t = q["q"]
-        if c in ("Estructura", "Reforma"): return 1
+        if c in ("Estructura", "Reforma", "Fechas"): return 1
         if c == "Contenido": return 1 if re.search(r"valores superiores|lengua española oficial", t) else 2
         if c in ("Garantías", "Suspensión", "Defensor del Pueblo"): return 2
         return 3
@@ -281,7 +282,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
     elif tema_n == 2:
         H = [dict(y="1978", txt="27-12-1978: la Constitución, en vigor desde el 29-12-1978, reconoce en el Título I (arts. 10 a 55) los derechos y deberes fundamentales y sus garantías", cons="Niveles de protección, garantías (arts. 53 y 54) y suspensión (art. 55)", cat="normativo", target="s16")] + [h for h in T.H if h["target"] in ("s39", "s28")]
     else:
-        H = [dict(y="1978", txt="27-12-1978: la Constitución crea el Tribunal Constitucional (Título IX, arts. 159 a 165)", cons="Composición, competencias y valor de las sentencias", cat="normativo", target="s33")] + [h for h in T.H if h["target"] == "s33"]
+        H = [dict(y="1978", txt="27-12-1978: sanción de la Constitución, que crea el Tribunal Constitucional (Título IX, arts. 159 a 165); BOE y entrada en vigor el 29-12-1978", cons="Composición, competencias y valor de las sentencias", cat="normativo", target="s33")] + [h for h in T.H if h["target"] == "s33"]
     if tema_n == 3:
         FC += [dict(q="¿Qué es el Tribunal Constitucional según su ley orgánica?", a="**Intérprete supremo** de la Constitución, **independiente** de los demás órganos constitucionales, sometido **solo** a la Constitución y a su ley orgánica y **único en su orden** (art. 1 LOTC).", cat="Tribunal Constitucional"),
                dict(q="¿Quién legitima cada proceso ante el Tribunal Constitucional?", a="**Inconstitucionalidad**: Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores y ejecutivos y Asambleas de las CCAA. **Amparo**: persona con interés legítimo, Defensor del Pueblo y Ministerio Fiscal. **Cuestión**: el órgano judicial (arts. 162 y 163 CE).", cat="Tribunal Constitucional")]
@@ -299,6 +300,6 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
         body = _limpia(body, tit)
         if i == ap[-1][0] and tema_n == 1:   # último apartado de I.1: enlace al tema siguiente
             body = re.sub(r"→ Siguiente: [^*\n]+", "→ Fin del tema I.1: sigue el tema I.2 (derechos y deberes fundamentales)", body)
-        X.ap(i, tit, _remisiones(body, tema_n), nivel)
+        X.ap(i, tit, body if i == "s0" else _remisiones(body, tema_n), nivel)
     X.Q, X.FC, X.G, X.H = Q, FC, G, H
     return X

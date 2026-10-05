@@ -50,10 +50,12 @@ T.ap("s30", "VI.4 Puntos en común de los tres estados", f"""
 T.ap("s31", "VI.5 La suspensión individual (art. 55.2)", f"""
 Además de la suspensión general, el art. 55.2 permite una suspensión **individual** de algunos derechos, **para personas determinadas** y en relación con las investigaciones de la actuación de **bandas armadas o elementos terroristas**.
 
-{tabla(["Derecho", "Qué se puede suspender", "Garantía"], [
-  [tag("I.2.1", "Art. 17.2"), "La **duración máxima de la detención preventiva** (72 horas)", "**Intervención judicial** y **control parlamentario**"],
-  [tag("I.2.1", "Art. 18.2"), "La **inviolabilidad del domicilio**", "Ley **orgánica**"],
-  [tag("I.2.1", "Art. 18.3"), "El **secreto de las comunicaciones**", "Responsabilidad **penal** por uso injustificado o abusivo"]])}
+{tabla(["Derecho", "Qué se puede suspender"], [
+  [tag("I.2.1", "Art. 17.2"), "La **duración máxima de la detención preventiva** (72 horas)"],
+  [tag("I.2.1", "Art. 18.2"), "La **inviolabilidad del domicilio**"],
+  [tag("I.2.1", "Art. 18.3"), "El **secreto de las comunicaciones**"]])}
+
+**Garantías comunes a los tres derechos:** forma y casos fijados por **ley orgánica**, **intervención judicial** y **control parlamentario**; y el uso injustificado o abusivo de esas facultades produce **responsabilidad penal**.
 
 {lit("CE", "a55", ["Una ley orgánica podrá determinar la forma y los casos en los que, de forma individual y con la necesaria intervención judicial y el adecuado control parlamentario", "La utilización injustificada o abusiva de las facultades reconocidas en dicha ley orgánica producirá responsabilidad penal"], solo=[2, 3], titulo="Artículo 55.2")}
 
@@ -71,7 +73,7 @@ T.ap("s32", "VI.6 Cuadro resumen de la suspensión", f"""
   "**Art. 55** (capítulo V): suspensión **general** (excepción y sitio: diez derechos, salvo el 17.3 en excepción) e **individual** (bandas armadas y terroristas: 17.2, 18.2, 18.3).",
   "**Quién declara:** alarma → Gobierno (da cuenta); excepción → Gobierno con autorización del Congreso; sitio → Congreso por mayoría absoluta a propuesta del Gobierno.",
   "**Duración:** alarma 15 días; excepción 30 (+30); sitio, la que fije el Congreso.",
-  "**En común:** no se disuelve el Congreso, no se interrumpe el funcionamiento de las Cámaras, no se modifica la responsabilidad, no se reforma la Constitución; ley orgánica."], "Siguiente: VII. El Tribunal Constitucional (Título IX)")}
+  "**En común:** no se disuelve el Congreso, no se interrumpe el funcionamiento de las Cámaras, no se modifica la responsabilidad del Gobierno y de sus agentes, no se reforma la Constitución; ley orgánica."], "Siguiente: VII. El Tribunal Constitucional (Título IX)")}
 """, 2)
 
 # =============================================================================

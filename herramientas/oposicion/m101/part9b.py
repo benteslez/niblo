@@ -76,7 +76,7 @@ T.ap("s46", "IX.3 El procedimiento del art. 168", f"""
          ["Las Cortes que aprueban el principio (y quedan disueltas)", "Las **Cámaras elegidas** después", "El **pueblo**, en referéndum obligatorio"],
          ["::Se aplica a:", "La **revisión total**", "Una revisión parcial que afecte al **Título preliminar** (arts. 1 a 9)", "… al **Capítulo segundo, Sección primera, del Título I** (arts. 15 a 29)", "… al **Título II** (la Corona, arts. 56 a 65)"],
          ["1. Principio: **2/3 de cada Cámara** + **disolución inmediata**", "2. Nuevas Cámaras: ratifican y aprueban el nuevo texto por **2/3 de ambas**", "3. **Referéndum** de ratificación, siempre"],
-         "No están protegidos el **art. 14** ni la **Sección 2.ª**: la Sección 1.ª empieza en el art. 15 (→ II.3). Tampoco la reforma del Título X. El referéndum es **obligatorio** («será sometida»)."))}
+         "No están protegidos el **art. 14** ni la **Sección 2.ª**: la Sección 1.ª empieza en el art. 15 (→ II.3). El Título X tampoco está en el art. 168.1: se reforma por el art. 167. El referéndum es **obligatorio** («será sometida»)."))}
 
 {unidad("3.2 La tramitación en el Congreso (Reglamento del Congreso, art. 147)",
   lit("RCD", "art147", ["las normas previstas para los de totalidad", "las dos terceras partes de los miembros de la Cámara", "Real Decreto de disolución de las Cortes Generales", "las dos terceras partes de los miembros del Congreso"], titulo="Artículo 147 (Reglamento del Congreso)"),

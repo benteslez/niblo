@@ -80,9 +80,9 @@ La Constitución se ha reformado **cuatro veces**, siempre por el procedimiento 
 
 {tabla(["Reforma", "Artículo", "Sanción", "Publicación y entrada en vigor", "Qué cambia"], [
   ["**1992**", "**13.2**", "27 de agosto de 1992", "28 de agosto de 1992", "Los extranjeros pueden tener **sufragio pasivo** (y no solo activo) en las elecciones **municipales**, por reciprocidad. Se añadió «y pasivo»."],
-  ["**2011**", "**135**", "27 de septiembre de 2011", "27 de septiembre de 2011", "**Estabilidad presupuestaria**: el artículo se reescribió entero."],
+  ["**2011**", "**135**", "27 de septiembre de 2011", "27 de septiembre de 2011", "**Estabilidad presupuestaria**: el artículo se reescribió entero. Los límites de déficit estructural del art. 135.2 «entrarán en vigor a partir de 2020» (disposición adicional única, ap. 3)."],
   ["**2024**", "**49**", "15 de febrero de 2024", "17 de febrero de 2024", "Protección de las **personas con discapacidad**: actualiza su lenguaje y su contenido."],
-  ["**2026**", "**69.3**", "19 de mayo de 2026", "20 de mayo de 2026", "Circunscripciones del **Senado** en las islas: **Ibiza y Formentera** pasan a elegir cada una su senador."]])}
+  ["**2026**", "**69.3**", "19 de mayo de 2026", "20 de mayo de 2026", "Circunscripciones del **Senado** en las islas: **Ibiza y Formentera** pasan a elegir cada una su senador; la eficacia de estas circunscripciones «quedará pospuesta hasta la convocatoria de las primeras elecciones al Senado» posteriores a la reforma (disposición transitoria única)."]])}
 
 {unidad("2.1 Reforma del art. 13.2 (1992)",
   lit("CE", "a13", ["sufragio activo y pasivo"], solo=[2]),
@@ -100,7 +100,7 @@ La Constitución se ha reformado **cuatro veces**, siempre por el procedimiento 
   lit("CE", "a69", ["Ibiza, Formentera, Menorca"], solo=[3]),
   lit("REF2026", "preambulo", ["19 de mayo de 2026"], solo=[ix("REF2026", "preambulo", "Artículo único") + j for j in (0, 1)] + [ix("REF2026", "preambulo", "Madrid,")], titulo="Reforma de la Constitución de 2026 (artículo único y fecha)"))}
 
-!> {IMP} **Para el examen:** artículos reformados **13.2, 135, 49 y 69.3**, y año de cada reforma (**1992, 2011, 2024, 2026**). La del 135 es la más «radical»: se reescribió casi entero, con ocasión de la crisis de la deuda.
+!> {IMP} **Para el examen:** artículos reformados **13.2, 135, 49 y 69.3**, y año de cada reforma (**1992, 2011, 2024, 2026**). La del 135 es la más «radical»: se reescribió entero, con ocasión de la crisis de la deuda.
 
 ?> La **guía M101** da el art. 69.3 el «20 de mayo de 2026»: es la fecha de **publicación y entrada en vigor**. La reforma es de **19 de mayo de 2026** (sanción).
 """, 2)
