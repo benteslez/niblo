@@ -220,5 +220,6 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   app y «Las etiquetas de los apuntes» del mapa. En la app todo se mantiene.
   La portada **no** lleva altura fija ni hay dos saltos de página seguidos: con otro papel o márgenes del cuadro de impresión
   una altura fija desbordaba y dejaba páginas en blanco. Probar también con `Letter` y márgenes grandes.
+  Tipografía para A4: cuerpo 9,2 pt, literales 8,9 pt, tablas 8,4 pt, márgenes 18/15/16 mm (el A4 es el papel por defecto).
   Al tocar el CSS (`APUNTES_CSS`), regenerar los PDF con `pruebas/apuntes.js` y revisar portada y saltos de página.
 - Prueba: `herramientas/oposicion/pruebas/apuntes.js` (genera también el PDF con Chromium).
