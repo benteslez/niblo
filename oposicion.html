@@ -2981,7 +2981,7 @@ async function cargarTemasPublicados() {
   for (const id of (idx.retirados || [])) if (estado.temas[id]) { try { await quitarTema(id, true); } catch (_) {} }
   const sellos = leerJSON(KEY_SELLOS, {});
   const antes = new Set(Object.keys(estado.temas));
-  let nuevos = 0;
+  let nuevos = 0; const actualizados = new Set();
   for (const id in idx.temas) {
     const sello = idx.temas[id];
     if (sellos[id] === sello || !TEMA_POR_ID[id]) continue;
@@ -2991,13 +2991,15 @@ async function cargarTemasPublicados() {
       const j = await r.json();
       if (j._format !== FORMATO) continue;
       await importarCopia(Object.assign({}, j, { ajustes:null }), true);
-      sellos[id] = sello; escribirJSON(KEY_SELLOS, sellos); nuevos++;
+      sellos[id] = sello; escribirJSON(KEY_SELLOS, sellos); nuevos++; actualizados.add(id);
     } catch (e) { console.warn("Tema publicado", id, e); }
   }
   /* Si se está leyendo un tema que ya estaba, no se repinta debajo del lector (se
      verá al navegar); si el que se está viendo acaba de llegar, sí. */
   const visto = (location.hash.match(/#\/tema\/([A-Z0-9]+)/) || [])[1];
   if (nuevos && (!/\/leer/.test(location.hash) || (visto && !antes.has(visto) && estado.temas[visto]))) render();
+  // El tema que se está leyendo se ha actualizado (versión nueva publicada): se repinta conservando la posición, para no tener que recargar dos veces.
+  else if (nuevos && visto && actualizados.has(visto) && !document.querySelector(".panel.on")) { const y = window.scrollY; render(); requestAnimationFrame(() => window.scrollTo(0, y)); }
 }
 async function cargarEmbebidos() {
   const el = document.getElementById("datos-embebidos");
@@ -4803,11 +4805,20 @@ function pintarRepaso(c) {
   });
   document.getElementById("srs-star").addEventListener("click", () => { alternarMarca(it.x, it.q, "st"); const b = document.getElementById("srs-star"), on = !!marcasDe(it.x, it.q).st; b.textContent = on ? "★" : "☆"; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
   document.getElementById("srs-pausa").addEventListener("click", () => { alternarMarca(it.x, it.q, "pa"); toast("Pausada: no saldrá en el repaso hasta que la reactives"); S.cola = S.cola.filter((y, k) => k < S.i || !(y.x === it.x && y.q === it.q)); pintarRepaso(c); });
-  quitarTeclasReal();
+  quitarTeclasReal(); let ultFlecha = 0;
   real.tecla = e => {
     if (!document.body.contains(c) || !real.ses) { quitarTeclasReal(); return; }
     if (e.ctrlKey || e.metaKey || e.altKey || (e.target.closest && e.target.closest("input, select, textarea, dialog"))) return;
     const k = e.key.toLowerCase();
+    if (k === "arrowright" && !e.shiftKey) {
+      e.preventDefault();
+      const rate = c.querySelector(".srs-rate"), ahora = Date.now();
+      // Contestada: → pasa a la siguiente (si acertaste, «La sabía»; si fallaste, «Fallada»).
+      if (rate) { const b = rate.querySelector('[data-cal="5"]') || rate.querySelector("[data-cal]"); if (b) { b.click(); ultFlecha = 0; } return; }
+      // Sin contestar: doble → rápido = «No la sabía» (en blanco).
+      if (ahora - ultFlecha < 500) { ultFlecha = 0; document.getElementById("srs-nolase").click(); } else ultFlecha = ahora;
+      return;
+    }
     if (!c.querySelector(".srs-rate")) { const j = LETRAS.indexOf(k); if (j >= 0 && j < ops.length) { e.preventDefault(); revelar(j); } return; }
     const cal = { "1":0, "2":3, "3":5 }[k];
     const b = cal != null && c.querySelector(`[data-cal="${cal}"]`);
@@ -4870,6 +4881,16 @@ function pintarExamen(c) {
     </div>
     <div class="card sim-mapa">${E.qs.map((_, k) => `<button class="${k === E.i ? "act" : ""} ${E.resp[k] != null ? "resp" : ""}" data-k="${k}">${k + 1}</button>`).join("")}</div>`;
   const ir_ = k => { E.i = k; pintarExamen(c); };
+  // Teclado del examen: → siguiente pregunta, ← anterior (dejar en blanco = seguir sin marcar).
+  if (!real.teclaEx) {
+    real.teclaEx = e => {
+      if (!real.ex || !document.getElementById("sim-sig")) { document.removeEventListener("keydown", real.teclaEx); real.teclaEx = null; return; }
+      if (e.ctrlKey || e.metaKey || e.altKey || (e.target.closest && e.target.closest("input, select, textarea, dialog"))) return;
+      const b = e.key === "ArrowRight" ? document.getElementById("sim-sig") : e.key === "ArrowLeft" ? document.getElementById("sim-ant") : null;
+      if (b && !b.disabled) { e.preventDefault(); b.click(); }
+    };
+    document.addEventListener("keydown", real.teclaEx);
+  }
   c.querySelectorAll(".q-opt").forEach(b => b.addEventListener("click", () => { const o = it.ord[parseInt(b.dataset.j, 10)]; E.resp[E.i] = E.resp[E.i] === o ? null : o; pintarExamen(c); }));
   document.getElementById("sim-ant").addEventListener("click", () => ir_(E.i - 1));
   document.getElementById("sim-sig").addEventListener("click", () => ir_(E.i + 1));
