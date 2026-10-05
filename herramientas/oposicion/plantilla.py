@@ -153,6 +153,46 @@ class Tema:
     def glos(self, t, d, section, cat): self.G.append({"t": t, "d": d, "section": section, "cat": cat})
     def hito(self, y, txt, cons, cat, target): self.H.append({"y": y, "txt": txt, "cons": cons, "cat": cat, "target": target})
 
+    def _cierre1_al_test(self):
+        """Las preguntas de exámenes oficiales NO van en los apuntes (petición del usuario, 5-10-2026): viven en el test del tema
+        («Práctica activa»). Se quita el apartado «Cierre 1»; las preguntas de sus recuadros que aún no estén en el test se pasan
+        a él (con su `real`, su respuesta y el porqué de cada opción) y el consejo «Cómo se pregunta» se traslada al repaso final."""
+        c1 = [x for x in self.S if x["title"].startswith("Cierre 1")]
+        if not c1: return
+        vistas = {_norm(q["q"]) for q in self.Q}
+        body = c1[0]["body"]
+        for bloque in re.findall(r"(?:^%> .*\n?)+", body, re.M):
+            L = [l[3:] for l in bloque.strip("\n").split("\n")]
+            hd = re.match(r"\*\*(?:📋 Pregunta real · (.+?) · n\.º (\d+)|🎓 Pregunta de la guía M108 · n\.º (\d+))", L[0])
+            if not hd: continue
+            enun = L[1].strip("«»")
+            if _norm(enun) in vistas: continue
+            ops = [re.match(r"\[( |x)\] ([a-d])\) (.*?) \|\| (.*)$", l) for l in L[2:6]]
+            assert all(ops), ("OPCIONES NO LEÍDAS", self.id, L[:3])
+            ok = [m.group(1) for m in ops].index("x")
+            e = f"Respuesta {'abcd'[ok]}) según la plantilla definitiva. " + " ".join(("✅ " if i == ok else "✗ ") + f"{m.group(2)}) " + m.group(4) for i, m in enumerate(ops)).replace("**", "")
+            q = {"q": enun, "o": [m.group(3) for m in ops], "c": ok, "e": e, "cat": "Examen real"}
+            if hd.group(1): q["real"] = f"Examen {hd.group(1)} · pregunta {hd.group(2)}"
+            else: q["ac"] = f"M108 · pregunta {hd.group(3)}"; q["cat"] = "Guía M108"
+            self.Q.append(q); vistas.add(_norm(enun))
+        tip = re.search(r"### Cómo se pregunta\n\n(.*?)(?=\n### |\Z)", body, re.S)
+        self.S = [x for x in self.S if x is not c1[0]]
+        cierre = [x for x in self.S if x["title"].startswith("Cierre 2")]
+        if cierre:
+            cierre[0]["title"] = cierre[0]["title"].replace("Cierre 2.", "Cierre.", 1)
+            if tip: cierre[0]["body"] += "\n\n### Cómo se pregunta\n\n" + tip.group(1).strip()
+        sust = [(r"Siguiente: Cierre 1\.[^*\n]*", "Siguiente: Cierre. Repaso en 10 minutos (por bloques)"),
+                (r"\*\*Cierre 1\*\* \([^)]*\) y \*\*Cierre 2\*\* \(([^)]*)\)", "el **Cierre** (\\1); las preguntas de exámenes oficiales están en el **test** («Práctica activa», barra lateral)"),
+                (r"\(→ Cierre 1\)", "(está en el test)"), (r", → Cierre 1\)", ", está en el test)"), (r"; → Cierre 1\)", "; está en el test)"),
+                (r"→ Cierre 1", "está en el test"),
+                (r"Para fijarlo: Cierre 1 \(preguntas oficiales de 2025\) y Cierre 2 \(repaso por bloques\)", "Para fijarlo: el repaso del Cierre y el test («Práctica activa»), donde están las preguntas oficiales de 2025"),
+                (r"- Al final: \*\*Cierre 1\*\* \(las preguntas oficiales de 2025 sobre este tema\) y \*\*Cierre 2\*\* \(repaso por bloques\)\.",
+                 "- Al final: el **Cierre** (repaso por bloques). Las preguntas de exámenes oficiales de este tema están en el **test** («Práctica activa», barra lateral)."),
+                (r"del Cierre 2\b", "del Cierre")]
+        for x in self.S:
+            for a_, b_ in sust: x["body"] = re.sub(a_, b_, x["body"])
+        for f in self.FC: f["a"] = re.sub(r"→ Cierre 1", "está en el test", f["a"])
+
     def publicar(self):
         ids = {s["id"] for s in self.S}
         for g in self.G: assert g["section"] in ids, g
@@ -163,6 +203,7 @@ class Tema:
             for m in re.finditer(r"→ ((?:I{1,3}|IV|V|VI)\.\d+)(?:\.(\d+))?", s["body"]):
                 assert m.group(1) in tit, ("REMISIÓN ROTA", s["id"], m.group(0))
                 if m.group(2): assert f"### {m.group(1).split('.')[1]}.{m.group(2)} " in tit[m.group(1)]["body"], ("REMISIÓN ROTA", s["id"], m.group(0))
+        self._cierre1_al_test()
         sello = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
         data = dict(self.meta, sections=self.S, glossary=self.G, timeline=self.H, flashcards=self.FC, questions=self.Q, cargado=sello)
         out = {"_format": "gestion_hub_config", "_version": 2, "_exportedAt": sello, "ajustes": None, "temas": {self.id: data}}
