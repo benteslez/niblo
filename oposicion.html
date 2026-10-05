@@ -6548,6 +6548,7 @@ const APUNTES_CSS = `
 html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 body { margin:0; font:9.2pt/1.42 Arial, Helvetica, sans-serif; color:#222; background:#fff; }
 .barra { position:sticky; top:0; z-index:5; display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:10px 18px; background:#0b3d91; color:#fff; font-size:14px; }
+.barra button.volver { background:transparent; color:#fff; border:1.5px solid #fff; }
 .barra button { border:0; border-radius:20px; padding:8px 18px; font-weight:700; background:#fff; color:#0b3d91; cursor:pointer; font-size:14px; }
 .barra span { opacity:.9; }
 @media print { .barra { display:none; } }
@@ -6700,7 +6701,7 @@ function apuntesHTML(id) {
   const cabIzq = `${codigo} · ${titulo.length > 62 ? titulo.slice(0, 60) + "…" : titulo}`;
   const css = APUNTES_CSS + `:root { --cab-izq:${JSON.stringify(cabIzq)}; --cab-der:${JSON.stringify("Oposición GACE · Bloque " + b.rom)}; }`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(codigo + " · " + titulo)}</title><style>${css}</style></head><body>
-    <div class="barra"><button type="button" onclick="print()">⬇ Guardar como PDF / Imprimir</button><span>En el cuadro de impresión elige «Guardar como PDF» (tamaño A4, márgenes predeterminados, activa «Gráficos de fondo» si no se ven los colores).</span></div>
+    <div class="barra"><button type="button" class="volver" onclick="volver()">← Volver a la app</button><button type="button" onclick="print()">⬇ Guardar como PDF / Imprimir</button><span>En el cuadro de impresión elige «Guardar como PDF» (tamaño A4, márgenes predeterminados, activa «Gráficos de fondo» si no se ven los colores).</span></div>
     <div class="hoja">
       <section class="portada"><div class="sup">Oposición · Gestión de la Administración Civil del Estado (A2) · Bloque ${esc(b.rom)} · ${esc(b.nombre)}</div>
         <h1>${tituloHTML}</h1><div class="regla"></div>
@@ -6710,7 +6711,10 @@ function apuntesHTML(id) {
       </section>
       ${secHTML}${omitidos.length ? `<p class="lead" style="margin-top:14px">No se incluye el bloque ${omitidos.join(", ")} (lectura profunda): los artículos de estudio van dentro de cada apartado. El texto completo de la Constitución y la lectura profunda de sus artículos están en la aplicación (botón «Constitución Española»).</p>` : ""}${gl}${cr}
     </div>
-    <script>addEventListener("load", () => setTimeout(() => { try { print(); } catch (_) {} }, 700));<\/script></body></html>`;
+    <script>
+      // Volver a la app: si esta pestaña la abrió ella, se cierra; si no (PWA, ventana bloqueada, archivo descargado), se navega a la app.
+      function volver() { const url = ${JSON.stringify(location.href.split("#")[0] + "#/tema/" + id)}; if (window.opener && !window.opener.closed) { try { window.opener.focus(); } catch (_) {} window.close(); setTimeout(() => { location.href = url; }, 300); } else location.href = url; }
+      addEventListener("load", () => setTimeout(() => { try { print(); } catch (_) {} }, 700));<\/script></body></html>`;
 }
 function descargarApuntes(id) {
   if (!estado.temas[id]) { toast("Este tema aún no tiene apuntes desarrollados", "error"); return; }
