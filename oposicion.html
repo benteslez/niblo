@@ -542,6 +542,11 @@ details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-mu
       linear-gradient(135deg, color-mix(in srgb, var(--accent) 42%, #0b1220) 0%, color-mix(in srgb, var(--accent) 18%, #0b1220) 100%);
   }
 }
+/* Cabecera del tema: fondo blanco y texto en el color del bloque (petición del usuario) */
+.hero-tema, :root[data-tema="oscuro"] .hero-tema, :root:not([data-tema]) .hero-tema { background:var(--bg-elev) !important; color:var(--accent) !important; border:1px solid var(--line); box-shadow:var(--sh-1) !important; }
+.hero-tema h1 { color:var(--accent); }
+.hero-btn { background:transparent; color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.hero-btn:hover { background:var(--accent-bg); }
 .hero-sup { font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.85; }
 .hero-num { font-size:13px; font-weight:600; opacity:.9; margin-top:6px; }
 .hero-tema h1 + .hero-acc { margin-top:16px; }
@@ -554,8 +559,6 @@ details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-mu
 .hero-chips { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
 .hero-chips span { font-size:12.5px; font-weight:600; padding:5px 12px; border-radius:var(--r-pill); background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); backdrop-filter:blur(4px); }
 .hero-acc { display:flex; flex-wrap:wrap; gap:8px; }
-.hero-btn { background:rgba(255,255,255,.14); color:#fff; border-color:rgba(255,255,255,.3); }
-.hero-btn:hover { background:rgba(255,255,255,.24); }
 
 .estudio { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; align-items:start; }
 @media (min-width:1000px) { .estudio { grid-template-columns:minmax(0,1fr) 290px; } }
