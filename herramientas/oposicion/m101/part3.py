@@ -1,3 +1,4 @@
+import re
 
 # =============================================================================
 # II. ESTRUCTURA
@@ -8,6 +9,27 @@ for _t in CEJ["titulos"]:
     _a = arts(_t); assert _a == list(range(_a[0], _a[-1] + 1))
     FILAS_TIT.append([tag(_t["id"], "Título preliminar" if _t["id"] == "P" else "Título " + _t["id"]), _t["nombre"] or "—", f"**{rng(_a)}**", len(_a)])
 assert sum(f[3] for f in FILAS_TIT) == 169 and len(FILAS_TIT) == 11
+# «Qué regula»: materias de cada título con su artículo (resumen propio de lo que dice el articulado; no es texto legal).
+# Se comprueba que todos los artículos citados caen dentro del título.
+QUE_REGULA = {
+ "P": "Los principios del Estado: Estado social y democrático de Derecho, soberanía y Monarquía parlamentaria (1), unidad y autonomía (2), lenguas (3), bandera (4), capital (5), partidos (6), sindicatos y asociaciones empresariales (7), Fuerzas Armadas (8) y sujeción a la Constitución (9)",
+ "I": "Dignidad de la persona (10); españoles y extranjeros (11-13); derechos y libertades (14-38); principios rectores de la política social y económica (39-52); garantías (53-54) y suspensión de los derechos (55)",
+ "II": "El Rey como Jefe del Estado (56), la sucesión (57), la regencia y la tutela (59-60), el juramento (61), sus funciones (62-63), el refrendo de sus actos (64) y la dotación de la Familia Real (65)",
+ "III": "**Cámaras** (66-80): composición del Congreso (68) y del Senado (69), estatuto de los parlamentarios (70-71), Pleno y Comisiones (75), Diputación Permanente (78). **Elaboración de las leyes** (81-92): leyes orgánicas (81), legislación delegada (82-85), decretos-leyes (86), iniciativa legislativa (87), sanción (91) y referéndum consultivo (92). **Tratados internacionales** (93-96)",
+ "IV": "La función del Gobierno (97), su composición (98), el Presidente (99), el cese del Gobierno (101), la responsabilidad criminal de sus miembros (102), la Administración Pública (103), las Fuerzas y Cuerpos de seguridad (104), el control judicial de la Administración (106) y el Consejo de Estado (107)",
+ "V": "Responsabilidad política del Gobierno ante el Congreso (108), información y comparecencias (109-111), cuestión de confianza (112), moción de censura (113-114), disolución de las Cámaras (115) y estados de alarma, excepción y sitio (116)",
+ "VI": "La justicia y su independencia (117), el cumplimiento de las sentencias (118), la justicia gratuita (119), la publicidad de las actuaciones (120), el error judicial (121), el Consejo General del Poder Judicial (122), el Tribunal Supremo (123), el Ministerio Fiscal (124), la acción popular y el Jurado (125), la policía judicial (126) y las incompatibilidades de jueces y fiscales (127)",
+ "VII": "La riqueza al servicio del interés general (128), la intervención en la economía (129-131), los bienes públicos (132), los tributos (133), los Presupuestos Generales del Estado (134), la estabilidad presupuestaria (135) y el Tribunal de Cuentas (136)",
+ "VIII": "**Principios generales** (137-139): organización territorial, solidaridad e igualdad de derechos. **Administración Local** (140-142): municipios, provincias y haciendas locales. **Comunidades Autónomas** (143-158): acceso a la autonomía, Estatutos, competencias, organización, control, Delegado del Gobierno y financiación",
+ "IX": "Composición (159), Presidente (160), competencias (161), legitimación para recurrir (162), cuestión de inconstitucionalidad (163), efectos de las sentencias (164) y ley orgánica del Tribunal (165)",
+ "X": "La reforma constitucional: iniciativa (166), procedimiento general (167), procedimiento agravado (168) y límites en guerra y en los estados del art. 116 (169)",
+}
+for _f, _t in zip(FILAS_TIT, CEJ["titulos"]):
+    _a = arts(_t); _q = QUE_REGULA[_t["id"]]
+    for _n in re.findall(r"\((\d+)(?:-(\d+))?(?:, ?(\d+))?[^)]*\)", _q):
+        for _x in _n:
+            if _x: assert _a[0] <= int(_x) <= _a[-1], ("ARTÍCULO FUERA DEL TÍTULO", _t["id"], _x)
+    _f.append(_q)
 
 T.ap("bII", "II. ¿Cómo está hecha? Estructura de la Constitución", donde(
   "Segunda pregunta. La Constitución es la **única norma** en la que hay que saber de memoria **cómo se reparten los artículos**: títulos, capítulos y secciones. Sirve de armazón para colgar después el contenido de cada artículo.",
@@ -36,7 +58,9 @@ Como muchas leyes, la Constitución va **de lo general a lo concreto**: lo prime
 T.ap("s4", "II.2 Los títulos y sus artículos", f"""
 {IMP} Hay que saberse **los nombres de los títulos** y **cómo se reparten los artículos** entre ellos. Se pregunta con frecuencia (p. ej., «¿en qué título está el art. 56?», «¿qué artículos comprende el Título VIII?»).
 
-{tabla(["Título", "Nombre (rúbrica del BOE)", "Artículos", "N.º"], FILAS_TIT + [["**Total**", "", "**1–169**", "**169**"]])}
+{tabla(["Título", "Nombre (rúbrica del BOE)", "Artículos", "N.º", "Qué regula"], FILAS_TIT + [["**Total**", "", "**1–169**", "**169**", ""]])}
+
+*La columna «Qué regula» es un resumen propio de cada título, con el artículo de cada materia; no es texto legal.*
 
 **Números finales de cada título** (para fijar los límites): **9 · 55 · 65 · 96 · 107 · 116 · 127 · 136 · 158 · 165 · 169**.
 
