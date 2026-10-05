@@ -194,3 +194,12 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   rebeldes o 🎲 aleatorio; unidades por color; 10/20/30/todos; barajar) y la sesión va en **pantalla completa**
   (`CT.cfg` se recuerda en `gestion_hub_ce_test_v1`). Al regenerar el texto: `python3 ce_datos.py`.
 - Prueba: `herramientas/oposicion/pruebas/ce.js` y `m101.js`.
+
+## Descargar apuntes (botón en cada tema)
+
+- Botón «⬇ Descargar apuntes» en la ficha y en el lector de cada tema desarrollado (`data-apuntes`).
+  `apuntesHTML(id)` genera un documento A4 con el estilo de los temas de ejemplo (portada, índice,
+  «SECCIÓN n», recuadros, tablas, glosario, cronología e hitos, preguntas de repaso con la solución) usando
+  `formatear()`; se abre en una pestaña y lanza «Imprimir → Guardar como PDF» (sin librerías). Si el
+  navegador bloquea la ventana, baja un `.html`. Cabecera y pie con `@page` (Chrome/Edge).
+- Prueba: `herramientas/oposicion/pruebas/apuntes.js` (genera también el PDF con Chromium).

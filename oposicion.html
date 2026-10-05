@@ -3196,7 +3196,7 @@ function bloqueContenido(t) {
         <div class="kpi"><div class="k">Preguntas</div><div class="v">${qs(t).length}</div></div>
       </div>
       <div class="btn-row" style="margin-top:16px">
-        ${tieneApuntes(t) ? `<a class="btn btn-primary" href="#/tema/${t.id}/leer">📖 Leer apuntes</a>` : ""}
+        ${tieneApuntes(t) ? `<a class="btn btn-primary" href="#/tema/${t.id}/leer">📖 Leer apuntes</a><button class="btn" data-apuntes="${t.id}" title="Descargar los apuntes en PDF">⬇ Descargar apuntes</button>` : ""}
         <a class="btn ${tieneApuntes(t) ? "" : "btn-primary"}" href="#/tema/${t.id}/editar">✏️ Editar</a>
         <a class="btn" href="#/bloque/${t.group}/hub">Repasar en el hub del bloque</a>
         ${t.html ? `<button class="btn" id="btn-original">Abrir archivo original ↗</button>` : ""}
@@ -3670,6 +3670,7 @@ function renderLeer(id) {
       <div class="hero-acc">
         <a class="btn btn-sm hero-btn" href="#/tema/${id}/editar">✏️ Editar</a>
         <a class="btn btn-sm hero-btn" href="#/tema/${id}">Ficha y fuentes</a>
+        <button class="btn btn-sm hero-btn" data-apuntes="${id}" title="Descargar los apuntes en PDF">⬇ Descargar apuntes</button>
         ${t.html ? `<button class="btn btn-sm hero-btn" id="btn-original">Archivo original ↗</button>` : ""}
       </div>
     </header>
@@ -6531,6 +6532,176 @@ function calificarCE(c, q) {
   if (q === 0) CT.cola.push(n);          // fallada: vuelve en la misma sesión
   cePintarSesion(c);
 }
+
+
+/* ========================================================================
+   (j) DESCARGAR APUNTES: documento de estudio paginado (A4) con el estilo de los temas de
+   ejemplo (portada, índice, secciones numeradas, recuadros, tablas, glosario, cronología).
+   Se abre en una pestaña y lanza «Imprimir» → «Guardar como PDF». Usa formatear(), así que
+   lleva exactamente lo que se ve en los apuntes (literales con su etiqueta de fuente, fichas,
+   pills, colores de la CE…). Las preguntas interactivas salen con la solución marcada.
+   ====================================================================== */
+const APUNTES_CSS = `
+@page { size:A4; margin:22mm 18mm 20mm; @top-left { content:var(--cab-izq); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @top-right { content:var(--cab-der); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } @bottom-center { content:counter(page); font:8.5pt Arial,Helvetica,sans-serif; color:#8a8a8a; } }
+@page :first { @top-left { content:""; } @top-right { content:""; } @bottom-center { content:""; } }
+* { box-sizing:border-box; }
+html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+body { margin:0; font:10.5pt/1.62 Arial, Helvetica, sans-serif; color:#222; background:#fff; }
+.barra { position:sticky; top:0; z-index:5; display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:10px 18px; background:#0b3d91; color:#fff; font-size:14px; }
+.barra button { border:0; border-radius:20px; padding:8px 18px; font-weight:700; background:#fff; color:#0b3d91; cursor:pointer; font-size:14px; }
+.barra span { opacity:.9; }
+@media print { .barra { display:none; } }
+.hoja { max-width:820px; margin:0 auto; padding:24px 28px 40px; }
+@media print { .hoja { max-width:none; padding:0; margin:0; } }
+.portada { min-height:240mm; page-break-after:always; break-after:page; }
+.portada .sup { margin-top:18mm; font-size:8.5pt; letter-spacing:.04em; text-transform:uppercase; color:#8a8a8a; text-align:center; }
+.portada h1 { margin:12mm 0 8mm; font-size:30pt; line-height:1.18; font-weight:800; color:#1c1c1c; letter-spacing:-.01em; }
+.portada h1 .az { color:#0b4a9e; }
+.portada .regla { height:2.4px; background:#0b4a9e; margin:0 0 6mm; }
+.portada .sub { font-style:italic; color:#7a7a7a; font-size:10.5pt; line-height:1.8; text-align:justify; margin:0 0 10mm; }
+.indice { margin:0 0 6mm; padding:0; list-style:none; }
+.indice li { display:flex; gap:14px; padding:6px 4px; border-bottom:1px solid #cfcfcf; font-size:9.5pt; }
+.indice li:first-child { border-top:1px solid #cfcfcf; }
+.indice .n { width:26px; color:#8a8a8a; }
+.pie-portada { margin-top:10mm; font-size:8pt; color:#9a9a9a; line-height:1.6; }
+.seccion { page-break-before:always; break-before:page; }
+.seccion > .k { font-size:8.5pt; letter-spacing:.03em; color:#0b4a9e; text-transform:uppercase; margin:2mm 0 1mm; }
+.seccion > h2.t { margin:0 0 6mm; padding-bottom:3mm; font-size:19pt; line-height:1.22; font-weight:800; color:#1c1c1c; border-bottom:2.4px solid #0b4a9e; }
+.seccion > h2.t .az { color:#0b4a9e; }
+h3.sub2 { margin:8mm 0 3mm; font-size:13pt; font-weight:800; color:#1c1c1c; page-break-after:avoid; break-after:avoid; }
+h3.sub2 .az { color:#0b4a9e; }
+.cuerpo p { margin:0 0 3.2mm; text-align:justify; }
+.cuerpo ul, .cuerpo ol { margin:0 0 3.4mm; padding-left:7mm; }
+.cuerpo li { margin:0 0 1.2mm; text-align:justify; }
+.cuerpo li.sub { margin-left:6mm; list-style:circle; }
+.cuerpo strong { color:#111; }
+.cuerpo em { color:#333; }
+.cuerpo a { color:#0b4a9e; text-decoration:none; }
+.cuerpo a.ce-ir-btn { display:none; }
+.cuerpo h4.ap-h { margin:6mm 0 2mm; font-size:11.5pt; font-weight:800; color:#0b4a9e; page-break-after:avoid; break-after:avoid; }
+.cuerpo h5.ap-h2 { margin:4mm 0 1.6mm; font-size:10.5pt; font-weight:800; color:#333; page-break-after:avoid; break-after:avoid; }
+.tag-boe { display:inline-block; padding:0 7px; border-radius:20px; color:#fff; font-size:7.5pt; font-weight:700; line-height:1.7; vertical-align:middle; }
+.fuente-link { text-decoration:none; }
+.pill-imp, .pill-pre { display:inline-block; padding:0 7px; border-radius:20px; font-size:7.2pt; font-weight:800; letter-spacing:.04em; line-height:1.7; vertical-align:middle; margin-right:3px; }
+.pill-imp { background:#c62828; color:#fff; }
+.pill-pre { background:#e8e8e8; color:#444; border:1px solid #9a9a9a; }
+.ce-tag { display:inline-block; padding:0 6px; border-radius:4px; font-weight:800; font-size:.95em; background:var(--c); color:var(--ct); }
+blockquote.literal { margin:3mm 0 4mm; padding:3mm 4mm 2mm; border-left:3px solid #8a6d3b; background:#f6f1e7; break-inside:avoid-page; }
+blockquote.literal p { margin:0 0 2mm; text-align:left; font-size:10pt; line-height:1.55; }
+blockquote.literal .tag-boe { float:right; margin:0 0 0 6px; }
+blockquote.literal p:first-of-type strong:first-child { color:#0b4a9e; }
+.ap-caja { margin:3mm 0 4mm; padding:2.6mm 4mm; border-radius:2px; break-inside:avoid-page; }
+.ap-caja p { margin:0 0 1.6mm; text-align:left; }
+.ap-caja p:last-child { margin-bottom:0; }
+.ap-caja.clave { background:#eaf1fb; border-left:4px solid #0b4a9e; color:#0b3d91; font-style:italic; }
+.ap-caja.clave strong { color:#0b3d91; }
+.ap-caja.trampa { background:#fff8e1; border:1px solid #f1b24a; border-left:4px solid #f1a02b; }
+.ap-caja.trampa strong:first-child { color:#a55a00; }
+.ap-caja.ap-guia { background:#f5f5f5; border-left:4px solid #0b4a9e; font-size:9.6pt; }
+.ap-caja.ap-guia strong:first-child { color:#0b4a9e; }
+.ap-caja.ap-ficha { padding:0; background:#faf9f6; border:1px solid #d6d2c8; overflow:hidden; break-inside:auto; }
+.ap-caja.ap-ficha::before { content:"FICHA"; display:block; padding:1.2mm 4mm; font-size:7.5pt; font-weight:800; letter-spacing:.08em; color:#555; background:#efece4; }
+.fi-fila { display:grid; grid-template-columns:28mm 1fr; gap:4mm; padding:2mm 4mm; border-top:1px solid #d6d2c8; break-inside:avoid; }
+.fi-k { font-weight:800; color:#0b4a9e; font-size:9.6pt; }
+.fi-v { font-size:10pt; }
+.fi-v ul { margin:1mm 0 0; padding-left:5mm; }
+.fi-v li { margin:0 0 .8mm; text-align:left; }
+.fi-fila.ojo { background:#fff4e0; }
+.fi-fila.ojo .fi-k { color:#a55a00; }
+.tabla-wrap { margin:3mm 0 5mm; }
+table.apuntes-tabla { width:100%; border-collapse:collapse; font-size:9.2pt; line-height:1.45; }
+table.apuntes-tabla th { background:#eef2f8; color:#0b3d91; text-align:left; font-weight:800; padding:2mm 2.4mm; border:1px solid #c5cddb; }
+table.apuntes-tabla td { padding:1.8mm 2.4mm; border:1px solid #d6d6d6; vertical-align:top; text-align:left; }
+table.apuntes-tabla tr { break-inside:avoid; }
+table.apuntes-tabla tbody tr:nth-child(even) td { background:#fafafa; }
+table.apuntes-tabla td:first-child { font-weight:700; }
+.ap-quiz { background:#fff; border:1px solid #d6d6d6; border-left:4px solid #f1a02b; }
+.qz-ops { display:flex; flex-direction:column; gap:1.4mm; margin:2mm 0; }
+.qz-op { display:flex; gap:6px; width:100%; text-align:left; font:inherit; padding:1.8mm 3mm; border:1px solid #d6d6d6; border-radius:3px; background:#fff; color:#222; }
+.qz-op[data-ok="1"] { background:#e6f4ea; border-color:#2e7d32; font-weight:700; }
+.qz-op[data-ok="1"]::after { content:" ✓"; color:#2e7d32; }
+.qz-l { font-weight:800; }
+.qz-exp, .qz-sol { display:block !important; font-size:9.4pt; margin:0 0 1.2mm 4mm !important; color:#333; }
+.qz-sol { font-weight:700; margin-left:0 !important; }
+.qz-pista, .qz-otra { display:none !important; }
+.fila { display:flex; gap:12px; padding:3.2mm 0; border-bottom:1px solid #cfcfcf; break-inside:avoid; }
+.fila .pi { flex:none; width:23mm; }
+.fila .pi span { display:block; text-align:center; padding:1px 0; border-radius:20px; background:#0b4a9e; color:#fff; font-size:8pt; font-weight:700; }
+.fila .pi span.mar { background:#7b3f00; }
+.fila .tx b { display:block; font-size:10.4pt; color:#111; }
+.fila .tx i { display:block; margin-top:1mm; font-size:9.6pt; color:#0b3d91; line-height:1.55; }
+.fila .tx i::before { content:"■ "; color:#0b4a9e; font-style:normal; font-size:8pt; }
+.fila.gl .tx i { color:#6b6b6b; }
+.fila.gl .tx i::before { color:#7b3f00; }
+.lead { font-style:italic; color:#7a7a7a; text-align:justify; margin:0 0 5mm; }
+.preg { break-inside:avoid; margin:0 0 4mm; padding:0 0 3mm; border-bottom:1px solid #cfcfcf; }
+.preg b.q { display:block; margin-bottom:1.5mm; }
+.preg .op { display:block; padding:.6mm 0 .6mm 4mm; }
+.preg .op.ok { color:#2e7d32; font-weight:700; }
+.preg .ex { display:block; margin-top:1.5mm; font-size:9.2pt; color:#555; font-style:italic; }
+`;
+function apuntesHTML(id) {
+  const t = estado.temas[id], p = TEMA_POR_ID[id], b = BLOQUE_POR_CODE[p.b];
+  const fusion = Object.keys(FUSION).some(k => FUSION[k] === id);
+  const codigo = fusion ? p.c + "-" + Math.max(...Object.keys(FUSION).filter(k => FUSION[k] === id).map(k => +TEMA_POR_ID[k].c.split(".")[1])) : p.c;
+  const titulo = (t.title && !/^CE: /.test(t.title) ? t.title : p.e) || p.e;
+  const partes = titulo.trim().split(/\s+/), azul = partes.length > 2 ? partes.slice(-Math.min(3, Math.ceil(partes.length / 3))).join(" ") : partes.slice(-1).join(" ");
+  const tituloHTML = esc(partes.slice(0, partes.length - azul.split(" ").length).join(" ")) + " <span class=\"az\">" + esc(azul) + "</span>";
+  const secs = t.sections || [];
+  // Agrupa: cada apartado de nivel 1 abre sección; los de nivel 2 cuelgan de él.
+  const bloques = [];
+  secs.forEach(s => { if (!bloques.length || (s.nivel || 1) === 1) bloques.push({ s, hijos:[] }); else bloques[bloques.length - 1].hijos.push(s); });
+  const extra = [];
+  if ((t.glossary || []).length) extra.push("Glosario");
+  if ((t.timeline || []).length) extra.push("Cronología e hitos");
+  if ((t.questions || []).length) extra.push("Preguntas de repaso");
+  const indice = bloques.map(x => x.s.title).concat(extra);
+  const dosUltimas = s => { const w = s.trim().split(/\s+/); return w.length < 3 ? esc(s) : esc(w.slice(0, -1).join(" ")) + " <span class=\"az\">" + esc(w[w.length - 1]) + "</span>"; };
+  let n = 0;
+  const secHTML = bloques.map(x => {
+    n++;
+    return `<section class="seccion"><div class="k">Sección ${n}</div><h2 class="t">${dosUltimas(x.s.title)}</h2>
+      <div class="cuerpo">${formatear(x.s.body)}</div>
+      ${x.hijos.map(h => `<h3 class="sub2">${esc(h.title)}</h3><div class="cuerpo">${formatear(h.body)}</div>`).join("")}</section>`;
+  }).join("");
+  const gl = (t.glossary || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Glosario de <span class="az">conceptos</span></h2>
+      <p class="lead">Términos clave del tema, con su definición y la categoría a la que pertenecen.</p>
+      ${(t.glossary).map(g => `<div class="fila gl"><div class="pi"><span class="mar">${esc(g.cat || "Concepto")}</span></div><div class="tx"><b>${esc(g.t)}</b><i>${esc(g.d)}</i></div></div>`).join("")}</section>` : "";
+  const cr = (t.timeline || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Cronología e <span class="az">hitos</span></h2>
+      <p class="lead">Fechas y normas del tema, ordenadas cronológicamente.</p>
+      ${[...t.timeline].sort((a, b2) => String(a.y).localeCompare(String(b2.y))).map(h => `<div class="fila"><div class="pi"><span>${esc(h.y)}</span></div><div class="tx"><b>${esc(h.txt)}</b>${h.cons ? `<i>${esc(h.cons)}</i>` : ""}</div></div>`).join("")}</section>` : "";
+  const pq = (t.questions || []).length ? `<section class="seccion"><div class="k">Sección ${++n}</div><h2 class="t">Preguntas de <span class="az">repaso</span></h2>
+      <p class="lead">Preguntas tipo test del tema, con la respuesta correcta marcada y su explicación.</p>
+      ${t.questions.map((q, i) => `<div class="preg"><b class="q">${i + 1}. ${esc(q.q)}${q.cat ? ` <span class="tag-boe" style="background:#6b6b6b">${esc(q.cat)}</span>` : ""}</b>${q.o.map((o, j) => `<span class="op ${j === q.c ? "ok" : ""}">${"abcd"[j]}) ${esc(o)}${j === q.c ? " ✓" : ""}</span>`).join("")}${q.e ? `<span class="ex">${esc(String(q.e).replace(/\*\*/g, ""))}</span>` : ""}</div>`).join("")}</section>` : "";
+  const hoy = new Date().toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
+  const cabIzq = `${codigo} · ${titulo.length > 62 ? titulo.slice(0, 60) + "…" : titulo}`;
+  const css = APUNTES_CSS + `:root { --cab-izq:${JSON.stringify(cabIzq)}; --cab-der:${JSON.stringify("Oposición GACE · Bloque " + b.rom)}; }`;
+  return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(codigo + " · " + titulo)}</title><style>${css}</style></head><body>
+    <div class="barra"><button type="button" onclick="print()">⬇ Guardar como PDF / Imprimir</button><span>En el cuadro de impresión elige «Guardar como PDF» (tamaño A4, márgenes predeterminados, activa «Gráficos de fondo» si no se ven los colores).</span></div>
+    <div class="hoja">
+      <section class="portada"><div class="sup">Oposición · Gestión de la Administración Civil del Estado (A2) · Bloque ${esc(b.rom)} · ${esc(b.nombre)}</div>
+        <h1>${tituloHTML}</h1><div class="regla"></div>
+        <p class="sub">Tema ${esc(codigo)} · ${esc(epigrafeDe(p))}${lleno(t.subtitle) ? " " + esc(t.subtitle) : ""}</p>
+        <ol class="indice">${indice.map((x, i) => `<li><span class="n">${i + 1}.</span><span>${esc(x)}</span></li>`).join("")}</ol>
+        <div class="pie-portada">Apuntes generados desde la aplicación el ${esc(hoy)}. El texto de las normas es literal del BOE consolidado (etiqueta BOE); los esquemas, cuadros y reglas mnemotécnicas son material de estudio. Etiquetas: <span class="pill-imp">IMPORTANTE</span> lo que se pregunta mucho; <span class="pill-pre">PRESCINDIBLE</span> lo que no hace falta estudiar a fondo.</div>
+      </section>
+      ${secHTML}${gl}${cr}${pq}
+    </div>
+    <script>addEventListener("load", () => setTimeout(() => { try { print(); } catch (_) {} }, 700));<\/script></body></html>`;
+}
+function descargarApuntes(id) {
+  if (!estado.temas[id]) { toast("Este tema aún no tiene apuntes desarrollados", "error"); return; }
+  let html;
+  try { html = apuntesHTML(id); } catch (e) { console.error(e); toast("No se pudieron generar los apuntes", "error"); return; }
+  const w = window.open("", "_blank");
+  if (w) { w.document.open(); w.document.write(html); w.document.close(); toast("En el cuadro de impresión elige «Guardar como PDF»", "", 4500); return; }
+  // Ventanas emergentes bloqueadas: se baja el documento como archivo HTML (ábrelo e imprímelo).
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([html], { type:"text/html" })); a.download = "apuntes-" + TEMA_POR_ID[id].c.replace(/\./g, "-") + ".html";
+  document.body.appendChild(a); a.click(); a.remove();
+  toast("Se ha descargado el archivo: ábrelo y elige «Imprimir → Guardar como PDF»", "", 5000);
+}
+document.addEventListener("click", e => { const bt = e.target.closest("[data-apuntes]"); if (bt) { e.preventDefault(); descargarApuntes(bt.dataset.apuntes); } });
 
 (async function arrancar() {
   leerSesion();
