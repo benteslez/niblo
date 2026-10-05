@@ -3799,6 +3799,14 @@ function formatear(txt) {
       caja.lineas.push(k[2]); return;
     }
     cerrarK();
+    /* Imagen: «![texto|ancha](ruta)». Se usa para los esquemas y cuadros originales de las guías (ancha = cuadro grande, con desplazamiento en móvil). */
+    const im = t.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
+    if (im) {
+      cerrarP(); cerrarL(); cerrarT(); cerrarC();
+      const [alt, cls] = im[1].split("|"), src = new URL(im[2], location.href).href;
+      html += `<figure class="fig${cls ? " " + cls : ""}"><a href="${esc(src)}" target="_blank" rel="noopener"><img loading="lazy" src="${esc(src)}" alt="${esc(alt)}"></a><figcaption>${esc(alt)} · imagen original de la guía</figcaption></figure>`;
+      return;
+    }
     if (t.startsWith(">")) { cerrarP(); cerrarL(); cerrarT(); cita.push(t.replace(/^>\s?/, "")); return; }
     cerrarC();
     /* Subtítulos: «### » y «#### » */
@@ -4187,7 +4195,7 @@ function panelMapa(c, id) {
 
 /* ---- Lectura en voz (Web Speech API) ----------------------------------- */
 const VOZ = { cola:[], i:0, activo:false, pausa:false, vel:1 };
-function textoPlano(md) { return String(md || "").replace(/\[\[([A-Z0-9_]+)(?:\|[^\]]*)?\]\]/g, (m, c) => (FUENTES[c] ? FUENTES[c].n : c)).replace(/^\s*(#{3,4}|[!?@=%+~^&]>)\s*(\[[ x]\]\s*)?/gm, "").replace(/\s\|\|\s/g, ". ").replace(/^\s*\|?\s*:?-{2,}.*$/gm, "").replace(/\|/g, ", ").replace(/\*\*|\*/g, "").replace(/^\s*[-•]\s+/gm, "").replace(/BOE-A-(\d{4})-(\d+)/g, "BOE $1 $2"); }
+function textoPlano(md) { return String(md || "").replace(/\[\[([A-Z0-9_]+)(?:\|[^\]]*)?\]\]/g, (m, c) => (FUENTES[c] ? FUENTES[c].n : c)).replace(/^!\[[^\]]*\]\([^)]*\)\s*$/gm, "").replace(/^\s*(#{3,4}|[!?@=%+~^&]>)\s*(\[[ x]\]\s*)?/gm, "").replace(/\s\|\|\s/g, ". ").replace(/^\s*\|?\s*:?-{2,}.*$/gm, "").replace(/\|/g, ", ").replace(/\*\*|\*/g, "").replace(/^\s*[-•]\s+/gm, "").replace(/BOE-A-(\d{4})-(\d+)/g, "BOE $1 $2"); }
 function vozParar() {
   VOZ.activo = false; VOZ.pausa = false; VOZ.cola = [];
   try { speechSynthesis.cancel(); } catch (_) {}
@@ -5112,6 +5120,17 @@ function hubGlosario(c, ambito, temas, actual) {
 
 /* Escritorio: la barra espaciadora gira la tarjeta de las flashcards abiertas (si no se está escribiendo en un campo). */
 document.addEventListener("keydown", e => {
+  /* Flechas: en las flashcards, → la sabía, ← no la sabía, ↑ dudé; en el test, → pasa a la siguiente pregunta (ya contestada). */
+  if ((e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "ArrowUp") && !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey) {
+    if (e.target.closest && e.target.closest("input, textarea, select, [contenteditable]")) return;
+    const panel = document.getElementById("panel");
+    if (FC_ACT && document.getElementById("fc") && panel && !panel.hidden && panel.dataset.herramienta === "fc") {
+      e.preventDefault(); FC_ACT.dir(e.key === "ArrowRight" ? "si" : e.key === "ArrowLeft" ? "no" : "dude"); return;
+    }
+    const sig = document.getElementById("t-sig");
+    if (sig && e.key === "ArrowRight") { e.preventDefault(); sig.click(); }
+    return;
+  }
   if (e.key !== " " || e.ctrlKey || e.metaKey || e.altKey) return;
   const panel = document.getElementById("panel"), carta = document.getElementById("fc");
   if (!carta || !panel || panel.hidden || panel.dataset.herramienta !== "fc") return;
@@ -5126,7 +5145,9 @@ let espacioFc = false;
 document.addEventListener("keyup", e => { if (e.key === " " && espacioFc) { espacioFc = false; e.preventDefault(); } });
 /* 4 · Flashcards. Progreso: claves "id:índice" de las que «la sabía». */
 const KEY_FCM = "gestion_hub_fc_modo_v1";
+let FC_ACT = null;   // acciones de la tarjeta visible (teclado)
 function hubFc(c, ambito, temas) {
+  FC_ACT = null;
   const s = hl(ambito);
   const desliz = leerJSON(KEY_FCM, "desliz") !== "botones";
   if (s.fcTema !== "todos" && !temas.some(t => t.id === s.fcTema)) { s.fcTema = "todos"; s.mazo = null; }
@@ -5190,10 +5211,10 @@ function hubFc(c, ambito, temas) {
       carta.style.transform = dir === "dude" ? "translateY(-120vh) scale(.9)" : `translateX(${dir === "si" ? 130 : -130}vw) rotate(${dir === "si" ? 25 : -25}deg)`;
       setTimeout(() => accion(dir), 480);
     };
+    FC_ACT = { dir:d => (desliz ? sacar(d) : accion(d)) };
     carta.addEventListener("click", e => { if (CT.arrastrado || e.target.closest("a, button")) return; voltear(); });
     carta.addEventListener("keydown", e => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); voltear(); }
-      else if (desliz && (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "ArrowUp")) { e.preventDefault(); sacar(e.key === "ArrowRight" ? "si" : e.key === "ArrowLeft" ? "no" : "dude"); }
     });
     document.getElementById("fc-si").addEventListener("click", () => (desliz ? sacar("si") : accion("si")));
     document.getElementById("fc-no").addEventListener("click", () => (desliz ? sacar("no") : accion("no")));
@@ -7039,6 +7060,10 @@ const CJ_CSS = `
 :root[data-theme="dark"] .ap-cuerpo .cj-cc, :root[data-theme="dark"] .ap-cuerpo .cj-ex, :root[data-theme="dark"] .ap-cuerpo .cj-sin, :root[data-theme="dark"] .ap-cuerpo .cj-nota, :root[data-theme="dark"] .ap-cuerpo .cj-guia { background:#16213a; color:#d6e0f5; }
 :root[data-theme="dark"] .ap-cuerpo .cj-k, :root[data-theme="dark"] .ap-cuerpo .cj strong { color:inherit; }
 :root[data-theme="dark"] .ap-cuerpo .cmap, :root[data-theme="dark"] .ap-cuerpo .cmap-b, :root[data-theme="dark"] .ap-cuerpo .cmap-s { background:#16213a; color:#d6e0f5; } :root[data-theme="dark"] .ap-cuerpo .cmap-t { color:#e6ecfa; }
+.fig { margin:1.1em 0 1.3em; } .fig img { display:block; width:100%; height:auto; background:#fff; border:1px solid #dcdcd4; border-radius:10px; }
+.fig figcaption { font-size:.75em; color:#777; margin-top:.3em; } .fig.ancha { overflow-x:auto; } .fig.ancha img { min-width:860px; }
+@media (max-width:640px) { .fig { overflow-x:auto; } .fig img { min-width:640px; } .fig.ancha img { min-width:860px; } }
+@media print { .fig img { min-width:0 !important; } }
 .cflu { margin:1.2em 0 1.5em; padding:1em 1.2em 1.1em; border:1px solid #dcdcd4; border-radius:18px; background:#f9f9f6; break-inside:avoid-page; }
 .cflu-k { font-size:.72em; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#777; }
 .cflu-t { font-family:Georgia,"Times New Roman",serif; font-size:1.15em; margin:.5em 0 .8em; color:#222; }
@@ -7064,6 +7089,7 @@ const PDF_CJ = `
 .cmap-root span, .cflu-n { background:var(--ac, #2f62b8); }
 .cuerpo .tabla-wrap, .tabla-wrap { overflow:visible !important; border-radius:0 !important; }
 .cmap { padding:3mm 4mm 4mm; margin:3mm 0 4mm; } .cmap-t { font-size:11pt; } .cmap-root span { font-size:9.5pt; box-shadow:none; } .cmap-b b { font-size:8.6pt; } .cmap-b small, .cmap-s { font-size:7.4pt; }
+.fig { break-inside:avoid; margin:3mm 0 4mm; } .fig.ancha img { min-width:0; } .fig img { border-radius:2mm; }
 .cflu { padding:3mm 4mm; margin:3mm 0 4mm; } .cflu-t { font-size:10.5pt; } .cflu-b { padding:1.2mm 2.4mm; }  .cflu-c { font-size:7.4pt; } .cflu-r { font-size:7.2pt; }
 .cuerpo h4.ap-h { font-size:10.5pt; }
 .apuntes-tabla th, .apuntes-tabla td { padding:1.5mm 2.4mm; }
