@@ -405,7 +405,9 @@ mark { background:color-mix(in srgb, #facc15 45%, transparent); color:inherit; b
 .fc.desliz { position:relative; touch-action:pan-y; user-select:none; -webkit-user-select:none; transition:transform .2s ease; }
 .fc.desliz.fija { touch-action:none; }
 .fc.desliz.arrastra { transition:none; cursor:grabbing; }
-.fc.desliz.sale { transition:transform .22s ease-in; pointer-events:none; }
+.fc.desliz.sale { transition:transform .5s ease-in; pointer-events:none; }
+.fc-lista { margin:0; padding:0 0 0 20px; display:flex; flex-direction:column; gap:7px; }
+.fc-a .fc-resto { margin:10px 0 0; }
 .fc.desliz .fc-in { animation:ce-entra .28s ease-out; }
 .fc[data-dir="si"] .fc-cara { box-shadow:0 0 0 4px var(--ok), var(--sh-2); background:#15803d !important; color:#fff !important; }
 .fc[data-dir="no"] .fc-cara { background:#dc2626 !important; color:#fff !important; }
@@ -5140,7 +5142,7 @@ function hubFc(c, ambito, temas) {
               <div class="tags"><span class="tag acc">${esc(codigoDe(f._id))}</span>${f.cat ? `<span class="tag">${esc(f.cat)}</span>` : ""}</div>
               <div class="fc-q">${negE(f.q)}</div><div class="fc-hint">Toca la tarjeta para ver la respuesta</div>
             </div>
-            <div class="fc-cara atras"><div class="fc-a">${negE(f.a)}</div>${chipsConstelacion(f._id, f)}</div>
+            <div class="fc-cara atras"><div class="fc-a">${fcTexto(f.a)}</div>${chipsConstelacion(f._id, f)}</div>
           </div>
         </div>
         <div class="fc-btns" ${s.volteada || desliz ? "" : "hidden"} id="fc-btns">
@@ -5172,16 +5174,16 @@ function hubFc(c, ambito, temas) {
       if (carta.classList.contains("sale")) return;
       carta.dataset.dir = dir; carta.classList.add("sale");
       carta.style.transform = dir === "dude" ? "translateY(-120vh) scale(.9)" : `translateX(${dir === "si" ? 130 : -130}vw) rotate(${dir === "si" ? 25 : -25}deg)`;
-      setTimeout(() => accion(dir), 200);
+      setTimeout(() => accion(dir), 480);
     };
     carta.addEventListener("click", e => { if (CT.arrastrado || e.target.closest("a, button")) return; voltear(); });
     carta.addEventListener("keydown", e => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); voltear(); }
       else if (desliz && (e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "ArrowUp")) { e.preventDefault(); sacar(e.key === "ArrowRight" ? "si" : e.key === "ArrowLeft" ? "no" : "dude"); }
     });
-    document.getElementById("fc-si").addEventListener("click", () => accion("si"));
-    document.getElementById("fc-no").addEventListener("click", () => accion("no"));
-    document.getElementById("fc-dude").addEventListener("click", () => accion("dude"));
+    document.getElementById("fc-si").addEventListener("click", () => (desliz ? sacar("si") : accion("si")));
+    document.getElementById("fc-no").addEventListener("click", () => (desliz ? sacar("no") : accion("no")));
+    document.getElementById("fc-dude").addEventListener("click", () => (desliz ? sacar("dude") : accion("dude")));
     if (desliz) ceDeslizar(carta, sacar);
   }
 }
@@ -5199,6 +5201,15 @@ function realesDeTema(t) {
   return out;
 }
 const qsTest = t => qs(t).concat(realesDeTema(t));
+/* Respuesta de flashcard: si es una enumeración «a · b · c», cada elemento va en su línea (la frase final, aparte). */
+const fcTexto = s => {
+  const partes = String(s).split(" · ");
+  if (partes.length < 3) return negE(s);
+  let resto = "", ult = partes[partes.length - 1];
+  const m = ult.match(/^(.*?[)\]])\.\s+(\S.*)$/);
+  if (m) { partes[partes.length - 1] = m[1]; resto = m[2]; }
+  return `<ul class="fc-lista">${partes.map(x => `<li>${negE(x)}</li>`).join("")}</ul>${resto ? `<p class="fc-resto">${negE(resto)}</p>` : ""}`;
+};
 const negE = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 
 /* 5 · Test. Opciones barajadas; acepta cualquier número de opciones. */
