@@ -1439,7 +1439,7 @@ const BLOQUES = [
 
 const TEMAS_PROGRAMA = {
   B1: [
-    { c:"I.1", e:"La Constitución: estructura, derechos, garantías, TC, Defensor y reforma",
+    { c:"I.1", e:"CE: estructura y contenido; reforma",
       n:"CE BOE-A-1978-31229: Título preliminar y Título X (arts. 166-169). Reformas de 1992 (art. 13.2), 2011 (art. 135) y 2024 (art. 49).",
       i:"Sinopsis de la CE (Congreso) (comentario oficial por artículo).",
       p:"Preguntable: procedimientos ordinario (167) y agravado (168); reformas habidas y su contenido.",
@@ -3058,7 +3058,7 @@ function renderTemasBloque(panel, b) {
 /** Temas cuyo contenido vive en otro (fusionados como en la plantilla del plan de estudio, módulos de la academia). */
 /** Epígrafe literal del tema; si reúne otros (fusionados), los de todos, en orden. */
 const epigrafeDe = p => [p.l].concat(Object.keys(FUSION).filter(k => FUSION[k] === p.id).map(k => TEMA_POR_ID[k].l)).join(" ");
-const FUSION = { B1T02:"B1T01", B1T03:"B1T01" };
+const FUSION = {};   // temas fusionados en otro (id → id destino); hoy ninguno: I.1, I.2 e I.3 son temas separados
 function tarjetaTema(p) {
   if (FUSION[p.id]) {
     const d = TEMA_POR_ID[FUSION[p.id]];
@@ -6649,8 +6649,11 @@ function apuntesHTML(id) {
   const tituloHTML = esc(partes.slice(0, partes.length - azul.split(" ").length).join(" ")) + " <span class=\"az\">" + esc(azul) + "</span>";
   const secs = t.sections || [];
   // Agrupa: cada apartado de nivel 1 abre sección; los de nivel 2 cuelgan de él.
-  const bloques = [];
-  secs.forEach(s => { if (!bloques.length || (s.nivel || 1) === 1) bloques.push({ s, hijos:[] }); else bloques[bloques.length - 1].hijos.push(s); });
+  const todos = [];
+  secs.forEach(s => { if (!todos.length || (s.nivel || 1) === 1) todos.push({ s, hijos:[] }); else todos[todos.length - 1].hijos.push(s); });
+  // El PDF no lleva la Constitución completa: se omiten las «Lectura profunda de los artículos…» (siguen en la app).
+  const bloques = todos.filter(x => !/Lectura profunda de los art/i.test(x.s.title));
+  const omitidos = todos.length - bloques.length;
   const extra = [];
   if ((t.glossary || []).length) extra.push("Glosario");
   if ((t.timeline || []).length) extra.push("Cronología e hitos");
@@ -6685,7 +6688,7 @@ function apuntesHTML(id) {
         <ol class="indice">${indice.map((x, i) => `<li><span class="n">${i + 1}.</span><span>${esc(x)}</span></li>`).join("")}</ol>
         <div class="pie-portada">Apuntes generados desde la aplicación el ${esc(hoy)}. El texto de las normas es literal del BOE consolidado (etiqueta BOE); los esquemas, cuadros y reglas mnemotécnicas son material de estudio. Etiquetas: <span class="pill-imp">IMPORTANTE</span> lo que se pregunta mucho; <span class="pill-pre">PRESCINDIBLE</span> lo que no hace falta estudiar a fondo.</div>
       </section>
-      ${secHTML}${gl}${cr}${pq}
+      ${secHTML}${omitidos ? `<p class="lead" style="margin-top:14px">Los artículos de estudio van dentro de cada apartado. El texto completo de la Constitución y la lectura profunda de sus artículos están en la aplicación (botón «Constitución Española»).</p>` : ""}${gl}${cr}${pq}
     </div>
     <script>addEventListener("load", () => setTimeout(() => { try { print(); } catch (_) {} }, 700));<\/script></body></html>`;
 }

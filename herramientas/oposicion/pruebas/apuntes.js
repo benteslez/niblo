@@ -5,10 +5,11 @@ const OUT = process.env.SHOTS || '.';
   const ctx = await b.newContext({ viewport:{ width:1100, height:900 } });
   const p = await ctx.newPage();
   p.on('pageerror', e => errs.push('pageerror: ' + e.message)); p.on('console', m => { if (m.type()==='error') errs.push('consola: ' + m.text()); });
-  for (const id of ['B1T01', 'B4T05']) {
+  for (const id of ['B1T01', 'B1T02', 'B1T03', 'B4T05']) {
     await p.goto('http://localhost:8765/oposicion.html#/tema/' + id + '/leer'); await p.waitForTimeout(3000);
     const html = await p.evaluate(i => { const h = apuntesHTML(i); return h.replace(/<script>addEventListener[\s\S]*?<\/script>/, ''); }, id);
     require('fs').writeFileSync(`${OUT}/apuntes-${id}.html`, html);
+    console.log(id, 'secciones:', (html.match(/class="k">Sección/g)||[]).length, '| lectura profunda en el PDF:', /Lectura profunda: art\. 10/.test(html), '| índice:', (html.match(/<li><span class="n">/g)||[]).length);
     console.log(id, 'longitud HTML', html.length, '| botones en la página:', await p.locator('[data-apuntes]').count());
     const d = await ctx.newPage(); await d.setContent(html, { waitUntil:'load' });
     await d.pdf({ path:`${OUT}/apuntes-${id}.pdf`, format:'A4', printBackground:true, preferCSSPageSize:true });

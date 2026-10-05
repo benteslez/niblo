@@ -173,10 +173,13 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 
 ## Constitución (`#/ce`) y temas fusionados del módulo M101
 
-- **Tema I.1-3 (B1T01) fusionado**: reúne los temas I.1, I.2 e I.3 como la plantilla del plan de estudio y el
-  módulo M101 de la academia. `FUSION` (`oposicion.html`) redirige I.2 e I.3 a I.1; `temas/indice.json` lleva
-  `retirados` para quitar I.2/I.3 de los dispositivos. Se genera con `herramientas/oposicion/temas/B1T01.py`.
-  Los demás temas se irán rehaciendo módulo a módulo igual (apuntes explicados, solo lo que entra, pills).
+- **Temas I.1, I.2 e I.3 (B1T01, B1T02, B1T03) separados**, con el contenido del módulo M101: I.1 estructura, contenido
+  (arts. 1 a 55) y reforma; I.2 derechos y deberes, garantías, suspensión y Defensor del Pueblo; I.3 Tribunal
+  Constitucional. El contenido se escribe una vez en `herramientas/oposicion/m101/part*.py` y `m101/dividir.py` lo reparte
+  (apartados, numeración, remisiones entre temas «→ tema I.2 · III.1», preguntas, flashcards, glosario, hitos);
+  `temas/B1T0n.py` solo llama a `dividir.generar(n).publicar()`. Solo la **plantilla del plan** fusiona I.1-3 en una fila.
+  `FUSION` (`oposicion.html`) está vacío, pero la lógica sigue por si hace falta; `indice.json` → `retirados` solo se usa
+  para quitar temas de los dispositivos (no dejar ids vigentes).
 - **Estilo de estos temas** (petición del usuario): explicados, no solo esquemas; texto legal literal del BOE
   (`lit`/`c`, comprobado); cuadros comparativos; reglas mnemotécnicas; cierre con cronología e hitos.
   Pills: `{{IMPORTANTE}}` (la guía o el vídeo dicen «importante/atención») y `{{PRESCINDIBLE}}` (no hace falta
@@ -198,7 +201,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 ## Descargar apuntes (botón en cada tema)
 
 - Botón «⬇ Descargar apuntes» en la ficha y en el lector de cada tema desarrollado (`data-apuntes`).
-  `apuntesHTML(id)` genera un documento A4 con el estilo de los temas de ejemplo (portada, índice,
+  `apuntesHTML(id)` genera un documento A4 (sin los bloques «Lectura profunda de los artículos…», para no incluir la Constitución completa: los artículos de estudio van en cada apartado y la lectura profunda sigue en la app) con el estilo de los temas de ejemplo (portada, índice,
   «SECCIÓN n», recuadros, tablas, glosario, cronología e hitos, preguntas de repaso con la solución) usando
   `formatear()`; se abre en una pestaña y lanza «Imprimir → Guardar como PDF» (sin librerías). Si el
   navegador bloquea la ventana, baja un `.html`. Cabecera y pie con `@page` (Chrome/Edge).
