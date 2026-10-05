@@ -642,10 +642,11 @@ details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-mu
 .ap-tit { flex:1; min-width:0; margin:0; font-size:17px; font-weight:800; letter-spacing:-.03em; line-height:1.3; color:var(--accent); }
 @media (min-width:720px) { .ap-tit { font-size:18.5px; } }
 .ap-rep {
-  flex-shrink:0; border:1px solid var(--line); background:var(--bg-soft); color:var(--text-muted);
-  font-size:11.5px; font-weight:600; padding:5px 11px; border-radius:var(--r-pill); cursor:pointer; white-space:nowrap;
+  flex-shrink:0; width:28px; height:28px; padding:0; display:grid; place-items:center; border-radius:50%; cursor:pointer;
+  border:1.5px solid var(--line); background:transparent; color:var(--text-muted); font-size:14px; font-weight:800; line-height:1; opacity:.75;
+  transition:background .15s, color .15s, border-color .15s, opacity .15s;
 }
-.ap-rep:hover { border-color:var(--ok); color:var(--ok); }
+.ap-rep:hover { border-color:var(--ok); color:var(--ok); opacity:1; }
 .ap-tog {
   flex-shrink:0; width:34px; height:34px; border-radius:50%; border:none; cursor:pointer; color:#fff; font-size:12px;
   background:linear-gradient(135deg, var(--accent), var(--accent-2)); transition:transform .2s var(--ease);
@@ -714,14 +715,12 @@ details.importar summary { cursor:pointer; font-size:13.5px; color:var(--text-mu
 .card.ap { scroll-margin-top:76px; }
 .ap.repasada { border-color:color-mix(in srgb, var(--ok) 45%, var(--line)); }
 .ap.repasada .ap-num { color:var(--ok); }
-.ap.repasada .ap-rep { background:var(--ok-bg); color:var(--ok); border-color:color-mix(in srgb, var(--ok) 40%, transparent); }
+.ap.repasada .ap-rep { background:var(--ok); color:#fff; border-color:var(--ok); opacity:1; }
 .ap.leyendo { box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent), var(--sh-2); }
 .destello { animation:destello 1.4s var(--ease); }
 @keyframes destello { 0%,40% { background:color-mix(in srgb, var(--accent-bg) 70%, transparent); } 100% { background:transparent; } }
 @media (max-width:600px) {
-  .ap-cab { flex-wrap:wrap; padding:14px; gap:8px 10px; }
-  .ap-tit { flex-basis:calc(100% - 80px); }
-  .ap-rep { order:3; margin-left:30px; }
+  .ap-cab { padding:14px; gap:8px 10px; }
   .ap-cuerpo { margin:0 12px; padding:2px 4px 18px; }
 }
 button.card.ap-extra { display:flex; align-items:center; gap:12px; width:100%; padding:16px 18px; cursor:pointer; text-align:left; font:inherit; margin-top:12px; }
@@ -3892,7 +3891,7 @@ function tarjetaApartado(id, a, i, abierto) {
       <div class="ap-cab" data-toggle>
         <span class="ap-num">${String(i + 1).padStart(2, "0")}</span>
         <h2 class="ap-tit">${esc(a.s.title || "(sin título)")}</h2>
-        <button class="ap-rep" data-rep aria-pressed="${rep}">${rep ? "✓ Repasada" : "Marcar como repasada"}</button>
+        <button class="ap-rep" data-rep aria-pressed="${rep}" aria-label="${rep ? "Repasada: quitar la marca" : "Marcar como repasada"}" title="${rep ? "Repasada (pulsa para quitar)" : "Marcar como repasada"}">✓</button>
         <button class="ap-tog" data-toggle-btn aria-expanded="${abierto}" aria-label="${abierto ? "Plegar" : "Desplegar"}">▸</button>
       </div>
       <div class="ap-cuerpo" data-cuerpo="${esc(a.s.id)}">
@@ -3928,7 +3927,7 @@ function refrescarLectura() {
   document.querySelectorAll(".ap[data-ap]").forEach(ap => {
     const rep = repasada(id, ap.dataset.ap), b = ap.querySelector("[data-rep]");
     ap.classList.toggle("repasada", rep);
-    if (b) { b.textContent = rep ? "✓ Repasada" : "Marcar como repasada"; b.setAttribute("aria-pressed", rep); }
+    if (b) { b.setAttribute("aria-pressed", rep); b.setAttribute("aria-label", rep ? "Repasada: quitar la marca" : "Marcar como repasada"); b.title = rep ? "Repasada (pulsa para quitar)" : "Marcar como repasada"; }
   });
   const lat = document.querySelector(".estudio-lateral");
   if (lat) { const q = lat.querySelector("[data-buscar]"); const foco = document.activeElement === q; if (!foco) { lat.innerHTML = htmlLateral(id); actualizarContadorBusq(); } }
