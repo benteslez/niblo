@@ -405,7 +405,8 @@ mark { background:color-mix(in srgb, #facc15 45%, transparent); color:inherit; b
 .fc.desliz { position:relative; touch-action:pan-y; user-select:none; -webkit-user-select:none; transition:transform .2s ease; }
 .fc.desliz.fija { touch-action:none; }
 .fc.desliz.arrastra { transition:none; cursor:grabbing; }
-.fc.desliz.sale { transition:transform .5s ease-in; pointer-events:none; }
+.fc.desliz.sale, .fc.sale { transition:transform .38s ease-in; pointer-events:none; }
+.fc.tine .fc-cara { transition:background .12s; }
 .fc-lista { margin:0; padding:0 0 0 20px; display:flex; flex-direction:column; gap:7px; }
 .fc-a .fc-resto { margin:10px 0 0; }
 .fc.desliz .fc-in { animation:ce-entra .28s ease-out; }
@@ -5207,18 +5208,19 @@ function hubFc(c, ambito, temas) {
     };
     const sacar = dir => {
       if (carta.classList.contains("sale")) return;
-      carta.dataset.dir = dir; carta.classList.add("sale");
-      carta.style.transform = dir === "dude" ? "translateY(-120vh) scale(.9)" : `translateX(${dir === "si" ? 130 : -130}vw) rotate(${dir === "si" ? 25 : -25}deg)`;
-      setTimeout(() => accion(dir), 480);
+      // Primero la tarjeta se tiñe (rojo / verde / ámbar) quieta ~0,3 s y después sale volando: así el color se ve siempre.
+      carta.dataset.dir = dir; carta.classList.add("sale", "tine");
+      setTimeout(() => { carta.style.transform = dir === "dude" ? "translateY(-120vh) scale(.9)" : `translateX(${dir === "si" ? 130 : -130}vw) rotate(${dir === "si" ? 25 : -25}deg)`; }, 320);
+      setTimeout(() => accion(dir), 320 + 380);
     };
-    FC_ACT = { dir:d => (desliz ? sacar(d) : accion(d)) };
+    FC_ACT = { dir:d => sacar(d) };
     carta.addEventListener("click", e => { if (CT.arrastrado || e.target.closest("a, button")) return; voltear(); });
     carta.addEventListener("keydown", e => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); voltear(); }
     });
-    document.getElementById("fc-si").addEventListener("click", () => (desliz ? sacar("si") : accion("si")));
-    document.getElementById("fc-no").addEventListener("click", () => (desliz ? sacar("no") : accion("no")));
-    document.getElementById("fc-dude").addEventListener("click", () => (desliz ? sacar("dude") : accion("dude")));
+    document.getElementById("fc-si").addEventListener("click", () => sacar("si"));
+    document.getElementById("fc-no").addEventListener("click", () => sacar("no"));
+    document.getElementById("fc-dude").addEventListener("click", () => sacar("dude"));
     if (desliz) ceDeslizar(carta, sacar);
   }
 }
