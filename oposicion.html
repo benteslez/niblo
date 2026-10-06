@@ -31,6 +31,18 @@
   font-family:"Manrope"; font-style:normal; font-weight:300 800; font-display:swap;
   src:url("manrope.woff2") format("woff2");
 }
+
+/* Datos de estudio */
+.heat { display:flex; flex-direction:column; gap:4px; }
+.heat-f { display:flex; align-items:center; gap:10px; font-size:13.5px; }
+.heat-b { min-width:30px; text-align:center; padding:2px 6px; border-radius:6px; font-weight:700; color:#fff; background:hsl(8 78% calc(62% - var(--i) * 24%)); opacity:calc(.45 + var(--i) * .55); }
+.heat-t { flex:1; min-width:0; }
+.err-f { display:flex; align-items:center; gap:10px; margin:6px 0; }
+.err-n { width:190px; font-weight:600; font-size:14px; }
+.err-bar { flex:1; height:10px; background:var(--bg-sunk,rgba(128,128,128,.18)); border-radius:6px; overflow:hidden; }
+.err-bar i { display:block; height:100%; background:var(--accent,#2563eb); }
+@media (max-width:600px) { .err-n { width:120px; font-size:13px; } }
+mark { background:#fde68a; color:inherit; border-radius:3px; padding:0 2px; }
 </style>
 
 <style>
@@ -2996,6 +3008,7 @@ async function cargarTemasPublicados() {
     const sello = Date.parse(idx.apagadosSello || "") || 0;
     if (JSON.stringify(idx.apagados) !== JSON.stringify(APAG.ids) || sello !== APAG.sello) { APAG = { ids:idx.apagados, sello }; escribirJSON(KEY_APAG, APAG); render(); }
   }
+  if (idx.verificados && typeof idx.verificados === "object") VERIF = idx.verificados;
   for (const id of (idx.retirados || [])) if (estado.temas[id]) { try { await quitarTema(id, true); } catch (_) {} }
   const sellos = leerJSON(KEY_SELLOS, {});
   const antes = new Set(Object.keys(estado.temas));
@@ -3077,6 +3090,7 @@ function ruta() {
   if (p[0] === "guia") return { v:"guia" };
   if (p[0] === "plan") return { v:"plan", tab:p[1] || "plantilla" };
   if (p[0] === "registro") return { v:"registro" };
+  if (p[0] === "datos") return { v:"datos", tab:p[1] || "plazos" };
   if (p[0] === "ce") return { v:"ce", tab:p[1] || "texto", n:+p[2] || 0 };
   return { v:"inicio" };
 }
@@ -3111,6 +3125,7 @@ function render() {
     else if (r.v === "guia") { titulo.textContent = "Guía de fuentes"; renderGuia(); }
     else if (r.v === "plan") { titulo.textContent = "Plan de estudio"; renderPlan(r.tab); }
     else if (r.v === "registro") { titulo.textContent = "Registro de estudio"; renderRegistro(); }
+    else if (r.v === "datos") { titulo.textContent = "Datos de estudio"; renderDatos(r.tab); }
     else if (r.v === "ce") { titulo.textContent = "Constitución Española"; renderCE(r.tab, r.n); }
   }
   if (clave !== rutaPrevia) { window.scrollTo(0, 0); rutaPrevia = clave; }
@@ -3141,6 +3156,10 @@ function renderInicio() {
     <button class="dash-card plan" data-ir="#/plan">
       <span class="dash-ico" aria-hidden="true">📅</span>
       <span><span class="dash-t">Plan de estudio</span><span class="dash-d">Plantilla de temas y vueltas con tus tiempos, orden sugerido, encaje con los supuestos y guía de estudio</span></span>
+    </button>
+    <button class="dash-card" data-ir="#/datos">
+      <span class="dash-ico" aria-hidden="true">📊</span>
+      <span><span class="dash-t">Datos de estudio</span><span class="dash-d">Plazos y mayorías de todos los temas juntos, frecuencia en examen por apartado, tus errores por tipo y vigencia de cada tema</span></span>
     </button>
     <button class="dash-card registro" data-ir="#/registro">
       <span class="dash-ico" aria-hidden="true">⏱</span>
@@ -3988,14 +4007,17 @@ const conConceptos = (t, secId, body) => { const c = conceptosAl(t, secId); retu
    progreso, mapa conceptual, cronología y lectura en voz). Lo que es tuyo
    (repasados, resaltados, respuestas) se sincroniza entre tus dispositivos. */
 const HERRAMIENTAS = [
+  { id:"rapido",     ico:"⚡", txt:"Repaso rápido" },
   { id:"glosario",   ico:"📖", txt:"Glosario" },
   { id:"resaltados", ico:"🖍️", txt:"Resaltados" },
   { id:"test",       ico:"📝", txt:"Test",       practica:true },
   { id:"fc",         ico:"🎴", txt:"Flashcards", practica:true },
   { id:"aleatorio",  ico:"🎲", txt:"Aleatorio",  practica:true },
+  { id:"cambio",     ico:"🔍", txt:"Detecta el cambio", practica:true },
   { id:"progreso",   ico:"📊", txt:"Progreso" },
   { id:"mapa",       ico:"🗺️", txt:"Mapa conceptual" },
   { id:"crono",      ico:"📅", txt:"Cronología" },
+  { id:"vigencia",   ico:"🕒", txt:"Vigencia y revisión" },
   { id:"voz",        ico:"🔊", txt:"Lectura en voz" }
 ];
 const ESTUDIO = { id:null, abiertos:{}, busq:{ q:"", marcas:[], i:-1 } };
@@ -4225,6 +4247,9 @@ function abrirPanel(herr) {
   if (herr === "progreso") return panelProgreso(c, id);
   if (herr === "mapa") return panelMapa(c, id);
   if (herr === "voz") return panelVoz(c, id);
+  if (herr === "rapido") return panelRapido(c, id);
+  if (herr === "cambio") return panelCambio(c, id);
+  if (herr === "vigencia") return panelVigencia(c, id);
 }
 function cerrarPanel(desdeRender) {
   const fondo = document.getElementById("panel-fondo"), panel = document.getElementById("panel");
@@ -4276,6 +4301,7 @@ function panelAleatorio(c, id) {
       const i = +b.dataset.i, ok = i === correcta;
       c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === correcta) x.classList.add("bien"); if (j === i && !ok) x.classList.add("mal"); });
       registrarRespuesta(id, q, ok);
+      if (!ok) registrarError(o[correcta], o[i], "Test · " + codigoDe(id));
       document.getElementById("al-fb").innerHTML = `<div class="q-fb ${ok ? "bien" : "mal"}">${ok ? "✓ Correcto." : "✗ Era la " + "ABCDEF"[correcta] + "."} ${esc(q.e || "")}</div>`;
     }));
   }
@@ -4592,7 +4618,7 @@ function calificar(x, q, calidad, equivocada) {
   const n = srsSiguiente(prev, calidad);
   const h = ((prev && prev.h) || []).concat([[hoyISO(), calidad]]).slice(-30);
   const d = Object.assign({}, m, { r:n.r, i:n.i, e:n.e, l:n.l, rs:n.rs, lr:hoyISO(), nx:masDias(n.i), h });
-  if (equivocada != null) d.cf = q.o[equivocada]; else if (calidad >= 3) delete d.cf;
+  if (equivocada != null) { d.cf = q.o[equivocada]; registrarError(q.o[q.c], q.o[equivocada], "Test real · " + x.id); } else if (calidad >= 3) delete d.cf;
   marcarProg(claveReal(x, q), calidad >= 3, d);
   return n.i;
 }
@@ -5516,6 +5542,7 @@ function pintarPregunta(c, ambito, temas) {
     const ok = i === q._c;
     if (ok) r.bien++; else r.mal++;
     registrarRespuesta(q._id, q, ok);
+    if (!ok) registrarError(q.o[q._c], q.o[i], "Test · " + codigoDe(q._id));
     c.querySelectorAll(".q-opt").forEach((x, j) => { x.disabled = true; if (j === q._c) x.classList.add("bien"); if (j === i && !ok) x.classList.add("mal"); etiquetarOpcion(x, j === q._c, j === i); });
     document.getElementById("t-blanco").hidden = true;
     document.getElementById("fb").innerHTML = `
@@ -6509,6 +6536,257 @@ const fechaLarga = iso => { const d = new Date(isoMs(iso)); return DIAS_ES[(d.ge
 const fechaCorta = iso => { const [y, m, d] = iso.split("-"); return d + "/" + m + "/" + y; };
 const nivelDia = seg => { const h = seg / 3600; return h <= 0 ? 0 : h < 1 ? 1 : h < 2.5 ? 2 : h < 4 ? 3 : h < 6 ? 4 : 5; };
 const diasEntre = (a, b) => Math.round((isoMs(b) - isoMs(a)) / 86400000);
+/* ===== Estudio avanzado: repaso rápido, «Detecta el cambio», errores por tipo, plazos y mayorías,
+   frecuencia en examen y vigencia (petición del usuario, 6-10-2026). Todo se calcula en el cliente de los
+   datos que ya hay (apuntes, pills «Examen», progreso); no hay datos nuevos salvo `verificados` en indice.json. */
+let VERIF = {};                       // id → "AAAA-MM-DD" (última auditoría; lo fija temas/indice.json → verificados)
+const DIAS_CADUCA = 90;
+const unidadesDe = t => {
+  const out = [];
+  t.sections.forEach(s => String(s.body || "").split(/^(?=### )/m).forEach(p => {
+    const m = p.startsWith("### ") ? p.match(/^### (.*)$/m) : null;
+    out.push({ sec:s, titulo:m ? m[1].trim() : "", texto:p });
+  }));
+  return out;
+};
+const quitaMd = s => String(s).replace(/\*\*/g, "").replace(/\[\[[^\]]*\]\]/g, "").replace(/\{\{[^}]*\}\}/g, "").trim();
+const temasCargados = () => Object.values(estado.temas).filter(t => TEMA_POR_ID[t.id]).sort((a, b) => a.id.localeCompare(b.id));
+const fechaES = iso => { const d = new Date(iso); return isNaN(d) ? "—" : d.toLocaleDateString("es-ES"); };
+const diasDesde = iso => { const d = Date.parse(iso); return isNaN(d) ? null : Math.floor((Date.now() - d) / 864e5); };
+
+/* ---- Registro de errores por tipo -------------------------------------- */
+const TIPOS_ERR = {
+  mayoria: { n:"Mayoría", ico:"🗳️", t:"Confundes la mayoría exigida (absoluta, simple, cualificada, tres quintos, unanimidad…). Repasa el cuadro de plazos y mayorías." },
+  plazo:   { n:"Plazo", ico:"⏳", t:"Cambias un plazo (días, meses, años). Repasa las casillas «Plazos y mayorías» y las fechas del tema." },
+  cifra:   { n:"Cifra", ico:"🔢", t:"Cambias un número que no es un plazo (miembros, firmas, porcentajes)." },
+  organo:  { n:"Órgano", ico:"🏛️", t:"Atribuyes la competencia a otro órgano (Congreso/Senado, Consejo/Consejo Europeo…). Repasa la casilla «Quién»." },
+  otro:    { n:"Concepto o redacción", ico:"📝", t:"La diferencia no es un plazo, mayoría u órgano: es un concepto o una palabra. Relee el literal." }
+};
+const RE_MAY = /(mayor[ií]a (?:absoluta|simple|cualificada|reforzada|de los miembros)|dos tercios|tres quintos|cuatro quintos|tres cuartos|unanimidad|mayor[ií]a)/gi;
+const RE_ORG = /(Congreso de los Diputados|Senado|Cortes Generales|Consejo Europeo|Consejo de la Uni[oó]n|Consejo de Ministros|Consejo de Estado|Consejo General del Poder Judicial|Consejo|Comisi[oó]n|Parlamento Europeo|Tribunal Constitucional|Tribunal Supremo|Tribunal de Justicia|Tribunal de Cuentas|Defensor del Pueblo|Fiscal General|Gobierno|Rey|Presidente)/g;
+const RE_NUM = /(\d+(?:[.,]\d+)?|\b(?:dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|quince|veinte|treinta|cuarenta|sesenta|noventa)\b)/gi;
+const RE_PLAZO = /(\d+|\b(?:un|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|quince|veinte|treinta|sesenta|noventa)\b)\s+(d[ií]as?|meses|mes|a[ñn]os?|semanas?|horas?)\b/gi;
+const conjunto = (s, re) => new Set([...String(s).matchAll(re)].map(m => m[0].toLowerCase().replace(/\s+/g, " ")));
+const difiere = (a, b) => { if (a.size !== b.size) return true; for (const x of a) if (!b.has(x)) return true; return false; };
+/** Clasifica en qué se diferencian dos redacciones: mayoría > plazo > cifra > órgano > otro. */
+function tipoError(correcta, elegida) {
+  const a = String(correcta || ""), b = String(elegida || "");
+  if (difiere(conjunto(a, RE_MAY), conjunto(b, RE_MAY))) return "mayoria";
+  if (difiere(conjunto(a, RE_PLAZO), conjunto(b, RE_PLAZO))) return "plazo";
+  if (difiere(conjunto(a, RE_NUM), conjunto(b, RE_NUM))) return "cifra";
+  if (difiere(conjunto(a, RE_ORG), conjunto(b, RE_ORG))) return "organo";
+  return "otro";
+}
+function registrarError(correcta, elegida, origen) {
+  if (!correcta || !elegida || correcta === elegida) return null;
+  const tipo = tipoError(correcta, elegida), k = "ERRT:" + tipo, v = progreso(k), n = ((v && v.d && v.d.n) || 0) + 1;
+  marcarProg(k, true, { n });
+  const kl = "ERRL", vl = progreso(kl), l = ((vl && vl.d && vl.d.l) || []).slice(-39);
+  l.push({ t:tipo, c:String(correcta).slice(0, 220), e:String(elegida).slice(0, 220), o:origen || "", f:Date.now() });
+  marcarProg(kl, true, { l });
+  return tipo;
+}
+const erroresPorTipo = () => Object.keys(TIPOS_ERR).map(k => { const v = progreso("ERRT:" + k); return { k, n:(v && v.d && v.d.n) || 0 }; });
+
+/* ---- Plazos y mayorías (de las fichas) ----------------------------------- */
+function plazosDe(t) {
+  const out = [];
+  unidadesDe(t).forEach(u => {
+    const ls = u.texto.split("\n");
+    for (let i = 0; i < ls.length; i++) {
+      const m = ls[i].match(/^=> Plazos y mayor[ií]as:\s*(.*)$/); if (!m) continue;
+      const partes = m[1].trim() ? [m[1].trim()] : [];
+      while (i + 1 < ls.length && /^=> - /.test(ls[i + 1])) partes.push(ls[++i].replace(/^=> - /, "").trim());
+      const txt = partes.join(" · ");
+      if (txt && txt !== "—") out.push({ id:t.id, sec:u.sec.title, unidad:u.titulo, txt });
+    }
+  });
+  return out;
+}
+const DT = { q:"", tema:"" };
+function datosPlazos(c) {
+  const ts = temasCargados(), todos = ts.flatMap(plazosDe);
+  const q = DT.q.trim().toLowerCase();
+  const lista = todos.filter(x => (!DT.tema || x.id === DT.tema) && (!q || (x.txt + " " + x.unidad + " " + x.sec).toLowerCase().includes(q)));
+  c.innerHTML = `
+    <p class="view-sub">Todo lo que las fichas dicen en «Plazos y mayorías», junto, para compararlo. ${todos.length} entradas en ${ts.length} temas.</p>
+    <div class="btn-row" style="gap:8px;margin-bottom:12px">
+      <input class="input" type="search" id="dt-q" placeholder="Filtrar: «tres quintos», «meses», «unanimidad»…" value="${esc(DT.q)}" style="flex:1;min-width:200px">
+      <select class="input" id="dt-tema" style="max-width:260px"><option value="">Todos los temas</option>${ts.map(t => `<option value="${t.id}" ${DT.tema === t.id ? "selected" : ""}>${esc(codigoDe(t.id))}</option>`).join("")}</select>
+    </div>
+    ${lista.length ? `<div class="tabla-wrap"><table><thead><tr><th>Tema</th><th>Apartado</th><th>Plazos y mayorías</th></tr></thead><tbody>
+      ${lista.map(x => `<tr><td><a href="#/tema/${x.id}/leer">${esc(codigoDe(x.id))}</a></td><td>${esc(x.unidad ? x.unidad.replace(/^\d+\.\d+\s*/, "") : x.sec)}</td><td>${negE(x.txt)}</td></tr>`).join("")}</tbody></table></div>` : `<div class="empty"><div class="ico">🔎</div><h3>Sin resultados</h3></div>`}`;
+  const q1 = $id("dt-q"); q1.addEventListener("input", () => { DT.q = q1.value; const p = q1.selectionStart; datosPlazos(c); const n = $id("dt-q"); n.focus(); n.setSelectionRange(p, p); });
+  $id("dt-tema").addEventListener("change", e => { DT.tema = e.target.value; datosPlazos(c); });
+}
+
+/* ---- Frecuencia en examen (pills «Examen» de los apuntes) --------------- */
+function frecuenciaDe(t) {
+  const unidades = [];
+  unidadesDe(t).forEach(u => {
+    const refs = [];
+    for (const m of u.texto.matchAll(/\{\{EXAMEN:([A-Za-z0-9.,]+)\}\}/g)) m[1].split(",").forEach(r => refs.push(r));
+    if (refs.length) unidades.push({ sec:u.sec.title, unidad:u.titulo, refs:[...new Set(refs)] });
+  });
+  return unidades;
+}
+function datosFrecuencia(c) {
+  const filas = temasCargados().map(t => ({ t, us:frecuenciaDe(t) })).map(x => Object.assign(x, { n:x.us.reduce((s, u) => s + u.refs.length, 0) }));
+  const max = Math.max(1, ...filas.flatMap(x => x.us.map(u => u.refs.length)));
+  c.innerHTML = `<p class="view-sub">Cuántas preguntas de exámenes oficiales (test y supuestos de los exámenes del registro) caen en cada apartado de los apuntes. Más intenso = más preguntas. Se cuenta cada pregunta una vez por apartado.</p>
+    ${filas.map(x => `<section class="card" style="margin-bottom:12px"><h3 style="margin:0 0 4px"><a href="#/tema/${x.t.id}/leer">${esc(codigoDe(x.t.id))}</a> · ${esc(epigrafeDe(TEMA_POR_ID[x.t.id]))}</h3>
+      <p class="muted" style="margin:0 0 10px;font-size:13px">${x.n} preguntas en ${x.us.length} apartados</p>
+      ${x.us.length ? `<div class="heat">${x.us.sort((a, b) => b.refs.length - a.refs.length).map(u => `<div class="heat-f" title="${esc(u.refs.join(", "))}"><span class="heat-b" style="--i:${(u.refs.length / max).toFixed(2)}">${u.refs.length}</span><span class="heat-t">${esc(u.unidad || u.sec)}</span></div>`).join("")}</div>` : `<p class="muted">Sin marcas «Examen» en este tema.</p>`}</section>`).join("") || `<div class="empty"><h3>Sin temas cargados</h3></div>`}`;
+}
+
+/* ---- Errores por tipo ----------------------------------------------------- */
+function datosErrores(c) {
+  const por = erroresPorTipo(), tot = por.reduce((s, x) => s + x.n, 0), max = Math.max(1, ...por.map(x => x.n));
+  const vl = progreso("ERRL"), lista = ((vl && vl.d && vl.d.l) || []).slice().reverse();
+  c.innerHTML = `<p class="view-sub">En qué se diferencian la respuesta correcta y la que marcaste cuando fallas un test o «Detecta el cambio». Es una clasificación automática de la diferencia entre las dos redacciones (mayoría, plazo, cifra, órgano, otro).</p>
+    ${tot ? `<div class="card" style="margin-bottom:12px">${por.sort((a, b) => b.n - a.n).map(x => `<div class="err-f"><span class="err-n">${TIPOS_ERR[x.k].ico} ${TIPOS_ERR[x.k].n}</span><span class="err-bar"><i style="width:${(x.n / max * 100).toFixed(0)}%"></i></span><b>${x.n}</b></div>${x.n === max && x.n ? `<p class="muted" style="margin:0 0 8px;font-size:13px">${TIPOS_ERR[x.k].t}</p>` : ""}`).join("")}</div>
+    <h3>Últimos fallos</h3>${lista.map(e => `<div class="card" style="margin-bottom:8px"><div class="tags"><span class="tag acc">${TIPOS_ERR[e.t] ? TIPOS_ERR[e.t].n : esc(e.t)}</span><span class="tag">${esc(e.o)}</span><span class="muted" style="font-size:12px">${fechaES(e.f)}</span></div>
+      <p style="margin:6px 0 2px"><b>Correcta:</b> ${esc(e.c)}</p><p style="margin:0"><b>Marcaste:</b> ${esc(e.e)}</p></div>`).join("")}
+    <p><button class="btn btn-sm" id="err-borrar">Borrar el registro de errores</button></p>`
+    : `<div class="empty"><div class="ico">🎯</div><h3>Aún no hay fallos registrados</h3><p>Se rellena solo al fallar preguntas de test o en «Detecta el cambio».</p></div>`}`;
+  const b = $id("err-borrar");
+  if (b) b.addEventListener("click", () => { if (!confirm("¿Borrar el registro de errores por tipo?")) return; Object.keys(TIPOS_ERR).forEach(k => marcarProg("ERRT:" + k, false)); marcarProg("ERRL", false); datosErrores(c); });
+}
+
+/* ---- Vigencia y revisión -------------------------------------------------- */
+function caducablesDe(t) {
+  const out = [];
+  unidadesDe(t).forEach(u => { if (/REVISAR|Dato \*\*cambiante\*\*|comprueba el dato vigente|comprobar la ficha actualizada/i.test(u.texto)) out.push({ sec:u.sec.title, unidad:u.titulo }); });
+  return out;
+}
+function vigenciaHTML(t) {
+  const v = VERIF[t.id], dias = v ? diasDesde(v) : null, sello = (leerJSON(KEY_SELLOS, {}) || {})[t.id], cad = caducablesDe(t);
+  const estado_ = !v ? `<span class="tag hot">Sin auditar</span>` : dias > DIAS_CADUCA ? `<span class="tag hot">Revisar: hace ${dias} días</span>` : `<span class="tag acc">Al día (hace ${dias} días)</span>`;
+  return `<div class="tags" style="margin-bottom:8px">${estado_}</div>
+    <p style="margin:0 0 6px"><b>Última auditoría:</b> ${v ? fechaES(v) : "ninguna registrada"}</p>
+    <p style="margin:0 0 6px" class="muted">Versión publicada de los apuntes: ${sello ? fechaES(sello) : "—"}. Pasados ${DIAS_CADUCA} días desde la auditoría se pide revisar el tema.</p>
+    ${cad.length ? `<p style="margin:10px 0 4px"><b>Datos que pueden caducar</b> (comprobar antes del examen):</p><ul style="margin:0;padding-left:20px">${cad.map(x => `<li>${esc((x.unidad || x.sec).replace(/^\d+\.\d+\s*/, ""))}</li>`).join("")}</ul>` : `<p class="muted" style="margin:8px 0 0">Ningún apartado marcado como cambiante.</p>`}`;
+}
+function datosVigencia(c) {
+  const ts = temasCargados();
+  c.innerHTML = `<p class="view-sub">Cuándo se auditó cada tema contra la norma vigente y qué datos cambian con el tiempo (candidaturas de la UE, reformas, etc.).</p>
+    ${ts.map(t => `<section class="card" style="margin-bottom:12px"><h3 style="margin:0 0 8px"><a href="#/tema/${t.id}/leer">${esc(codigoDe(t.id))}</a> · ${esc(epigrafeDe(TEMA_POR_ID[t.id]))}</h3>${vigenciaHTML(t)}</section>`).join("") || `<div class="empty"><h3>Sin temas cargados</h3></div>`}`;
+}
+
+/* ---- Vista «Datos de estudio» --------------------------------------------- */
+const DATOS_TABS = [{ id:"plazos", txt:"⏳ Plazos y mayorías" }, { id:"frecuencia", txt:"🔥 Frecuencia en examen" }, { id:"errores", txt:"🎯 Mis errores" }, { id:"vigencia", txt:"🕒 Vigencia" }];
+function renderDatos(tab) {
+  tab = DATOS_TABS.some(t => t.id === tab) ? tab : "plazos";
+  vista().innerHTML = `<h1 class="titulo-grande">📊 Datos de estudio</h1>
+    <div class="pl-tabs" role="tablist" aria-label="Datos de estudio">${DATOS_TABS.map(t => `<button class="chip ${t.id === tab ? "active" : ""}" role="tab" data-dtt="${t.id}">${t.txt}</button>`).join("")}</div>
+    <div id="dt-cuerpo"></div>`;
+  vista().querySelectorAll("[data-dtt]").forEach(b => b.addEventListener("click", () => ir("#/datos/" + b.dataset.dtt)));
+  ({ plazos:datosPlazos, frecuencia:datosFrecuencia, errores:datosErrores, vigencia:datosVigencia })[tab]($id("dt-cuerpo"));
+}
+
+/* ---- Repaso rápido de un tema ---------------------------------------------- */
+function panelRapido(c, id) {
+  const t = estado.temas[id], bloques = [];
+  t.sections.forEach(s => {
+    const ls = String(s.body || "").split("\n"), items = [];
+    let unidad = "";
+    for (let i = 0; i < ls.length; i++) {
+      const l = ls[i], mu = l.match(/^### (.*)$/); if (mu) { unidad = mu[1].replace(/^\d+\.\d+\s*/, ""); continue; }
+      if (/^[!@]> /.test(l)) {
+        const mk = l.slice(0, 2), blk = [l];
+        while (i + 1 < ls.length && ls[i + 1].startsWith(mk + " ")) blk.push(ls[++i]);
+        if (mk === "!>" || /En resumen/.test(blk[0])) items.push(blk.join("\n"));
+        continue;
+      }
+      const mo = l.match(/^=> (⚠ Ojo en el examen|Plazos y mayor[ií]as):\s*(.*)$/);
+      if (mo) {
+        const partes = mo[2].trim() ? [mo[2].trim()] : [];
+        while (i + 1 < ls.length && /^=> - /.test(ls[i + 1])) partes.push(ls[++i].replace(/^=> - /, "").trim());
+        const txt = partes.join(" · "); if (txt && txt !== "—") items.push(`**${unidad ? unidad + " · " : ""}${mo[1]}:** ${txt}`);
+        continue;
+      }
+      if (/\{\{EXAMEN:/.test(l) && !/^[>=]/.test(l)) items.push(l);
+    }
+    if (items.length) bloques.push({ t:s.title, items });
+  });
+  c.innerHTML = bloques.length ? `<p class="muted" style="font-size:13px;margin:0 0 12px">Solo lo que se pregunta: avisos de examen, plazos y mayorías, pills «Examen» y los «En resumen». Para las vueltas cortas del plan; el tema completo sigue en los apuntes.</p>
+    ${bloques.map(b => `<section style="margin-bottom:18px"><h3 style="margin:0 0 6px">${esc(b.t)}</h3><div class="ap-cuerpo">${formatear(b.items.join("\n\n"))}</div></section>`).join("")}`
+    : `<div class="empty"><div class="ico">⚡</div><h3>Nada que repasar aún</h3><p>Este tema no tiene avisos de examen ni plazos.</p></div>`;
+}
+
+/* ---- Detecta el cambio ------------------------------------------------------- */
+const NUMS_P = ["un", "dos", "tres", "cuatro", "cinco", "seis", "diez", "quince", "treinta"];
+const UNID = { dia:["día", "días"], mes:["mes", "meses"], ano:["año", "años"], semana:["semana", "semanas"], hora:["hora", "horas"] };
+const unidBase = u => { u = u.toLowerCase().replace("ñ", "n").replace("í", "i"); return u.startsWith("di") ? "dia" : u.startsWith("me") ? "mes" : u.startsWith("an") ? "ano" : u.startsWith("se") ? "semana" : "hora"; };
+const SWAP_MAY = [[/mayor[ií]a absoluta/i, "mayoría simple"], [/mayor[ií]a simple/i, "mayoría absoluta"], [/tres quintos/i, "dos tercios"], [/dos tercios/i, "tres quintos"], [/cuatro quintos/i, "tres quintos"], [/tres cuartos/i, "dos tercios"], [/unanimidad/i, "mayoría cualificada"], [/mayor[ií]a cualificada/i, "unanimidad"]];
+const SWAP_ORG = [[/Congreso de los Diputados/, "Senado"], [/Senado/, "Congreso de los Diputados"], [/Consejo Europeo/, "Consejo"], [/Parlamento Europeo/, "Consejo"], [/Tribunal Constitucional/, "Tribunal Supremo"], [/Defensor del Pueblo/, "Fiscal General del Estado"]];
+function mutaciones(s) {
+  const out = [];
+  const mp = new RegExp(RE_PLAZO.source, "i").exec(s);
+  if (mp) {
+    const dig = /^\d+$/.test(mp[1]), base = unidBase(mp[2]);
+    const pool = (dig ? ["1", "2", "3", "5", "6", "10", "15", "30", "60", "90"] : NUMS_P).filter(x => x.toLowerCase() !== mp[1].toLowerCase());
+    const n = pool[Math.floor(Math.random() * pool.length)], uno = n === "un" || n === "1";
+    const gen = base === "semana" || base === "hora", nn = n === "un" && gen ? "una" : n;
+    const nueva = nn + " " + UNID[base][uno ? 0 : 1];
+    out.push({ tipo:"plazo", ini:mp.index, fin:mp.index + mp[0].length, nueva });
+  }
+  for (const [re, nueva] of SWAP_MAY) { const m = re.exec(s); if (m) { out.push({ tipo:"mayoria", ini:m.index, fin:m.index + m[0].length, nueva }); break; } }
+  for (const [re, nueva] of SWAP_ORG) { const m = re.exec(s); if (m) { out.push({ tipo:"organo", ini:m.index, fin:m.index + m[0].length, nueva }); break; } }
+  return out;
+}
+function frasesLiterales(t) {
+  const out = [], vistas = new Set();
+  t.sections.forEach(s => {
+    const ls = String(s.body || "").split("\n"); let blk = [];
+    const cierra = () => {
+      const cod = blk.length ? (blk[0].match(/^\[\[([A-Z0-9_]+)/) || [])[1] : null;
+      if (blk.length && (!cod || cod === "BOE" || cod === "DOUE") && !blk.some(x => /no es texto legal/i.test(x))) {
+        let titulo = "";
+        blk.slice(cod ? 1 : 0).forEach(x => {
+          const mt = x.match(/^\*\*(.+?)\*\*\s*$/); if (mt) { titulo = mt[1]; return; }
+          x.replace(/^\s*(?:\d+\.|[a-z]\))\s+/, "").replace(/\*\*/g, "").split(/(?<=[.;])\s+(?=[A-ZÁÉÍÓÚ«"])/).forEach(f => {
+            f = f.trim(); if (f.length < 50 || f.length > 420 || /…|\[\.\.\.\]/.test(f) || vistas.has(f)) return;
+            if (!mutaciones(f).length) return;
+            vistas.add(f); out.push({ f, titulo });
+          });
+        });
+      }
+      blk = [];
+    };
+    ls.forEach(l => { if (l.startsWith("> ") || l === ">") blk.push(l.slice(2)); else cierra(); });
+    cierra();
+  });
+  return out;
+}
+const CAMBIO = { id:null, pool:[], bien:0, mal:0 };
+function panelCambio(c, id) {
+  const t = estado.temas[id];
+  if (CAMBIO.id !== id) { CAMBIO.id = id; CAMBIO.pool = barajar(frasesLiterales(t)); CAMBIO.bien = 0; CAMBIO.mal = 0; }
+  if (!CAMBIO.pool.length) return vacioHerr(c, "🔍", "Sin frases para este ejercicio", "Hacen falta literales con un plazo, una mayoría o un órgano que se puedan alterar.");
+  const it = CAMBIO.pool.shift(); CAMBIO.pool.push(it);
+  const mut = mutaciones(it.f), alterada = Math.random() < 0.5;
+  const m = alterada ? mut[Math.floor(Math.random() * mut.length)] : null;
+  const mostrado = m ? it.f.slice(0, m.ini) + m.nueva + it.f.slice(m.fin) : it.f;
+  c.innerHTML = `<p class="muted" style="font-size:13px;margin:0 0 10px">¿Esta frase es <b>fiel</b> al texto literal o lleva <b>un dato alterado</b> (plazo, mayoría u órgano)? La mitad están alteradas. Las versiones alteradas se fabrican aquí y no son texto legal. Acertadas ${CAMBIO.bien} · falladas ${CAMBIO.mal}.</p>
+    <div class="card"><div class="tags" style="margin-bottom:8px"><span class="tag">${esc(it.titulo || "Literal")}</span></div>
+      <div class="q-txt" style="font-size:17px;line-height:1.5">${esc(mostrado)}</div>
+      <div class="btn-row" style="gap:10px;margin-top:14px"><button class="btn btn-primary" data-cm="fiel">✓ Es fiel</button><button class="btn" data-cm="alt">✗ Está alterada</button></div><div id="cm-fb"></div></div>`;
+  c.querySelectorAll("[data-cm]").forEach(b => b.addEventListener("click", () => {
+    const dijoAlt = b.dataset.cm === "alt", ok = dijoAlt === !!m;
+    if (ok) CAMBIO.bien++; else CAMBIO.mal++;
+    c.querySelectorAll("[data-cm]").forEach(x => x.disabled = true);
+    if (!ok && m) registrarError(it.f.slice(m.ini, m.fin), m.nueva, "Detecta el cambio · " + codigoDe(id));
+    const real = m ? `<p style="margin:8px 0 0"><b>Alterada:</b> ${esc(mostrado.slice(0, m.ini))}<mark>${esc(m.nueva)}</mark>${esc(mostrado.slice(m.ini + m.nueva.length))}</p><p style="margin:6px 0 0"><b>Literal:</b> ${esc(it.f.slice(0, m.ini))}<mark>${esc(it.f.slice(m.ini, m.fin))}</mark>${esc(it.f.slice(m.fin))}</p>` : `<p style="margin:8px 0 0">La frase era el literal tal cual.</p>`;
+    $id("cm-fb").innerHTML = `<div class="q-fb ${ok ? "bien" : "mal"}">${ok ? "✓ Correcto." : "✗ " + (m ? "Estaba alterada" + (m.tipo === "plazo" ? " (un plazo)" : m.tipo === "mayoria" ? " (una mayoría)" : " (un órgano)") + "." : "Era fiel.")}${real}</div>
+      <div class="btn-row" style="justify-content:flex-end;margin-top:12px"><button class="btn btn-primary" id="cm-sig">Otra →</button></div>`;
+    $id("cm-sig").addEventListener("click", () => panelCambio(c, id));
+  }));
+}
+
+/* ---- Vigencia en el lector (panel) ------------------------------------------ */
+function panelVigencia(c, id) { c.innerHTML = vigenciaHTML(estado.temas[id]); }
+
 function renderRegistro() {
   vista().innerHTML = `<h1 class="titulo-grande">⏱ Registro de estudio</h1>
     <p class="view-sub">Tiempo dedicado cada día y a qué temas. Se alimenta del cronómetro de la esquina inferior izquierda; también puedes añadir o corregir tiempos a mano.</p>

@@ -370,3 +370,11 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   descargado— navega a `#/tema/<id>`).
   Al tocar el CSS (`APUNTES_CSS`), regenerar los PDF con `pruebas/apuntes.js` y revisar portada y saltos de página.
 - Prueba: `herramientas/oposicion/pruebas/apuntes.js` (genera también el PDF con Chromium).
+
+## Estudio avanzado: datos, repaso rápido y «Detecta el cambio» (petición del usuario, 6-10-2026)
+
+- **`#/datos/<pestaña>`** («Datos de estudio», botón en el inicio; `renderDatos` en `oposicion.html`): **plazos y mayorías** (todas las casillas «Plazos y mayorías» de las fichas, con filtro), **frecuencia en examen** (pills `{{EXAMEN:…}}` por apartado, calor), **mis errores** y **vigencia**. Todo se calcula en el cliente de los apuntes ya cargados; no hay datos nuevos.
+- **Errores por tipo** (`tipoError`, `registrarError`): al fallar un test de tema, aleatorio, test real o «Detecta el cambio» se compara la redacción correcta con la elegida y se clasifica la diferencia (mayoría > plazo > cifra > órgano > otro). Claves en `prog.mapa`: `ERRT:<tipo>` (`{n}`) y `ERRL` (últimos 40 fallos). Heurístico: revisar `RE_MAY/RE_PLAZO/RE_ORG` si clasifica mal.
+- **Herramientas del lector**: ⚡ **Repaso rápido** (`panelRapido`: «Atención examen», «Ojo en el examen», «Plazos y mayorías», pills «Examen» y «En resumen» de cada apartado), 🔍 **Detecta el cambio** (`panelCambio`: frases de los bloques `>` de **BOE y DOUE**, la mitad con un plazo, mayoría u órgano alterado por `mutaciones`; las versiones alteradas se fabrican en el cliente, nunca se guardan ni se presentan como texto legal) y 🕒 **Vigencia y revisión**.
+- **Vigencia**: `temas/indice.json` → `verificados` = `{id: "AAAA-MM-DD"}` con la fecha de la **última auditoría** contra la norma. **Actualizarlo cada vez que se audite un tema.** Pasados 90 días (`DIAS_CADUCA`) se pide revisar; los apartados con «REVISAR» o «Dato **cambiante**» se listan como datos que caducan.
+- Prueba: `herramientas/oposicion/pruebas/estudio.js`.
