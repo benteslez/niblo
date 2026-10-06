@@ -1320,6 +1320,17 @@ body.real-abierto .cr { display:none; }
 
 /* ===== Constitución · pills · organigrama · test ===== */
 /* ---- Pills del desarrollo del tema ----------------------------------------- */
+.pill-exa[data-ex] { cursor:pointer; }
+p:has(> .pill-exa[data-ex]), li:has(> .pill-exa[data-ex]) { cursor:pointer; }
+p:has(> .pill-exa[data-ex]):hover .pill-exa, li:has(> .pill-exa[data-ex]):hover .pill-exa { filter:brightness(1.12); }
+.ex-dlg .ex-p { border:1px solid var(--line, #e2e8f0); border-radius:12px; padding:12px 14px; margin:10px 0; }
+.ex-dlg .ex-t { font-size:12px; font-weight:800; letter-spacing:.03em; color:#b91c1c; margin-bottom:6px; }
+.pl-dlg.ex-dlg { max-height:88vh; overflow:auto; width:min(640px, calc(100vw - 24px)); }
+.ex-dlg .ex-q { font-weight:700; margin:0 0 8px; font-size:14.5px; color:var(--text); }
+.ex-dlg .ex-o { display:flex; gap:8px; padding:5px 8px; border-radius:8px; margin:2px 0; }
+.ex-dlg .ex-o b { flex:none; width:1.4em; }
+.ex-dlg .ex-o.ok { background:#dcfce7; color:#14532d; font-weight:600; }
+.ex-dlg .ex-n { font-size:12.5px; color:#475569; margin-top:6px; }
 .pill-imp, .pill-pre, .pill-exa { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.05em; padding:1px 8px; border-radius:var(--r-pill); vertical-align:middle; margin:0 4px 0 0; line-height:1.5; white-space:nowrap; }
 .pill-imp, .pill-exa { background:#dc2626; color:#fff; }
 .pill-pre { background:#e2e8f0; color:#334155; border:1px solid #94a3b8; }
@@ -3835,7 +3846,7 @@ function formatear(txt) {
   const enLinea = x => esc(x)
     .replace(/\[\[([A-Z0-9_]+)(?:\|(https?:[^\]\s]+))?\]\]/g, (m, cod, url) => pillFuente(cod, url ? url.replace(/&amp;/g, "&") : ""))
     .replace(/\{\{IMPORTANTE\}\}/g, '<span class="pill-imp">IMPORTANTE</span>')
-    .replace(/\{\{EXAMEN\}\}/g, '<span class="pill-exa">Examen</span>')
+    .replace(/\{\{EXAMEN(?::([A-Za-z0-9.,]+))?\}\}/g, (m, r) => r ? `<span class="pill-exa" data-ex="${r}" role="button" tabindex="0" title="Ver las preguntas">Examen</span>` : '<span class="pill-exa">Examen</span>')
     .replace(/\{\{ir:(#\/[^|}]+)\|([^}]+)\}\}/g, '<a class="btn btn-sm ce-ir-btn" href="$1">$2</a>')
     .replace(/\{\{PRESCINDIBLE\}\}/g, '<span class="pill-pre">PRESCINDIBLE</span>')
     .replace(/\{\{c:([A-Z0-9.]+)~([^}]+)\}\}/g, (m, k, t) => `<span class="ce-tag" style="${ceSt(k)}">${t}</span>`)
@@ -6044,6 +6055,46 @@ function cronSeguir(r) {
   if (CR.run) { crCambiar(fila, plCfg().v, plCfg().x); toast("Contando: " + codigoFila(PLAN_FILA[fila]), "", 1800); }
   else { CR.fila = fila; CR.v = plCfg().v; CR.x = plCfg().x; crGuardar(); crPintar(); }
 }
+
+/* ---- Pill «Examen»: pregunta y respuesta correcta de cada examen citado ------------------------------------------ */
+let EX_PREVIOS = null;
+async function exPrevios() {
+  if (EX_PREVIOS) return EX_PREVIOS;
+  try { EX_PREVIOS = await (await fetch("temas/examenes_previos.json", { cache:"no-cache" })).json(); } catch (_) { EX_PREVIOS = { examenes:{} }; }
+  return EX_PREVIOS;
+}
+async function abrirExamenRefs(refs, libres) {
+  const prev = await exPrevios();
+  const bloques = refs.split(",").map(r => {
+    const [cod, n] = r.split(".");
+    let titulo, q;
+    if (["L", "P", "X"].includes(cod)) {
+      const ex = TESTS_REALES.examenes.find(x => x.id === `GACE-${cod}-2025-1`);
+      titulo = (ex ? ex.titulo : "GACE " + cod + " 2025") + " · 1.er ejercicio";
+      q = ex && ex.preguntas.find(p => String(p.n) === n);
+    } else {
+      const ex = prev.examenes && prev.examenes[cod];
+      titulo = ex ? ex.titulo : cod;
+      q = ex && ex.preguntas[n];
+    }
+    if (!q) return `<div class="ex-p"><div class="ex-t">${esc(titulo || cod)} · pregunta ${esc(n)}</div><div class="ex-n">No se ha podido cargar esta pregunta.</div></div>`;
+    const ops = q.o.map((o, i) => `<div class="ex-o${i === q.c ? " ok" : ""}"><b>${"abcd"[i]})</b><span>${esc(o)}${i === q.c ? " ✔" : ""}</span></div>`).join("");
+    const nota = q.anulada ? '<div class="ex-n">Pregunta anulada.</div>'
+      : (q.c == null ? '<div class="ex-n">Sin respuesta de plantilla en los datos.</div>'
+      : `<div class="ex-n">Respuesta de la plantilla oficial: <b>${"abcd"[q.c]})</b></div>`);
+    return `<div class="ex-p"><div class="ex-t">${esc(titulo)} · pregunta ${esc(n)}</div><p class="ex-q">${esc(q.q)}</p>${ops}${nota}</div>`;
+  }).join("");
+  const sup = libres ? '<div class="ex-n">Los apartados de supuestos prácticos (2.º ejercicio) no tienen plantilla oficial: la marca apunta al artículo que, según la norma vigente, resuelve ese apartado.</div>' : "";
+  abrirDialogo(`<form method="dialog"><h3>Preguntado en exámenes oficiales</h3>${bloques}${sup}<div class="acciones"><button class="btn">Cerrar</button></div></form>`, { ancho:true, alMostrar:d => d.classList.add("ex-dlg") });
+}
+document.addEventListener("click", e => {
+  if (e.target.closest("a, button")) return;
+  const box = e.target.closest("p, li"); const pill = box && box.querySelector(":scope > .pill-exa[data-ex]");
+  if (pill) { e.preventDefault(); abrirExamenRefs(pill.dataset.ex, /Supuesto pr|2\.º ejercicio/.test(box.textContent)); }
+});
+document.addEventListener("keydown", e => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches(".pill-exa[data-ex]")) { e.preventDefault(); e.target.click(); }
+});
 
 /* ---- Diálogos --------------------------------------------------------------- */
 function abrirDialogo(html, { ancho, alMostrar } = {}) {
