@@ -1330,6 +1330,7 @@ p:has(> .pill-exa[data-ex]):hover .pill-exa, li:has(> .pill-exa[data-ex]):hover 
 .ex-dlg .ex-o { display:flex; gap:8px; padding:5px 8px; border-radius:8px; margin:2px 0; }
 .ex-dlg .ex-o b { flex:none; width:1.4em; }
 .ex-dlg .ex-o.ok { background:#dcfce7; color:#14532d; font-weight:600; }
+.ex-dlg .ex-sup { white-space:pre-line; font-size:13.5px; line-height:1.5; }
 .ex-dlg .ex-n { font-size:12.5px; color:#475569; margin-top:6px; }
 .pill-imp, .pill-pre, .pill-exa { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.05em; padding:1px 8px; border-radius:var(--r-pill); vertical-align:middle; margin:0 4px 0 0; line-height:1.5; white-space:nowrap; }
 .pill-imp, .pill-exa { background:#dc2626; color:#fff; }
@@ -6063,9 +6064,14 @@ async function exPrevios() {
   try { EX_PREVIOS = await (await fetch("temas/examenes_previos.json", { cache:"no-cache" })).json(); } catch (_) { EX_PREVIOS = { examenes:{} }; }
   return EX_PREVIOS;
 }
-async function abrirExamenRefs(refs, libres) {
+async function abrirExamenRefs(refs) {
   const prev = await exPrevios();
   const bloques = refs.split(",").map(r => {
+    if (r.startsWith("SP.")) {   // supuesto práctico o primera parte del 2.º ejercicio: solo hay enunciado (no hay plantilla oficial)
+      const [, conv, sup, n] = r.split("."); const e = prev.supuestos && prev.supuestos[conv]; const tx = e && e[sup] && e[sup][n];
+      const et = sup === "P" ? "primera parte, pregunta " + n : "supuesto " + sup + ", cuestión " + n;
+      return `<div class="ex-p"><div class="ex-t">${esc(e ? e.titulo : conv)} · ${esc(et)}</div>${tx ? `<div class="ex-sup">${esc(tx)}</div>` : '<div class="ex-n">No se ha podido cargar el enunciado.</div>'}<div class="ex-n">2.º ejercicio: no tiene plantilla oficial. La marca apunta al artículo que, según la norma vigente, resuelve ${sup === "P" ? "esta pregunta" : "esta cuestión"}.</div></div>`;
+    }
     const [cod, n] = r.split(".");
     let titulo, q;
     if (["L", "P", "X"].includes(cod)) {
@@ -6084,13 +6090,21 @@ async function abrirExamenRefs(refs, libres) {
       : `<div class="ex-n">Respuesta de la plantilla oficial: <b>${"abcd"[q.c]})</b></div>`);
     return `<div class="ex-p"><div class="ex-t">${esc(titulo)} · pregunta ${esc(n)}</div><p class="ex-q">${esc(q.q)}</p>${ops}${nota}</div>`;
   }).join("");
-  const sup = libres ? '<div class="ex-n">Los apartados de supuestos prácticos (2.º ejercicio) no tienen plantilla oficial: la marca apunta al artículo que, según la norma vigente, resuelve ese apartado.</div>' : "";
-  abrirDialogo(`<form method="dialog"><h3>Preguntado en exámenes oficiales</h3>${bloques}${sup}<div class="acciones"><button class="btn">Cerrar</button></div></form>`, { ancho:true, alMostrar:d => d.classList.add("ex-dlg") });
+  abrirDialogo(`<form method="dialog"><h3>Preguntado en exámenes oficiales</h3>${bloques}<div class="acciones"><button class="btn">Cerrar</button></div></form>`, { ancho:true, alMostrar:d => d.classList.add("ex-dlg") });
 }
+/* Tablas de los apuntes más anchas que la pantalla (móvil vertical): se deslizan en horizontal y llevan una pista. */
+(() => {
+  let t = 0;
+  const marcar = () => { t = 0; document.querySelectorAll(".ap-cuerpo .tabla-wrap").forEach(w => w.classList.toggle("desliza", w.scrollWidth > w.clientWidth + 4 && w.scrollLeft < 24)); };
+  const programar = () => { if (!t) t = setTimeout(marcar, 250); };
+  new MutationObserver(programar).observe(document.body, { childList:true, subtree:true });
+  addEventListener("resize", programar); programar();
+  document.addEventListener("scroll", e => { const w = e.target; if (w && w.classList && w.classList.contains("tabla-wrap")) w.classList.toggle("desliza", w.scrollWidth > w.clientWidth + 4 && w.scrollLeft < 24); }, true);
+})();
 document.addEventListener("click", e => {
   if (e.target.closest("a, button")) return;
   const box = e.target.closest("p, li"); const pill = box && box.querySelector(":scope > .pill-exa[data-ex]");
-  if (pill) { e.preventDefault(); abrirExamenRefs(pill.dataset.ex, /Supuesto pr|2\.º ejercicio/.test(box.textContent)); }
+  if (pill) { e.preventDefault(); abrirExamenRefs(pill.dataset.ex); }
 });
 document.addEventListener("keydown", e => {
   if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches(".pill-exa[data-ex]")) { e.preventDefault(); e.target.click(); }
@@ -7271,7 +7285,8 @@ const CJ_CSS = `
 .cuerpo h4.ap-h { font-family:inherit; border:none; padding:0; }
 .apuntes-tabla { border-collapse:separate; border-spacing:0; }
 .apuntes-tabla th { background:#2f62b8 !important; color:#fff !important; font-weight:700; padding:.7em .9em; }
-.ap-cuerpo .tabla-wrap, .cuerpo .tabla-wrap { border-radius:12px; overflow:hidden; }
+.ap-cuerpo .tabla-wrap, .cuerpo .tabla-wrap { border-radius:12px; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; }
+.tabla-wrap.desliza::before { content:"↔ Desliza para ver más columnas"; display:block; position:sticky; left:0; width:max-content; max-width:100%; margin:6px 0 0 10px; padding:2px 10px; font-size:11.5px; font-weight:700; color:var(--accent,#2f62b8); background:color-mix(in srgb, var(--accent-bg,#e8f0fe) 70%, transparent); border-radius:999px; }
 .apuntes-tabla td { padding:.7em .9em; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .ap-cuerpo .cj-cc, :root:not([data-theme="light"]) .ap-cuerpo .cj-ex, :root:not([data-theme="light"]) .ap-cuerpo .cj-sin, :root:not([data-theme="light"]) .ap-cuerpo .cj-nota, :root:not([data-theme="light"]) .ap-cuerpo .cj-guia { background:#16213a; color:#d6e0f5; }

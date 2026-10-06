@@ -30,6 +30,8 @@ def main(dtxt):
             if not q or not q["o"]: print("FALTA", cod, n); continue
             pre[str(n)] = {"q": q["q"], "o": q["o"], "c": q["c"], "anulada": bool(q.get("anulada"))} if q.get("c") is not None or q.get("anulada") else {"q": q["q"], "o": q["o"], "c": None}
         out["examenes"][cod] = {"titulo": TITULOS[cod] + " · 1.er ejercicio", "preguntas": pre}
+    import previos_supuestos as PS
+    out["supuestos"] = PS.todo(dtxt)
     ruta = os.path.join(AQUI, "..", "..", "temas", "examenes_previos.json")
     json.dump(out, open(ruta, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print({c: len(v["preguntas"]) for c, v in out["examenes"].items()}, os.path.getsize(ruta), "bytes")
