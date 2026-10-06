@@ -135,3 +135,43 @@ MARCAS += [
     S24("B5T05", "TREBEP", "a89", "X II 5"),
 ]
 
+
+
+def SX(conv, tema, k, art, *ref):
+    """Supuestos y primera parte del 2.º ejercicio anteriores a 2024. conv = clave de EJ; ref = «I 1 a)» (supuesto, cuestión, apartado) o «P2 a)» (primera parte, pregunta)."""
+    b = art if art in P.boe.ley(k) else P.bid(k, art)
+    out = []
+    for r in ref:
+        sup, c = r.split(" ", 1)
+        if sup.startswith("P"): out.append(f"2.º ejercicio {EJ[conv]}, primera parte, pregunta {sup[1:]} {c}".strip())
+        else: out.append(f"Supuesto práctico {sup} (2.º ejercicio {EJ[conv]}), cuestión {c}")
+    return {"tema": tema, "k": k, "bloque": b, "ex": out}
+
+EJ = {"LP22": "GACE-L y GACE-P 2022", "L22": "GACE-L 2022", "X22": "GACE-L extraordinario 2022", "L19": "GACE-L 2019"}
+
+MARCAS += [
+    # --- 2.º ejercicio 2022 (turno libre y promoción interna, mismo supuesto I y supuesto II; la cuestión 5 del I solo en L) ---
+    SX("LP22", "B4T07", "LGS", "a57", "I 1 a)"), SX("LP22", "B4T07", "LGS", "a59", "I 1 a)"), SX("LP22", "B4T07", "LGS", "a66", "I 1 a)"),
+    SX("LP22", "B4T07", "LGS", "a31", "I 1 b)"),
+    SX("LP22", "B4T05", "LCSP", "Artículo 118", "I 2 a)", "II 3 a)"), SX("LP22", "B4T05", "LCSP", "Artículo 159", "I 2 b)"),
+    SX("LP22", "B5T02", "RD33", "a47", "I 3 b)"), SX("LP22", "B5T02", "TREBEP", "a96", "I 3 b)"),
+    SX("L22", "B4T10", "L39", "a92", "I 5 a)"), SX("L22", "B4T10", "L39", "a114", "I 5 b) y c)"),
+    SX("LP22", "B4T06", "LCSP", "Artículo 13", "II 1 a)"), SX("LP22", "B4T05", "LCSP", "Artículo 135", "II 1 b)"),
+    SX("LP22", "B4T05", "LCSP", "Artículo 158", "II 1 b)"), SX("LP22", "B4T05", "LCSP", "Artículo 63", "II 3 b)"),
+    SX("LP22", "B4T05", "LCSP", "Artículo 107", "II 4 a)"),
+    # --- extraordinario 2022 (L): supuesto I y II ---
+    SX("X22", "B4T05", "LCSP", "Artículo 101", "I 1"), SX("X22", "B4T05", "LCSP", "Artículo 118", "I 1"), SX("X22", "B4T05", "LCSP", "Artículo 326", "I 1"),
+    SX("X22", "B4T05", "LCSP", "Artículo 198", "I 2"), SX("X22", "B4T13", "LJCA", "a29", "I 2"),
+    SX("X22", "B5T01", "TREBEP", "a10", "I 3"), SX("X22", "B5T06", "TREBEP", "a25", "I 3"),
+    SX("X22", "B6T03", "LGP", "a52", "I 4"), SX("X22", "B6T03", "LGP", "a63", "I 4"),
+    SX("X22", "B4T07", "LGS", "a29", "II 3"), SX("X22", "B4T07", "LGS", "a31", "II 3"),
+    # --- 2019 (GACE-L): primera parte y supuestos ---
+    SX("L19", "B1T01", "CE", "a167", "P1 a) y b)"), SX("L19", "B1T03", "CE", "a162", "P2 a) y b)"),
+    SX("L19", "B1T08", "L40", "a63", "P3 a) y b)"), SX("L19", "B2T02", "PROT2", "Artículo 6", "P4 a)"), SX("L19", "B2T06", "TFUE", "Artículo 127", "P4 b)"),
+    SX("L19", "B6T03", "LGP", "a52", "I 1"), SX("L19", "B6T03", "LGP", "a63", "I 1"),
+    SX("L19", "B4T09", "LPAP", "a66", "I 3 b)"),
+    SX("L19", "B4T05", "LCSP", "Artículo 29", "I 4 a)"), SX("L19", "B4T05", "LCSP", "Artículo 326", "I 4 b)"),
+    SX("L19", "B5T02", "TREBEP", "a49", "I 5 a)"), SX("L19", "B5T05", "TREBEP", "a89", "I 5 b)"),
+    SX("L19", "B4T11", "L39", "a21", "II 1 a)"), SX("L19", "B4T12", "L40", "a24", "II 1 b)"), SX("L19", "B4T12", "L39", "a122", "II 2"),
+    SX("L19", "B4T05", "LCSP", "Artículo 118", "II 4"), SX("L19", "B5T04", "RD364", "a70", "II 5 b)"),
+]
