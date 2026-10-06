@@ -153,6 +153,19 @@ class Tema:
     def glos(self, t, d, section, cat): self.G.append({"t": t, "d": d, "section": section, "cat": cat})
     def hito(self, y, txt, cons, cat, target): self.H.append({"y": y, "txt": txt, "cons": cons, "cat": cat, "target": target})
 
+    def marcar_examen(self, marcas):
+        """Pill roja «Examen» (petición del usuario, 6-10-2026) en lo que se ha preguntado en exámenes oficiales (o que la academia
+        da como muy preguntado). marcas: [(clave, nota)]. clave = regex sobre el título de una unidad («### N.M título») o
+        «sec:<id>» para un apartado entero. La nota dice por qué (pregunta oficial o valoración de la academia): nada sin fuente."""
+        for clave, nota in marcas:
+            linea = "{{EXAMEN}} **Preguntado en exámenes oficiales.** " + nota
+            if clave.startswith("sec:"):
+                sec = [x for x in self.S if x["id"] == clave[4:]]; assert len(sec) == 1, clave
+                sec[0]["body"] = linea + "\n\n" + sec[0]["body"]; continue
+            hit = [(x, m_) for x in self.S for m_ in re.finditer(r"(?m)^### (?:\d+\.\d+ )?" + clave + r".*$", x["body"])]
+            assert len(hit) == 1, ("MARCA «EXAMEN» SIN UNIDAD ÚNICA", clave, len(hit))
+            x, m_ = hit[0]; x["body"] = x["body"][:m_.end()] + "\n\n" + linea + x["body"][m_.end():]
+
     def _cierre1_al_test(self):
         """Las preguntas de exámenes oficiales NO van en los apuntes (petición del usuario, 5-10-2026): viven en el test del tema
         («Práctica activa»). Se quita el apartado «Cierre 1»; las preguntas de sus recuadros que aún no estén en el test se pasan

@@ -1699,4 +1699,21 @@ BARE = [
 MAPA_U, MAPA_A = IND.reorganizar(T, BLOQUES, BARE, OMITIR, REMAP_U, REMAP_A, PARCHES)
 if os.environ.get("NIBLO_MAPA"):
     for k, v in sorted(MAPA_U.items()): print(k, "→", v)
+# Pill «Examen»: lo que la guía M108 da como muy preguntado o casi todos los años, y lo preguntado en los exámenes oficiales de 2025
+VAL = "La guía M108 lo valora entre lo que se pregunta **casi todos los años**. [[M108]]"
+T.marcar_examen([
+    (r"La naturaleza jurídica en tres etapas", VAL),
+    (r"Personalidad jurídica \(art\. 47\)", VAL),
+    (r"Los valores de la Unión \(art\. 2\)", VAL),
+    (r"Regla de memoria de los valores: LÍDER", VAL),
+    (r"Qué aporta cada Tratado", "La guía M108 lo valora como **muy preguntado**: dominar el cuadro maestro resuelve entre el 40 % y el 50 % de las preguntas de Unión Europea. [[M108]]"),
+    (r"La ciudadanía de la Unión \(art\. 9\)", VAL),
+    (r"Los tratados de adhesión y las candidaturas", "La guía M108 incluye entre lo que se pregunta casi todos los años **qué países entran y cuándo**. [[M108]]"),
+    (r"Los países fundadores y la Declaración Schuman", "Pregunta oficial de 2025: GACE-L, pregunta 18 (qué conmemora el Día de Europa)."),
+    (r"Quién puede solicitar el ingreso y cómo se decide", "Pregunta oficial de 2025: GACE-P, pregunta 9 (a quién se dirige la solicitud; art. 49 TUE)."),
+    (r"El procedimiento de revisión ordinario", "Pregunta oficial de 2025: GACE-L extraordinario, pregunta 30 (quiénes pueden presentar proyectos de revisión; art. 48.2 TUE)."),
+    (r"El marco general \(art\. 20 TUE\)", "Pregunta oficial de 2025: GACE-L extraordinario, pregunta 29 (arts. 20.1 y 2 TUE y 329 TFUE)."),
+    (r"Apertura e información \(art\. 328\)", "Pregunta oficial de 2025: GACE-L extraordinario, pregunta 28 (art. 328.2 TFUE)."),
+    (r"Autorización \(art\. 329\)", "Pregunta oficial de 2025: GACE-L extraordinario, pregunta 29 (arts. 20.1 y 2 TUE y 329 TFUE)."),
+])
 T.publicar()

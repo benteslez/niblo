@@ -212,7 +212,7 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - **Descargar apuntes de la Constitución** (botón en `#/ce`, `ceApuntesHTML`/`descargarApuntesCE`): documento A4 generado **de los datos**, así que lo que se añada entra solo: guía y leyenda M103, estructura y reglas M107 (tabla con «inicio + N»), el organigrama de la app (se reutiliza `ceVerOrg` y sus CSS `.og*`), niveles de protección, arts. 1-55 anotados (subrayado, pills, comentarios; siempre con las anotaciones aunque el interruptor esté apagado) y todos los apartados «Cuadro…» de I.1-I.3 más «Los títulos y sus artículos» y «El Título I por dentro». Lleva la **Constitución completa** (Preámbulo, arts. 1-169 y disposiciones; las anotaciones M103/M107 salen donde las haya y lo que se añada entra solo): la parte dogmática y, en **página nueva**, la parte orgánica (Título II). La estructura (sección 2) y cada mitad del organigrama (dogmática / orgánica, en página nueva, ajustada con `zoom` a su hoja) caben en una página. Comparte `abrirApuntes` con los apuntes de tema.
 - **Módulo M107** (repaso de la estructura de la CE; PDF + vídeo): las reglas de memoria van en `m103_datos.py` (`M107_UNIDADES`: una nota por título, capítulo, sección, preámbulo y disposiciones; `M107_ARTS`) → `ce.json` → `m103.m107`, y se ven en `#/ce/texto` con el mismo interruptor (pill 🛡 «nivel de protección» calculado por artículo en `ceNivel`); en I.1 solo la regla «inicio + N = fin» (II.2, 2.1) y las reglas del Título I (II.3, 3.1). Las dos preguntas GACE 2018 del PDF están en los tests (I.1 y I.2) con su `real`.
 - **Módulo M103** (lectura y explicación de los arts. 1-52: PDF subrayado + vídeo): vive **solo en `temas/ce.json` → `m103`** (generado por
-  `ce_datos.py` desde `herramientas/oposicion/m103_datos.py`; cada frase marcada tiene que ser literal del artículo): pills 🟧 examen oficial,
+  `ce_datos.py` desde `herramientas/oposicion/m103_datos.py`; cada frase marcada tiene que ser literal del artículo): pills **«Examen»** (roja, antes 🟧),
   🟨 importante, 🟩 coletilla, 🟦 se limita en excepción y sitio (completado con el art. 55.1), 🌸 ley orgánica, subrayado en el texto y comentario
   de la academia por artículo. Se ve en `#/ce/texto` (botón «🚫 Apagar leyendas» / «🖍 Encender leyendas»: texto limpio sin subrayados, pills ni comentarios; el mismo botón está en el dorso de las tarjetas del Test Constitución; se recuerda en `KEY_M103`) y en el reverso del Test Constitución; el tema I.1 (III.1, 1.1 y 1.2) solo
   explica los niveles y el código de colores y remite a la Constitución. No copiar estas anotaciones en los temas.
@@ -288,6 +288,12 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - **Teclado**: ← → ↑ en las flashcards (la sabía / no la sabía / dudé), → en el test (siguiente pregunta ya contestada) y espacio (gira la tarjeta) funcionan sin tener el foco en la tarjeta.
 - **Preguntas de la guía** (`QG` en `B2T01.py`; 3, que la guía da como de examen oficial pero sin convocatoria): van al test del tema con
   `ac = "M108 · pregunta n"` (chip 🎓 Academia) y **no** al test real global (no hay convocatoria que citar).
+
+## Pill roja «Examen» (petición del usuario, 6-10-2026)
+
+- `{{EXAMEN}}` → pill con **fondo rojo y letras blancas** «Examen» (`.pill-exa`, app y PDF; misma pill en `#/ce/texto` para los artículos que la academia da como preguntados en examen oficial, `m103.arts[n].exam`).
+- Se pone en los **artículos o cuestiones muy preguntados o preguntados con frecuencia**, siempre con su motivo en la línea que acompaña a la pill: (a) la academia lo da como preguntado en examen oficial (M103) o como «muy preguntado / casi todos los años» (valoración de la guía, p. ej. M108); (b) hay pregunta en los exámenes oficiales aportados (L, P, X de 2025, con n.º de pregunta). **No se marca nada sin una de esas dos fuentes** y la frecuencia real solo se conoce con esos datos: cuando el usuario aporte más exámenes, revisar las marcas.
+- En los generadores: `T.marcar_examen([(clave, nota), …])` antes de `publicar()` (`plantilla.py`); `clave` = regex sobre el título de una unidad (`### N.M título`) o `sec:<id>` para un apartado entero; si no hay exactamente una unidad, el generador se detiene. Hoy: B1T01, B1T02, B1T03 (`temas/B1T0n.py`) y B2T01 (final de `temas/B2T01.py`).
 
 ## Temas encendidos y apagados
 

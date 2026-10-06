@@ -1320,8 +1320,8 @@ body.real-abierto .cr { display:none; }
 
 /* ===== Constitución · pills · organigrama · test ===== */
 /* ---- Pills del desarrollo del tema ----------------------------------------- */
-.pill-imp, .pill-pre { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.05em; padding:1px 8px; border-radius:var(--r-pill); vertical-align:middle; margin:0 4px 0 0; line-height:1.5; white-space:nowrap; }
-.pill-imp { background:#dc2626; color:#fff; }
+.pill-imp, .pill-pre, .pill-exa { display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.05em; padding:1px 8px; border-radius:var(--r-pill); vertical-align:middle; margin:0 4px 0 0; line-height:1.5; white-space:nowrap; }
+.pill-imp, .pill-exa { background:#dc2626; color:#fff; }
 .pill-pre { background:#e2e8f0; color:#334155; border:1px solid #94a3b8; }
 :root[data-tema="oscuro"] .pill-pre { background:#334155; color:#e2e8f0; border-color:#64748b; }
 @media (prefers-color-scheme: dark) { :root:not([data-tema]) .pill-pre { background:#334155; color:#e2e8f0; border-color:#64748b; } }
@@ -1363,7 +1363,7 @@ body.real-abierto .cr { display:none; }
 .ce-cu { min-width:0; }
 .m103-pills { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
 .m103-pill { display:inline-flex; align-items:center; padding:1px 8px; border-radius:99px; font-size:10.5px; font-weight:800; line-height:1.6; border:1px solid transparent; white-space:nowrap; }
-.m103-pill.ex { background:#fed7aa; color:#7c2d12; border-color:#fb923c; }
+.m103-pill.ex { background:#dc2626; color:#fff; border-color:#b91c1c; }
 .m103-pill.am { background:#fef08a; color:#713f12; border-color:#facc15; }
 .m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; }
 .m103-pill.az { background:#bae6fd; color:#0c4a6e; border-color:#38bdf8; }
@@ -3835,6 +3835,7 @@ function formatear(txt) {
   const enLinea = x => esc(x)
     .replace(/\[\[([A-Z0-9_]+)(?:\|(https?:[^\]\s]+))?\]\]/g, (m, cod, url) => pillFuente(cod, url ? url.replace(/&amp;/g, "&") : ""))
     .replace(/\{\{IMPORTANTE\}\}/g, '<span class="pill-imp">IMPORTANTE</span>')
+    .replace(/\{\{EXAMEN\}\}/g, '<span class="pill-exa">Examen</span>')
     .replace(/\{\{ir:(#\/[^|}]+)\|([^}]+)\}\}/g, '<a class="btn btn-sm ce-ir-btn" href="$1">$2</a>')
     .replace(/\{\{PRESCINDIBLE\}\}/g, '<span class="pill-pre">PRESCINDIBLE</span>')
     .replace(/\{\{c:([A-Z0-9.]+)~([^}]+)\}\}/g, (m, k, t) => `<span class="ce-tag" style="${ceSt(k)}">${t}</span>`)
@@ -6768,7 +6769,7 @@ function ceParr(p, marks) {
   hits.forEach(m => { if (m.i < pos) return; h += esc(p.slice(pos, m.i)) + `<mark class="m103-${M103_CLS[m.c]}">${esc(p.slice(m.i, m.j))}</mark>`; pos = m.j; });
   return `<p class="${cls}">${h + esc(p.slice(pos))}</p>`;
 }
-const M103_PILL = { exam:["ex", "🟧 Examen oficial"], am:["am", "🟨 Importante"], vd:["vd", "🟩 Coletilla"], az:["az", "🟦 Se limita (excepción y sitio)"], lo:["lo", "🌸 Ley orgánica"] };
+const M103_PILL = { exam:["ex", "Examen"], am:["am", "🟨 Importante"], vd:["vd", "🟩 Coletilla"], az:["az", "🟦 Se limita (excepción y sitio)"], lo:["lo", "🌸 Ley orgánica"] };
 /** Nivel de protección del artículo (arts. 53 y 81; módulo M107): dónde está y qué garantías tiene. */
 function ceNivel(n) {
   if (n >= 10 && n <= 13) return ["Fuera de las garantías del art. 53", "Los arts. 10 a 13 no están en el capítulo II: no tienen las garantías del art. 53.1 ni del 53.2 (sí los protege el Defensor del Pueblo)."];
@@ -7196,7 +7197,7 @@ const CJ_CSS = `
 .cj-nota { background:#fff3e0; border-color:#e08a1e; color:#6a4310; } .cj-nota .cj-k, .cj-nota strong { color:#8a4e08; }
 .cj-guia { background:#eef1f6; border-color:#8a97ad; color:#2c3a52; } .cj-guia .cj-k, .cj-guia strong { color:#33496b; }
 .cj-ant { background:#f3f1f8; border-color:#9b8bc4; border-left-style:dashed; color:#41355f; } .cj-ant .cj-k, .cj-ant strong { color:#4b3a7d; }
-.cj-nota .pill-pre, .cj-nota .pill-imp { display:none; }
+.cj-nota .pill-pre, .cj-nota .pill-imp, .cj-nota .pill-exa { display:none; }
 .ap-cuerpo blockquote.literal.lit-ref, blockquote.literal.lit-ref { border-left-color:#7c4dbd; background:#f4effb; }
 .ap-cuerpo blockquote.literal.lit-ref p:first-child strong:first-child, blockquote.literal.lit-ref p:first-of-type strong:first-child { color:#5b34a0; }
 .cmap { margin:1.2em 0 1.5em; padding:1em 1.2em 1.3em; border:1px solid #dcdcd4; border-radius:18px; background:#f9f9f6; break-inside:avoid-page; }
@@ -7334,8 +7335,8 @@ h3.sub2 .az { color:var(--ac); }
 .cuerpo h5.ap-h2 { margin:3mm 0 1.2mm; font-size:9.4pt; font-weight:800; color:#333; page-break-after:avoid; break-after:avoid; }
 .tag-boe { display:inline-block; padding:0 7px; border-radius:20px; color:#fff; font-size:7.5pt; font-weight:700; line-height:1.7; vertical-align:middle; }
 .fuente-link { text-decoration:none; }
-.pill-imp, .pill-pre { display:inline-block; padding:0 7px; border-radius:20px; font-size:7.2pt; font-weight:800; letter-spacing:.04em; line-height:1.7; vertical-align:middle; margin-right:3px; }
-.pill-imp { background:#c62828; color:#fff; }
+.pill-imp, .pill-pre, .pill-exa { display:inline-block; padding:0 7px; border-radius:20px; font-size:7.2pt; font-weight:800; letter-spacing:.04em; line-height:1.7; vertical-align:middle; margin-right:3px; }
+.pill-imp, .pill-exa { background:#c62828; color:#fff; }
 .pill-pre { background:#e8e8e8; color:#444; border:1px solid #9a9a9a; }
 .ce-tag { display:inline-block; padding:0 6px; border-radius:4px; font-weight:800; font-size:.95em; background:var(--c); color:var(--ct); }
 blockquote.literal { margin:2.4mm 0 3mm; padding:2.2mm 3.4mm 1.4mm; border-left:3px solid #8a6d3b; background:#f6f1e7; }
@@ -7505,7 +7506,7 @@ const CE_APUNTES_CSS = `
 .ca-n { grid-column:1 / -1; }
 .m103-pills { display:flex; flex-wrap:wrap; gap:1mm; margin-top:1.4mm; }
 .m103-pill { display:inline-flex; padding:0 1.8mm; border-radius:10mm; font-size:6.4pt; font-weight:800; line-height:1.6; border:.3mm solid transparent; }
-.m103-pill.ex { background:#fed7aa; color:#7c2d12; border-color:#fb923c; } .m103-pill.am { background:#fef08a; color:#713f12; border-color:#facc15; }
+.m103-pill.ex { background:#c62828; color:#fff; border-color:#b71c1c; } .m103-pill.am { background:#fef08a; color:#713f12; border-color:#facc15; }
 .m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; } .m103-pill.az { background:#bae6fd; color:#0c4a6e; border-color:#38bdf8; }
 .m103-pill.lo { background:#fbcfe8; color:#831843; border-color:#f472b6; } .m103-pill.niv { background:#e9d5ff; color:#581c87; border-color:#c084fc; }
 mark.m103-am { background:#fef08a; color:inherit; padding:0 .3mm; } mark.m103-vd { background:#86efac; color:inherit; padding:0 .3mm; }
