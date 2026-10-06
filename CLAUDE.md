@@ -37,6 +37,15 @@ Regla del usuario para **todos los temas, siempre**: prima la **literalidad**.
   (convocatoria, ejercicio y número) y la respuesta de la plantilla oficial.
 - Ajustarse al epígrafe literal del programa de la convocatoria.
 
+### Guía de la academia (PDF) = índice del tema (regla del usuario, 6-10-2026)
+
+- Cuando el usuario aporta un **PDF de la academia** para un tema, **su orden y sus puntos son el índice del tema**: los epígrafes en grande (bloques) y los
+  puntos en negrita de la guía son los bloques y apartados de los apuntes, **en ese orden y con esos nombres**; no se reordena ni se inventa otra estructura.
+  Cada punto lleva el contenido que le corresponde (texto literal de la norma, fichas, cuadros y esquemas de la guía en su sitio).
+- Se puede **ampliar** un punto con la **legislación vigente** (texto literal consolidado, fuentes oficiales) cuando sea oportuno y necesario para estudiarlo
+  mejor; lo añadido no está en la guía y se dice (p. ej. «ampliación de la guía» en el título o un aviso). Si la guía discrepa de la norma, prevalece la norma.
+- Si un punto de la guía solo se desarrolla en otro tema (p. ej. instituciones), se remite allí en lugar de duplicarlo.
+
 ### Estructura fija de los apuntes (plantilla de todos los temas)
 
 Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mismo modo.
@@ -251,9 +260,16 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   (no es texto legal). El texto del PDF está en `herramientas/oposicion/m108/guia.txt` y `temas/B2T01.py` comprueba contra él
   cada cita (`cg()`) y cada celda de sus cuadros (`tabla(..., ver=...)`, `TRAT`). Ojo: el cuadro impreso dice «Procedimiento **de**
   alerta temprana» y la capa de texto del PDF no; se compara con la variante sin «de».
-- **Orden de los apuntes = orden de la guía**: I antecedentes · II naturaleza y objetivos (arts. 1 a 3 y 47) · III Tratados (con el
-  **cuadro maestro**, III.4, reordenado Tratado a Tratado) · IV TUE y TFUE (arts. 4 a 12, 48 y 51 a 55; luego el TFUE) · V ampliación y
-  retirada · VI cooperaciones reforzadas. El art. 48 vive en IV.5 (no en III) y los arts. 4 a 8 en IV.2 y IV.3.
+- **Orden de los apuntes = índice de la guía** (petición del usuario, 6-10-2026): cinco bloques, los de la guía. I La Unión Europea: antecedentes
+  (I.1 Schuman y Día de Europa; I.2 CED y Mesina, ampliación) · II Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos (II.1 naturaleza
+  jurídica; II.2 art. 1; II.3 valores, art. 2; II.4 objetivos, art. 3; II.5 Tratados de París a Lisboa; II.6 cuadro maestro) · III El TUE y el TFUE (III.1 origen y
+  estructura; III.2 arts. 4 y 5; III.3 art. 6; III.4 art. 7 y mayoría cualificada; III.5 art. 8; III.6 arts. 9 a 12; III.7 disposiciones finales y revisión, art. 48;
+  III.8 TFUE) · IV El proceso de ampliación (IV.1 art. 49 y Copenhague; IV.2 art. 50; IV.3 ampliaciones, retiradas y candidaturas) · V Las cooperaciones reforzadas
+  (V.1 concepto y condiciones, art. 20 TUE y arts. 326 a 328; V.2 arts. 329 a 331; V.3 arts. 332 a 334). Los cuadros, el cuadro maestro y los esquemas están en el
+  punto de la guía al que pertenecen. **Cómo se genera:** `temas/B2T01.py` escribe las unidades con su numeración de trabajo y `temas/B2T01_indice.py` (`PLAN`)
+  las reordena y renumera según este índice y reasigna todas las remisiones («→ III.2.4»), el glosario y la cronología; las remisiones sin flecha («en el bloque IV»,
+  «en **III.7**») se corrigen a mano en `BARE`. Los ids de apartado (`s7`, `s10`…) son estables: los destinos de `CM_IR` y `ESQUEMAS` en `oposicion.html` apuntan a
+  ellos (II.5 = `s7`, II.6 = `s10`, III.4 = `s6`, III.7 = `s10b`, IV.1 = `s13`, IV.2 = `s15`, V.1 = `s16`, V.2 = `s18`). El art. 48 vive en III.7 y los arts. 4 a 8 en III.2 a III.5.
 - **Esquemas de procedimiento**: marcador `&>` (`&> Título` y un paso por línea `Actor + Actor | qué hace | regla`; `↳ Actor | …` es una
   alternativa del paso anterior). Un color por institución (Consejo Europeo azul, Consejo verde, Comisión rojo, Parlamento Europeo morado,
   Parlamentos nacionales azul oscuro, Estados gris, Alto Representante rosa, BCE naranja). Son de elaboración propia a partir de los artículos

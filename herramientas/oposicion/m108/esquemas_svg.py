@@ -25,7 +25,7 @@ def ir(txt, defecto):
     if "comisión" in x or "comision" in x: return "B2T02"
     if "consejo" in x: return "B2T02"
     if "convención" in x or "cig" in x or "conferencia" in x: return "B2T01:s10b"
-    if "ratificación" in x: return "B2T01:s3"
+    if "ratificación" in x: return "B2T01:s7"
     return "B2T01:" + defecto
 def trazo_items(items):
     """Camino continuo: solo se abre un subcamino nuevo (M) cuando el segmento no empieza donde acabó el anterior."""

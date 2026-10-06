@@ -128,28 +128,27 @@ TAB3 = "| Año | Estados | Particularidad (ficha 5.5.1 del Parlamento Europeo) |
 TAB4 = "| | Régimen general (329.1 y 331.1) | PESC (329.2 y 331.2) |\n|---|---|---|\n| Solicitud | A la **Comisión** | Al **Consejo** |\n| Propuesta o dictámenes | Propuesta de la **Comisión** | Dictámenes del **Alto Representante** y de la **Comisión** |\n| Parlamento Europeo | **Aprobación** | Solo **información** |\n| Autoriza | **Consejo** | **Consejo**, por **unanimidad** |\n| Incorporación posterior | Confirma la **Comisión** (4 meses) | Confirma el **Consejo** (unanimidad) |\n| Mínimo de Estados (art. 20.2 TUE) | **Nueve** | **Nueve** |"
 
 T = Tema("B2T01",
-  'Seis preguntas, en el orden de la guía M108: I. De dónde viene la Unión: antecedentes (fichas del Parlamento Europeo; guía M108) · II. Qué es la Unión y qué persigue: naturaleza jurídica, valores y objetivos (TUE, arts. 1 a 3 y 47; CE, arts. 93 y 94) · III. Con qué Tratados: originarios y modificativos, con el cuadro maestro de la guía (fichas del Parlamento Europeo; LO 1/2008) · IV. Qué son el TUE y el TFUE: competencias, defensa de los valores, principios democráticos, revisión y disposiciones finales (TUE, arts. 4 a 12 y 47 a 55; TFUE, arts. 1, 238 y 354) · V. Cómo se entra y cómo se sale: ampliación y retirada (TUE, arts. 49 y 50) · VI. Cómo avanzan solo algunos: cooperaciones reforzadas (TUE, art. 20; TFUE, arts. 326 a 334). Cada artículo: texto literal (DOUE o BOE) y ficha; los esquemas de procedimiento y los cuadros de la guía, aparte y sin valor legal.',
+  'Cinco bloques, en el orden y con los epígrafes de la guía M108: I. La Unión Europea: antecedentes (fichas del Parlamento Europeo; guía M108) · II. Objetivos y naturaleza jurídica; los Tratados originarios y modificativos (TUE, arts. 1 a 3, 47 y 48.4; CE, arts. 93 y 94; fichas del Parlamento Europeo; LO 1/2008; cuadro maestro de la guía) · III. El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea (TUE, arts. 4 a 12 y 47 a 55; TFUE, arts. 1, 238 y 354) · IV. El proceso de ampliación (TUE, arts. 49 y 50) · V. Las cooperaciones reforzadas (TUE, art. 20; TFUE, arts. 326 a 334). Cada artículo: texto literal (DOUE o BOE) y ficha; los esquemas de procedimiento y los cuadros de la guía, aparte y sin valor legal.',
   ["Declaración Schuman", "9 de mayo", "Consejo de Europa", "CECA", "Tratados de Roma", "Tratado de Fusión", "Acta Única", "Maastricht", "Ámsterdam", "Niza", "Lisboa", "Personalidad jurídica", "Valores (art. 2)", "Objetivos (art. 3)", "Atribución", "Subsidiariedad", "Proporcionalidad", "Cooperación leal", "Art. 7 TUE", "Mayoría cualificada", "Ciudadanía de la Unión", "Iniciativa ciudadana europea", "Revisión de los Tratados", "Revisión simplificada", "TUE y TFUE", "Adhesión (art. 49)", "Criterios de Copenhague", "Retirada (art. 50)", "Cooperaciones reforzadas", "Nueve Estados"])
 
 # =============================================================================
-T.ap("s0", "Mapa del tema: seis preguntas", f"""
+T.ap("s0", "Mapa del tema: los cinco bloques de la guía", f"""
 **Epígrafe oficial** (BOE-A-2025-26262, anexo VII, Bloque II, tema 1):
 > La Unión Europea: Antecedentes. Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos. El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea. El proceso de ampliación. Las cooperaciones reforzadas.
 
 ### El hilo conductor
 
-El epígrafe se lee como **seis preguntas encadenadas**, en el mismo orden que la guía de estudio M108. Cada una es un bloque de los apuntes:
+Los apuntes siguen **el orden y los epígrafes de la guía de estudio M108** [[M108]]: cada bloque de los apuntes es un bloque de la guía y cada apartado, un epígrafe suyo. Donde la guía es breve, el apartado se **amplía con la norma vigente** (texto literal del Tratado, fuentes oficiales) para estudiarlo mejor; lo que se añade no está en la guía y se dice.
 
-| Bloque | Pregunta | Tratados (EUR-Lex) | Otras fuentes |
+| Bloque | Epígrafe de la guía | Tratados (EUR-Lex) | Otras fuentes |
 |---|---|---|---|
-| **I** | ¿De dónde viene la Unión? (antecedentes) | TUE, arts. 15 y 16 (para no confundir los «Consejos») | Fichas del Parlamento Europeo 1.1.1; portal de la Unión (Día de Europa); guía M108 |
-| **II** | ¿Qué es la Unión y qué persigue? (naturaleza jurídica, valores y objetivos) | TUE: preámbulo y arts. 1 a 3 y 47; CE, arts. 93 y 94 | Guía M108 |
-| **III** | ¿Con qué Tratados? (originarios y modificativos) | TUE, arts. 13 y 15 | Fichas del PE 1.1.1 a 1.1.5; LO 1/2008; **cuadro maestro** de la guía M108 |
-| **IV** | ¿Qué son el TUE y el TFUE? (principios, Título II, revisión y disposiciones finales) | TUE, arts. 4 a 12, 16 y 47 a 55; TFUE, arts. 1, 24, 238 y 354; CE, art. 87 | Índices de las versiones consolidadas (DOUE); guía M108 |
-| **V** | ¿Cómo se entra y cómo se sale? (ampliación y retirada) | TUE, arts. 49 y 50 | Ficha del PE 5.5.1; guía M108 |
-| **VI** | ¿Cómo avanzan solo algunos Estados? (cooperaciones reforzadas) | TUE, art. 20; TFUE, arts. 326 a 334 | Fichas del PE 1.1.3 y 1.1.4; guía M108 |
+| **I** | La Unión Europea: antecedentes | TUE, arts. 15 y 16 (para no confundir los «Consejos») | Fichas del Parlamento Europeo 1.1.1; portal de la Unión (Día de Europa); guía M108 |
+| **II** | Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos | TUE: preámbulo y arts. 1 a 3, 13, 15, 47 y 48.4; CE, arts. 93 y 94 | Fichas del PE 1.1.1 a 1.1.5; LO 1/2008; **cuadro maestro** de la guía M108 |
+| **III** | El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea | TUE, arts. 4 a 12, 16 y 47 a 55; TFUE, arts. 1, 24, 238 y 354; CE, art. 87 | Índices de las versiones consolidadas (DOUE); guía M108 |
+| **IV** | El proceso de ampliación | TUE, arts. 49 y 50 | Ficha del PE 5.5.1; guía M108 |
+| **V** | Las cooperaciones reforzadas | TUE, art. 20; TFUE, arts. 326 a 334 | Fichas del PE 1.1.3 y 1.1.4; guía M108 |
 
-!> **La idea que une los seis bloques:** tras la guerra, seis Estados ponen en común el carbón y el acero (I). De ahí nacen unas Comunidades que los **Tratados** van ampliando y reformando (III) hasta una **Unión** con **personalidad jurídica**, **valores**, **objetivos** y **competencias atribuidas** por los Estados (II). Esa Unión se apoya en dos Tratados, el TUE y el TFUE (IV), puede **crecer** (adhesión) o **perder** miembros (retirada) (V), y dentro de ella unos Estados pueden **ir más deprisa** mediante cooperaciones reforzadas (VI).
+!> **La idea que une los cinco bloques:** tras la guerra, seis Estados ponen en común el carbón y el acero (I). De ahí nacen unas Comunidades que los **Tratados** van ampliando y reformando hasta una **Unión** con **personalidad jurídica**, **valores**, **objetivos** y **competencias atribuidas** por los Estados (II). Esa Unión se apoya en dos Tratados, el **TUE** y el **TFUE** (III), puede **crecer** (adhesión) o **perder** miembros (retirada) (IV), y dentro de ella unos Estados pueden **ir más deprisa** mediante cooperaciones reforzadas (V).
 
 ### Cómo está escrito
 
@@ -163,10 +162,10 @@ El epígrafe se lee como **seis preguntas encadenadas**, en el mismo orden que l
 ### Qué se pregunta y cuánto (valoración de la academia)
 
 {tabla(["Peso en el examen", "Contenido", "Dónde"],
-  [["**Muy preguntado**", "Los Tratados originarios y modificativos: qué instituciones, políticas y procedimientos aporta cada uno. La guía afirma que dominar el cuadro maestro resuelve **entre el 40 % y el 50 %** de las preguntas de Unión Europea", "III.4"],
-   ["**Casi todos los años**", "Personalidad jurídica (**Lisboa**, art. 47); ciudadanía europea (**Maastricht**); valores del art. 2 (regla **LÍDER**); qué países entran y cuándo", "II.1, II.2, III.4, V.2"],
-   ["**Alguna vez**", "Arts. 4 y 5 (delimitación frente a ejercicio de competencias); mayoría de **cuatro quintos** del art. 7; **iniciativa** de la revisión (art. 48); **a quién se dirige** la solicitud (arts. 49 y 50); **nueve** Estados y actos que vinculan solo a los participantes; cifras de la mayoría cualificada; Islandia y Noruega", "IV.2, IV.3, IV.5, V, VI"],
-   ["**Nunca o casi nunca**", "Art. 1, art. 3 (en test), art. 6, art. 8, art. 11 (salvo el millón de firmas), índice del TFUE, fechas de firma de los Tratados", "II, IV"]],
+  [["**Muy preguntado**", "Los Tratados originarios y modificativos: qué instituciones, políticas y procedimientos aporta cada uno. La guía afirma que dominar el cuadro maestro resuelve **entre el 40 % y el 50 %** de las preguntas de Unión Europea", "II.6"],
+   ["**Casi todos los años**", "Personalidad jurídica (**Lisboa**, art. 47); ciudadanía europea (**Maastricht**); valores del art. 2 (regla **LÍDER**); qué países entran y cuándo", "II.1, II.3, II.6, IV.3"],
+   ["**Alguna vez**", "Arts. 4 y 5 (delimitación frente a ejercicio de competencias); mayoría de **cuatro quintos** del art. 7; **iniciativa** de la revisión (art. 48); **a quién se dirige** la solicitud (arts. 49 y 50); **nueve** Estados y actos que vinculan solo a los participantes; cifras de la mayoría cualificada; Islandia y Noruega", "III.2, III.4, III.7, IV, V"],
+   ["**Nunca o casi nunca**", "Art. 1, art. 3 (en test), art. 6, art. 8, art. 11 (salvo el millón de firmas), índice del TFUE, fechas de firma de los Tratados", "II.2, II.4, II.5, III.3, III.5, III.6, III.8"]],
   ver=())}
 
 {GUIA_NOTA.replace("Cuadro transcrito de la guía M108 (academia)", "Valoración recogida del vídeo M108 (academia)")}
@@ -1302,11 +1301,10 @@ T.ap("s21", "Cierre 2. Repaso en 10 minutos (por bloques)", f"""
 | Bloque | Lo esencial | Dato que más cae |
 |---|---|---|
 | I. Antecedentes | Declaración Schuman; carbón y acero; CED fallida; Mesina | **9 de mayo de 1950** (Día de Europa) |
-| II. Naturaleza y objetivos | Tratado entre Estados; competencias atribuidas; personalidad jurídica (47, **Lisboa**); valores (2, regla **LÍDER**); objetivos (3); ratificación (arts. 93 y 94 CE) | **Lisboa** da la personalidad jurídica; **Maastricht**, la ciudadanía |
-| III. Tratados | París 1951; Roma 1957; Fusión 1965; AUE 1986; Maastricht 1992; Ámsterdam 1997; Niza 2001; Lisboa 2007; **cuadro maestro** | Instituciones: 4 → 5 → **7**; la entrada en vigor, no la firma |
-| IV. TUE y TFUE | Mismo valor jurídico; TUE (55 arts., 6 títulos) y TFUE (358 arts., 7 partes); arts. 4 y 5, 7, 9 a 12, 48 y 51 a 55 | **Atribución** delimita, **subsidiariedad y proporcionalidad** ejercen; art. 7: **4/5** y **unanimidad**; ICE: **un millón**; revisión: iniciativa del **Gobierno, el PE o la Comisión** |
-| V. Ampliación y retirada | Art. 49 y criterios de Copenhague; ampliaciones; art. 50 | Solicitud al **Consejo**, **unanimidad**; retirada: **2 años** |
-| VI. Cooperaciones reforzadas | Art. 20 TUE; arts. 326 a 334 TFUE | **Nueve** Estados; informan **Comisión y Alto Representante** al **PE y Consejo** |
+| II. Objetivos y naturaleza jurídica; Tratados | Tratado entre Estados; competencias atribuidas; personalidad jurídica (47, **Lisboa**); art. 1; valores (2, regla **LÍDER**); objetivos (3); París 1951; Roma 1957; Fusión 1965; AUE 1986; Maastricht 1992; Ámsterdam 1997; Niza 2001; Lisboa 2007; **cuadro maestro**; ratificación (arts. 93 y 94 CE) | **Lisboa** da la personalidad jurídica; **Maastricht**, la ciudadanía; instituciones: 4 → 5 → **7**; la entrada en vigor, no la firma |
+| III. TUE y TFUE | Mismo valor jurídico; TUE (55 arts., 6 títulos) y TFUE (358 arts., 7 partes); arts. 4 y 5, 6, 7, 8, 9 a 12, 48 y 51 a 55 | **Atribución** delimita, **subsidiariedad y proporcionalidad** ejercen; art. 7: **4/5** y **unanimidad**; ICE: **un millón**; revisión: iniciativa del **Gobierno, el PE o la Comisión** |
+| IV. Proceso de ampliación | Art. 49 y criterios de Copenhague; art. 50; ampliaciones, retiradas y candidaturas | Solicitud al **Consejo**, **unanimidad**; retirada: **2 años** |
+| V. Cooperaciones reforzadas | Art. 20 TUE; arts. 326 a 334 TFUE | **Nueve** Estados; informan **Comisión y Alto Representante** al **PE y Consejo** |
 
 ?> **Trampas frecuentes:** «la solicitud de adhesión se dirige a la **Comisión**» (va al **Consejo**, que decide por **unanimidad**); «cooperación reforzada en **cualquier** ámbito» (no en competencias **exclusivas**); «solicitud de cooperación reforzada al **Consejo Europeo**» (a la **Comisión**; en PESC, al **Consejo**); «el TUE prevalece sobre el TFUE» (tienen el **mismo valor jurídico**); «el Día de Europa conmemora el Tratado de **Roma**» (conmemora la **Declaración Schuman**); «el acuerdo de retirada lo celebra el Consejo por **unanimidad**» (por **mayoría cualificada**).
 """)
@@ -1579,4 +1577,70 @@ T.hito("1973", "Primera ampliación (1-1-1973)", "Dinamarca, Irlanda y Reino Uni
 T.hito("1997", "Tratado de Ámsterdam, firmado el 2-10-1997", "En vigor el 1-5-1999; primeras disposiciones generales sobre cooperación reforzada (ficha 1.1.3 del PE)", "normativo", "s8")
 T.hito("2009", "Tratado de Lisboa en vigor (1-12-2009)", "La Unión adquiere personalidad jurídica propia (art. 47 TUE) y desaparece la Comunidad Europea (guía M108)", "normativo", "s9")
 
+# =============================================================================
+# Reorganización según el índice de la guía M108 (B2T01_indice.py): bloques, resúmenes y remisiones
+import B2T01_indice as IND
+
+BLOQUES = {
+ "bI": (donde(
+   "Primer bloque de la guía. Antes de leer los Tratados vigentes, hay que saber **por qué** y **cómo** empezó la integración europea: la reconciliación franco-alemana y la puesta en común del carbón y del acero. Este bloque no es texto legal: todo sale literal de fuentes oficiales de la Unión.",
+   ["1 Del fin de la Segunda Guerra Mundial a la Declaración Schuman y el Día de Europa", "2 Del fracaso de la CED a la Conferencia de Mesina (ampliación de la guía)"]),
+  resumen([
+   "Punto de partida: **Declaración Schuman**, **9 de mayo de 1950** (por eso el 9 de mayo es el **Día de Europa**).",
+   "Idea: poner en común el **carbón y el acero** para la **reconciliación franco-alemana**; seis países.",
+   "La **CED** fracasó (Asamblea Nacional francesa, 1954); la **Conferencia de Mesina** (1955) llevó a los Tratados **CEE** y **CEEA**."],
+   "Siguiente: II. Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos")),
+ "bII": (donde(
+   "Segundo bloque de la guía. Primero, **qué es** jurídicamente la Unión (organización creada por Tratado entre Estados, con personalidad jurídica y competencias atribuidas) y **para qué** existe (arts. 1 a 3: valores y objetivos). Después, **cómo se llegó** a ella: los Tratados originarios y modificativos, con el cuadro que la guía considera la clave del tema.",
+   ["1 Naturaleza jurídica", "2 La Unión Europea (TUE, art. 1)", "3 Valores de la Unión Europea (TUE, art. 2)", "4 Objetivos de la Unión Europea (TUE, art. 3)",
+    "5 Tratados originarios y modificativos: de París a Lisboa", "6 Tratados originarios y modificativos: el cuadro maestro (guía M108)"]),
+  resumen([
+   "La Unión se crea **por Tratado** entre Estados que le **atribuyen competencias**; se fundamenta en el **TUE** y el **TFUE**, con el **mismo valor jurídico**, y sucede a la Comunidad Europea (art. 1).",
+   "Naturaleza jurídica en tres etapas: **Roma** (CEE, 1958) → **Maastricht** (Unión Europea, 1993, sin personalidad jurídica) → **Lisboa** (2009, **personalidad jurídica propia**, art. 47).",
+   "**Valores** (art. 2): **LÍDER** (libertad, igualdad, democracia, Estado de Derecho, respeto de los derechos humanos) más la dignidad humana. **Finalidad** (art. 3.1): paz, valores y bienestar; los objetivos **no amplían competencias** (art. 3.6).",
+   "Un Tratado entra en vigor cuando lo han ratificado **todos** los Estados; en España, arts. 93 y 94 CE (el Tratado de Lisboa, por la LO 1/2008).",
+   "Originarios: **París** (CECA, 1951; 50 años) y **Roma** (CEE y Euratom, 1957; indefinidos); para la guía, también **Maastricht**. Modificativos: **Fusión** (1965), **Acta Única** (1986), **Maastricht** (1992), **Ámsterdam** (1997), **Niza** (2001) y **Lisboa** (2007; en vigor el 1-12-2009). La Constitución para Europa fracasó (2005).",
+   "Instituciones: 4 (Fusión) → 5 (Maastricht, Tribunal de Cuentas) → **7** (Lisboa: Consejo Europeo y BCE). Personalidad jurídica: **Lisboa**; ciudadanía: **Maastricht**; ICE: **Lisboa**."],
+   "Siguiente: III. El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea")),
+ "bIII": (donde(
+   "Tercer bloque de la guía. Desde Lisboa, la Unión se apoya en **dos Tratados** con el mismo valor jurídico: el **TUE** (principios, instituciones, acción exterior) y el **TFUE** (funcionamiento y competencias). Aquí se estudia **el TUE** en el orden de la guía —título I (arts. 4 a 8), título II (arts. 9 a 12) y disposiciones finales (revisión, art. 48)— y después **el TFUE**.",
+   ["1 El Tratado de la Unión Europea: origen y estructura", "2 Principios en el reparto competencial (arts. 4 y 5)", "3 Carta de los Derechos Fundamentales (art. 6)",
+    "4 Procedimientos de alerta temprana y de violación de los valores (art. 7)", "5 Vecindad (art. 8)", "6 Disposiciones sobre los principios democráticos (arts. 9 a 12)",
+    "7 Disposiciones finales: revisión de los Tratados (arts. 47 a 55)", "8 El Tratado de Funcionamiento de la Unión Europea"]),
+  resumen([
+   "El **TUE** (55 artículos, seis títulos) nace en Maastricht y marca las directrices; el **TFUE** (358 artículos, siete partes) es el antiguo Tratado de Roma y desarrolla políticas y procedimientos. **Mismo valor jurídico** (art. 1 TUE; art. 1.2 TFUE).",
+   "Competencias: la **atribución** delimita y la **subsidiariedad** y la **proporcionalidad** rigen el ejercicio (arts. 4 y 5). Art. 7: **cuatro quintos** (riesgo, Consejo), **unanimidad** (violación, Consejo Europeo), **mayoría cualificada** (sanción; 72 %/65 % según el art. 354).",
+   "Principios democráticos: **ciudadanía** (Maastricht), democracia representativa, **ICE** (un millón; Lisboa), Parlamentos nacionales (art. 12).",
+   "Revisión (art. 48): ordinaria (iniciativa de un Gobierno, el PE o la Comisión; Convención; Conferencia; ratificación de todos) y simplificadas (Consejo Europeo, unanimidad). Disposiciones finales: Protocolos parte integrante (51), TUE ilimitado (53), la Unión tiene personalidad jurídica (47)."],
+   "Siguiente: IV. El proceso de ampliación")),
+ "bIV": (donde(
+   "Cuarto bloque de la guía. La Unión ha pasado de seis a veintisiete Estados mediante sucesivas **ampliaciones** (art. 49) y ha conocido una **retirada** (art. 50). Los requisitos y el procedimiento están en el TUE; los criterios de Copenhague y la historia de las ampliaciones, en la ficha del Parlamento Europeo.",
+   ["1 Procedimiento de adhesión (art. 49) y criterios de Copenhague", "2 Procedimiento de retirada (art. 50)", "3 Ampliaciones, retiradas y candidaturas a la Unión Europea"]),
+  resumen([
+   "Adhesión (art. 49): **cualquier Estado europeo** que respete y promueva los valores del art. 2; solicitud al **Consejo** (unanimidad), consulta a la Comisión, aprobación del PE (**mayoría de sus miembros**); acuerdo y **ratificación de todos**. Criterios de **Copenhague** (Consejo Europeo, 1993): político, económico y asunción del acervo.",
+   "Retirada (art. 50): notificación al **Consejo Europeo**; acuerdo del **Consejo** por **mayoría cualificada** con aprobación del PE; **dos años** prorrogables por unanimidad; Reino Unido, 31-1-2020.",
+   "Ampliaciones: 1973, 1981, **1986 (España y Portugal)**, 1995, 2004, 2007 y 2013 (Croacia)."],
+   "Siguiente: V. Las cooperaciones reforzadas")),
+ "bV": (donde(
+   "Quinto bloque de la guía. Cuando la Unión en su conjunto no puede avanzar, un grupo de Estados puede **cooperar más estrechamente** usando las instituciones de la Unión. El marco general está en el art. 20 TUE y el detalle, en los arts. 326 a 334 TFUE. Es el bloque con más preguntas oficiales de este tema.",
+   ["1 Concepto, finalidad y condiciones (art. 20 TUE; arts. 326 a 328 TFUE)", "2 Autorización, votación y participación posterior (arts. 329 a 331 TFUE)", "3 Gastos, pasarelas y coherencia (arts. 332 a 334 TFUE)"]),
+  resumen([
+   "Cooperación reforzada (art. 20 TUE): solo en **competencias no exclusivas**, como **último recurso**, con **al menos nueve** Estados; abierta permanentemente; sus actos vinculan **solo a los participantes**.",
+   "Límites (326-327): respetar Tratados, mercado interior y cohesión, y a los no participantes. Informan **Comisión y Alto Representante** al **PE y al Consejo** (328.2).",
+   "Autorización (329): régimen general, solicitud a la **Comisión** y aprobación del **PE**; PESC, solicitud al **Consejo** y **unanimidad**. Votan solo los participantes (330).",
+   "Gastos para los participantes salvo unanimidad de todos (332); pasarelas propias sin efectos militares (333); coherencia: Consejo y Comisión (334)."],
+   "Fin del tema. Para fijarlo: Cierre 1 (preguntas oficiales de 2025) y Cierre 2 (repaso por bloques); después, el test.")),
+}
+BARE = [
+ ("→ II.1, IV.2 y IV.3)", "→ II.2, II.3, II.4, III.2, III.3, III.4 y III.5)"),
+ ("arts. 1 a 3 en **II**; arts. 4 a 8 en **IV.2** y **IV.3**", "arts. 1 a 3 en **II.2 a II.4**; arts. 4 a 8 en **III.2 a III.5**"),
+ ("Aquí: **IV.4**", "Aquí: **III.6**"),
+ ("Aquí: art. 47 en **II.1.3**; art. 48 en **IV.5**; arts. 49 y 50 en **V**; arts. 51 a 55 en **IV.5.3**", "Aquí: art. 47 en **II.1.2**; art. 48 en **III.7**; arts. 49 y 50 en **IV**; arts. 51 a 55 en **III.7.3**"),
+ ("está en II.1.3, el **48** en IV.5.1 y IV.5.2 y los **49 y 50** en el bloque V.", "está en II.1.2, el **48** en III.7.1 y III.7.2 y los **49 y 50** en el bloque IV."),
+ ("cuadro del III.4", "cuadro del II.6"),
+ ("(→ bloque V)", "(→ bloque IV)"),
+]
+MAPA_U, MAPA_A = IND.reorganizar(T, BLOQUES, BARE)
+if os.environ.get("NIBLO_MAPA"):
+    for k, v in sorted(MAPA_U.items()): print(k, "→", v)
 T.publicar()
