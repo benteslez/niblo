@@ -17,7 +17,8 @@ import marcas_examen as M
 
 # nombre de convocatoria → código corto en las marcas (NOM en plantilla.Tema._marcas_examen)
 EXAMENES = {"2024-01L": "L24", "2024-01P": "P24", "2022-01L": "L22", "2022-01P": "P22", "2022-01ST": "ST22",
-            "2019-01L": "L19", "2019-01P": "P19", "2019-01ST": "ST19", "2019-01STX": "STX19"}
+            "2019-01L": "L19", "2019-01P": "P19", "2019-01ST": "ST19", "2019-01STX": "STX19",
+            "2013-01L": "L13", "2013-01P": "P13", "2011-01L": "L11", "2011-01P": "P11", "2008-01L": "L08", "2008-01P": "P08"}
 
 # «Ley 39/2015», «Real Decreto 364/1995»… → clave de boe/
 NUM = {"39/2015": "L39", "40/2015": "L40", "9/2017": "LCSP", "47/2003": "LGP", "6/1985": "LOPJ", "29/1998": "LJCA", "7/1985": "LRBRL",
@@ -72,11 +73,13 @@ def por_texto(q, citado, bt):
     (≥ 80 % de sus palabras clave) y buena parte del enunciado, con ventaja clara sobre el segundo y, si el enunciado nombra la norma, de esa norma."""
     to, tq = _toks(q["o"][q["c"]]), _toks(q["q"])
     if len(to) < 4: return None
+    if re.search(r"LOFAGE|Ley 30/1992|LRJPAC|Ley 30/2007|Texto Refundido de la Ley de Contratos|Ley 7/2007", q["q"]): return None   # norma derogada: el artículo vigente no es «el de la pregunta»
     k0 = norma(q["q"])
     if any(m.group(1) not in NUM for m in NORMA_NUM.finditer(q["q"])) or (NORMA_NUM.search(q["q"]) and not k0): return None   # norma que no está en boe/
     sc = []
     for (k, b), bs in bt.items():
         if b == "preambulo" or not SOLO_NORMAS(k) or (k0 and k != k0): continue
+        if k == "LCSP" and q.get("antigua"): continue
         so, sq = len(to & bs) / len(to), len(tq & bs) / max(1, len(tq))
         sc.append((so + 0.5 * sq, so, sq, k, b))
     sc.sort(reverse=True)
@@ -101,6 +104,7 @@ def main(dtxt, dlits):
         for q in G.examen(base, dtxt):
             tot += 1
             if q.get("anulada"): continue
+            q["antigua"] = cod[-2:] in ("08", "11", "13")   # la LCSP vigente (9/2017) no es la de entonces
             arts = [int(a) for a in ART.findall(q["q"])]
             if not arts:
                 sin_art += 1
