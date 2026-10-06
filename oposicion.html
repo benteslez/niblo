@@ -5417,7 +5417,7 @@ function realesDeTema(t) {
   }));
   return out;
 }
-const qsTest = t => qs(t).concat(realesDeTema(t));
+const qsTest = t => qs(t).concat(realesDeTema(t)).filter(q => !q.retenida);   // las retenidas (premisa o respuesta desfasada) quedan fuera del test
 /* Respuesta de flashcard: si es una enumeración «a · b · c», cada elemento va en su línea (la frase final, aparte). */
 const fcTexto = s => {
   const partes = String(s).split(" · ");

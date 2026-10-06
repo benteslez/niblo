@@ -16,6 +16,8 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 PARTES = ["part1", "part2", "part3", "part4", "part5", "part6", "part7", "part8", "part9a", "part9b", "part10", "part11", "part12", "part13"]
 
 def _cargar():
+    sys.path[:0] = [os.path.join(AQUI, ".."), os.path.join(AQUI, "..", "boe")]
+    import plantilla as _P; _P.ELISION = True      # literales parciales con «[…]»
     ns = {}
     for f in PARTES:
         p = os.path.join(AQUI, f + ".py"); ns["__file__"] = p
@@ -243,9 +245,9 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
 
 | Bloque | Pregunta | Constitución | Otras normas |
 |---|---|---|---|
-| **I** | ¿Qué es y cómo se compone? | Arts. 159 y 160, 165 | LOTC arts. 1, 5, 9, 16, 18, 19 |
-| **II** | ¿Qué conoce? | Arts. 161 a 163 | LOTC arts. 32, 33, 35, 41 a 46, 59 a 63, 73 a 77 |
-| **III** | ¿Qué valor tienen las sentencias? | Art. 164 | LOTC arts. 38 y 39 |
+| **I** | ¿Qué es, cómo se compone y cómo se organiza? | Arts. 159 y 160, 165 | LOTC arts. 1, 5 a 9, 14 a 16, 18, 19, 23 |
+| **II** | ¿Qué conoce? | Arts. 161 a 163 | LOTC arts. 30, 32, 33, 35, 41 a 46, 59 a 63, 67 a 72, 73 a 79 (y art. 95 CE) |
+| **III** | ¿Qué valor tienen las sentencias? | Art. 164 | LOTC arts. 38 a 40 y 93 |
 | **IV** | Resumen | — | — |
 
 ### Cómo estudiarlo
@@ -261,9 +263,10 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
 """, 1)
         A("bVII", "I. El Tribunal Constitucional: naturaleza y composición", donde(
           "Primera pregunta. Antes de ver qué hace el Tribunal Constitucional hay que saber **qué es** y **cómo se compone**: quién propone a sus 12 miembros, cuánto dura el mandato y quién puede serlo.",
-          ["1 Qué es el Tribunal Constitucional", "2 Composición y mandato"]), 1)
+          ["1 Qué es el Tribunal Constitucional", "2 Composición y mandato", "3 Claves para memorizar la composición", "4 Organización, quórum y cese"]), 1)
         A("s33", "I.1" + S["s33"]["title"][5:], S["s33"]["body"]); A("s34", "I.2" + S["s34"]["title"][5:], S["s34"]["body"])
         A("s34b", "I.3 Claves para memorizar la composición", S["s34b"]["body"])
+        A("s34c", "I.4 Organización del Tribunal: Pleno, Salas, Secciones, quórum y cese", S["s34c"]["body"])
         A("bII", "II. ¿Qué procesos conoce el Tribunal Constitucional?", donde(
           "Segunda pregunta. El Tribunal conoce de **inconstitucionalidad**, **cuestión de inconstitucionalidad**, **amparo**, **conflictos de competencia** (de tres clases) y la **impugnación del art. 161.2** del Gobierno. Aprende **quién** los interpone, **frente a qué** y en **qué plazo**.",
           ["1 Competencias y procedimientos", "2 Recapitulación: amparo frente a inconstitucionalidad"]), 1)

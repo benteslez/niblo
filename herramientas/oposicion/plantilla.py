@@ -50,6 +50,7 @@ def c(k, art, frag):
     return "«" + frag + "»"
 
 
+ELISION = False   # True (lo activa m101/dividir.py): los literales parciales llevan «[…]» donde se omiten párrafos del artículo
 LITS = []   # (norma, bloque, línea de título del bloque literal) de cada lit() emitido en este proceso
 def lit(k, art, resaltar=(), solo=None, titulo=None):
     """Bloque literal del artículo (sin la línea de cabecera del BOE, que va como título).
@@ -58,12 +59,16 @@ def lit(k, art, resaltar=(), solo=None, titulo=None):
     cab_boe = ps[0]
     idx = solo if solo is not None else list(range(1, len(ps)))
     out, usados = [], set()
+    prev = 0
     for i in idx:
+        if ELISION and i - prev > 1: out.append("[…]")     # párrafos del artículo que no se reproducen
+        prev = i
         p = ps[i]
         for r in resaltar:
             if r in p and r not in usados:
                 p = p.replace(r, "**" + r + "**", 1); usados.add(r)
         out.append(p)
+    if ELISION and idx and prev < len(ps) - 1: out.append("[…]")
     falta = [r for r in resaltar if r not in usados]
     assert not falta, ("NEGRITA NO LITERAL", k, art, falta)
     if titulo is None:
@@ -229,10 +234,13 @@ class Tema:
                 for k, b, linea in LITS:
                     if k != x["k"] or b != x["bloque"]: continue
                     for sec in self.S:
-                        mm = re.search(r"(?m)^" + re.escape(linea) + r"$", sec["body"])
-                        if mm:
+                        for mm in re.finditer(r"(?m)^" + re.escape(linea) + r"$", sec["body"]):
                             hs = [h for h in re.finditer(r"(?m)^### .*$", sec["body"]) if h.start() < mm.start()]
-                            hallado = (sec["id"], hs[-1].group(0) if hs else None); break
+                            cab_ = hs[-1].group(0) if hs else None
+                            # `en`: regex sobre el título de la unidad, cuando el mismo artículo se cita en varias y la marca va en una concreta
+                            if x.get("en") and not (cab_ and re.search(x["en"], cab_)): continue
+                            hallado = (sec["id"], cab_); break
+                        if hallado: break
                     if hallado: break
             elif x.get("clave", "").startswith("sec:"):
                 hallado = (x["clave"][4:], None) if any(s_["id"] == x["clave"][4:] for s_ in self.S) else None

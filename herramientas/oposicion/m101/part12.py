@@ -4,7 +4,7 @@
 # Enunciado y opciones literales del documento; la respuesta es la de su clave (M104: tabla final;
 # M105: tabla final y respuesta en rojo en las soluciones) y se ha comprobado contra el texto vigente.
 # Se marcan con "ac" (filtro «Academia» del test de cada tema) y "t" (tema al que van).
-def AC(src, n, tema, k, art, cat, q, ops, ok, exp, frags, aviso=None):
+def AC(src, n, tema, k, art, cat, q, ops, ok, exp, frags, aviso=None, retenida=None):
     """ops: opciones en el orden del documento (a, b, c, d); ok: letra de la clave."""
     i = "abcd".index(ok)
     orden = [ops[i]] + [o for j, o in enumerate(ops) if j != i]
@@ -16,6 +16,7 @@ def AC(src, n, tema, k, art, cat, q, ops, ok, exp, frags, aviso=None):
     e = f"Solución de la academia ({src} · pregunta {n}). {exp}"
     if aviso: e += f" ⚠ {aviso}"
     T.Q[-1].update({"e": e, "ac": f"{src} · pregunta {n}", "t": tema})
+    if retenida: T.Q[-1]["retenida"] = retenida     # se ve en los datos, pero queda fuera del test (premisa o respuesta desfasada)
 
 # ------------------------------------------------------------------ M104 · Test de repaso
 M = "M104"
@@ -173,7 +174,7 @@ AC(M, 26, 2, "CE", "a43", "Contenido", "Señale cuál de los siguientes derechos
 AC(M, 27, 1, "CE", "a49", "Reforma", "Señale qué artículos se han reformado desde la publicación y entrada en vigor de la Constitución Española de 1978:",
    ["El artículo 13.2, el 135 y el 49.", "El artículo 13.4, el 135 y el 49.", "Únicamente el artículo 13.2 y el 135.", "El artículo 13.3, el 135 y el 47."], "a",
    "Las tres reformas que recoge la clave: **1992** (art. 13.2: sufragio pasivo en las municipales), **2011** (art. 135: estabilidad presupuestaria) y **2024** (art. 49: personas con discapacidad). El documento no desarrolla esta solución. **Falta la cuarta reforma: 2026 (art. 69.3).**", None,
-   aviso="el documento es anterior a la reforma de **2026** (art. 69.3, circunscripciones insulares del Senado: Ibiza y Formentera). Hoy son **cuatro** reformas (13.2, 135, 49 y 69.3) y **ninguna opción las recoge todas**; la opción «El artículo 13.2, el 135 y el 49» es la única que reúne tres reformas sin errores y por eso se mantiene la clave de la academia.")
+   aviso="el documento es anterior a la reforma de **2026** (art. 69.3, circunscripciones insulares del Senado: Ibiza y Formentera). Hoy son **cuatro** reformas (13.2, 135, 49 y 69.3) y **ninguna opción las recoge todas**; la opción «El artículo 13.2, el 135 y el 49» es la única que reúne tres reformas sin errores y por eso se mantiene la clave de la academia.", retenida="La reforma de 2026 (art. 69.3) hace que ninguna opción recoja las cuatro reformas hoy vigentes.")
 AC(M, 28, 2, "CE", "a11", "Contenido", "Según el artículo 11.3 de la Constitución Española de 1978, en los países iberoamericanos podrán naturalizarse los españoles sin perder su nacionalidad de origen:",
    ["Siempre que tales países reconozcan a sus ciudadanos un derecho recíproco.", "Aunque no hayan tenido o tengan una particular vinculación con España.", "En los casos que la normativa de tales países lo permita para los ciudadanos españoles y europeos.", "Aun cuando no reconozcan a sus ciudadanos un derecho recíproco."], "d",
    NOEXP + "art. 11.3 CE: «El Estado podrá concertar tratados de doble nacionalidad con los países iberoamericanos o con aquellos que hayan tenido o tengan una particular vinculación con España. En estos mismos países, aun cuando no reconozcan a sus ciudadanos un derecho recíproco, podrán naturalizarse los españoles sin perder su nacionalidad de origen.»", ["aun cuando no reconozcan a sus ciudadanos un derecho recíproco, podrán naturalizarse los españoles sin perder su nacionalidad de origen"])
@@ -189,4 +190,4 @@ AC(M, 31, 1, "CE", "a9", "Contenido", "¿Cuáles de los siguientes principios ge
 AC(M, 32, 1, "CE", "a49", "Reforma", "La última reforma de la Constitución Española de 1978, de 15 de febrero de 2024, tiene por objeto:",
    ["El artículo 49.", "El artículo 33.", "El artículo 50.", "El artículo 47."], "a",
    "La reforma de 15 de febrero de 2024 modificó el **art. 49** (personas con discapacidad): «Las personas con discapacidad ejercen los derechos previstos en este Título en condiciones de libertad e igualdad reales y efectivas.»", ["Las personas con discapacidad ejercen los derechos previstos en este Título en condiciones de libertad e igualdad reales y efectivas"],
-   aviso="la de 2024 ya no es «la última»: la reforma de **2026** modificó el art. 69.3. La respuesta de la clave (art. 49) sigue siendo la de la reforma de 2024.")
+   aviso="la de 2024 ya no es «la última»: la reforma de **2026** modificó el art. 69.3. La respuesta de la clave (art. 49) sigue siendo la de la reforma de 2024.", retenida="La premisa («la última reforma») ya no es cierta tras la reforma de 2026 (art. 69.3).")
