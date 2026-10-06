@@ -143,8 +143,8 @@ Los apuntes siguen **el orden y los epígrafes de la guía de estudio M108** [[M
 | Bloque | Epígrafe de la guía | Tratados (EUR-Lex) | Otras fuentes |
 |---|---|---|---|
 | **I** | La Unión Europea: antecedentes | TUE, arts. 15 y 16 (para no confundir los «Consejos») | Fichas del Parlamento Europeo 1.1.1; portal de la Unión (Día de Europa); guía M108 |
-| **II** | Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos | TUE: preámbulo y arts. 1 a 3, 13, 15, 47 y 48.4; CE, arts. 93 y 94 | Fichas del PE 1.1.1 a 1.1.5; LO 1/2008; **cuadro maestro** de la guía M108 |
-| **III** | El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea | TUE, arts. 4 a 12, 16 y 47 a 55; TFUE, arts. 1, 24, 238 y 354; CE, art. 87 | Índices de las versiones consolidadas (DOUE); guía M108 |
+| **II** | Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos | TUE: arts. 1 a 3, 13, 15, 47 y 48.4; CE, arts. 93 y 94 | Fichas del PE 1.1.1 a 1.1.5 (literales solo la 1.1.1 y la 1.1.4); LO 1/2008; **cuadro maestro** de la guía M108 |
+| **III** | El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea | TUE, arts. 4 a 12, 16 y 47 a 55; TFUE, arts. 1 a 6, 24, 238 y 354; Protocolo n.º 2 (subsidiariedad); CE, art. 87 | Índices de las versiones consolidadas (DOUE); guía M108 |
 | **IV** | El proceso de ampliación | TUE, arts. 49 y 50 | Ficha del PE 5.5.1; guía M108 |
 | **V** | Las cooperaciones reforzadas | TUE, art. 20; TFUE, arts. 326 a 334 | Fichas del PE 1.1.3 y 1.1.4; guía M108 |
 
@@ -161,7 +161,7 @@ Los apuntes siguen **el orden y los epígrafes de la guía de estudio M108** [[M
 ### Qué se pregunta y cuánto (valoración de la academia)
 
 {tabla(["Peso en el examen", "Contenido", "Dónde"],
-  [["**Muy preguntado**", "Los Tratados originarios y modificativos: qué instituciones, políticas y procedimientos aporta cada uno. La guía afirma que dominar el cuadro maestro resuelve **entre el 40 % y el 50 %** de las preguntas de Unión Europea", "II.6"],
+  [["**Muy preguntado**", "Los Tratados originarios y modificativos: qué instituciones, políticas y procedimientos aporta cada uno. La guía afirma que dominar el cuadro maestro resuelve **entre el 40 % y el 50 %** de las preguntas de Unión Europea", "II.5"],
    ["**Casi todos los años**", "Personalidad jurídica (**Lisboa**, art. 47); ciudadanía europea (**Maastricht**); valores del art. 2 (regla **LÍDER**); qué países entran y cuándo", "II.1, II.3, II.5, IV.3"],
    ["**Alguna vez**", "Arts. 4 y 5 (delimitación frente a ejercicio de competencias); mayoría de **cuatro quintos** del art. 7; **iniciativa** de la revisión (art. 48); **a quién se dirige** la solicitud (arts. 49 y 50); **nueve** Estados y actos que vinculan solo a los participantes; cifras de la mayoría cualificada; Islandia y Noruega", "III.2, III.4, III.7, IV, V"],
    ["**Nunca o casi nunca**", "Art. 1, art. 3 (en test), art. 6, art. 8, art. 11 (salvo el millón de firmas), índice del TFUE, fechas de firma de los Tratados", "II.2, II.4, III.3, III.5, III.6, III.8"]],
@@ -187,7 +187,7 @@ U1_1 = unidad("1.1 Del fin de la guerra a los primeros Tratados (cuadro de la gu
      ["23 de julio de 1952", "Tratado de París - CECA"],
      ["1 de enero de 1958", "Tratado de Roma - CEE"]], ver=(0, 1)),
   GUIA_NOTA,
-  L("**OTAN** (Organización del Tratado del Atlántico Norte): organización **intergubernamental político-militar** que, en su origen, firmaron **12 países**; si uno es atacado, los demás acuden en su defensa. Sigue funcionando y **no es** de la Unión Europea. [[M108]]",
+  L("**OTAN** (Organización del Tratado del Atlántico Norte): organización **intergubernamental político-militar** que, en su origen, firmaron **12 países**; si uno es atacado, los demás se consideran atacados y prestan la asistencia que cada uno juzgue necesaria (art. 5 del Tratado del Atlántico Norte; el vídeo lo resume como «acuden en su defensa»). Sigue funcionando y **no es** de la Unión Europea. [[M108]]",
     "**Consejo de Europa**: organismo **intergubernamental** de ámbito geográfico, no una institución ni parte de la Unión. Según el vídeo lo forman **46 países** del continente, frente a los **27** Estados miembros de la Unión: «no es lo mismo». [[M108]]",
     "**Deseo de Schuman** (lo que se ha preguntado): la guía lo resume como " + cg("el deseo de la formación de una Alta Autoridad común que supervisara la producción de carbón y acero en Europa") + ". Los países fundadores " + cg("mostraron su conformidad con la propuesta") + " y por eso " + cg("el 9 de mayo se considera el Día de Europa") + ".",
     "**Los seis fundadores** (también preguntado): **Francia, Alemania e Italia** y el **Benelux** (Bélgica, Países Bajos y Luxemburgo). Son los que firman el Tratado de París y crean la CECA, y los que se consideran fundadores de la Unión.",
@@ -259,7 +259,7 @@ U3_4 = unidad("1.4 La naturaleza jurídica en tres etapas: Roma, Maastricht y Li
 U3_5 = unidad("1.5 Qué implica tener personalidad jurídica",
   "Que la Unión tenga personalidad jurídica significa que es **sujeto de Derecho** y puede actuar **hacia fuera**, no solo entre los Estados miembros. [[M108]]",
   L("Puede **celebrar y negociar acuerdos y tratados internacionales** en las competencias que tiene atribuidas: " + cg("tiene competencia para celebrar y negociar acuerdos y tratados internacionales en aquellas competencias que tiene atribuidas"),
-    "Puede **participar en organizaciones internacionales** y **adherirse a convenios internacionales**: " + cg("puede participar en organizaciones internacionales y es susceptible de adherirse a convenios internacionales") + " (así, la adhesión al Convenio Europeo de Derechos Humanos del art. 6.2 TUE, → IV.3.1)",
+    "Puede **participar en organizaciones internacionales** y **adherirse a convenios internacionales**: " + cg("puede participar en organizaciones internacionales y es susceptible de adherirse a convenios internacionales") + " (así, el art. 6.2 TUE prevé la adhesión al Convenio Europeo de Derechos Humanos, que todavía no se ha consumado; → IV.3.1)",
     "Tiene **capacidad exterior** para entablar relaciones diplomáticas: " + cg("Es, por tanto, una organización con capacidad exterior para entablar relaciones diplomáticas")),
   "?> **Límite:** la capacidad exterior se ejerce **solo en las competencias atribuidas** a la Unión (art. 1 TUE, → II.1.2); la personalidad jurídica no amplía competencias.")
 
@@ -564,7 +564,7 @@ U10_2 = unidad("4.2 Tratados originarios y Tratados modificativos",
   "El epígrafe distingue dos clases de Tratados. **No hay norma que defina «originario»**, y la guía y la ficha del Parlamento Europeo no cuentan lo mismo, así que conviene conocer los dos criterios. [[M108]]",
   tabla(["Criterio", "Tratados originarios", "Tratados modificativos"],
     [["**Ficha 1.1.1 del Parlamento Europeo** («Los primeros Tratados», → III.1)", "**París** (CECA, 1951) y **Roma** (CEE y Euratom, 1957)", "Fusión, Acta Única, Maastricht, Ámsterdam, Niza y Lisboa"],
-     ["**Guía M108** (los que crean una Comunidad o el Tratado de base)", "**París** (crea la CECA), **Roma** (crea la CEE) y **Maastricht** (elimina la CEE y crea las Comunidades Europeas y el TUE)", "El resto, que «lo que hacen son modificar esos tres tratados»"]]),
+     ["**Guía M108** (los que crean una Comunidad o el Tratado de base)", "**París** (crea la CECA), **Roma** (crea la CEE) y **Maastricht** (convierte la CEE en Comunidad Europea y crea el TUE)", "El resto, que «lo que hacen son modificar esos tres tratados»"]]),
   "?> **Aviso (clasificación, no es norma):** si el enunciado no aclara el criterio, razona con el que use. Lo seguro es que **París y Roma** son originarios con cualquier criterio y que **Lisboa** es modificativo: no sustituye los Tratados por un texto único, los **modifica** (→ III.3.2).")
 
 U10_3 = unidad("4.3 Qué aporta cada Tratado (cuadro de la guía)",
@@ -599,7 +599,7 @@ U10_5 = unidad("4.5 Reglas de memoria y trampas del cuadro",
     "**Alto Representante:** en **Ámsterdam**, el Alto Representante «en Política Exterior y de Seguridad Común»; en **Lisboa**, el de nombre largo, «en Asuntos Exteriores y Política de Seguridad». Aprendiendo uno se distingue el otro. En el Tratado vigente: " + cT(18, "al Alto Representante de la Unión para Asuntos Exteriores y Política de Seguridad") + " (art. 18.1 TUE).",
     "**Consejo Europeo:** el Acta Única lo recoge (no institución) → Maastricht lo refuerza → **Lisboa** lo hace institución y crea su **Presidencia**.",
     "**Tribunales:** Tribunal de Primera Instancia (Acta Única) → Gran Sala y Salas jurisdiccionales (Niza) → **TJUE, Tribunal General y tribunales especializados** (Lisboa).",
-    "**Ámsterdam** (1999): **cooperaciones reforzadas** (solo en el 1.er y el 3.er pilar; la PESC llega con Niza), **procedimiento de violación** (art. 7.2), mayoría cualificada con porcentajes, abstención constructiva (PESC), la política de **Empleo** (la única que introduce) y la **CPJP**.",
+    "**Ámsterdam** (1999): **cooperaciones reforzadas** (solo en el 1.er y el 3.er pilar; la PESC llega con Niza), **procedimiento de violación** (art. 7.2), mayoría cualificada con porcentajes, abstención constructiva (PESC), las políticas de **Empleo** y **Schengen** (según el cuadro de la guía; véase el apartado II.5, punto 9) y la **CPJP**.",
     "**Niza** (2003): prepara la **gran adhesión**: un Comisario por Estado, nuevo cálculo de la mayoría cualificada y de escaños, **alerta temprana** (art. 7.1), cooperaciones reforzadas en PESC, **DOCE → DOUE** y **Eurojust**.",
     "**Maastricht** y **Lisboa** son los que más políticas introducen y entre los que más se juega en las preguntas. En Maastricht: **defensa del consumidor, fondo de cohesión, cooperación al desarrollo, cultura, industria, educación, sanidad, redes transeuropeas** y calendario de la UEM; la guía propone inventar **una historia propia con esas iniciales** (cuanto más absurda, mejor).",
     "**Lisboa y las políticas:** **tres** evolucionan —cohesión económica, social y **territorial**; I+D y **política espacial**; educación, **formación profesional, juventud y deporte**— y **cuatro** son nuevas —**energía, turismo, protección civil y cooperación administrativa**—; además clasifica las políticas en **exclusivas, compartidas y de apoyo**.",
@@ -639,7 +639,7 @@ TAB_TUE = tabla(["Título del TUE", "Artículos", "Dónde se estudia"],
   [["**I.** Disposiciones comunes", "1 a 8", "Aquí: arts. 1 a 3 en **II**; arts. 4 a 8 en **IV.2** y **IV.3**"],
    ["**II.** Disposiciones sobre los principios democráticos", "9 a 12", "Aquí: **IV.4**"],
    ["**III.** Disposiciones sobre las instituciones", "13 a 19", "Otros epígrafes: instituciones (tema II.2 y tema II.3)"],
-   ["**IV.** Disposiciones sobre las cooperaciones reforzadas", "20", "Epígrafe propio de este tema: **VI**"],
+   ["**IV.** Disposiciones sobre las cooperaciones reforzadas", "20", "Epígrafe propio de este tema: **V**"],
    ["**V.** Acción exterior y política exterior y de seguridad común", "21 a 46", "Otro epígrafe: política exterior (tema II.6)"],
    ["**VI.** Disposiciones finales", "47 a 55", "Aquí: art. 47 en **II.1.3**; art. 48 en **IV.5**; arts. 49 y 50 en **V**; arts. 51 a 55 en **IV.5.3**"]])
 
@@ -651,7 +651,7 @@ U_IV2_3 = unidad("2.3 Cuadro: delimitar las competencias frente a ejercerlas",
      ["**Apartado del art. 5**", "5.1 y 5.2", "5.1, 5.3 y 5.4"]]),
   ESQ,
   L("**Subsidiariedad:** en un ámbito no exclusivo, la Unión **ayuda** al Estado a conseguir el objetivo que él solo no alcanza. **Proporcionalidad:** esa ayuda debe ser **proporcionada** («viene de la misma palabra»).",
-    "**Cooperación leal** (art. 4.3): la Unión y los Estados «se respetarán y asistirán mutuamente» en torno a los objetivos, los valores y la misión de la Unión.",
+    "**Cooperación leal** (art. 4.3): la Unión y los Estados «se respetarán y asistirán mutuamente en el cumplimiento de las misiones derivadas de los Tratados».",
     "**Igualdad de los Estados** y **seguridad nacional** (art. 4.2): ante los Tratados no hay Estados «más que otros», y la seguridad nacional es **responsabilidad exclusiva de cada Estado**."),
   "!> Las preguntas de 2025 sobre este artículo (X 34 y X 36, → Cierre 1) juegan exactamente con esa frontera: el **principio de atribución** (5.2) frente a la **subsidiariedad** (5.3) y a los principios que rigen el **ejercicio** (5.1).")
 
@@ -660,11 +660,11 @@ U_IV2_3 = unidad("2.3 Cuadro: delimitar las competencias frente a ejercerlas",
 TAB_MC = tabla(["Supuesto", "Mayoría cualificada del Consejo", "Dónde"],
   [["**Regla general** (votan todos los miembros)", "Al menos el **55 %** de los miembros del Consejo, **incluidos al menos quince**, que representen Estados con al menos el **65 %** de la población de la Unión. Minoría de bloqueo: al menos **cuatro** miembros", "Art. 16.4 TUE"],
    ["Votan todos, el Consejo **no** actúa a propuesta de la Comisión o del Alto Representante", "Al menos el **72 %** de los miembros del Consejo, que representen Estados con al menos el **65 %** de la población de la Unión", "Art. 238.2 TFUE"],
-   ["**No votan todos** los miembros (art. 7, art. 50, cooperaciones reforzadas…), propuesta de la Comisión o del Alto Representante", "Al menos el **55 %** de los miembros del Consejo que representen Estados **participantes**, con el **65 %** de la población de dichos Estados", "Art. 238.3.a TFUE"],
-   ["**No votan todos**, propuesta de **otros** (p. ej., del Parlamento o de los Estados)", "Al menos el **72 %** de los miembros del Consejo que representen Estados **participantes**, con el **65 %** de la población de dichos Estados", "Art. 238.3.b TFUE"]])
+   ["**No votan todos** los miembros (cooperaciones reforzadas, art. 330 TFUE…), propuesta de la Comisión o del Alto Representante", "Al menos el **55 %** de los miembros del Consejo que representen Estados **participantes**, con el **65 %** de la población de dichos Estados", "Art. 238.3.a TFUE"],
+   ["**No votan todos**, propuesta de **otros** (p. ej., del Parlamento o de los Estados) y los casos que **remiten expresamente a la letra b)**: art. 7.3 y 7.4 TUE (por el art. 354 TFUE) y art. 50.4 TUE", "Al menos el **72 %** de los miembros del Consejo que representen Estados **participantes**, con el **65 %** de la población de dichos Estados", "Art. 238.3.b TFUE"]])
 
 U_7_3 = unidad("3.3 Cómo se calcula la mayoría cualificada (arts. 16.4 TUE, 238 y 354 TFUE)",
-  "El art. 7.3 dice «mayoría cualificada» y el art. 7.5 remite al **art. 354 TFUE**, que a su vez remite al **art. 238.3 TFUE**. La guía resume el cálculo con una regla fácil: **el 65 % siempre es de población**; lo que cambia es el porcentaje de miembros del Consejo: **55 %** si la propuesta es de la **Comisión o del Alto Representante** y **72 %** si es de cualquier otro. [[M108]]",
+  "El art. 7.3 dice «mayoría cualificada» y el art. 7.5 remite al **art. 354 TFUE**, que a su vez remite al **art. 238.3 TFUE**. La guía resume el cálculo con una regla fácil: **el 65 % es siempre de población** (de la población de los Estados participantes cuando no votan todos); lo que cambia es el porcentaje de miembros del Consejo: **55 %** si la propuesta es de la **Comisión o del Alto Representante** y **72 %** si es de cualquier otro. [[M108]]",
   LT(16, solo=[idx("TUE", "Artículo 16", "4. A partir"), idx("TUE", "Artículo 16", "4. A partir") + 1, idx("TUE", "Artículo 16", "4. A partir") + 2]),
   LF(238, ["un mínimo del 72 % de los miembros del Consejo", "un mínimo del 55 % de los miembros del Consejo que represente a Estados miembros participantes que reúnan como mínimo el 65 % de la población de dichos Estados"], solo=[2, 3, 4, 5]),
   LF(354),
@@ -739,7 +739,7 @@ U_48_ORD = "\n\n".join(["@@esquema art48_ordinario@@",
   TAB_INI,
   ESQ])
 U_48_SIMP = "\n\n".join(["@@esquema art48_6@@", "@@esquema art48_7@@",
-  "!> **Regla del «pez gordo»** (vídeo M108): en la revisión **simplificada** decide el **Consejo Europeo**, porque ahí están los Jefes de Estado o de Gobierno, y el **Consejo ni aparece**. En la ordinaria el Consejo solo **informa, remite, notifica y convoca la Conferencia**; quien decide dar el paso es el Consejo Europeo. [[M108]]",
+  "!> **Regla del «pez gordo»** (vídeo M108): en la revisión **simplificada** decide el **Consejo Europeo**, porque ahí están los Jefes de Estado o de Gobierno, y el **Consejo no es quien decide** (en el art. 48.7 el Consejo Europeo solo lo autoriza a pasar a la mayoría cualificada). En la ordinaria el Consejo solo **informa, remite, notifica y convoca la Conferencia**; quien decide dar el paso es el Consejo Europeo. [[M108]]",
   "Tres usos de la revisión simplificada, que la guía resume así: (1) modificar la **tercera parte del TFUE**, sin aumentar competencias; (2) pasar de **unanimidad** a **mayoría cualificada** (no en el ámbito militar o de defensa); (3) pasar del procedimiento legislativo **especial** al **ordinario**."])
 
 U_IV5_3 = unidad("5.3 Resto de las disposiciones finales (arts. 47 y 49 a 55)",
@@ -758,7 +758,7 @@ U_IV5_3 = unidad("5.3 Resto de las disposiciones finales (arts. 47 y 49 a 55)",
      ["**55**", "Idiomas en los que se redacta el TUE"]]),
   GUIA_NOTA + " Resumen del vídeo: el art. 52 enumera los Estados miembros, el 53 dice que el TUE está en vigor «por un tiempo ilimitado», el 54 regula su ratificación y entrada en vigor y el 55 los idiomas, que son los **oficiales de la Unión**.",
   fichab("Valor de los Protocolos, ámbito, duración, ratificación e idiomas del TUE", "—",
-         ["Los **Protocolos y Anexos** forman parte integrante de los Tratados (51)", "Ámbito territorial: art. 355 TFUE (52.2); el art. 52.1 enumera a los Estados miembros (no se reproduce: la versión consolidada de 2016 aún incluye al Reino Unido)", "Duración **ilimitada** (53)", "Ratificación «de conformidad con sus respectivas normas constitucionales» (54.1); la fecha de entrada en vigor del art. 54.2 es la **prevista inicialmente** (1-1-1993), no la real (1-11-1993, → III.2.3)", "Textos **igualmente auténticos** en las lenguas oficiales (55.1)"],
+         ["Los **Protocolos y Anexos** forman parte integrante de los Tratados (51)", "Ámbito territorial: art. 355 TFUE (52.2); el art. 52.1 enumera a los Estados miembros (no se reproduce: la versión consolidada de 2016 aún incluye al Reino Unido)", "Duración **ilimitada** (53)", "Ratificación «de conformidad con sus respectivas normas constitucionales» (54.1); la fecha de entrada en vigor del art. 54.2 es la **prevista inicialmente** (1-1-1993), no la real (1-11-1993, → III.2.3)", "Textos **igualmente auténticos** en las lenguas en que está redactado el Tratado (55.1)"],
          "Duración: **ilimitada**",
          "Protocolos y Anexos = **mismo valor** que los Tratados (parte integrante). **Ilimitado**, como los Tratados de Roma, a diferencia de la CECA (50 años)."))
 
@@ -793,7 +793,7 @@ U_IV6_4 = unidad("6.4 Comparación del TUE y del TFUE (guía M108)",
     [["1.ª", "Principios", "1 a 17"], ["2.ª", "No discriminación y ciudadanía de la Unión", "18 a 25"], ["3.ª", "Políticas y acciones internas de la Unión", "26 a 197"],
      ["4.ª", "Asociación de los países y territorios de ultramar", "198 a 204"], ["5.ª", "Acción exterior de la Unión", "205 a 222"],
      ["6.ª", "Disposiciones institucionales y financieras", "223 a 334"], ["7.ª", "Disposiciones generales y finales", "335 a 358"]]),
-  "?> **Discrepancia de rúbrica (prevalece el Tratado):** la guía titula la primera parte «Disposiciones comunes»; en la versión consolidada del TFUE se titula **«Principios»**. Lo útil para el examen: la **2.ª parte** incluye la **ciudadanía de la Unión** (y el art. 24, de la ICE), la **3.ª** es la de **políticas y acciones internas** (la que se puede revisar por el procedimiento simplificado del art. 48.6 TUE, → IV.5.2) y la **6.ª** contiene los arts. 238, 326 a 334 y 354 que se usan en este tema.")
+  "?> **Discrepancia de rúbrica (prevalece el Tratado):** la guía titula la primera parte «Disposiciones comunes»; en la versión consolidada del TFUE se titula **«Principios»**. Lo útil para el examen: la **2.ª parte** incluye la **ciudadanía de la Unión** (y el art. 24, de la ICE), la **3.ª** es la de **políticas y acciones internas** (la que se puede revisar por el procedimiento simplificado del art. 48.6 TUE, → IV.5.2) y la **6.ª** contiene los arts. 238 y 326 a 334 y la **7.ª** el art. 354, que se usan en este tema.")
 
 T.ap("bIV", "IV. ¿Qué son el TUE y el TFUE? Competencias, valores, democracia, revisión y disposiciones finales", donde(
   "Cuarta pregunta. Desde Lisboa, la Unión se apoya en **dos Tratados** con el mismo valor jurídico: el **TUE** (principios, instituciones, acción exterior) y el **TFUE** (funcionamiento y competencias). Aquí se estudia **el TUE** en el orden de la guía —título I (arts. 4 a 8), título II (arts. 9 a 12) y disposiciones finales (arts. 47 a 55)— y después **el TFUE**.",
@@ -839,6 +839,15 @@ T.ap("s5", "IV.2 Competencias de la Unión y de los Estados: atribución, subsid
          f"La **delimitación** se rige por la **atribución**; el **ejercicio**, por **subsidiariedad y proporcionalidad** (5.1). La subsidiariedad **no** se aplica a las competencias **exclusivas**. Dos preguntas oficiales de 2025 (→ Cierre 1)."))}
 
 {U_IV2_3}
+
+{unidad("2.4 El control de la subsidiariedad por los Parlamentos nacionales (Protocolo n.º 2) · ampliación de la guía",
+  lit("PROT2", "Artículo 6", ["ocho semanas", "dictamen motivado"], solo=[1], titulo="Artículo 6 del Protocolo n.º 2 (fragmento)"),
+  lit("PROT2", "Artículo 7", ["dos votos", "al menos un tercio del total de votos", "un cuarto", "la mayoría simple de los votos", "mayoría del 55 % de los miembros del Consejo"], solo=[2, 3, 5, 8], titulo="Artículo 7 del Protocolo n.º 2 (fragmento)"),
+  fichab("Control de la subsidiariedad («alerta temprana»)",
+         "Los **Parlamentos nacionales** (o cada cámara) envían un **dictamen motivado**",
+         ["Sobre un **proyecto de acto legislativo**, a los Presidentes del Parlamento Europeo, del Consejo y de la Comisión", "Cada Parlamento nacional tiene **dos votos** (uno por cámara si es bicameral)"],
+         ["**8 semanas** desde la transmisión del proyecto", "**1/3** de los votos: el proyecto **debe volver a estudiarse** (**1/4** si se basa en el art. 76 TFUE, espacio de libertad, seguridad y justicia)", "Procedimiento legislativo ordinario: **mayoría simple** de los votos → la Comisión revisa; si la mantiene, el legislador puede desestimar la propuesta por el **55 %** de los miembros del Consejo o por mayoría de los votos del Parlamento Europeo"],
+         "Este es el procedimiento que la guía llama «alerta temprana» (→ IV.4). No confundirlo con el art. 7 TUE (violación grave de los valores). Los recursos por violación de la subsidiariedad van al TJUE (art. 8 del Protocolo)."))}
 """, 2)
 
 T.ap("s6", "IV.3 Derechos fundamentales, defensa de los valores y vecindad (TUE, arts. 6 a 8)", f"""
@@ -991,7 +1000,7 @@ U_V3_3 = unidad("3.3 Esquema de la retirada y reglas de memoria",
 # --- VI. Cooperaciones reforzadas ---------------------------------------------------------------------------------
 U_VI1_3 = unidad("1.3 Cómo se entienden: acervo, ejemplos y quién interviene",
   "Una cooperación reforzada permite que **algunos** Estados avancen más allá del mínimo que fijan los Tratados para todos, **usando las instituciones de la Unión**. [[M108]]",
-  L("**Acervo:** lo que **vincula a todos** los Estados miembros porque lo han ratificado todos: los Tratados del cuadro del III.4 y los tratados de adhesión. Una cooperación reforzada **no** se ratifica por todos y por eso **no es acervo**: " + cT(20, "Los actos adoptados en el marco de una cooperación reforzada vincularán únicamente a los Estados miembros participantes") + ".",
+  L("**Acervo:** lo que **vincula a todos** los Estados miembros porque lo han ratificado todos: los Tratados del cuadro del III.4 y los tratados de adhesión (en sentido amplio, el acervo incluye también el Derecho derivado y la jurisprudencia del Tribunal de Justicia). Una cooperación reforzada **no** se ratifica por todos y por eso **no es acervo**: " + cT(20, "Los actos adoptados en el marco de una cooperación reforzada vincularán únicamente a los Estados miembros participantes") + ".",
     "**Ejemplos:** la **primera** cooperación reforzada fue un reglamento del Consejo de **2010** sobre la **ley aplicable al divorcio y a la separación judicial**; en **2017**, el reglamento del Consejo por el que se crea la **Fiscalía Europea** (el texto de esos reglamentos no se reproduce aquí).",
     "**Origen:** Ámsterdam la introduce en el **primer y el tercer pilar** (Comunidad Europea y cooperación policial y judicial en materia penal) y Niza la integra en la **PESC** (→ VI.1.2)."),
   tabla(["Quién", "Papel en una cooperación reforzada"],
@@ -1271,7 +1280,7 @@ PORQ_G2 = {
 PORQ_G3 = {
   "a": "Primera ampliación, 1973: " + cg("Dinamarca, Irlanda y Reino Unido") + " (cuadro de la guía; ficha 1.1.2 del Parlamento Europeo: " + cw(PE2, "El 1 de enero de 1973 tuvo lugar la adhesión del Reino Unido, así como de Dinamarca e Irlanda") + ").",
   "b": "Noruega **no** entró: " + cw(PE2, "el pueblo noruego rechazó la adhesión por referéndum") + ".",
-  "c": "Groenlandia no entró como Estado: formaba parte de **Dinamarca** (ficha 5.5.1 del Parlamento Europeo).",
+  "c": "Groenlandia no entró como Estado: se adhirió en 1973 como parte de **Dinamarca** y se retiró en 1985 (ficha 5.5.1 del Parlamento Europeo).",
   "d": "Suecia entró en **1995** con Austria y Finlandia (" + cg("Austria, Finlandia y Suecia") + ")."}
 EX_G1 = QG(1, "¿Cuál de los siguientes Tratados establece que la Unión Europea tiene personalidad jurídica propia?", ["Tratado de Niza.", "Tratado de Maastricht.", "*Tratado de Lisboa.", "Tratado de Ámsterdam."], PORQ_G1)
 EX_G2 = QG(2, "La ciudadanía europea se crea en el Tratado de:", ["Roma.", "*Maastricht.", "Ámsterdam.", "Niza."], PORQ_G2)
@@ -1409,7 +1418,7 @@ Q("TFUE", "Artículo 1", "TUE y TFUE", "Según el artículo 1.1 del Tratado de F
   "Art. 1.1 TFUE. Las demás son contenido del TUE (arts. 2, 3, 47, 49 y 50).", "El presente Tratado organiza el funcionamiento de la Unión y determina los ámbitos, la delimitación y las condiciones de ejercicio de sus competencias")
 Q("LO1_2008", "a1", "Tratados", "Según el artículo 1 de la Ley Orgánica 1/2008, el Tratado de Lisboa se firmó en la capital de la República de Portugal el:",
   ["13 de diciembre de 2007.", "1 de diciembre de 2009.", "18 de junio de 2004.", "7 de febrero de 1992."],
-  "Art. 1 LO 1/2008. El 1-12-2009 es su entrada en vigor; el 18-6-2004, la aprobación de la Constitución europea; el 7-2-1992, la firma de Maastricht.", "firmado en la capital de la República de Portugal el 13 de diciembre de 2007")
+  "Art. 1 LO 1/2008. El 1-12-2009 es su entrada en vigor; el 18-6-2004, el acuerdo del Consejo Europeo sobre el Proyecto de Constitución europea (se firmó el 29-10-2004); el 7-2-1992, la firma de Maastricht.", "firmado en la capital de la República de Portugal el 13 de diciembre de 2007")
 Q("TUE", "Artículo 20", "Cooperaciones reforzadas", "Según el artículo 20.1 del Tratado de la Unión Europea, los Estados miembros pueden instaurar entre sí una cooperación reforzada:",
   ["En el marco de las competencias no exclusivas de la Unión.", "En el marco de las competencias exclusivas de la Unión.", "En cualquier ámbito, incluidas las competencias exclusivas.", "Solo en el ámbito de la política exterior y de seguridad común."],
   "Art. 20.1 TUE.", "en el marco de las competencias no exclusivas de la Unión")
@@ -1543,26 +1552,26 @@ T.hito("2007", "Tratado de Lisboa, firmado el 13-12-2007", "Ratificación autori
 T.hito("2020", "Retirada del Reino Unido (31-1-2020)", "Dato de la ficha 5.5.1 del PE; la retirada se regula en el art. 50 TUE", "normativo", "s15")
 
 for q_, a_, cat in [
-  ("¿Qué es el Consejo de Europa y por qué no hay que confundirlo con el Consejo Europeo y el Consejo?", "Organización intergubernamental europea (1949; 46 países según la guía M108); no es de la Unión. El Consejo Europeo (Jefes de Estado o de Gobierno) y el Consejo (ministros) sí son instituciones (arts. 15 y 16 TUE).", "Antecedentes"),
+  ("¿Qué es el Consejo de Europa y por qué no hay que confundirlo con el Consejo Europeo y el Consejo?", "Organización intergubernamental europea (1949; 46 países según el vídeo M108); no es de la Unión. El Consejo Europeo (Jefes de Estado o de Gobierno) y el Consejo (ministros) sí son instituciones (arts. 15 y 16 TUE).", "Antecedentes"),
   ("¿En qué Tratado adquiere la Unión personalidad jurídica propia?", "En el de Lisboa (en vigor el 1-12-2009; art. 47 TUE). Maastricht creó la Unión, pero sin personalidad jurídica.", "Naturaleza jurídica"),
   ("¿Qué Tratado crea la ciudadanía europea?", "Maastricht. Hoy, art. 9 TUE: la ciudadanía de la Unión se añade a la nacional sin sustituirla. La iniciativa ciudadana europea es de Lisboa.", "Naturaleza jurídica"),
   ("Regla LÍDER del art. 2 TUE", "Libertad, Igualdad, Democracia, Estado de Derecho y Respeto de los derechos humanos, más la dignidad humana. Pluralismo, no discriminación, tolerancia, justicia, solidaridad e igualdad entre mujeres y hombres son rasgos de la sociedad, no valores.", "Valores y objetivos"),
   ("Atribución frente a subsidiariedad y proporcionalidad", "La atribución **delimita** las competencias (lo no atribuido es de los Estados, art. 5.2); la subsidiariedad y la proporcionalidad regulan su **ejercicio** (art. 5.1, 5.3 y 5.4).", "Principios"),
-  ("Mayoría cualificada del Consejo: cifras", "El 65 % es siempre de población. 55 % de los miembros si propone la Comisión o el Alto Representante (art. 16.4 TUE: al menos quince miembros); 72 % en los demás casos (art. 238 TFUE).", "Mayoría cualificada"),
+  ("Mayoría cualificada del Consejo: cifras", "El 65 % es siempre de población (de los Estados participantes cuando no votan todos). 55 % de los miembros si propone la Comisión o el Alto Representante (art. 16.4 TUE: al menos quince miembros); 72 % en los demás casos (art. 238 TFUE).", "Mayoría cualificada"),
   ("Art. 7 TUE: ¿quién propone y ante quién en la alerta temprana y en la violación?", "Alerta temprana (7.1): un tercio de los Estados, el PE o la Comisión → Consejo (cuatro quintos). Violación (7.2): un tercio de los Estados o la Comisión (no el PE) → Consejo Europeo (unanimidad).", "Defensa de los valores"),
   ("Iniciativa ciudadana europea (art. 11.4 TUE)", "Al menos un millón de ciudadanos de un número significativo de Estados invitan a la Comisión a proponer un acto jurídico. Es de Lisboa. En España, la iniciativa legislativa popular exige 500.000 firmas (art. 87.3 CE).", "Principios democráticos"),
   ("Art. 48 TUE: Convención frente a Conferencia", "La Convención (la convoca el Presidente del Consejo Europeo) examina y recomienda por consenso; la Conferencia intergubernamental (la convoca el Presidente del Consejo) aprueba la modificación de común acuerdo.", "Revisión de los Tratados"),
-  ("Revisión simplificada (art. 48.6 y 48.7 TUE): ¿quién decide y con qué mayoría?", "El Consejo Europeo por unanimidad (48.7 con aprobación del PE; un solo Parlamento nacional puede oponerse en seis meses). El 48.6 solo modifica la tercera parte del TFUE y no puede aumentar competencias.", "Revisión de los Tratados"),
+  ("Revisión simplificada (art. 48.6 y 48.7 TUE): ¿quién decide y con qué mayoría?", "El Consejo Europeo por unanimidad. 48.6: solo la tercera parte del TFUE, sin aumentar competencias, previa consulta al PE y a la Comisión, y la decisión necesita la aprobación de los Estados según sus normas constitucionales. 48.7 (pasarelas): con aprobación del PE y sin que un solo Parlamento nacional se oponga en seis meses.", "Revisión de los Tratados"),
   ("Presidente del Consejo Europeo: duración del mandato", "Dos años y medio, renovable una sola vez (art. 15.5 TUE); lo elige el Consejo Europeo por mayoría cualificada. Es novedad de Lisboa.", "Instituciones"),
   ("¿Cuántas instituciones había en cada etapa?", "Cuatro tras el Tratado de Fusión; cinco con Maastricht (Tribunal de Cuentas); siete con Lisboa (Consejo Europeo y BCE pasan a ser instituciones; art. 13 TUE).", "Tratados"),
   ("Tratados de adhesión por orden", "Bruselas 1973 (Dinamarca, Irlanda, Reino Unido), Atenas 1981 (Grecia), Madrid-Lisboa 1986, Corfú 1995, Atenas 2004 (diez Estados), Luxemburgo 2007, Bruselas 2013 (Croacia); 2020, Reino Unido se retira.", "Ampliación"),
   ("Islandia y Noruega en la ampliación", "Islandia: solicitud 2009, negociaciones 2010, paralizadas en 2013 y en 2015 pidió dejar de ser candidata. Noruega: referéndums en 1972 y 1994 sin resultado positivo (guía M108).", "Ampliación"),
   ("Cooperación reforzada: ¿es acervo?", "No: sus actos vinculan solo a los Estados participantes y no son acervo que deban aceptar los candidatos (art. 20.4 TUE).", "Cooperaciones reforzadas"),
-  ("Dos ejemplos de cooperación reforzada", "2010: ley aplicable al divorcio y a la separación judicial (la primera); 2017: Fiscalía Europea (guía M108).", "Cooperaciones reforzadas"),
+  ("Dos ejemplos de cooperación reforzada", "2010: ley aplicable al divorcio y a la separación judicial (la primera); 2017: Fiscalía Europea (vídeo M108).", "Cooperaciones reforzadas"),
   ("Alto Representante: Ámsterdam frente a Lisboa", "Ámsterdam: el Alto Representante para la PESC. Lisboa: el Alto Representante de la Unión para Asuntos Exteriores y Política de Seguridad (art. 18 TUE).", "Tratados"),
 ]: T.fc(q_, a_, cat)
 
-T.glos("Consejo de Europa", "Organización intergubernamental europea fundada el 5-5-1949; no es una institución de la Unión (46 países según la guía M108, frente a 27 Estados miembros).", "s1", "Antecedentes")
+T.glos("Consejo de Europa", "Organización intergubernamental europea fundada el 5-5-1949; no es una institución de la Unión (46 países según el vídeo M108, frente a 27 Estados miembros).", "s1", "Antecedentes")
 T.glos("Mayoría cualificada", "Doble mayoría en el Consejo: 55 % de los miembros (al menos quince) que representen el 65 % de la población (art. 16.4 TUE); 72 % si no se actúa a propuesta de la Comisión o del Alto Representante (art. 238 TFUE).", "s6", "Mayoría cualificada")
 T.glos("Ciudadanía de la Unión", "Toda persona con la nacionalidad de un Estado miembro; se añade a la ciudadanía nacional sin sustituirla (art. 9 TUE). Se crea en Maastricht.", "s6b", "Principios democráticos")
 T.glos("Iniciativa ciudadana europea", "Un millón de ciudadanos de un número significativo de Estados invitan a la Comisión a presentar una propuesta (art. 11.4 TUE); se introduce con Lisboa.", "s6b", "Principios democráticos")
@@ -1581,12 +1590,12 @@ T.hito("2009", "Tratado de Lisboa en vigor (1-12-2009)", "La Unión adquiere per
 N1 = unidad("8.1 Los países fundadores y la Declaración Schuman",
   "Al terminar la Segunda Guerra Mundial, los países que luego serían fundadores —**Francia, Alemania, Italia, Bélgica, los Países Bajos y Luxemburgo**— empezaron a **poner en común** parte de su actividad. Ese proceso los llevó a firmar los primeros **Tratados originarios** y a crear la **Comunidad Europea del Carbón y del Acero (CECA)** y la **Comunidad Económica Europea (CEE)**. [[M108]]",
   "El **9 de mayo de 1950**, el entonces ministro francés de Asuntos Exteriores, **Robert Schuman**, expuso en un discurso las ideas en que se asienta la Unión: la formación de una **Alta Autoridad común** que supervisara la producción de carbón y acero en Europa. Los países fundadores se mostraron conformes con la propuesta y, desde entonces, el **9 de mayo es el Día de Europa**. [[M108]]",
-  "?> **Matices.** (1) La CECA y la CEE nacen de **dos Tratados distintos**, el de **París** y el de **Roma**; el de Roma creó además " + cw(PE1, "la Comunidad Europea de la Energía Atómica (Euratom)") + ". (2) En la tabla de la guía (siguiente apartado), las fechas de París (**23-7-1952**) y de Roma (**1-1-1958**) son las de **entrada en vigor**; las de **firma** son el 18-4-1951 y el 25-3-1957 (cuadro maestro, II.5).",
+  "?> **Matices.** (1) La CECA y la CEE nacen de **dos Tratados distintos**, el de **París** y el de **Roma**; el de Roma creó la CEE y, con otro Tratado de Roma firmado el mismo día, " + cw(PE1, "la Comunidad Europea de la Energía Atómica (Euratom)") + ". (2) En la tabla de la guía (siguiente apartado), las fechas de París (**23-7-1952**) y de Roma (**1-1-1958**) son las de **entrada en vigor**; las de **firma** son el 18-4-1951 y el 25-3-1957 (cuadro maestro, II.5).",
   "!> **Pregunta de examen (2025):** el 9 de mayo **no** es la firma del Tratado de Roma (25 de marzo de 1957) ni la primera ampliación (1973): es la fecha de la **Declaración Schuman** (1950).")
 T.ap("n1", "I.8 Texto de la guía", N1, 2)
 
 N2 = unidad("8.1 Los artículos 1 a 3 y el Título I (texto de la guía)",
-  "Los **arts. 1 a 3 del TUE** abren el **Título I, «Disposiciones comunes»** (arts. 1 a 8): el **art. 1** constituye la Unión; el **art. 2** concreta los **valores** en que se fundamenta; y el **art. 3** fija los **objetivos** comunes que han de cumplir los Estados miembros. Se estudian uno a uno en los apartados II.2 a II.4; el resto del Título I (arts. 4 a 8) está en el bloque III. [[M108]]")
+  "Los **arts. 1 a 3 del TUE** abren el **Título I, «Disposiciones comunes»** (arts. 1 a 8): el **art. 1** constituye la Unión; el **art. 2** concreta los **valores** en que se fundamenta; y el **art. 3** fija los **objetivos de la Unión** (la guía los presenta como comunes a los Estados miembros). Se estudian uno a uno en los apartados II.2 a II.4; el resto del Título I (arts. 4 a 8) está en el bloque III. [[M108]]")
 T.ap("n2", "II.8 Texto de la guía", N2, 2)
 
 N3 = unidad("9.1 La evolución de la Unión a través de los Tratados (texto de la guía)",
