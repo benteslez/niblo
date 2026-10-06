@@ -1,6 +1,6 @@
 
 T.ap("s29", "VI.3 Qué derechos se pueden suspender en cada estado", f"""
-El art. 55.1 enumera los derechos **suspendibles** y el art. 116 dice que solo en **excepción y sitio**. Combinando ambos:
+El art. 55.1 enumera los derechos **suspendibles** y dice que solo pueden suspenderse en **excepción y sitio**. Combinando ambos:
 
 {tabla(["Derecho (art.)", "Alarma", "Excepción", "Sitio"], [
   ["**17** · Libertad y seguridad (detención…)", NO, SI, SI],
@@ -54,7 +54,7 @@ T.ap("s30", "VI.4 Puntos en común de los tres estados", f"""
 
 {lit("CE", "a169", ["No podrá iniciarse la reforma constitucional en tiempo de guerra o de vigencia de alguno de los estados previstos en el artículo 116"])}
 
-!> {IMP} **Para el examen:** no se puede **disolver el Congreso**, no se **interrumpe** el funcionamiento de las Cámaras ni de los poderes del Estado, no se modifica la **responsabilidad** de los poderes públicos, **no se puede reformar la Constitución** (ni siquiera en alarma) y todo se regula por **ley orgánica**.
+!> {IMP} **Para el examen:** no se puede **disolver el Congreso**, no se **interrumpe** el funcionamiento de las Cámaras ni de los poderes del Estado, no se modifica la **responsabilidad del Gobierno y de sus agentes**, **no se puede reformar la Constitución** (ni siquiera en alarma) y todo se regula por **ley orgánica**.
 """, 2)
 
 T.ap("s31", "VI.5 La suspensión individual (art. 55.2)", f"""
@@ -77,7 +77,7 @@ T.ap("s32", "VI.6 Cuadro resumen de la suspensión", f"""
   ["**Suspensión general**", f"{tag('I.5', 'Excepción')}", "**Gobierno**, con **autorización del Congreso**", "**30 días**; prórroga por otro plazo igual", "**17** (salvo 17.3) · **18.2** · **18.3** · **19** · **20.1.a)** y **d)** y **20.5** · **21** · **28.2** · **37.2**"],
   ["**Suspensión general**", f"{tag('X', 'Sitio')}", "**Congreso**, mayoría absoluta, a propuesta exclusiva del Gobierno", "La determinada por el **Congreso**", "Los mismos **más el 17.3**"],
   ["**Limitación**", f"{tag('IV', 'Alarma')}", "**Gobierno**, dando cuenta al Congreso", "**15 días**; prórroga con autorización del Congreso", "**Ninguno** (solo se pueden decretar algunas limitaciones)"],
-  ["**Suspensión individual**", "Bandas armadas y elementos terroristas (art. 55.2)", "Ley orgánica", "—", "**17.2** (duración máxima de la detención preventiva) · **18.2** · **18.3**"]])}
+  ["**Suspensión individual**", "Bandas armadas y elementos terroristas (art. 55.2)", "Sin declaración de estado: **ley orgánica** que fija la forma y los casos", "—", "**17.2** (duración máxima de la detención preventiva) · **18.2** · **18.3**"]])}
 
 {resumen([
   "**Art. 55** (capítulo V): suspensión **general** (excepción y sitio: diez derechos, salvo el 17.3 en excepción) e **individual** (bandas armadas y terroristas: 17.2, 18.2, 18.3).",
@@ -128,10 +128,10 @@ T.ap("s34", "VII.2 Composición y mandato", f"""
 
 {unidad("2.3 El Presidente y el Vicepresidente (art. 160 CE; art. 9 LOTC)",
   lit("CE", "a160", ["nombrado entre sus miembros por el Rey", "a propuesta del mismo Tribunal en pleno", "tres años"]),
-  lx("LOTC", "anoveno", 9, ["elige de entre sus miembros por votación secreta a su Presidente", "tres años", "reelegido por una sola vez"], solo=[1, 3, 4]),
+  lx("LOTC", "anoveno", 9, ["elige de entre sus miembros por votación secreta a su Presidente", "mayoría absoluta", "tres años", "reelegido por una sola vez"], solo=[1, 2, 3, 4]),
   fichab("Presidente del Tribunal Constitucional",
          "Lo elige el **Pleno** de entre sus miembros; lo nombra el **Rey**",
-         "**Votación secreta** del Pleno; propuesta al Rey",
+         "**Votación secreta** del Pleno: **mayoría absoluta** en primera votación y, si no se alcanza, segunda votación (resulta elegido quien obtenga más votos; art. 9.2 LOTC); propuesta al Rey",
          "**3 años**; **reelegible por una sola vez**",
          "El Presidente lo nombra el Rey **a propuesta del propio Tribunal en pleno** (art. 160). El **Vicepresidente** lo elige el Pleno por el mismo procedimiento y periodo (art. 9.4 LOTC)."))}
 """, 2)

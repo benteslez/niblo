@@ -6,8 +6,8 @@ T.ap("bIX", "IX. ¿Cómo se reforma la Constitución? Título X (arts. 166 a 169
   ["1 La iniciativa (arts. 87 y 166)", "2 El procedimiento del art. 167 («light»)", "3 El procedimiento del art. 168 («heavy»)", "4 Límites y reglas comunes", "5 Cuadro comparativo"]))
 
 T.ap("s44", "IX.1 La iniciativa de reforma (arts. 87.1 y 2 y 166)", f"""
-{unidad("1.1 Los titulares (art. 87.1 y 2)",
-  lit("CE", "a87", ["al Gobierno, al Congreso y al Senado", "Las Asambleas de las Comunidades Autónomas", "un máximo de tres miembros"], solo=[1, 2]),
+{unidad("1.1 Los titulares (art. 87)",
+  lit("CE", "a87", ["al Gobierno, al Congreso y al Senado", "Las Asambleas de las Comunidades Autónomas", "un máximo de tres miembros", "no menos de 500.000 firmas acreditadas"], solo=[1, 2, 3]),
   fichab("Iniciativa a la que remite el art. 166 (→ IX.1.2)",
          ["El **Gobierno**", "El **Congreso** y el **Senado**", "Las **Asambleas de las Comunidades Autónomas**"],
          [f"Asambleas autonómicas: {c('CE', 'Artículo 87', 'solicitar del Gobierno la adopción de un proyecto de ley')} o {c('CE', 'Artículo 87', 'remitir a la Mesa del Congreso una proposición de ley')}"],
@@ -159,7 +159,7 @@ T.ap("s48b", "IX.6 Cómo no confundir las mayorías", f"""
 La reforma constitucional es, sobre todo, un **problema de mayorías**, y es donde el examen suele poner las trampas, porque se parecen mucho entre sí (y se parecen, además, a la elección del Defensor del Pueblo, que verás en el tema I.2). Estas son las reglas que conviene grabar. [[M101]]
 
 {unidad("6.1 Las dos reglas de oro",
-  "**1.ª regla: la mayoría cualificada «normal» es la de tres quintos (3/5).** Es la que se pide para el procedimiento ordinario de reforma (art. 167.1), para que las Cortes propongan a los Magistrados del Tribunal Constitucional (art. 159.1) y para elegir al Defensor del Pueblo (art. 2.4 LO 3/1981).",
+  "**1.ª regla: la mayoría cualificada «normal» es la de tres quintos (3/5).** Es la que se pide para el procedimiento ordinario de reforma (art. 167.1), para que cada Cámara proponga cuatro Magistrados del Tribunal Constitucional (art. 159.1) y para elegir al Defensor del Pueblo (art. 2.4 LO 3/1981).",
   "**2.ª regla: los dos tercios (2/3) son la excepción, y solo aparecen en dos sitios**: en la **reforma agravada** del art. 168 (principio de reforma y aprobación final, siempre de **cada Cámara**) y en el **«plan B» del art. 167.2**, donde se exigen al **Congreso** (y solo a él).")}
 
 {unidad("6.2 El «plan B»: tres procedimientos que se parecen",
@@ -167,7 +167,7 @@ La reforma constitucional es, sobre todo, un **problema de mayorías**, y es don
     ["**Reforma ordinaria**", "**3/5** de cada Cámara", "**Comisión paritaria** de Diputados y Senadores, nueva votación de 3/5 y, si no, **mayoría absoluta del Senado + 2/3 del Congreso**", "CE 167"],
     ["**Reforma agravada**", "**2/3** de cada Cámara + disolución", "**No hay plan B**: o se alcanzan las mayorías o no hay reforma", "CE 168"],
     ["**Elección del Defensor del Pueblo**", "**3/5** del Congreso y **3/5** del Senado", "**3/5 del Congreso** y **mayoría absoluta del Senado**", "LO 3/1981, art. 2.4 y 2.5"]]),
-  f"!> {IMP} **Dos ideas para no equivocarte:** (1) en **todos** los «planes B» el Senado se conforma con la **mayoría absoluta**; lo que cambia es lo que se pide al Congreso: **2/3** en la reforma ordinaria y solo **3/5** para el Defensor. (2) Una exigencia es **más dura** cuanto mayor es la fracción: 3/5 < 2/3, y la **mayoría absoluta** (la mitad más uno de los miembros) queda por debajo de ambas.",
+  f"!> {IMP} **Dos ideas para no equivocarte:** (1) en **todos** los «planes B» el Senado se conforma con la **mayoría absoluta**; lo que cambia es lo que se pide al Congreso: **2/3** en la reforma ordinaria y solo **3/5** para el Defensor. (2) Una exigencia es **más dura** cuanto mayor es la fracción: 3/5 < 2/3, y la **mayoría absoluta** (más de la mitad de los miembros) queda por debajo de ambas.",
   f"?> **Cuidado con el vídeo:** el módulo dice en un momento que, en el plan B del Defensor, bastaría la mayoría simple del Senado. Lo correcto, según el **art. 2.5 de la LO 3/1981**, es la **mayoría absoluta**, como figura en la guía. Prevalece la ley.")}
 
 {unidad("6.3 Quién puede pedir el referéndum: «cualquiera de las Cámaras»",

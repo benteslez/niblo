@@ -175,7 +175,7 @@ Es el **segundo tema del bloque I** (el primero estudia la estructura de la Cons
 |---|---|---|---|
 | **I** | ¿Qué niveles de protección tienen los derechos? | Título I, arts. 10 a 52 | — |
 | **II** | Lectura profunda de los arts. 10 a 52 | Arts. 10 a 52 (literales) | — |
-| **III** | ¿Cómo se garantizan? | Arts. 53, 54, 81, 161 y 162 | LOTC, LJCA |
+| **III** | ¿Cómo se garantizan? | Arts. 53, 81, 161 y 162 | LOTC, LJCA |
 | **IV** | ¿Cómo se suspenden? | Arts. 55 y 116 | LO 4/1981 |
 | **V** | El Defensor del Pueblo | Art. 54 | LO 3/1981 |
 | **VI** | Repaso | — | — |
@@ -256,7 +256,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
 
 ### Aviso
 
-- **9 años de mandato.** El módulo los presenta como el mandato más largo de los órganos constitucionales; la LO 2/1982 (art. 30) fija también **9 años** para los Consejeros de Cuentas: es un **empate**, no un récord (→ I.3).
+- **9 años de mandato.** El módulo los presenta como el mandato más largo de los órganos constitucionales; la LO 2/1982 (art. 30) fija también **9 años** para los Consejeros de Cuentas: es un **empate**, no un récord (véase el apartado «Claves para memorizar la composición» de este tema).
 - La **jurisprudencia** del Tribunal Constitucional no se incluye todavía: se añadirá cuando se aporte la fuente oficial.
 """, 1)
         A("bVII", "I. El Tribunal Constitucional: naturaleza y composición", donde(
@@ -303,6 +303,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
         H = [dict(y="1978", txt="27-12-1978: sanción de la Constitución, que crea el Tribunal Constitucional (Título IX, arts. 159 a 165); BOE y entrada en vigor el 29-12-1978", cons="Composición, competencias y valor de las sentencias", cat="normativo", target="s33")] + [h for h in T.H if h["target"] == "s33"]
     # hitos ya definidos en las partes (leyes orgánicas de desarrollo) que son de estos temas
     H += [h for h in T.H if (tema_n == 2 and h["target"] in ("s39", "s28")) or (tema_n == 3 and h["target"] == "s33")]
+    H = [h for i, h in enumerate(H) if h["txt"] not in [x["txt"] for x in H[:i]]]   # sin hitos repetidos
     if tema_n == 3:
         FC += [dict(q="¿Qué es el Tribunal Constitucional según su ley orgánica?", a="**Intérprete supremo** de la Constitución, **independiente** de los demás órganos constitucionales, sometido **solo** a la Constitución y a su ley orgánica y **único en su orden** (art. 1 LOTC).", cat="Tribunal Constitucional"),
                dict(q="¿Quién legitima cada proceso ante el Tribunal Constitucional?", a="**Inconstitucionalidad**: Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores y ejecutivos y Asambleas de las CCAA. **Amparo**: persona con interés legítimo, Defensor del Pueblo y Ministerio Fiscal. **Cuestión**: el órgano judicial (arts. 162 y 163 CE).", cat="Tribunal Constitucional")]

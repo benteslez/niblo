@@ -69,7 +69,7 @@ GL = [
  ("Comisión de composición paritaria", "Comisión de Diputados y Senadores que intenta un texto de acuerdo cuando las Cámaras no aprueban la reforma del art. 167.", "s45", "Reforma"),
  ("Referéndum de ratificación", "Votación del pueblo sobre una reforma ya aprobada: facultativo en el art. 167, obligatorio en el 168.", "s46", "Reforma"),
  ("Iniciativa legislativa popular", "La regula el art. 87.3; no puede ejercerse para reformar la Constitución (art. 166).", "s44", "Reforma"),
- ("Sanción y promulgación", "La **sanción** es la conformidad del Rey con la ley aprobada por las Cortes (art. 91: «El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación»); la **promulgación**, su orden de publicación. La Constitución se sancionó el 27-12-1978.", "s1", "Fechas"),
+ ("Sanción y promulgación", "La **sanción** es la conformidad del Rey con la ley aprobada por las Cortes (art. 91: «El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación»); la **promulgación**, que el propio art. 91 distingue de la orden de publicación: el Rey las «promulgará **y** ordenará su inmediata publicación». La Constitución se sancionó el 27-12-1978.", "s1", "Fechas"),
 ]
 for t_, d_, s_, cat in GL: T.glos(t_, d_, s_, cat)
 

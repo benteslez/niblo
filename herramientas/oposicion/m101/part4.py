@@ -61,7 +61,7 @@ NOTAS = {
  40: (["pleno empleo"], "Progreso social y económico, distribución de la renta, **pleno empleo**, formación, seguridad e higiene, descanso."),
  41: (["régimen público de Seguridad Social para todos los ciudadanos"], "**Régimen público de Seguridad Social**; las prestaciones complementarias son **libres**."),
  42: (["trabajadores españoles en el extranjero"], "La guía M101 lo titula «inmigrantes españoles en el extranjero»; la CE dice **trabajadores españoles en el extranjero** y su **retorno**."),
- 43: (["derecho a la protección de la salud"], f"{IMP} La **salud** es un derecho **del capítulo III**: sin amparo ni recurso de inconstitucionalidad por sí mismo; solo se alega ante la jurisdicción ordinaria **según las leyes que lo desarrollen**."),
+ 43: (["derecho a la protección de la salud"], f"{IMP} La **salud** es un derecho **del capítulo III**: sin amparo ni tutela preferente y sumaria (el art. 53.1 no le extiende esa protección, aunque una ley contraria a él sí puede impugnarse por inconstitucionalidad: art. 39.2 LOTC); solo se alega ante la jurisdicción ordinaria **según las leyes que lo desarrollen**."),
  44: (["acceso a la cultura"], "**Cultura** y **ciencia e investigación**."),
  45: (["medio ambiente adecuado"], "**Medio ambiente** adecuado: derecho **y deber** de conservarlo."),
  46: (["patrimonio histórico, cultural y artístico"], "Conservación y enriquecimiento del **patrimonio histórico, cultural y artístico**."),
@@ -109,7 +109,7 @@ Los artículos 1 a 52 están anotados con un **código de colores** que verás e
 
 | Marca | Qué señala | Cómo usarla |
 |---|---|---|
-| 🟧 **Examen oficial** | Artículo que ya ha caído en un examen del INAP | Léelo con más cuidado |
+| 🔴 **Examen** (pill roja) | Artículo que ya ha caído en un examen del INAP | Léelo con más cuidado |
 | 🟨 **Importante** | Cuestión importante, preguntada o susceptible de serlo | Grábatela |
 | 🟩 **Coletilla** | Con qué se regula o limita un derecho: *ley, tratado, resolución judicial…* | Pregunta muy fácil de manipular: cambian la palabra |
 | 🟦 **Se limita (excepción y sitio)** | Aparece en el cuadro de suspensión (arts. 55 y 116) | Domínalo un poco más (→ tema I.2 · IV) |

@@ -19,12 +19,12 @@ T.ap("s23", "V.5 El recurso de inconstitucionalidad", f"""
   fichab("Recurso de inconstitucionalidad ante el Tribunal Constitucional",
          ["**Presidente del Gobierno**", "**Defensor del Pueblo**", "**50 Diputados** y **50 Senadores**", "**Órganos ejecutivos** y **Asambleas** de las CCAA, solo contra leyes del Estado que afecten a su ámbito de autonomía"],
          "Contra **leyes y disposiciones normativas con fuerza de ley** (Estatutos, leyes orgánicas y ordinarias, decretos-leyes, decretos legislativos, tratados, reglamentos de las Cámaras)",
-         ["**3 meses** desde la publicación de la norma (art. 33.1 LOTC)", "**9 meses** (Presidente del Gobierno y ejecutivos autonómicos) si hay Comisión Bilateral y acuerdo de negociaciones (art. 33.2 LOTC)"],
+         ["**3 meses** desde la publicación de la norma (art. 33.1 LOTC)", "**9 meses** (Presidente del Gobierno y ejecutivos autonómicos) si hay Comisión Bilateral, acuerdo de negociaciones y este se comunica al Tribunal en los 3 primeros meses y se publica en el BOE y en el diario oficial de la Comunidad (art. 33.2 LOTC)"],
          "Protege **todo el capítulo II (arts. 14 a 38)** según el art. 53.1; pero el TC puede apoyar su fallo en **cualquier** precepto constitucional (art. 39.2 LOTC)."))}
 
 {unidad("5.2 El plazo (art. 33 LOTC)",
   lx("LOTC", "atreintaytres", 33, ["tres meses", "nueve meses", "Comisión Bilateral de Cooperación"], solo=[1, 2, 3, 4, 5]),
-  f"!> {IMP} **Plazo: 3 meses**, y **9 meses** si el Presidente del Gobierno o el ejecutivo autonómico han activado la **Comisión Bilateral** para negociar (art. 33.2 LOTC). Se cuenta desde la **publicación** de la norma.")}
+  f"!> {IMP} **Plazo: 3 meses**, y **9 meses** si el Presidente del Gobierno o el ejecutivo autonómico han activado la **Comisión Bilateral** para negociar, y el acuerdo se comunica al Tribunal **dentro de los 3 meses siguientes a la publicación** y se publica en el BOE y en el diario oficial de la Comunidad (art. 33.2 LOTC). Se cuenta desde la **publicación** de la norma.")}
 """, 2)
 
 T.ap("s24", "V.6 Vinculación de los poderes públicos", f"""
@@ -39,17 +39,17 @@ T.ap("s24", "V.6 Vinculación de los poderes públicos", f"""
 """, 2)
 
 T.ap("s25", "V.7 La paradoja del capítulo III: principios rectores", f"""
-El {tag("I.3", "capítulo III")} se llama «**De los principios rectores de la política social y económica**» y contiene cosas tan importantes como la **salud**, la **vivienda**, la **seguridad social** o el **medio ambiente**. Pero tiene una paradoja: **son derechos sobre el papel, con poca garantía**.
+El {tag("I.3", "capítulo III")} se llama «**De los principios rectores de la política social y económica**» y contiene cosas tan importantes como la **salud**, la **vivienda**, la **seguridad social** o el **medio ambiente**. Pero tiene una paradoja: **son principios que parecen derechos, pero con poca garantía**.
 
 {unidad("7.1 El art. 53.3",
   lit("CE", "a53", ["informarán la legislación positiva, la práctica judicial y la actuación de los poderes públicos", "Sólo podrán ser alegados ante la Jurisdicción ordinaria de acuerdo con lo que dispongan las leyes que los desarrollen"], solo=[3]),
   fichab("Principios rectores del capítulo III",
          "Los **poderes públicos**",
          ["**Informan** la legislación positiva, la práctica judicial y la actuación de los poderes públicos", "Solo se **alegan ante la jurisdicción ordinaria** según las leyes que los desarrollen"],
-         "Sin amparo, sin tutela preferente y sumaria, sin ley orgánica, sin recurso de inconstitucionalidad por reconocerlos como derechos; solo cuenta el **Defensor del Pueblo** (art. 54)",
+         "Sin amparo ni tutela preferente y sumaria; solo se alegan ante la jurisdicción ordinaria según las leyes que los desarrollen (53.3); entre las garantías específicas del Título I, solo les alcanza el **Defensor del Pueblo** (art. 54)",
          f"{IMP} **A diferencia** de los derechos del capítulo II, **no pueden exigirse sin una ley que los desarrolle**. Si no hay ley, aunque lo diga la Constitución, no hay acción."))}
 
-{IMP} **Trampa típica:** te presentan como «derechos fundamentales» la **salud** (43), la **vivienda** (47), la **redistribución equitativa de la riqueza** (40) o la **propiedad privada** (33). **No lo son**: los tres primeros son principios del capítulo III; la propiedad privada es un derecho de la sección 2.ª (sin amparo). El **derecho al trabajo** (35), también de la sección 2.ª, tampoco es fundamental.
+{IMP} **Trampa típica:** te presentan como «derechos fundamentales» la **salud** (43), la **vivienda** (47), la **distribución de la renta regional y personal más equitativa** (40) o la **propiedad privada** (33). **No lo son**: los tres primeros son principios del capítulo III; la propiedad privada es un derecho de la sección 2.ª (sin amparo). El **derecho al trabajo** (35), también de la sección 2.ª, tampoco es fundamental.
 """, 2)
 
 T.ap("s26", "V.8 Cuadro resumen de las garantías", f"""
@@ -62,7 +62,7 @@ T.ap("s26", "V.8 Cuadro resumen de las garantías", f"""
   ["**Recurso de inconstitucionalidad**", f"{tag('I.2', 'Capítulo II')} (14-38)", "Arts. 53.1 y 161.1.a", "Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores, ejecutivos y asambleas autonómicas · TC"],
   ["**Vinculación de los poderes públicos**", f"{tag('I.2', 'Capítulo II')} (14-38)", "Art. 53.1", "Todos los poderes públicos"]])}
 
-{IMP} **El capítulo III (39-52) solo se toca con el Defensor del Pueblo**: sus principios **informan** la actuación de los poderes públicos y se alegan ante la jurisdicción ordinaria según las leyes que los desarrollen (art. 53.3).
+{IMP} **Entre las garantías de este cuadro, al capítulo III (39-52) solo le alcanza el Defensor del Pueblo** (art. 54): sus principios **informan** la actuación de los poderes públicos y se alegan ante la jurisdicción ordinaria según las leyes que los desarrollen (art. 53.3). No hay amparo ni tutela preferente y sumaria; y, aunque no tienen un recurso propio, una ley contraria a ellos sí puede impugnarse por inconstitucionalidad, porque el Tribunal puede fundar su fallo en cualquier precepto constitucional (art. 39.2 LOTC).
 """, 2)
 
 # =============================================================================

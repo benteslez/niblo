@@ -150,11 +150,11 @@ Tras el artículo 169 vienen **quince disposiciones**, que se agrupan así:
 
 {IMP} **Regla mnemotécnica: «4-9-1-1».** Cuatro adicionales, **nueve** transitorias (la Constitución nace en plena **transición**: por eso son las más numerosas), **una** derogatoria y **una** final. Y siempre **en este orden**: adicionales, transitorias, derogatoria y final.
 
-{lit("CE", "dd", ["Queda derogada la Ley 1/1977, de 4 de enero, para la Reforma Política"], solo=[0, 1])}
+{lit("CE", "dd", ["Queda derogada la Ley 1/1977, de 4 de enero, para la Reforma Política", "cuantas disposiciones se opongan a lo establecido en esta Constitución"], solo=[1, 2, 3, 4])}
 
 {lit("CE", "df", ["entrará en vigor el mismo día de la publicación de su texto oficial"])}
 
-!> La **disposición derogatoria** deroga la Ley para la Reforma Política y las Leyes Fundamentales del régimen anterior; la **final** fija la **entrada en vigor** (→ I.1).
+!> La **disposición derogatoria** deroga la Ley para la Reforma Política y las Leyes Fundamentales del régimen anterior (apartados 1 y 2) y, con carácter general, «cuantas disposiciones se opongan a lo establecido en esta Constitución» (apartado 3); la **final** fija la **entrada en vigor** (→ I.1).
 """, 2)
 
 T.ap("s8", "II.6 Resumen de la estructura", resumen([

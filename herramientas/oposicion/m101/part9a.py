@@ -6,7 +6,7 @@ T.ap("bVIII", "VIII. El Defensor del Pueblo (art. 54)", donde(
   ["1 Qué es", "2 Requisitos y elección", "3 Mandato, adjuntos y estatuto", "4 Funciones y actuación"]))
 
 T.ap("s39", "VIII.1 Qué es el Defensor del Pueblo", f"""
-Según el módulo, tiene **cierta inspiración nórdica** (el *ombudsman*). Sus **aspectos constitucionales** son cuatro:
+Según el módulo, tiene **cierta inspiración nórdica** (el *ombudsman*). Sus **aspectos constitucionales** son los siguientes:
 
 {unidad("1.1 El art. 54 CE y el art. 1 de su ley orgánica",
   lit("CE", "a54", ["alto comisionado de las Cortes Generales", "los derechos comprendidos en este Título", "supervisar la actividad de la Administración, dando cuenta a las Cortes Generales"]),
@@ -64,7 +64,7 @@ T.ap("s41", "VIII.3 Mandato, adjuntos y estatuto", f"""
 T.ap("s42", "VIII.4 Funciones y actuación", f"""
 {tabla(["Aspecto", "Qué dice", "Norma"], [
   ["**Qué supervisa**", "La actividad de la **Administración** (del Estado y también de las **Comunidades Autónomas**, aunque estas pueden tener sus propios defensores)", "Art. 54 CE; arts. 9 y 12 LO 3/1981"],
-  ["**Quién puede dirigirse a él**", "**Toda persona natural o jurídica** con interés legítimo, sin restricción de nacionalidad, residencia, sexo, minoría de edad… · **Diputados y Senadores** individualmente · **comisiones de investigación** · la **Comisión Mixta Congreso-Senado**", "Art. 10"],
+  ["**Quién puede dirigirse a él**", "**Toda persona natural o jurídica** con interés legítimo, sin restricción de nacionalidad, residencia, sexo, minoría de edad… · **Diputados y Senadores** individualmente · **comisiones de investigación o relacionadas con la defensa de los derechos y libertades públicas** · la **Comisión Mixta Congreso-Senado**", "Art. 10"],
   ["**Quién no**", "**Ninguna autoridad administrativa** en asuntos de su competencia", "Art. 10.3"],
   ["**Cómo actúa**", "De **oficio** o a **petición de parte**; **investigación sumaria e informal**; la Administración informa en **15 días**", "Arts. 9.1 y 18.1"],
   ["**Plazo para la queja**", "**Un año** desde que se conocen los hechos; es **gratuita** y no necesita abogado ni procurador", "Art. 15"],

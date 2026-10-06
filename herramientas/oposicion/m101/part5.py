@@ -48,7 +48,7 @@ El cuadro cruza **cada unidad del Título I** con **cada garantía**. {IMP} Es *
 """, 2)
 
 T.ap("s18", "IV.3 Los deberes del Título I", f"""
-El título habla de **derechos y deberes**. Los deberes que aparecen en sus artículos son pocos y se reconocen por la palabra «**deber**» en el texto:
+El título habla de **derechos y deberes**. Los deberes expresamente declarados son pocos y se reconocen por la palabra «**deber**» en el texto (además, el **39.3** impone a los padres el deber de asistencia a los hijos y el **30.4** prevé deberes en casos de grave riesgo, catástrofe o calamidad pública):
 
 {tabla(["Artículo", "Deber", "Texto literal"], [
   [tag("I.2.2", "Art. 30"), "**Defender a España** (y obligaciones militares, objeción de conciencia, servicio civil, grave riesgo o catástrofe)", c("CE", "a30", "Los españoles tienen el derecho y el deber de defender a España")],
@@ -81,7 +81,7 @@ Los derechos son cosas importantes que **no puede regular un reglamento**: solo 
          "Las Cortes Generales; el Congreso, por mayoría absoluta",
          ["Desarrollo de los **derechos fundamentales y libertades públicas** = **sección 1.ª (arts. 15 a 29)**", "Estatutos de Autonomía y régimen electoral general", "**Y las demás previstas en la Constitución**"],
          "**Mayoría absoluta del Congreso** en una votación final sobre el conjunto del proyecto",
-         f"{IMP} Del título I, **solo los arts. 15 a 29** van por ley orgánica; el resto, por **ley ordinaria**. El 81.1 termina con «**y las demás previstas en la Constitución**»: hay otras leyes orgánicas que no son de derechos."))}
+         f"{IMP} El **desarrollo de los derechos fundamentales y de las libertades públicas** (sección 1.ª, arts. 15 a 29) exige ley orgánica (art. 81.1); el resto de los derechos, **ley ordinaria**. Pero ojo: otros artículos del Título I prevén también ley orgánica (el **54**, Defensor del Pueblo, y el **55.2**, suspensión individual) y el 81.1 termina con «**y las demás previstas en la Constitución**»: hay otras leyes orgánicas que no son de derechos."))}
 
 **Otras leyes orgánicas previstas en la propia Constitución**, que no están en el art. 81 (y por eso se pregunta):
 
@@ -107,7 +107,7 @@ T.ap("s20", "V.2 Tutela ante los tribunales ordinarios (procedimiento preferente
 {unidad("2.2 El procedimiento en la jurisdicción contencioso-administrativa",
   lit("LJCA", "a114", ["procedimiento de amparo judicial", "artículo 53.2 de la Constitución"], solo=[1], titulo="Artículo 114.1 (LJCA)"),
   lit("LJCA", "a115", ["diez días"], solo=[1], titulo="Artículo 115.1 (LJCA)"),
-  "En el orden contencioso-administrativo, este procedimiento se llama **«de protección de los derechos fundamentales»** y tiene un **plazo de diez días** para recurrir.")}
+  "En el orden contencioso-administrativo, este procedimiento es el «**Procedimiento para la protección de los derechos fundamentales de la persona**» (LJCA, Título V, capítulo I) y tiene un **plazo de diez días** para recurrir.")}
 """, 2)
 
 T.ap("s21", "V.3 El recurso de amparo", f"""
@@ -134,5 +134,6 @@ Es **el último remedio**: normalmente se acude al Tribunal Constitucional **cua
 
 {unidad("3.3 Quién lo interpone y cómo se admite (art. 46 y 50 LOTC)",
   lx("LOTC", "acuarentayseis", 46, ["la persona directamente afectada, el Defensor del Pueblo y el Ministerio Fiscal", "quienes hayan sido parte en el proceso judicial correspondiente, el Defensor del Pueblo y el Ministerio Fiscal"], solo=[1, 2, 3]),
-  lx("LOTC", "acincuenta", 50, ["especial trascendencia constitucional"], solo=[1, 2, 3, 4, 5, 6], extra=".1"))}
+  lx("LOTC", "acincuenta", 50, ["especial trascendencia constitucional"], solo=[1, 2, 3, 4, 5, 6], extra=".1"),
+  "?> **Ojo:** el art. 46.1.a) remite a los arts. 42 y **45**, pero el art. 45 LOTC está **derogado** (el 46.1.a) lo sigue citando).")}
 """, 2)
