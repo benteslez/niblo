@@ -253,22 +253,25 @@ class Tema:
                 return NOM[c] + ", " + (f"pregunta {n[0]}" if len(n) == 1 else "preguntas " + ", ".join(map(str, n[:-1])) + f" y {n[-1]}")
             partes = [_fmt(c, n) for c, n in sorted(ex.items())]
             texto = "; ".join(partes + sorted(set(libres)))
+            # «{{EXAMEN:L24.48,P24.3}}»: la pill (y su frase) abren el diálogo con la pregunta y su respuesta (oposicion.html)
+            refs = ",".join(f"{c}.{n_}" for c, ns in sorted(ex.items()) for n_ in sorted(ns))
+            PILL = "{{EXAMEN:" + refs + "}}" if refs else "{{EXAMEN}}"
             sec = [s_ for s_ in self.S if s_["id"] == sid][0]
             if cab is None:
                 lin0 = sec["body"].split("\n", 1)[0]
                 if lin0.startswith("{{EXAMEN}}"):
-                    sec["body"] = lin0.rstrip() + " Además: " + texto + "." + sec["body"][len(lin0):]
+                    sec["body"] = PILL + lin0[len("{{EXAMEN}}"):].rstrip() + " Además: " + texto + "." + sec["body"][len(lin0):]
                 else:
-                    sec["body"] = "{{EXAMEN}} **Preguntado en exámenes oficiales:** " + texto + ".\n\n" + sec["body"]
+                    sec["body"] = PILL + " **Preguntado en exámenes oficiales:** " + texto + ".\n\n" + sec["body"]
                 continue
             i = sec["body"].index(cab) + len(cab)
             resto = sec["body"][i:]
             mm = re.match(r"\n\n(\{\{EXAMEN\}\}[^\n]*)", resto)
             if mm:
-                nueva = mm.group(1).rstrip() + " Además: " + texto + "."
+                nueva = PILL + mm.group(1)[len("{{EXAMEN}}"):].rstrip() + " Además: " + texto + "."
                 sec["body"] = sec["body"][:i] + "\n\n" + nueva + resto[mm.end():]
             else:
-                sec["body"] = sec["body"][:i] + "\n\n{{EXAMEN}} **Preguntado en exámenes oficiales:** " + texto + "." + resto
+                sec["body"] = sec["body"][:i] + "\n\n" + PILL + " **Preguntado en exámenes oficiales:** " + texto + "." + resto
         if sin:
             print(f"{self.id} · marcas «Examen» sin sitio todavía: {len(sin)}", file=sys.stderr)
             if os.environ.get("NIBLO_SIN_SITIO"):
