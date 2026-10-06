@@ -1,0 +1,3940 @@
+{
+"_formato": "marcas_examen_v1",
+"marcas": [
+{
+"tema": "B1T01",
+"k": "CE",
+"bloque": "a9",
+"ex": [
+[
+"P",
+51
+]
+]
+},
+{
+"tema": "B1T01",
+"k": "CE",
+"bloque": "preambulo",
+"ex": [
+[
+"X",
+3
+]
+]
+},
+{
+"tema": "B1T01",
+"clave": "Las disposiciones: 4-9-1-1",
+"ex": [
+[
+"X",
+2
+]
+]
+},
+{
+"tema": "B1T01",
+"clave": "sec:s4",
+"ex": [
+[
+"L",
+1
+],
+[
+"X",
+1
+]
+]
+},
+{
+"tema": "B1T02",
+"k": "CE",
+"bloque": "a15",
+"ex": [
+[
+"X",
+4
+]
+]
+},
+{
+"tema": "B1T02",
+"k": "CE",
+"bloque": "a54",
+"ex": [
+[
+"X",
+6
+]
+]
+},
+{
+"tema": "B1T02",
+"k": "CE",
+"bloque": "a55",
+"ex": [
+[
+"X",
+4
+]
+]
+},
+{
+"tema": "B1T02",
+"k": "LODP",
+"bloque": "aprimero",
+"ex": [
+[
+"X",
+6
+]
+]
+},
+{
+"tema": "B1T02",
+"k": "LODP",
+"bloque": "asegundo",
+"ex": [
+[
+"L",
+2
+]
+]
+},
+{
+"tema": "B1T02",
+"k": "LODP",
+"bloque": "atreinta",
+"ex": [
+[
+"X",
+5
+]
+]
+},
+{
+"tema": "B1T03",
+"k": "CE",
+"bloque": "a159",
+"ex": [
+[
+"L",
+3
+]
+]
+},
+{
+"tema": "B1T03",
+"k": "CE",
+"bloque": "a161",
+"ex": [
+[
+"X",
+8
+]
+]
+},
+{
+"tema": "B1T03",
+"k": "LOTC",
+"bloque": "aveintisiete",
+"ex": [
+[
+"X",
+9
+]
+]
+},
+{
+"tema": "B1T03",
+"clave": "Cuadro de las competencias",
+"ex": [
+[
+"X",
+7
+]
+]
+},
+{
+"tema": "B1T04",
+"k": "CE",
+"bloque": "a56",
+"ex": [
+[
+"L",
+6
+]
+]
+},
+{
+"tema": "B1T04",
+"k": "CE",
+"bloque": "a57",
+"ex": [
+[
+"X",
+10
+]
+]
+},
+{
+"tema": "B1T04",
+"k": "CE",
+"bloque": "a61",
+"ex": [
+[
+"X",
+11
+]
+]
+},
+{
+"tema": "B1T04",
+"k": "CE",
+"bloque": "a62",
+"ex": [
+[
+"L",
+5
+]
+]
+},
+{
+"tema": "B1T05",
+"k": "CE",
+"bloque": "a69",
+"ex": [
+[
+"X",
+14
+]
+]
+},
+{
+"tema": "B1T05",
+"k": "CE",
+"bloque": "a70",
+"ex": [
+[
+"X",
+12
+]
+]
+},
+{
+"tema": "B1T05",
+"k": "CE",
+"bloque": "a75",
+"ex": [
+[
+"L",
+7
+]
+]
+},
+{
+"tema": "B1T05",
+"k": "CE",
+"bloque": "a87",
+"ex": [
+[
+"P",
+45
+],
+[
+"P",
+48
+]
+]
+},
+{
+"tema": "B1T05",
+"k": "CE",
+"bloque": "a90",
+"ex": [
+[
+"P",
+46
+]
+]
+},
+{
+"tema": "B1T05",
+"k": "RCD",
+"bloque": "art2",
+"ex": [
+[
+"X",
+13
+]
+]
+},
+{
+"tema": "B1T06",
+"k": "CE",
+"bloque": "a113",
+"ex": [
+[
+"X",
+15
+]
+]
+},
+{
+"tema": "B1T06",
+"k": "CE",
+"bloque": "a99",
+"ex": [
+[
+"L",
+4
+]
+]
+},
+{
+"tema": "B1T06",
+"k": "LGOB",
+"bloque": "a24",
+"ex": [
+[
+"P",
+49
+]
+]
+},
+{
+"tema": "B1T06",
+"k": "LGOB",
+"bloque": "a6",
+"ex": [
+[
+"P",
+101
+]
+]
+},
+{
+"tema": "B1T06",
+"k": "LO3_1980",
+"bloque": "acuarto",
+"ex": [
+[
+"L",
+8
+]
+]
+},
+{
+"tema": "B1T06",
+"k": "LO3_1980",
+"bloque": "aoctavo",
+"ex": [
+[
+"X",
+17
+]
+]
+},
+{
+"tema": "B1T06",
+"k": "LO3_1980",
+"bloque": "aseptimo",
+"ex": [
+[
+"L",
+8
+]
+]
+},
+{
+"tema": "B1T06",
+"k": "LO3_1980",
+"bloque": "atrece",
+"ex": [
+[
+"X",
+16
+]
+]
+},
+{
+"tema": "B1T07",
+"k": "CE",
+"bloque": "a124",
+"ex": [
+[
+"X",
+19
+],
+[
+"L",
+9
+]
+]
+},
+{
+"tema": "B1T07",
+"k": "LOPJ",
+"bloque": "acientoochentaycinco",
+"ex": [
+[
+"X",
+105
+]
+]
+},
+{
+"tema": "B1T07",
+"k": "LOPJ",
+"bloque": "acientoochentaydos",
+"ex": [
+[
+"X",
+105
+]
+]
+},
+{
+"tema": "B1T07",
+"k": "LOPJ",
+"bloque": "acientoochentaytres",
+"ex": [
+[
+"X",
+105
+]
+]
+},
+{
+"tema": "B1T07",
+"k": "LOPJ",
+"bloque": "asesentaycuatrobis",
+"ex": [
+[
+"X",
+18
+]
+]
+},
+{
+"tema": "B1T07",
+"k": "LOPJ",
+"bloque": "atercero",
+"ex": [
+[
+"L",
+10
+]
+]
+},
+{
+"tema": "B1T08",
+"k": "L40",
+"bloque": "a5-2",
+"ex": [
+[
+"L",
+11
+]
+]
+},
+{
+"tema": "B1T08",
+"k": "L40",
+"bloque": "a55",
+"ex": [
+[
+"L",
+11
+],
+[
+"P",
+2
+],
+[
+"P",
+3
+]
+]
+},
+{
+"tema": "B1T08",
+"k": "L40",
+"bloque": "a9",
+"ex": [
+[
+"X",
+20
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a1-3",
+"ex": [
+[
+"P",
+5
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a103",
+"ex": [
+[
+"P",
+7
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a108",
+"ex": [
+[
+"P",
+5
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a120",
+"ex": [
+[
+"X",
+21
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a130",
+"ex": [
+[
+"X",
+22
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a82",
+"ex": [
+[
+"L",
+12
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a84",
+"ex": [
+[
+"X",
+22
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a95",
+"ex": [
+[
+"P",
+4
+]
+]
+},
+{
+"tema": "B1T09",
+"k": "L40",
+"bloque": "a99",
+"ex": [
+[
+"P",
+6
+]
+]
+},
+{
+"tema": "B1T10",
+"k": "CE",
+"bloque": "a139",
+"ex": [
+[
+"X",
+23
+]
+]
+},
+{
+"tema": "B1T10",
+"k": "CE",
+"bloque": "a145",
+"ex": [
+[
+"L",
+14
+]
+]
+},
+{
+"tema": "B1T10",
+"k": "CE",
+"bloque": "a148",
+"ex": [
+[
+"L",
+13
+]
+]
+},
+{
+"tema": "B1T10",
+"k": "CE",
+"bloque": "a149",
+"ex": [
+[
+"L",
+13
+]
+]
+},
+{
+"tema": "B1T10",
+"k": "CE",
+"bloque": "a153",
+"ex": [
+[
+"X",
+24
+],
+[
+"X",
+65
+]
+]
+},
+{
+"tema": "B1T10",
+"k": "L22_2009",
+"bloque": "preambulo",
+"ex": [
+[
+"L",
+36
+],
+[
+"P",
+31
+]
+]
+},
+{
+"tema": "B1T11",
+"k": "CE",
+"bloque": "a141",
+"ex": [
+[
+"L",
+15
+],
+[
+"X",
+26
+]
+]
+},
+{
+"tema": "B1T11",
+"k": "LRBRL",
+"bloque": "a22",
+"ex": [
+[
+"L",
+16
+]
+]
+},
+{
+"tema": "B1T11",
+"k": "LRBRL",
+"bloque": "a25",
+"ex": [
+[
+"X",
+27
+]
+]
+},
+{
+"tema": "B1T11",
+"k": "LRBRL",
+"bloque": "a43",
+"ex": [
+[
+"X",
+25
+]
+]
+},
+{
+"tema": "B2T01",
+"clave": "Cómo leer el cuadro",
+"ex": [
+[
+"X",
+31
+]
+]
+},
+{
+"tema": "B2T01",
+"clave": "Los países fundadores y la Declaración Schuman",
+"ex": [
+[
+"L",
+18
+]
+]
+},
+{
+"tema": "B2T01",
+"k": "TFUE",
+"bloque": "Artículo 3",
+"ex": [
+[
+"L",
+28
+],
+[
+"P",
+8
+],
+[
+"P",
+19
+]
+]
+},
+{
+"tema": "B2T01",
+"k": "TFUE",
+"bloque": "Artículo 328",
+"ex": [
+[
+"X",
+28
+]
+]
+},
+{
+"tema": "B2T01",
+"k": "TFUE",
+"bloque": "Artículo 329",
+"ex": [
+[
+"X",
+29
+]
+]
+},
+{
+"tema": "B2T01",
+"k": "TUE",
+"bloque": "Artículo 20",
+"ex": [
+[
+"X",
+29
+]
+]
+},
+{
+"tema": "B2T01",
+"k": "TUE",
+"bloque": "Artículo 48",
+"ex": [
+[
+"X",
+30
+]
+]
+},
+{
+"tema": "B2T01",
+"k": "TUE",
+"bloque": "Artículo 49",
+"ex": [
+[
+"P",
+9
+]
+]
+},
+{
+"tema": "B2T01",
+"k": "TUE",
+"bloque": "Artículo 5",
+"ex": [
+[
+"X",
+34
+],
+[
+"X",
+36
+]
+]
+},
+{
+"tema": "B2T02",
+"k": "TFUE",
+"bloque": "Artículo 247",
+"ex": [
+[
+"P",
+11
+]
+]
+},
+{
+"tema": "B2T02",
+"k": "TFUE",
+"bloque": "Artículo 249",
+"ex": [
+[
+"L",
+21
+]
+]
+},
+{
+"tema": "B2T02",
+"k": "TFUE",
+"bloque": "Artículo 297",
+"ex": [
+[
+"P",
+14
+]
+]
+},
+{
+"tema": "B2T02",
+"k": "TUE",
+"bloque": "Artículo 15",
+"ex": [
+[
+"L",
+19
+],
+[
+"X",
+32
+]
+]
+},
+{
+"tema": "B2T02",
+"k": "TUE",
+"bloque": "Artículo 16",
+"ex": [
+[
+"L",
+20
+]
+]
+},
+{
+"tema": "B2T02",
+"k": "TUE",
+"bloque": "Artículo 17",
+"ex": [
+[
+"P",
+13
+]
+]
+},
+{
+"tema": "B2T03",
+"clave": "Presidente y Mesa",
+"ex": [
+[
+"X",
+33
+]
+]
+},
+{
+"tema": "B2T03",
+"k": "TFUE",
+"bloque": "Artículo 255",
+"ex": [
+[
+"P",
+12
+]
+]
+},
+{
+"tema": "B2T03",
+"k": "TFUE",
+"bloque": "Artículo 263",
+"ex": [
+[
+"L",
+23
+]
+]
+},
+{
+"tema": "B2T03",
+"k": "TUE",
+"bloque": "Artículo 14",
+"ex": [
+[
+"L",
+22
+]
+]
+},
+{
+"tema": "B2T03",
+"k": "TUE",
+"bloque": "Artículo 16",
+"ex": [
+[
+"L",
+22
+]
+]
+},
+{
+"tema": "B2T03",
+"k": "TUE",
+"bloque": "Artículo 17",
+"ex": [
+[
+"L",
+22
+]
+]
+},
+{
+"tema": "B2T04",
+"clave": "La Declaración n\\.º 17, relativa a la primacía",
+"ex": [
+[
+"P",
+16
+]
+]
+},
+{
+"tema": "B2T04",
+"clave": "sec:s1",
+"ex": [
+[
+"P",
+10
+]
+]
+},
+{
+"tema": "B2T04",
+"clave": "sec:s12",
+"ex": [
+[
+"L",
+25
+]
+]
+},
+{
+"tema": "B2T04",
+"k": "TFUE",
+"bloque": "Artículo 288",
+"ex": [
+[
+"L",
+24
+]
+]
+},
+{
+"tema": "B2T05",
+"k": "MFP",
+"bloque": "Artículo 1",
+"ex": [
+[
+"X",
+35
+]
+]
+},
+{
+"tema": "B2T05",
+"clave": "Horizonte Europa",
+"ex": [
+[
+"L",
+27
+]
+]
+},
+{
+"tema": "B2T05",
+"k": "TFUE",
+"bloque": "Artículo 177",
+"ex": [
+[
+"P",
+17
+]
+]
+},
+{
+"tema": "B2T05",
+"k": "TFUE",
+"bloque": "Artículo 312",
+"ex": [
+[
+"X",
+35
+]
+]
+},
+{
+"tema": "B2T05",
+"k": "TFUE",
+"bloque": "Artículo 314",
+"ex": [
+[
+"X",
+35
+]
+]
+},
+{
+"tema": "B2T05",
+"k": "TFUE",
+"bloque": "Artículo 319",
+"ex": [
+[
+"L",
+26
+]
+]
+},
+{
+"tema": "B2T06",
+"k": "FEMPA",
+"bloque": "Artículo 25",
+"ex": [
+[
+"L",
+102
+]
+]
+},
+{
+"tema": "B2T06",
+"clave": "Quién lo firmó",
+"ex": [
+[
+"L",
+30
+]
+]
+},
+{
+"tema": "B2T06",
+"clave": "Qué es un Estado acogido a una excepción",
+"ex": [
+[
+"L",
+17
+]
+]
+},
+{
+"tema": "B2T06",
+"k": "PROT13",
+"bloque": "Artículo 1",
+"ex": [
+[
+"X",
+37
+]
+]
+},
+{
+"tema": "B2T06",
+"k": "PROT13",
+"bloque": "Artículo 2",
+"ex": [
+[
+"X",
+37
+]
+]
+},
+{
+"tema": "B2T06",
+"k": "PROT13",
+"bloque": "Artículo 3",
+"ex": [
+[
+"X",
+37
+]
+]
+},
+{
+"tema": "B2T06",
+"k": "PROT13",
+"bloque": "Artículo 4",
+"ex": [
+[
+"X",
+37
+]
+]
+},
+{
+"tema": "B2T06",
+"k": "TFUE",
+"bloque": "Artículo 26",
+"ex": [
+[
+"P",
+18
+]
+]
+},
+{
+"tema": "B2T06",
+"k": "TFUE",
+"bloque": "Artículo 59",
+"ex": [
+[
+"P",
+15
+]
+]
+},
+{
+"tema": "B2T06",
+"k": "TFUE",
+"bloque": "Artículo 82",
+"ex": [
+[
+"L",
+29
+]
+]
+},
+{
+"tema": "B3T01",
+"clave": "España Digital 2026",
+"ex": [
+[
+"L",
+31
+]
+]
+},
+{
+"tema": "B3T01",
+"k": "RD1118",
+"bloque": "a1",
+"ex": [
+[
+"P",
+20
+]
+]
+},
+{
+"tema": "B3T01",
+"k": "RD203",
+"bloque": "a1-3",
+"ex": [
+[
+"P",
+102
+]
+]
+},
+{
+"tema": "B3T01",
+"k": "RD203",
+"bloque": "a2-3",
+"ex": [
+[
+"P",
+103
+]
+]
+},
+{
+"tema": "B3T01",
+"k": "RD203",
+"bloque": "a4-4",
+"ex": [
+[
+"X",
+102
+]
+]
+},
+{
+"tema": "B3T01",
+"k": "RD203",
+"bloque": "a4-6",
+"ex": [
+[
+"X",
+102
+]
+]
+},
+{
+"tema": "B3T01",
+"k": "RD931",
+"bloque": "a3",
+"ex": [
+[
+"L",
+32
+],
+[
+"P",
+21
+],
+[
+"X",
+38
+]
+]
+},
+{
+"tema": "B3T01",
+"k": "RD951",
+"bloque": "a9",
+"ex": [
+[
+"P",
+22
+],
+[
+"X",
+103
+]
+]
+},
+{
+"tema": "B3T02",
+"k": "L20_2013",
+"bloque": "a10",
+"ex": [
+[
+"X",
+41
+]
+]
+},
+{
+"tema": "B3T03",
+"k": "CE",
+"bloque": "a149",
+"ex": [
+[
+"P",
+27
+]
+]
+},
+{
+"tema": "B3T03",
+"k": "L7_2021",
+"bloque": "a4",
+"ex": [
+[
+"X",
+43
+]
+]
+},
+{
+"tema": "B3T03",
+"k": "L7_2022",
+"bloque": "a2-7",
+"ex": [
+[
+"X",
+40
+]
+]
+},
+{
+"tema": "B3T03",
+"clave": "Programa Nacional de Control de la Contaminación Atmosférica",
+"ex": [
+[
+"L",
+34
+]
+]
+},
+{
+"tema": "B3T03",
+"k": "RD556",
+"bloque": "a5",
+"ex": [
+[
+"X",
+42
+]
+]
+},
+{
+"tema": "B3T04",
+"k": "CE",
+"bloque": "a149",
+"ex": [
+[
+"P",
+28
+]
+]
+},
+{
+"tema": "B3T04",
+"k": "LGSS",
+"bloque": "a121",
+"ex": [
+[
+"P",
+29
+]
+]
+},
+{
+"tema": "B3T04",
+"k": "LGSS",
+"bloque": "a125",
+"ex": [
+[
+"L",
+35
+],
+[
+"P",
+30
+]
+]
+},
+{
+"tema": "B3T04",
+"clave": "Recursos generales",
+"ex": [
+[
+"X",
+44
+]
+]
+},
+{
+"tema": "B3T05",
+"k": "L3_2023",
+"bloque": "a1-5",
+"ex": [
+[
+"X",
+45
+]
+]
+},
+{
+"tema": "B3T05",
+"k": "RD633",
+"bloque": "ci-3",
+"ex": [
+[
+"L",
+37
+]
+]
+},
+{
+"tema": "B3T06",
+"k": "CE",
+"bloque": "a149",
+"ex": [
+[
+"P",
+33
+]
+]
+},
+{
+"tema": "B3T06",
+"k": "LOEX",
+"bloque": "a3-3",
+"ex": [
+[
+"L",
+38
+]
+]
+},
+{
+"tema": "B3T06",
+"k": "LOEX",
+"bloque": "a35",
+"ex": [
+[
+"L",
+38
+]
+]
+},
+{
+"tema": "B3T06",
+"k": "LOEX",
+"bloque": "a68",
+"ex": [
+[
+"X",
+101
+]
+]
+},
+{
+"tema": "B3T06",
+"clave": "sec:s4",
+"ex": [
+[
+"X",
+39
+]
+]
+},
+{
+"tema": "B3T06",
+"k": "RD345",
+"bloque": "a4",
+"ex": [
+[
+"L",
+101
+],
+[
+"P",
+34
+]
+]
+},
+{
+"tema": "B3T06",
+"k": "REFUG",
+"bloque": "a46",
+"ex": [
+[
+"X",
+46
+]
+]
+},
+{
+"tema": "B3T07",
+"k": "L19_2013",
+"bloque": "a37",
+"ex": [
+[
+"X",
+48
+]
+]
+},
+{
+"tema": "B3T07",
+"clave": "El V Plan de Gobierno Abierto",
+"ex": [
+[
+"L",
+39
+],
+[
+"P",
+38
+]
+]
+},
+{
+"tema": "B3T07",
+"k": "RD615",
+"bloque": "a2-2",
+"ex": [
+[
+"P",
+39
+]
+]
+},
+{
+"tema": "B3T08",
+"k": "LOPD",
+"bloque": "a3-6",
+"ex": [
+[
+"X",
+50
+]
+]
+},
+{
+"tema": "B3T08",
+"k": "LOPD",
+"bloque": "a8-10",
+"ex": [
+[
+"L",
+41
+],
+[
+"P",
+35
+]
+]
+},
+{
+"tema": "B3T08",
+"clave": "Plan Estratégico de la Agencia Española de Protección de Datos",
+"ex": [
+[
+"P",
+36
+]
+]
+},
+{
+"tema": "B3T08",
+"k": "RD389",
+"bloque": "a6",
+"ex": [
+[
+"L",
+40
+],
+[
+"P",
+37
+]
+]
+},
+{
+"tema": "B3T08",
+"k": "RGPD",
+"bloque": "Artículo 20",
+"ex": [
+[
+"X",
+49
+]
+]
+},
+{
+"tema": "B3T09",
+"k": "L4_2023",
+"bloque": "a1-7",
+"ex": [
+[
+"X",
+52
+]
+]
+},
+{
+"tema": "B3T09",
+"k": "L4_2023",
+"bloque": "a3",
+"ex": [
+[
+"L",
+43
+],
+[
+"P",
+42
+]
+]
+},
+{
+"tema": "B3T09",
+"k": "LO1_2004",
+"bloque": "a21",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 5 a)"
+]
+},
+{
+"tema": "B3T09",
+"k": "LO1_2004",
+"bloque": "a24",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 5 a)"
+]
+},
+{
+"tema": "B3T09",
+"k": "LO3_2007",
+"bloque": "a45",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 4 c)"
+]
+},
+{
+"tema": "B3T09",
+"clave": "Plan conjunto plurianual",
+"ex": [
+[
+"X",
+53
+]
+]
+},
+{
+"tema": "B3T09",
+"clave": "Renovación del Pacto de Estado",
+"ex": [
+[
+"L",
+103
+]
+]
+},
+{
+"tema": "B3T09",
+"k": "RD1026",
+"bloque": "ai",
+"ex": [
+[
+"P",
+41
+]
+]
+},
+{
+"tema": "B3T09",
+"k": "RD1051",
+"bloque": "anii",
+"ex": [
+[
+"L",
+42
+],
+[
+"P",
+43
+]
+]
+},
+{
+"tema": "B3T09",
+"k": "RD246",
+"bloque": "a2",
+"ex": [
+[
+"X",
+51
+]
+]
+},
+{
+"tema": "B3T10",
+"k": "L2_2014",
+"bloque": "a6",
+"ex": [
+[
+"P",
+1
+]
+]
+},
+{
+"tema": "B3T10",
+"k": "L7_2025",
+"bloque": "a1",
+"ex": [
+[
+"L",
+45
+]
+]
+},
+{
+"tema": "B3T10",
+"k": "L7_2025",
+"bloque": "a2",
+"ex": [
+[
+"L",
+45
+]
+]
+},
+{
+"tema": "B3T10",
+"clave": "Estrategia de Acción Exterior de España 2025-2028",
+"ex": [
+[
+"L",
+44
+]
+]
+},
+{
+"tema": "B3T10",
+"clave": "Estrategia de Desarrollo Sostenible 2030",
+"ex": [
+[
+"P",
+40
+]
+]
+},
+{
+"tema": "B3T10",
+"clave": "Plan Director de la Cooperación Española",
+"ex": [
+[
+"P",
+32
+]
+]
+},
+{
+"tema": "B4T01",
+"k": "CC",
+"bloque": "a1",
+"ex": [
+[
+"L",
+46
+]
+]
+},
+{
+"tema": "B4T02",
+"k": "CE",
+"bloque": "a30",
+"ex": [
+[
+"P",
+44
+]
+]
+},
+{
+"tema": "B4T02",
+"k": "CE",
+"bloque": "a85",
+"ex": [
+[
+"L",
+47
+],
+[
+"P",
+47
+]
+]
+},
+{
+"tema": "B4T03",
+"k": "CC",
+"bloque": "a1",
+"ex": [
+[
+"P",
+50
+]
+]
+},
+{
+"tema": "B4T03",
+"k": "L39",
+"bloque": "a133",
+"ex": [
+[
+"L",
+48
+]
+]
+},
+{
+"tema": "B4T04",
+"k": "L39",
+"bloque": "a100",
+"ex": [
+[
+"P",
+62
+]
+]
+},
+{
+"tema": "B4T04",
+"k": "L39",
+"bloque": "a35",
+"ex": [
+[
+"P",
+53
+]
+]
+},
+{
+"tema": "B4T04",
+"k": "L39",
+"bloque": "a40",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 3 c)"
+]
+},
+{
+"tema": "B4T04",
+"k": "L39",
+"bloque": "a41",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 3 c)"
+]
+},
+{
+"tema": "B4T04",
+"k": "L39",
+"bloque": "a47",
+"ex": [
+[
+"P",
+55
+]
+]
+},
+{
+"tema": "B4T04",
+"k": "L39",
+"bloque": "a48",
+"ex": [
+[
+"L",
+49
+]
+]
+},
+{
+"tema": "B4T04",
+"k": "L39",
+"bloque": "a52",
+"ex": [
+[
+"P",
+54
+],
+[
+"P",
+55
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "ET",
+"bloque": "a33",
+"ex": [
+[
+"P",
+57
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-105",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 1 c)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-108",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 2 a)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-15",
+"ex": [
+[
+"X",
+56
+],
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 4 d)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-2",
+"ex": [
+[
+"P",
+56
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-3",
+"ex": [
+[
+"P",
+56
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-30",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 1 a) y d)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a2-17",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 1 b)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a2-2",
+"ex": [
+[
+"P",
+57
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a2-26",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 4 a) y b)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a2-3",
+"ex": [
+[
+"P",
+57
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a2-4",
+"ex": [
+[
+"P",
+57
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a3",
+"ex": [
+[
+"P",
+56
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a3-35",
+"ex": [
+[
+"P",
+58
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a3-8",
+"ex": [
+[
+"L",
+51
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a4-6",
+"ex": [
+[
+"L",
+50
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a5",
+"ex": [
+[
+"P",
+56
+]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a7-3",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 4 c)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a8-10",
+"ex": [
+[
+"L",
+52
+]
+]
+},
+{
+"tema": "B4T06",
+"k": "LCSP",
+"bloque": "a1-10",
+"ex": [
+[
+"P",
+59
+]
+]
+},
+{
+"tema": "B4T06",
+"k": "LCSP",
+"bloque": "a1-5",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 1 a)"
+]
+},
+{
+"tema": "B4T06",
+"k": "LCSP",
+"bloque": "a2-55",
+"ex": [
+[
+"X",
+55
+]
+]
+},
+{
+"tema": "B4T06",
+"k": "LCSP",
+"bloque": "a2-56",
+"ex": [
+[
+"X",
+54
+]
+]
+},
+{
+"tema": "B4T06",
+"k": "LCSP",
+"bloque": "a2-59",
+"ex": [
+[
+"X",
+57
+]
+]
+},
+{
+"tema": "B4T06",
+"k": "LCSP",
+"bloque": "a3-16",
+"ex": [
+[
+"P",
+60
+]
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a20",
+"ex": [
+[
+"L",
+53
+]
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a22",
+"ex": [
+[
+"P",
+61
+]
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a54",
+"ex": [
+[
+"P",
+65
+]
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a56",
+"ex": [
+[
+"P",
+63
+]
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a57",
+"ex": [
+[
+"P",
+63
+]
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a6",
+"ex": [
+[
+"P",
+64
+]
+]
+},
+{
+"tema": "B4T08",
+"k": "LEF",
+"bloque": "asegundo",
+"ex": [
+[
+"P",
+67
+]
+]
+},
+{
+"tema": "B4T08",
+"k": "LEF",
+"bloque": "aseptimo",
+"ex": [
+[
+"P",
+68
+]
+]
+},
+{
+"tema": "B4T08",
+"k": "LEF",
+"bloque": "atercero",
+"ex": [
+[
+"X",
+58
+]
+]
+},
+{
+"tema": "B4T08",
+"k": "LEF",
+"bloque": "aveinte",
+"ex": [
+[
+"P",
+66
+]
+]
+},
+{
+"tema": "B4T08",
+"k": "LEF",
+"bloque": "aveintidos",
+"ex": [
+[
+"L",
+54
+]
+]
+},
+{
+"tema": "B4T08",
+"k": "LOFAGE",
+"bloque": "dacuarta",
+"ex": [
+[
+"P",
+66
+]
+]
+},
+{
+"tema": "B4T09",
+"k": "CE",
+"bloque": "a132",
+"ex": [
+[
+"P",
+69
+]
+]
+},
+{
+"tema": "B4T09",
+"k": "L23_1982",
+"bloque": "asexto",
+"ex": [
+[
+"X",
+60
+]
+]
+},
+{
+"tema": "B4T09",
+"k": "LPAP",
+"bloque": "a50",
+"ex": [
+[
+"L",
+55
+]
+]
+},
+{
+"tema": "B4T09",
+"k": "LPAP",
+"bloque": "a51",
+"ex": [
+[
+"L",
+55
+]
+]
+},
+{
+"tema": "B4T09",
+"k": "LPAP",
+"bloque": "a9",
+"ex": [
+[
+"P",
+70
+]
+]
+},
+{
+"tema": "B4T09",
+"k": "LPAP",
+"bloque": "dacuarta",
+"ex": [
+[
+"X",
+60
+]
+]
+},
+{
+"tema": "B4T09",
+"k": "LPAP",
+"bloque": "ddunica",
+"ex": [
+[
+"X",
+60
+]
+]
+},
+{
+"tema": "B4T09",
+"k": "RD1372",
+"bloque": "art100",
+"ex": [
+[
+"X",
+59
+]
+]
+},
+{
+"tema": "B4T10",
+"k": "L39",
+"bloque": "a67",
+"ex": [
+[
+"P",
+71
+],
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 2 a)"
+]
+},
+{
+"tema": "B4T10",
+"k": "L39",
+"bloque": "a81",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 2 a)"
+]
+},
+{
+"tema": "B4T10",
+"k": "L39",
+"bloque": "a91",
+"ex": [
+[
+"L",
+56
+],
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 2 b)"
+]
+},
+{
+"tema": "B4T10",
+"k": "L40",
+"bloque": "a32",
+"ex": [
+[
+"X",
+61
+]
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a24",
+"ex": [
+[
+"L",
+58
+]
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a32",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 5 b)"
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a33",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 5 a)"
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a5",
+"ex": [
+[
+"P",
+72
+]
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a68",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 5 b)"
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a71",
+"ex": [
+[
+"X",
+62
+]
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a73",
+"ex": [
+[
+"L",
+57
+]
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a84",
+"ex": [
+[
+"P",
+73
+]
+]
+},
+{
+"tema": "B4T12",
+"k": "L39",
+"bloque": "a114",
+"ex": [
+[
+"P",
+74
+]
+]
+},
+{
+"tema": "B4T12",
+"k": "L39",
+"bloque": "a117",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 3 b)"
+]
+},
+{
+"tema": "B4T12",
+"k": "L39",
+"bloque": "a121",
+"ex": [
+[
+"L",
+59
+]
+]
+},
+{
+"tema": "B4T12",
+"k": "L39",
+"bloque": "a122",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 3 a) y d)"
+]
+},
+{
+"tema": "B4T12",
+"k": "L39",
+"bloque": "a53",
+"ex": [
+[
+"P",
+75
+],
+[
+"X",
+64
+]
+]
+},
+{
+"tema": "B4T13",
+"k": "LJCA",
+"bloque": "a10",
+"ex": [
+[
+"P",
+76
+]
+]
+},
+{
+"tema": "B4T13",
+"k": "LJCA",
+"bloque": "a19",
+"ex": [
+[
+"L",
+60
+]
+]
+},
+{
+"tema": "B4T13",
+"k": "LJCA",
+"bloque": "a25",
+"ex": [
+[
+"X",
+63
+]
+]
+},
+{
+"tema": "B4T13",
+"k": "LJCA",
+"bloque": "a28",
+"ex": [
+[
+"X",
+63
+]
+]
+},
+{
+"tema": "B4T13",
+"k": "LJCA",
+"bloque": "a46",
+"ex": [
+[
+"P",
+77
+]
+]
+},
+{
+"tema": "B5T01",
+"k": "TREBEP",
+"bloque": "a10",
+"ex": [
+[
+"P",
+78
+],
+[
+"X",
+67
+]
+]
+},
+{
+"tema": "B5T01",
+"k": "TREBEP",
+"bloque": "a62",
+"ex": [
+[
+"L",
+61
+]
+]
+},
+{
+"tema": "B5T01",
+"k": "TREBEP",
+"bloque": "a64",
+"ex": [
+[
+"L",
+62
+]
+]
+},
+{
+"tema": "B5T01",
+"k": "TREBEP",
+"bloque": "a7",
+"ex": [
+[
+"P",
+81
+]
+]
+},
+{
+"tema": "B5T02",
+"k": "TREBEP",
+"bloque": "a15",
+"ex": [
+[
+"X",
+68
+]
+]
+},
+{
+"tema": "B5T02",
+"k": "TREBEP",
+"bloque": "a48",
+"ex": [
+[
+"X",
+69
+]
+]
+},
+{
+"tema": "B5T02",
+"k": "TREBEP",
+"bloque": "a49",
+"ex": [
+[
+"P",
+24
+],
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 5 a)"
+]
+},
+{
+"tema": "B5T02",
+"k": "TREBEP",
+"bloque": "a96",
+"ex": [
+[
+"L",
+64
+]
+]
+},
+{
+"tema": "B5T03",
+"k": "RDL6",
+"bloque": "a1-20",
+"ex": [
+[
+"X",
+72
+],
+[
+"X",
+75
+]
+]
+},
+{
+"tema": "B5T03",
+"k": "RDL6",
+"bloque": "a1-22",
+"ex": [
+[
+"L",
+66
+]
+]
+},
+{
+"tema": "B5T03",
+"k": "TREBEP",
+"bloque": "a10",
+"ex": [
+[
+"X",
+70
+]
+]
+},
+{
+"tema": "B5T03",
+"k": "TREBEP",
+"bloque": "a11",
+"ex": [
+[
+"X",
+70
+]
+]
+},
+{
+"tema": "B5T03",
+"k": "TREBEP",
+"bloque": "a55",
+"ex": [
+[
+"X",
+70
+]
+]
+},
+{
+"tema": "B5T03",
+"k": "TREBEP",
+"bloque": "a61",
+"ex": [
+[
+"X",
+81
+]
+]
+},
+{
+"tema": "B5T03",
+"k": "TREBEP",
+"bloque": "a70",
+"ex": [
+[
+"L",
+65
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a26",
+"ex": [
+[
+"X",
+66
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a36",
+"ex": [
+[
+"X",
+66
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a42",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 2 a)"
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a44",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 2 b)"
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a47",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 2 c)"
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a48",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 2 d)"
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a58",
+"ex": [
+[
+"X",
+73
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a59",
+"ex": [
+[
+"X",
+66
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a64",
+"ex": [
+[
+"X",
+66
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a66",
+"ex": [
+[
+"X",
+66
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a66ter",
+"ex": [
+[
+"X",
+66
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RD364",
+"bloque": "a70",
+"ex": [
+[
+"X",
+74
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RDL6",
+"bloque": "a1-23",
+"ex": [
+[
+"L",
+68
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RDL6",
+"bloque": "a1-35",
+"ex": [
+[
+"L",
+67
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "RDL6",
+"bloque": "a1-39",
+"ex": [
+[
+"L",
+67
+],
+[
+"X",
+71
+],
+[
+"X",
+76
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "TREBEP",
+"bloque": "a16",
+"ex": [
+[
+"L",
+63
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "TREBEP",
+"bloque": "a19",
+"ex": [
+[
+"P",
+82
+]
+]
+},
+{
+"tema": "B5T04",
+"k": "TREBEP",
+"bloque": "a82",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 5 c)"
+]
+},
+{
+"tema": "B5T05",
+"k": "L53",
+"bloque": "acatorce",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 3 a)"
+]
+},
+{
+"tema": "B5T05",
+"k": "L53",
+"bloque": "acuarto",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 3 c)"
+]
+},
+{
+"tema": "B5T05",
+"k": "L53",
+"bloque": "adieciseis",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 3 a)"
+]
+},
+{
+"tema": "B5T05",
+"k": "L53",
+"bloque": "anoveno",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 3 c)"
+]
+},
+{
+"tema": "B5T05",
+"k": "L53",
+"bloque": "aquinto",
+"ex": [
+[
+"L",
+70
+]
+]
+},
+{
+"tema": "B5T05",
+"k": "L53",
+"bloque": "aseptimo",
+"ex": [
+[
+"X",
+78
+],
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 3 d)"
+]
+},
+{
+"tema": "B5T05",
+"k": "RD598",
+"bloque": "art14",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 3 b)"
+]
+},
+{
+"tema": "B5T05",
+"k": "TREBEP",
+"bloque": "a85",
+"ex": [
+[
+"L",
+69
+],
+[
+"X",
+77
+]
+]
+},
+{
+"tema": "B5T05",
+"k": "TREBEP",
+"bloque": "a89",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 5 b)"
+]
+},
+{
+"tema": "B5T06",
+"k": "L30",
+"bloque": "aveinticuatro",
+"ex": [
+[
+"L",
+72
+]
+]
+},
+{
+"tema": "B5T06",
+"k": "L30",
+"bloque": "aveintitres",
+"ex": [
+[
+"L",
+72
+],
+[
+"L",
+99
+]
+]
+},
+{
+"tema": "B5T06",
+"k": "RD462",
+"bloque": "a1",
+"ex": [
+[
+"L",
+73
+]
+]
+},
+{
+"tema": "B5T06",
+"k": "RD462",
+"bloque": "a12",
+"ex": [
+[
+"X",
+80
+]
+]
+},
+{
+"tema": "B5T06",
+"k": "RD462",
+"bloque": "a5",
+"ex": [
+[
+"L",
+71
+],
+[
+"X",
+79
+]
+]
+},
+{
+"tema": "B5T06",
+"k": "TREBEP",
+"bloque": "a23",
+"ex": [
+[
+"P",
+99
+]
+]
+},
+{
+"tema": "B5T06",
+"k": "TREBEP",
+"bloque": "a26",
+"ex": [
+[
+"P",
+100
+]
+]
+},
+{
+"tema": "B5T06",
+"k": "TREBEP",
+"bloque": "a29",
+"ex": [
+[
+"X",
+98
+]
+]
+},
+{
+"tema": "B5T06",
+"k": "TREBEP",
+"bloque": "a30",
+"ex": [
+[
+"X",
+99
+]
+]
+},
+{
+"tema": "B5T07",
+"k": "CONV",
+"bloque": "a1",
+"ex": [
+[
+"X",
+82
+]
+]
+},
+{
+"tema": "B5T07",
+"k": "CONV",
+"bloque": "a1-3",
+"ex": [
+[
+"P",
+80
+]
+]
+},
+{
+"tema": "B5T07",
+"k": "CONV",
+"bloque": "a1-8",
+"ex": [
+[
+"P",
+104
+]
+]
+},
+{
+"tema": "B5T07",
+"k": "CONV",
+"bloque": "a2",
+"ex": [
+[
+"X",
+82
+]
+]
+},
+{
+"tema": "B5T07",
+"k": "CONV",
+"bloque": "a8",
+"ex": [
+[
+"L",
+74
+],
+[
+"P",
+79
+]
+]
+},
+{
+"tema": "B5T08",
+"k": "CONV",
+"bloque": "a8-7",
+"ex": [
+[
+"L",
+75
+]
+]
+},
+{
+"tema": "B5T08",
+"clave": "Mesa General de las Administraciones Públicas",
+"ex": [
+[
+"L",
+104
+]
+]
+},
+{
+"tema": "B5T08",
+"k": "TREBEP",
+"bloque": "a37",
+"ex": [
+[
+"L",
+76
+],
+[
+"X",
+84
+]
+]
+},
+{
+"tema": "B5T08",
+"k": "TREBEP",
+"bloque": "a42",
+"ex": [
+[
+"X",
+83
+]
+]
+},
+{
+"tema": "B5T09",
+"k": "LGSS",
+"bloque": "datercera",
+"ex": [
+[
+"L",
+79
+]
+]
+},
+{
+"tema": "B5T09",
+"k": "MUF",
+"bloque": "a18",
+"ex": [
+[
+"X",
+86
+]
+]
+},
+{
+"tema": "B5T09",
+"k": "MUF",
+"bloque": "a3",
+"ex": [
+[
+"L",
+77
+]
+]
+},
+{
+"tema": "B5T09",
+"k": "MUF",
+"bloque": "dasexta",
+"ex": [
+[
+"L",
+105
+]
+]
+},
+{
+"tema": "B5T09",
+"k": "RD375",
+"bloque": "a6-8",
+"ex": [
+[
+"L",
+78
+]
+]
+},
+{
+"tema": "B5T09",
+"k": "RD466_2026",
+"bloque": "at",
+"ex": [
+[
+"X",
+85
+]
+]
+},
+{
+"tema": "B5T09",
+"k": "RDL670",
+"bloque": "a11",
+"ex": [
+[
+"X",
+87
+]
+]
+},
+{
+"tema": "B5T10",
+"k": "OPJC804",
+"bloque": "a5",
+"ex": [
+[
+"L",
+81
+]
+]
+},
+{
+"tema": "B5T10",
+"k": "RD2271",
+"bloque": "a3",
+"ex": [
+[
+"X",
+104
+]
+]
+},
+{
+"tema": "B5T10",
+"k": "RD2271",
+"bloque": "a9",
+"ex": [
+[
+"L",
+80
+]
+]
+},
+{
+"tema": "B5T10",
+"k": "RDL6",
+"bloque": "a1-25",
+"ex": [
+[
+"X",
+88
+]
+]
+},
+{
+"tema": "B6T01",
+"k": "CE",
+"bloque": "a134",
+"ex": [
+[
+"X",
+92
+]
+]
+},
+{
+"tema": "B6T01",
+"k": "CE",
+"bloque": "a135",
+"ex": [
+[
+"P",
+26
+]
+]
+},
+{
+"tema": "B6T01",
+"k": "LGP",
+"bloque": "a2",
+"ex": [
+[
+"P",
+84
+]
+]
+},
+{
+"tema": "B6T01",
+"k": "LO6_2013",
+"bloque": "a17",
+"ex": [
+[
+"L",
+33
+]
+]
+},
+{
+"tema": "B6T01",
+"k": "LOEP",
+"bloque": "a13",
+"ex": [
+[
+"P",
+83
+]
+]
+},
+{
+"tema": "B6T01",
+"k": "LOEP",
+"bloque": "a2",
+"ex": [
+[
+"X",
+90
+]
+]
+},
+{
+"tema": "B6T01",
+"k": "LOEP",
+"bloque": "a25",
+"ex": [
+[
+"P",
+23
+]
+]
+},
+{
+"tema": "B6T01",
+"k": "LOEP",
+"bloque": "a3",
+"ex": [
+[
+"L",
+83
+]
+]
+},
+{
+"tema": "B6T02",
+"k": "CE",
+"bloque": "a134",
+"ex": [
+[
+"P",
+85
+],
+[
+"X",
+89
+]
+]
+},
+{
+"tema": "B6T02",
+"k": "LGP",
+"bloque": "a40",
+"ex": [
+[
+"L",
+85
+]
+]
+},
+{
+"tema": "B6T02",
+"k": "LGP",
+"bloque": "a43",
+"ex": [
+[
+"L",
+96
+],
+[
+"P",
+87
+]
+]
+},
+{
+"tema": "B6T02",
+"clave": "Las tres clasificaciones del gasto",
+"ex": [
+[
+"L",
+84
+]
+]
+},
+{
+"tema": "B6T02",
+"clave": "Programas y códigos económicos que se preguntan",
+"ex": [
+[
+"P",
+86
+]
+]
+},
+{
+"tema": "B6T02",
+"k": "OPGE27",
+"bloque": "a6",
+"ex": [
+[
+"X",
+91
+]
+]
+},
+{
+"tema": "B6T02",
+"k": "RCD",
+"bloque": "art79",
+"ex": [
+[
+"X",
+89
+]
+]
+},
+{
+"tema": "B6T03",
+"k": "LGP",
+"bloque": "a51",
+"ex": [
+[
+"L",
+86
+],
+[
+"P",
+89
+]
+]
+},
+{
+"tema": "B6T03",
+"k": "LGP",
+"bloque": "a54",
+"ex": [
+[
+"P",
+88
+]
+]
+},
+{
+"tema": "B6T03",
+"k": "LGP",
+"bloque": "a56",
+"ex": [
+[
+"L",
+87
+]
+]
+},
+{
+"tema": "B6T04",
+"k": "L15_2014",
+"bloque": "a22",
+"ex": [
+[
+"X",
+93
+]
+]
+},
+{
+"tema": "B6T04",
+"k": "LGP",
+"bloque": "a150",
+"ex": [
+[
+"L",
+88
+]
+]
+},
+{
+"tema": "B6T04",
+"k": "LGP",
+"bloque": "a150bis",
+"ex": [
+[
+"L",
+88
+]
+]
+},
+{
+"tema": "B6T04",
+"k": "LGP",
+"bloque": "a151",
+"ex": [
+[
+"P",
+91
+],
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 4 b)"
+]
+},
+{
+"tema": "B6T04",
+"k": "LOTCu",
+"bloque": "adiez",
+"ex": [
+[
+"P",
+90
+]
+]
+},
+{
+"tema": "B6T04",
+"k": "LOTCu",
+"bloque": "atreinta",
+"ex": [
+[
+"L",
+89
+]
+]
+},
+{
+"tema": "B6T04",
+"k": "LOTCu",
+"bloque": "atreintayocho",
+"ex": [
+[
+"L",
+89
+]
+]
+},
+{
+"tema": "B6T04",
+"k": "RD2188",
+"bloque": "a23",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 4 b)"
+]
+},
+{
+"tema": "B6T04",
+"k": "RD2188",
+"bloque": "a35",
+"ex": [
+[
+"X",
+94
+]
+]
+},
+{
+"tema": "B6T05",
+"k": "LGP",
+"bloque": "a73",
+"ex": [
+[
+"L",
+90
+]
+]
+},
+{
+"tema": "B6T05",
+"k": "LGP",
+"bloque": "a74",
+"ex": [
+[
+"P",
+92
+]
+]
+},
+{
+"tema": "B6T05",
+"k": "LGP",
+"bloque": "a75",
+"ex": [
+[
+"P",
+93
+]
+]
+},
+{
+"tema": "B6T05",
+"clave": "Claves del documento MC y de las fases",
+"ex": [
+[
+"L",
+92
+]
+]
+},
+{
+"tema": "B6T05",
+"k": "ODOC",
+"bloque": "sexto",
+"ex": [
+[
+"L",
+93
+],
+[
+"X",
+95
+]
+]
+},
+{
+"tema": "B6T05",
+"k": "OIOC",
+"bloque": "regla23",
+"ex": [
+[
+"L",
+91
+]
+]
+},
+{
+"tema": "B6T06",
+"k": "LGP",
+"bloque": "a78",
+"ex": [
+[
+"X",
+96
+],
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 1 b)",
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 4 a)"
+]
+},
+{
+"tema": "B6T06",
+"k": "LGP",
+"bloque": "a79",
+"ex": [
+[
+"L",
+95
+]
+]
+},
+{
+"tema": "B6T06",
+"k": "RD725",
+"bloque": "a1",
+"ex": [
+[
+"P",
+94
+],
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 1 a)",
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 4 a)"
+]
+},
+{
+"tema": "B6T06",
+"k": "RD725",
+"bloque": "a2",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 1 a), b) y c)",
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 4 a)"
+]
+},
+{
+"tema": "B6T06",
+"k": "RD725",
+"bloque": "a5",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 4 b)"
+]
+},
+{
+"tema": "B6T06",
+"k": "RD725",
+"bloque": "a7",
+"ex": [
+[
+"P",
+95
+]
+]
+},
+{
+"tema": "B6T06",
+"k": "RES2014",
+"bloque": "ai-2",
+"ex": [
+[
+"P",
+96
+]
+]
+},
+{
+"tema": "B6T06",
+"k": "RES2014",
+"bloque": "ai-4",
+"ex": [
+[
+"L",
+94
+]
+]
+},
+{
+"tema": "B6T07",
+"k": "L8_1989",
+"bloque": "a10",
+"ex": [
+[
+"L",
+98
+]
+]
+},
+{
+"tema": "B6T07",
+"k": "LGT",
+"bloque": "a2",
+"ex": [
+[
+"L",
+97
+],
+[
+"P",
+97
+]
+]
+},
+{
+"tema": "B6T07",
+"k": "LGT",
+"bloque": "a20",
+"ex": [
+[
+"P",
+98
+]
+]
+},
+{
+"tema": "B6T07",
+"clave": "Concepto y clases de derechos",
+"ex": [
+[
+"X",
+97
+]
+]
+},
+{
+"tema": "B6T08",
+"clave": "Cierre de la nómina ordinaria",
+"ex": [
+[
+"L",
+100
+]
+]
+},
+{
+"tema": "B6T08",
+"clave": "Devengo y mensualidades",
+"ex": [
+[
+"X",
+100
+]
+]
+},
+{
+"tema": "B6T08",
+"k": "RES2010N",
+"bloque": "preambulo",
+"ex": [
+[
+"P",
+105
+]
+]
+},
+{
+"tema": "SIN_TEMA",
+"k": "CE",
+"bloque": "a124",
+"ex": [
+[
+"L",
+9
+]
+]
+},
+{
+"tema": "SIN_TEMA",
+"k": "ET",
+"bloque": "a48",
+"ex": [
+[
+"P",
+24
+]
+]
+},
+{
+"tema": "SIN_TEMA",
+"k": "ET",
+"bloque": "a49",
+"ex": [
+[
+"X",
+47
+]
+]
+},
+{
+"tema": "SIN_TEMA",
+"k": "RD126_2026",
+"bloque": "a1",
+"ex": [
+[
+"P",
+25
+]
+]
+}
+]
+}
