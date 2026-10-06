@@ -5,7 +5,7 @@ capítulos, secciones). Lo usa la vista «Constitución» (#/ce) de oposicion.ht
 
 Los «títulos de artículo» (rúbricas didácticas) NO son texto de la CE (la CE no los
 tiene): son los de la guía de estudio M101 (arts. 1 a 52, tabla de la p. 10). Los de
-los arts. 53 a 55 no figuran en esa tabla: llevan `propio: true` (rótulo breve nuestro).
+los arts. 53 a 169 no figuran en esa tabla: llevan `propio: true` (rótulo breve nuestro, redactado del texto literal del artículo; pedido por el usuario el 6-10-2026).
 
     cd herramientas/oposicion && python3 ce_datos.py
 """
@@ -40,8 +40,46 @@ RUBRICAS = {
  50: "Pensiones públicas, periódicas y actualizadas para la tercera edad", 51: "Consumidores y usuarios, defensores y protegidos",
  52: "Organizaciones profesionales cuya estructura interna y funcionamiento deberá ser democrático"}
 # Art. 42: la guía dice «inmigrantes españoles»; la CE habla de «trabajadores españoles en el extranjero» (prevalece la norma).
-# Los arts. 53 a 55 no están en la tabla de la guía: rótulo breve propio (marcado «propio»).
-PROPIAS = {53: "Vinculación, reserva de ley y tutela de los derechos", 54: "El Defensor del Pueblo", 55: "Suspensión de derechos y libertades"}
+# Los arts. 53 a 169 no están en la tabla de la guía: rótulo breve propio (marcado «propio»).
+PROPIAS = {53: "Vinculación, reserva de ley y tutela de los derechos", 54: "El Defensor del Pueblo", 55: "Suspensión de derechos y libertades",
+ 56: "El Rey: Jefe del Estado, inviolabilidad y refrendo", 57: "Sucesión en la Corona", 58: "La Reina consorte o el consorte de la Reina",
+ 59: "La Regencia", 60: "La tutela del Rey menor", 61: "Proclamación y juramento del Rey",
+ 62: "Funciones del Rey", 63: "El Rey y las relaciones internacionales: embajadores, tratados, guerra y paz", 64: "El refrendo de los actos del Rey",
+ 65: "La Casa del Rey y la dotación de la Familia Real", 66: "Las Cortes Generales: composición y funciones", 67: "Incompatibilidad entre Cámaras y prohibición del mandato imperativo",
+ 68: "El Congreso de los Diputados: composición y elección", 69: "El Senado: composición y elección", 70: "Inelegibilidad e incompatibilidades de Diputados y Senadores",
+ 71: "Inviolabilidad, inmunidad y fuero de los parlamentarios", 72: "Reglamentos y autonomía de las Cámaras", 73: "Períodos de sesiones",
+ 74: "Sesiones conjuntas de las Cámaras", 75: "Funcionamiento en Pleno y por Comisiones", 76: "Comisiones de investigación",
+ 77: "Peticiones dirigidas a las Cámaras", 78: "Las Diputaciones Permanentes", 79: "Quórum y mayorías para adoptar acuerdos",
+ 80: "Publicidad de las sesiones plenarias", 81: "Las leyes orgánicas", 82: "Delegación legislativa de las Cortes en el Gobierno",
+ 83: "Límites de las leyes de bases", 84: "Proposiciones de ley o enmiendas contrarias a una delegación", 85: "Los decretos legislativos",
+ 86: "Los decretos-leyes", 87: "La iniciativa legislativa", 88: "Los proyectos de ley",
+ 89: "Tramitación de las proposiciones de ley", 90: "Aprobación de los proyectos de ley: veto y enmiendas del Senado", 91: "Sanción y promulgación de las leyes",
+ 92: "El referéndum consultivo", 93: "Tratados que atribuyen competencias derivadas de la Constitución", 94: "Autorización de las Cortes para obligarse por tratados",
+ 95: "Tratados internacionales contrarios a la Constitución", 96: "Eficacia y denuncia de los tratados internacionales", 97: "Funciones del Gobierno",
+ 98: "Composición y estatuto del Gobierno", 99: "Propuesta e investidura del Presidente del Gobierno", 100: "Nombramiento y cese de los demás miembros del Gobierno",
+ 101: "Cese del Gobierno", 102: "Responsabilidad criminal de los miembros del Gobierno", 103: "La Administración Pública y la función pública",
+ 104: "Las Fuerzas y Cuerpos de seguridad", 105: "Audiencia, acceso a archivos y procedimiento administrativo", 106: "Control judicial de la Administración y responsabilidad patrimonial",
+ 107: "El Consejo de Estado", 108: "Responsabilidad solidaria del Gobierno ante el Congreso", 109: "Información y ayuda a las Cámaras",
+ 110: "Presencia de miembros del Gobierno en las Cámaras", 111: "Interpelaciones y preguntas", 112: "La cuestión de confianza",
+ 113: "La moción de censura", 114: "Consecuencias de la pérdida de la confianza del Congreso", 115: "La disolución de las Cámaras",
+ 116: "Los estados de alarma, excepción y sitio", 117: "Principios del Poder Judicial", 118: "Obligación de cumplir las sentencias",
+ 119: "Justicia gratuita", 120: "Publicidad y forma de las actuaciones judiciales", 121: "Error judicial y funcionamiento anormal de la justicia",
+ 122: "Ley Orgánica del Poder Judicial y Consejo General del Poder Judicial", 123: "El Tribunal Supremo", 124: "El Ministerio Fiscal",
+ 125: "Acción popular, jurado y tribunales consuetudinarios", 126: "La policía judicial", 127: "Incompatibilidades y asociación de jueces, magistrados y fiscales",
+ 128: "Subordinación de la riqueza al interés general e iniciativa pública", 129: "Participación en la Seguridad Social, en la empresa y en los medios de producción", 130: "Modernización y desarrollo de los sectores económicos",
+ 131: "La planificación económica", 132: "Bienes de dominio público, comunales y patrimonio del Estado", 133: "La potestad tributaria",
+ 134: "Los Presupuestos Generales del Estado", 135: "Estabilidad presupuestaria y deuda pública", 136: "El Tribunal de Cuentas",
+ 137: "Organización territorial del Estado", 138: "Solidaridad y equilibrio económico entre territorios", 139: "Igualdad de derechos en todo el territorio",
+ 140: "Autonomía de los municipios", 141: "La provincia", 142: "Las Haciendas locales",
+ 143: "Acceso a la autonomía: iniciativa del proceso autonómico", 144: "Facultades de las Cortes por motivos de interés nacional", 145: "Prohibición de federación y convenios entre Comunidades Autónomas",
+ 146: "Elaboración del proyecto de Estatuto", 147: "Contenido y reforma de los Estatutos", 148: "Competencias que pueden asumir las Comunidades Autónomas",
+ 149: "Competencias exclusivas del Estado", 150: "Leyes marco, transferencia o delegación y leyes de armonización", 151: "Acceso rápido a la autonomía",
+ 152: "Organización institucional de las Comunidades Autónomas y Tribunal Superior de Justicia", 153: "Control de la actividad de las Comunidades Autónomas", 154: "El Delegado del Gobierno",
+ 155: "Control extraordinario: incumplimiento de obligaciones por una Comunidad Autónoma", 156: "Autonomía financiera de las Comunidades Autónomas", 157: "Recursos de las Comunidades Autónomas",
+ 158: "Asignaciones del Estado y Fondo de Compensación", 159: "Composición del Tribunal Constitucional", 160: "El Presidente del Tribunal Constitucional",
+ 161: "Competencias del Tribunal Constitucional", 162: "Legitimación para el recurso de inconstitucionalidad y el amparo", 163: "La cuestión de inconstitucionalidad",
+ 164: "Las sentencias del Tribunal Constitucional", 165: "Ley orgánica del Tribunal Constitucional", 166: "Iniciativa de la reforma constitucional",
+ 167: "Procedimiento ordinario de reforma", 168: "Procedimiento agravado de reforma", 169: "Límites temporales a la reforma"}
 
 def limpia(t): return " ".join(t.replace("\xa0", " ").split())
 
