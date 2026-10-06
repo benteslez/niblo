@@ -125,7 +125,7 @@ def examen_web(cod, n, porque, apoyo):
 # Cuadros (fuera de los f-strings)
 TAB1 = "| Rasgo | Dónde se dice |\n|---|---|\n| Se crea **por Tratado** entre Estados (" + cT(1, "constituyen entre sí una UNIÓN EUROPEA") + ") | TUE, art. 1 |\n| Tiene **competencias atribuidas** por los Estados; lo no atribuido es de los Estados | TUE, arts. 1, 4.1 y 5.2 |\n| Se fundamenta en **dos Tratados con el mismo valor jurídico** | TUE, art. 1; TFUE, art. 1.2 |\n| **Sustituye y sucede** a la Comunidad Europea | TUE, art. 1 |\n| Tiene **personalidad jurídica** | TUE, art. 47 |\n| Se basa en **valores** comunes a los Estados miembros | TUE, art. 2 |"
 TAB3 = "| Año | Estados | Particularidad (ficha 5.5.1 del Parlamento Europeo) |\n|---|---|---|\n| 1958 | Bélgica, Francia, Alemania, Italia, Luxemburgo, Países Bajos | Signatarios originales del Tratado de Roma de 1957 |\n| 1973 | Dinamarca, Irlanda, Reino Unido | Groenlandia, como parte de Dinamarca, se adhirió en 1973 y se retiró en 1985 |\n| 1981 | Grecia | Consolidó la democracia en el país |\n| 1986 | Portugal, España | Consolidó la democracia en España y Portugal |\n| 1995 | Austria, Finlandia, Suecia | Antes, miembros de la AELC; Noruega rechazó la adhesión en referéndum |\n| 2004 | Chipre, Chequia, Estonia, Hungría, Letonia, Lituania, Malta, Polonia, Eslovaquia, Eslovenia | Reunificar el continente tras la caída del muro de Berlín |\n| 2007 | Bulgaria, Rumanía | Mecanismo de cooperación y verificación |\n| 2013 | Croacia | Condiciones más estrictas del «consenso renovado sobre la ampliación» (2006) |"
-TAB4 = "| | Régimen general (329.1 y 331.1) | PESC (329.2 y 331.2) |\n|---|---|---|\n| Solicitud | A la **Comisión** | Al **Consejo** |\n| Propuesta o dictámenes | Propuesta de la **Comisión** | Dictámenes del **Alto Representante** y de la **Comisión** |\n| Parlamento Europeo | **Aprobación** | Solo **información** |\n| Autoriza | **Consejo** | **Consejo**, por **unanimidad** |\n| Incorporación posterior | Confirma la **Comisión** (4 meses) | Confirma el **Consejo** (unanimidad) |\n| Mínimo de Estados (art. 20.2 TUE) | **Nueve** | **Nueve** |"
+TAB4 = "| | Régimen general (329.1 y 331.1) | PESC (329.2 y 331.2) |\n|---|---|---|\n| Solicitud | A la **Comisión** | Al **Consejo** |\n| Propuesta o dictámenes | Propuesta de la **Comisión** | Dictámenes del **Alto Representante** y de la **Comisión** |\n| Parlamento Europeo | **Aprobación** | Solo **información** |\n| Autoriza | **Consejo**, a propuesta de la Comisión y previa aprobación del PE (el art. 329.1 no fija la mayoría: rige la regla general del art. 16.3 TUE, la cualificada) | **Consejo**, por **unanimidad** |\n| Incorporación posterior | Confirma la **Comisión** (4 meses); si sigue sin cumplir las condiciones, el Estado puede acudir al Consejo, que se pronuncia de conformidad con el art. 330 | Confirma el **Consejo**, por **unanimidad** y de conformidad con el art. 330 |\n| Mínimo de Estados (art. 20.2 TUE) | **Nueve** | **Nueve** |"
 
 T = Tema("B2T01",
   'Cinco bloques, en el orden y con los epígrafes de la guía M108: I. La Unión Europea: antecedentes (fichas del Parlamento Europeo; guía M108) · II. Objetivos y naturaleza jurídica; los Tratados originarios y modificativos (TUE, arts. 1 a 3, 47 y 48.4; CE, arts. 93 y 94; fichas del Parlamento Europeo; LO 1/2008; cuadro maestro de la guía) · III. El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea (TUE, arts. 4 a 12 y 47 a 55; TFUE, arts. 1, 238 y 354) · IV. El proceso de ampliación (TUE, arts. 49 y 50) · V. Las cooperaciones reforzadas (TUE, art. 20; TFUE, arts. 326 a 334). Cada artículo: texto literal (DOUE o BOE) y ficha; los esquemas de procedimiento y los cuadros de la guía, aparte y sin valor legal.',
@@ -269,7 +269,7 @@ U3_6 = unidad("1.6 Cuándo entra en vigor un Tratado y cómo se ratifica en Espa
   lit("CE", "a93"),
   lit("CE", "a94", ["La prestación del consentimiento del Estado para obligarse por medio de tratados o convenios requerirá la previa autorización de las Cortes Generales"], solo=[1, 2, 3, 4, 5, 6], titulo="Artículo 94.1"),
   fichab("Ratificación de los Tratados de la Unión en España",
-         "Las **Cortes Generales** o el **Gobierno**, según los casos (art. 93 CE)",
+         "Autoriza la **ley orgánica** de las Cortes Generales (art. 93) o la **autorización previa** de las Cortes (art. 94.1); a las Cortes o al Gobierno, según los casos, corresponde **garantizar el cumplimiento** (art. 93)",
          ["Tratados que atribuyen competencias derivadas de la Constitución: **ley orgánica** (art. 93)", "Otros Tratados: **autorización previa de las Cortes Generales** en los casos del art. 94.1", "Ejemplo: el Tratado de Lisboa, autorizado por la **LO 1/2008** (→ III.3.2)"],
          "El Tratado entra en vigor cuando lo han ratificado **todos** los Estados (art. 48.4 TUE)",
          "Si un solo Estado no ratifica, el Tratado no entra en vigor: así fracasó la **Constitución para Europa** (Francia y Países Bajos, → III.3.1)."))
@@ -563,7 +563,7 @@ U10_1 = unidad("4.1 Cómo leer el cuadro",
 U10_2 = unidad("4.2 Tratados originarios y Tratados modificativos",
   "El epígrafe distingue dos clases de Tratados. **No hay norma que defina «originario»**, y la guía y la ficha del Parlamento Europeo no cuentan lo mismo, así que conviene conocer los dos criterios. [[M108]]",
   tabla(["Criterio", "Tratados originarios", "Tratados modificativos"],
-    [["**Ficha 1.1.1 del Parlamento Europeo** («Los primeros Tratados», → III.1)", "**París** (CECA, 1951) y **Roma** (CEE y Euratom, 1957)", "Fusión, Acta Única, Maastricht, Ámsterdam, Niza y Lisboa"],
+    [["**Ficha 1.1.1 del Parlamento Europeo** («Los primeros Tratados», → I.1.2)", "**París** (CECA, 1951) y **Roma** (CEE y Euratom, 1957)", "Fusión, Acta Única, Maastricht, Ámsterdam, Niza y Lisboa"],
      ["**Guía M108** (los que crean una Comunidad o el Tratado de base)", "**París** (crea la CECA), **Roma** (crea la CEE) y **Maastricht** (convierte la CEE en Comunidad Europea y crea el TUE)", "El resto, que «lo que hacen son modificar esos tres tratados»"]]),
   "?> **Aviso (clasificación, no es norma):** si el enunciado no aclara el criterio, razona con el que use. Lo seguro es que **París y Roma** son originarios con cualquier criterio y que **Lisboa** es modificativo: no sustituye los Tratados por un texto único, los **modifica** (→ III.3.2).")
 
@@ -589,7 +589,7 @@ U10_4 = unidad("4.4 Evolución de las instituciones",
   "La **Presidencia del Consejo Europeo** es una novedad de Lisboa, y la que más se confunde:",
   LT(15, ["por mayoría cualificada para un mandato de dos años y medio, que podrá renovarse una sola vez"], solo=[idx("TUE", "Artículo 15", "5. El Consejo Europeo elegirá")]),
   fichab("Instituciones de la Unión y su evolución", "—",
-         ["Siete instituciones (art. 13.1 TUE)", "El **BCE** se crea en Maastricht (→ III.2.3) pero es **institución** desde Lisboa", c("TUE", "Artículo 19", "El Tribunal de Justicia de la Unión Europea comprenderá el Tribunal de Justicia, el Tribunal General y los tribunales especializados")],
+         ["Siete instituciones (art. 13.1 TUE)", "Maastricht prevé la unión económica y monetaria y el **BCE** (el cuadro de la guía lo sitúa en Lisboa), que es **institución** desde Lisboa (art. 13.1 TUE)", c("TUE", "Artículo 19", "El Tribunal de Justicia de la Unión Europea comprenderá el Tribunal de Justicia, el Tribunal General y los tribunales especializados")],
          "Presidente del Consejo Europeo: **dos años y medio**, renovable **una sola vez** (art. 15.5)",
          "Les encanta preguntar por el Consejo Europeo y confundirlo con el **Consejo** y con el **Consejo de Europa** (→ I.1.1): el Consejo Europeo es **institución desde Lisboa**; el Consejo de Europa **no** es de la Unión."))
 
@@ -606,7 +606,7 @@ U10_5 = unidad("4.5 Reglas de memoria y trampas del cuadro",
     "**Cadenas de políticas** (el color del cuadro): Fondo Social Europeo (Roma) → Cohesión económica y social (Acta Única) → Fondo de Cohesión (Maastricht) → Cohesión económica, social y territorial (Lisboa). Libre circulación y competencia (Roma) → Objetivo 92 (Acta Única) → Espacio Schengen. Educación (Maastricht) → Educación, formación profesional, juventud y deporte (Lisboa).",
     "**Procedimientos legislativos:** **consulta** (Roma) y **cooperación** (Acta Única) → **procedimiento legislativo especial** (PLE); **codecisión** (Maastricht) → **procedimiento legislativo ordinario** (PLO); Lisboa define ambos. Siglas útiles según el vídeo: ICE, ELSJ, PLO, PLE.",
     "**Procedimientos de control entre Estados:** violación (**Ámsterdam**, art. 7.2) y alerta temprana (**Niza**, art. 7.1); con **Lisboa**, retirada (art. 50) y revisión simplificada (art. 48)."),
-  "?> **Discrepancia dentro de la guía (Schengen):** el cuadro sitúa el **Espacio Schengen** en **Ámsterdam**, y el vídeo lo atribuye a Maastricht. Prevalecen el cuadro y la fuente oficial: la ficha 1.1.3 del Parlamento Europeo dice que Ámsterdam integra el acervo de Schengen (→ III.2.4).",
+  "?> **Discrepancia dentro de la guía (Schengen):** el cuadro sitúa el **Espacio Schengen** en **Ámsterdam**, y el vídeo lo atribuye a Maastricht. Prevalecen el cuadro y la fuente oficial: la ficha 1.1.3 del Parlamento Europeo cita la integración del acervo de Schengen entre los casos de cooperación reforzada regulada por disposiciones específicas, al tratar de Ámsterdam (→ VI.1.2); que el Protocolo de Schengen se anexó a Ámsterdam es dato de la norma, no de la guía.",
   ESQ)
 
 T.ap("s10", "III.4 El cuadro maestro de los Tratados (guía M108)", f"""
@@ -704,6 +704,7 @@ U_IV4_3 = unidad("4.3 Participación ciudadana e iniciativa ciudadana europea (a
          "Mínimo: **un millón** de ciudadanos de un número significativo de Estados",
          "La ICE es de **Lisboa**; se dirige a la **Comisión** y requiere **un millón** de firmas. En **España**, la iniciativa legislativa popular exige **500.000** (art. 87.3 CE): «que no jueguen con eso»."),
   lit("CE", "a87", ["no menos de 500.000 firmas acreditadas"], solo=[3], titulo="Artículo 87.3"),
+  "La marca «Examen» de este apartado (GACE-L 2019, pregunta 46) se debe a este **art. 87.3 CE** (iniciativa legislativa popular española), no al art. 11 TUE.",
   "El art. 11.4 remite al art. 24 TFUE, que prevé un **reglamento** adoptado por el procedimiento legislativo ordinario para fijar los procedimientos y condiciones de la ICE:",
   LF(24, solo=[1]),
   "?> El reglamento que desarrolla hoy ese art. 24 es el Reglamento (UE) 2019/788, que **no** se reproduce aquí (no está entre las fuentes del tema): para el examen basta con saber que **la Comisión** es el destinatario y que hace falta **un millón** de ciudadanos.")
@@ -984,11 +985,11 @@ U_V2_3 = unidad("2.3 Los tratados de adhesión y las candidaturas que no prosper
   "La guía reúne las ampliaciones en un cuadro por **Tratado de adhesión** y entrada en vigor. Son tratados **de adhesión**: no son los Tratados modificativos del cuadro del III.4. [[M108]]",
   TAB_ADH,
   GUIA_NOTA,
-  L("**Siete ampliaciones y una retirada**, hasta los **27** Estados miembros actuales (→ V.2.1).",
+  L("**Siete ampliaciones y una retirada**, hasta los **27** Estados miembros actuales (los 28 de la tabla, menos el Reino Unido).",
     "**Reglas de memoria del vídeo:** el Tratado de **Bruselas** abre (1973) y cierra (2013) los tratados de adhesión; **Madrid-Lisboa** = España y Portugal; hay **dos Tratados de Atenas** (Grecia en 1981 y la «gran adhesión» de 2004, de diez países); **Corfú** = Austria, Finlandia y Suecia; **Luxemburgo** = Bulgaria y Rumanía. Para fijar quién entró cuándo, el vídeo propone **pintar un mapa político en blanco** de la Unión por oleadas.",
     "La gran adhesión de **2004** es la que prepara el Tratado de **Niza** (→ III.2.5): por eso se cruzan las dos tablas (qué Estados firmaron cada Tratado y cuándo entraron)."),
   "?> **Matiz (prevalece el art. 49):** el vídeo afirma que los tratados de adhesión «no han modificado ni el TUE ni el TFUE». Pero el art. 49 dice que el acuerdo con el Estado solicitante regula " + cT(49, "las adaptaciones que esta admisión supone en lo relativo a los Tratados sobre los que se funda la Unión") + ": **sí** adaptan los Tratados, aunque no son los Tratados modificativos del cuadro.",
-  "**Candidaturas que no prosperaron** (según la guía): **Islandia** solicitó la adhesión en 2009 y empezó a negociar en 2010; **a petición de Islandia** las negociaciones se paralizaron en 2013 y en 2015 pidió **dejar de ser país candidato**. **Noruega** celebró **dos referéndums**, en **1972** y en **1994**, sobre su ingreso en las Comunidades Europeas y en la Unión, sin resultado positivo: sigue sin ser candidata (la ficha del Parlamento Europeo recoge el rechazo de 1973, → V.2.1). Han preguntado **los años** de los referéndums. [[M108]]",
+  "**Candidaturas que no prosperaron** (según la guía): **Islandia** solicitó la adhesión en 2009 y empezó a negociar en 2010; **a petición de Islandia** las negociaciones se paralizaron en 2013 y en 2015 pidió **dejar de ser país candidato**. **Noruega** celebró **dos referéndums**, en **1972** y en **1994**, sobre su ingreso en las Comunidades Europeas y en la Unión, sin resultado positivo: sigue sin ser candidata (la ficha del Parlamento Europeo dice que, en la ampliación del 1 de enero de 1973, «el pueblo noruego rechazó la adhesión por referéndum»; el referéndum fue en 1972 → V.2.1). Han preguntado **los años** de los referéndums. [[M108]]",
   "?> **REVISAR el estado de las candidaturas:** la guía cuenta **nueve candidatos** (Albania, Bosnia y Herzegovina, Georgia, Moldavia, Montenegro, Macedonia del Norte, Serbia, Turquía y Ucrania) y a **Kosovo** como «candidato potencial». La guía define «candidato potencial» como quien ha presentado la solicitud formal sin respuesta, pero la ficha del Parlamento Europeo (→ V.2.2) solo dice que **Kosovo presentó su solicitud en 2022**: no uses esa definición como regla general. El estado de las candidaturas cambia: **comprueba el dato vigente** antes del examen.")
 
 U_V3_3 = unidad("3.3 Esquema de la retirada y reglas de memoria",
@@ -1005,7 +1006,7 @@ U_VI1_3 = unidad("1.3 Cómo se entienden: acervo, ejemplos y quién interviene",
     "**Origen:** Ámsterdam la introduce en el **primer y el tercer pilar** (Comunidad Europea y cooperación policial y judicial en materia penal) y Niza la integra en la **PESC** (→ VI.1.2)."),
   tabla(["Quién", "Papel en una cooperación reforzada"],
     [["**Consejo**", "**Autoriza** siempre (como último recurso, con al menos nueve Estados). **No** interviene el Consejo Europeo"],
-     ["**Comisión** y, en su caso, **Alto Representante**", "**Informan** periódicamente al Parlamento Europeo y al Consejo. El Alto Representante solo interviene si se trata de **PESC**: de ahí el «en su caso»"],
+     ["**Comisión** y, en su caso, **Alto Representante**", "**Informan** periódicamente al Parlamento Europeo y al Consejo. El art. 328.2 dice solo «en su caso»; la intervención del Alto Representante en la **PESC** es lo que prevén los arts. 329.2 y 331.2 (interpretación de estos apuntes)"],
      ["**Consejo** y **Comisión**", "Velan por la **coherencia** de las acciones"],
      ["**Todos** los miembros del Consejo", "**Deliberan**"],
      ["Miembros del Consejo de los Estados **participantes**", "**Votan**"]]),
@@ -1072,7 +1073,11 @@ T.ap("s14", "V.2 Las sucesivas ampliaciones", f"""
 {unidad("2.2 Los candidatos actuales",
   web("PE", PE167,
       "Se han entablado negociaciones y abierto capítulos de adhesión con Albania, Montenegro, Serbia y Turquía. Macedonia del Norte abrió negociaciones de adhesión en 2022, y Bosnia y Herzegovina lo hizo en 2024. Kosovo presentó su solicitud de adhesión a la Unión en 2022. En 2023, la Unión decidió iniciar las negociaciones de adhesión con Moldavia y Ucrania y conceder a Georgia el estatuto de país candidato"),
-  fichab("Estado de la ampliación según la ficha del Parlamento Europeo", "Balcanes Occidentales, Turquía, Moldavia, Ucrania y Georgia", "Negociaciones por capítulos", "—",
+  web("PE", PE167,
+      "Hasta la fecha, se han abierto los 33 capítulos de negociación con Montenegro, y 14 de ellos se han cerrado provisionalmente. Por su parte, Serbia ha abierto 22 capítulos de negociación de 35, dos de los cuales se han cerrado provisionalmente.",
+      "Desde octubre de 2024, Albania ha abierto 33 capítulos de negociación",
+      "Macedonia del Norte completó las sesiones de examen analítico de los seis grupos temáticos de negociación en diciembre de 2023, pero todavía no se ha abierto capítulo ni grupo temático ninguno."),
+  fichab("Estado de la ampliación según la ficha del Parlamento Europeo (consultada el 6-10-2026)", "Balcanes Occidentales, Turquía, Moldavia, Ucrania y Georgia", "Negociaciones por capítulos solo con los países con negociaciones abiertas (Georgia tiene el estatuto de candidato y Kosovo solo ha presentado su solicitud)", "—",
          f"Dato **cambiante**: comprobar la ficha actualizada antes del examen. Según la misma ficha, {cw(PE167, 'Turquía solicitó su ingreso en la Unión en 1987')}."))}
 
 {U_V2_3}
@@ -1157,7 +1162,7 @@ T.ap("s18", "VI.3 Autorización, votación y participación posterior (TFUE, art
   fichab("Cómo se autoriza una cooperación reforzada",
          ["**Régimen general**: solicitud a la **Comisión** → propuesta de la Comisión → autoriza el **Consejo** con **aprobación del PE**", "**PESC**: solicitud al **Consejo** → dictámenes del Alto Representante y de la Comisión; el PE, solo **informado** → autoriza el **Consejo**"],
          ["La solicitud precisa ámbito de aplicación y objetivos", "Si la Comisión no presenta propuesta, comunica los motivos a los Estados interesados"],
-         ["Régimen general: autoriza el Consejo, previa **aprobación** del PE", "PESC: **unanimidad** del Consejo"],
+         ["Régimen general: autoriza el Consejo, a propuesta de la Comisión y previa **aprobación** del PE (el art. 329.1 no fija la mayoría: regla general del art. 16.3 TUE, la cualificada)", "PESC: **unanimidad** del Consejo (art. 329.2)"],
          "Fuera de PESC, la solicitud va a la **Comisión**; en PESC, al **Consejo**. Excluidas las competencias **exclusivas** (en PESC hay régimen propio)."))}
 
 {unidad("3.2 Votación en el Consejo (art. 330)",
@@ -1172,7 +1177,7 @@ T.ap("s18", "VI.3 Autorización, votación y participación posterior (TFUE, art
   fichab("Cómo se une un Estado a una cooperación reforzada ya existente",
          ["Régimen general: confirma la **Comisión**; si se deniega dos veces, el Estado puede acudir al **Consejo**", "PESC: confirma el **Consejo**, previa consulta al Alto Representante"],
          ["Notificación (régimen general: al Consejo y a la Comisión; PESC: además al Alto Representante)", "Medidas transitorias para aplicar los actos ya adoptados"],
-         ["Comisión: **cuatro meses** desde la notificación", "PESC: **unanimidad** del Consejo (art. 330)"],
+         ["Comisión: **cuatro meses** desde la notificación; si interviene el Consejo, se pronuncia de conformidad con el art. 330 (331.1)", "PESC: **unanimidad** del Consejo y de conformidad con el art. 330 (331.2)"],
          "En el régimen general confirma la **Comisión** en **4 meses**; en PESC, el **Consejo** por **unanimidad**."))}
 
 {U_VI3_4}
@@ -1192,7 +1197,7 @@ T.ap("s19", "VI.4 Gastos, pasarelas y coherencia (TFUE, arts. 332 a 334)", f"""
          "El Consejo (votan los participantes, art. 330)",
          ["De **unanimidad** a **mayoría cualificada** (333.1)", "De procedimiento legislativo **especial** a **ordinario**, previa consulta al PE (333.2)"],
          "**Unanimidad** (de los participantes) para adoptar la decisión de cambio",
-         "No vale para decisiones con repercusiones **militares o de defensa** (333.3), igual que la pasarela general del art. 48.7 TUE (→ IV.5.2)."))}
+         "No vale para decisiones con repercusiones **militares o de defensa** (333.3), como en el art. 48.7 TUE, cuyo primer párrafo (pasarela de la unanimidad a la mayoría cualificada) tampoco se aplica a las decisiones con repercusiones militares o de defensa (→ IV.5.2); pero allí decide el Consejo Europeo y los Parlamentos nacionales pueden oponerse, mientras que en el 333 decide el Consejo."))}
 
 {unidad("4.3 Coherencia (art. 334)",
   LF(334, ["El Consejo y la Comisión velarán por la coherencia"]),
@@ -1231,7 +1236,7 @@ EX_X28 = examen("X", 28, {
   "d": "Cambia el segundo informante (el Consejo en vez del Alto Representante) y los destinatarios (Consejo Europeo en vez de Consejo)."},
   [("La Comisión y, en su caso, el Alto Representante de la Unión para Asuntos Exteriores y Política de Seguridad informarán periódicamente al Parlamento Europeo y al Consejo", "TFUE", "Artículo 328", "La Comisión y, en su caso, el Alto Representante de la Unión para Asuntos Exteriores y Política de Seguridad informarán periódicamente al Parlamento Europeo y al Consejo")])
 EX_X29 = examen("X", 29, {
-  "a": f"No en cualquier ámbito: el art. 329.1 TFUE exceptúa {cF(329, 'los ámbitos de competencia exclusiva')} (y el art. 20.1 TUE habla de {cT(20, 'competencias no exclusivas')}).",
+  "a": f"No en cualquier ámbito: el art. 329.1 TFUE exceptúa {cF(329, 'los ámbitos de competencia exclusiva')} y la PESC, que tiene su propio régimen en el art. 329.2 (y el art. 20.1 TUE habla de {cT(20, 'competencias no exclusivas')}).",
   "b": f"La solicitud no va al Consejo Europeo: en el régimen general {cF(329, 'dirigirán a la Comisión una solicitud')}.",
   "c": f"Es al revés: en PESC la solicitud {cF(329, 'se dirigirá al Consejo')}.",
   "d": f"Literal del art. 20.2 TUE: {cT(20, 'a condición de que participen en ella al menos nueve Estados miembros')}."},
@@ -1269,7 +1274,7 @@ def QG(n, enunciado, ops, porque, ok=None):
 
 PORQ_G1 = {
   "a": "Niza (2001) se hizo para " + cw(PE4, "preparar a la Unión para su siguiente gran ampliación") + ": reforma las instituciones, no atribuye personalidad jurídica.",
-  "b": "Maastricht **crea** la Unión, pero en el cuadro de la guía es la «" + "UE sin personalidad jurídica" + "» (" + cg("UE sin personalidad jurídica") + ").",
+  "b": "Maastricht **crea** la Unión, pero en el cuadro de la guía es la " + cg("UE sin personalidad jurídica") + ".",
   "c": "Lisboa: " + cg("UE Personalidad jurídica propia") + "; y el art. 47 TUE dice " + cT(47, "La Unión tiene personalidad jurídica") + ".",
   "d": "Ámsterdam: su objetivo en el cuadro es otro (" + cg("Cooperaciones reforzadas") + ")."}
 PORQ_G2 = {
@@ -1523,7 +1528,7 @@ for q_, a_, cat in [
   ("¿Cuándo se adhirieron España y Portugal?", "En 1986 (fichas 1.1.2 y 5.5.1 del PE).", "Ampliación"),
   ("Retirada (art. 50 TUE): notificación, acuerdo y plazo", "Notificación al Consejo Europeo; acuerdo celebrado por el Consejo por mayoría cualificada con aprobación del PE; dos años, prorrogables por unanimidad del Consejo Europeo.", "Retirada"),
   ("Cooperación reforzada: requisitos del art. 20 TUE", "Competencias no exclusivas; último recurso; al menos nueve Estados; abierta a todos; actos vinculan solo a los participantes.", "Cooperaciones reforzadas"),
-  ("Cooperación reforzada: ¿a quién se dirige la solicitud?", "Régimen general: a la Comisión (autoriza el Consejo con aprobación del PE). PESC: al Consejo, que decide por unanimidad (art. 329 TFUE).", "Cooperaciones reforzadas"),
+  ("Cooperación reforzada: ¿a quién se dirige la solicitud?", "Régimen general: a la Comisión (que puede proponer o debe motivar que no lo hace); autoriza el Consejo, a propuesta de la Comisión y con aprobación del PE. PESC: al Consejo, que decide por unanimidad (art. 329 TFUE).", "Cooperaciones reforzadas"),
   ("Art. 328.2 TFUE: ¿quién informa sobre las cooperaciones reforzadas y a quién?", "La Comisión y, en su caso, el Alto Representante, al Parlamento Europeo y al Consejo.", "Cooperaciones reforzadas"),
 ]: T.fc(q_, a_, cat)
 
@@ -1564,7 +1569,7 @@ for q_, a_, cat in [
   ("Revisión simplificada (art. 48.6 y 48.7 TUE): ¿quién decide y con qué mayoría?", "El Consejo Europeo por unanimidad. 48.6: solo la tercera parte del TFUE, sin aumentar competencias, previa consulta al PE y a la Comisión, y la decisión necesita la aprobación de los Estados según sus normas constitucionales. 48.7 (pasarelas): con aprobación del PE y sin que un solo Parlamento nacional se oponga en seis meses.", "Revisión de los Tratados"),
   ("Presidente del Consejo Europeo: duración del mandato", "Dos años y medio, renovable una sola vez (art. 15.5 TUE); lo elige el Consejo Europeo por mayoría cualificada. Es novedad de Lisboa.", "Instituciones"),
   ("¿Cuántas instituciones había en cada etapa?", "Cuatro tras el Tratado de Fusión; cinco con Maastricht (Tribunal de Cuentas); siete con Lisboa (Consejo Europeo y BCE pasan a ser instituciones; art. 13 TUE).", "Tratados"),
-  ("Tratados de adhesión por orden", "Bruselas 1973 (Dinamarca, Irlanda, Reino Unido), Atenas 1981 (Grecia), Madrid-Lisboa 1986, Corfú 1995, Atenas 2004 (diez Estados), Luxemburgo 2007, Bruselas 2013 (Croacia); 2020, Reino Unido se retira.", "Ampliación"),
+  ("Tratados de adhesión por orden", "Bruselas 1973 (Dinamarca, Irlanda, Reino Unido), Atenas 1981 (Grecia), Madrid-Lisboa 1986, Corfú 1995, Atenas 2004 (diez Estados), Luxemburgo 2007, Bruselas 2013 (Croacia) (años de entrada en vigor, como en el cuadro de la guía); 2020, Reino Unido se retira.", "Ampliación"),
   ("Islandia y Noruega en la ampliación", "Islandia: solicitud 2009, negociaciones 2010, paralizadas en 2013 y en 2015 pidió dejar de ser candidata. Noruega: referéndums en 1972 y 1994 sin resultado positivo (guía M108).", "Ampliación"),
   ("Cooperación reforzada: ¿es acervo?", "No: sus actos vinculan solo a los Estados participantes y no son acervo que deban aceptar los candidatos (art. 20.4 TUE).", "Cooperaciones reforzadas"),
   ("Dos ejemplos de cooperación reforzada", "2010: ley aplicable al divorcio y a la separación judicial (la primera); 2017: Fiscalía Europea (vídeo M108).", "Cooperaciones reforzadas"),
