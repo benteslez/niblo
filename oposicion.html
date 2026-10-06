@@ -60,6 +60,7 @@ mark { background:#fde68a; color:inherit; border-radius:3px; padding:0 2px; }
 .cem-det { margin:8px 0 14px; } .cem-det-cab { display:flex; justify-content:space-between; align-items:center; }
 .tag.est0 { opacity:.7; } .tag.est1 { background:#fee2e2; color:#991b1b; } .tag.est2 { background:#fef3c7; color:#92400e; } .tag.est3 { background:#dcfce7; color:#166534; }
 .cem-cfg label { display:block; margin:0 0 10px; font-weight:600; font-size:13.5px; } .cem-cfg select { display:block; width:100%; margin-top:4px; font-weight:400; }
+.cem-chk { display:flex !important; gap:8px; align-items:flex-start; font-weight:600; } .cem-chk input { margin-top:3px; }
 .cem-card { max-width:760px; margin:0 auto; } .cem-big { font-size:30px; font-weight:800; margin:6px 0 10px; }
 .cem-resp { font-size:18px; font-weight:700; margin:10px 0 4px; } .cem-dorso { margin-top:10px; border-top:1px dashed var(--line,rgba(128,128,128,.4)); padding-top:8px; }
 .cem-txt { font-size:16px; line-height:1.75; } .cem-p { margin:0 0 8px; }
@@ -7113,7 +7114,7 @@ const CE_TABS = [{ id:"texto", txt:"📜 Texto completo" }, { id:"organigrama", 
    huecos progresivos, tablero de dominio de los 169 artículos y mini-juegos de estructura. Todo sale de ce.json
    (texto, estructura y etiquetas) y del SRS del Test Constitución (`ceSiguiente`). Claves: `CEM:<art>:<u|t|x>`. */
 const KEY_CEM = "gestion_hub_ce_mem_v1";
-const CEM = { sub:"tablero", sel:0, ses:null, juego:null, cfg:Object.assign({ nivel:"mezcla", que:"hoy", unidad:"", max:15, dif:"auto" }, leerJSON(KEY_CEM, {})) };
+const CEM = { sub:"tablero", sel:0, ses:null, juego:null, cfg:Object.assign({ nivel:"mezcla", que:"hoy", unidad:"", max:15, dif:"auto", barajar:false }, leerJSON(KEY_CEM, {})) };
 const CEM_NIV = { u:{ n:"Ubicación", ico:"📍" }, t:{ n:"De qué va", ico:"🏷️" }, x:{ n:"Texto", ico:"📜" } };
 const CEM_EST = ["Sin empezar", "Flojo", "En curso", "Dominado"];
 const CEM_N = 169;
@@ -7186,7 +7187,8 @@ function cemArmar(cfg, soloArt) {
   const peso = it => cemDebil(it.n, it.l) ? 0 : cemSrs(it.n, it.l) ? 1 : 2;
   if (cfg.que === "azar") return barajar(out).slice(0, cfg.max || out.length);
   out.sort((a, b) => peso(a) - peso(b) || a.n - b.n || a.l.localeCompare(b.l));
-  return cfg.max > 0 && !soloArt ? out.slice(0, cfg.max) : out;
+  const sel = cfg.max > 0 && !soloArt ? out.slice(0, cfg.max) : out;
+  return cfg.barajar && !soloArt ? barajar(sel) : sel;       // 🔀 primero se eligen las que tocan y después se mezcla el orden
 }
 const cemEtapa = it => CEM.cfg.dif !== "auto" ? +CEM.cfg.dif - 1 : Math.min(3, (cemSrs(it.n, "x") || { r:0 }).r);
 const ETAPAS = ["Con huecos (pocos)", "Con huecos (muchos)", "Solo iniciales", "Recitado de memoria"];
@@ -7234,9 +7236,11 @@ function cemPracticar(c) {
     <label>Dónde ${sel("cf-uni", [["", "Toda la Constitución"]].concat(unidades.map(u => [u.key, cemUnidadTxt(u.key) + " (" + cemRango(u) + ")"])), cfg.unidad)}</label>
     <label>Cuántas ${sel("cf-max", [[10, "10"], [15, "15"], [20, "20"], [30, "30"], [0, "Todas"]], cfg.max)}</label>
     <label>Dificultad del texto ${sel("cf-dif", [["auto", "Automática (sube según aciertas)"], [1, "1 · Con huecos (pocos)"], [2, "2 · Con huecos (muchos)"], [3, "3 · Solo iniciales"], [4, "4 · Recitado de memoria"]], cfg.dif)}</label>
+    <label class="cem-chk"><input type="checkbox" id="cf-baj" ${cfg.barajar ? "checked" : ""}> 🔀 Orden aleatorio <span class="muted">(los artículos y los niveles salen mezclados, no uno detrás de otro; con «Al azar» ya va mezclado)</span></label>
     <p class="muted" style="margin:6px 0 0">${prev.length} tarjetas cumplen la selección${prev.length ? "" : ": cambia «Cuáles» o «Dónde»"}.</p>
     <div class="btn-row" style="margin-top:12px"><button class="btn btn-primary" id="cf-ir" ${prev.length ? "" : "disabled"}>Empezar</button></div></div>`;
   [["cf-nivel", "nivel"], ["cf-que", "que"], ["cf-uni", "unidad"], ["cf-max", "max"], ["cf-dif", "dif"]].forEach(([id, k]) => $id(id).addEventListener("change", e => { cfg[k] = ["max"].includes(k) ? +e.target.value : e.target.value; cemGuardarCfg(); cemPracticar(c); }));
+  $id("cf-baj").addEventListener("change", e => { cfg.barajar = e.target.checked; cemGuardarCfg(); });
   $id("cf-ir").addEventListener("click", () => { const cola = cemArmar(cfg); CEM.ses = { cola, i:0, bien:0, mal:0, rev:false, tot:cola.length }; cemPracticar(c); });
 }
 function cemSesion(c) {
