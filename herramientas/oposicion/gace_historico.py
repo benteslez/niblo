@@ -28,8 +28,12 @@ def preguntas(txt):
     return out
 
 def plantilla(txt):
+    """n.º → letra. Solo la plantilla principal: las «preguntas de reserva» (1., 2., 3.… al final) NO sobrescriben las primeras."""
     t = " ".join(txt.split())
-    return {int(n): l.lower() for n, l in re.findall(r"(\d{1,3})\.\s*([abcdABCD]|ANULADA)\b", t)}
+    t = re.split(r"(?i)\breserva\b", t)[0] if re.search(r"(?i)\breserva\b", t) else t
+    r = {}
+    for n, l in re.findall(r"(\d{1,3})\.\s*([abcdABCD]|ANULADA)\b", t): r.setdefault(int(n), l.lower())
+    return r
 
 def examen(base, dir_="."):
     q = preguntas(open(os.path.join(dir_, base + ".txt"), encoding="utf-8").read())
