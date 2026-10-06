@@ -15,7 +15,7 @@ T.ap("s0", "Mapa del tema", f"""
 | **II** | ¿Cómo está hecha? | Partes, títulos, capítulos, secciones, disposiciones | — |
 | **III** | ¿De qué trata cada artículo? | Arts. 1 a 55 (literales) | — |
 | **IV** | ¿Qué niveles de protección tienen los derechos? | Título I, arts. 10 a 52 | — |
-| **V** | ¿Cómo se garantizan? | Arts. 53, 54, 81, 161 y 162 | LOTC arts. 32, 33, 41 a 46 |
+| **V** | ¿Cómo se garantizan? | Arts. 53, 81, 161 y 162 | LOTC arts. 32, 33, 41 a 46 |
 | **VI** | ¿Cómo se suspenden? | Arts. 55 y 116 | LO 4/1981 |
 | **VII** | El Tribunal Constitucional | Título IX, arts. 159 a 165 | LOTC |
 | **VIII** | El Defensor del Pueblo | Art. 54 | LO 3/1981 |
@@ -54,7 +54,7 @@ T.ap("bI", "I. ¿Cuándo nace la Constitución y cuándo se ha reformado?", dond
   ["1 Las fechas de 1978", "2 Las cuatro reformas"]))
 
 T.ap("s1", "I.1 Las fechas de 1978", f"""
-Para recordarlas, ponte en situación: **las Cortes aprueban** el texto en una sesión conjunta; más de un mes después, **el pueblo lo ratifica** en referéndum (preparar el referéndum es lo que más tarda); y todo lo demás ocurre en diciembre del 78: **el Rey sanciona y promulga**, y dos días después **se publica en el BOE y entra en vigor**.
+Para recordarlas, ponte en situación: **las Cortes aprueban** el texto en sesiones plenarias del Congreso y del Senado; más de un mes después, **el pueblo lo ratifica** en referéndum (preparar el referéndum es lo que más tarda); y todo lo demás ocurre en diciembre del 78: **el Rey sanciona y promulga**, y dos días después **se publica en el BOE y entra en vigor**.
 
 {tabla(["Hecho", "Fecha", "Quién", "Fuente"], [
   ["**Aprobación**", "31 de octubre de 1978", "Las **Cortes Generales**, en sesiones plenarias del Congreso de los Diputados y del Senado", "[[M101]]"],
@@ -91,7 +91,7 @@ La Constitución se ha reformado **cuatro veces**, siempre por el procedimiento 
 ^> **Antes de 1992.** El apartado ya permitía, por reciprocidad, una excepción a que solo los españoles sean titulares de los derechos del art. 23, pero **solo para el derecho de voto (sufragio activo)** en las elecciones municipales: un extranjero podía votar, no ser elegido. La reforma añadió el **sufragio pasivo** (poder ser elegido).
 
 {unidad("2.2 Reforma del art. 135 (2011)",
-  lit("CE", "a135", ["principio de estabilidad presupuestaria"], solo=[1]),
+  lit("CE", "a135", ["principio de estabilidad presupuestaria", "mayoría absoluta de los miembros del Congreso de los Diputados"], solo=[1, 2, 3, 4, 5, 6, 7], titulo="Artículo 135 (apartados 1 a 4; el 5 y el 6 no se reproducen)"),
   lit("REF2011", "preambulo", ["garantizar el principio de estabilidad presupuestaria"], solo=[9], titulo="Exposición de motivos de la Reforma de 2011 (extracto)"))}
 
 ^> **Antes de 2011.** El art. 135 era mucho más corto y trataba solo de la **deuda pública**: el Gobierno necesitaba autorización por ley para emitirla o contraer crédito, y los créditos para pagar los intereses y el capital de la deuda del Estado se consideraban siempre incluidos en los presupuestos de gastos y quedaban protegidos frente a enmiendas mientras cumplieran la ley de emisión. **No decía nada de estabilidad presupuestaria ni de déficit estructural**: la reforma reescribió el artículo entero.

@@ -3,7 +3,7 @@ T.ap("s35", "VII.3 Competencias y procedimientos", f"""
 {unidad("3.1 Cuadro de las competencias (art. 161 CE; arts. 2 y 59 LOTC)",
   lit("CE", "a161", ["recurso de inconstitucionalidad contra leyes y disposiciones normativas con fuerza de ley", "recurso de amparo por violación de los derechos y libertades referidos en el artículo 53, 2", "conflictos de competencia entre el Estado y las Comunidades Autónomas o de los de éstas entre sí", "las disposiciones y resoluciones adoptadas por los órganos de las Comunidades Autónomas"], solo=[1, 2, 3, 4, 5, 6]),
   tabla(["Procedimiento", "Lo interpone", "Frente a", "Plazo", "Base"], [
-    [f"**Recurso de inconstitucionalidad**", "**50 Diputados**, **50 Senadores**, **Defensor del Pueblo**, **Presidente del Gobierno**, **órganos ejecutivos y Asambleas** de las CCAA (estos, solo contra normas del Estado que afecten a su autonomía)", "**Leyes y normas con rango de ley** (decretos-leyes y decretos legislativos incluidos)", "**3 meses** desde la publicación (art. 33.1); **9 meses** para el Presidente del Gobierno y los ejecutivos autonómicos si se cumplen los requisitos de la Comisión Bilateral (art. 33.2)", "CE 161.1.a, 162.1.a; LOTC 32, 33"],
+    [f"**Recurso de inconstitucionalidad**", "**50 Diputados**, **50 Senadores**, **Defensor del Pueblo**, **Presidente del Gobierno**, **órganos ejecutivos y Asambleas** de las CCAA (estos, solo contra normas del Estado que afecten a su autonomía)", "**Leyes y disposiciones normativas con fuerza de ley** (decretos-leyes y decretos legislativos incluidos), **Estatutos de Autonomía**, **Tratados internacionales** y **Reglamentos de las Cámaras** (arts. 27.2 y 32.1 LOTC)", "**3 meses** desde la publicación (art. 33.1); **9 meses** para el Presidente del Gobierno y los ejecutivos autonómicos si se cumplen los requisitos de la Comisión Bilateral (art. 33.2)", "CE 161.1.a, 162.1.a; LOTC 32, 33"],
     [f"**Cuestión de inconstitucionalidad**", "El **órgano judicial** (jueces y tribunales) cuando deba dictar sentencia", "**Norma con rango de ley** aplicable al caso y de cuya validez dependa el fallo", "**Una vez concluso el procedimiento** y dentro del plazo para dictar sentencia", "CE 163; LOTC 35"],
     [f"**Recurso de amparo** (*«último remedio»*, tras el proceso preferente y sumario)", "**Persona natural o jurídica con interés legítimo**, **Ministerio Fiscal** y **Defensor del Pueblo**", "**Actuación de los poderes públicos** (derechos 14, 15 a 29 y 30.2)", "**3 meses · 20 días · 30 días** (→ V.3)", "CE 161.1.b, 162.1.b; LOTC 41 a 46"],
     [f"**Conflicto de competencias** (Estado ↔ CCAA y CCAA entre sí)", "El **Gobierno** o el **órgano ejecutivo** de la CA", "**Estado ↔ CCAA** · **CA ↔ CA**", "Requerimiento previo de **2 meses**; luego **1 mes**", "CE 161.1.c; LOTC 59.1.a y b, 62 y 63"],
@@ -13,7 +13,7 @@ T.ap("s35", "VII.3 Competencias y procedimientos", f"""
 
 {unidad("3.2 La cuestión de inconstitucionalidad (art. 163 CE; art. 35 LOTC)",
   lit("CE", "a163", ["Cuando un órgano judicial considere", "planteará la cuestión ante el Tribunal Constitucional"]),
-  lx("LOTC", "atreintaycinco", 35, ["una norma con rango de Ley aplicable al caso y de cuya validez dependa el fallo", "sólo podrá plantear la cuestión una vez concluso el procedimiento y dentro del plazo para dictar sentencia", "10 días"], solo=[1, 2]),
+  lx("LOTC", "atreintaycinco", 35, ["una norma con rango de Ley aplicable al caso y de cuya validez dependa el fallo", "sólo podrá plantear la cuestión una vez concluso el procedimiento y dentro del plazo para dictar sentencia", "10 días"], solo=[1, 2, 3]),
   fichab("Cuestión de inconstitucionalidad",
          "**Jueces y tribunales** (de oficio o a instancia de parte)",
          "Si el juez duda de que una **norma con rango de ley** aplicable al caso y de cuya validez depende el fallo sea contraria a la Constitución",
@@ -60,7 +60,7 @@ T.ap("s36", "VII.4 Las sentencias y sus efectos", f"""
 T.ap("s37", "VII.5 Recapitulación: amparo frente a inconstitucionalidad", f"""
 {tabla(["", "**Recurso de amparo**", "**Recurso de inconstitucionalidad**"], [
   ["**Quién**", "**Afectado** (persona con interés legítimo) · **Ministerio Fiscal** · **Defensor del Pueblo**", "**Presidente del Gobierno** · **Defensor del Pueblo** · **50 Diputados** · **50 Senadores** · **órganos ejecutivos y Asambleas** de las CCAA (en su ámbito)"],
-  ["**Contra qué**", "**Actos, omisiones o vía de hecho** de los poderes públicos que violen los derechos **14, 15 a 29 y 30.2**", "**Leyes y normas con rango de ley** (por infringir la Constitución)"],
+  ["**Contra qué**", "**Actos, omisiones o vía de hecho** de los poderes públicos que violen los derechos **14, 15 a 29 y 30.2**", "**Leyes y disposiciones con fuerza de ley, Estatutos, Tratados y Reglamentos de las Cámaras** (por infringir la Constitución; art. 27.2 LOTC)"],
   ["**Plazo**", "**3 meses · 20 días · 30 días**", "**3 meses** (9 en los casos del art. 33.2 LOTC)"],
   ["**Particularidad**", "**«Último remedio»**: normalmente tras agotar la vía judicial (art. 42: no hay vía previa)", "Lo puede promover el **Defensor del Pueblo**: único legitimado en **ambos**"]])}
 
@@ -68,7 +68,7 @@ T.ap("s37", "VII.5 Recapitulación: amparo frente a inconstitucionalidad", f"""
 
 
 {unidad("2.1 Los plazos del amparo: una regla para recordarlos",
-  "El plazo depende de **quién** haya vulnerado el derecho: **3 meses** si es una decisión o acto sin valor de ley de las **Cortes Generales** o de las **Asambleas legislativas** (art. 42 LOTC); **20 días** si procede del **Gobierno** o de la **Administración** (art. 43.2); **30 días** si procede de un **órgano judicial** (art. 44.2). Fíjate en que el plazo más **corto** es el del **poder ejecutivo**, precisamente el que con más frecuencia puede vulnerar derechos: la ley le da más facilidad para «sacudirse» la impugnación. Y recuerda que los legitimados son los **propios afectados** (persona natural o jurídica con interés legítimo), el **Ministerio Fiscal** y el **Defensor del Pueblo**: no puedes plantear un amparo por los derechos de tu vecino. [[M101]]")}
+  "El plazo depende de **quién** haya vulnerado el derecho: **3 meses** si es una decisión o acto sin valor de ley de las **Cortes Generales** o de las **Asambleas legislativas** (art. 42 LOTC); **20 días** si procede del **Gobierno** o de los **órganos ejecutivos colegiados de las Comunidades Autónomas**, contados desde la notificación de la resolución recaída en el previo proceso judicial (art. 43.1 y 2); **30 días** si procede de un **órgano judicial** (art. 44.2). Y recuerda que están legitimados quienes invoquen un **interés legítimo** (art. 162.1.b CE), el **Ministerio Fiscal** y el **Defensor del Pueblo**; el art. 46.1 LOTC exige además ser la **persona directamente afectada** (arts. 42 y 45) o haber sido **parte en el proceso judicial** (arts. 43 y 44): no puedes plantear un amparo por los derechos de tu vecino. [[M101]]")}
 """, 2)
 
 T.ap("s38", "VII.6 Resumen del Tribunal Constitucional", resumen([
