@@ -39,6 +39,13 @@ const { chromium } = require(require('child_process').execSync('npm root -g').to
     await p.selectOption('#cf-nivel', 'x'); await p.selectOption('#cf-que', 'azar'); await p.selectOption('#cf-dif', '3'); await p.locator('#cf-ir').click(); await p.waitForTimeout(300);
     ok(/Solo iniciales/i.test(await p.locator('.cem-card').innerText()) && await p.locator('.cem-i').count() > 3, nombre + ': dificultad 3 (iniciales)');
     await p.evaluate(() => { CEM.ses = null; });
+    // orden aleatorio: sin barajar salen ordenados por artículo; barajando, el mismo conjunto en otro orden
+    const ord = await p.evaluate(() => { const c = { nivel:'mezcla', que:'todas', unidad:'P', max:0, dif:'auto', barajar:false }; const a = cemArmar(c).map(x => x.n + x.l), b = cemArmar(Object.assign({}, c, { barajar:true })).map(x => x.n + x.l); let dif = false; for (let k = 0; k < 8 && !dif; k++) dif = JSON.stringify(cemArmar(Object.assign({}, c, { barajar:true })).map(x => x.n + x.l)) !== JSON.stringify(a); return [a[0], a[1], a.length === b.length, [...a].sort().join() === [...b].sort().join(), dif]; });
+    ok(ord[0] === '1t' || ord[0] === '1u' || ord[0] === '1x', nombre + ': sin barajar, ordenado por artículo ' + ord.slice(0, 2));
+    ok(ord[2] && ord[3] && ord[4], nombre + ': con orden aleatorio, mismo conjunto y otro orden');
+    await p.locator('[data-cems="practicar"]').click(); await p.waitForTimeout(200);
+    await p.locator('#cf-baj').check(); ok(await p.evaluate(() => CEM.cfg.barajar === true), nombre + ': casilla «Orden aleatorio» guardada');
+    await p.locator('#cf-baj').uncheck();
     // juegos
     await p.locator('[data-cems="juegos"]').click(); await p.waitForTimeout(300);
     for (const j of ['ubica', 'rango', 'tema']) {
