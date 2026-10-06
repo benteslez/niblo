@@ -52,6 +52,12 @@ Como muchas leyes, la Constitución va **de lo general a lo concreto**: lo prime
 
 !> {IMP} No es una regla que se cumpla a rajatabla, pero **sirve para ubicar**: lo primero es lo más importante y a la vez lo más genérico; lo que viene después es lo que concreta. Por eso los artículos 10 y 14 quedan «sueltos».
 
+### El Preámbulo y la fórmula de promulgación
+
+{lit("CE", "preambulo", ["LAS CORTES HAN APROBADO Y EL PUEBLO ESPAÑOL RATIFICADO", "las Cortes aprueban y el pueblo español ratifica"], solo=[1, 3, 4, 5, 6, 7, 8, 9, 10, 11], titulo="Fórmula de promulgación y Preámbulo de la Constitución")}
+
+!> {IMP} **Pregunta oficial de 2025** (GACE-L extraordinario, pregunta 3): el Preámbulo cierra con «**las Cortes aprueban y el pueblo español ratifica** la siguiente Constitución». Quien **sanciona** es el **Rey** (27 de diciembre de 1978), no el Gobierno: no confundas **aprobar** (Cortes), **ratificar** (pueblo, en referéndum) y **sancionar** (Rey) (→ I.1.1).
+
 {ir("#/ce/organigrama", "🗺 Ver el organigrama")}
 """, 2)
 

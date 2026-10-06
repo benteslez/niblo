@@ -1598,6 +1598,24 @@ N3 = unidad("9.1 La evolución de la Unión a través de los Tratados (texto de 
   "?> **Matiz (prevalece el TFUE):** la guía habla de políticas «exclusivas, comunes y de apoyo». En el TFUE las categorías son **exclusivas** (art. 3), **compartidas** (art. 4) y **de apoyo, coordinación o complemento** (art. 6); los Estados además **coordinan** sus políticas económicas y de empleo (art. 5). El cuadro de la guía las llama «compartidas, exclusivas y apoyo».")
 T.ap("n3", "II.9 Texto de la guía", N3, 2)
 
+N4 = unidad("9.1 Categorías y ámbitos de competencias de la Unión (arts. 2 a 6 TFUE)",
+  "El art. 5 TUE dice que la Unión solo tiene las competencias que le atribuyen los Tratados; **el TFUE las clasifica** en tres categorías y enumera los ámbitos de cada una. Es la base de la guía cuando habla de políticas «exclusivas, comunes y de apoyo» (apartado II.5, punto 1). [[M108]]",
+  LF(2, solo=[1, 2, 5]),
+  LF(3, solo=[1, 2, 3, 4, 5, 6]),
+  LF(4, solo=list(range(1, 14))),
+  LF(6, solo=list(range(1, 9))),
+  tabla(["Categoría", "Art.", "Quién legisla y adopta actos vinculantes", "Ámbitos"],
+    [["**Exclusivas**", "3", "**Solo la Unión**; los Estados solo si ella los faculta o para aplicar sus actos (art. 2.1)", "Unión aduanera · normas de competencia del mercado interior · **política monetaria** de los Estados cuya moneda es el euro · conservación de los recursos biológicos marinos (pesca) · **política comercial común**"],
+     ["**Compartidas**", "4", "**La Unión y los Estados**; los Estados ejercen la suya en la medida en que la Unión no haya ejercido la suya (art. 2.2)", "Mercado interior · política social · cohesión · agricultura y pesca · medio ambiente · consumidores · transportes · redes transeuropeas · energía · espacio de libertad, seguridad y justicia · seguridad en salud pública"],
+     ["**De apoyo, coordinación o complemento**", "6", "**Los Estados**; la Unión solo apoya, coordina o complementa y sus actos **no armonizan** (art. 2.5)", "Salud humana · industria · cultura · turismo · educación, formación profesional, juventud y deporte · protección civil · cooperación administrativa"]]),
+  ESQ,
+  fichab("Categorías de competencias de la Unión",
+         "La **Unión** y los **Estados miembros**, según la categoría",
+         ["**Exclusivas** (art. 3): solo legisla la Unión", "**Compartidas** (art. 4): legislan ambos", "**De apoyo** (art. 6): la Unión apoya, coordina o complementa", "Aparte: la coordinación de las **políticas económicas y de empleo** (art. 5) y la **PESC** (art. 2.4)"],
+         "—",
+         "**Preguntas oficiales de 2025** (GACE-L 28; GACE-P 8 y 19): **política comercial común** (art. 3.1.e) y **política monetaria de los Estados cuya moneda es el euro** (art. 3.1.c) son competencias **exclusivas** de la Unión. La **agricultura y la pesca** son compartidas, **salvo** la conservación de los recursos biológicos marinos, que es exclusiva."))
+T.ap("n4", "III.9 Texto del TFUE", N4, 2)
+
 # =============================================================================
 # Reorganización según el índice de la guía M108 (B2T01_indice.py): bloques, resúmenes y remisiones
 import B2T01_indice as IND
@@ -1702,6 +1720,7 @@ if os.environ.get("NIBLO_MAPA"):
 # Pill «Examen»: lo que la guía M108 da como muy preguntado o casi todos los años, y lo preguntado en los exámenes oficiales de 2025
 VAL = "La guía M108 lo valora entre lo que se pregunta **casi todos los años**. [[M108]]"
 T.marcar_examen([
+    (r"Categorías y ámbitos de competencias de la Unión", "Preguntas oficiales de 2025 sobre el art. 3 TFUE: GACE-L, pregunta 28; GACE-P, preguntas 8 y 19."),
     (r"La naturaleza jurídica en tres etapas", VAL),
     (r"Personalidad jurídica \(art\. 47\)", VAL),
     (r"Los valores de la Unión \(art\. 2\)", VAL),

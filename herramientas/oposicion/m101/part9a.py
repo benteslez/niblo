@@ -88,6 +88,14 @@ T.ap("s42", "VIII.4 Funciones y actuación", f"""
     ["Cualquier decisión de admisión o rechazo", "**No cabe recurso**", "Art. 17.3"]]),
   f"?> **Trampa típica:** «el Defensor **podrá** rechazar las quejas anónimas» (falso: las **rechaza siempre**) o «sus decisiones son recurribles ante…» (falso: **no son susceptibles de recurso**).")}
 
+{unidad("4.3 Recomendaciones y respuesta de la Administración (art. 30 LO 3/1981)",
+  lx("LODP", "atreinta", 30, ["vendrán obligados a responder por escrito en término no superior al de un mes", "informe anual o especial"], solo=[1, 2]),
+  fichab("Resultado de las investigaciones del Defensor",
+         "El **Defensor del Pueblo** (formula) y las **autoridades y funcionarios** de las Administraciones Públicas (responden)",
+         ["Formula **advertencias, recomendaciones, recordatorios de deberes legales y sugerencias**", "Si no hay medida adecuada en un plazo razonable, lo pone en conocimiento del **Ministro** o de la **máxima autoridad** de la Administración afectada", "Si tampoco hay justificación, lo incluye en su **informe anual o especial**, con los nombres de quienes adoptaron esa actitud"],
+         "Las autoridades y funcionarios deben **responder por escrito** en un plazo **no superior a un mes**",
+         f"{IMP} **Pregunta oficial de 2025** (GACE-L extraordinario, pregunta 5): el plazo para responder a una recomendación es **un mes** (no treinta días, quince días ni tres meses). El Defensor **no puede modificar ni anular** los actos de la Administración."))}
+
 !> {IMP} **Para el examen:** el Defensor puede interponer **a la vez** amparo e inconstitucionalidad; su investigación es **sumaria e informal**; supervisa también a las **CCAA**; los **estados de excepción o sitio no interrumpen** su actividad (art. 11.3, sin perjuicio del art. 55 CE).
 """, 2)
 
