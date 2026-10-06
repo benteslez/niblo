@@ -261,15 +261,19 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
   cada cita (`cg()`) y cada celda de sus cuadros (`tabla(..., ver=...)`, `TRAT`). Ojo: el cuadro impreso dice «Procedimiento **de**
   alerta temprana» y la capa de texto del PDF no; se compara con la variante sin «de».
 - **Orden de los apuntes = índice de la guía** (petición del usuario, 6-10-2026): cinco bloques, los de la guía. I La Unión Europea: antecedentes
-  (I.1 Schuman y Día de Europa; I.2 CED y Mesina, ampliación) · II Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos (II.1 naturaleza
-  jurídica; II.2 art. 1; II.3 valores, art. 2; II.4 objetivos, art. 3; II.5 Tratados de París a Lisboa; II.6 cuadro maestro) · III El TUE y el TFUE (III.1 origen y
+  (I.1 Schuman y Día de Europa) · II Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos (II.1 naturaleza jurídica; II.2 art. 1;
+  II.3 valores, art. 2; II.4 objetivos, art. 3; II.5 Tratados originarios y modificativos, con el cuadro maestro) · III El TUE y el TFUE (III.1 origen y
   estructura; III.2 arts. 4 y 5; III.3 art. 6; III.4 art. 7 y mayoría cualificada; III.5 art. 8; III.6 arts. 9 a 12; III.7 disposiciones finales y revisión, art. 48;
   III.8 TFUE) · IV El proceso de ampliación (IV.1 art. 49 y Copenhague; IV.2 art. 50; IV.3 ampliaciones, retiradas y candidaturas) · V Las cooperaciones reforzadas
   (V.1 concepto y condiciones, art. 20 TUE y arts. 326 a 328; V.2 arts. 329 a 331; V.3 arts. 332 a 334). Los cuadros, el cuadro maestro y los esquemas están en el
-  punto de la guía al que pertenecen. **Cómo se genera:** `temas/B2T01.py` escribe las unidades con su numeración de trabajo y `temas/B2T01_indice.py` (`PLAN`)
-  las reordena y renumera según este índice y reasigna todas las remisiones («→ III.2.4»), el glosario y la cronología; las remisiones sin flecha («en el bloque IV»,
-  «en **III.7**») se corrigen a mano en `BARE`. Los ids de apartado (`s7`, `s10`…) son estables: los destinos de `CM_IR` y `ESQUEMAS` en `oposicion.html` apuntan a
-  ellos (II.5 = `s7`, II.6 = `s10`, III.4 = `s6`, III.7 = `s10b`, IV.1 = `s13`, IV.2 = `s15`, V.1 = `s16`, V.2 = `s18`). El art. 48 vive en III.7 y los arts. 4 a 8 en III.2 a III.5.
+  punto de la guía al que pertenecen. **Ajustado a la guía y sin duplicados** (petición del usuario, 6-10-2026): cada punto abre con **el texto de la guía** reescrito y
+  precisado con la norma (`N1`, `N2`, `N3` en `B2T01.py`; I.1 · 1.1, II.2 · 2.1, II.5 · 5.1, y los de II.1) y se quitó lo que no está en la guía o repetía otra cosa: CED y Mesina,
+  preámbulo del TUE, la historia de cada Tratado de las fichas del PE (la dan el cuadro y la guía), la tabla de fechas que repetía el cuadro, los arts. 52, 54 y 55,
+  el cuadro «Consejo / Consejo Europeo» (queda la regla del vídeo), TFUE 8.2-8.3, el proceso de adhesión «en la práctica» y la tabla de ampliaciones de la ficha del PE
+  (la da la guía). Las remisiones a lo retirado se redirigen en `REMAP_U`/`REMAP_A`. **Cómo se genera:** `temas/B2T01.py` escribe las unidades con su numeración de trabajo y `temas/B2T01_indice.py` (`PLAN`)
+  las reordena y renumera según este índice y reasigna todas las remisiones («→ III.2.4»), el glosario y la cronología; `OMITIR` retira unidades, `PARCHES` retoca su texto;
+  las remisiones sin flecha («en el bloque IV», «en **III.7**») se corrigen a mano en `BARE`. Los ids de apartado (`s7`, `s10b`…) son estables: los destinos de `CM_IR` y `ESQUEMAS` en `oposicion.html` apuntan a
+  ellos (II.5 = `s7`, III.4 = `s6`, III.7 = `s10b`, IV.1 = `s13`, IV.2 = `s15`, V.1 = `s16`, V.2 = `s18`). El art. 48 vive en III.7 y los arts. 4 a 8 en III.2 a III.5.
 - **Esquemas de procedimiento**: marcador `&>` (`&> Título` y un paso por línea `Actor + Actor | qué hace | regla`; `↳ Actor | …` es una
   alternativa del paso anterior). Un color por institución (Consejo Europeo azul, Consejo verde, Comisión rojo, Parlamento Europeo morado,
   Parlamentos nacionales azul oscuro, Estados gris, Alto Representante rosa, BCE naranja). Son de elaboración propia a partir de los artículos
