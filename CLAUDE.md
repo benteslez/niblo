@@ -289,6 +289,11 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - **Preguntas de la guía** (`QG` en `B2T01.py`; 3, que la guía da como de examen oficial pero sin convocatoria): van al test del tema con
   `ac = "M108 · pregunta n"` (chip 🎓 Academia) y **no** al test real global (no hay convocatoria que citar).
 
+## Revisión de los exámenes oficiales contra los apuntes (6-10-2026)
+
+- Se cotejaron las preguntas de L, P y X de 2025 que caen en los cuatro temas encendidos (I.1-I.3 y II.1) y las no etiquetadas (`tema` vacío) que son de esas normas con lo desarrollado. Faltaba y se añadió: Preámbulo y fórmula de promulgación (I.1 · II.1, X3), art. 30 LO 3/1981 y plazo de un mes (I.2 · V.2 · 2.8, X5), art. 27.2 LOTC y qué puede declararse inconstitucional (I.3 · II.1 · 1.1, X9) y arts. 2 a 6 TFUE, categorías de competencias (II.1 · III.2 · 2.4, L28, P8 y P19). Cada vez que se añada un examen, repetir este cotejo para los temas encendidos.
+- Las preguntas L28, P8 y P19 (art. 3 TFUE) siguen **sin `tema`** en `tests-reales`: no se sabe con seguridad si son de II.1 o de otro tema de la UE; hasta que el usuario lo diga, no se etiquetan.
+
 ## Pill roja «Examen» (petición del usuario, 6-10-2026)
 
 - `{{EXAMEN}}` → pill con **fondo rojo y letras blancas** «Examen» (`.pill-exa`, app y PDF; misma pill en `#/ce/texto` para los artículos que la academia da como preguntados en examen oficial, `m103.arts[n].exam`).

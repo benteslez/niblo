@@ -26,7 +26,7 @@ PLAN = [
         ("s10", "4.1"), ("s10", "4.3"), ("s10", "4.4"), ("s10", "4.5")])]),
  ("bIII", "III. El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea", [
    ("s12", "El Tratado de la Unión Europea: origen y estructura", [("s12", "1.1"), ("s12", "1.2")]),
-   ("s5", "Principios en el reparto competencial (TUE, arts. 4 y 5)", [("s5", "2.1"), ("s5", "2.2"), ("s5", "2.3")]),
+   ("s5", "Principios en el reparto competencial (TUE, arts. 4 y 5)", [("s5", "2.1"), ("s5", "2.2"), ("s5", "2.3"), ("n4", "9.1")]),
    ("s6a", "Carta de los Derechos Fundamentales de la Unión Europea (TUE, art. 6)", [("s6", "3.1")]),
    ("s6", "Procedimientos de alerta temprana y de violación de los valores de la UE (TUE, art. 7)", [("s6", "3.2"), ("s6", "3.3")]),
    ("s6c", "Vecindad (TUE, art. 8)", [("s6", "3.4")]),
