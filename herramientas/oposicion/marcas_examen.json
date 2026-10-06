@@ -482,6 +482,28 @@
 {
 "tema": "B1T03",
 "k": "CE",
+"bloque": "a167",
+"ex": [
+[
+"L13",
+1
+]
+]
+},
+{
+"tema": "B1T03",
+"k": "CE",
+"bloque": "a17",
+"ex": [
+[
+"L08",
+2
+]
+]
+},
+{
+"tema": "B1T03",
+"k": "CE",
 "bloque": "a49",
 "ex": [
 [
@@ -6287,6 +6309,17 @@
 "bloque": "a24",
 "ex": [
 "Supuesto práctico II (2.º ejercicio GACE-L 2019), cuestión 1 b)"
+]
+},
+{
+"tema": "B4T13",
+"k": "CE",
+"bloque": "a153",
+"ex": [
+[
+"L08",
+16
+]
 ]
 },
 {
