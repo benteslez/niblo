@@ -16,16 +16,14 @@ import re
 # Cada apartado: (id, rótulo, [(apartado de origen, unidad|"pre")…]); la unidad es el «N.M» de B2T01.py.
 PLAN = [
  ("bI", "I. La Unión Europea: antecedentes", [
-   ("s1", "Del fin de la Segunda Guerra Mundial a la Declaración Schuman y el Día de Europa", [("s1", "pre"), ("s1", "1.1"), ("s1", "1.2"), ("s1", "1.3")]),
-   ("s2", "Del fracaso de la CED a la Conferencia de Mesina (ampliación de la guía)", [("s2", "pre"), ("s2", "2.1")])]),
+   ("s1", "Del fin de la Segunda Guerra Mundial a la Declaración Schuman y el Día de Europa", [("n1", "8.1"), ("s1", "pre"), ("s1", "1.1"), ("s1", "1.2")])]),
  ("bII", "II. Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos", [
    ("s3", "Naturaleza jurídica", [("s3", "1.4"), ("s3", "1.3"), ("s3", "1.5")]),
-   ("s3b", "La Unión Europea (TUE, art. 1)", [("s3", "1.1"), ("s3", "1.2"), ("s3", "1.7")]),
+   ("s3b", "La Unión Europea (TUE, art. 1)", [("n2", "8.1"), ("s3", "1.2"), ("s3", "1.7")]),
    ("s4", "Valores de la Unión Europea (TUE, art. 2)", [("s4", "2.1"), ("s4", "2.2")]),
    ("s4b", "Objetivos de la Unión Europea (TUE, art. 3)", [("s4", "2.3"), ("s4", "2.4")]),
-   ("s7", "Tratados originarios y modificativos: de París a Lisboa", [("s10", "4.2"), ("s3", "1.6"), ("s7", "1.1"), ("s7", "1.2"),
-        ("s8", "2.1"), ("s8", "2.2"), ("s8", "2.3"), ("s8", "2.4"), ("s8", "2.5"), ("s9", "3.1"), ("s9", "3.3"), ("s9", "3.2")]),
-   ("s10", "Tratados originarios y modificativos: el cuadro maestro (guía M108)", [("s10", "4.1"), ("s10", "4.3"), ("s10", "4.4"), ("s10", "4.5")])]),
+   ("s7", "Tratados originarios y modificativos", [("n3", "9.1"), ("s10", "4.2"), ("s3", "1.6"), ("s9", "3.3"), ("s9", "3.2"),
+        ("s10", "4.1"), ("s10", "4.3"), ("s10", "4.4"), ("s10", "4.5")])]),
  ("bIII", "III. El Tratado de la Unión Europea y el Tratado de Funcionamiento de la Unión Europea", [
    ("s12", "El Tratado de la Unión Europea: origen y estructura", [("s12", "1.1"), ("s12", "1.2")]),
    ("s5", "Principios en el reparto competencial (TUE, arts. 4 y 5)", [("s5", "2.1"), ("s5", "2.2"), ("s5", "2.3")]),
@@ -34,18 +32,18 @@ PLAN = [
    ("s6c", "Vecindad (TUE, art. 8)", [("s6", "3.4")]),
    ("s6b", "Disposiciones sobre los principios democráticos (TUE, arts. 9 a 12)", [("s6b", "4.1"), ("s6b", "4.2"), ("s6b", "4.3"), ("s6b", "4.4")]),
    ("s10b", "Disposiciones finales: revisión de los Tratados (TUE, arts. 47 a 55)", [("s10b", "5.1"), ("s10b", "5.2"), ("s10b", "5.3"), ("s10b", "5.4")]),
-   ("s11", "El Tratado de Funcionamiento de la Unión Europea (TFUE)", [("s11", "6.1"), ("s11", "6.2"), ("s11", "6.3"), ("s11", "6.4")])]),
+   ("s11", "El Tratado de Funcionamiento de la Unión Europea (TFUE)", [("s11", "6.1"), ("s11", "6.4")])]),
  ("bIV", "IV. El proceso de ampliación", [
-   ("s13", "Procedimiento de adhesión (TUE, art. 49) y criterios de Copenhague", [("s13", "1.1"), ("s13", "1.2"), ("s13", "1.3"), ("s13", "1.4")]),
+   ("s13", "Procedimiento de adhesión (TUE, art. 49) y criterios de Copenhague", [("s13", "1.1"), ("s13", "1.2"), ("s13", "1.4")]),
    ("s15", "Procedimiento de retirada (TUE, art. 50)", [("s15", "3.1"), ("s15", "3.2"), ("s15", "3.3")]),
-   ("s14", "Ampliaciones, retiradas y candidaturas a la Unión Europea", [("s14", "2.1"), ("s14", "2.2"), ("s14", "2.3")])]),
+   ("s14", "Ampliaciones, retiradas y candidaturas a la Unión Europea", [("s14", "2.2"), ("s14", "2.3")])]),
  ("bV", "V. Las cooperaciones reforzadas", [
    ("s16", "Concepto, finalidad y condiciones (TUE, art. 20; TFUE, arts. 326 a 328)", [("s16", "1.1"), ("s16", "1.2"), ("s16", "1.3"), ("s17", "2.1"), ("s17", "2.2"), ("s17", "2.3")]),
    ("s18", "Autorización, votación y participación posterior (TFUE, arts. 329 a 331)", [("s18", "3.1"), ("s18", "3.2"), ("s18", "3.3"), ("s18", "3.4")]),
    ("s19", "Gastos, pasarelas y coherencia (TFUE, arts. 332 a 334)", [("s19", "4.1"), ("s19", "4.2"), ("s19", "4.3"), ("s19", "4.4")])]),
 ]
 # apartados de trabajo que desaparecen al fundirse en otro (glosario y cronología apuntan al nuevo)
-FUSIONADOS = {"s8": "s7", "s9": "s7", "s17": "s16"}
+FUSIONADOS = {"s2": "s1", "s8": "s7", "s9": "s7", "s10": "s7", "s17": "s16"}
 ROM = ["I", "II", "III", "IV", "V", "VI"]
 RES = r"\n*@> \*\*▸ En resumen\.\*\*\n(?:@> .*\n?)+\s*$"
 UNIDAD = re.compile(r"(?m)^### (\d+\.\d+) (.*)$")
@@ -60,16 +58,23 @@ def _trocear(body):
     return out
 
 
-def reorganizar(T, bloques, bare):
+def reorganizar(T, bloques, bare, omitir=(), remap_u=None, remap_a=None, parches=()):
     """T: Tema con T.S en el orden de trabajo. bloques: {id de bloque: (donde(...) ya compuesto, resumen ya compuesto)}.
     bare: [(texto viejo, texto nuevo)] para las remisiones sin flecha que hay que escribir a mano (se aplican tras renumerar)."""
     viejo = {s["id"]: s for s in T.S}
     codigo_viejo = {i: s["title"].split(" ")[0] for i, s in viejo.items() if re.match(r"^(I{1,3}|IV|V|VI)\.\d+$", s["title"].split(" ")[0])}
     trozos = {i: _trocear(s["body"]) for i, s in viejo.items() if i in codigo_viejo}
+    remap_u, remap_a = remap_u or {}, remap_a or {}
     # el «En resumen» de cada apartado viejo se retira: lo sustituye el de cada bloque nuevo
     for i, t in trozos.items():
         ultima = [k for k in t if k != "pre"][-1] if len(t) > 1 else "pre"
         t[ultima] = re.sub(RES, "", t[ultima] + "\n")
+    # --- retoques de texto (antes de colocar): (apartado, unidad, patrón, sustitución) o una función f(trozos) ---
+    for pa in parches:
+        if callable(pa): pa(trozos); continue
+        sec, u, pat, rep_ = pa
+        trozos[sec][u], n = re.subn(pat, rep_, trozos[sec][u], flags=re.S)
+        assert n == 1, ("PARCHE SIN EFECTO", sec, u, pat[:50], n)
     # --- correspondencia vieja → nueva ---
     usados, mapa_u, mapa_a, nuevos = set(), {}, {}, []
     for b, (bid, bt, aps) in enumerate(PLAN):
@@ -90,13 +95,17 @@ def reorganizar(T, bloques, bare):
     for i, t in trozos.items():   # nada se queda sin colocar
         for u in t:
             if u == "pre" and not t[u].strip(): continue
-            assert (i, u) in usados, ("SIN COLOCAR", i, u)
+            if i.startswith("n") and False: continue
+            assert (i, u) in usados or (i, u) in omitir, ("SIN COLOCAR", i, u)
     # --- remisiones ---
     def remitir(txt):
         def f(m):
             a, u = m.group(1), m.group(2)
             if u:
-                assert f"{a}.{u}" in mapa_u, ("REMISIÓN SIN DESTINO", m.group(0)); return "→ " + mapa_u[f"{a}.{u}"]
+                k = f"{a}.{u}"; k = remap_u.get(k, k)
+                assert k in mapa_u, ("REMISIÓN SIN DESTINO", m.group(0)); return "→ " + mapa_u[k]
+            a = remap_a.get(a, a)
+            if a.count(".") == 2: return "→ " + mapa_u[remap_u.get(a, a)]
             assert a in mapa_a, ("REMISIÓN SIN DESTINO", m.group(0)); return "→ " + mapa_a[a]
         return re.sub(r"→ ((?:I{1,3}|IV|V|VI)\.\d+)(?:\.(\d+))?", f, txt)
     marca = {}

@@ -152,20 +152,19 @@ Los apuntes siguen **el orden y los epígrafes de la guía de estudio M108** [[M
 
 ### Cómo está escrito
 
-- Cada artículo: primero el **texto literal** del Tratado (versión consolidada de EUR-Lex, etiqueta **DOUE**) o de la ley española (etiqueta **BOE**) y debajo su **ficha** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen).
-- Lo que **no es norma** (historia, fechas de los Tratados, ampliaciones) se copia **literal** de fuentes oficiales —fichas temáticas del **Parlamento Europeo** y portal de la **Unión Europea**— con su etiqueta y la advertencia «fuente oficial, no es texto legal».
-- La **guía M108** [[M108]] (cuadros, esquemas y reglas de memoria de la academia) está transcrita y explicada con redacción propia; sus cuadros salen etiquetados y **no son texto legal**. Los **esquemas de procedimiento** (cajas con pasos numerados y un color por institución) son de elaboración propia a partir de los artículos y de los esquemas de la guía.
-- **Si la guía o el vídeo discrepan de la norma vigente, prevalece la norma** y se avisa donde ocurre (hoy: mayoría cualificada del art. 7, Schengen, clasificación de los Tratados «originarios», definición de «candidato potencial»).
+- Cada punto empieza por el **texto de la guía M108** [[M108]] (reescrito y precisado donde la norma vigente lo exige) y sigue con el **texto literal** del Tratado (versión consolidada de EUR-Lex, etiqueta **DOUE**) o de la ley española (etiqueta **BOE**) y su **ficha** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen). Los cuadros y esquemas de la guía van en su sitio; no son texto legal.
+- Lo que añade la fuente oficial (fichas temáticas del **Parlamento Europeo**, portal de la **Unión**) va **literal** y con su etiqueta y la advertencia «fuente oficial, no es texto legal».
+- **Si la guía o el vídeo discrepan de la norma vigente, prevalece la norma** y se avisa donde ocurre (hoy: mayoría cualificada del art. 7, Schengen, clasificación de los Tratados «originarios», categorías de competencias, «candidato potencial»).
 - Lo que el epígrafe comparte con otros temas se remite allí: instituciones (tema II.2 y tema II.3), Carta de Derechos Fundamentales y fuentes del Derecho (tema II.4), políticas (tema II.6).
-- Al final: **Cierre 1** (las preguntas de exámenes oficiales de 2025 y las de la guía) y **Cierre 2** (repaso por bloques).
+- Al final: el **Cierre** (repaso por bloques). Las preguntas de exámenes oficiales de este tema están en el **test** («Práctica activa», barra lateral).
 
 ### Qué se pregunta y cuánto (valoración de la academia)
 
 {tabla(["Peso en el examen", "Contenido", "Dónde"],
   [["**Muy preguntado**", "Los Tratados originarios y modificativos: qué instituciones, políticas y procedimientos aporta cada uno. La guía afirma que dominar el cuadro maestro resuelve **entre el 40 % y el 50 %** de las preguntas de Unión Europea", "II.6"],
-   ["**Casi todos los años**", "Personalidad jurídica (**Lisboa**, art. 47); ciudadanía europea (**Maastricht**); valores del art. 2 (regla **LÍDER**); qué países entran y cuándo", "II.1, II.3, II.6, IV.3"],
+   ["**Casi todos los años**", "Personalidad jurídica (**Lisboa**, art. 47); ciudadanía europea (**Maastricht**); valores del art. 2 (regla **LÍDER**); qué países entran y cuándo", "II.1, II.3, II.5, IV.3"],
    ["**Alguna vez**", "Arts. 4 y 5 (delimitación frente a ejercicio de competencias); mayoría de **cuatro quintos** del art. 7; **iniciativa** de la revisión (art. 48); **a quién se dirige** la solicitud (arts. 49 y 50); **nueve** Estados y actos que vinculan solo a los participantes; cifras de la mayoría cualificada; Islandia y Noruega", "III.2, III.4, III.7, IV, V"],
-   ["**Nunca o casi nunca**", "Art. 1, art. 3 (en test), art. 6, art. 8, art. 11 (salvo el millón de firmas), índice del TFUE, fechas de firma de los Tratados", "II.2, II.4, II.5, III.3, III.5, III.6, III.8"]],
+   ["**Nunca o casi nunca**", "Art. 1, art. 3 (en test), art. 6, art. 8, art. 11 (salvo el millón de firmas), índice del TFUE, fechas de firma de los Tratados", "II.2, II.4, III.3, III.5, III.6, III.8"]],
   ver=())}
 
 {GUIA_NOTA.replace("Cuadro transcrito de la guía M108 (academia)", "Valoración recogida del vídeo M108 (academia)")}
@@ -249,14 +248,13 @@ T.ap("bII", "II. ¿Qué es la Unión y qué persigue? Naturaleza jurídica y obj
   ["1 La creación de la Unión: preámbulo, art. 1, personalidad jurídica (art. 47) y ratificación de los Tratados", "2 Valores y objetivos (arts. 2 y 3)"]))
 
 U3_4 = unidad("1.4 La naturaleza jurídica en tres etapas: Roma, Maastricht y Lisboa",
-  "La naturaleza jurídica de lo que hoy llamamos Unión Europea ha cambiado en tres momentos, y el examen pregunta **en cuál** se produce cada cambio. [[M108]]",
+  "La **Comunidad Económica Europea** nació con el **Tratado de Roma**, en vigor desde el **1 de enero de 1958** y firmado por los **seis** países fundadores (Francia, Italia, Alemania, Bélgica, Países Bajos y Luxemburgo). El **Tratado de Maastricht**, en vigor desde el **1 de noviembre de 1993**, creó la **Unión Europea** sobre **tres pilares** (las Comunidades Europeas, la Política Exterior y de Seguridad Común y la cooperación en justicia e interior) y convirtió la CEE en la **Comunidad Europea** (CE), con una cooperación y unas políticas más estrechas entre los **12** Estados firmantes. Con el **Tratado de Lisboa**, en vigor desde el **1 de diciembre de 2009** y firmado por **27** Estados, **desaparece la Comunidad Europea** y la Unión adquiere formalmente **personalidad jurídica propia**, recogida en el art. 47 TUE. El examen pregunta **en cuál** de los tres Tratados se produce cada cambio. [[M108]]",
   tabla(["Tratado", "Entrada en vigor", "Estados que lo firman", "Qué ocurre"],
     [["**Roma**", "1-1-1958", "**6** (Francia, Italia, Alemania, Bélgica, Países Bajos y Luxemburgo)", "Nace la **Comunidad Económica Europea** (CEE)"],
      ["**Maastricht**", "1-11-1993", "**12**", "Se crea la **Unión Europea**, sobre **tres pilares** (Comunidades Europeas, PESC y cooperación en justicia e interior); la CEE pasa a ser la **Comunidad Europea** (CE). La Unión **todavía no tiene personalidad jurídica propia**"],
      ["**Lisboa**", "1-12-2009", "**27**", "**Desaparece la Comunidad Europea** y la Unión **adquiere formalmente personalidad jurídica propia**, recogida en el **art. 47 TUE**"]]),
   ESQ,
-  "!> **No mezclar Maastricht con Lisboa.** Maastricht **crea** la Unión; **Lisboa** le da **personalidad jurídica propia**. La guía lo advierte: «Esto es algo que hace que confundamos con el tratado de Lisboa». La **ciudadanía europea**, en cambio, es de **Maastricht** (→ IV.4.1).",
-  "Hechos de la guía: " + cg("El Tratado de Maastricht entró en vigor el 1 de noviembre de 1993 y con él se creó la Unión Europea") + "; " + cg("Con la entrada en vigor del Tratado de Lisboa el 1 de diciembre de 2009") + " " + cg("desaparece la Comunidad Europea") + " y la Unión Europea adquiere " + cg("formalmente personalidad jurídica propia") + ".")
+  "!> **No mezclar Maastricht con Lisboa.** Maastricht **crea** la Unión; **Lisboa** le da **personalidad jurídica propia**. La guía lo advierte: «Esto es algo que hace que confundamos con el tratado de Lisboa». La **ciudadanía europea**, en cambio, es de **Maastricht** (→ IV.4.1).")
 
 U3_5 = unidad("1.5 Qué implica tener personalidad jurídica",
   "Que la Unión tenga personalidad jurídica significa que es **sujeto de Derecho** y puede actuar **hacia fuera**, no solo entre los Estados miembros. [[M108]]",
@@ -1298,13 +1296,13 @@ T.ap("s20", "Cierre 1. Preguntas de los exámenes de 2025 sobre este tema", "\n\
 ]))
 
 T.ap("s21", "Cierre 2. Repaso en 10 minutos (por bloques)", f"""
-| Bloque | Lo esencial | Dato que más cae |
-|---|---|---|
-| I. Antecedentes | Declaración Schuman; carbón y acero; CED fallida; Mesina | **9 de mayo de 1950** (Día de Europa) |
-| II. Objetivos y naturaleza jurídica; Tratados | Tratado entre Estados; competencias atribuidas; personalidad jurídica (47, **Lisboa**); art. 1; valores (2, regla **LÍDER**); objetivos (3); París 1951; Roma 1957; Fusión 1965; AUE 1986; Maastricht 1992; Ámsterdam 1997; Niza 2001; Lisboa 2007; **cuadro maestro**; ratificación (arts. 93 y 94 CE) | **Lisboa** da la personalidad jurídica; **Maastricht**, la ciudadanía; instituciones: 4 → 5 → **7**; la entrada en vigor, no la firma |
-| III. TUE y TFUE | Mismo valor jurídico; TUE (55 arts., 6 títulos) y TFUE (358 arts., 7 partes); arts. 4 y 5, 6, 7, 8, 9 a 12, 48 y 51 a 55 | **Atribución** delimita, **subsidiariedad y proporcionalidad** ejercen; art. 7: **4/5** y **unanimidad**; ICE: **un millón**; revisión: iniciativa del **Gobierno, el PE o la Comisión** |
-| IV. Proceso de ampliación | Art. 49 y criterios de Copenhague; art. 50; ampliaciones, retiradas y candidaturas | Solicitud al **Consejo**, **unanimidad**; retirada: **2 años** |
-| V. Cooperaciones reforzadas | Art. 20 TUE; arts. 326 a 334 TFUE | **Nueve** Estados; informan **Comisión y Alto Representante** al **PE y Consejo** |
+| Bloque | Dato que más cae |
+|---|---|
+| I. Antecedentes | **9 de mayo de 1950** (Declaración Schuman; Día de Europa) |
+| II. Objetivos, naturaleza jurídica y Tratados | **Lisboa** da la personalidad jurídica (art. 47); **Maastricht**, la ciudadanía; valores del art. 2 (**LÍDER**); instituciones: 4 → 5 → **7**; la **entrada en vigor**, no la firma |
+| III. TUE y TFUE | Mismo valor jurídico; **atribución** delimita, **subsidiariedad y proporcionalidad** ejercen; art. 7: **4/5** y **unanimidad**; ICE: **un millón**; revisión: iniciativa del **Gobierno, el PE o la Comisión** |
+| IV. Proceso de ampliación | Solicitud al **Consejo**, **unanimidad**; retirada: **2 años**; ampliaciones por año |
+| V. Cooperaciones reforzadas | **Nueve** Estados; informan **Comisión y Alto Representante** al **PE y Consejo** |
 
 ?> **Trampas frecuentes:** «la solicitud de adhesión se dirige a la **Comisión**» (va al **Consejo**, que decide por **unanimidad**); «cooperación reforzada en **cualquier** ámbito» (no en competencias **exclusivas**); «solicitud de cooperación reforzada al **Consejo Europeo**» (a la **Comisión**; en PESC, al **Consejo**); «el TUE prevalece sobre el TFUE» (tienen el **mismo valor jurídico**); «el Día de Europa conmemora el Tratado de **Roma**» (conmemora la **Declaración Schuman**); «el acuerdo de retirada lo celebra el Consejo por **unanimidad**» (por **mayoría cualificada**).
 """)
@@ -1577,6 +1575,29 @@ T.hito("1973", "Primera ampliación (1-1-1973)", "Dinamarca, Irlanda y Reino Uni
 T.hito("1997", "Tratado de Ámsterdam, firmado el 2-10-1997", "En vigor el 1-5-1999; primeras disposiciones generales sobre cooperación reforzada (ficha 1.1.3 del PE)", "normativo", "s8")
 T.hito("2009", "Tratado de Lisboa en vigor (1-12-2009)", "La Unión adquiere personalidad jurídica propia (art. 47 TUE) y desaparece la Comunidad Europea (guía M108)", "normativo", "s9")
 
+
+# =============================================================================
+# Textos de la guía M108 (reescritos y precisados con la norma vigente) que abren cada punto
+N1 = unidad("8.1 Los países fundadores y la Declaración Schuman",
+  "Al terminar la Segunda Guerra Mundial, los países que luego serían fundadores —**Francia, Alemania, Italia, Bélgica, los Países Bajos y Luxemburgo**— empezaron a **poner en común** parte de su actividad. Ese proceso los llevó a firmar los primeros **Tratados originarios** y a crear la **Comunidad Europea del Carbón y del Acero (CECA)** y la **Comunidad Económica Europea (CEE)**. [[M108]]",
+  "El **9 de mayo de 1950**, el entonces ministro francés de Asuntos Exteriores, **Robert Schuman**, expuso en un discurso las ideas en que se asienta la Unión: la formación de una **Alta Autoridad común** que supervisara la producción de carbón y acero en Europa. Los países fundadores se mostraron conformes con la propuesta y, desde entonces, el **9 de mayo es el Día de Europa**. [[M108]]",
+  "?> **Matices.** (1) La CECA y la CEE nacen de **dos Tratados distintos**, el de **París** y el de **Roma**; el de Roma creó además " + cw(PE1, "la Comunidad Europea de la Energía Atómica (Euratom)") + ". (2) En la tabla de la guía (siguiente apartado), las fechas de París (**23-7-1952**) y de Roma (**1-1-1958**) son las de **entrada en vigor**; las de **firma** son el 18-4-1951 y el 25-3-1957 (cuadro maestro, II.5).",
+  "!> **Pregunta de examen (2025):** el 9 de mayo **no** es la firma del Tratado de Roma (25 de marzo de 1957) ni la primera ampliación (1973): es la fecha de la **Declaración Schuman** (1950).")
+T.ap("n1", "I.8 Texto de la guía", N1, 2)
+
+N2 = unidad("8.1 Los artículos 1 a 3 y el Título I (texto de la guía)",
+  "Los **arts. 1 a 3 del TUE** abren el **Título I, «Disposiciones comunes»** (arts. 1 a 8): el **art. 1** constituye la Unión; el **art. 2** concreta los **valores** en que se fundamenta; y el **art. 3** fija los **objetivos** comunes que han de cumplir los Estados miembros. Se estudian uno a uno en los apartados II.2 a II.4; el resto del Título I (arts. 4 a 8) está en el bloque III. [[M108]]")
+T.ap("n2", "II.8 Texto de la guía", N2, 2)
+
+N3 = unidad("9.1 La evolución de la Unión a través de los Tratados (texto de la guía)",
+  "La evolución de la Unión desde la Declaración Schuman hasta la actual se estudia a través de los **Tratados originarios y modificativos**. En cada uno se fueron **introduciendo o consolidando las instituciones**, hasta llegar a las **siete** de hoy; se incorporaron **políticas** que se desarrollan en común con los Estados miembros para lograr los objetivos de la Unión; y se crearon **herramientas jurídicas** (procedimientos legislativos y decisorios) con las que hoy legislan y trabajan las instituciones, cada una con las funciones que tiene atribuidas. [[M108]]",
+  LT(13, solo=[1, 2, 3, 4, 5, 6, 7, 8, 9]),
+  L("**Instituciones** (art. 13.1 TUE): " + cT(13, "El Parlamento Europeo") + ", el Consejo Europeo, el Consejo, la Comisión, el Tribunal de Justicia de la Unión Europea, el Banco Central Europeo y el Tribunal de Cuentas. Los órganos **consultivos** (Comité Económico y Social y Comité de las Regiones) **no** son instituciones: " + cT(13, "ejercerán funciones consultivas") + " (art. 13.4).",
+    "**Competencias:** desde Lisboa el TFUE distingue las **exclusivas** (" + cF(2, "una competencia exclusiva en un ámbito determinado") + "), las **compartidas** (" + cF(2, "una competencia compartida con los Estados miembros en un ámbito determinado") + ") y las de **apoyo** (" + cF(6, "apoyar, coordinar o complementar la acción de los Estados miembros") + ").",
+    "**Herramientas jurídicas:** el procedimiento legislativo **ordinario** consiste en " + cF(289, "la adopción conjunta por el Parlamento Europeo y el Consejo, a propuesta de la Comisión, de un reglamento, una directiva o una decisión") + " (art. 289.1 TFUE); los **especiales** son los casos que prevén los Tratados."),
+  "?> **Matiz (prevalece el TFUE):** la guía habla de políticas «exclusivas, comunes y de apoyo». En el TFUE las categorías son **exclusivas** (art. 3), **compartidas** (art. 4) y **de apoyo, coordinación o complemento** (art. 6); los Estados además **coordinan** sus políticas económicas y de empleo (art. 5). El cuadro de la guía las llama «compartidas, exclusivas y apoyo».")
+T.ap("n3", "II.9 Texto de la guía", N3, 2)
+
 # =============================================================================
 # Reorganización según el índice de la guía M108 (B2T01_indice.py): bloques, resúmenes y remisiones
 import B2T01_indice as IND
@@ -1584,16 +1605,16 @@ import B2T01_indice as IND
 BLOQUES = {
  "bI": (donde(
    "Primer bloque de la guía. Antes de leer los Tratados vigentes, hay que saber **por qué** y **cómo** empezó la integración europea: la reconciliación franco-alemana y la puesta en común del carbón y del acero. Este bloque no es texto legal: todo sale literal de fuentes oficiales de la Unión.",
-   ["1 Del fin de la Segunda Guerra Mundial a la Declaración Schuman y el Día de Europa", "2 Del fracaso de la CED a la Conferencia de Mesina (ampliación de la guía)"]),
+   ["1 Del fin de la Segunda Guerra Mundial a la Declaración Schuman y el Día de Europa"]),
   resumen([
    "Punto de partida: **Declaración Schuman**, **9 de mayo de 1950** (por eso el 9 de mayo es el **Día de Europa**).",
-   "Idea: poner en común el **carbón y el acero** para la **reconciliación franco-alemana**; seis países.",
-   "La **CED** fracasó (Asamblea Nacional francesa, 1954); la **Conferencia de Mesina** (1955) llevó a los Tratados **CEE** y **CEEA**."],
+   "Idea: poner en común el **carbón y el acero** para la **reconciliación franco-alemana**; seis países fundadores.",
+   "Los primeros Tratados originarios: **París** (CECA) y **Roma** (CEE y Euratom)."],
    "Siguiente: II. Objetivos y naturaleza jurídica. Los Tratados originarios y modificativos")),
  "bII": (donde(
    "Segundo bloque de la guía. Primero, **qué es** jurídicamente la Unión (organización creada por Tratado entre Estados, con personalidad jurídica y competencias atribuidas) y **para qué** existe (arts. 1 a 3: valores y objetivos). Después, **cómo se llegó** a ella: los Tratados originarios y modificativos, con el cuadro que la guía considera la clave del tema.",
    ["1 Naturaleza jurídica", "2 La Unión Europea (TUE, art. 1)", "3 Valores de la Unión Europea (TUE, art. 2)", "4 Objetivos de la Unión Europea (TUE, art. 3)",
-    "5 Tratados originarios y modificativos: de París a Lisboa", "6 Tratados originarios y modificativos: el cuadro maestro (guía M108)"]),
+    "5 Tratados originarios y modificativos (con el cuadro maestro de la guía M108)"]),
   resumen([
    "La Unión se crea **por Tratado** entre Estados que le **atribuyen competencias**; se fundamenta en el **TUE** y el **TFUE**, con el **mismo valor jurídico**, y sucede a la Comunidad Europea (art. 1).",
    "Naturaleza jurídica en tres etapas: **Roma** (CEE, 1958) → **Maastricht** (Unión Europea, 1993, sin personalidad jurídica) → **Lisboa** (2009, **personalidad jurídica propia**, art. 47).",
@@ -1631,16 +1652,51 @@ BLOQUES = {
    "Gastos para los participantes salvo unanimidad de todos (332); pasarelas propias sin efectos militares (333); coherencia: Consejo y Comisión (334)."],
    "Fin del tema. Para fijarlo: Cierre 1 (preguntas oficiales de 2025) y Cierre 2 (repaso por bloques); después, el test.")),
 }
+OMITIR = {("s2", "pre"), ("s2", "2.1"), ("s3", "1.1"), ("s7", "1.1"), ("s7", "1.2"), ("s8", "2.1"), ("s8", "2.2"), ("s8", "2.3"), ("s8", "2.4"), ("s8", "2.5"),
+          ("s1", "1.3"), ("s14", "2.1"), ("s9", "3.1"), ("s11", "6.2"), ("s11", "6.3"), ("s13", "1.3")}
+# unidades retiradas → unidad que ahora recoge la remisión (códigos de trabajo)
+REMAP_U = {"I.1.3": "I.8.1", "V.2.1": "V.2.3", "I.2.1": "I.8.1", "II.1.1": "II.1.2", "III.3.1": "III.3.3", "IV.6.2": "IV.6.4", "IV.6.3": "IV.6.4", "V.1.3": "V.1.1",
+           "III.1.1": "III.4.3", "III.1.2": "III.4.3", "III.2.1": "III.4.3", "III.2.2": "III.4.3", "III.2.3": "III.4.3", "III.2.4": "III.4.3", "III.2.5": "III.4.3"}
+REMAP_A = {"I.2": "I.8.1", "III.1": "III.4.3", "III.2": "III.4.3"}
+
+
+def _constitucion(tz):
+    """La Constitución para Europa: la ficha del PE (3.1) se funde con el texto de la guía (3.3)."""
+    m = re.search(r"> \[\[PE\|[^\n]*\n(?:> [^\n]*\n?)+", tz["s9"]["3.1"]); assert m
+    partes = tz["s9"]["3.3"].split("\n\n"); assert partes[0].startswith("### 3.3")
+    partes[0] = "### 3.3 La Constitución para Europa: el Tratado que no se ratificó"
+    partes.insert(2, m.group(0).rstrip("\n"))
+    partes.insert(3, "?> **Matiz (fuente oficial):** la guía dice que Francia y los Países Bajos votaron «no» en un «referéndum consultivo»; la ficha del Parlamento Europeo habla de " + cw(PE4, "sendos referendos nacionales") + " y da las fechas: **Francia, 29-5-2005**, y **Países Bajos, 1-6-2005**. Lo que importa: **no se ratificó** y nunca entró en vigor.")
+    tz["s9"]["3.3"] = "\n\n".join(partes)
+
+PARCHES = [_constitucion,
+  # I.1: lo que ya dice el texto de la guía del principio
+  ("s1", "1.1", r"\n- \*\*Deseo de Schuman\*\*[^\n]*", ""),
+  ("s1", "1.1", r"\n- \*\*Los seis fundadores\*\*[^\n]*", ""),
+  # II.5: la tabla de fechas repite el cuadro maestro
+  ("s10", "4.1", r"\| Tratado \| Estados que lo firman.*?\*Cuadro transcrito de la guía M108 \(academia\); no es texto legal\.\*\n+", ""),
+  # Lisboa: la ficha del PE repite el cuadro; queda la LO 1/2008 (ratificación en España)
+  ("s9", "3.2", r"> \[\[PE\|[^\n]*tratado-de-lisboa\]\]\n(?:> [^\n]*\n)+\n", ""),
+  # III.7: arts. 52, 54 y 55 (no están en la guía y casi no se preguntan)
+  ("s10b", "5.3", r"> \[\[DOUE\]\]\n> \*\*Artículo 52 TUE[^\n]*\n(?:> [^\n]*\n)+\n", ""),
+  ("s10b", "5.3", r"> \[\[DOUE\]\]\n> \*\*Artículo 54 TUE[^\n]*\n(?:> [^\n]*\n)+\n", ""),
+  ("s10b", "5.3", r"> \[\[DOUE\]\]\n> \*\*Artículo 55 TUE[^\n]*\n(?:> [^\n]*\n)+\n", ""),
+  # III.7: el cuadro «Consejo / Consejo Europeo» repite las fichas; quedan la regla y la técnica del vídeo
+  ("s10b", "5.4", r"### 5\.4 Cuadro: ¿Consejo o Consejo Europeo\?", "### 5.4 Regla de memoria: ¿Consejo o Consejo Europeo?"),
+  ("s10b", "5.4", r" Este cuadro reúne los procedimientos del tema\. \[\[M108\]\]", " [[M108]]"),
+  ("s10b", "5.4", r"\| Procedimiento \| Consejo \| Consejo Europeo \|.*?\*Esquema de elaboración propia[^\n]*\n+", ""),
+]
+
 BARE = [
  ("→ II.1, IV.2 y IV.3)", "→ II.2, II.3, II.4, III.2, III.3, III.4 y III.5)"),
  ("arts. 1 a 3 en **II**; arts. 4 a 8 en **IV.2** y **IV.3**", "arts. 1 a 3 en **II.2 a II.4**; arts. 4 a 8 en **III.2 a III.5**"),
  ("Aquí: **IV.4**", "Aquí: **III.6**"),
  ("Aquí: art. 47 en **II.1.3**; art. 48 en **IV.5**; arts. 49 y 50 en **V**; arts. 51 a 55 en **IV.5.3**", "Aquí: art. 47 en **II.1.2**; art. 48 en **III.7**; arts. 49 y 50 en **IV**; arts. 51 a 55 en **III.7.3**"),
  ("está en II.1.3, el **48** en IV.5.1 y IV.5.2 y los **49 y 50** en el bloque V.", "está en II.1.2, el **48** en III.7.1 y III.7.2 y los **49 y 50** en el bloque IV."),
- ("cuadro del III.4", "cuadro del II.6"),
+ ("cuadro del III.4", "cuadro del II.5"),
  ("(→ bloque V)", "(→ bloque IV)"),
 ]
-MAPA_U, MAPA_A = IND.reorganizar(T, BLOQUES, BARE)
+MAPA_U, MAPA_A = IND.reorganizar(T, BLOQUES, BARE, OMITIR, REMAP_U, REMAP_A, PARCHES)
 if os.environ.get("NIBLO_MAPA"):
     for k, v in sorted(MAPA_U.items()): print(k, "→", v)
 T.publicar()
