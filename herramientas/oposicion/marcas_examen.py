@@ -45,7 +45,7 @@ def clave(m): return (m["tema"], m.get("k"), m.get("bloque"), m.get("clave"))
 
 
 # Marcas heurísticas duplicadas en temas donde la pregunta no se resuelve (un artículo citado en I.1, I.2 e I.3 daba marca en los tres): (tema, norma, bloque, examen, n.º)
-EXCLUIR = {("B1T01", "CE", "a161", "L22", 4), ("B1T02", "CE", "a161", "L22", 4), ("B1T02", "CE", "a9", "L24", 49), ("B1T03", "CE", "a9", "L24", 49)}
+EXCLUIR = {("B2T01", "TUE", "Artículo 16", "P22", 10), ("B2T01", "TUE", "Artículo 16", "ST22", 11), ("B2T01", "TUE", "Artículo 16", "ST22", 13), ("B1T01", "CE", "a161", "L22", 4), ("B1T02", "CE", "a161", "L22", 4), ("B1T02", "CE", "a9", "L24", 49), ("B1T03", "CE", "a9", "L24", 49)}
 
 
 def anadir(marcas, nuevas):
