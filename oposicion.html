@@ -45,8 +45,8 @@
 mark { background:#fde68a; color:inherit; border-radius:3px; padding:0 2px; }
 
 /* Constitución · Memorizar */
-.cem-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:6px; }
-.cem-kpi { display:flex; flex-direction:column; gap:6px; padding:12px; }
+.cem-kpis { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-bottom:6px; align-items:stretch; }
+.cem-kpis > .cem-kpi { display:flex; flex-direction:column; gap:6px; padding:12px; margin:0 !important; height:auto; min-width:0; }
 .cem-bar { display:flex; height:10px; border-radius:6px; overflow:hidden; background:rgba(128,128,128,.18); }
 .cem-bar i, .cem-lg { display:block; }
 .e0 { background:#cbd5e1; } .e1 { background:#ef4444; } .e2 { background:#f59e0b; } .e3 { background:#16a34a; }
