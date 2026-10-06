@@ -220,7 +220,8 @@ class Tema:
         reg = [x for x in json.load(open(ruta, encoding="utf-8"))["marcas"] if x["tema"] == self.id]
         NOM = {"L": "GACE-L 2025", "P": "GACE-P 2025", "X": "GACE-L 2025 extraordinario", "L24": "GACE-L 2024", "P24": "GACE-P 2024",
                "L22": "GACE-L 2022", "P22": "GACE-P 2022", "ST22": "GACE-E 2022", "L19": "GACE-L 2019", "P19": "GACE-P 2019",
-               "ST19": "GACE-E 2019", "STX19": "GACE-E 2019 extraordinario"}
+               "ST19": "GACE-E 2019", "STX19": "GACE-E 2019 extraordinario",
+               "L13": "GACE-L 2013", "P13": "GACE-P 2013", "L11": "GACE-L 2011", "P11": "GACE-P 2011", "L08": "GACE-L 2008", "P08": "GACE-P 2008"}
         sitios, sin = {}, []
         for x in reg:
             hallado = None
