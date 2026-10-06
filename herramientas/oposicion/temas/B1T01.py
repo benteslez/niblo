@@ -10,8 +10,6 @@ NOTA_ART = "La academia lo recoge entre los artículos preguntados en exámenes 
 MARCAS = [
     (r"Art\. 1 ·", NOTA_ART),
     (r"Art\. 8 ·", NOTA_ART),
-    ("sec:s4", "Preguntas oficiales de 2025 sobre la estructura de la Constitución (GACE-L pregunta 1; GACE-L extraordinario, preguntas 1, 2 y 3)."),
-    ("sec:s5", "Preguntas oficiales de 2025 sobre el Título I y la estructura (GACE-L pregunta 1; GACE-L extraordinario, preguntas 1 a 3)."),
 ]
 T = dividir.generar(1)
 T.marcar_examen(MARCAS)

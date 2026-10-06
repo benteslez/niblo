@@ -42,7 +42,7 @@ La Constitución se abre con un **preámbulo** y su articulado se reparte en **d
   [f"**Parte dogmática**", f"{tag('P', 'Título preliminar')} y {tag('I', 'Título I')}", "**1 a 55**", "Los principios y los **derechos y deberes**: qué es el Estado y qué se reconoce a las personas"],
   [f"**Parte orgánica**", f"{tag('II', 'Título II')} a {tag('X', 'Título X')}", "**56 a 169**", "Cómo se **organiza** el Estado y sus instituciones: Corona, Cortes, Gobierno, Poder Judicial, territorio, Tribunal Constitucional y reforma"]])}
 
-### La lógica de «las muñecas rusas»
+### 1.1 La lógica de «las muñecas rusas»
 
 Como muchas leyes, la Constitución va **de lo general a lo concreto**: lo primero que aparece es lo más **ideal e inespecífico**, y lo que viene después lo **concreta**. Si tienes esto en la cabeza, la estructura se asimila mejor:
 
@@ -52,7 +52,7 @@ Como muchas leyes, la Constitución va **de lo general a lo concreto**: lo prime
 
 !> {IMP} No es una regla que se cumpla a rajatabla, pero **sirve para ubicar**: lo primero es lo más importante y a la vez lo más genérico; lo que viene después es lo que concreta. Por eso los artículos 10 y 14 quedan «sueltos».
 
-### El Preámbulo y la fórmula de promulgación
+### 1.2 El Preámbulo y la fórmula de promulgación
 
 {lit("CE", "preambulo", ["LAS CORTES HAN APROBADO Y EL PUEBLO ESPAÑOL RATIFICADO", "las Cortes aprueban y el pueblo español ratifica"], solo=[1, 3, 4, 5, 6, 7, 8, 9, 10, 11], titulo="Fórmula de promulgación y Preámbulo de la Constitución")}
 

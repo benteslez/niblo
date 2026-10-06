@@ -44,9 +44,15 @@ def cargar():
 def clave(m): return (m["tema"], m.get("k"), m.get("bloque"), m.get("clave"))
 
 
+# Marcas heurísticas duplicadas en temas donde la pregunta no se resuelve (un artículo citado en I.1, I.2 e I.3 daba marca en los tres): (tema, norma, bloque, examen, n.º)
+EXCLUIR = {("B1T01", "CE", "a161", "L22", 4), ("B1T02", "CE", "a161", "L22", 4), ("B1T02", "CE", "a9", "L24", 49), ("B1T03", "CE", "a9", "L24", 49)}
+
+
 def anadir(marcas, nuevas):
     """Fusiona sin borrar nada: mismas marcas → se unen las preguntas (`ex`) y se conserva la nota."""
     idx = {clave(m): m for m in marcas}
+    nuevas = [dict(n, ex=[e for e in n["ex"] if isinstance(e, str) or (n["tema"], n.get("k"), n.get("bloque"), e[0], e[1]) not in EXCLUIR]) for n in nuevas]
+    nuevas = [n for n in nuevas if n["ex"]]
     for n in nuevas:
         m = idx.get(clave(n))
         if m is None: marcas.append(n); idx[clave(n)] = n; continue

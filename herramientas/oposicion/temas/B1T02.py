@@ -19,9 +19,6 @@ MARCAS = [
     (r"Art\. 27 ·", NOTA_ART),
     (r"Art\. 34 ·", NOTA_ART),
     (r"Art\. 41 ·", NOTA_ART),
-    (r"1\.1 El art\. 54 CE", "Pregunta oficial de 2025: GACE-L extraordinario, pregunta 6 (institución que supervisa la Administración y defiende los derechos del Título I)."),
-    (r"1\.3 La elección", "Pregunta oficial de 2025: GACE-L, pregunta 2 (art. 2, apartados 4 y 5, de la LO 3/1981)."),
-    (r"3\.1 Por qué importa el 17\.3", "Pregunta oficial de 2025: GACE-L extraordinario, pregunta 4 (derechos que no se pueden suspender; arts. 55.1 y 15)."),
 ]
 T = dividir.generar(2)
 T.marcar_examen(MARCAS)

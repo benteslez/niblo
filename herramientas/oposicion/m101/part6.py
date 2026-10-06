@@ -24,7 +24,7 @@ T.ap("s23", "V.5 El recurso de inconstitucionalidad", f"""
 
 {unidad("5.2 El plazo (art. 33 LOTC)",
   lx("LOTC", "atreintaytres", 33, ["tres meses", "nueve meses", "Comisión Bilateral de Cooperación"], solo=[1, 2, 3, 4, 5]),
-  f"!> {IMP} **Plazo: 3 meses**, y **9 meses** si el Presidente del Gobierno o el ejecutivo autonómico han activado la **Comisión Bilateral** para negociar, y el acuerdo se comunica al Tribunal **dentro de los 3 meses siguientes a la publicación** y se publica en el BOE y en el diario oficial de la Comunidad (art. 33.2 LOTC). Se cuenta desde la **publicación** de la norma.")}
+  f"!> {IMP} **Plazo: 3 meses**, y **9 meses** si el Presidente del Gobierno o el ejecutivo autonómico han activado la **Comisión Bilateral** para negociar, y el acuerdo se comunica al Tribunal **dentro de los 3 meses siguientes a la publicación** y se publica en el BOE y en el diario oficial de la Comunidad (art. 33.2 LOTC). Se cuenta desde la **publicación** de la norma. La admisión del recurso **no suspende** la ley, salvo cuando el Presidente del Gobierno recurre leyes autonómicas amparándose en el art. 161.2 CE (art. 30 LOTC; se explica en el tema I.3).")}
 """, 2)
 
 T.ap("s24", "V.6 Vinculación de los poderes públicos", f"""
@@ -131,7 +131,7 @@ Hay **tres estados**, de menor a mayor gravedad: **alarma < excepción < sitio**
 
 **Regla mnemotécnica: 15 – 30 – lo decide el Congreso.** Alarma, 15 días; excepción, 30 días (+30); sitio, el tiempo que decida el Congreso.
 
-### La gradación: el peso pasa del Gobierno al Congreso [[M107]]
+### 2.4 La gradación: el peso pasa del Gobierno al Congreso [[M107]]
 
 La clave para ordenar los tres estados es verlos como una **escala de gravedad** (alarma < excepción < sitio) en la que **el poder de decidir se desplaza** del Gobierno al Congreso. Y siempre es un **diálogo entre Gobierno y Congreso**: ni el **Senado** ni las **Cortes Generales** en su conjunto intervienen en la declaración (los apartados 2 a 4 del art. 116 solo nombran al Gobierno y al Congreso).
 

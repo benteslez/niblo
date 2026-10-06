@@ -42,7 +42,36 @@ T.ap("s35", "VII.3 Competencias y procedimientos", f"""
 {unidad("3.6 La impugnación de disposiciones sin fuerza de ley de las CCAA (art. 161.2 CE; arts. 76 y 77 LOTC)",
   lit("CE", "a161", ["El Gobierno podrá impugnar ante el Tribunal Constitucional las disposiciones y resoluciones adoptadas por los órganos de las Comunidades Autónomas", "en un plazo no superior a cinco meses"], solo=[6]),
   lx("LOTC", "asetentayseis", 76, ["Dentro de los dos meses siguientes", "disposiciones normativas sin fuerza de Ley y resoluciones emanadas de cualquier órgano de las Comunidades Autónomas"]),
-  "Solo la plantea el **Gobierno**; produce la **suspensión** de la disposición o resolución recurrida, que el Tribunal ratifica o levanta en un plazo **no superior a cinco meses** (art. 161.2 CE).")}
+  "Solo la plantea el **Gobierno**; produce la **suspensión** de la disposición o resolución recurrida, que el Tribunal ratifica o levanta en un plazo **no superior a cinco meses** (art. 161.2 CE).",
+  lx("LOTC", "atreinta", 30, ["no suspenderá la vigencia ni la aplicación de la Ley", "por medio de su Presidente"]),
+  f"{IMP} **La suspensión del art. 161.2 también se da con las leyes autonómicas** (art. 30 LOTC): si el Gobierno se ampara en el art. 161.2 CE y recurre, **por medio de su Presidente**, **leyes, disposiciones normativas o actos con fuerza de ley** de las CCAA, la admisión del recurso **sí suspende** su vigencia. En los demás recursos y cuestiones de inconstitucionalidad, la admisión **no suspende** la ley.")}
+
+{unidad("3.7 Requerimiento previo sobre tratados internacionales (art. 95 CE; art. 78 LOTC)",
+  lit("CE", "a95", ["El Gobierno o cualquiera de las Cámaras puede requerir al Tribunal Constitucional"], solo=[1, 2]),
+  lx("LOTC", "asetentayocho", 78, ["El Gobierno o cualquiera de ambas Cámaras", "en el término de un mes", "tendrá carácter vinculante"], solo=[1, 2]),
+  fichab("Control previo de tratados",
+         "El **Gobierno** o **cualquiera de las dos Cámaras**",
+         ["Verifica si un tratado **contradice la Constitución** **antes** de que el Estado le preste su consentimiento", "Sobre un tratado cuyo texto está **definitivamente fijado** y al que **no** se ha prestado aún el consentimiento del Estado", "El Tribunal emplaza al solicitante y a los demás legitimados para que opinen"],
+         ["**1 mes** para que expresen su opinión", "**1 mes** más para emitir su declaración, que es **vinculante** (art. 95 CE)"],
+         f"{IMP} Si el tratado contradice la CE, hace falta **revisión constitucional** **antes** de celebrarlo (art. 95.1). Es un control **previo y vinculante** (no un recurso)."))}
+
+{unidad("3.8 Recurso previo de inconstitucionalidad contra Estatutos de Autonomía (art. 79 LOTC)",
+  lx("LOTC", "asetentaynueve", 79, ["recurso de inconstitucionalidad, con carácter previo", "tres días desde la publicación", "suspenderá automáticamente todos los trámites subsiguientes", "plazo improrrogable de seis meses"], solo=[1, 2, 3, 4, 6]),
+  fichab("Recurso previo contra Estatutos",
+         "Los **mismos legitimados** que para recurrir Estatutos de Autonomía (art. 79.3)",
+         ["Impugna el **texto definitivo** de un **Proyecto de Estatuto** o de una **propuesta de reforma**, **una vez aprobado por las Cortes Generales** y **antes** de su entrada en vigor", "La interposición **suspende automáticamente** los trámites siguientes; si hay referéndum autonómico, **no puede convocarse** hasta que resuelva el Tribunal (art. 79.5)"],
+         ["**3 días** desde la publicación del texto en el Boletín Oficial de las Cortes Generales", "El Tribunal lo resuelve en **6 meses improrrogables**"],
+         f"{IMP} **3 días** para recurrir y **6 meses** para resolver. Es una vía **previa**: el pronunciamiento **no prejuzga** los recursos o cuestiones posteriores (art. 79.9)."))}
+
+{unidad("3.9 Conflictos de competencia negativos (arts. 60 y 67 a 72 LOTC)",
+  lx("LOTC", "asesenta", 60, ["Los conflictos negativos podrán ser instados también por las personas físicas o jurídicas interesadas"]),
+  lx("LOTC", "asesentayocho", 68, ["declinare su competencia", "dentro del mes siguiente a la notificación de la declinatoria"], solo=[1, 3]),
+  lx("LOTC", "asetentayuno", 71, ["conflicto de competencias negativo"], solo=[1]),
+  lx("LOTC", "asetentaydos", 72, ["Dentro del mes siguiente"], solo=[1]),
+  tabla(["Quién lo plantea", "Cuándo", "Plazo", "Base"], [
+    ["**Persona física o jurídica** interesada", "Una Administración (del Estado o de una CA) **declina su competencia** por entender que corresponde a otra y la otra Administración, solicitada en segundo lugar, también se inhibe o no responde", "**1 mes** desde la notificación de la declinatoria (la segunda Administración tiene **1 mes** para admitir o declinar)", "Arts. 60 y 68"],
+    ["**Gobierno**", "Ha **requerido** al órgano ejecutivo superior de una CA para que ejerza sus competencias y este lo **rechaza**, de forma expresa o por inactividad (**mínimo un mes** de plazo en el requerimiento)", "**1 mes** desde el rechazo, expreso o tácito", "Arts. 71 y 72"]]),
+  f"{IMP} Los conflictos **negativos** son los que **nadie quiere asumir**: el sujeto reclama que **alguien ejerza** una competencia. Los **positivos** (cuadro 3.1) son los que **ambas partes reclaman** como suya.")}
 """, 2)
 
 T.ap("s36", "VII.4 Las sentencias y sus efectos", f"""
@@ -55,6 +84,16 @@ T.ap("s36", "VII.4 Las sentencias y sus efectos", f"""
          ["Se **publican en el BOE** con los **votos particulares**, si los hubiere", "No cabe **recurso alguno**", "La parte de la ley **no afectada** por la inconstitucionalidad **mantiene su vigencia**", "Si declaran la **inconstitucionalidad** de una ley, declaran también su **nulidad**"],
          ["**Cosa juzgada** desde el **día siguiente** a su publicación (art. 164.1 CE)", "**Plenos efectos frente a todos**: las que declaran la inconstitucionalidad de una ley o norma con fuerza de ley y **todas las que no se limiten a la estimación subjetiva de un derecho**"],
          f"{IMP} Cinco ideas del art. 164: **BOE con votos particulares**, **cosa juzgada al día siguiente**, **sin recurso**, **efectos frente a todos** (salvo las que solo estiman un derecho subjetivo) y **vigencia de la parte no afectada**. Se refiere a leyes **o normas con fuerza de ley**."))}
+
+{unidad("4.2 Alcance en el tiempo y otros efectos (arts. 38.2 y 3, 40 y 93 LOTC)",
+  lx("LOTC", "atreintayocho", 38, ["impedirán cualquier planteamiento ulterior de la cuestión", "quedará vinculado desde que tuviere conocimiento de la sentencia constitucional"], solo=[2, 3], extra=".2 y 3"),
+  lx("LOTC", "acuarenta", 40, ["no permitirán revisar procesos fenecidos mediante sentencia con fuerza de cosa juzgada", "reducción de la pena o de la sanción"], solo=[1]),
+  lx("LOTC", "anoventaytres", 93, ["no cabe recurso alguno", "dos días"], solo=[1]),
+  fichab("Otros efectos de las sentencias",
+         "Las sentencias de **inconstitucionalidad** y las que resuelven **cuestiones de inconstitucionalidad**",
+         ["Las **desestimatorias** (recurso de inconstitucionalidad y conflictos en defensa de la autonomía local) **impiden volver a plantear** la cuestión, por cualquiera de las dos vías, por la **misma infracción de idéntico precepto** (art. 38.2)", "En la **cuestión de inconstitucionalidad**, el juez queda vinculado desde que **conoce** la sentencia y las partes desde que se les **notifica** (art. 38.3)", "**No** se pueden revisar los **procesos fenecidos** con sentencia de cosa juzgada que aplicaron la ley inconstitucional (art. 40.1); **excepción:** procesos **penales** o **contencioso-administrativos sancionadores** donde la nulidad suponga una **reducción** de la pena o sanción o una **exclusión, exención o limitación** de la responsabilidad"],
+         "Sin recurso; **2 días** para pedir **aclaración** (art. 93.1)",
+         f"{IMP} Efecto **hacia el futuro** (*ex nunc*) salvo la excepción **más favorable** del art. 40.1. La **jurisprudencia** de los tribunales se entiende **corregida** por la doctrina del Tribunal Constitucional (art. 40.2)."))}
 """, 2)
 
 T.ap("s37", "VII.5 Recapitulación: amparo frente a inconstitucionalidad", f"""

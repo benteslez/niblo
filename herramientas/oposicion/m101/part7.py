@@ -24,7 +24,7 @@ Dos ideas para ayudarte a recordar la lista: **tiene sentido** que se puedan res
 
 *Alarma no suspende derechos:* el decreto de alarma solo permite **limitaciones**, como limitar la circulación, requisar bienes o racionar servicios (→ VI.2, art. 11 LO 4/1981).
 
-### Reglas de memoria de los arts. 17, 18, 19, 20, 21, 28 y 37 [[M107]]
+### 3.2 Reglas de memoria de los arts. 17, 18, 19, 20, 21, 28 y 37 [[M107]]
 
 Es un trabajo de **memoria**, y el vídeo avisa de que hay que cuidar sobre todo la redacción de los arts. **17, 18 y 20**:
 
@@ -134,6 +134,47 @@ T.ap("s34", "VII.2 Composición y mandato", f"""
          "**Votación secreta** del Pleno: **mayoría absoluta** en primera votación y, si no se alcanza, segunda votación (resulta elegido quien obtenga más votos; art. 9.2 LOTC); propuesta al Rey",
          "**3 años**; **reelegible por una sola vez**",
          "El Presidente lo nombra el Rey **a propuesta del propio Tribunal en pleno** (art. 160). El **Vicepresidente** lo elige el Pleno por el mismo procedimiento y periodo (art. 9.4 LOTC)."))}
+""", 2)
+
+T.ap("s34c", "VII.2c Organización del Tribunal: Pleno, Salas, Secciones, quórum y cese", f"""
+El epígrafe oficial habla de «**organización, composición y atribuciones**»: tras la composición (arts. 159 y 160 CE) toca ver **cómo se organiza** el Tribunal por dentro (arts. 6 a 15 LOTC) y **cuándo cesan** sus Magistrados (art. 23 LOTC). *Apartado añadido a la guía M101 a partir de la LOTC vigente (ampliación): el módulo no lo desarrolla, pero el test oficial lo pregunta.*
+
+{unidad("4.1 Pleno, Salas y Secciones (arts. 6 a 8 LOTC)",
+  lx("LOTC", "asexto", 6, ["actúa en Pleno, en Sala o en Sección", "integrado por todos los Magistrados del Tribunal"], solo=[1, 2]),
+  lx("LOTC", "aseptimo", 7, ["consta de dos Salas", "seis Magistrados nombrados por el Tribunal en Pleno"], solo=[1, 2, 3]),
+  lx("LOTC", "aoctavo", 8, ["Secciones compuestas por el respectivo Presidente o quien le sustituya y dos Magistrados"], solo=[1]),
+  tabla(["Órgano", "Composición", "Preside"], [
+    ["**Pleno**", "**Todos** los Magistrados (12)", "El **Presidente**; en su defecto, el Vicepresidente y, a falta de ambos, el Magistrado más antiguo (y, si hay igual antigüedad, el de mayor edad)"],
+    ["**Salas** (dos)", "**6 Magistrados** cada una, nombrados por el Pleno", "**Sala Primera**: el Presidente del Tribunal · **Sala Segunda**: el Vicepresidente"],
+    ["**Secciones**", "El **Presidente** (del Pleno o de la Sala) o quien le sustituya y **2 Magistrados** (3 miembros)", "El Presidente respectivo"]]))}
+
+{unidad("4.2 Qué conoce cada órgano (arts. 10 a 13 LOTC)",
+  lx("LOTC", "adiez", 10, ["tratados internacionales", "excepto los de mera aplicación de doctrina", "conflictos constitucionales de competencia", "conflictos entre los órganos constitucionales del Estado"], solo=[1, 2, 3, 4, 5, 6, 7, 8, 9]),
+  lx("LOTC", "aonce", 11, ["no sean de la competencia del Pleno"], solo=[1]),
+  lx("LOTC", "adoce", 12, ["turno establecido por el Pleno"]),
+  lx("LOTC", "atrece", 13, ["se someterá a la decisión del Pleno"]),
+  fichab("Reparto de asuntos",
+         ["El **Pleno**: tratados, recursos de inconstitucionalidad, conflictos de competencia, impugnaciones del art. 161.2 CE, conflictos en defensa de la autonomía local y entre órganos constitucionales…", "Las **Salas**: todo lo que **no** es del Pleno (art. 11), en especial el **amparo**"],
+         "Las **Salas** se reparten los asuntos por un **turno** que fija el Pleno a propuesta de su Presidente (art. 12)",
+         "—",
+         f"{IMP} Si una **Sala** quiere **apartarse de la doctrina constitucional** anterior, la cuestión pasa al **Pleno** (art. 13)."))}
+
+{unidad("4.3 Quórum (art. 14 LOTC) y funciones del Presidente (art. 15 LOTC)",
+  lx("LOTC", "acatorce", 14, ["dos tercios de los miembros", "presencia de dos miembros"]),
+  lx("LOTC", "aquince", 15, ["ejerce la representación del Tribunal", "convoca y preside el Tribunal en Pleno"], solo=[1]),
+  fichab("Adopción de acuerdos",
+         "El **Pleno**, las **Salas** y las **Secciones**",
+         "Con la **presencia** de un número mínimo de miembros",
+         ["**Pleno** y **Salas**: al menos **dos tercios** de los miembros que en cada momento los compongan", "**Secciones**: **dos** miembros, salvo que haya discrepancia (entonces, los **tres**)"],
+         f"{IMP} **Dos tercios** de presencia (quórum), **no** de votos. El voto del Presidente dirime los empates (art. 90 LOTC; véase «Claves para memorizar la composición»)."))}
+
+{unidad("4.4 Cese de los Magistrados (art. 23 LOTC)",
+  lx("LOTC", "aveintitres", 23, ["por renuncia aceptada por el Presidente del Tribunal", "por expiración del plazo de su nombramiento", "mayoría simple en los casos tercero y cuarto", "mayoría de las tres cuartas partes de sus miembros en los demás casos"], solo=[1, 2]),
+  tabla(["Causa de cese (art. 23.1)", "Quién lo decreta o decide (art. 23.2)"], [
+    ["**1.º** Renuncia aceptada por el Presidente · **2.º** Expiración del plazo del nombramiento · **Fallecimiento**", "El **Presidente** del Tribunal"],
+    ["**3.º** Incapacidad (las de los miembros del Poder Judicial) · **4.º** Incompatibilidad sobrevenida", "El **Pleno**, por **mayoría simple**"],
+    ["**5.º** No atender con diligencia los deberes del cargo · **6.º** Violar la reserva propia de su función · **7.º** Responsabilidad civil por dolo, o condena por delito doloso o por culpa grave", "El **Pleno**, por **mayoría de las tres cuartas partes** de sus miembros"]]),
+  f"{IMP} **Regla:** las dos causas «normales» (renuncia y expiración) y la muerte las decreta el **Presidente**; el resto lo decide el **Pleno**: **mayoría simple** para las dos primeras causas «sobrevenidas» (3.ª y 4.ª) y **tres cuartas partes** para las demás.")}
 """, 2)
 
 T.ap("s34b", "VII.2b Claves para memorizar la composición", f"""
