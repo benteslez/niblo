@@ -175,3 +175,29 @@ MARCAS += [
     SX("L19", "B4T11", "L39", "a21", "II 1 a)"), SX("L19", "B4T12", "L40", "a24", "II 1 b)"), SX("L19", "B4T12", "L39", "a122", "II 2"),
     SX("L19", "B4T05", "LCSP", "Artículo 118", "II 4"), SX("L19", "B5T04", "RD364", "a70", "II 5 b)"),
 ]
+
+
+# --- GACE-L 2008 (revisadas una a una contra la norma vigente: solo las preguntas cuya respuesta de la plantilla sigue siendo correcta hoy;
+# quedan fuera las de normas derogadas o cambiadas: LOFAGE, Ley 30/1992, Ley 30/2007, plazos de la LPAC, complementos, planes y datos de 2008) ---
+def L08(tema, k, art, *ns):
+    b = art if art in P.boe.ley(k) else P.bid(k, art)
+    return {"tema": tema, "k": k, "bloque": b, "ex": [["L08", n] for n in ns]}
+
+MARCAS += [
+    L08("B1T01", "CE", "a166", 1), L08("B1T02", "CE", "a17", 2), L08("B1T03", "LOTC", "aveintiseis", 3), L08("B1T04", "CE", "a60", 4),
+    L08("B1T05", "CE", "a87", 5), L08("B1T07", "LOPJ", "acincuentaycinco", 7), L08("B1T08", "L40", "a62", 9), L08("B1T08", "L40", "a67", 10),
+    L08("B1T10", "CE", "a152", 11), L08("B1T08", "L40", "a70", 12), L08("B1T10", "CE", "a147", 15), L08("B1T10", "CE", "a153", 16),
+    L08("B1T10", "CE", "a149", 17, 18, 62), L08("B1T11", "CE", "a141", 19), L08("B1T11", "LRBRL", "a29", 20),
+    L08("B2T01", "TUE", "Artículo 49", 22), L08("B2T02", "TFUE", "Artículo 297", 23), L08("B2T02", "TUE", "Artículo 17", 24),
+    L08("B2T05", "TFUE", "Artículo 177", 26), L08("B2T04", "TFUE", "Artículo 288", 27), L08("B2T06", "TFUE", "Artículo 39", 28),
+    L08("B3T04", "LGSS", "a109", 40), L08("B3T06", "LOEX", "a29", 45), L08("B1T02", "LO3_2007", "dfsegunda", 49),
+    L08("B4T03", "CE", "a96", 52), L08("B4T03", "L39", "a128", 53), L08("B4T03", "LGOB", "a24", 54),
+    L08("B4T04", "L39", "a35", 55), L08("B4T04", "L39", "a48", 56), L08("B4T04", "L39", "a40", 57),
+    L08("B4T08", "LEF", "aveintiuno", 64), L08("B4T10", "L40", "a32", 66), L08("B4T12", "L39", "a4", 67),
+    L08("B5T01", "TREBEP", "dfcuaa", 73), L08("B5T01", "TREBEP", "a10", 74), L08("B5T01", "TREBEP", "a67", 75),
+    L08("B5T03", "TREBEP", "a70", 76), L08("B5T05", "TREBEP", "a87", 77), L08("B5T05", "TREBEP", "a89", 78), L08("B5T02", "RD33", "a7", 80),
+    L08("B5T09", "RDL670", "a41", 84), L08("B5T08", "RDL17", "acuatro", 88),
+    L08("B6T01", "LGP", "a28", 90), L08("B6T05", "LGP", "a73", 95), L08("B6T07", "LGT", "a36", 97), L08("B3T04", "LGSS", "a55", 99),
+    # teoría (hechos de la historia de la Unión, en el cuadro de los Tratados): Maastricht entró en vigor en noviembre de 1993; el AUE creó el Tribunal de Primera Instancia
+    M("B2T01", r"Cómo leer el cuadro", ["L08", 21], ["L08", 25]),
+]
