@@ -218,7 +218,9 @@ class Tema:
         ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "marcas_examen.json")
         if not os.path.exists(ruta): return
         reg = [x for x in json.load(open(ruta, encoding="utf-8"))["marcas"] if x["tema"] == self.id]
-        NOM = {"L": "GACE-L 2025", "P": "GACE-P 2025", "X": "GACE-L 2025 extraordinario"}
+        NOM = {"L": "GACE-L 2025", "P": "GACE-P 2025", "X": "GACE-L 2025 extraordinario", "L24": "GACE-L 2024", "P24": "GACE-P 2024",
+               "L22": "GACE-L 2022", "P22": "GACE-P 2022", "ST22": "GACE-E 2022", "L19": "GACE-L 2019", "P19": "GACE-P 2019",
+               "ST19": "GACE-E 2019", "STX19": "GACE-E 2019 extraordinario"}
         sitios, sin = {}, []
         for x in reg:
             hallado = None
