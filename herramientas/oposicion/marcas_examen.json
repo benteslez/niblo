@@ -64,7 +64,8 @@
 [
 "L13",
 1
-]
+],
+"2.º ejercicio GACE-L 2019, primera parte, pregunta 1 a) y b)"
 ]
 },
 {
@@ -452,7 +453,8 @@
 [
 "L19",
 4
-]
+],
+"2.º ejercicio GACE-L 2019, primera parte, pregunta 2 a) y b)"
 ]
 },
 {
@@ -1279,7 +1281,8 @@
 [
 "ST19",
 76
-]
+],
+"2.º ejercicio GACE-L 2019, primera parte, pregunta 3 a) y b)"
 ]
 },
 {
@@ -2161,6 +2164,14 @@
 },
 {
 "tema": "B2T02",
+"k": "PROT2",
+"bloque": "Artículo 6",
+"ex": [
+"2.º ejercicio GACE-L 2019, primera parte, pregunta 4 a)"
+]
+},
+{
+"tema": "B2T02",
 "k": "TFUE",
 "bloque": "Artículo 247",
 "ex": [
@@ -2713,6 +2724,14 @@
 "P11",
 20
 ]
+]
+},
+{
+"tema": "B2T06",
+"k": "TFUE",
+"bloque": "Artículo 127",
+"ex": [
+"2.º ejercicio GACE-L 2019, primera parte, pregunta 4 b)"
 ]
 },
 {
@@ -4725,6 +4744,22 @@
 {
 "tema": "B4T05",
 "k": "LCSP",
+"bloque": "a1-110",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 2"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-13",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 1"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
 "bloque": "a1-15",
 "ex": [
 [
@@ -4736,6 +4771,14 @@
 "L19",
 52
 ]
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-19",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L y GACE-P 2022), cuestión 4 a)"
 ]
 },
 {
@@ -4765,7 +4808,11 @@
 "k": "LCSP",
 "bloque": "a1-30",
 "ex": [
-"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 1 a) y d)"
+"Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 1 a) y d)",
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2022), cuestión 2 a)",
+"Supuesto práctico II (2.º ejercicio GACE-L y GACE-P 2022), cuestión 3 a)",
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 1",
+"Supuesto práctico II (2.º ejercicio GACE-L 2019), cuestión 4"
 ]
 },
 {
@@ -4774,6 +4821,14 @@
 "bloque": "a1-32",
 "ex": [
 "Supuesto práctico II (2.º ejercicio GACE-L y GACE-P 2024), cuestión 2"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a1-47",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L y GACE-P 2022), cuestión 1 b)"
 ]
 },
 {
@@ -4796,7 +4851,8 @@
 [
 "P19",
 49
-]
+],
+"Supuesto práctico II (2.º ejercicio GACE-L y GACE-P 2022), cuestión 1 b)"
 ]
 },
 {
@@ -4816,7 +4872,16 @@
 "ST22",
 47
 ],
-"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2024), cuestión 4"
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2024), cuestión 4",
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2022), cuestión 2 b)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
+"bloque": "a2-11",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2019), cuestión 4 a)"
 ]
 },
 {
@@ -4919,6 +4984,15 @@
 {
 "tema": "B4T05",
 "k": "LCSP",
+"bloque": "a3-38",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 1",
+"Supuesto práctico I (2.º ejercicio GACE-L 2019), cuestión 4 b)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
 "bloque": "a3-8",
 "ex": [
 [
@@ -4961,6 +5035,14 @@
 {
 "tema": "B4T05",
 "k": "LCSP",
+"bloque": "a6-5",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L y GACE-P 2022), cuestión 3 b)"
+]
+},
+{
+"tema": "B4T05",
+"k": "LCSP",
 "bloque": "a7-3",
 "ex": [
 "Supuesto práctico I (2.º ejercicio GACE-L 2025), cuestión 4 c)"
@@ -4993,7 +5075,8 @@
 "k": "LCSP",
 "bloque": "a1-5",
 "ex": [
-"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 1 a)"
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 1 a)",
+"Supuesto práctico II (2.º ejercicio GACE-L y GACE-P 2022), cuestión 1 a)"
 ]
 },
 {
@@ -5174,9 +5257,26 @@
 {
 "tema": "B4T07",
 "k": "LGS",
+"bloque": "a29",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L extraordinario 2022), cuestión 3"
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
 "bloque": "a3",
 "ex": [
 "Supuesto práctico II (2.º ejercicio GACE-L y GACE-P 2024), cuestión 3"
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a31",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2022), cuestión 1 b)",
+"Supuesto práctico II (2.º ejercicio GACE-L extraordinario 2022), cuestión 3"
 ]
 },
 {
@@ -5257,7 +5357,16 @@
 [
 "P",
 63
+],
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2022), cuestión 1 a)"
 ]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a59",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2022), cuestión 1 a)"
 ]
 },
 {
@@ -5269,6 +5378,14 @@
 "P",
 64
 ]
+]
+},
+{
+"tema": "B4T07",
+"k": "LGS",
+"bloque": "a66",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2022), cuestión 1 a)"
 ]
 },
 {
@@ -5492,6 +5609,14 @@
 {
 "tema": "B4T09",
 "k": "LPAP",
+"bloque": "a66",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2019), cuestión 3 b)"
+]
+},
+{
+"tema": "B4T09",
+"k": "LPAP",
 "bloque": "a8",
 "ex": [
 [
@@ -5579,7 +5704,8 @@
 [
 "P08",
 61
-]
+],
+"Supuesto práctico I (2.º ejercicio GACE-L 2022), cuestión 5 b) y c)"
 ]
 },
 {
@@ -5685,6 +5811,14 @@
 {
 "tema": "B4T10",
 "k": "L39",
+"bloque": "a92",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L 2022), cuestión 5 a)"
+]
+},
+{
+"tema": "B4T10",
+"k": "L39",
 "bloque": "a96",
 "ex": [
 [
@@ -5758,6 +5892,14 @@
 "STX19",
 58
 ]
+]
+},
+{
+"tema": "B4T11",
+"k": "L39",
+"bloque": "a21",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2019), cuestión 1 a)"
 ]
 },
 {
@@ -6043,7 +6185,8 @@
 "k": "L39",
 "bloque": "a122",
 "ex": [
-"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 3 a) y d)"
+"Supuesto práctico II (2.º ejercicio GACE-L 2025), cuestión 3 a) y d)",
+"Supuesto práctico II (2.º ejercicio GACE-L 2019), cuestión 2"
 ]
 },
 {
@@ -6136,6 +6279,14 @@
 "ST19",
 56
 ]
+]
+},
+{
+"tema": "B4T12",
+"k": "L40",
+"bloque": "a24",
+"ex": [
+"Supuesto práctico II (2.º ejercicio GACE-L 2019), cuestión 1 b)"
 ]
 },
 {
@@ -6251,6 +6402,14 @@
 "STX19",
 63
 ]
+]
+},
+{
+"tema": "B4T13",
+"k": "LJCA",
+"bloque": "a29",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 2"
 ]
 },
 {
@@ -6384,7 +6543,8 @@
 [
 "P22",
 72
-]
+],
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 3"
 ]
 },
 {
@@ -6497,6 +6657,14 @@
 },
 {
 "tema": "B5T02",
+"k": "RD33",
+"bloque": "a47",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2022), cuestión 3 b)"
+]
+},
+{
+"tema": "B5T02",
 "k": "TREBEP",
 "bloque": "a15",
 "ex": [
@@ -6565,7 +6733,8 @@
 [
 "ST19",
 79
-]
+],
+"Supuesto práctico I (2.º ejercicio GACE-L 2019), cuestión 5 a)"
 ]
 },
 {
@@ -6591,7 +6760,8 @@
 [
 "L",
 64
-]
+],
+"Supuesto práctico I (2.º ejercicio GACE-L y GACE-P 2022), cuestión 3 b)"
 ]
 },
 {
@@ -6924,7 +7094,8 @@
 [
 "STX19",
 67
-]
+],
+"Supuesto práctico II (2.º ejercicio GACE-L 2019), cuestión 5 b)"
 ]
 },
 {
@@ -7190,7 +7361,8 @@
 [
 "L08",
 78
-]
+],
+"Supuesto práctico I (2.º ejercicio GACE-L 2019), cuestión 5 b)"
 ]
 },
 {
@@ -7303,6 +7475,14 @@
 65
 ],
 "Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2024), cuestión 4"
+]
+},
+{
+"tema": "B5T06",
+"k": "TREBEP",
+"bloque": "a25",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 3"
 ]
 },
 {
@@ -8310,7 +8490,9 @@
 [
 "P13",
 89
-]
+],
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 4",
+"Supuesto práctico I (2.º ejercicio GACE-L 2019), cuestión 1"
 ]
 },
 {
@@ -8392,6 +8574,15 @@
 "L13",
 92
 ]
+]
+},
+{
+"tema": "B6T03",
+"k": "LGP",
+"bloque": "a63",
+"ex": [
+"Supuesto práctico I (2.º ejercicio GACE-L extraordinario 2022), cuestión 4",
+"Supuesto práctico I (2.º ejercicio GACE-L 2019), cuestión 1"
 ]
 },
 {
