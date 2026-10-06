@@ -12,6 +12,7 @@ Uso:  python3 marcas_examen.py            (añade lo nuevo de leyes25L/P/X, test
       python3 marcas_examen.py --lits DIR  (con volcados NIBLO_LITS de cada tema: asigna tema a las preguntas sin tema por su texto)
 """
 import os, sys, json, importlib
+ARGV = sys.argv[:]   # plantilla.py recorta sys.argv
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path[:0] = [AQUI, os.path.join(AQUI, "boe")]
 RUTA = os.path.join(AQUI, "marcas_examen.json")
@@ -105,8 +106,8 @@ def del_test(lits=None):
 
 def main():
     lits = None
-    if "--lits" in sys.argv:
-        d = sys.argv[sys.argv.index("--lits") + 1]
+    if "--lits" in ARGV:
+        d = ARGV[ARGV.index("--lits") + 1]
         lits = {f[:-5]: json.load(open(os.path.join(d, f), encoding="utf-8")) for f in os.listdir(d) if f.endswith(".json")}
     marcas = cargar()
     anadir(marcas, del_test(lits))

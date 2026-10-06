@@ -105,3 +105,33 @@ MARCAS += [
     S("B5T05", "TREBEP", "a89", "II 5 b)"),
     S("B5T04", "TREBEP", "a82", "II 5 c)"),
 ]
+
+
+def S24(tema, k, art, *ref):
+    """Supuestos de 2024: ref = «LP I 1» (supuesto I del GACE-L y GACE-P, cuestión 1) o «X II 4» (extraordinario)."""
+    b = art if art in P.boe.ley(k) else P.bid(k, art)
+    out = []
+    for r in ref:
+        ex, sup, c = r.split(" ", 2)
+        out.append(f"Supuesto práctico {sup} (2.º ejercicio {'GACE-L y GACE-P 2024' if ex == 'LP' else 'GACE-L extraordinario 2024'}), cuestión {c}")
+    return {"tema": tema, "k": k, "bloque": b, "ex": out}
+
+
+MARCAS += [
+    # 2.º ejercicio 2024 (turno libre y promoción interna: mismo supuesto; extraordinario aparte). Solo apartados que resuelve un artículo claro.
+    S24("B4T12", "L39", "a14", "LP I 1"), S24("B4T04", "L39", "a43", "LP I 1"),
+    S24("B6T03", "LGP", "a55", "LP I 2", "X II 3"),
+    S24("B5T02", "TREBEP", "a48", "LP I 3"),
+    S24("B4T05", "LCSP", "Artículo 159", "LP I 4"), S24("B4T05", "LCSP", "Artículo 147", "LP I 4"),
+    S24("B4T06", "LCSP", "Artículo 15", "LP II 1"),
+    S24("B4T05", "LCSP", "Artículo 120", "LP II 2"),
+    S24("B4T07", "LGS", "a3", "LP II 3"), S24("B4T07", "LGS", "a8", "LP II 3"),
+    S24("B4T10", "L40", "a32", "LP II 4", "X I 3"), S24("B4T10", "L39", "a67", "LP II 4"), S24("B4T10", "L39", "a91", "LP II 4", "X I 3"),
+    S24("B4T07", "LGS", "a20", "X I 2"),
+    S24("B5T06", "TREBEP", "a24", "X I 4"),
+    S24("B5T05", "L53", "adiecinueve", "X I 5"),
+    S24("B4T05", "LCSP", "Artículo 44", "X II 2"), S24("B4T05", "LCSP", "Artículo 50", "X II 2"),
+    S24("B6T06", "RD725", "a1", "X II 4"), S24("B6T06", "RD725", "a2", "X II 4"),
+    S24("B5T05", "TREBEP", "a89", "X II 5"),
+]
+
