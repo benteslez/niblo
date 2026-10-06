@@ -50,6 +50,7 @@ def c(k, art, frag):
     return "«" + frag + "»"
 
 
+LITS = []   # (norma, bloque, línea de título del bloque literal) de cada lit() emitido en este proceso
 def lit(k, art, resaltar=(), solo=None, titulo=None):
     """Bloque literal del artículo (sin la línea de cabecera del BOE, que va como título).
     solo: índices de párrafo (el 0 es la cabecera «Artículo N. Rúbrica.»). resaltar: negritas literales."""
@@ -68,6 +69,7 @@ def lit(k, art, resaltar=(), solo=None, titulo=None):
     if titulo is None:
         titulo = cab_boe.rstrip(".") + (f" ({CORTO.get(k, k)})" if CORTO.get(k, k) else "")
     cab = ["> [[DOUE]]"] if fuente(k) == "DOUE" else []
+    LITS.append((k, bid(k, art), "> **" + titulo + "**"))   # dónde se cita cada artículo (marcas «Examen», ver marcas_examen.py)
     return "\n".join(cab + ["> **" + titulo + "**"] + ["> " + p for p in out])
 
 
@@ -206,6 +208,69 @@ class Tema:
             for a_, b_ in sust: x["body"] = re.sub(a_, b_, x["body"])
         for f in self.FC: f["a"] = re.sub(r"→ Cierre 1", "está en el test", f["a"])
 
+    def _marcas_examen(self):
+        """Pill «Examen» del registro marcas_examen.json (petición del usuario, 6-10-2026): una marca por artículo o cuestión de la
+        respuesta correcta de cada pregunta de exámenes oficiales (test y supuestos). El registro NO se borra: al subir el temario de la
+        academia el tema se regenera y cada marca se coloca sola donde esté ahora el artículo (por su texto literal) o el apartado
+        (`clave`). Lo que el tema aún no desarrolla queda en el registro y se coloca cuando exista."""
+        if os.environ.get("NIBLO_LITS"):
+            json.dump([list(x) for x in LITS], open(os.environ["NIBLO_LITS"], "w", encoding="utf-8"))
+        ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)), "marcas_examen.json")
+        if not os.path.exists(ruta): return
+        reg = [x for x in json.load(open(ruta, encoding="utf-8"))["marcas"] if x["tema"] == self.id]
+        NOM = {"L": "GACE-L 2025", "P": "GACE-P 2025", "X": "GACE-L 2025 extraordinario"}
+        sitios, sin = {}, []
+        for x in reg:
+            hallado = None
+            if "k" in x:
+                for k, b, linea in LITS:
+                    if k != x["k"] or b != x["bloque"]: continue
+                    for sec in self.S:
+                        mm = re.search(r"(?m)^" + re.escape(linea) + r"$", sec["body"])
+                        if mm:
+                            hs = [h for h in re.finditer(r"(?m)^### .*$", sec["body"]) if h.start() < mm.start()]
+                            hallado = (sec["id"], hs[-1].group(0) if hs else None); break
+                    if hallado: break
+            elif x.get("clave", "").startswith("sec:"):
+                hallado = (x["clave"][4:], None) if any(s_["id"] == x["clave"][4:] for s_ in self.S) else None
+            elif "clave" in x:
+                hit = [(sec["id"], h.group(0)) for sec in self.S for h in re.finditer(r"(?m)^### (?:\d+\.\d+ )?" + x["clave"] + r".*$", sec["body"])]
+                hallado = hit[0] if len(hit) == 1 else None
+            if not hallado: sin.append(x); continue
+            sitios.setdefault(hallado, []).append(x)
+        for (sid, cab), xs in sitios.items():
+            ex = {}
+            libres = []
+            for x in xs:
+                for e in x["ex"]:
+                    if isinstance(e, str): libres.append(e)
+                    else: ex.setdefault(e[0], set()).add(int(e[1]))
+            def _fmt(c, n):
+                n = sorted(n)
+                return NOM[c] + ", " + (f"pregunta {n[0]}" if len(n) == 1 else "preguntas " + ", ".join(map(str, n[:-1])) + f" y {n[-1]}")
+            partes = [_fmt(c, n) for c, n in sorted(ex.items())]
+            texto = "; ".join(partes + sorted(set(libres)))
+            sec = [s_ for s_ in self.S if s_["id"] == sid][0]
+            if cab is None:
+                lin0 = sec["body"].split("\n", 1)[0]
+                if lin0.startswith("{{EXAMEN}}"):
+                    sec["body"] = lin0.rstrip() + " Además: " + texto + "." + sec["body"][len(lin0):]
+                else:
+                    sec["body"] = "{{EXAMEN}} **Preguntado en exámenes oficiales:** " + texto + ".\n\n" + sec["body"]
+                continue
+            i = sec["body"].index(cab) + len(cab)
+            resto = sec["body"][i:]
+            mm = re.match(r"\n\n(\{\{EXAMEN\}\}[^\n]*)", resto)
+            if mm:
+                nueva = mm.group(1).rstrip() + " Además: " + texto + "."
+                sec["body"] = sec["body"][:i] + "\n\n" + nueva + resto[mm.end():]
+            else:
+                sec["body"] = sec["body"][:i] + "\n\n{{EXAMEN}} **Preguntado en exámenes oficiales:** " + texto + "." + resto
+        if sin:
+            print(f"{self.id} · marcas «Examen» sin sitio todavía: {len(sin)}", file=sys.stderr)
+            if os.environ.get("NIBLO_SIN_SITIO"):
+                with open(os.environ["NIBLO_SIN_SITIO"], "a", encoding="utf-8") as f: f.write(json.dumps({"tema": self.id, "sin": sin}, ensure_ascii=False) + "\n")
+
     def publicar(self):
         ids = {s["id"] for s in self.S}
         for g in self.G: assert g["section"] in ids, g
@@ -217,6 +282,7 @@ class Tema:
                 assert m.group(1) in tit, ("REMISIÓN ROTA", s["id"], m.group(0))
                 if m.group(2): assert f"### {m.group(1).split('.')[1]}.{m.group(2)} " in tit[m.group(1)]["body"], ("REMISIÓN ROTA", s["id"], m.group(0))
         self._cierre1_al_test()
+        self._marcas_examen()
         sello = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
         data = dict(self.meta, sections=self.S, glossary=self.G, timeline=self.H, flashcards=self.FC, questions=self.Q, cargado=sello)
         out = {"_format": "gestion_hub_config", "_version": 2, "_exportedAt": sello, "ajustes": None, "temas": {self.id: data}}
