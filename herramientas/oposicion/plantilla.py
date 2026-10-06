@@ -254,7 +254,16 @@ class Tema:
             partes = [_fmt(c, n) for c, n in sorted(ex.items())]
             texto = "; ".join(partes + sorted(set(libres)))
             # «{{EXAMEN:L24.48,P24.3}}»: la pill (y su frase) abren el diálogo con la pregunta y su respuesta (oposicion.html)
-            refs = ",".join(f"{c}.{n_}" for c, ns in sorted(ex.items()) for n_ in sorted(ns))
+            refs = [f"{c}.{n_}" for c, ns in sorted(ex.items()) for n_ in sorted(ns)]
+            CONV = {"GACE-L 2025": "L25", "GACE-L y GACE-P 2024": "LP24", "GACE-L extraordinario 2024": "X24", "GACE-L y GACE-P 2022": "LP22",
+                    "GACE-L 2022": "LP22", "GACE-L extraordinario 2022": "X22", "GACE-L 2019": "L19"}
+            for lb in sorted(set(libres)):   # supuestos y primera parte del 2.º ejercicio → «SP.<conv>.<I|II|P>.<cuestión>» (texto en examenes_previos.json)
+                m1 = re.match(r"Supuesto práctico (I{1,2}) \(2\.º ejercicio (.+?)\), cuestión (\d+)", lb)
+                m2 = re.match(r"2\.º ejercicio (.+?), primera parte, pregunta (\d+)", lb)
+                r = (f"SP.{CONV[m1.group(2)]}.{m1.group(1)}.{m1.group(3)}" if m1 and m1.group(2) in CONV else
+                     f"SP.{CONV[m2.group(1)]}.P.{m2.group(2)}" if m2 and m2.group(1) in CONV else None)
+                if r and r not in refs: refs.append(r)
+            refs = ",".join(refs)
             PILL = "{{EXAMEN:" + refs + "}}" if refs else "{{EXAMEN}}"
             sec = [s_ for s_ in self.S if s_["id"] == sid][0]
             if cab is None:
