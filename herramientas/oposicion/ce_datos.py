@@ -130,7 +130,7 @@ for _n, _d in M103.items():
     for _f, _c in _d.get("marks", []):
         assert _f in _txt[_n], ("M103: la frase no es literal", _n, _f)
         assert _c in ("am", "vd", "az", "lo"), (_n, _c)
-M103_OUT = {"_fuente": "Módulo M103 «Artículos CE · Lectura y explicación» (documento subrayado y vídeo): marcas y comentarios de la academia, no texto de la CE. Las marcas azules se completan con el art. 55.1 CE.",
+M103_OUT = {"_fuente": "Módulo M103 «Artículos CE · Lectura y explicación» (documento subrayado y vídeo): marcas y comentarios de la academia, no texto de la CE. Las marcas naranjas se completan con el art. 55.1 CE.",
             "leyenda": [list(x) for x in LEYENDA], "niveles": NIVELES,
             "m107": {"_fuente": "Módulo M107 «Contenido de repaso sobre la CE» (PDF y vídeo): reglas para memorizar la estructura; no es texto de la CE.", "unidades": M107_UNIDADES, "arts": {str(k): v for k, v in M107_ARTS.items()}},
             "arts": {str(n): {k: v for k, v in d.items() if k != "marks"} | ({"marks": [list(m) for m in d["marks"]]} if d.get("marks") else {}) for n, d in M103.items()}}

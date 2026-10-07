@@ -1431,15 +1431,15 @@ p:has(> .pill-exa[data-ex]):hover .pill-exa, li:has(> .pill-exa[data-ex]):hover 
 .m103-pills { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
 .m103-pill { display:inline-flex; align-items:center; padding:1px 8px; border-radius:99px; font-size:10.5px; font-weight:800; line-height:1.6; border:1px solid transparent; white-space:nowrap; }
 .m103-pill.ex { background:#dc2626; color:#fff; border-color:#b91c1c; }
-.m103-pill.am { background:#fef08a; color:#713f12; border-color:#facc15; }
+.m103-pill.am { background:#fecaca; color:#7f1d1d; border-color:#f87171; }
 .m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; }
-.m103-pill.az { background:#bae6fd; color:#0c4a6e; border-color:#38bdf8; }
+.m103-pill.az { background:#fed7aa; color:#7c2d12; border-color:#fb923c; }
 .m103-pill.lo { background:#fbcfe8; color:#831843; border-color:#f472b6; }
 .m103-pill.niv { background:#e9d5ff; color:#581c87; border-color:#c084fc; white-space:normal; }
 .m107-u { margin:6px 0 4px 8px; }
-mark.m103-am { background:#fef08a; color:#1c1917; border-radius:3px; padding:0 2px; }
+mark.m103-am { background:#f87171; color:#450a0a; border-radius:3px; padding:0 2px; }
 mark.m103-vd { background:#86efac; color:#14301f; border-radius:3px; padding:0 2px; }
-mark.m103-az { background:#7dd3fc; color:#082f49; border-radius:3px; padding:0 2px; }
+mark.m103-az { background:#fb923c; color:#431407; border-radius:3px; padding:0 2px; }
 mark.m103-lo { background:#f9a8d4; color:#500724; border-radius:3px; padding:0 2px; }
 .m103-nota { margin:6px 0 4px; padding:8px 12px; border-left:4px solid #f59e0b; background:color-mix(in srgb, #f59e0b 10%, var(--bg-elev)); border-radius:0 var(--r-sm) var(--r-sm) 0; font-size:13.5px; line-height:1.5; }
 .m103-nota p { margin:0 0 4px; font-size:13.5px; }
@@ -7431,7 +7431,7 @@ function ceParr(p, marks) {
   hits.forEach(m => { if (m.i < pos) return; h += esc(p.slice(pos, m.i)) + `<mark class="m103-${M103_CLS[m.c]}">${esc(p.slice(m.i, m.j))}</mark>`; pos = m.j; });
   return `<p class="${cls}">${h + esc(p.slice(pos))}</p>`;
 }
-const M103_PILL = { exam:["ex", "Examen"], am:["am", "🟨 Importante"], vd:["vd", "🟩 Coletilla"], az:["az", "🟦 Se limita (excepción y sitio)"], lo:["lo", "🌸 Ley orgánica"] };
+const M103_PILL = { exam:["ex", "Examen"], am:["am", "🟥 Importante"], vd:["vd", "🟩 Coletilla"], az:["az", "🟧 Se limita (excepción y sitio)"], lo:["lo", "🌸 Ley orgánica"] };
 /** Nivel de protección del artículo (arts. 53 y 81; módulo M107): dónde está y qué garantías tiene. */
 function ceNivel(n) {
   if (n >= 10 && n <= 13) return ["Fuera de las garantías del art. 53", "Los arts. 10 a 13 no están en el capítulo II: no tienen las garantías del art. 53.1 ni del 53.2 (sí los protege el Defensor del Pueblo)."];
@@ -7455,7 +7455,7 @@ function ceM103Nota(n) {
   if (!CEV.m103) return "";
   const d = ceM103(n) || {}, r = CE.m103 && CE.m103.m107 && CE.m103.m107.arts[n];
   if (!(d.nota || d.lim || r)) return "";
-  return `<div class="m103-nota">${d.lim ? `<p class="m103-lim">🟦 ${m103Inline(d.lim)}</p>` : ""}${d.nota ? `<p>🎓 ${m103Inline(d.nota)}</p>` : ""}${r ? `<p>🧠 ${m103Inline(r)}</p>` : ""}<span class="m103-src">Comentario de la academia (módulos M103${r ? " y M107" : ""}); no es texto de la CE.</span></div>`;
+  return `<div class="m103-nota">${d.lim ? `<p class="m103-lim">🟧 ${m103Inline(d.lim)}</p>` : ""}${d.nota ? `<p>🎓 ${m103Inline(d.nota)}</p>` : ""}${r ? `<p>🧠 ${m103Inline(r)}</p>` : ""}<span class="m103-src">Comentario de la academia (módulos M103${r ? " y M107" : ""}); no es texto de la CE.</span></div>`;
 }
 /** Nota de la academia (módulo M107) sobre una unidad de la estructura: título, capítulo o sección. */
 function ceM107Unidad(key) {
@@ -8240,11 +8240,11 @@ mark.res[data-col="rosa"] { background:#fecdd3; border-color:#fb7185; } mark.res
 .ca.ca-solo { display:block; break-inside:auto; } .ca-t p.ca-c { text-align:center; font-weight:700; }
 .m103-pills { display:flex; flex-wrap:wrap; gap:1mm; margin-top:1.4mm; }
 .m103-pill { display:inline-flex; padding:0 1.8mm; border-radius:10mm; font-size:6.4pt; font-weight:800; line-height:1.6; border:.3mm solid transparent; }
-.m103-pill.ex { background:#c62828; color:#fff; border-color:#b71c1c; } .m103-pill.am { background:#fef08a; color:#713f12; border-color:#facc15; }
-.m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; } .m103-pill.az { background:#bae6fd; color:#0c4a6e; border-color:#38bdf8; }
+.m103-pill.ex { background:#c62828; color:#fff; border-color:#b71c1c; } .m103-pill.am { background:#fecaca; color:#7f1d1d; border-color:#f87171; }
+.m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; } .m103-pill.az { background:#fed7aa; color:#7c2d12; border-color:#fb923c; }
 .m103-pill.lo { background:#fbcfe8; color:#831843; border-color:#f472b6; } .m103-pill.niv { background:#e9d5ff; color:#581c87; border-color:#c084fc; }
-mark.m103-am { background:#fef08a; color:inherit; padding:0 .3mm; } mark.m103-vd { background:#86efac; color:inherit; padding:0 .3mm; }
-mark.m103-az { background:#7dd3fc; color:inherit; padding:0 .3mm; } mark.m103-lo { background:#f9a8d4; color:inherit; padding:0 .3mm; }
+mark.m103-am { background:#f87171; color:inherit; padding:0 .3mm; } mark.m103-vd { background:#86efac; color:inherit; padding:0 .3mm; }
+mark.m103-az { background:#fb923c; color:inherit; padding:0 .3mm; } mark.m103-lo { background:#f9a8d4; color:inherit; padding:0 .3mm; }
 .m103-nota { margin:1mm 0; padding:1.6mm 2.6mm; border-left:1.2mm solid #f59e0b; background:#fff6e3; font-size:8.4pt; line-height:1.38; }
 .m103-nota p { margin:0 0 1mm; font-size:8.4pt; text-align:left; } .m103-src { display:block; font-size:6.6pt; color:#777; }
 .leyenda-ul { list-style:none; padding:0; margin:0 0 3mm; display:grid; gap:1.2mm; font-size:8.8pt; } .leyenda-ul li { display:flex; gap:2mm; align-items:baseline; }
