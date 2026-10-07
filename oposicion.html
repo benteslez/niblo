@@ -74,6 +74,16 @@ mark { background:#fde68a; color:inherit; border-radius:3px; padding:0 2px; }
 .cem-pz.bien { background:#dcfce7; color:#14532d; } .cem-pz.mal { background:#fee2e2; color:#7f1d1d; }
 .cem-pila { display:flex; flex-wrap:wrap; gap:8px; }
 @media (max-width:600px) { .cem-kpis { grid-template-columns:1fr; } .cem-big { font-size:24px; } }
+
+/* Memorizar a pantalla completa */
+.cem-cuerpo { min-height:0; }
+.cem-pc .real-full-in { height:100%; max-width:760px; display:flex; flex-direction:column; padding-bottom:calc(12px + env(safe-area-inset-bottom)); }
+.cem-pc .cem-card { flex:1; min-height:0; display:flex; flex-direction:column; max-width:none; width:100%; margin:0; }
+.cem-pc .cem-cuerpo { flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; justify-content:center; }
+.cem-pc .cem-acc { flex:none; }
+.cem-pc .cem-big { font-size:38px; } .cem-pc .cem-txt { font-size:18px; } .cem-pc .cem-resp { font-size:22px; }
+.cem-pc .cem-card .tags { align-items:center; gap:6px; }
+.cem-card .q-meta { flex-wrap:wrap; gap:6px 10px; align-items:center; } .cem-card .q-meta > span:first-child { white-space:nowrap; } .cem-card .q-meta .tags { margin-left:auto; justify-content:flex-end; flex-wrap:wrap; }
 </style>
 
 <style>
@@ -3130,6 +3140,7 @@ function render() {
   edGuardarYa();                  // lo tecleado en el editor no se pierde al navegar
   S.renderPendiente = false;
   const r = ruta();
+  if (r.v !== "ce") cemSalirPC();
   if ((r.v === "tema" || r.v === "leer" || r.v === "editar") && FUSION[r.id]) { location.replace("#/tema/" + FUSION[r.id] + (r.v === "tema" ? "" : "/" + r.v)); return; }
   // Un tema desarrollado se abre directamente en sus apuntes; la ficha (programa, fuentes, vigencia) queda en «Ficha y fuentes» (#/tema/ID/ficha).
   if (r.v === "tema" && !r.ficha && estado.temas[r.id] && tieneApuntes(estado.temas[r.id])) { location.replace("#/tema/" + r.id + "/leer"); return; }
@@ -7114,7 +7125,7 @@ const CE_TABS = [{ id:"texto", txt:"📜 Texto completo" }, { id:"organigrama", 
    huecos progresivos, tablero de dominio de los 169 artículos y mini-juegos de estructura. Todo sale de ce.json
    (texto, estructura y etiquetas) y del SRS del Test Constitución (`ceSiguiente`). Claves: `CEM:<art>:<u|t|x>`. */
 const KEY_CEM = "gestion_hub_ce_mem_v1";
-const CEM = { sub:"tablero", sel:0, ses:null, juego:null, cfg:Object.assign({ nivel:"mezcla", que:"hoy", unidad:"", max:15, dif:"auto", barajar:false }, leerJSON(KEY_CEM, {})) };
+const CEM = { sub:"tablero", sel:0, ses:null, juego:null, cfg:Object.assign({ nivel:"mezcla", que:"hoy", unidad:"", max:15, dif:"auto", barajar:false, pc:false }, leerJSON(KEY_CEM, {})) };
 const CEM_NIV = { u:{ n:"Ubicación", ico:"📍" }, t:{ n:"De qué va", ico:"🏷️" }, x:{ n:"Texto", ico:"📜" } };
 const CEM_EST = ["Sin empezar", "Flojo", "En curso", "Dominado"];
 const CEM_N = 169;
@@ -7198,7 +7209,7 @@ const CEM_SUBS = [{ id:"tablero", txt:"🗂 Tablero" }, { id:"practicar", txt:"�
 function ceVerMem(c) {
   c.innerHTML = `<p class="view-sub">Memoriza los 169 artículos en tres niveles, cada uno con su calendario de repaso: <b>📍 dónde está</b>, <b>🏷️ de qué va</b> y <b>📜 qué dice</b>. Las etiquetas «de qué va» de los arts. 1-52 son de la guía M101; las de los <b>arts. 53-169 son propias</b> (resumen del texto literal) y están marcadas.</p>
     <div class="pl-tabs" role="tablist">${CEM_SUBS.map(s => `<button class="chip ${s.id === CEM.sub ? "active" : ""}" data-cems="${s.id}">${s.txt}</button>`).join("")}</div><div id="cem-cuerpo"></div>`;
-  c.querySelectorAll("[data-cems]").forEach(b => b.addEventListener("click", () => { CEM.sub = b.dataset.cems; if (CEM.sub !== "practicar") CEM.ses = null; if (CEM.sub !== "juegos") CEM.juego = null; ceVerMem(c); }));
+  c.querySelectorAll("[data-cems]").forEach(b => b.addEventListener("click", () => { CEM.sub = b.dataset.cems; if (CEM.sub !== "practicar") { CEM.ses = null; cemSalirPC(); } if (CEM.sub !== "juegos") CEM.juego = null; ceVerMem(c); }));
   const cu = $id("cem-cuerpo");
   if (CEM.sub === "tablero") cemTablero(cu); else if (CEM.sub === "practicar") cemPracticar(cu); else cemJuegos(cu);
 }
@@ -7236,24 +7247,41 @@ function cemPracticar(c) {
     <label>Dónde ${sel("cf-uni", [["", "Toda la Constitución"]].concat(unidades.map(u => [u.key, cemUnidadTxt(u.key) + " (" + cemRango(u) + ")"])), cfg.unidad)}</label>
     <label>Cuántas ${sel("cf-max", [[10, "10"], [15, "15"], [20, "20"], [30, "30"], [0, "Todas"]], cfg.max)}</label>
     <label>Dificultad del texto ${sel("cf-dif", [["auto", "Automática (sube según aciertas)"], [1, "1 · Con huecos (pocos)"], [2, "2 · Con huecos (muchos)"], [3, "3 · Solo iniciales"], [4, "4 · Recitado de memoria"]], cfg.dif)}</label>
+    <label class="cem-chk"><input type="checkbox" id="cf-pc" ${cfg.pc ? "checked" : ""}> ⛶ Practicar a pantalla completa <span class="muted">(también puedes cambiarlo durante la sesión)</span></label>
     <label class="cem-chk"><input type="checkbox" id="cf-baj" ${cfg.barajar ? "checked" : ""}> 🔀 Orden aleatorio <span class="muted">(los artículos y los niveles salen mezclados, no uno detrás de otro; con «Al azar» ya va mezclado)</span></label>
     <p class="muted" style="margin:6px 0 0">${prev.length} tarjetas cumplen la selección${prev.length ? "" : ": cambia «Cuáles» o «Dónde»"}.</p>
     <div class="btn-row" style="margin-top:12px"><button class="btn btn-primary" id="cf-ir" ${prev.length ? "" : "disabled"}>Empezar</button></div></div>`;
   [["cf-nivel", "nivel"], ["cf-que", "que"], ["cf-uni", "unidad"], ["cf-max", "max"], ["cf-dif", "dif"]].forEach(([id, k]) => $id(id).addEventListener("change", e => { cfg[k] = ["max"].includes(k) ? +e.target.value : e.target.value; cemGuardarCfg(); cemPracticar(c); }));
+  $id("cf-pc").addEventListener("change", e => { cfg.pc = e.target.checked; cemGuardarCfg(); });
   $id("cf-baj").addEventListener("change", e => { cfg.barajar = e.target.checked; cemGuardarCfg(); });
   $id("cf-ir").addEventListener("click", () => { const cola = cemArmar(cfg); CEM.ses = { cola, i:0, bien:0, mal:0, rev:false, tot:cola.length }; cemPracticar(c); });
 }
+/** Pantalla completa de la práctica: capa fija encima de la app (y la API de pantalla completa donde exista, p. ej. no en iPhone). */
+function cemSalirPC() {
+  const o = document.getElementById("cem-pc"); if (!o) return;
+  o.remove(); document.body.classList.remove("real-abierto"); salirPantallaCompleta();
+}
 function cemSesion(c) {
+  if (!CEM.ses || !CEM.cfg.pc) { cemSalirPC(); return cemSesionPintar(c); }
+  let o = document.getElementById("cem-pc");
+  if (!o) {
+    o = document.createElement("div"); o.id = "cem-pc"; o.className = "real-full cem-pc"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true"); o.setAttribute("aria-label", "Memorizar la Constitución");
+    o.innerHTML = `<div class="real-full-in" id="cem-pc-in"></div>`; document.body.appendChild(o);
+    document.body.classList.add("real-abierto"); entrarPantallaCompleta();
+  }
+  cemSesionPintar(document.getElementById("cem-pc-in"));
+}
+function cemSesionPintar(c) {
   const S = CEM.ses, it = S.cola[S.i];
   if (!it) {
     c.innerHTML = `<div class="card" style="text-align:center"><h3>Sesión terminada</h3><p>✓ ${S.bien} · ✗ ${S.mal} de ${S.tot}</p><div class="btn-row" style="justify-content:center"><button class="btn btn-primary" id="cs-otra">Otra sesión</button><button class="btn" id="cs-tab">Ver el tablero</button></div></div>`;
-    $id("cs-otra").addEventListener("click", () => { CEM.ses = null; cemPracticar(c); });
-    $id("cs-tab").addEventListener("click", () => { CEM.ses = null; CEM.sub = "tablero"; ceVerMem($id("ce-cuerpo")); });
+    $id("cs-otra").addEventListener("click", () => { CEM.ses = null; cemSalirPC(); cemPracticar($id("cem-cuerpo")); });
+    $id("cs-tab").addEventListener("click", () => { CEM.ses = null; cemSalirPC(); CEM.sub = "tablero"; ceVerMem($id("ce-cuerpo")); });
     return;
   }
   const n = it.n, l = it.l, e = cemEtq(n), etapa = l === "x" ? cemEtapa(it) : -1;
   const dir = it._dir == null ? (it._dir = l === "t" && Math.random() < 0.5 ? "inv" : "dir") : it._dir;
-  const cab = `<div class="q-meta"><span>${Math.min(S.i + 1, S.cola.length)} / ${S.cola.length}</span><span class="tags"><span class="tag acc">${CEM_NIV[l].ico} ${CEM_NIV[l].n}</span>${l === "x" ? `<span class="tag">${ETAPAS[etapa]}</span>` : ""}</span></div><div class="bar" style="flex:none;min-width:0;margin:0 0 10px"><div style="width:${(S.i / Math.max(1, S.cola.length) * 100).toFixed(0)}%"></div></div>`;
+  const cab = `<div class="q-meta"><span>${Math.min(S.i + 1, S.cola.length)} / ${S.cola.length}</span><span class="tags"><span class="tag acc">${CEM_NIV[l].ico} ${CEM_NIV[l].n}</span>${l === "x" ? `<span class="tag">${ETAPAS[etapa]}</span>` : ""}<button class="btn btn-sm" id="cs-pc" title="${CEM.cfg.pc ? "Salir de la pantalla completa" : "Practicar a pantalla completa"}">${CEM.cfg.pc ? "✕ Cerrar" : "⛶ Pantalla completa"}</button></span></div><div class="bar" style="flex:none;min-width:0;margin:0 0 10px"><div style="width:${(S.i / Math.max(1, S.cola.length) * 100).toFixed(0)}%"></div></div>`;
   let frente = "", dorso = "", extra = "";
   if (l === "u") { frente = `<div class="cem-big">Artículo ${n}</div><p class="muted">¿En qué título, capítulo y sección está?</p>`; dorso = `<p class="cem-resp">${esc(cemUbic(n))}</p><p class="muted">${esc(rangoU(CE_UNI[CE_ART[n].key]))} · <small>${esc(e.t)}</small></p>`; }
   else if (l === "t") { frente = dir === "dir" ? `<div class="cem-big">Artículo ${n}</div><p class="muted">¿De qué va?</p>` : `<div class="cem-big" style="font-size:20px">${esc(e.t)}</div><p class="muted">¿Qué artículo es?</p>`; dorso = dir === "dir" ? `<p class="cem-resp">${esc(e.t)}</p><p class="muted"><small>${e.propio ? "etiqueta propia" : "guía M101"}</small></p>` : `<p class="cem-resp">Artículo ${n}</p><p class="muted"><small>${esc(cemUbic(n))}</small></p>`; }
@@ -7262,10 +7290,11 @@ function cemSesion(c) {
   const sug = it._cmp ? (it._cmp.ratio >= 0.97 ? 5 : it._cmp.ratio >= 0.85 ? 3 : 0) : null;
   const iv = q => ceSiguiente(cemSrs(n, l), q).i + " d";
   const mostrar = l === "x" && etapa === 3 ? `<button class="btn btn-primary" id="cs-rev">Comprobar</button>` : `<button class="btn btn-primary" id="cs-rev">Mostrar</button>`;
-  c.innerHTML = `<div class="card cem-card">${cab}${frente}${S.rev ? `<div class="cem-dorso">${dorso}</div>` : ""}
-    <div class="btn-row" style="justify-content:center;margin-top:14px;gap:8px">${S.rev ? `<button class="btn srs-r no ${sug === 0 ? "sug" : ""}" data-cc="0"><span>✗ No la sabía</span><small>${iv(0)}</small></button><button class="btn srs-r mid ${sug === 3 ? "sug" : ""}" data-cc="3"><span>🤔 Dudando</span><small>${iv(3)}</small></button><button class="btn srs-r si ${sug === 5 ? "sug" : ""}" data-cc="5"><span>✓ La sabía</span><small>${iv(5)}</small></button>` : mostrar}</div>
+  c.innerHTML = `<div class="card cem-card">${cab}<div class="cem-cuerpo">${frente}${S.rev ? `<div class="cem-dorso">${dorso}</div>` : ""}</div>
+    <div class="btn-row cem-acc" style="justify-content:center;margin-top:14px;gap:8px">${S.rev ? `<button class="btn srs-r no ${sug === 0 ? "sug" : ""}" data-cc="0"><span>✗ No la sabía</span><small>${iv(0)}</small></button><button class="btn srs-r mid ${sug === 3 ? "sug" : ""}" data-cc="3"><span>🤔 Dudando</span><small>${iv(3)}</small></button><button class="btn srs-r si ${sug === 5 ? "sug" : ""}" data-cc="5"><span>✓ La sabía</span><small>${iv(5)}</small></button>` : mostrar}</div>
     <div class="btn-row" style="justify-content:flex-end;margin-top:10px"><button class="btn btn-sm" id="cs-salir">Terminar</button></div></div>`;
   $id("cs-salir").addEventListener("click", () => { S.cola = S.cola.slice(0, S.i); cemSesion(c); });
+  $id("cs-pc").addEventListener("click", () => { const ta = $id("cs-ta"); if (ta) it._ta = ta.value; CEM.cfg.pc = !CEM.cfg.pc; cemGuardarCfg(); cemSesion($id("cem-cuerpo") || c); });
   const rev = $id("cs-rev");
   if (rev) rev.addEventListener("click", () => { if (l === "x" && etapa === 3) { it._ta = ($id("cs-ta") || {}).value || ""; it._cmp = cemComparar(n, it._ta); } S.rev = true; cemSesion(c); });
   c.querySelectorAll("[data-cc]").forEach(b => b.addEventListener("click", () => {
@@ -7351,6 +7380,7 @@ function cemJuegoOrden() {
 
 function renderCE(tab, n) {
   CEV.tab = CE_TABS.some(t => t.id === tab) ? tab : "texto";
+  if (CEV.tab !== "memorizar") cemSalirPC();
   if (CEV.tab !== "test" && CT.ses) { CT.ses = false; salirPantallaCompleta(); }
   if (CEV.tab === "test" && CT.ses && CE) { ceSesion(); return; }
   vista().innerHTML = `
