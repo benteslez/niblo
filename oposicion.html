@@ -2176,6 +2176,7 @@ function semaforo(t) {
    publicados en el mismo dominio (github.io comparte origen entre repos).
    ====================================================================== */
 const KEY_AJUSTES_V1 = "gestion_hub_ajustes_v1";   // progreso antiguo (por posición); se migra
+const BUILD_ID = "334";   // = niblo-v334 de sw.js (súbelos juntos); se ve al pie del inicio para saber qué versión está cargada
 const KEY_PROG    = "gestion_hub_progreso_v2:";     // + uid | "local"
 const KEY_PEND    = "gestion_hub_pendientes_v1";    // { temas:{id:1}, prog:{"uid|clave":1} }
 const KEY_BORR    = "gestion_hub_borrados_v1";      // { id: ms } temas quitados, hasta subirlos
@@ -3219,7 +3220,8 @@ function renderInicio() {
       <span><span class="dash-t">Test real global</span><span class="dash-d">${nReales ? `${plural(nReales, "pregunta real", "preguntas reales")} de ${plural(TESTS_REALES.examenes.length, "examen oficial", "exámenes oficiales")}, con su plantilla` : "Preguntas literales de exámenes oficiales · se añadirán cuando aportes los cuestionarios y las plantillas"}</span></span>
     </button>
     </div>
-    <a class="guia-link" href="#/guia">📚 Guía de fuentes: niveles de fuente, recursos y qué fuente usar en cada tema →</a>`;
+    <a class="guia-link" href="#/guia">📚 Guía de fuentes: niveles de fuente, recursos y qué fuente usar en cada tema →</a>
+    <p class="muted" style="text-align:center;font-size:11.5px;margin:14px 0 4px" title="Si tras un cambio no ves las novedades, comprueba que aquí sale el número más reciente">Versión de la app: ${BUILD_ID}</p>`;
   vista().querySelectorAll("[data-ir]").forEach(b => b.addEventListener("click", e => { e.preventDefault(); ir(b.dataset.ir); }));
 }
 function tarjetaBloque(b) {

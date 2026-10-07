@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v333";  // Barra de resaltar por debajo de la selección
+const CACHE_NAME = "niblo-v334";  // Hub: siempre revalidar con el servidor; versión visible al pie del inicio
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manrope.woff2",
@@ -94,7 +94,8 @@ self.addEventListener("fetch", (event) => {
       const cache = await caches.open(CACHE_DOC);
       const clave = url.origin + url.pathname;
       try {
-        const resp = await fetch(event.request);
+        /* «no-cache»: revalida siempre con el servidor. Sin esto, la caché HTTP del navegador (GitHub Pages sirve max-age=600) podía darte la versión anterior hasta 10 minutos. */
+        const resp = await fetch(event.request, { cache: "no-cache" });
         if (resp && resp.ok) cache.put(clave, resp.clone());
         return resp;
       } catch (e) {
