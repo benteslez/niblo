@@ -2,6 +2,8 @@
 
 ## Subir los cambios
 
+- **Versión**: al subir, cambiar `CACHE_NAME` en `sw.js` **y** `BUILD_ID` en `oposicion.html` (mismo número; se ve al pie del inicio de la oposición). GitHub Pages tarda 1-3 minutos en publicar; si el usuario «no ve los cambios», comprobar primero que el despliegue («pages build and deployment») terminó y que el número de versión coincide.
+
 - Al terminar un cambio, sin preguntar: commit, push a la rama de trabajo,
   abrir una pull request contra `main` y fusionarla.
 - Parar y avisar solo si la pull request tiene conflictos o algún check falla.
