@@ -61,9 +61,11 @@ mark { background:#fde68a; color:inherit; border-radius:3px; padding:0 2px; }
 .tag.est0 { opacity:.7; } .tag.est1 { background:#fee2e2; color:#991b1b; } .tag.est2 { background:#fef3c7; color:#92400e; } .tag.est3 { background:#dcfce7; color:#166534; }
 .cem-cfg label { display:block; margin:0 0 10px; font-weight:600; font-size:13.5px; } .cem-cfg select { display:block; width:100%; margin-top:4px; font-weight:400; }
 .cem-chk { display:flex !important; gap:8px; align-items:flex-start; font-weight:600; } .cem-chk input { margin-top:3px; }
-.cem-card { max-width:760px; margin:0 auto; } .cem-big { font-size:30px; font-weight:800; margin:6px 0 10px; }
-.cem-resp { font-size:18px; font-weight:700; margin:10px 0 4px; } .cem-dorso { margin-top:10px; border-top:1px dashed var(--line,rgba(128,128,128,.4)); padding-top:8px; }
-.cem-txt { font-size:16px; line-height:1.75; } .cem-p { margin:0 0 8px; }
+.cem-big[style*="--b"] { font-size:calc(var(--b) * var(--ce-k, 1)); }
+.ce-fs { display:inline-flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; } .ce-fs input[type=range] { width:150px; accent-color:var(--accent,#2563eb); } .ce-fs b { min-width:3.2em; font-weight:700; }
+.cem-card { max-width:760px; margin:0 auto; } .cem-big { font-size:calc(30px * var(--ce-k, 1)); font-weight:800; margin:6px 0 10px; }
+.cem-resp { font-size:calc(18px * var(--ce-k, 1)); font-weight:700; margin:10px 0 4px; } .cem-dorso { margin-top:10px; border-top:1px dashed var(--line,rgba(128,128,128,.4)); padding-top:8px; }
+.cem-txt { font-size:calc(16px * var(--ce-k, 1)); line-height:1.75; } .cem-p { margin:0 0 8px; }
 .cem-h { display:inline-block; border-bottom:2px solid var(--accent,#2563eb); margin:0 1px; vertical-align:baseline; }
 .cem-i { font-weight:700; letter-spacing:.06em; margin-right:.25em; color:var(--accent,#2563eb); }
 .cem-r { background:#bbf7d0; color:inherit; border-radius:3px; padding:0 2px; } .cem-f { background:#fecaca; color:inherit; border-radius:3px; padding:0 2px; }
@@ -73,7 +75,7 @@ mark { background:#fde68a; color:inherit; border-radius:3px; padding:0 2px; }
 .cem-orden { display:flex; flex-direction:column; gap:6px; margin-bottom:10px; } .cem-pz { padding:8px 10px; border-radius:8px; background:rgba(128,128,128,.12); }
 .cem-pz.bien { background:#dcfce7; color:#14532d; } .cem-pz.mal { background:#fee2e2; color:#7f1d1d; }
 .cem-pila { display:flex; flex-wrap:wrap; gap:8px; }
-@media (max-width:600px) { .cem-kpis { grid-template-columns:1fr; } .cem-big { font-size:24px; } }
+@media (max-width:600px) { .cem-kpis { grid-template-columns:1fr; } .cem-big { font-size:calc(24px * var(--ce-k, 1)); } }
 
 /* Memorizar a pantalla completa */
 .cem-cuerpo { min-height:0; }
@@ -81,7 +83,7 @@ mark { background:#fde68a; color:inherit; border-radius:3px; padding:0 2px; }
 .cem-pc .cem-card { flex:1; min-height:0; display:flex; flex-direction:column; max-width:none; width:100%; margin:0; }
 .cem-pc .cem-cuerpo { flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; justify-content:center; }
 .cem-pc .cem-acc { flex:none; }
-.cem-pc .cem-big { font-size:38px; } .cem-pc .cem-txt { font-size:18px; } .cem-pc .cem-resp { font-size:22px; }
+.cem-pc .cem-big { font-size:calc(38px * var(--ce-k, 1)); } .cem-pc .cem-txt { font-size:calc(18px * var(--ce-k, 1)); } .cem-pc .cem-resp { font-size:calc(22px * var(--ce-k, 1)); }
 .cem-pc .cem-card .tags { align-items:center; gap:6px; }
 .cem-card .q-meta { flex-wrap:wrap; gap:6px 10px; align-items:center; } .cem-card .q-meta > span:first-child { white-space:nowrap; } .cem-card .q-meta .tags { margin-left:auto; justify-content:flex-end; flex-wrap:wrap; }
 </style>
@@ -1422,7 +1424,7 @@ p:has(> .pill-exa[data-ex]):hover .pill-exa, li:has(> .pill-exa[data-ex]):hover 
 .ce-num { display:inline-block; background:var(--c); color:var(--ct); font-weight:800; font-size:13.5px; padding:2px 10px; border-radius:6px; }
 .ce-rub { display:block; margin-top:6px; font-weight:800; font-size:13px; line-height:1.3; color:color-mix(in srgb, var(--c) 76%, var(--text)); }
 .ce-rub.propio { font-style:italic; font-weight:700; }
-.ce-txt p { margin:0 0 6px; font-size:15px; line-height:1.6; }
+.ce-txt p { margin:0 0 6px; font-size:calc(15px * var(--ce-k, 1)); line-height:1.6; }
 .ce-txt p.ce-li { margin-left:18px; }
 /* Subrayado y comentarios de la academia (M103) */
 .ce-cu { min-width:0; }
@@ -1452,7 +1454,7 @@ mark.m103-lo { background:#f9a8d4; color:#500724; border-radius:3px; padding:0 2
 .ce-pdf-opc { display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; cursor:pointer; } .ce-pdf-opc .muted { font-weight:400; font-size:12px; }
 .ce-foco { animation:ce-foco 2.2s ease; }
 @keyframes ce-foco { 0%, 60% { background:color-mix(in srgb, var(--c) 22%, transparent); } 100% { background:transparent; } }
-.ce-pream p { margin:0 0 8px; font-size:15px; line-height:1.6; }
+.ce-pream p { margin:0 0 8px; font-size:calc(15px * var(--ce-k, 1)); line-height:1.6; }
 .ce-pream p.ce-c { text-align:center; font-weight:800; letter-spacing:.1em; margin:12px 0; }
 .ce-pream p.ce-f { text-align:right; font-weight:700; }
 @media (max-width:760px) {
@@ -7087,6 +7089,18 @@ const CE_COL = {
 const ceColor = k => CE_COL[k] || "#64748b";
 const ceTexto = hex => { const n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255; return (0.299 * r + 0.587 * g + 0.114 * b) > 165 ? "#111827" : "#ffffff"; };
 const ceSt = k => `--c:${ceColor(k)};--ct:${ceTexto(ceColor(k))}`;
+/* Tamaño del texto en la Constitución y en Memorizar (deslizador; factor --ce-k sobre el tamaño base). */
+const KEY_CE_FS = "gestion_hub_ce_fs_v1";
+const ceFs = () => { const v = +leerJSON(KEY_CE_FS, 100); return v >= 80 && v <= 200 ? v : 100; };
+function ceFsPon(v) {
+  v = Math.max(80, Math.min(200, Math.round(v / 5) * 5)); escribirJSON(KEY_CE_FS, v);
+  document.documentElement.style.setProperty("--ce-k", String(v / 100));
+  const r = document.getElementById("ce-fs"), t = document.getElementById("ce-fs-v"); if (r) r.value = v; if (t) t.textContent = v + " %";
+  return v;
+}
+document.documentElement.style.setProperty("--ce-k", String(ceFs() / 100));
+document.addEventListener("input", e => { if (e.target && e.target.id === "ce-fs") ceFsPon(+e.target.value); });
+document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("[data-ce-fs]"); if (b) ceFsPon(ceFs() + (+b.dataset.ceFs)); });
 let CE = null, cePromesa = null;
 const CE_ART = {}, CE_UNI = {};   // CE_ART[n] = {n, t, propio, p, key, path:[{key, k, nombre}]} · CE_UNI[key] = {key, k, nombre, desde, hasta}
 const cap1 = s => { s = String(s).toLowerCase(); return s.charAt(0).toUpperCase() + s.slice(1); };
@@ -7282,12 +7296,12 @@ function cemSesionPintar(c) {
   }
   const n = it.n, l = it.l, e = cemEtq(n), etapa = l === "x" ? cemEtapa(it) : -1;
   const dir = it._dir == null ? (it._dir = l === "t" && Math.random() < 0.5 ? "inv" : "dir") : it._dir;
-  const cab = `<div class="q-meta"><span>${Math.min(S.i + 1, S.cola.length)} / ${S.cola.length}</span><span class="tags"><span class="tag acc">${CEM_NIV[l].ico} ${CEM_NIV[l].n}</span>${l === "x" ? `<span class="tag">${ETAPAS[etapa]}</span>` : ""}<button class="btn btn-sm" id="cs-pc" title="${CEM.cfg.pc ? "Salir de la pantalla completa" : "Practicar a pantalla completa"}">${CEM.cfg.pc ? "✕ Cerrar" : "⛶ Pantalla completa"}</button></span></div><div class="bar" style="flex:none;min-width:0;margin:0 0 10px"><div style="width:${(S.i / Math.max(1, S.cola.length) * 100).toFixed(0)}%"></div></div>`;
+  const cab = `<div class="q-meta"><span>${Math.min(S.i + 1, S.cola.length)} / ${S.cola.length}</span><span class="tags"><span class="tag acc">${CEM_NIV[l].ico} ${CEM_NIV[l].n}</span>${l === "x" ? `<span class="tag">${ETAPAS[etapa]}</span>` : ""}<button class="btn btn-sm" data-ce-fs="-10" title="Texto más pequeño" aria-label="Texto más pequeño">A−</button><button class="btn btn-sm" data-ce-fs="10" title="Texto más grande" aria-label="Texto más grande">A+</button><button class="btn btn-sm" id="cs-pc" title="${CEM.cfg.pc ? "Salir de la pantalla completa" : "Practicar a pantalla completa"}">${CEM.cfg.pc ? "✕ Cerrar" : "⛶ Pantalla completa"}</button></span></div><div class="bar" style="flex:none;min-width:0;margin:0 0 10px"><div style="width:${(S.i / Math.max(1, S.cola.length) * 100).toFixed(0)}%"></div></div>`;
   let frente = "", dorso = "", extra = "";
   if (l === "u") { frente = `<div class="cem-big">Artículo ${n}</div><p class="muted">¿En qué título, capítulo y sección está?</p>`; dorso = `<p class="cem-resp">${esc(cemUbic(n))}</p><p class="muted">${esc(rangoU(CE_UNI[CE_ART[n].key]))} · <small>${esc(e.t)}</small></p>`; }
-  else if (l === "t") { frente = dir === "dir" ? `<div class="cem-big">Artículo ${n}</div><p class="muted">¿De qué va?</p>` : `<div class="cem-big" style="font-size:20px">${esc(e.t)}</div><p class="muted">¿Qué artículo es?</p>`; dorso = dir === "dir" ? `<p class="cem-resp">${esc(e.t)}</p><p class="muted"><small>${e.propio ? "etiqueta propia" : "guía M101"}</small></p>` : `<p class="cem-resp">Artículo ${n}</p><p class="muted"><small>${esc(cemUbic(n))}</small></p>`; }
-  else if (etapa < 3) { frente = `<div class="cem-big" style="font-size:20px">Artículo ${n} · ${esc(e.t)}</div><div class="cem-txt">${cemClozeHTML(n, etapa, S.rev)}</div>`; dorso = `<p class="muted"><small>${esc(cemUbic(n))}</small></p>`; }
-  else { frente = `<div class="cem-big" style="font-size:20px">Artículo ${n} · ${esc(e.t)}</div><textarea class="input" id="cs-ta" rows="7" placeholder="Escribe el artículo de memoria…" ${S.rev ? "readonly" : ""}>${esc(it._ta || "")}</textarea>`; dorso = S.rev && it._cmp ? `<div class="cem-txt">${it._cmp.html}</div><p class="muted">Coincide ${(it._cmp.ratio * 100).toFixed(0)} %. En rojo, lo que olvidaste${it._cmp.sobran.length ? "; sobran o cambian: <b>" + esc(it._cmp.sobran.slice(0, 12).join(" ")) + "</b>" : ""}.</p>` : ""; }
+  else if (l === "t") { frente = dir === "dir" ? `<div class="cem-big">Artículo ${n}</div><p class="muted">¿De qué va?</p>` : `<div class="cem-big" style="--b:20px">${esc(e.t)}</div><p class="muted">¿Qué artículo es?</p>`; dorso = dir === "dir" ? `<p class="cem-resp">${esc(e.t)}</p><p class="muted"><small>${e.propio ? "etiqueta propia" : "guía M101"}</small></p>` : `<p class="cem-resp">Artículo ${n}</p><p class="muted"><small>${esc(cemUbic(n))}</small></p>`; }
+  else if (etapa < 3) { frente = `<div class="cem-big" style="--b:20px">Artículo ${n} · ${esc(e.t)}</div><div class="cem-txt">${cemClozeHTML(n, etapa, S.rev)}</div>`; dorso = `<p class="muted"><small>${esc(cemUbic(n))}</small></p>`; }
+  else { frente = `<div class="cem-big" style="--b:20px">Artículo ${n} · ${esc(e.t)}</div><textarea class="input" id="cs-ta" rows="7" placeholder="Escribe el artículo de memoria…" ${S.rev ? "readonly" : ""}>${esc(it._ta || "")}</textarea>`; dorso = S.rev && it._cmp ? `<div class="cem-txt">${it._cmp.html}</div><p class="muted">Coincide ${(it._cmp.ratio * 100).toFixed(0)} %. En rojo, lo que olvidaste${it._cmp.sobran.length ? "; sobran o cambian: <b>" + esc(it._cmp.sobran.slice(0, 12).join(" ")) + "</b>" : ""}.</p>` : ""; }
   const sug = it._cmp ? (it._cmp.ratio >= 0.97 ? 5 : it._cmp.ratio >= 0.85 ? 3 : 0) : null;
   const iv = q => ceSiguiente(cemSrs(n, l), q).i + " d";
   const mostrar = l === "x" && etapa === 3 ? `<button class="btn btn-primary" id="cs-rev">Comprobar</button>` : `<button class="btn btn-primary" id="cs-rev">Mostrar</button>`;
@@ -7387,6 +7401,7 @@ function renderCE(tab, n) {
   vista().innerHTML = `
     <h1 class="titulo-grande">📜 Constitución Española</h1>
     <div class="ce-acciones"><button type="button" class="btn" data-ce-apuntes>⬇ Descargar apuntes</button>
+      <label class="ce-fs" title="Tamaño del texto"><span aria-hidden="true">A</span><input type="range" id="ce-fs" min="80" max="200" step="5" value="${ceFs()}" aria-label="Tamaño del texto"><span aria-hidden="true" style="font-size:19px">A</span><b id="ce-fs-v">${ceFs()} %</b></label>
       <label class="ce-pdf-opc"><input type="checkbox" data-ce-pdf="res" ${cePdfOpc().res ? "checked" : ""}> 🖍️ Incluir mis resaltados</label>
       <label class="ce-pdf-opc"><input type="checkbox" data-ce-pdf="ley" ${cePdfOpc().ley ? "checked" : ""}> 🏷️ Incluir las leyendas <span class="muted">(subrayados, pills y comentarios de la academia)</span></label></div>
     <p class="view-sub">Texto literal del <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229" target="_blank" rel="noopener">BOE consolidado vigente</a>, con su estructura, un color por título y capítulo, el organigrama y el test de repaso por artículos.</p>
