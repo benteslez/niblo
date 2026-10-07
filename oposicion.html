@@ -1437,7 +1437,7 @@ p:has(> .pill-exa[data-ex]):hover .pill-exa, li:has(> .pill-exa[data-ex]):hover 
 .m103-pill.lo { background:#fbcfe8; color:#831843; border-color:#f472b6; }
 .m103-pill.niv { background:#e9d5ff; color:#581c87; border-color:#c084fc; white-space:normal; }
 .m107-u { margin:6px 0 4px 8px; }
-mark.m103-am { background:#f87171; color:#450a0a; border-radius:3px; padding:0 2px; }
+mark.m103-am { background:#fecaca; color:#1c1917; border-radius:3px; padding:0 2px; box-shadow:inset 0 -2px 0 #f87171; }
 mark.m103-vd { background:#86efac; color:#14301f; border-radius:3px; padding:0 2px; }
 mark.m103-az { background:#fb923c; color:#431407; border-radius:3px; padding:0 2px; }
 mark.m103-lo { background:#f9a8d4; color:#500724; border-radius:3px; padding:0 2px; }
@@ -4509,7 +4509,7 @@ document.addEventListener("click", e => {
   if (todo) { document.querySelectorAll(".ap[data-ap]").forEach(ap => alternarApartado(ap, todo.dataset.todo === "1")); return; }
   const bq = el.closest("[data-busq]"); if (bq) { moverBusq(+bq.dataset.busq); return; }
   const res = el.closest("mark.res");
-  if (res && !el.closest("#panel")) { if (confirm("¿Quitar este resaltado?")) { marcarProg(res.dataset.k, false, null); if (res.closest("#ce-cuerpo")) cePintarRes(); else pintarResaltados(ESTUDIO.id); } return; }
+  if (res && !el.closest("#panel")) { abrirMenuRes(res); return; }
 });
 document.addEventListener("input", e => {
   if (e.target.matches && e.target.matches("[data-buscar]")) {
@@ -4521,6 +4521,43 @@ document.addEventListener("keydown", e => {
   if (e.target.matches && e.target.matches("[data-buscar]") && e.key === "Enter") { e.preventDefault(); moverBusq(e.shiftKey ? -1 : 1); }
   if (e.key === "Escape") cerrarPanel();
 });
+
+/* ---- Menú de un resaltado: cambiar su color o quitarlo (apuntes y Constitución) ---------------- */
+function cerrarMenuRes() { const m = document.getElementById("menu-res"); if (m) m.remove(); }
+function abrirMenuRes(res) {
+  cerrarMenuRes();
+  const k = res.dataset.k, v = progreso(k); if (!v || !v.d) return;
+  const actual = res.dataset.col || v.d.col || "amarillo", enCE = !!res.closest("#ce-cuerpo");
+  const m = document.createElement("div"); m.id = "menu-res"; m.className = "barra-resaltar"; m.dataset.k = k; m.dataset.ce = enCE ? "1" : "";
+  m.setAttribute("role", "toolbar"); m.setAttribute("aria-label", "Resaltado");
+  m.innerHTML = RES_COLORES.map(([c, t]) => `<button class="res-col ${c === actual ? "on" : ""}" data-col="${c}" data-mr-col="${c}" title="Cambiar a ${t.toLowerCase()}" aria-label="Cambiar a ${t.toLowerCase()}"></button>`).join("")
+    + `<button class="btn-resaltar" data-mr-del title="Quitar este resaltado" aria-label="Quitar este resaltado">🗑 Quitar</button>`;
+  document.body.appendChild(m);
+  const rc = res.getBoundingClientRect(), ancho = m.offsetWidth || 240, alto = m.offsetHeight || 40;
+  const arriba = rc.top - alto - 8 >= 70;
+  m.style.top = Math.max(70, Math.min(innerHeight - alto - 8, arriba ? rc.top - alto - 8 : rc.bottom + 8)) + "px";
+  m.style.left = Math.min(innerWidth - ancho - 10, Math.max(10, rc.left + rc.width / 2 - ancho / 2)) + "px";
+}
+document.addEventListener("click", e => {
+  const m = document.getElementById("menu-res"); if (!m) return;
+  const c = e.target.closest && e.target.closest("[data-mr-col]"), d = e.target.closest && e.target.closest("[data-mr-del]");
+  if (c || d) {
+    e.preventDefault(); e.stopPropagation();
+    const k = m.dataset.k, v = progreso(k), enCE = !!m.dataset.ce;
+    if (v && v.d) {
+      if (d) marcarProg(k, false, null);
+      else { marcarProg(k, true, Object.assign({}, v.d, { col:c.dataset.mrCol })); escribirJSON(KEY_RES_COLOR, c.dataset.mrCol); }
+    }
+    cerrarMenuRes();
+    if (enCE) cePintarRes(); else pintarResaltados(ESTUDIO.id);
+    toast(d ? "Resaltado quitado" : "Color cambiado");
+    return;
+  }
+  if (!e.target.closest("#menu-res") && !e.target.closest("mark.res")) cerrarMenuRes();
+}, true);
+document.addEventListener("keydown", e => { if (e.key === "Escape") cerrarMenuRes(); });
+window.addEventListener("scroll", cerrarMenuRes, { passive:true });
+
 /* Resaltar: aparece un botón al seleccionar texto dentro de los apuntes. */
 function seleccionEnApuntes() {
   const sel = window.getSelection();
@@ -7600,7 +7637,7 @@ document.addEventListener("mousedown", e => { if (e.target.closest && e.target.c
 document.addEventListener("click", e => {
   const res = e.target.closest && e.target.closest("#ce-cuerpo mark.res");
   if (!res || ruta().v !== "ce" || !getSelection().isCollapsed) return;
-  if (confirm("¿Quitar este resaltado?")) { marcarProg(res.dataset.k, false, null); cePintarRes(); }
+  abrirMenuRes(res);
 });
 document.addEventListener("click", e => {
   const boton = e.target.closest && e.target.closest("#barra-resaltar-ce [data-res-col]");
@@ -8243,7 +8280,7 @@ mark.res[data-col="rosa"] { background:#fecdd3; border-color:#fb7185; } mark.res
 .m103-pill.ex { background:#c62828; color:#fff; border-color:#b71c1c; } .m103-pill.am { background:#fecaca; color:#7f1d1d; border-color:#f87171; }
 .m103-pill.vd { background:#bbf7d0; color:#14532d; border-color:#4ade80; } .m103-pill.az { background:#fed7aa; color:#7c2d12; border-color:#fb923c; }
 .m103-pill.lo { background:#fbcfe8; color:#831843; border-color:#f472b6; } .m103-pill.niv { background:#e9d5ff; color:#581c87; border-color:#c084fc; }
-mark.m103-am { background:#f87171; color:inherit; padding:0 .3mm; } mark.m103-vd { background:#86efac; color:inherit; padding:0 .3mm; }
+mark.m103-am { background:#fecaca; color:inherit; padding:0 .3mm; box-shadow:inset 0 -.4mm 0 #f87171; } mark.m103-vd { background:#86efac; color:inherit; padding:0 .3mm; }
 mark.m103-az { background:#fb923c; color:inherit; padding:0 .3mm; } mark.m103-lo { background:#f9a8d4; color:inherit; padding:0 .3mm; }
 .m103-nota { margin:1mm 0; padding:1.6mm 2.6mm; border-left:1.2mm solid #f59e0b; background:#fff6e3; font-size:8.4pt; line-height:1.38; }
 .m103-nota p { margin:0 0 1mm; font-size:8.4pt; text-align:left; } .m103-src { display:block; font-size:6.6pt; color:#777; }
