@@ -8149,6 +8149,7 @@ const CE_APUNTES_CSS = `
 .ca-rub { display:block; margin-top:1mm; font-weight:800; font-size:8pt; line-height:1.25; color:#444; }
 .ca-t p { margin:0 0 1.4mm; font-size:9pt; line-height:1.38; text-align:left; } .ca-t p.ce-li { margin-left:4mm; }
 .ca-n { grid-column:1 / -1; }
+.ca.ca-solo { display:block; break-inside:auto; } .ca-t p.ca-c { text-align:center; font-weight:700; }
 .m103-pills { display:flex; flex-wrap:wrap; gap:1mm; margin-top:1.4mm; }
 .m103-pill { display:inline-flex; padding:0 1.8mm; border-radius:10mm; font-size:6.4pt; font-weight:800; line-height:1.6; border:.3mm solid transparent; }
 .m103-pill.ex { background:#c62828; color:#fff; border-color:#b71c1c; } .m103-pill.am { background:#fef08a; color:#713f12; border-color:#facc15; }
@@ -8218,10 +8219,10 @@ function ceApuntesHTML() {
     return `<div class="ca" style="${ceSt(A.key)}"><div class="ca-h"><span class="ca-num">Art. ${A.n}</span>${A.t ? `<span class="ca-rub">${esc(A.t)}</span>` : ""}${ceM103Pills(A.n)}</div>
       <div class="ca-t">${A.p.map(p => par(p, marks)).join("")}</div>${ceM103Nota(A.n) ? `<div class="ca-n">${ceM103Nota(A.n)}</div>` : ""}</div>`; };
   const banda = (key, k, nombre) => `<div class="cab-bloque" style="${ceSt(key)}"><b>${esc(k)}</b><span>${esc(nombre)}</span><small>${rangoU(CE_UNI[key])}</small></div>`;
-  const parr = x => `<p>${esc(Array.isArray(x) ? x[1] : x)}</p>`;
+  const parr = (x, centro) => `<p${centro && Array.isArray(x) && /centro/.test(x[0]) ? ' class="ca-c"' : ""}>${esc(Array.isArray(x) ? x[1] : x)}</p>`;
   const bandaP = (txt, rango) => `<div class="cab-parte"><b>${esc(txt)}</b><span>${esc(rango)}</span></div>`;
   let cuerpo = bandaP("Parte dogmática", "Del Preámbulo al art. 55");
-  cuerpo += `<div class="cab-bloque" style="${ceSt("D")}"><b>Preámbulo</b></div><div class="ca"><div class="ca-t">${(CE.preambulo || []).map(parr).join("")}</div></div>`;
+  cuerpo += `<div class="cab-bloque" style="${ceSt("D")}"><b>Preámbulo</b></div><div class="ca ca-solo"><div class="ca-t">${(CE.preambulo || []).map(x => parr(x, true)).join("")}</div></div>`;
   CE.titulos.forEach(t => {
     if (t.id === "II") cuerpo += `<div class="parte-org">${bandaP("Parte orgánica", "Arts. 56 a 169")}</div>`;
     cuerpo += banda(t.id, t.id === "P" ? "Título preliminar" : "Título " + t.id, t.nombre) + t.arts.map(a => art(CE_ART[a.n])).join("");
@@ -8231,7 +8232,7 @@ function ceApuntesHTML() {
   });
   cuerpo += `<div class="cab-bloque" style="${ceSt("D")}"><b>Disposiciones</b><span>Adicionales, transitorias, derogatoria y final</span></div>`
     + (CE.disposiciones || []).map(d => `<div class="ca"><div class="ca-h"><span class="ca-rub">${esc(d.t)}</span></div><div class="ca-t">${(d.p || []).map(parr).join("")}</div></div>`).join("")
-    + ((CE.firma || []).length ? `<div class="ca"><div class="ca-t">${CE.firma.map(parr).join("")}</div></div>` : "");
+    + ((CE.firma || []).length ? `<div class="ca ca-solo"><div class="ca-t">${CE.firma.map(x => parr(x, true)).join("")}</div></div>` : "");
   const s5 = `<section class="seccion nueva"><div class="k">Sección 5</div><h2 class="t">Constitución completa <span class="az">con los apuntes</span></h2>
     <p class="lead">Texto literal del BOE consolidado (Preámbulo, arts. 1 a 169 y disposiciones) con el subrayado, los pills y los comentarios de la academia allí donde los hay (hoy, arts. 1 a 55: módulos M103 y M107); lo que se vaya añadiendo entra solo. Los títulos junto al número (arts. 1-52) son los de la guía M101, no de la Constitución.</p>${cuerpo}</section>`;
   // --- Sección 6: cuadros y esquemas de los temas I.1 a I.3 (todos los apartados «Cuadro…» y los de estructura)
