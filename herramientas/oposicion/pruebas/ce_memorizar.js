@@ -46,6 +46,21 @@ const { chromium } = require(require('child_process').execSync('npm root -g').to
     await p.locator('[data-cems="practicar"]').click(); await p.waitForTimeout(200);
     await p.locator('#cf-baj').check(); ok(await p.evaluate(() => CEM.cfg.barajar === true), nombre + ': casilla «Orden aleatorio» guardada');
     await p.locator('#cf-baj').uncheck();
+    // pantalla completa de la práctica
+    await p.evaluate(() => { CEM.cfg.pc = false; CEM.ses = null; CEM.sub = 'practicar'; ceVerMem(document.getElementById('ce-cuerpo')); });
+    await p.selectOption('#cf-nivel', 'x'); await p.selectOption('#cf-que', 'azar'); await p.selectOption('#cf-dif', '1'); await p.locator('#cf-pc').check(); await p.locator('#cf-ir').click(); await p.waitForTimeout(400);
+    ok(await p.locator('#cem-pc').count() === 1 && await p.evaluate(() => document.body.classList.contains('real-abierto')), nombre + ': pantalla completa activada desde la selección');
+    await p.locator('#cs-rev').click(); await p.waitForTimeout(200);
+    const caja = await p.locator('#cem-pc [data-cc="5"]').boundingBox();
+    ok(caja && caja.y + caja.height <= vp.height + 1, nombre + ': botones de respuesta visibles en pantalla completa');
+    if (process.env.SHOTS) await p.screenshot({ path:`${process.env.SHOTS}/cem-pc-${nombre}.png` });
+    await p.locator('#cs-pc').click(); await p.waitForTimeout(300);
+    ok(await p.locator('#cem-pc').count() === 0 && !(await p.evaluate(() => document.body.classList.contains('real-abierto'))), nombre + ': botón «Cerrar» sale de pantalla completa');
+    await p.locator('#cs-pc').click(); await p.waitForTimeout(300);
+    ok(await p.locator('#cem-pc').count() === 1, nombre + ': botón «Pantalla completa» durante la sesión');
+    await p.evaluate(() => { location.hash = '#/ce/texto'; }); await p.waitForTimeout(600);
+    ok(await p.locator('#cem-pc').count() === 0, nombre + ': al salir de la pestaña se cierra');
+    await p.evaluate(() => { CEM.cfg.pc = false; CEM.ses = null; location.hash = '#/ce/memorizar'; }); await p.waitForTimeout(800);
     // juegos
     await p.locator('[data-cems="juegos"]').click(); await p.waitForTimeout(300);
     for (const j of ['ubica', 'rango', 'tema']) {
