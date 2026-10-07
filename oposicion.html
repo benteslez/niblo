@@ -4506,7 +4506,7 @@ document.addEventListener("click", e => {
   if (todo) { document.querySelectorAll(".ap[data-ap]").forEach(ap => alternarApartado(ap, todo.dataset.todo === "1")); return; }
   const bq = el.closest("[data-busq]"); if (bq) { moverBusq(+bq.dataset.busq); return; }
   const res = el.closest("mark.res");
-  if (res && !el.closest("#panel")) { if (confirm("¿Quitar este resaltado?")) { marcarProg(res.dataset.k, false, null); pintarResaltados(ESTUDIO.id); } return; }
+  if (res && !el.closest("#panel")) { if (confirm("¿Quitar este resaltado?")) { marcarProg(res.dataset.k, false, null); if (res.closest("#ce-cuerpo")) cePintarRes(); else pintarResaltados(ESTUDIO.id); } return; }
 });
 document.addEventListener("input", e => {
   if (e.target.matches && e.target.matches("[data-buscar]")) {
@@ -7481,6 +7481,7 @@ function ceVerTexto(c, n) {
   const cuerpo = T.map(t => `<section class="ce-u ce-tit" style="${ceSt(t.id)}" id="ce-u-${t.id}">${ceBandHtml(t.id, t.id === "P" ? "Título preliminar" : "Título " + t.id, t.nombre)}<div class="ce-u-body">${cuerpoT(t)}</div></section>`).join("");
   const disp = CE.disposiciones.map(d => `<article class="ce-art ce-disp" style="${ceSt("D")}"><div class="ce-marg"><span class="ce-num">${esc(d.t.replace("Disposición ", "Disp. "))}</span></div><div class="ce-txt">${d.p.map(ceParr).join("")}</div></article>`).join("");
   c.innerHTML = ceM103Leyenda() + `
+    <p class="muted" style="font-size:12.5px;margin:0 0 8px">🖍️ Selecciona texto de cualquier artículo y elige un color para resaltarlo; pulsa un resaltado para quitarlo. Se sincroniza entre tus dispositivos.</p>
     <div class="ce-nav">
       <div class="ce-nav-fila">
         <label class="ce-ir">Ir al artículo <input type="number" id="ce-ir" min="1" max="169" inputmode="numeric" placeholder="1-169"></label>
@@ -7495,6 +7496,11 @@ function ceVerTexto(c, n) {
     <section class="ce-u" id="ce-disp" style="${ceSt("D")}"><header class="ce-band" style="${ceSt("D")}"><span class="ce-band-k">Disposiciones</span><span class="ce-band-n">4 adicionales · 9 transitorias · 1 derogatoria · 1 final</span></header>${ceM107Unidad("D")}<div class="ce-u-body">${disp}</div></section>
     <section class="ce-u ce-pre" style="${ceSt("D")}"><div class="ce-u-body ce-pream">${CE.firma.map(([cl, t]) => `<p class="${/firma/.test(cl) ? "ce-f" : ""}">${esc(t)}</p>`).join("")}</div></section>
     <p class="muted" style="font-size:12.5px;margin-top:14px">Fuente: ${CE._fuente}. Los títulos que van junto al número de artículo son los de la guía de estudio M101 (arts. 1 a 52): son un recurso para estudiar, no texto de la Constitución. Los de los arts. 53 a 55 son un rótulo propio.</p>`;
+  // Contenedores de texto que admiten resaltados (clave estable por artículo, disposición, preámbulo y fórmula final)
+  c.querySelectorAll(".ce-art[data-n] .ce-txt").forEach(e => { e.dataset.cer = "a" + e.closest(".ce-art").dataset.n; });
+  c.querySelectorAll(".ce-disp .ce-txt").forEach((e, i) => { e.dataset.cer = "d" + i; });
+  c.querySelectorAll(".ce-pream").forEach((e, i) => { e.dataset.cer = i ? "firma" : "pre"; });
+  cePintarRes();
   const arts = Array.from(c.querySelectorAll(".ce-art[data-n]"));
   const ir = x => { const e = document.getElementById(x); if (e) e.scrollIntoView({ behavior:"smooth", block:"start" }); };
   c.querySelectorAll("[data-ir]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); ir(a.dataset.ir); }));
@@ -7529,6 +7535,67 @@ function ceVerTexto(c, n) {
   window.addEventListener("scroll", onScroll, { passive:true }); pintarMigas();
   if (n && CE_ART[n]) setTimeout(() => { const e = document.getElementById("ce-a" + n); if (e) { e.scrollIntoView({ block:"center" }); e.classList.add("ce-foco"); setTimeout(() => e.classList.remove("ce-foco"), 2200); } }, 60);
 }
+
+
+/* ---- Resaltados en la Constitución (mismos colores que en los apuntes; claves CE:res:<hash> en prog.mapa) ---- */
+const ceResaltadosDe = () => Object.keys(prog.mapa).filter(k => k.startsWith("CE:res:") && prog.mapa[k].s && prog.mapa[k].d).map(k => Object.assign({ k }, prog.mapa[k].d));
+function cePintarRes() {
+  const c = document.getElementById("ce-cuerpo"); if (!c) return;
+  desenvolver(c, "mark.res");
+  ceResaltadosDe().forEach(r => {
+    const cont = c.querySelector(`[data-cer="${CSS.escape(r.sec)}"]`); if (!cont) return;
+    envolver(cont, r.x, () => { const m = document.createElement("mark"); m.className = "res"; m.dataset.k = r.k; m.dataset.col = r.col || "amarillo"; m.title = "Resaltado · pulsa para quitarlo"; return m; }, false);
+  });
+}
+function seleccionEnCE() {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.rangeCount || ruta().v !== "ce" || CEV.tab !== "texto") return null;
+  const r = sel.getRangeAt(0);
+  const nodo = r.commonAncestorContainer.nodeType === 1 ? r.commonAncestorContainer : r.commonAncestorContainer.parentNode;
+  const cuerpo = nodo.closest && nodo.closest("[data-cer]");
+  if (!cuerpo) return null;
+  const letra = ch => /[0-9A-Za-zÀ-ÿ]/.test(ch || "");
+  const ini = r.startContainer, fin = r.endContainer;
+  if (ini.nodeType === 3) { let i = r.startOffset; while (i > 0 && letra(ini.nodeValue[i - 1]) && letra(ini.nodeValue[i])) i--; r.setStart(ini, i); }
+  if (fin.nodeType === 3) { let j = r.endOffset; while (j < fin.nodeValue.length && letra(fin.nodeValue[j - 1]) && letra(fin.nodeValue[j])) j++; r.setEnd(fin, j); }
+  const txt = r.toString().replace(/\s+/g, " ").trim();
+  if (txt.length < 2) return null;
+  return { r, cuerpo, txt:txt.slice(0, 400) };
+}
+function ceBarraRes() {
+  let b = document.getElementById("barra-resaltar-ce");
+  if (!b) { b = document.createElement("div"); b.id = "barra-resaltar-ce"; b.className = "barra-resaltar"; b.hidden = true; b.setAttribute("role", "toolbar"); b.setAttribute("aria-label", "Resaltar"); document.body.appendChild(b); }
+  return b;
+}
+document.addEventListener("selectionchange", () => {
+  const b = document.getElementById("barra-resaltar-ce");
+  const s = seleccionEnCE();
+  if (!s) { if (b) b.hidden = true; return; }
+  const bar = ceBarraRes(), rc = s.r.getBoundingClientRect();
+  if (bar.hidden) pintarBarraResaltar(bar);
+  bar.hidden = false;
+  const ancho = bar.offsetWidth || 270;
+  bar.style.top = Math.min(window.innerHeight - 56, Math.max(70, rc.top - 50)) + "px";
+  bar.style.left = Math.min(window.innerWidth - ancho - 10, Math.max(10, rc.left + rc.width / 2 - ancho / 2)) + "px";
+});
+document.addEventListener("mousedown", e => { if (e.target.closest && e.target.closest("#barra-resaltar-ce")) e.preventDefault(); });
+document.addEventListener("click", e => {
+  const res = e.target.closest && e.target.closest("#ce-cuerpo mark.res");
+  if (!res || ruta().v !== "ce" || !getSelection().isCollapsed) return;
+  if (confirm("¿Quitar este resaltado?")) { marcarProg(res.dataset.k, false, null); cePintarRes(); }
+});
+document.addEventListener("click", e => {
+  const boton = e.target.closest && e.target.closest("#barra-resaltar-ce [data-res-col]");
+  if (!boton) return;
+  const s = seleccionEnCE(); if (!s) return;
+  const col = boton.dataset.resCol, sec = s.cuerpo.dataset.cer;
+  escribirJSON(KEY_RES_COLOR, col);
+  marcarProg("CE:res:" + hashCorto(sec + "|" + s.txt), true, { sec, x:s.txt, col });
+  window.getSelection().removeAllRanges();
+  document.getElementById("barra-resaltar-ce").hidden = true;
+  cePintarRes();
+  toast("🖍️ Resaltado");
+});
 
 /* ---- Organigrama ----------------------------------------------------------- */
 function ceVerOrg(c) {

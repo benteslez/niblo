@@ -379,6 +379,11 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 - **Vigencia**: `temas/indice.json` → `verificados` = `{id: "AAAA-MM-DD"}` con la fecha de la **última auditoría** contra la norma. **Actualizarlo cada vez que se audite un tema.** Pasados 90 días (`DIAS_CADUCA`) se pide revisar; los apartados con «REVISAR» o «Dato **cambiante**» se listan como datos que caducan.
 - Prueba: `herramientas/oposicion/pruebas/estudio.js`.
 
+## Resaltados en la Constitución (`#/ce/texto`; petición del usuario, 7-10-2026)
+
+- Mismos colores y barra que en los apuntes (`RES_COLORES`, `pintarBarraResaltar`, el último color se recuerda en `KEY_RES_COLOR`): se selecciona texto de un artículo, de una disposición, del preámbulo o de la fórmula final y se elige color; pulsar un resaltado lo quita (con confirmación). Claves `CE:res:<hash>` en `prog.mapa` con `{sec, x, col}` (`sec` = `a<n>`, `d<i>`, `pre`, `firma`, atributo `data-cer`); se sincronizan. Código: `cePintarRes`, `seleccionEnCE`, `#barra-resaltar-ce`. No van al PDF «Descargar apuntes» de la Constitución.
+- Prueba: `herramientas/oposicion/pruebas/ce_resaltar.js`.
+
 ## Constitución · pestaña «🧠 Memorizar» (`#/ce/memorizar`; petición del usuario, 6-10-2026)
 
 - **Tres niveles por artículo (1-169), cada uno con su calendario de repaso** (`cemCalificar`, mismo SRS `ceSiguiente` que el Test Constitución; claves `CEM:<art>:<u|t|x>` en `prog.mapa`): 📍 ubicación (título, capítulo, sección), 🏷️ de qué va (etiqueta, en las dos direcciones al azar) y 📜 texto.
