@@ -383,7 +383,8 @@ Basado en el módulo M100 «Guía de estudio del temario. El sistema» (PDF y v�
 
 - Mismos colores y barra que en los apuntes (`RES_COLORES`, `pintarBarraResaltar`, el último color se recuerda en `KEY_RES_COLOR`): se selecciona texto de un artículo, de una disposición, del preámbulo o de la fórmula final y se elige color; pulsar un resaltado lo quita (con confirmación). Claves `CE:res:<hash>` en `prog.mapa` con `{sec, x, col}` (`sec` = `a<n>`, `d<i>`, `pre`, `firma`, atributo `data-cer`); se sincronizan. Código: `cePintarRes`, `seleccionEnCE`, `#barra-resaltar-ce`. Van al PDF «Descargar apuntes» de la Constitución si la casilla «🖍️ Incluir mis resaltados» está marcada (`ceApuntesConResaltados`).
 - **Casillas junto a «⬇ Descargar apuntes»** (`#/ce`; `data-ce-pdf`, se recuerdan en `gestion_hub_ce_pdf_v1`; por defecto ambas marcadas): «🖍️ Incluir mis resaltados» y «🏷️ Incluir las leyendas» (subrayados, pills y comentarios de la academia M103/M107 y la sección «Cómo estudiar los artículos 1 a 52»). Con las leyendas apagadas el texto sale limpio y las secciones se renumeran; la estructura, el organigrama y los niveles de protección se mantienen. `ceApuntesHTML({res, ley})`.
-- Pruebas: `herramientas/oposicion/pruebas/ce_resaltar.js` y `ce_pdf.js`.
+- **Tamaño del texto** (petición del usuario, 7-10-2026): deslizador «A ▬ A» 80-200 % junto a «Descargar apuntes» en `#/ce` (`#ce-fs`) y botones **A− / A+** en la tarjeta de «Memorizar» (`data-ce-fs`, sirven también en pantalla completa). Factor `--ce-k` en `:root` (`ceFsPon`, se recuerda en `gestion_hub_ce_fs_v1`) que multiplica el tamaño del texto de los artículos, el preámbulo y las tarjetas de «Memorizar» (`calc(15px * var(--ce-k, 1))`). No afecta al Test Constitución ni al PDF.
+- Pruebas: `herramientas/oposicion/pruebas/ce_resaltar.js` y `ce_pdf.js`. `ce_tamano.js`.
 
 ## Constitución · pestaña «🧠 Memorizar» (`#/ce/memorizar`; petición del usuario, 6-10-2026)
 
