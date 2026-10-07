@@ -4523,6 +4523,12 @@ document.addEventListener("keydown", e => {
 });
 
 /* ---- Menú de un resaltado: cambiar su color o quitarlo (apuntes y Constitución) ---------------- */
+/** Posición vertical de una barra flotante respecto a un texto: por DEBAJO (el menú del sistema, «Copiar / Consultar / Traducir», sale por encima); solo arriba si abajo no cabe. */
+function posBajoSel(rc, alto) {
+  const abajo = rc.bottom + 26, tope = window.innerHeight - alto - 10;
+  if (abajo <= tope) return Math.max(70, abajo);
+  return Math.max(70, Math.min(tope, rc.top - alto - 12));
+}
 function cerrarMenuRes() { const m = document.getElementById("menu-res"); if (m) m.remove(); }
 function abrirMenuRes(res) {
   cerrarMenuRes();
@@ -4534,8 +4540,7 @@ function abrirMenuRes(res) {
     + `<button class="btn-resaltar" data-mr-del title="Quitar este resaltado" aria-label="Quitar este resaltado">🗑 Quitar</button>`;
   document.body.appendChild(m);
   const rc = res.getBoundingClientRect(), ancho = m.offsetWidth || 240, alto = m.offsetHeight || 40;
-  const arriba = rc.top - alto - 8 >= 70;
-  m.style.top = Math.max(70, Math.min(innerHeight - alto - 8, arriba ? rc.top - alto - 8 : rc.bottom + 8)) + "px";
+  m.style.top = posBajoSel(rc, alto) + "px";
   m.style.left = Math.min(innerWidth - ancho - 10, Math.max(10, rc.left + rc.width / 2 - ancho / 2)) + "px";
 }
 document.addEventListener("click", e => {
@@ -4592,7 +4597,7 @@ document.addEventListener("selectionchange", () => {
   if (b.hidden) pintarBarraResaltar(b);
   b.hidden = false;
   const ancho = b.offsetWidth || 270;
-  b.style.top = Math.min(window.innerHeight - 56, Math.max(70, rc.top - 50)) + "px";
+  b.style.top = posBajoSel(rc, b.offsetHeight || 40) + "px";
   b.style.left = Math.min(window.innerWidth - ancho - 10, Math.max(10, rc.left + rc.width / 2 - ancho / 2)) + "px";
 });
 // Que pulsar la barra no deshaga la selección
@@ -7630,7 +7635,7 @@ document.addEventListener("selectionchange", () => {
   if (bar.hidden) pintarBarraResaltar(bar);
   bar.hidden = false;
   const ancho = bar.offsetWidth || 270;
-  bar.style.top = Math.min(window.innerHeight - 56, Math.max(70, rc.top - 50)) + "px";
+  bar.style.top = posBajoSel(rc, bar.offsetHeight || 40) + "px";
   bar.style.left = Math.min(window.innerWidth - ancho - 10, Math.max(10, rc.left + rc.width / 2 - ancho / 2)) + "px";
 });
 document.addEventListener("mousedown", e => { if (e.target.closest && e.target.closest("#barra-resaltar-ce")) e.preventDefault(); });

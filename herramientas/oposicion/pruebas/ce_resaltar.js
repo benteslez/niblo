@@ -14,6 +14,9 @@ const { chromium } = require(require('child_process').execSync('npm root -g').to
     ok(await p.locator('[data-cer]').count() > 150, nombre + ': contenedores resaltables ' + await p.locator('[data-cer]').count());
     const t = await sel(66, 3, 20); await p.waitForTimeout(200);
     ok(await p.locator('#barra-resaltar-ce:not([hidden])').count() === 1 && await p.locator('#barra-resaltar-ce .res-col').count() === 5, nombre + ': aparece la barra con 5 colores («' + t.trim() + '»)');
+    const pos = await p.evaluate(() => { const r = getSelection().getRangeAt(0).getBoundingClientRect(), b = document.getElementById('barra-resaltar-ce').getBoundingClientRect(); return { selBottom:r.bottom, selTop:r.top, barTop:b.top, barBottom:b.bottom, alto:innerHeight }; });
+    ok(pos.barTop > pos.selBottom, nombre + ': la barra sale por debajo de la selección (' + Math.round(pos.selBottom) + ' → ' + Math.round(pos.barTop) + ')');
+    ok(pos.barBottom <= pos.alto, nombre + ': cabe en pantalla');
     await p.locator('#barra-resaltar-ce [data-col="azul"].res-col').click(); await p.waitForTimeout(300);
     ok(await p.locator('mark.res[data-col="azul"]').count() >= 1, nombre + ': resaltado en azul');
     const t2 = await sel(67, 5, 30); await p.waitForTimeout(200);
