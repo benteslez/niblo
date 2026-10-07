@@ -6,8 +6,7 @@ const { chromium } = require(require('child_process').execSync('npm root -g').to
   for (const [nombre, vp] of [['esc', { width:1280, height:900 }], ['mov', { width:390, height:800 }]]) {
     const ctx = await b.newContext({ viewport:vp }); const p = await ctx.newPage();
     p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type()==='error') errs.push(m.text()); });
-    p.on('dialog', d => d.accept());
-    await p.goto('http://localhost:8765/oposicion.html#/ce/texto/66'); await p.waitForTimeout(2800);
+        await p.goto('http://localhost:8765/oposicion.html#/ce/texto/66'); await p.waitForTimeout(2800);
     const sel = async (art, ini, fin) => p.evaluate(([art, ini, fin]) => {
       const cont = document.querySelector(`[data-cer="a${art}"]`); const w = document.createTreeWalker(cont, NodeFilter.SHOW_TEXT); const n = w.nextNode();
       const r = document.createRange(); r.setStart(n, ini); r.setEnd(n, fin); const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.dispatchEvent(new Event('selectionchange')); return r.toString();
@@ -26,9 +25,34 @@ const { chromium } = require(require('child_process').execSync('npm root -g').to
     // persiste al recargar
     await p.reload(); await p.waitForTimeout(2800);
     ok(await p.locator('mark.res').count() >= 2, nombre + ': persisten al recargar');
-    // quitar
-    await p.locator('mark.res[data-col="azul"]').first().click(); await p.waitForTimeout(300);
-    ok(await p.locator('mark.res[data-col="azul"]').count() === 0 && await p.locator('mark.res[data-col="verde"]').count() >= 1, nombre + ': pulsar quita solo ese resaltado');
+    // pulsar un resaltado abre un menú: cambiar de color o quitarlo
+    await p.locator('mark.res[data-col="azul"]').first().click(); await p.waitForTimeout(200);
+    ok(await p.locator('#menu-res').count() === 1 && await p.locator('#menu-res .res-col').count() === 5 && await p.locator('#menu-res [data-mr-del]').count() === 1, nombre + ': el menú ofrece 5 colores y «Quitar»');
+    ok(await p.locator('#menu-res .res-col.on').getAttribute('data-col') === 'azul', nombre + ': marca el color actual');
+    await p.locator('#menu-res [data-mr-col="rosa"]').click(); await p.waitForTimeout(250);
+    ok(await p.locator('mark.res[data-col="rosa"]').count() === 1 && await p.locator('mark.res[data-col="azul"]').count() === 0 && await p.locator('#menu-res').count() === 0, nombre + ': cambia de azul a rosa y se cierra');
+    await p.reload(); await p.waitForTimeout(2800);
+    ok(await p.locator('mark.res[data-col="rosa"]').count() === 1, nombre + ': el color nuevo persiste');
+    await p.locator('mark.res[data-col="rosa"]').first().click(); await p.waitForTimeout(200);
+    await p.locator('#menu-res [data-mr-del]').click(); await p.waitForTimeout(250);
+    ok(await p.locator('mark.res[data-col="rosa"]').count() === 0 && await p.locator('mark.res[data-col="verde"]').count() >= 1, nombre + ': «Quitar» borra solo ese resaltado');
+    await p.locator('mark.res[data-col="verde"]').first().click(); await p.waitForTimeout(150);
+    await p.keyboard.press('Escape'); await p.waitForTimeout(100);
+    ok(await p.locator('#menu-res').count() === 0 && await p.locator('mark.res[data-col="verde"]').count() >= 1, nombre + ': Esc cierra el menú sin cambios');
+    // en los apuntes de un tema funciona igual
+    await p.goto('http://localhost:8765/oposicion.html#/tema/B1T02/leer'); await p.waitForTimeout(2800);
+    const ap = await p.evaluate(() => { const t = estado.temas.B1T02, s = t.sections.find(x => /derechos/i.test(x.body) && x.body.length > 400); const k = 'B1T02:res:testmenu'; const sec = s.id; const frase = (String(s.body).match(/[A-Za-zÁÉÍÓÚáéíóúñ]{6,} [A-Za-zÁÉÍÓÚáéíóúñ]{6,}/) || [''])[0]; return { sec, frase }; });
+    if (ap.frase) {
+      await p.evaluate(a => { irASeccion(a.sec, true); marcarProg('B1T02:res:testmenu', true, { sec:a.sec, x:a.frase, col:'amarillo' }); pintarResaltados('B1T02'); }, ap); await p.waitForTimeout(500);
+      const m = p.locator('mark.res[data-col="amarillo"]').first();
+      if (await m.count()) {
+        await m.scrollIntoViewIfNeeded(); await m.click(); await p.waitForTimeout(200);
+        await p.locator('#menu-res [data-mr-col="verde"]').click(); await p.waitForTimeout(250);
+        ok(await p.locator('mark.res[data-col="verde"]').count() >= 1, nombre + ': en los apuntes también cambia de color');
+        await p.evaluate(() => marcarProg('B1T02:res:testmenu', false, null));
+      } else ok(false, nombre + ': no se pudo crear el resaltado de prueba en los apuntes');
+    }
+    await p.goto('http://localhost:8765/oposicion.html#/ce/texto/66'); await p.waitForTimeout(2800);
     // una selección fuera del texto de un artículo no muestra la barra
     await p.evaluate(() => { const h = document.querySelector('.ce-nav'); const r = document.createRange(); r.selectNodeContents(h); const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.dispatchEvent(new Event('selectionchange')); });
     await p.waitForTimeout(150);
