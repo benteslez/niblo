@@ -4,13 +4,13 @@ sobre los artículos 1 a 52 de la Constitución. NO es texto de la CE: son marca
 
 Código de colores del documento (según el vídeo):
   naranja (exam)  artículo que ha sido objeto de pregunta en algún examen oficial del INAP
-  amarillo  (am)  cuestiones importantes (preguntadas o susceptibles de serlo)
+  rojo      (am)  cuestiones importantes (el documento las subraya en amarillo; en la app van en rojo) (preguntadas o susceptibles de serlo)
   verde     (vd)  «coletillas»: con qué se regula, desarrolla o limita un derecho (ley, tratado, resolución judicial…)
-  azul      (az)  artículos que aparecen en el cuadro de suspensión (art. 55 + art. 116: excepción y sitio)
+  naranja   (az)  artículos (el documento los subraya en azul; en la app van en naranja) que aparecen en el cuadro de suspensión (art. 55 + art. 116: excepción y sitio)
   rosa      (lo)  materia que expresamente se regula por ley orgánica (art. 8)
 
 Cada frase de `marks` tiene que ser LITERAL del texto del artículo (la comprueba ce_datos.py).
-Las marcas azules no vienen subrayadas en todos los artículos del PDF: se completan con el art. 55.1 CE (prevalece la norma).
+Las marcas naranjas no vienen subrayadas en todos los artículos del PDF: se completan con el art. 55.1 CE (prevalece la norma).
 """
 M103 = {
  1: dict(exam=True, marks=[("valores superiores de su ordenamiento jurídico", "am"), ("Monarquía parlamentaria", "am")],

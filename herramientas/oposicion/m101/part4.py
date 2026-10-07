@@ -110,12 +110,12 @@ Los artículos 1 a 52 están anotados con un **código de colores** que verás e
 | Marca | Qué señala | Cómo usarla |
 |---|---|---|
 | 🔴 **Examen** (pill roja) | Artículo que ya ha caído en un examen del INAP | Léelo con más cuidado |
-| 🟨 **Importante** | Cuestión importante, preguntada o susceptible de serlo | Grábatela |
+| 🟥 **Importante** | Cuestión importante, preguntada o susceptible de serlo | Grábatela |
 | 🟩 **Coletilla** | Con qué se regula o limita un derecho: *ley, tratado, resolución judicial…* | Pregunta muy fácil de manipular: cambian la palabra |
-| 🟦 **Se limita (excepción y sitio)** | Aparece en el cuadro de suspensión (arts. 55 y 116) | Domínalo un poco más (→ tema I.2 · IV) |
+| 🟧 **Se limita (excepción y sitio)** | Aparece en el cuadro de suspensión (arts. 55 y 116) | Domínalo un poco más (→ tema I.2 · IV) |
 | 🌸 **Ley orgánica** | Materia que se regula expresamente por ley orgánica (art. 8, además del art. 81) | Es la excepción |
 
-Las **marcas azules** se completan con el art. 55.1 de la Constitución (en el PDF de la academia no están subrayadas en todos los artículos): prevalece la norma. {ir("#/ce/texto", "🖍 Ver el subrayado en la Constitución")}
+Las **marcas naranjas** se completan con el art. 55.1 de la Constitución (en el PDF de la academia no están subrayadas en todos los artículos): prevalece la norma. {ir("#/ce/texto", "🖍 Ver el subrayado en la Constitución")}
 
 {ir("#/ce/texto", "📜 Constitución completa")} {ir("#/ce/organigrama", "🗺 Organigrama")}
 """, 2)
