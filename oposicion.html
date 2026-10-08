@@ -803,7 +803,7 @@ mark.res[data-col="amarillo"], [data-col="amarillo"] { --rc:#ffe600; } mark.res[
 mark.res[data-col="azul"], [data-col="azul"] { --rc:#3b82f6; } mark.res[data-col="rosa"], [data-col="rosa"] { --rc:#fb7185; }
 mark.res[data-col="morado"], [data-col="morado"] { --rc:#a855f7; }
 /* Amarillo de subrayador: mucho más vivo que el resto (el 32 % lo dejaba ámbar apagado) y con letra oscura también en modo oscuro. */
-mark.res[data-col="amarillo"] { background:color-mix(in srgb, #ffe600 78%, transparent); border-bottom-color:#facc15; color:#1c1917; }
+mark.res[data-col="amarillo"] { background:color-mix(in srgb, #ffe600 50%, transparent); border-bottom-color:#fde047; color:#1c1917; }
 .barra-resaltar {
   position:fixed; z-index:60; display:flex; align-items:center; gap:6px; padding:5px 6px 5px 5px;
   border-radius:var(--r-pill); background:var(--text); color:var(--text-inv); box-shadow:var(--sh-3);
@@ -2178,7 +2178,7 @@ function semaforo(t) {
    publicados en el mismo dominio (github.io comparte origen entre repos).
    ====================================================================== */
 const KEY_AJUSTES_V1 = "gestion_hub_ajustes_v1";   // progreso antiguo (por posición); se migra
-const BUILD_ID = "335";   // = niblo-v334 de sw.js (súbelos juntos); se ve al pie del inicio para saber qué versión está cargada
+const BUILD_ID = "336";   // = niblo-v334 de sw.js (súbelos juntos); se ve al pie del inicio para saber qué versión está cargada
 const KEY_PROG    = "gestion_hub_progreso_v2:";     // + uid | "local"
 const KEY_PEND    = "gestion_hub_pendientes_v1";    // { temas:{id:1}, prog:{"uid|clave":1} }
 const KEY_BORR    = "gestion_hub_borrados_v1";      // { id: ms } temas quitados, hasta subirlos
@@ -8272,7 +8272,7 @@ document.addEventListener("click", e => { const bt = e.target.closest("[data-apu
    añadiendo —ce.json → m103, temas I.1 a I.3— entra solo): guía de la academia, estructura y reglas de memoria, organigrama,
    niveles de protección, arts. 1 a 55 con subrayado, pills y comentarios, y los cuadros/esquemas de los temas. */
 const CE_APUNTES_CSS = `
-mark.res { background:#fff35c; border-bottom:1.5px solid #facc15; border-radius:1px; padding:0 .3px; color:inherit; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+mark.res { background:#fff59a; border-bottom:1.5px solid #fde047; border-radius:1px; padding:0 .3px; color:inherit; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
 mark.res[data-col="verde"] { background:#bbf7d0; border-color:#22c55e; } mark.res[data-col="azul"] { background:#bfdbfe; border-color:#3b82f6; }
 mark.res[data-col="rosa"] { background:#fecdd3; border-color:#fb7185; } mark.res[data-col="morado"] { background:#e9d5ff; border-color:#a855f7; }
 :root { --ac:#0b4a9e; --ac-d:#0b3d91; --line:#cfcfcf; --line-soft:#e4e4e4; --text:#222; --text-muted:#666; --bg-elev:#fff; --bg:#fff; --accent:#0b4a9e; --r-sm:6px; --r-md:8px; --r-lg:10px; }
