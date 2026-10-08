@@ -413,10 +413,9 @@ def generar_menus(intro, por_dia, batch):
         dia_items["de"] = de
 
         # ---------------- media mañana
-        mm = []
-        if not ocho:
-            mm.append(fruta("mm", mm=True))
-        dia_items["mm"] = mm
+        # Frutas: hasta el 4 nov., dos (desayuno y almuerzo, de postre); desde
+        # el 5 nov., tres (desayuno, merienda y cena), como indico la pediatra.
+        dia_items["mm"] = []
 
         # ---------------- almuerzo / cena
         def principal(slot, evita_prot=None):
@@ -513,9 +512,11 @@ def generar_menus(intro, por_dia, batch):
 
         usados_hoy = set(i["k"] for i in de)
         dia_items["c"] = principal("c")
+        if not ocho:
+            dia_items["c"].append(fruta("c"))
         huevos += sum(1 for i in dia_items["c"] if i["k"] == "huevo")
         # ---------------- merienda
-        dia_items["me"] = [fruta("me")]
+        dia_items["me"] = [fruta("me")] if ocho else []
         if ocho:
             prot_c = dia_items["c"][0]["k"]
             ce = principal("ce", evita_prot=prot_c)
@@ -688,9 +689,10 @@ def lista_compra(dias, plan_b):
 PAUTAS = [
     dict(desde="2026-10-08", hasta="2026-11-04", etiqueta="7 meses: 2 comidas", bloques={
         "de": dict(et="Desayuno", hora="06:00-08:00", orden=1, tipo="comida", fruta=True, bib="150-180 ml justo DESPUÉS"),
-        "mm": dict(et="Media mañana", hora="09:30-10:00", orden=2, tipo="leche", fruta=True, bib="120-180 ml (el primero que bajará según hambre)"),
-        "c": dict(et="Almuerzo", hora="12:00-13:00", orden=3, tipo="comida", fruta=False, bib=None),
-        "me": dict(et="Merienda", hora="15:30-16:00", orden=4, tipo="leche", fruta=True, bib="150-180 ml"),
+        "mm": dict(et="Media mañana", hora="09:30-10:00", orden=2, tipo="leche", fruta=False, bib="120-180 ml (el primero que bajará según hambre)"),
+        "c": dict(et="Almuerzo", hora="12:00-13:00", orden=3, tipo="comida", fruta=True, bib=None,
+                  nota="Fruta de postre: la OMS (2023) pide fruta y verdura a diario sin fijar en qué comida, y la vitamina C de la fruta ayuda a absorber el hierro de la comida. La pediatra indicó almuerzo sin fruta: comentádselo."),
+        "me": dict(et="Merienda", hora="15:30-16:00", orden=4, tipo="leche", fruta=False, bib="150-180 ml"),
         "ad": dict(et="Antes de dormir", hora="18:30", orden=5, tipo="leche", fruta=False, bib="150-180 ml antes de dormir (se duerme ~19:00)"),
         "no": dict(et="Noche", hora="si lo pide", orden=6, tipo="leche", fruta=False, bib="Si lo pide"),
     }),
@@ -726,9 +728,10 @@ def verificar(dias, intro, batch):
         if orden != sorted(orden): errores.append(f"{d}: bloques fuera de orden")
         if d >= OCHO_MESES and ("ce" not in cols or "ad" in cols): errores.append(f"{d}: falta cena o sobra 'antes de dormir'")
         if d < OCHO_MESES and ("ce" in cols or "ad" not in cols): errores.append(f"{d}: cena antes del 5 nov.")
-        if any(i["cat"] == "fru" for i in e.get("c", [])): errores.append(f"{d}: fruta en el almuerzo")
+        if d >= OCHO_MESES and any(i["cat"] == "fru" for i in e.get("c", [])): errores.append(f"{d}: fruta en el almuerzo")
+        if d < OCHO_MESES and sum(1 for i in e.get("c", []) if i["cat"] == "fru") != 1: errores.append(f"{d}: falta la fruta del almuerzo")
         frutas = sum(1 for s in cols for i in e[s] if i["cat"] == "fru")
-        if frutas != 3: errores.append(f"{d}: {frutas} frutas")
+        if frutas != (3 if d >= OCHO_MESES else 2): errores.append(f"{d}: {frutas} frutas")
         for s in ("de", "c", "ce"):
             if s not in cols: continue
             cats = {i["cat"] for i in e[s]}
