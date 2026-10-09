@@ -339,10 +339,6 @@
     }
 
     /* ---- Documentos ------------------------------------------------------ */
-    .doc-barra {
-      display: flex; gap: var(--gap-2); justify-content: flex-end;
-      flex-wrap: wrap; margin: var(--gap-4) 0 var(--gap-5);
-    }
     .doc-grupo { margin-bottom: var(--gap-6); }
     .doc-grupo-tit {
       display: flex; align-items: baseline; gap: var(--gap-2);
@@ -354,36 +350,160 @@
     }
     .doc-grupo-tit .emoji { font-size: 1.0625rem; letter-spacing: 0; }
     .doc-grupo-tit .doc-cuenta { font-weight: 500; letter-spacing: 0.02em; opacity: .7; }
-    .doc-lista { list-style: none; display: flex; flex-direction: column; gap: var(--gap-2); }
-    .doc-fila {
-      display: flex; align-items: stretch; gap: var(--gap-2);
-      background: var(--bg-elev); border: 1px solid var(--line);
-      border-radius: var(--r-md); box-shadow: var(--sh-1);
-      transition: border-color .12s, box-shadow .12s;
+    /* Cada documento es una tarjeta tipo cartera (como un pase de Wallet):
+       toda la tarjeta lleva el color del tipo (todos los DNI iguales, todos
+       los pasaportes iguales) con un fondo de guilloche suave, como el papel
+       de seguridad de un carne. El <a> se estira con ::after para que toda la
+       tarjeta abra el enlace; el lapiz queda por encima. */
+    .doc-lista {
+      list-style: none; margin: 0; padding: 0;
+      display: grid; gap: var(--gap-4);
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
     }
-    .doc-fila:hover { border-color: var(--line); box-shadow: var(--sh-2); }
-    .doc-abrir {
-      flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--gap-2);
-      padding: var(--gap-3) var(--gap-4); color: inherit; text-decoration: none;
-      border-radius: var(--r-md);
+    .doc-card {
+      position: relative; isolation: isolate;
+      display: flex; flex-direction: column; gap: var(--gap-3);
+      min-height: 176px; padding: 18px;
+      border-radius: 22px; overflow: hidden; color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 16px 30px -18px color-mix(in srgb, var(--c2) 80%, transparent);
+      transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s;
     }
-    .doc-abrir:hover .doc-titulo { color: var(--accent); }
-    .doc-abrir:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
-    .doc-titulo { font-weight: 600; font-size: 0.9375rem; }
-    .doc-notas {
-      color: var(--text-muted); font-size: 0.8125rem; min-width: 0;
+    /* Degradado en malla: luz arriba a la izquierda, el color en el centro y
+       profundidad abajo a la derecha, con un velo oscuro abajo para que el
+       texto blanco se lea igual en los tonos claros (ambar, cian). El fondo va
+       en su propia capa para poder apagarlo (caducado) sin apagar el texto. */
+    .doc-card::before {
+      content: ""; position: absolute; inset: 0; z-index: -1;
+      background:
+        radial-gradient(90% 80% at 0% 0%, color-mix(in srgb, var(--c1) 90%, transparent), transparent 70%),
+        radial-gradient(80% 90% at 100% 100%, var(--c3), transparent 70%),
+        radial-gradient(60% 50% at 85% 10%, rgba(255,255,255,.22), transparent 70%),
+        linear-gradient(to top, rgba(0,0,0,.18), transparent 55%),
+        linear-gradient(145deg, var(--c1), var(--c2) 55%, var(--c3));
+      transition: filter .2s;
+    }
+    /* Brillo que cruza la tarjeta al pasar el raton. */
+    .doc-card::after {
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.2) 50%, transparent 65%);
+      transform: translateX(-100%); transition: transform .6s ease;
+    }
+    .doc-card:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 24px 40px -20px color-mix(in srgb, var(--c2) 90%, transparent); }
+    .doc-card:hover::after { transform: translateX(100%); }
+    .doc-card.est-caducado::before { filter: grayscale(.85) brightness(.8); }
+    .doc-card-cab { display: flex; align-items: center; gap: 10px; padding-right: 40px; min-height: 40px; }
+    .doc-card-emoji {
+      flex: none; width: 40px; height: 40px; display: grid; place-items: center;
+      font-size: 1.375rem; line-height: 1; border-radius: 12px;
+      background: rgba(255,255,255,.2);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.28), 0 4px 10px -4px rgba(0,0,0,.25);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .doc-card-tipo {
+      min-width: 0; font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; opacity: .9;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .doc-notas::before { content: "·"; margin-right: var(--gap-2); }
-    /* Chip de caducidad. Solo se tine cuando hay algo que hacer: si falta mas
-       de la ventana de aviso es un dato mas, no una alarma. */
-    .doc-cad {
-      flex: none; font-size: 0.75rem; font-weight: 600; white-space: nowrap;
-      padding: 2px 8px; border-radius: var(--r-pill);
-      background: var(--bg-soft); color: var(--text-muted);
+    .doc-editar {
+      position: absolute; top: 14px; right: 14px; z-index: 2;
+      width: 32px; height: 32px; display: grid; place-items: center;
+      border-radius: 50%; color: #fff; background: rgba(255,255,255,.16);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.22);
+      transition: background .15s, transform .15s;
     }
-    .doc-cad.cad-pronto   { background: var(--tipo-huevos-bg); color: var(--tipo-huevos-fg); }
-    .doc-cad.cad-caducado { background: color-mix(in srgb, var(--danger) 14%, var(--bg-elev)); color: var(--danger); }
+    .doc-editar:hover { background: rgba(255,255,255,.32); transform: scale(1.06); }
+    .doc-editar:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    .doc-abrir { display: flex; flex-direction: column; gap: 4px; color: inherit; text-decoration: none; }
+    .doc-abrir::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+    .doc-abrir:focus-visible { outline: none; }
+    .doc-abrir:focus-visible::after { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 22px; }
+    .doc-titulo {
+      font-family: var(--font-titulo); font-weight: 700; font-size: 1.1875rem;
+      line-height: 1.2; letter-spacing: -0.02em;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      text-shadow: 0 1px 2px rgba(0,0,0,.12);
+    }
+    .doc-notas {
+      font-size: 0.8125rem; opacity: .78;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .doc-persona {
+      align-self: flex-start; display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 6px; padding: 3px 10px 3px 3px; border-radius: var(--r-pill);
+      font-size: 0.8125rem; font-weight: 600;
+      background: rgba(255,255,255,.18); box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+    }
+    .doc-avatar {
+      flex: none; width: 24px; height: 24px; display: grid; place-items: center;
+      border-radius: 50%; color: #fff; font-size: 0.6875rem; font-weight: 800;
+      background: linear-gradient(135deg, hsl(var(--ph, 220) 65% 55%), hsl(calc(var(--ph, 220) + 25) 70% 42%));
+    }
+    /* Dentro de la tarjeta de color, el avatar va en blanco con la letra de
+       su color: un circulo de color sobre otro color se perdia. */
+    .doc-persona .doc-avatar { background: #fff; color: hsl(var(--ph, 220) 60% 40%); width: 22px; height: 22px; }
+    .doc-grupo-tit .doc-avatar { width: 22px; height: 22px; letter-spacing: 0; }
+    /* Al agrupar por persona, el nombre va con la letra del titulo de la
+       pagina ("Documentos"), en pequeño. */
+    .doc-grupo-tit.doc-grupo-persona {
+      align-items: center; font-family: var(--font-titulo);
+      font-size: 1.375rem; font-weight: 600; letter-spacing: -0.03em;
+      text-transform: none; color: var(--text);
+    }
+    .doc-grupo-persona .doc-avatar { width: 30px; height: 30px; font-size: 0.8125rem; }
+    .doc-grupo-persona .emoji { font-size: 1.25rem; }
+    .doc-grupo-persona .doc-cuenta {
+      font-family: var(--font-num, inherit); font-size: 0.875rem; font-weight: 500;
+      letter-spacing: 0; color: var(--text-muted);
+    }
+    /* Pie: estado a la izquierda, fecha a la derecha, barra de vigencia. */
+    .doc-card-pie { margin-top: auto; }
+    .doc-cad-fila { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--gap-2); }
+    .doc-cad-bloque { flex: none; margin-left: auto; text-align: right; }
+    .doc-cad-et {
+      display: block; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; opacity: .75;
+    }
+    .doc-cad-fecha {
+      display: block; white-space: nowrap; font-weight: 700; font-size: 0.9375rem;
+      font-variant-numeric: tabular-nums; letter-spacing: 0.01em;
+    }
+    .doc-cad-sin { font-size: 0.8125rem; opacity: .75; }
+    .doc-estado {
+      flex: none; display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.75rem; font-weight: 700; white-space: nowrap;
+      padding: 4px 10px 4px 8px; border-radius: var(--r-pill);
+      color: #fff; background: rgba(255,255,255,.18); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22);
+    }
+    .doc-estado::before {
+      content: ""; width: 8px; height: 8px; border-radius: 50%;
+      background: #4ade80; box-shadow: 0 0 0 3px rgba(74,222,128,.28);
+    }
+    .doc-card.est-pronto .doc-estado { color: #422006; background: #fcd34d; box-shadow: none; }
+    .doc-card.est-pronto .doc-estado::before { background: #b45309; box-shadow: 0 0 0 3px rgba(180,83,9,.2); }
+    .doc-card.est-caducado .doc-estado { color: #fff; background: #dc2626; box-shadow: none; }
+    .doc-card.est-caducado .doc-estado::before { background: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.3); }
+    .doc-card.est-pronto { box-shadow: 0 0 0 2px #fcd34d, 0 16px 30px -18px color-mix(in srgb, var(--c2) 80%, transparent); }
+    .doc-card.est-caducado { box-shadow: 0 0 0 2px #ef4444, 0 16px 30px -18px rgba(0,0,0,.5); }
+    /* Simbolo de alerta (menos de 3 meses o caducado), al lado del lapiz. */
+    .doc-alerta-ico {
+      position: absolute; top: 14px; right: 54px; z-index: 2;
+      width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%;
+      color: #451a03; background: #fcd34d;
+      box-shadow: 0 0 0 0 rgba(252,211,77,.7), 0 4px 10px -4px rgba(0,0,0,.35);
+      animation: doc-latido 2.2s ease-out infinite;
+    }
+    .doc-alerta-ico.alerta-caducado { color: #fff; background: #ef4444; box-shadow: 0 0 0 0 rgba(239,68,68,.6); }
+    @keyframes doc-latido {
+      0%   { box-shadow: 0 0 0 0 rgba(252,211,77,.65), 0 4px 10px -4px rgba(0,0,0,.35); }
+      70%  { box-shadow: 0 0 0 10px rgba(252,211,77,0), 0 4px 10px -4px rgba(0,0,0,.35); }
+      100% { box-shadow: 0 0 0 0 rgba(252,211,77,0), 0 4px 10px -4px rgba(0,0,0,.35); }
+    }
+    .doc-card.con-alerta .doc-card-cab { padding-right: 80px; }
+    @media (prefers-reduced-motion: reduce) {
+      .doc-card, .doc-card::after, .doc-editar { transition: none; }
+      .doc-alerta-ico { animation: none; }
+      .doc-card:hover { transform: none; }
+    }
     .doc-alerta {
       background: var(--tipo-huevos-bg);
       border: 1px solid color-mix(in srgb, var(--tipo-huevos-fg) 22%, transparent);
@@ -395,8 +515,50 @@
     .doc-alerta li { margin-top: 2px; }
     .doc-fechas { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-3); }
     @media (max-width: 480px) { .doc-fechas { grid-template-columns: 1fr; } }
-    .doc-ir { margin-left: auto; color: var(--text-muted); flex: none; }
-    .doc-acciones { display: flex; align-items: center; padding-right: var(--gap-2); flex: none; }
+    /* Cabecera: titulo a la izquierda, acciones a la derecha, en una fila. */
+    .doc-cab {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--gap-3); margin-bottom: var(--gap-2);
+    }
+    .doc-cab .vista-titulo { margin: 0; }
+    .doc-cab-acciones { display: flex; align-items: center; gap: var(--gap-2); flex: none; }
+    .doc-btn-tipos, .doc-btn-nuevo {
+      display: inline-flex; align-items: center; gap: 6px; height: 40px;
+      padding: 0 16px; border-radius: var(--r-pill);
+      font-size: 0.875rem; font-weight: 600; white-space: nowrap;
+      transition: background .15s, transform .12s;
+    }
+    .doc-btn-tipos { background: var(--bg-soft); color: var(--text); }
+    .doc-btn-tipos:hover { background: var(--line); }
+    .doc-btn-nuevo { background: var(--btn-bg, var(--text)); color: var(--btn-fg, var(--bg)); }
+    .doc-btn-nuevo:hover { transform: translateY(-1px); }
+    .doc-btn-nuevo > span[aria-hidden] { font-size: 1.125rem; line-height: 1; }
+    .doc-vista-movil { display: none; }
+    /* Controles de vista: mismo segmentado en pastilla que el planificador. */
+    .doc-vista {
+      display: flex; flex-wrap: wrap; gap: var(--gap-3) var(--gap-5);
+      align-items: center; margin: calc(var(--gap-2) * -1) 0 var(--gap-5);
+    }
+    .doc-vista-grupo { display: inline-flex; align-items: center; gap: var(--gap-2); }
+    .doc-vista-et {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+    .doc-seg {
+      display: inline-flex; background: var(--bg-soft);
+      border-radius: var(--r-pill); padding: 2px;
+    }
+    .doc-seg button {
+      padding: 6px 14px; font-size: 0.8125rem; font-weight: 500;
+      border-radius: var(--r-pill); color: var(--text-muted);
+      transition: background .15s, color .15s;
+    }
+    .doc-seg button[aria-pressed="true"] {
+      background: var(--bg-elev); color: var(--text);
+      box-shadow: var(--sh-1); font-weight: 600;
+    }
+    .doc-vista-nota { margin: calc(var(--gap-3) * -1) 0 var(--gap-5); font-size: 0.8125rem; }
+    #modal-documentos .campo[hidden] { display: none; }
 
     /* Modal de documentos: mismo .modal, solo lo propio de esta pantalla. */
     #modal-documentos .modal { width: min(520px, 100%); }
@@ -440,6 +602,8 @@
       outline: 2px solid var(--focus); outline-offset: 1px;
     }
     #modal-documentos .modal-p { font-size: 0.9375rem; }
+    /* Borrar ya no esta en la tarjeta: va aqui, separado a la izquierda. */
+    #modal-documentos .doc-btn-borrar { margin-right: auto; color: var(--danger); }
     #modal-documentos .campo label { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: var(--gap-1); }
 
     @media (max-width: 600px) {
@@ -449,8 +613,65 @@
         width: 100%; max-height: 92vh; overflow-y: auto;
         border-radius: var(--r-lg) var(--r-lg) 0 0;
       }
-      .doc-barra { justify-content: stretch; }
-      .doc-barra button { flex: 1; }
+      /* Cabecera compacta: sin subtitulo, botones pequeños, y los dos
+         segmentados se cambian por dos desplegables en una sola fila. */
+      .doc-cab { margin-bottom: var(--gap-3); }
+      .doc-cab .vista-titulo { font-size: 1.625rem; }
+      .doc-subtitulo { display: none; }
+      .doc-btn-tipos, .doc-btn-nuevo { height: 36px; padding: 0 12px; font-size: 0.8125rem; }
+      .doc-btn-tipos { width: 36px; padding: 0; justify-content: center; }
+      .doc-btn-tipos-txt, .doc-btn-nuevo-largo { display: none; }
+      .doc-alerta { padding: var(--gap-2) var(--gap-3); margin-bottom: var(--gap-3); font-size: 0.8125rem; }
+      .doc-vista { display: none; }
+      .doc-vista-movil { display: flex; gap: var(--gap-2); margin-bottom: var(--gap-4); }
+      .doc-sel {
+        position: relative; flex: 1; min-width: 0;
+        display: flex; align-items: center; gap: 6px;
+        height: 38px; padding: 0 28px 0 12px; border-radius: var(--r-pill);
+        background: var(--bg-soft);
+      }
+      .doc-sel::after {
+        content: ""; position: absolute; right: 12px; top: 50%;
+        width: 6px; height: 6px; margin-top: -5px; pointer-events: none;
+        border-right: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted);
+        transform: rotate(45deg);
+      }
+      .doc-sel > svg { flex: none; color: var(--text-muted); }
+      .doc-sel select {
+        flex: 1; min-width: 0; appearance: none; -webkit-appearance: none;
+        border: 0; background: transparent; color: var(--text);
+        font: inherit; font-size: 16px; font-weight: 600; padding: 0; cursor: pointer;   /* 16px: iOS hace zoom si es menor */
+      }
+      .doc-sel select:focus-visible { outline: none; }
+      .doc-sel:focus-within { outline: 2px solid var(--focus); outline-offset: 1px; }
+      .doc-grupo-tit { margin-bottom: var(--gap-2); }
+      /* Dos tarjetas por fila, compactas. El tipo ya lo dicen el emoji y el
+         encabezado del grupo, asi que su nombre se oculta; fecha y estado van
+         uno bajo otro y la pastilla se acorta (el color dice el estado). */
+      .doc-grupo { margin-bottom: var(--gap-5); }
+      .doc-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .doc-card { min-height: 150px; padding: 12px; gap: 8px; border-radius: 18px; }
+      .doc-abrir:focus-visible::after { border-radius: 18px; }
+      .doc-card-cab { min-height: 32px; padding-right: 32px; }
+      .doc-card-emoji { width: 32px; height: 32px; font-size: 1.0625rem; border-radius: 10px; }
+      .doc-card-tipo { display: none; }
+      .doc-editar { top: 10px; right: 10px; width: 28px; height: 28px; font-size: 0.8125rem; }
+      .doc-titulo { font-size: 0.9375rem; }
+      .doc-notas { font-size: 0.75rem; }
+      .doc-persona { font-size: 0.6875rem; padding: 2px 8px 2px 2px; margin-top: 4px; max-width: 100%; }
+      .doc-persona .doc-avatar { width: 18px; height: 18px; font-size: 0.5625rem; }
+      .doc-cad-fila { flex-direction: column-reverse; align-items: flex-start; gap: 6px; }
+      .doc-cad-bloque { margin-left: 0; text-align: left; display: flex; align-items: baseline; gap: 5px; }
+      .doc-cad-fecha { font-size: 0.8125rem; }
+      .doc-estado { font-size: 0.6875rem; padding: 3px 8px 3px 6px; }
+      .doc-estado::before { width: 6px; height: 6px; }
+      .doc-alerta-ico { top: 10px; right: 44px; width: 28px; height: 28px; }
+      .doc-alerta-ico svg { width: 14px; height: 14px; }
+      .doc-card.con-alerta .doc-card-cab { padding-right: 66px; }
+      .doc-cad-sin { font-size: 0.75rem; }
+      .doc-card.est-ok .doc-estado-et, .doc-card.est-ok .doc-estado-sep,
+      .doc-card.est-pronto .doc-estado-et:not(:only-child), .doc-card.est-pronto .doc-estado-sep,
+      .doc-card.est-caducado .doc-estado-sep, .doc-card.est-caducado .doc-estado-t { display: none; }
       .doc-tipo-fila {
         grid-template-columns: 44px 1fr auto auto auto;
         grid-template-areas: "emoji campos n ok del"
@@ -462,13 +683,7 @@
       .doc-tipo-nuevo { flex-wrap: wrap; }
       .doc-tipo-nuevo input:not(#nt-emoji) { flex-basis: calc(100% - 52px); }
       .doc-tipo-nuevo button { flex-basis: 100%; }
-      .doc-notas { display: none; }   /* la caducidad si se queda: es lo accionable */
-      /* En movil el chip no cabe al lado del titulo: el titulo se partia en dos
-         y la flecha se metia encima del lapiz. Baja a su propia linea. */
-      .doc-abrir { flex-wrap: wrap; }
-      .doc-titulo { flex: 1; min-width: 0; }
-      .doc-ir { order: 1; }
-      .doc-cad { order: 2; flex-basis: 100%; margin-top: 2px; }
+      .doc-vista-grupo { width: 100%; justify-content: space-between; }
     }
 
     /* ---- Main / secciones ------------------------------------------------ */
@@ -10843,7 +11058,7 @@ function htmlPlanDia(dia, marcarFn) {
   const hotel = e.hotel && PLAN_DOC.hotel;
   let html = `<div class="card pd-dia">
     <div class="pd-cab">
-      <h2>Plan del día</h2>
+      <h2>${dia.fecha === HOY_ISO ? "Qué le toca hoy" : "Plan del día"}</h2>
       <div class="pd-cab-l">${capitalizar(fmtFechaLarga(dia.fecha))} · ${pdEdadTexto(dia.fecha)} · ${esc(pauta.etiqueta)}</div>
       ${e.nuevo ? `<div class="pd-cab-nuevo"><span class="pd-tag nuevo">NUEVO</span> <b>${esc(e.nuevo)}</b>
         (día ${e.nuevoDia} de ${e.nuevoTotal}, en el ${pauta.bloques[e.nuevoComida].et.toLowerCase()})
@@ -22365,6 +22580,11 @@ function boot(vistaInicial) {
         desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." },
       { id: "documentos", label: "Documentos", labelCorto: "Docs",    icono: "&#128194;",
         desc: "Enlaces a la documentaci\u00f3n de casa: DNI, pasaportes, seguros, titulaciones. Agrupados por tipo." },
+      /* El hub de la oposicion es una pagina aparte (oposicion.html), del
+         mismo sitio: se abre en la misma pestana y vuelve aqui con su flecha. */
+      { id: "oposicion", label: "Oposici\u00f3n", labelCorto: "Oposici\u00f3n", icono: "&#127891;",
+        url: "oposicion.html", mismaPestana: true,
+        desc: "Hub de estudio de Gesti\u00f3n de la Administraci\u00f3n Civil del Estado (A2): los 58 temas con sus fuentes, glosario, flashcards y test." },
       /* Estas dos no son secciones de Niblo: son otras apps del mismo autor y
          la tarjeta solo abre su web en otra pestana. Se filtran por hogar como
          las demas, para que un invitado no vea lo que no le toca. */
@@ -24297,13 +24517,38 @@ function boot(vistaInicial) {
       return res.text();
     }
 
+    /** Si otra pestana (el hub de la oposicion) ha renovado los tokens de esta
+        misma cuenta, se usan esos. Sin esto, el siguiente guardarSupabase()
+        volveria a escribir el refresh token viejo, ya gastado. */
+    function adoptarTokensGuardados() {
+      try {
+        const o = JSON.parse(localStorage.getItem(KEY_SUPABASE) || "null");
+        const s = sesion.supabase;
+        if (!o || !s.token || !o.token || !o.refreshToken) return false;
+        if (o.email && s.email && o.email !== s.email) return false;
+        if (o.refreshToken === s.refreshToken) return false;
+        s.token = o.token;
+        s.refreshToken = o.refreshToken;
+        return true;
+      } catch (_) { return false; }
+    }
+    window.addEventListener("storage", (e) => {
+      if (e.key === KEY_SUPABASE && e.newValue) adoptarTokensGuardados();
+    });
+
     let _refrescando = null;
     function refrescarToken() {
       /* De una en una: quien llegue mientras hay una en vuelo espera a esa
          misma promesa en vez de gastar el refresh token por su cuenta. */
       if (_refrescando) return _refrescando;
-      _refrescando = (async () => {
+      /* El hub de la oposicion (oposicion.html) usa esta misma sesion. Las
+         dos paginas se ponen en fila con el mismo cerrojo entre pestanas, y
+         antes de pedir se mira si la otra ya lo ha renovado: gastar dos veces
+         el mismo refresh token puede cerrar la sesion en todas partes. */
+      const tokenAntes = sesion.supabase.token;
+      const renovar = async () => {
         const s = sesion.supabase;
+        if (adoptarTokensGuardados() && s.token !== tokenAntes && !tokenCaducaPronto(s.token)) return true;
         if (!s.refreshToken) return false;
         try {
           const res = await fetchConPlazo(s.url + "/auth/v1/token?grant_type=refresh_token", {
@@ -24318,7 +24563,10 @@ function boot(vistaInicial) {
           guardarSupabase();
           return true;
         } catch (_) { return false; }
-      })();
+      };
+      _refrescando = (navigator.locks && navigator.locks.request)
+        ? navigator.locks.request("niblo-auth-refresh", renovar)
+        : renovar();
       _refrescando.finally(() => { _refrescando = null; });
       return _refrescando;
     }
@@ -27185,7 +27433,7 @@ function boot(vistaInicial) {
       nav.innerHTML = "";
       sub.innerHTML = "";
       sub.hidden = true;
-      if (!areaActiva) return;   // en el hub no hay chips de seccion
+      if (!areaActiva) { nav.hidden = false; return; }   // en el hub no hay chips de seccion
       const padre = seccionPadre(vistaActiva);
 
       const crear = (v, clase, activo) => {
@@ -27198,9 +27446,13 @@ function boot(vistaInicial) {
         return b;
       };
 
+      nav.hidden = false;
       if (!permitidas.has(areaActiva)) return;
-      VISTAS.filter(v => v.area === areaActiva && !v.sub)
-            .forEach(v => nav.appendChild(crear(v, "chip", v.id === padre)));
+      const secciones = VISTAS.filter(v => v.area === areaActiva && !v.sub);
+      // Un area con una sola seccion (Documentos) no necesita chips: un chip
+      // solo no lleva a ningun sitio y en movil se comia una franja entera.
+      if (secciones.length <= 1 && !VISTAS.some(v => v.sub === padre)) { nav.hidden = true; return; }
+      secciones.forEach(v => nav.appendChild(crear(v, "chip", v.id === padre)));
 
       const hijas = VISTAS.filter(v => v.sub === padre);
       if (hijas.length) {
@@ -27261,7 +27513,8 @@ function boot(vistaInicial) {
         recetas: `<span><b class="num">${nRecetas}</b> recetas</span>`,
         plan:    `<span><b class="num">${PC_PLAN.length}</b> días planificados</span>`,
         pablo:   `<span><b class="num">${nAlimentos}</b> alimentos</span>`,
-        documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`
+        documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`,
+        oposicion: `<span><b class="num">58</b> temas</span>`
       };
       /* Las areas externas se pintan como enlace, no como boton: asi el
          navegador hace su trabajo (abrir en otra pestana, copiar el enlace) y
@@ -27276,8 +27529,9 @@ function boot(vistaInicial) {
         const cuerpo = `<span class="hub-card-icono" aria-hidden="true">${a.icono}</span>
           <span class="hub-card-nombre">${a.label}</span>
           <span class="hub-card-desc">${a.desc}</span>
-          <span class="hub-card-meta">${a.url ? "<span>otra app</span>" : (meta[a.id] || "")}
-            <span class="hub-card-ir" aria-hidden="true">${a.url ? "&#8599;" : "&#8594;"}</span></span>`;
+          <span class="hub-card-meta">${a.url ? (meta[a.id] || "<span>otra app</span>") : (meta[a.id] || "")}
+            <span class="hub-card-ir" aria-hidden="true">${a.url && !a.mismaPestana ? "&#8599;" : "&#8594;"}</span></span>`;
+        if (a.url && a.mismaPestana) return `<a class="hub-card" data-area="${a.id}" href="${a.url}">${cuerpo}</a>`;
         return a.url
           ? `<a class="hub-card" data-area="${a.id}" href="${a.url}"
                target="_blank" rel="noopener noreferrer">${cuerpo}</a>`
@@ -27294,7 +27548,40 @@ function boot(vistaInicial) {
     const DOCS = {
       tipos: [], documentos: [],
       cargado: false, cargando: false, error: null,
+      // true si la base de datos aun no tiene las columnas de la 007.
+      sinAsignado: false,
     };
+
+    /* A quien pertenece un documento. La clave es lo que se guarda; el orden
+       de esta lista es el de los grupos al agrupar por persona. */
+    const DOCS_PERSONAS = [
+      { clave: "ruben",  nombre: "Rubén" },
+      { clave: "sergio", nombre: "Sergio" },
+      { clave: "pablo",  nombre: "Pablo" },
+      { clave: "lima",   nombre: "Lima" },
+      { clave: "otros",  nombre: "Otros" },
+    ];
+
+    /* Como se ve la lista. Se recuerda en este dispositivo. */
+    const DOCS_VISTA_KEY = "niblo.docs.vista";
+    const DOCS_VISTA = (() => {
+      const v = { agrupar: "tipo", orden: "titulo" };
+      try {
+        const g = JSON.parse(localStorage.getItem(DOCS_VISTA_KEY) || "{}");
+        if (["tipo", "persona", "nada"].includes(g.agrupar)) v.agrupar = g.agrupar;
+        if (["titulo", "caducidad"].includes(g.orden)) v.orden = g.orden;
+      } catch {}
+      return v;
+    })();
+    /** Agrupacion efectiva: "persona" no tiene sentido sin la 007. */
+    function docsAgrupar() {
+      return DOCS_VISTA.agrupar === "persona" && DOCS.sinAsignado ? "tipo" : DOCS_VISTA.agrupar;
+    }
+    function docsCambiarVista(campo, valor) {
+      DOCS_VISTA[campo] = valor;
+      try { localStorage.setItem(DOCS_VISTA_KEY, JSON.stringify(DOCS_VISTA)); } catch {}
+      renderDocumentos();
+    }
 
     /* Tipos que se siembran la primera vez que un hogar abre la pestaña. */
     const DOCS_TIPOS_INICIALES = [
@@ -27325,9 +27612,18 @@ function boot(vistaInicial) {
       if (DOCS.cargado && !forzar) return;
       DOCS.cargando = true; DOCS.error = null; renderDocumentos();
       try {
+        const base = "/rest/v1/documents?select=id,type_id,title,url,notes,issued_on,expires_on";
         const [tipos, docs] = await Promise.all([
           supaFetch("/rest/v1/document_types?select=id,name,plural_label,emoji,sort_order&order=sort_order.asc,name.asc"),
-          supaFetch("/rest/v1/documents?select=id,type_id,title,url,notes,issued_on,expires_on&order=title.asc"),
+          // Si falta la 007, se cargan igual pero sin asignado: mejor eso que
+          // dejar la pestaña en blanco hasta que alguien ejecute el SQL.
+          supaFetch(base + ",assignee,assignee_other&order=title.asc")
+            .then(r => { DOCS.sinAsignado = false; return r; })
+            .catch(e => {
+              if (!/assignee/i.test(e.message || "")) throw e;
+              DOCS.sinAsignado = true;
+              return supaFetch(base + "&order=title.asc");
+            }),
         ]);
         DOCS.tipos = tipos || [];
         DOCS.documentos = docs || [];
@@ -27357,9 +27653,9 @@ function boot(vistaInicial) {
       }).then(r => { DOCS.tipos = r || []; });
     }
 
-    /* Aviso 60 dias antes: margen suficiente para renovar un pasaporte o un
-       permiso sin agobios, que es lo que tarda una cita en muchos consulados. */
-    const DOCS_DIAS_AVISO = 60;
+    /* Aviso 3 meses antes (ver docsAlerta): margen para pedir cita y renovar
+       un pasaporte o un permiso sin agobios. El aviso de arriba, la
+       notificacion, la pastilla y el simbolo de la tarjeta usan el mismo. */
 
     /** Dias que faltan para que caduque, o null si no tiene fecha. */
     function docsDiasParaCaducar(doc) {
@@ -27372,7 +27668,7 @@ function boot(vistaInicial) {
     function docsEstadoCaducidad(doc) {
       const d = docsDiasParaCaducar(doc);
       if (d === null) return null;
-      return d < 0 ? "caducado" : d <= DOCS_DIAS_AVISO ? "pronto" : "ok";
+      return d < 0 ? "caducado" : docsAlerta(doc) === "pronto" ? "pronto" : "ok";
     }
     function docsTextoCaducidad(doc) {
       const d = docsDiasParaCaducar(doc);
@@ -27381,7 +27677,7 @@ function boot(vistaInicial) {
         .toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" });
       if (d < 0) return `Caducó el ${fecha}`;
       if (d === 0) return `Caduca hoy`;
-      if (d <= DOCS_DIAS_AVISO) return `Caduca en ${d} ${d === 1 ? "día" : "días"} · ${fecha}`;
+      if (docsAlerta(doc) === "pronto") return `Caduca en ${docsTiempo(d)} · ${fecha}`;
       return `Caduca el ${fecha}`;
     }
     /** Los que caducan dentro del margen o ya caducaron, primero los urgentes. */
@@ -27393,7 +27689,7 @@ function boot(vistaInicial) {
 
     /* Notificacion del sistema al abrir la app, como mucho una al dia. No hay
        servidor detras: una PWA solo puede avisar cuando se la abre. Para un
-       margen de 60 dias sobra, pero por eso conviene el correo (ver README). */
+       margen de 3 meses sobra, pero por eso conviene el correo (ver README). */
     function docsNotificarCaducidades() {
       if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
       if (localStorage.getItem("niblo.avisos.on") !== "1") return;
@@ -27409,6 +27705,132 @@ function boot(vistaInicial) {
     }
 
     function docsTipo(id) { return DOCS.tipos.find(t => t.id === id) || null; }
+
+    /** Nombre visible de a quien pertenece, o "" si no es de nadie.
+        En "otros" se muestra lo que se escribio; si no se escribio nada, "Otros". */
+    function docsNombreAsignado(doc) {
+      if (!doc || !doc.assignee) return "";
+      if (doc.assignee === "otros") return (doc.assignee_other || "").trim() || "Otros";
+      const p = DOCS_PERSONAS.find(x => x.clave === doc.assignee);
+      return p ? p.nombre : "";
+    }
+
+    /* Degradado de cada tipo: tres paradas (luz, color, profundidad). Los
+       tipos de serie tienen el suyo; uno creado a mano lo saca de su nombre,
+       siempre el mismo. */
+    const DOCS_COLORES = {
+      "dni":                 ["#60a5fa", "#4f46e5", "#3730a3"],   // azul → indigo
+      "pasaporte":           ["#fb7185", "#e11d48", "#9f1239"],   // rosa → carmin
+      "visa":                ["#c084fc", "#9333ea", "#6b21a8"],   // lila → violeta
+      "cedula":              ["#22d3ee", "#0891b2", "#155e75"],   // cian
+      "permiso de conducir": ["#fdba74", "#f97316", "#c2410c"],   // naranja
+      "certificado":         ["#fcd34d", "#f59e0b", "#b45309"],   // ambar
+      "libro de familia":    ["#6ee7b7", "#10b981", "#047857"],   // esmeralda
+      "seguros":             ["#5eead4", "#14b8a6", "#0f766e"],   // turquesa
+      "titulacion":          ["#a5b4fc", "#6366f1", "#4338ca"],   // indigo claro
+      "otros":               ["#94a3b8", "#475569", "#1e293b"],   // pizarra
+    };
+    function docsColores(tipo) {
+      const k = tipo ? tipo.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : "otros";
+      if (k in DOCS_COLORES) return DOCS_COLORES[k];
+      let h = 0;
+      for (const c of k) h = (h * 31 + c.charCodeAt(0)) % 360;
+      return [`hsl(${h} 90% 72%)`, `hsl(${(h + 15) % 360} 75% 52%)`, `hsl(${(h + 30) % 360} 70% 32%)`];
+    }
+    /* Color del avatar de cada persona. */
+    const DOCS_TONOS_PERSONA = { ruben: 205, sergio: 150, pablo: 30, lima: 325, otros: 255 };
+    function docsAvatar(clave, nombre) {
+      const h = DOCS_TONOS_PERSONA[clave] ?? 255;
+      const ini = (nombre || "?").trim().charAt(0).toUpperCase() || "?";
+      return `<span class="doc-avatar" style="--ph:${h}" aria-hidden="true">${esc(ini)}</span>`;
+    }
+
+    /** "6 años", "1 año y 3 meses", "4 meses", "39 días"; caducado: "hace 2 meses". */
+    function docsTiempo(dias) {
+      const n = Math.abs(dias);
+      if (n < 60) return `${n} ${n === 1 ? "día" : "días"}`;
+      const anos = Math.floor(n / 365.25);
+      const meses = Math.floor((n - anos * 365.25) / 30.44);
+      const tA = anos ? `${anos} ${anos === 1 ? "año" : "años"}` : "";
+      const tM = meses ? `${meses} ${meses === 1 ? "mes" : "meses"}` : "";
+      if (anos >= 2 || !tM) return tA || tM;
+      return tA ? `${tA} y ${tM}` : tM;
+    }
+    /** Pastilla de estado en dos partes, para que en movil (dos tarjetas por
+        fila) se pueda mostrar solo una sin que la pastilla se parta. */
+    function docsHtmlEstado(doc) {
+      const d = docsDiasParaCaducar(doc);
+      if (d === null) return "";
+      const [et, t] = d < 0 ? ["Caducado", `hace ${docsTiempo(d)}`]
+        : d === 0 ? ["Caduca hoy", ""]
+        : docsAlerta(doc) === "pronto" ? ["Renovar", docsTiempo(d)]
+        : ["Vigente", docsTiempo(d)];
+      // Un solo hijo de texto: si cada parte fuera hijo del flex, el gap de
+      // la pastilla separaria tambien el " · ".
+      return `<span><span class="doc-estado-et">${esc(et)}</span>${t
+        ? `<span class="doc-estado-sep"> · </span><span class="doc-estado-t">${esc(t)}</span>` : ""}</span>`;
+    }
+    /** Alerta: caduca antes de 3 meses (de calendario) o ya caducado. */
+    const DOCS_MESES_ALERTA = 3;
+    function docsAlerta(doc) {
+      if (!doc || !doc.expires_on) return null;
+      const cad = new Date(doc.expires_on + "T00:00:00");
+      const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+      if (cad < hoy) return "caducado";
+      const limite = new Date(hoy); limite.setMonth(limite.getMonth() + DOCS_MESES_ALERTA);
+      return cad < limite ? "pronto" : null;
+    }
+
+    /** Orden dentro de un grupo: por titulo, o primero lo que antes caduca
+        (los que no caducan van al final, por titulo). */
+    function docsOrdenar(lista) {
+      const porTitulo = (a, b) => a.title.localeCompare(b.title, "es");
+      if (DOCS_VISTA.orden !== "caducidad") return [...lista].sort(porTitulo);
+      return [...lista].sort((a, b) => {
+        if (a.expires_on && b.expires_on) return a.expires_on.localeCompare(b.expires_on) || porTitulo(a, b);
+        if (a.expires_on) return -1;
+        if (b.expires_on) return 1;
+        return porTitulo(a, b);
+      });
+    }
+
+    /** Grupos a pintar: [{ clave, emoji, titulo, items }]. Solo los que tienen algo. */
+    function docsGrupos() {
+      const docs = DOCS.documentos;
+      const agrupar = docsAgrupar();
+      if (agrupar === "nada") {
+        return [{ clave: "todos", emoji: "", titulo: "Todos", items: docsOrdenar(docs) }];
+      }
+      if (agrupar === "persona") {
+        const grupos = [];
+        // Las cuatro personas fijas, en su orden.
+        DOCS_PERSONAS.filter(p => p.clave !== "otros").forEach(p => {
+          const items = docs.filter(d => d.assignee === p.clave);
+          if (items.length) grupos.push({ clave: p.clave, persona: true, avatar: docsAvatar(p.clave, p.nombre), titulo: p.nombre, items: docsOrdenar(items) });
+        });
+        // "Otros": un grupo por cada nombre escrito (sin distinguir mayusculas),
+        // por orden alfabetico, y al final los que no dicen quien.
+        const otros = new Map();
+        docs.filter(d => d.assignee === "otros").forEach(d => {
+          const n = (d.assignee_other || "").trim();
+          const k = n.toLocaleLowerCase("es");
+          if (!otros.has(k)) otros.set(k, { nombre: n || "Otros", items: [] });
+          otros.get(k).items.push(d);
+        });
+        [...otros.entries()]
+          .sort(([ka, a], [kb, b]) => (ka === "") - (kb === "") || a.nombre.localeCompare(b.nombre, "es"))
+          .forEach(([k, g]) => grupos.push({ clave: "otros:" + k, persona: true, avatar: docsAvatar("otros", g.nombre), titulo: g.nombre, items: docsOrdenar(g.items) }));
+        const sin = docs.filter(d => !d.assignee);
+        if (sin.length) grupos.push({ clave: "sin", persona: true, emoji: "\u{2754}", titulo: "Sin asignar", items: docsOrdenar(sin) });
+        return grupos;
+      }
+      // Por tipo (por defecto): una seccion por tipo CON documentos.
+      return [...DOCS.tipos]
+        .sort((a, b) => (a.sort_order - b.sort_order) || a.name.localeCompare(b.name, "es"))
+        .map(t => ({ clave: t.id, emoji: t.emoji, titulo: t.plural_label || t.name,
+                     items: docsOrdenar(docs.filter(d => d.type_id === t.id)) }))
+        .filter(g => g.items.length);
+    }
     function docsCuenta(typeId) { return DOCS.documentos.filter(d => d.type_id === typeId).length; }
 
     /* ---- vista principal ------------------------------------------------- */
@@ -27434,36 +27856,53 @@ function boot(vistaInicial) {
         return;
       }
 
-      // Una seccion por tipo CON documentos; los vacios solo salen al gestionar.
-      const conDocs = DOCS.tipos
-        .filter(t => docsCuenta(t.id) > 0)
-        .sort((a, b) => (a.sort_order - b.sort_order) || a.name.localeCompare(b.name, "es"));
+      // Lo que ya dice el encabezado del grupo no se repite en cada fila.
+      const verTipo = docsAgrupar() !== "tipo";
+      const verPersona = !DOCS.sinAsignado && docsAgrupar() !== "persona";
 
-      cont.innerHTML = docsCabecera() + conDocs.map(t => {
-        const items = DOCS.documentos
-          .filter(d => d.type_id === t.id)
-          .sort((a, b) => a.title.localeCompare(b.title, "es"));
+      cont.innerHTML = docsCabecera() + docsGrupos().map(g => {
+        const items = g.items;
         return `<section class="doc-grupo">
-          <h3 class="doc-grupo-tit">
-            <span class="emoji" aria-hidden="true">${esc(t.emoji)}</span>
-            <span>${esc((t.plural_label || t.name).toUpperCase())}</span>
+          <h3 class="doc-grupo-tit${g.persona ? " doc-grupo-persona" : ""}">
+            ${g.avatar ? g.avatar : g.emoji ? `<span class="emoji" aria-hidden="true">${esc(g.emoji)}</span>` : ""}
+            <span>${esc(g.persona ? g.titulo : g.titulo.toUpperCase())}</span>
             <span class="doc-cuenta">· ${items.length}</span>
           </h3>
-          <ul class="doc-lista">${items.map(d => `
-            <li class="doc-fila">
-              <a class="doc-abrir" href="${esc(d.url)}" target="_blank" rel="noopener noreferrer">
+          <ul class="doc-lista">${items.map(d => {
+            const tipo = docsTipo(d.type_id);
+            const quien = verPersona ? docsNombreAsignado(d) : "";
+            const estado = docsEstadoCaducidad(d);
+            const alerta = docsAlerta(d);
+            const [c1, c2, c3] = docsColores(tipo);
+            const fecha = d.expires_on ? new Date(d.expires_on + "T00:00:00")
+              .toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }) : "";
+            return `
+            <li class="doc-card est-${estado || "sin"}${alerta ? " con-alerta" : ""}" style="--c1:${c1};--c2:${c2};--c3:${c3}">
+              <div class="doc-card-cab">
+                <span class="doc-card-emoji" aria-hidden="true">${tipo ? esc(tipo.emoji) : "\u{1F4C4}"}</span>
+                <span class="doc-card-tipo">${tipo ? esc(tipo.name) : "Documento"}</span>
+              </div>
+              <a class="doc-abrir" href="${esc(d.url)}" target="_blank" rel="noopener noreferrer" title="Abrir ${esc(d.title)}">
                 <span class="doc-titulo">${esc(d.title)}</span>
                 ${d.notes ? `<span class="doc-notas">${esc(d.notes)}</span>` : ""}
-                ${d.expires_on ? `<span class="doc-cad cad-${docsEstadoCaducidad(d)}">${esc(docsTextoCaducidad(d))}</span>` : ""}
-                <span class="doc-ir" aria-hidden="true">&#8599;</span>
+                ${quien ? `<span class="doc-persona">${docsAvatar(d.assignee, quien)}${esc(quien)}</span>` : ""}
               </a>
-              <span class="doc-acciones">
-                <button type="button" class="icon-btn txt" title="Editar" aria-label="Editar ${esc(d.title)}"
-                  onclick="DOCSUI.editar('${d.id}')">&#9998;</button>
-                <button type="button" class="icon-btn txt" title="Eliminar" aria-label="Eliminar ${esc(d.title)}"
-                  onclick="DOCSUI.borrar('${d.id}')">&#10005;</button>
-              </span>
-            </li>`).join("")}</ul>
+              <div class="doc-card-pie">
+                ${d.expires_on ? `
+                <div class="doc-cad-fila">
+                  <span class="doc-estado">${docsHtmlEstado(d)}</span>
+                  <span class="doc-cad-bloque"><span class="doc-cad-et">${estado === "caducado" ? "Caducó" : "Caduca"}</span>
+                    <span class="doc-cad-fecha">${esc(fecha)}</span></span>
+                </div>
+`
+                : `<span class="doc-cad-sin">Sin fecha de caducidad</span>`}
+              </div>
+              ${alerta ? `<span class="doc-alerta-ico alerta-${alerta}" role="img"
+                title="${alerta === "caducado" ? "Caducado" : `Caduca en menos de ${DOCS_MESES_ALERTA} meses`}"
+                aria-label="${alerta === "caducado" ? "Caducado" : `Caduca en menos de ${DOCS_MESES_ALERTA} meses`}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>` : ""}
+              <button type="button" class="doc-editar" title="Editar o borrar" aria-label="Editar ${esc(d.title)}"
+                onclick="DOCSUI.editar('${d.id}')">&#9998;</button>
+            </li>`; }).join("")}</ul>
         </section>`;
       }).join("");
     }
@@ -27478,13 +27917,56 @@ function boot(vistaInicial) {
             `<li><b>${esc(d.title)}</b> · ${esc(docsTextoCaducidad(d))}</li>`).join("")}</ul>
         </div>` : "";
       return `
-        <h1 class="vista-titulo">Documentos</h1>
-        <p class="vista-subtitulo">Enlaces a la documentación de casa, agrupados por tipo.</p>
+        <div class="doc-cab">
+          <h1 class="vista-titulo">Documentos</h1>
+          <div class="doc-cab-acciones">
+            <button type="button" class="doc-btn-tipos" onclick="DOCSUI.tipos()" title="Gestionar tipos" aria-label="Gestionar tipos">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg>
+              <span class="doc-btn-tipos-txt">Tipos</span>
+            </button>
+            <button type="button" class="doc-btn-nuevo" onclick="DOCSUI.nuevo()">
+              <span aria-hidden="true">+</span><span>Nuevo<span class="doc-btn-nuevo-largo"> documento</span></span>
+            </button>
+          </div>
+        </div>
+        <p class="vista-subtitulo doc-subtitulo">Enlaces a la documentación de casa, por tipo o por persona.</p>
         ${aviso}
-        <div class="doc-barra">
-          <button type="button" class="btn-plano" onclick="DOCSUI.tipos()">Gestionar tipos</button>
-          <button type="button" class="btn-primario" onclick="DOCSUI.nuevo()">+ Nuevo documento</button>
-        </div>`;
+        ${DOCS.documentos.length ? docsControlesVista() : ""}`;
+    }
+
+    /* Agrupar por tipo / persona / nada, y ordenar por titulo o caducidad. */
+    function docsControlesVista() {
+      const actual = { agrupar: docsAgrupar(), orden: DOCS_VISTA.orden };
+      const boton = (campo, valor, txt) =>
+        `<button type="button" aria-pressed="${actual[campo] === valor}"
+           onclick="DOCSUI.vista('${campo}','${valor}')">${txt}</button>`;
+      const agrupar = DOCS.sinAsignado
+        ? [["tipo", "Tipo"], ["nada", "Nada"]]
+        : [["tipo", "Tipo"], ["persona", "Persona"], ["nada", "Nada"]];
+      const opcion = (campo, valor, txt) =>
+        `<option value="${valor}"${actual[campo] === valor ? " selected" : ""}>${txt}</option>`;
+      return `
+        <div class="doc-vista-movil">
+          <label class="doc-sel">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            <select aria-label="Agrupar por" onchange="DOCSUI.vista('agrupar', this.value)">${agrupar.map(([v, t]) => opcion("agrupar", v, { tipo: "Por tipo", persona: "Por persona", nada: "Sin agrupar" }[v] || t)).join("")}</select>
+          </label>
+          <label class="doc-sel">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg>
+            <select aria-label="Ordenar por" onchange="DOCSUI.vista('orden', this.value)">${opcion("orden", "titulo", "A–Z")}${opcion("orden", "caducidad", "Caduca antes")}</select>
+          </label>
+        </div>
+        <div class="doc-vista">
+          <span class="doc-vista-grupo">
+            <span class="doc-vista-et">Agrupar</span>
+            <span class="doc-seg" role="group" aria-label="Agrupar por">${agrupar.map(([v, t]) => boton("agrupar", v, t)).join("")}</span>
+          </span>
+          <span class="doc-vista-grupo">
+            <span class="doc-vista-et">Ordenar</span>
+            <span class="doc-seg" role="group" aria-label="Ordenar por">${boton("orden", "titulo", "A–Z")}${boton("orden", "caducidad", "Caduca antes")}</span>
+          </span>
+        </div>
+        ${DOCS.sinAsignado ? `<p class="faint doc-vista-nota">Para asignar documentos a una persona falta ejecutar <code>007_documentos_asignado.sql</code> en Supabase.</p>` : ""}`;
     }
 
     /* ---- modal generico de Documentos ------------------------------------
@@ -27533,10 +28015,21 @@ function boot(vistaInicial) {
       const tipos = [...DOCS.tipos].sort((a, b) => (a.sort_order - b.sort_order) || a.name.localeCompare(b.name, "es"));
       if (!tipos.length) { toast("Crea antes un tipo de documento"); return docsGestionTipos(); }
       const sel = doc ? doc.type_id : tipos[0].id;
+      const asig = doc && doc.assignee ? doc.assignee : "";
       docsModal(doc ? "Editar documento" : "Nuevo documento", `
         <div class="campo"><label for="doc-tipo">Tipo</label>
           <select id="doc-tipo">${tipos.map(t =>
             `<option value="${t.id}"${t.id === sel ? " selected" : ""}>${esc(t.emoji)} ${esc(t.name)}</option>`).join("")}</select></div>
+        ${DOCS.sinAsignado ? "" : `
+        <div class="campo"><label for="doc-asignado">Asignar a <span class="faint">(opcional)</span></label>
+          <select id="doc-asignado" onchange="DOCSUI.cambioAsignado()">
+            <option value=""${!asig ? " selected" : ""}>— Nadie —</option>
+            ${DOCS_PERSONAS.map(p =>
+              `<option value="${p.clave}"${p.clave === asig ? " selected" : ""}>${esc(p.nombre)}</option>`).join("")}
+          </select></div>
+        <div class="campo" id="doc-asignado-otro-campo"${asig === "otros" ? "" : " hidden"}>
+          <label for="doc-asignado-otro">¿Quién? <span class="faint">(opcional)</span></label>
+          <input type="text" id="doc-asignado-otro" value="${esc(doc && doc.assignee_other ? doc.assignee_other : "")}" placeholder="Mamá, el coche…" maxlength="60" autocomplete="off"></div>`}
         <div class="campo"><label for="doc-titulo">Título</label>
           <input type="text" id="doc-titulo" value="${esc(doc ? doc.title : "")}" placeholder="Pasaporte Rubén — cad. 2031" autocomplete="off"></div>
         <div class="campo"><label for="doc-url">Enlace</label>
@@ -27547,11 +28040,12 @@ function boot(vistaInicial) {
           <div class="campo"><label for="doc-caducidad">Caducidad <span class="faint">(opcional)</span></label>
             <input type="date" id="doc-caducidad" value="${esc(doc && doc.expires_on ? doc.expires_on : "")}"></div>
         </div>
-        <p class="faint" style="margin:-4px 0 0">Con fecha de caducidad, Niblo avisa ${DOCS_DIAS_AVISO} días antes.</p>
+        <p class="faint" style="margin:-4px 0 0">Con fecha de caducidad, Niblo avisa ${DOCS_MESES_ALERTA} meses antes.</p>
         <div class="campo"><label for="doc-notas">Notas <span class="faint">(opcional)</span></label>
           <input type="text" id="doc-notas" value="${esc(doc && doc.notes ? doc.notes : "")}" autocomplete="off"></div>
         <div id="doc-aviso" class="doc-aviso" hidden></div>`,
-        `<button type="button" class="btn-plano" onclick="DOCSUI.cerrar()">Cancelar</button>
+        `${doc ? `<button type="button" class="btn-peligro doc-btn-borrar" onclick="DOCSUI.borrar('${doc.id}')">Eliminar</button>` : ""}
+         <button type="button" class="btn-plano" onclick="DOCSUI.cerrar()">Cancelar</button>
          <button type="button" class="btn-primario" onclick="DOCSUI.guardar()">Guardar</button>`);
     }
 
@@ -27569,6 +28063,13 @@ function boot(vistaInicial) {
       }
       docsAviso("");
       const fila = { type_id, title, url, notes: notes || null, issued_on, expires_on };
+      // Sin la 007 no se manda: PostgREST rechazaria la fila entera.
+      if (!DOCS.sinAsignado) {
+        const assignee = document.getElementById("doc-asignado").value || null;
+        const otro = document.getElementById("doc-asignado-otro").value.trim();
+        fila.assignee = assignee;
+        fila.assignee_other = assignee === "otros" && otro ? otro : null;
+      }
       try {
         if (DOCS_EDIT_ID) {
           await supaFetch("/rest/v1/documents?id=eq." + encodeURIComponent(DOCS_EDIT_ID), {
@@ -27713,6 +28214,13 @@ function boot(vistaInicial) {
       borrarTipoConfirmado: docsBorrarTipoConfirmado,
       cerrar: docsCerrarModal,
       recargar: () => docsCargar(true),
+      vista: docsCambiarVista,
+      cambioAsignado: () => {
+        const otros = document.getElementById("doc-asignado").value === "otros";
+        const campo = document.getElementById("doc-asignado-otro-campo");
+        campo.hidden = !otros;
+        if (otros) document.getElementById("doc-asignado-otro").focus();
+      },
     };
     window.DOCSUI = DOCSUI;
 

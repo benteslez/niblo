@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v182";  // Esquema del día con la pauta de la pediatra; frutas por etapa
+const CACHE_NAME = "niblo-v337";  // Plan de alimentación complementaria de Pablo (pauta de la pediatra)
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manrope.woff2",
@@ -82,6 +82,30 @@ self.addEventListener("fetch", (event) => {
     // Raiz del scope del SW, sea cual sea la carpeta publicada: asi no depende
     // del nombre del repositorio.
     || url.pathname === new URL("./", self.location).pathname;
+
+  /* Otras paginas del mismo sitio (el hub de la oposicion, sus temas): cada
+     una con su propia copia. Antes cualquier .html recibia el documento de
+     Niblo y, peor, lo sobrescribia con la pagina pedida. Red primero, para
+     no quedarse con una version vieja; la copia solo sirve sin conexion. */
+  const raiz = new URL("./", self.location).pathname;
+  const esDocNiblo = url.pathname === raiz || url.pathname === raiz + "index.html";
+  if (esHTML && !esDocNiblo) {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_DOC);
+      const clave = url.origin + url.pathname;
+      try {
+        /* «no-cache»: revalida siempre con el servidor. Sin esto, la caché HTTP del navegador (GitHub Pages sirve max-age=600) podía darte la versión anterior hasta 10 minutos. */
+        const resp = await fetch(event.request, { cache: "no-cache" });
+        if (resp && resp.ok) cache.put(clave, resp.clone());
+        return resp;
+      } catch (e) {
+        const guardado = await cache.match(clave);
+        if (guardado) return guardado;
+        throw e;
+      }
+    })());
+    return;
+  }
 
   if (esHTML) {
     /* STALE-WHILE-REVALIDATE: se sirve la copia guardada al momento y la
