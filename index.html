@@ -9991,6 +9991,9 @@ function renderHoy(el) {
       onclick="PB.modalPanal()">${iconoLinea("panal")}<span>Pañal</span></button>
   </div>`;
   html += htmlSemaforo(dia);
+  /* Lo registrado hoy, justo debajo del semaforo: debajo del plan del dia
+     quedaba demasiado abajo (peticion de la familia). */
+  html += htmlLineaDelDia(dia, "PB.TOMAS_HOY", false);
   html += htmlProximos();
   html += banner;
   if (dia.fase === "pre") {
@@ -9998,7 +10001,6 @@ function renderHoy(el) {
   }
 
   html += htmlComidaDelDia(dia, "PB.marcarEstadoRapidoHoy");
-  html += htmlLineaDelDia(dia, "PB.TOMAS_HOY", false);
   /* El patron de la semana estaba en Progreso, entre listados de alimentos,
      donde no lo veia nadie. Es la foto del dia a dia, asi que su sitio es el
      final de Hoy, y "lo que suele venir" debajo: primero lo que ha pasado,
