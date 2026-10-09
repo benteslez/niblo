@@ -19,7 +19,7 @@ DISC = {
        "p": ["La plantilla definitiva da la **b)** (10 % del capítulo de gastos corrientes en bienes y servicios, en cada ministerio).",
              "El art. 78.3 LGP fija como límite general «**el siete por ciento** del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios del presupuesto vigente en cada momento».",
              "El 10 % solo se admite así: «podrá incrementarse hasta un máximo del **10 por ciento de los créditos del artículo 23**, \"indemnizaciones por razón del servicio\", **del programa 222A, \"Seguridad ciudadana\", del Ministerio del Interior**».",
-             "Ninguna opción recoge esa regla: la b) aplica el 10 % al total del capítulo y a cualquier ministerio. Posible error de la plantilla o motivo de impugnación."],
+             "La b) aplica el 10 % al total del capítulo y a cualquier ministerio, y eso no lo dice la ley. La a) («7 % del total de créditos del capítulo 2») reproduce el límite general para cada ministerio: el capítulo 2 es el de gastos corrientes en bienes y servicios, en el que está el artículo 23. Según la ley, la respuesta sería la a): posible error de la plantilla o motivo de impugnación."],
        "citas": [("LGP", "Artículo 78", "el siete por ciento del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios del presupuesto vigente en cada momento"),
                  ("LGP", "Artículo 78", "podrá incrementarse hasta un máximo del 10 por ciento de los créditos del artículo 23, \"indemnizaciones por razón del servicio\", del programa 222A, \"Seguridad ciudadana\", del Ministerio del Interior")]},
   31: {"t": "La fuente oficial no da la fecha de la plantilla",

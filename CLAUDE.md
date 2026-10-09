@@ -113,7 +113,7 @@ Modelo: tema I.2. Se aplica igual en todos los temas para que se estudien del mi
   del todo con la norma o la fuente oficial, se **mantiene la respuesta de la
   plantilla** y la pregunta lleva la etiqueta **«⚠ Discrepancia»** y, debajo, la
   explicación (como el texto legal), con citas literales comprobadas
-  (`boe/discrepancias.py` → campo `disc: {t, p}`). Hoy: X31, X44, X60, X96 y P91.
+  (`boe/discrepancias.py` → campo `disc: {t, p}`; cada cita se comprueba en su fuente: norma de `boe/`, tema publicado o ficha del PE guardada en `herramientas/oposicion/fuentes/pe/<ficha>.txt`). Hoy: X31, X44, X60, X96 y P91. Tras regenerar `tests_reales.py`, reincrustar `tests_reales.json` (no versionado) en `oposicion.html`.
 - Modo **Repaso (SRS para test)**: SM-2 adaptado a preguntas de cuatro
   opciones (pedido por el usuario): fallada → vuelve en la misma sesión con
   las opciones rebarajadas hasta acertarla y después mañana; dudada → mañana

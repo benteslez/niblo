@@ -141,7 +141,7 @@ SI[54] = [("la convalidación podrá realizarse por el órgano competente cuando
            "Si el vicio consistiera en incompetencia no determinante de nulidad, la convalidación podrá realizarse por el órgano competente cuando sea superior jerárquico del que dictó el acto viciado")]
 # 55: solo se convalidan los anulables (52.1); la incompetencia jerárquica no es causa de nulidad (47.1 b) solo nombra materia y territorio) y la convalida el superior (52.3).
 LEY[55] = [("L39", "Artículo 52", [1, 3], "artículo 52.1 y 3", ["los actos anulables", "superior jerárquico"]),
-           ("L39", "Artículo 47", [1, 3, 5, 6], "artículo 47.1 b), d) y e) (nulidad: no convalidables)", ["por razón de la materia o del territorio", "se dicten como consecuencia de ésta", "prescindiendo total y absolutamente del procedimiento legalmente establecido"])]
+           ("L39", "Artículo 47", [1, 3, 5, 6], "artículo 47.1 b), d) y e) (nulidad: no convalidables)", ["manifiestamente incompetente por razón de la materia o del territorio", "se dicten como consecuencia de ésta", "prescindiendo total y absolutamente del procedimiento legalmente establecido"])]
 SI[55] = [("jerarquía", "L39", "Artículo 52", "cuando sea superior jerárquico del que dictó el acto viciado")]
 
 # ---- 56 a 82 ----------------------------------------------------------------
