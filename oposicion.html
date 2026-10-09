@@ -7480,12 +7480,12 @@ function ceParr(p, marks) {
 const M103_PILL = { exam:["ex", "Examen"], am:["am", "🟥 Importante"], vd:["vd", "🟩 Coletilla"], az:["az", "🟧 Se limita (excepción y sitio)"], lo:["lo", "🌸 Ley orgánica"] };
 /** Nivel de protección del artículo (arts. 53 y 81; módulo M107): dónde está y qué garantías tiene. */
 function ceNivel(n) {
-  if (n >= 10 && n <= 13) return ["Fuera de las garantías del art. 53", "Los arts. 10 a 13 no están en el capítulo II: no tienen las garantías del art. 53.1 ni del 53.2 (sí los protege el Defensor del Pueblo)."];
-  if (n === 14) return ["Garantías: todas menos ley orgánica", "El art. 14 tiene reserva de ley, tutela preferente y sumaria, amparo, inconstitucionalidad y vinculación, pero no reserva de ley orgánica."];
-  if (n >= 15 && n <= 29) return ["Máxima protección (sección 1.ª)", "Ley orgánica, tutela preferente y sumaria, amparo, inconstitucionalidad, reserva de ley y vinculación de los poderes públicos."];
+  if (n >= 10 && n <= 13) return ["Sin las garantías específicas del art. 53", "Los arts. 10 a 13 no están en el capítulo II: no tienen las garantías del art. 53.1 ni del 53.2, aunque, como toda la Constitución, vinculan y una ley contraria a ellos es inconstitucional (y los protege el Defensor del Pueblo)."];
+  if (n === 14) return ["Garantías: todas menos ley orgánica", "El art. 14 tiene reserva de ley, tutela preferente y sumaria, amparo, inconstitucionalidad y vinculación, pero no reserva de ley orgánica; su reforma va por el procedimiento ordinario (art. 167), no por el agravado."];
+  if (n >= 15 && n <= 29) return ["Máxima protección (sección 1.ª)", "Ley orgánica, tutela preferente y sumaria, amparo, inconstitucionalidad, reserva de ley y vinculación de los poderes públicos; además, su reforma exige el procedimiento agravado (art. 168)."];
   if (n === 30) return ["Sección 2.ª · amparo solo en el 30.2", "Vinculan a los poderes públicos, reserva de ley e inconstitucionalidad; amparo únicamente la objeción de conciencia (30.2)."];
   if (n >= 31 && n <= 38) return ["Sección 2.ª · sin amparo", "Vinculan a los poderes públicos, reserva de ley e inconstitucionalidad; no tienen amparo."];
-  if (n >= 39 && n <= 52) return ["Principios rectores: informan", "No son derechos fundamentales: orientan e informan la legislación y la práctica judicial; solo se pueden alegar según lo que dispongan las leyes que los desarrollan (art. 53.3)."];
+  if (n >= 39 && n <= 52) return ["Principios rectores: informan", "No son derechos fundamentales: informan la legislación positiva, la práctica judicial y la actuación de los poderes públicos; solo se pueden alegar según lo que dispongan las leyes que los desarrollan (art. 53.3)."];
   return null;
 }
 function ceM103Pills(n) {
@@ -7678,7 +7678,7 @@ function ceVerOrg(c) {
     return `<div class="og-fila"><a class="og-tit" ${enlace(u.desde)} style="${ceSt(t.id)}"><b>${t.id === "P" ? "TÍTULO PRELIMINAR" : "TÍTULO " + t.id}</b>${t.nombre ? `<span>${esc(t.nombre)}</span>` : ""}<small>${rangoU(u)}</small>${art10}</a>${caps ? `<div class="og-caps">${caja10}${caps}</div>` : ""}</div>`;
   };
   c.innerHTML = `
-    <p class="pl-nota">Estructura de la Constitución: dos partes, el preámbulo, 10 títulos, 169 artículos y 15 disposiciones. Pulsa cualquier recuadro para ir a su texto. El color de cada título y capítulo es el mismo en el texto y en el test.</p>
+    <p class="pl-nota">Estructura de la Constitución: dos partes, el preámbulo, el Título preliminar y 10 títulos, 169 artículos y 15 disposiciones. Pulsa cualquier recuadro para ir a su texto. El color de cada título y capítulo es el mismo en el texto y en el test.</p>
     <div class="og">
       <div class="og-parte" style="--c:#7c3aed"><b>PARTE DOGMÁTICA</b><span>Del 1 al 55</span></div>
       ${fila(T0("P"))}${fila(T0("I"))}
@@ -8346,7 +8346,7 @@ function ceApuntesHTML0(opts) {
   const unidades = [["P", "Título preliminar"], ["I", "Título I"], ["I.1", "Cap. I"], ["I.2", "Cap. II"], ["I.2.1", "Secc. 1.ª"], ["I.2.2", "Secc. 2.ª"], ["I.3", "Cap. III"], ["I.4", "Cap. IV"], ["I.5", "Cap. V"], ...["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"].map(i => [i, "Título " + i])];
   const rangoMas = key => { const u = CE_UNI[key]; if (!u) return ""; const base = rangoU(u); return /^(III|IV|V|VI|VII|VIII|IX|X)$/.test(key) ? `${base} (${u.desde} + ${u.hasta - u.desde})` : base; };
   const s2 = `<section class="seccion nueva junta"><div class="k">Sección 2</div><h2 class="t">Estructura y <span class="az">reglas de memoria</span></h2>
-    <p class="lead">Dos partes (dogmática 1-55, orgánica 56-169), el preámbulo, 10 títulos, 169 artículos y 15 disposiciones. Reglas del módulo M107 (repaso de la estructura): no son texto de la Constitución.</p>
+    <p class="lead">Dos partes (dogmática 1-55, orgánica 56-169), el preámbulo, el Título preliminar y 10 títulos, 169 artículos y 15 disposiciones. Reglas del módulo M107 (repaso de la estructura): no son texto de la Constitución.</p>
     <table class="ce-t estr"><thead><tr><th>Unidad</th><th>Artículos</th><th>Regla de memoria</th></tr></thead><tbody>
       <tr><td><span class="ce-chip" style="${ceSt("D")}">Preámbulo</span></td><td>—</td><td>${R.preambulo ? inl(R.preambulo) : ""}</td></tr>
       ${unidades.filter(([k]) => CE_UNI[k]).map(([k, e]) => filaU(k, e, rangoMas(k))).join("")}

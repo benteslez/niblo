@@ -26,7 +26,7 @@ DISC = {
        "p": ["La plantilla definitiva da la **a)** («Tratado de Fusión del 1 de julio de 1967»).",
              "Parlamento Europeo, ficha temática 1.1.2 (fuente oficial, no es texto legal): «La primera modificación institucional fue la realizada por el Tratado de Fusión, de **8 de abril de 1965**, que fusionó los órganos ejecutivos de las tres comunidades. Entró en vigor en **1967**».",
              "La a) y la d) se refieren al mismo tratado: la d) da la fecha de firma, que coincide con la fuente; la a), la de entrada en vigor, de la que la fuente solo dice el año. Ninguna fuente oficial consultada da el «1 de julio de 1967»."],
-       "citas": [("TEMA", "B2T01", "La primera modificación institucional fue la realizada por el Tratado de Fusión, de 8 de abril de 1965, que fusionó los órganos ejecutivos de las tres comunidades. Entró en vigor en 1967")]},
+       "citas": [("PE", "1.1.2", "La primera modificación institucional fue la realizada por el Tratado de Fusión, de 8 de abril de 1965, que fusionó los órganos ejecutivos de las tres comunidades. Entró en vigor en 1967")]},
   44: {"t": "La caracterización de la plantilla no está en la LGSS",
        "p": ["La plantilla definitiva da la **d)** («Intervienen en la función redistribuidora de los tributos y tienen carácter finalista»).",
              "La LGSS no caracteriza así las aportaciones del Estado. Art. 109.1 a): «Las aportaciones progresivas del Estado, que se consignarán con carácter permanente en sus Presupuestos Generales, y las que se acuerden para atenciones especiales o resulten precisas por exigencia de la coyuntura».",
@@ -64,7 +64,9 @@ def comprobar():
     for ex, d in DISC.items():
         for n, e in d.items():
             for k, b, frag in e["citas"]:
-                if k == "TEMA":
+                if k == "PE":   # ficha temática del Parlamento Europeo, texto guardado en fuentes/pe/<ficha>.txt
+                    fuente = open(os.path.join(RAIZ, "herramientas", "oposicion", "fuentes", "pe", b + ".txt"), encoding="utf-8").read()
+                elif k == "TEMA":
                     fuente = json.dumps(json.load(open(os.path.join(RAIZ, "temas", b + ".json"), encoding="utf-8")), ensure_ascii=False).replace("**", "")
                 else:
                     bid = b if b in boe.ley(k) else boe.bloque(k, b)

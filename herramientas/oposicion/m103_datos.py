@@ -41,7 +41,7 @@ M103 = {
           nota="Preguntaron cuál de cuatro oraciones era correcta (el 17.3 es el de los derechos del detenido)."),
  18: dict(exam=True, marks=[("sin consentimiento del titular o resolución judicial, salvo en caso de flagrante delito", "vd"), ("salvo resolución judicial", "vd"), ("La ley limitará el uso de la informática para garantizar el honor y la intimidad personal y familiar de los ciudadanos y el pleno ejercicio de sus derechos", "am")],
           lim="Se pueden suspender el **18.2** (domicilio) y el **18.3** (comunicaciones) en excepción y sitio.",
-          nota="Preguntaron el **18.4** (la informática: lo desarrollan el RGPD y la LOPD). Coletillas fáciles: **resolución judicial** (no administrativa) y **flagrante delito** como únicas excepciones a la entrada y registro del domicilio."),
+          nota="Preguntaron el **18.4** (la informática: lo desarrollan el RGPD y la LO 3/2018, LOPDGDD). Coletillas fáciles: para entrar o registrar el domicilio hace falta el **consentimiento del titular** o **resolución judicial** (no administrativa), salvo **flagrante delito** (18.2)."),
  19: dict(lim="Se puede limitar en excepción y sitio.", nota="La libertad de residencia y circulación."),
  20: dict(exam=True, marks=[("en virtud de resolución judicial", "vd")],
           lim="Se pueden suspender el **20.1.a)** y **d)** y el **20.5**.",
@@ -68,7 +68,7 @@ M103 = {
           nota="Única pregunta del capítulo III: las **situaciones de necesidad** cubiertas por el régimen público de Seguridad Social, «especialmente en caso de **desempleo**» (te pueden poner otras situaciones)."),
  42: dict(nota="Estudia el 40, 41 y 42 juntos."),
  43: dict(marks=[("Se reconoce el derecho a la protección de la salud", "am")],
-          nota="**Ojo:** el derecho a la salud es un **principio rector** de la política social y económica, **no un derecho fundamental**."),
+          nota="**Ojo:** el derecho a la **protección de la salud** (art. 43) es un **principio rector** de la política social y económica, **no un derecho fundamental**."),
  47: dict(marks=[("derecho a disfrutar de una vivienda digna y adecuada", "am")],
           nota="**Ojo:** igual que la salud, la vivienda es un **principio rector**, **no un derecho fundamental**."),
 }
@@ -84,7 +84,7 @@ NIVELES = [
  "**Nivel 1 · Estructura.** Título, capítulo y sección de cada artículo: de ahí depende qué garantías tiene.",
  "**Nivel 2 · Contenido.** Asociar cada artículo con su materia («el 3 es la lengua, el 8 las Fuerzas Armadas, el 33 la propiedad y la herencia»).",
  "**Nivel 3 · Lectura profunda** (último nivel; pocas preguntas): esta lectura, para detectar los puntos calientes.",
- "**Dónde se pregunta más:** la mayoría de las preguntas oficiales se concentran **hasta el art. 29**; de la sección 2.ª solo hay una (art. 34) y del capítulo III solo una (art. 41).",
+ "**Dónde se pregunta más:** la mayoría de las preguntas oficiales se concentran **hasta el art. 29**; de la sección 2.ª solo hay una (art. 34) y del capítulo III solo una (art. 41). ⚠ Es la valoración de la academia: los exámenes aportados ya tienen más (art. 30.2 en GACE-P 2025, pregunta 44, y art. 49 en GACE-P 2024, pregunta 48).",
 ]
 
 
@@ -110,7 +110,7 @@ M107_UNIDADES = {
  "VII": "**128 a 136 · Economía y Hacienda** (128 + **8**).",
  "VIII": "**137 a 158 · Organización territorial** (137 + **21**). Acaba en el **158**: «el 8 siempre viene al rescate». La cuestión territorial ya se asoma en el Título preliminar (lenguas, banderas, autonomía).",
  "IX": "**159 a 165 · Tribunal Constitucional** (159 + **6**).",
- "X": "**166 a 169 · Reforma constitucional** (166 + **3**): 166 iniciativa, 167 reforma «light», 168 reforma agravada y 169 límites (cuándo no se puede reformar).",
+ "X": "**166 a 169 · Reforma constitucional** (166 + **3**): 166 iniciativa, 167 reforma «light», 168 reforma agravada y 169 límites (cuándo no puede iniciarse la reforma).",
  "D": "**4 adicionales, 9 transitorias, 1 derogatoria y 1 final (4-9-1-1):** estamos en la Transición, por eso lo que más hay son transitorias.",
 }
 M107_ARTS = {
