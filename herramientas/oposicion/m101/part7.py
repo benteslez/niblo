@@ -137,7 +137,7 @@ T.ap("s34", "VII.2 Composición y mandato", f"""
 """, 2)
 
 T.ap("s34c", "VII.2c Organización del Tribunal: Pleno, Salas, Secciones, quórum y cese", f"""
-El epígrafe oficial habla de «**organización, composición y atribuciones**»: tras la composición (arts. 159 y 160 CE) toca ver **cómo se organiza** el Tribunal por dentro (arts. 6 a 15 LOTC) y **cuándo cesan** sus Magistrados (art. 23 LOTC). *Apartado añadido a la guía M101 a partir de la LOTC vigente (ampliación): el módulo no lo desarrolla, pero el test oficial lo pregunta.*
+El epígrafe oficial habla de «**organización, composición y atribuciones**»: tras la composición (arts. 159 y 160 CE) toca ver **cómo se organiza** el Tribunal por dentro (arts. 6 a 15 LOTC) y **cuándo cesan** sus Magistrados (art. 23 LOTC). *Apartado añadido a la guía M101 a partir de la LOTC vigente (ampliación): el módulo no lo desarrolla, pero el test de la academia lo pregunta (M105, preguntas 21 y 30).*
 
 {unidad("4.1 Pleno, Salas y Secciones (arts. 6 a 8 LOTC)",
   lx("LOTC", "asexto", 6, ["actúa en Pleno, en Sala o en Sección", "integrado por todos los Magistrados del Tribunal"], solo=[1, 2]),

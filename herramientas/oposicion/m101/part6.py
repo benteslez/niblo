@@ -57,7 +57,7 @@ T.ap("s26", "V.8 Cuadro resumen de las garantías", f"""
   ["**Reserva de ley orgánica**", f"{tag('I.2.1', 'Sección 1.ª')} (15-29)", "Art. 81.1", "Cortes Generales; mayoría absoluta del Congreso"],
   ["**Reserva de ley**", f"{tag('I.2', 'Capítulo II')} (14-38), respetando el contenido esencial", "Art. 53.1", "Ley (nunca reglamento)"],
   ["**Tutela ante los tribunales ordinarios** (preferente y sumaria)", f"{tag('I.2', 'Art. 14')} + {tag('I.2.1', 'sección 1.ª')} (14-29)", "Art. 53.2", "Cualquier ciudadano · tribunales ordinarios"],
-  ["**Recurso de amparo**", f"{tag('I.2', 'Art. 14')} + {tag('I.2.1', 'sección 1.ª')} + {tag('I.2.2', 'art. 30.2')} (14-29 y 30.2)", "Arts. 53.2 y 161.1.b", "Persona con interés legítimo, Defensor del Pueblo, Ministerio Fiscal · TC"],
+  ["**Recurso de amparo**", f"{tag('I.2', 'Art. 14')} + {tag('I.2.1', 'sección 1.ª')} + {tag('I.2.2', 'art. 30.2')} (14-29 y 30.2)", "Arts. 53.2 y 161.1.b", "Toda persona natural o jurídica que invoque un interés legítimo, Defensor del Pueblo, Ministerio Fiscal (art. 162.1.b) · TC"],
   ["**Defensor del Pueblo**", f"{tag('I', 'Título I')} (10-52)", "Art. 54", "Alto comisionado de las Cortes Generales"],
   ["**Recurso de inconstitucionalidad**", f"{tag('I.2', 'Capítulo II')} (14-38)", "Arts. 53.1 y 161.1.a", "Presidente del Gobierno, Defensor del Pueblo, 50 Diputados, 50 Senadores, ejecutivos y asambleas autonómicas · TC"],
   ["**Vinculación de los poderes públicos**", f"{tag('I.2', 'Capítulo II')} (14-38)", "Art. 53.1", "Todos los poderes públicos"]])}
@@ -95,7 +95,7 @@ Hay **tres estados**, de menor a mayor gravedad: **alarma < excepción < sitio**
   ["**Papel del Congreso**", "Se le **da cuenta** (reunido inmediatamente)", "**Autoriza** antes", "**Declara**"],
   ["**Duración**", "**No más de 15 días**", "**No más de 30 días**", "**La que determine el Congreso**"],
   ["**Prórroga**", "Solo con **autorización** del Congreso", "**Otro plazo igual** (30 días), con los **mismos requisitos**", "La que fije el Congreso"],
-  ["**Derechos**", "**No se suspende ninguno** (solo limitaciones)", "Se **suspenden** los del art. 55.1, **salvo el 17.3**", "Se **suspenden** los del art. 55.1, **incluido el 17.3**"],
+  ["**Derechos**", "**No se suspende ninguno** (solo limitaciones)", "**Pueden suspenderse** los del art. 55.1, **salvo el 17.3** (solo los que pida la solicitud de autorización: art. 13.2.a LOEAS)", "**Pueden suspenderse** los del art. 55.1, **incluido el 17.3** (art. 32.3 LOEAS)"],
   ["**Artículos**", "CE 116.2; LO 4/1981, arts. 4 a 12", "CE 116.3; LO 4/1981, arts. 13 a 31", "CE 116.4; LO 4/1981, arts. 32 a 36"]])}
 
 {unidad("2.1 Estado de alarma (art. 116.2 CE; art. 6 LO 4/1981)",

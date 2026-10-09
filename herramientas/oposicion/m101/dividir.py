@@ -220,7 +220,7 @@ Es el **segundo tema del bloque I** (el primero estudia la estructura de la Cons
         A("bVI", "IV. ¿Cómo se suspenden los derechos? Estados de alarma, excepción y sitio (arts. 55 y 116)", S["bVI"]["body"], 1)
         A("s27", "IV.1" + S["s27"]["title"][4:], S["s27"]["body"]); A("s28", "IV.2" + S["s28"]["title"][4:], S["s28"]["body"])
         A("s29", "IV.3 Qué derechos se pueden suspender: suspensión general e individual",
-          S["s29"]["body"] + "\n\n### 3.2 La suspensión individual (art. 55.2)\n\n" + S["s31"]["body"])
+          S["s29"]["body"] + "\n\n### 3.3 La suspensión individual (art. 55.2)\n\n" + S["s31"]["body"])
         A("s30", "IV.4" + S["s30"]["title"][4:], S["s30"]["body"]); A("s32", "IV.5" + S["s32"]["title"][4:], re.sub(r"Siguiente: [^*\n]+", "Siguiente: V. El Defensor del Pueblo", S["s32"]["body"]))
         A("bVIII", "V. El Defensor del Pueblo (art. 54)", donde(
           "Quinta pregunta. El Defensor del Pueblo es la **garantía institucional** de los derechos del Título I. Se estudia el art. 54 y la **LO 3/1981**: cómo se elige, cuánto dura su mandato, qué puede investigar y qué recursos puede interponer.",
@@ -246,7 +246,7 @@ Es el **tercer tema del bloque I**. Se apoya en el **Título IX de la Constituci
 | Bloque | Pregunta | Constitución | Otras normas |
 |---|---|---|---|
 | **I** | ¿Qué es, cómo se compone y cómo se organiza? | Arts. 159 y 160, 165 | LOTC arts. 1, 5 a 9, 14 a 16, 18, 19, 23 |
-| **II** | ¿Qué conoce? | Arts. 161 a 163 | LOTC arts. 30, 32, 33, 35, 41 a 46, 59 a 63, 67 a 72, 73 a 79 (y art. 95 CE) |
+| **II** | ¿Qué conoce? | Arts. 161 a 163 | LOTC arts. 30, 32, 33, 35, 41 a 46, 59 a 63, 68 a 72, 73 a 79 (y art. 95 CE) |
 | **III** | ¿Qué valor tienen las sentencias? | Art. 164 | LOTC arts. 38 a 40 y 93 |
 | **IV** | Resumen | — | — |
 

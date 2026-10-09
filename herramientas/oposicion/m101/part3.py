@@ -154,7 +154,7 @@ Tras el artículo 169 vienen **quince disposiciones**, que se agrupan así:
 
 {lit("CE", "df", ["entrará en vigor el mismo día de la publicación de su texto oficial"])}
 
-!> La **disposición derogatoria** deroga la Ley para la Reforma Política y las Leyes Fundamentales del régimen anterior (apartados 1 y 2) y, con carácter general, «cuantas disposiciones se opongan a lo establecido en esta Constitución» (apartado 3); la **final** fija la **entrada en vigor** (→ I.1).
+!> La **disposición derogatoria** deroga la Ley para la Reforma Política y las Leyes Fundamentales del régimen anterior (apartado 1), y considera definitivamente derogadas las leyes de 25 de octubre de 1839 (en lo que afectara a Álava, Guipúzcoa y Vizcaya) y de 21 de julio de 1876 (apartado 2) y, con carácter general, «cuantas disposiciones se opongan a lo establecido en esta Constitución» (apartado 3); la **final** fija la **entrada en vigor** (→ I.1).
 """, 2)
 
 T.ap("s8", "II.6 Resumen de la estructura", resumen([

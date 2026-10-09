@@ -91,6 +91,7 @@ AC(M, 20, 1, "CE", "a167", "Reforma", "Señale la respuesta correcta en relació
    "Art. 167.3 CE: «Aprobada la reforma por las Cortes Generales, será sometida a referéndum para su ratificación cuando así lo soliciten, dentro de los quince días siguientes a su aprobación, una décima parte de los miembros de cualquiera de las Cámaras.»", ["dentro de los quince días siguientes a su aprobación, una décima parte de los miembros de cualquiera de las Cámaras"])
 
 # ------------------------------------------------------------------ M105 · Test de tema
+T.Q[-1]["real"] = "Examen GACE-L 2013 · 1.er ejercicio · pregunta 1"
 M = "M105"
 NOEXP = "El documento no desarrolla esta solución; el artículo, de la norma vigente: "
 AC(M, 1, 2, "CE", "a55", "Suspensión", "La suspensión de los derechos y libertades se encuentra regulada en la Constitución en:",
@@ -186,6 +187,7 @@ AC(M, 30, 3, "LOTC", "aveintitres", "Tribunal Constitucional", "Según la Ley Or
 AC(M, 31, 1, "CE", "a9", "Contenido", "¿Cuáles de los siguientes principios generales del Derecho aparecen en el artículo 9.3 de la Constitución Española de 1978?",
    ["La autonomía y la solidaridad.", "La buena fe y la equidad.", "La publicidad de las normas, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos.", "La eficacia y la jerarquía."], "c",
    NOEXP + "art. 9.3 CE: «La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos.»", ["la publicidad de las normas", "la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos"])
+T.Q[-1]["real"] = "Examen GACE-L 2024 · 1.er ejercicio · pregunta 49"
 AC(M, "32 (actualizada: reforma de 2024)", 1, "CE", "a49", "Reforma", "La reforma de la Constitución Española de 1978 de 15 de febrero de 2024 tiene por objeto:",
    ["El artículo 49.", "El artículo 33.", "El artículo 50.", "El artículo 47."], "a",
    "**Pregunta de la academia actualizada** (el enunciado original la llamaba «la última reforma», pero hoy la última es la de 2026). La reforma de 15 de febrero de 2024 modificó el **art. 49** (personas con discapacidad): «Las personas con discapacidad ejercen los derechos previstos en este Título en condiciones de libertad e igualdad reales y efectivas.»", ["Las personas con discapacidad ejercen los derechos previstos en este Título en condiciones de libertad e igualdad reales y efectivas"])

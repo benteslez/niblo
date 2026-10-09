@@ -41,6 +41,7 @@ El cuadro cruza **cada unidad del Título I** con **cada garantía**. {IMP} Es *
 - **Recurso de amparo:** el **art. 14 + la sección 1.ª + el art. 30.2**.
 - **Defensor del Pueblo:** **todo el Título I**.
 - **Recurso de inconstitucionalidad y vinculación a los poderes públicos:** todo el **capítulo II** (arts. **14 a 38**).
+- *Ojo:* el ✘ de inconstitucionalidad del art. 10, el capítulo I y el capítulo III solo indica que el art. 53.1 no la cita para ellos; una ley contraria a cualquier precepto de la Constitución, también a estos, puede declararse inconstitucional (→ V.5).
 
 !> {IMP} **Mnemotecnia de las tres garantías «fuertes»:** la **sección 1.ª (15-29)** las tiene **todas**. El **art. 14** las tiene todas **menos la ley orgánica**. Y el **30.2** solo tiene **amparo** de entre las especiales. Todo lo demás del capítulo II solo vincula, exige ley y puede llegar al **TC por inconstitucionalidad**.
 
@@ -48,7 +49,7 @@ El cuadro cruza **cada unidad del Título I** con **cada garantía**. {IMP} Es *
 """, 2)
 
 T.ap("s18", "IV.3 Los deberes del Título I", f"""
-El título habla de **derechos y deberes**. Los deberes expresamente declarados son pocos y se reconocen por la palabra «**deber**» en el texto (además, el **39.3** impone a los padres el deber de asistencia a los hijos y el **30.4** prevé deberes en casos de grave riesgo, catástrofe o calamidad pública):
+El título habla de **derechos y deberes**. Los deberes expresamente declarados son pocos y casi siempre el texto usa la palabra «**deber**» (el art. 31, en cambio, lo impone con «contribuirán»). Además, los arts. **32.2** y **43.2** remiten a la ley los «derechos y deberes» de los cónyuges y de todos respecto de la salud, el **39.3** impone a los padres el deber de asistencia a los hijos y el **30.4** prevé deberes en casos de grave riesgo, catástrofe o calamidad pública. Los cuatro deberes del cuadro:
 
 {tabla(["Artículo", "Deber", "Texto literal"], [
   [tag("I.2.2", "Art. 30"), "**Defender a España** (y obligaciones militares, objeción de conciencia, servicio civil, grave riesgo o catástrofe)", c("CE", "a30", "Los españoles tienen el derecho y el deber de defender a España")],
@@ -88,7 +89,7 @@ Los derechos son cosas importantes que **no puede regular un reglamento**: solo 
 {tabla(["Artículo", "Ley orgánica de…", "Literal"], [
   [tag("P", "Art. 8.2"), "Bases de la organización militar (Fuerzas Armadas)", c("CE", "a8", "Una ley orgánica regulará las bases de la organización militar")],
   [tag("I.4", "Art. 54"), "El Defensor del Pueblo", c("CE", "a54", "Una ley orgánica regulará la institución del Defensor del Pueblo")],
-  [tag("IV", "Art. 116.1"), "Estados de alarma, de excepción y de sitio", c("CE", "a116", "Una ley orgánica regulará los estados de alarma, de excepción y de sitio")],
+  [tag("V", "Art. 116.1"), "Estados de alarma, de excepción y de sitio", c("CE", "a116", "Una ley orgánica regulará los estados de alarma, de excepción y de sitio")],
   [tag("IX", "Art. 165"), "El Tribunal Constitucional", c("CE", "a165", "Una ley orgánica regulará el funcionamiento del Tribunal Constitucional")]])}
 
 !> {IMP} **Atención a la «ley de igualdad».** El vídeo del módulo dice que la ley de igualdad entre mujeres y hombres va por ley orgánica aunque el art. 14 quede fuera de la sección 1.ª. Es cierto que se llama **Ley Orgánica 3/2007**, pero **no toda ella** tiene ese carácter, según su propia disposición final:
@@ -117,7 +118,7 @@ Es **el último remedio**: normalmente se acude al Tribunal Constitucional **cua
   lit("CE", "a53", ["recurso de amparo ante el Tribunal Constitucional", "objeción de conciencia reconocida en el artículo 30"], solo=[2], titulo="Artículo 53.2 (amparo)"),
   lx("LOTC", "acuarentayuno", 41, ["artículos catorce a veintinueve de la Constitución", "objeción de conciencia reconocida en el artículo treinta"], solo=[1, 2]),
   fichab("Recurso de amparo constitucional",
-         "Persona natural o jurídica con interés legítimo, **Defensor del Pueblo** y **Ministerio Fiscal** (art. 162.1.b CE; art. 46 LOTC)",
+         "Toda persona natural o jurídica que invoque un interés legítimo, **Defensor del Pueblo** y **Ministerio Fiscal** (art. 162.1.b CE; art. 46 LOTC)",
          ["Frente a violaciones de los derechos de los **arts. 14 a 29** y de la **objeción de conciencia (art. 30.2)**", "Por disposiciones, actos, omisiones o vía de hecho de los poderes públicos"],
          ["Plazos según el origen de la violación (→ 3.2)", "Se admite solo si tiene **especial trascendencia constitucional** (art. 50.1.b LOTC)"],
          f"{IMP} Amparo: **14 + 15 a 29 + 30.2**. Los derechos de la sección 2.ª (salvo el 30.2) y los principios del capítulo III **no** tienen amparo."))}

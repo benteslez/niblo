@@ -103,10 +103,10 @@ La Constitución se ha reformado **cuatro veces**, siempre por el procedimiento 
 ^> **Antes de 2024.** El art. 49 era un solo párrafo, con enfoque **asistencial**: ordenaba a los poderes públicos una política de previsión, tratamiento, rehabilitación e integración de los **«disminuidos»** físicos, sensoriales y psíquicos, con atención especializada y amparo para disfrutar de los derechos del Título I. La reforma cambió el término por **«personas con discapacidad»** y el enfoque por el de derechos en **libertad e igualdad reales y efectivas**, con autonomía personal, inclusión social y participación de sus organizaciones.
 
 {unidad("2.4 Reforma del art. 69.3 (2026)",
-  lit("CE", "a69", ["Ibiza, Formentera, Menorca"], solo=[3]),
+  lit("CE", "a69", ["Ibiza, Formentera"], solo=[3]),
   lit("REF2026", "preambulo", ["19 de mayo de 2026"], solo=[ix("REF2026", "preambulo", "Artículo único") + j for j in (0, 1)] + [ix("REF2026", "preambulo", "Madrid,")], titulo="Reforma de la Constitución de 2026 (artículo único y fecha)"))}
 
-^> **Antes de 2026.** El apartado tenía ya una circunscripción por **isla o agrupación de islas** con Cabildo o Consejo Insular, con tres senadores para las islas mayores y uno para cada una de las demás, pero **Ibiza y Formentera figuraban unidas como una agrupación** que elegía **un solo senador**. La reforma las separó: cada una elige el suyo y desaparece la referencia a las «agrupaciones».
+^> **Antes de 2026.** El apartado tenía ya una circunscripción por **isla o agrupación de islas** con Cabildo o Consejo Insular, con tres senadores para las islas mayores y uno para cada una de las demás, pero **Ibiza y Formentera figuraban unidas como una agrupación** que elegía **un solo senador**. La reforma las separó: cada una elige el suyo y desaparece la referencia a las «agrupaciones». Ojo también a los nombres: la redacción de 1978 decía «Gomera, Hierro»; la vigente, «La Gomera, El Hierro».
 
 ### 2.5 Por qué se reformó cada artículo
 
@@ -120,7 +120,7 @@ Las cuatro reformas tienen una **causa externa o social** que explica su conteni
 
 {IMP} **El texto que figura en cada reforma (2.1 a 2.4) es el redactado definitivo**: el artículo tal como **quedó** tras la reforma y como está **hoy en vigor** en el texto consolidado del BOE. Cada reforma sustituye el texto anterior; no se acumulan. Dos matices de eficacia: en el art. 135, los límites de déficit estructural del apartado 2 «entrarán en vigor a partir de 2020», y en el 69.3, las nuevas circunscripciones del Senado se aplican desde las **primeras elecciones al Senado posteriores** a la reforma.
 
-!> {IMP} **Para el examen:** artículos reformados **13.2, 135, 49 y 69.3**, y año de cada reforma (**1992, 2011, 2024, 2026**). La del 135 es la más «radical»: se reescribió entero, con ocasión de la crisis de la deuda.
+!> {IMP} **Para el examen:** artículos reformados **13.2, 135, 49 y 69.3**, y año de cada reforma (**1992, 2011, 2024, 2026**). La del 135 es la más «radical»: se reescribió entero (como el 49 en 2024), en plena crisis económica y financiera.
 
 ?> La **guía M101** da el art. 69.3 el «20 de mayo de 2026»: es la fecha de **publicación y entrada en vigor**. La reforma es de **19 de mayo de 2026** (sanción).
 """, 2)
