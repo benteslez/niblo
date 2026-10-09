@@ -11061,28 +11061,33 @@ function pdBiberon(dia, s, meta, tomasObj) {
       <button type="button" class="pd-bib-btn" onclick="${tomasObj}.nuevaToma('${dia.fecha}'${hora !== "--:--" ? `,'${hora}'` : ""})">Anotar ml</button></div>
   </div>`;
 }
-/* Plegado del plan del dia (tarjeta entera y cada comida). Cada dia empieza
-   todo abierto; lo que se pliega o despliega se recuerda durante ese dia
-   (en este movil) y al dia siguiente vuelve a salir abierto. Los dias que
-   no son hoy (calendario) lo recuerdan solo mientras la app esta abierta. */
-const PD_PLEGADO_KEY = "niblo.pd.plegado";
+/* Plegado del plan del dia. Cada dia empieza con la tarjeta abierta y las
+   comidas (desayuno, almuerzo...) plegadas; lo que se abre o cierra se
+   recuerda durante ese dia (en este movil) y al dia siguiente vuelve a
+   empezar igual. Los dias que no son hoy (calendario) lo recuerdan solo
+   mientras la app esta abierta. Se guarda el estado de cada parte
+   (true = abierta), no solo lo plegado. */
+const PD_PLEGADO_KEY = "niblo.pd.abiertos";
 const PD_PLEGADO_MEM = {};
-function pdPlegados(fecha) {
+function pdEstados(fecha) {
   if (fecha === HOY_ISO) {
     try {
       const g = JSON.parse(localStorage.getItem(PD_PLEGADO_KEY) || "null");
-      return g && g.fecha === HOY_ISO && g.cerr ? g.cerr : {};
+      return g && g.fecha === HOY_ISO && g.ab ? g.ab : {};
     } catch (e) { return {}; }
   }
   return PD_PLEGADO_MEM[fecha] || {};
 }
-function pdAbierto(fecha, parte) { return pdPlegados(fecha)[parte] ? "" : " open"; }
+function pdAbierto(fecha, parte) {
+  const v = pdEstados(fecha)[parte];
+  return (v === undefined ? parte === "dia" : v) ? " open" : "";
+}
 function pdToggle(fecha, parte, el) {
-  const cerr = Object.assign({}, pdPlegados(fecha));
-  if (el.open) delete cerr[parte]; else cerr[parte] = true;
+  const ab = Object.assign({}, pdEstados(fecha));
+  ab[parte] = !!el.open;
   if (fecha === HOY_ISO) {
-    try { localStorage.setItem(PD_PLEGADO_KEY, JSON.stringify({ fecha, cerr })); } catch (e) {}
-  } else PD_PLEGADO_MEM[fecha] = cerr;
+    try { localStorage.setItem(PD_PLEGADO_KEY, JSON.stringify({ fecha, ab })); } catch (e) {}
+  } else PD_PLEGADO_MEM[fecha] = ab;
 }
 function htmlPlanDia(dia, marcarFn) {
   const e = dia.v2, pauta = pdPauta(dia.fecha);
