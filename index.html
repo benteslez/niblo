@@ -5983,6 +5983,11 @@
     .pb-app .pd-bloque.comida .pd-bloque-cab { background: var(--green-soft); color: var(--green); }
     .pb-app .pd-bloque.leche .pd-bloque-cab { background: var(--blue-soft); color: var(--blue); }
     .pb-app .pd-bloque-hora { margin-left: auto; font-weight: 600; text-transform: none; letter-spacing: 0; }
+    .pb-app summary.pd-bloque-cab { cursor: pointer; list-style: none; }
+    .pb-app summary.pd-bloque-cab::-webkit-details-marker { display: none; }
+    .pb-app .pd-bloque-chev { font-size: 1.125rem; line-height: 1; opacity: .6; transition: transform .18s ease; align-self: center; }
+    .pb-app .pd-bloque[open] .pd-bloque-chev { transform: rotate(90deg); }
+    .pb-app .pd-dia > .pd-cab { margin-top: var(--gap-3); }
     .pb-app .pd-bloque > :not(.pd-bloque-cab) { margin-left: 12px; margin-right: 12px; }
     .pb-app .pd-cat { margin-top: 10px; }
     .pb-app .pd-cat-tit { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
@@ -11035,7 +11040,7 @@ function pdItem(dia, it, marcarFn, recetaAqui) {
     ${it.notaPlan ? `<div class="pd-linea"><span>Nota</span>${esc(it.notaPlan)}</div>` : ""}
     ${notaAl ? `<div class="pd-linea"><span>Ojo</span>${esc(notaAl)}</div>` : ""}
     ${it.origen ? `<div class="pd-origen">${esc(it.origen)}</div>` : ""}
-    ${marcaId && (nuevo || al) ? `<div class="pd-reac"><span>¿Cómo le fue?</span><div class="seg-btns">
+    ${marcaId ? `<div class="pd-reac"><span>¿Cómo le fue?</span><div class="seg-btns">
         <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}" onclick="${marcarFn}('${marcaId}','tolerado')" aria-pressed="${est === 'tolerado'}">Tolerado</button>
         <button type="button" class="${est === 'rechazo' ? 'on rechazo' : ''}" onclick="${marcarFn}('${marcaId}','rechazo')" aria-pressed="${est === 'rechazo'}">Rechazo</button>
         <button type="button" class="${est === 'reaccion' ? 'on reaccion' : ''}" onclick="${marcarFn}('${marcaId}','reaccion')" aria-pressed="${est === 'reaccion'}">Reacción</button>
@@ -11056,6 +11061,34 @@ function pdBiberon(dia, s, meta, tomasObj) {
       <button type="button" class="pd-bib-btn" onclick="${tomasObj}.nuevaToma('${dia.fecha}'${hora !== "--:--" ? `,'${hora}'` : ""})">Anotar ml</button></div>
   </div>`;
 }
+/* Plegado del plan del dia. Cada dia empieza con la tarjeta abierta y las
+   comidas (desayuno, almuerzo...) plegadas; lo que se abre o cierra se
+   recuerda durante ese dia (en este movil) y al dia siguiente vuelve a
+   empezar igual. Los dias que no son hoy (calendario) lo recuerdan solo
+   mientras la app esta abierta. Se guarda el estado de cada parte
+   (true = abierta), no solo lo plegado. */
+const PD_PLEGADO_KEY = "niblo.pd.abiertos";
+const PD_PLEGADO_MEM = {};
+function pdEstados(fecha) {
+  if (fecha === HOY_ISO) {
+    try {
+      const g = JSON.parse(localStorage.getItem(PD_PLEGADO_KEY) || "null");
+      return g && g.fecha === HOY_ISO && g.ab ? g.ab : {};
+    } catch (e) { return {}; }
+  }
+  return PD_PLEGADO_MEM[fecha] || {};
+}
+function pdAbierto(fecha, parte) {
+  const v = pdEstados(fecha)[parte];
+  return (v === undefined ? parte === "dia" : v) ? " open" : "";
+}
+function pdToggle(fecha, parte, el) {
+  const ab = Object.assign({}, pdEstados(fecha));
+  ab[parte] = !!el.open;
+  if (fecha === HOY_ISO) {
+    try { localStorage.setItem(PD_PLEGADO_KEY, JSON.stringify({ fecha, ab })); } catch (e) {}
+  } else PD_PLEGADO_MEM[fecha] = ab;
+}
 function htmlPlanDia(dia, marcarFn) {
   const e = dia.v2, pauta = pdPauta(dia.fecha);
   if (!e || !pauta) return "";
@@ -11068,9 +11101,14 @@ function htmlPlanDia(dia, marcarFn) {
   if (ses) tareas.push(`Hoy toca cocinar (sesión de batch): ${ses.cocinar.map(c => esc(c.titulo)).join(", ")}. <a href="#" onclick="PB.irA('cocina');return false">Ver la sesión</a>`);
   if (e.descongelar && e.descongelar.length) tareas.push(`Hoy: pasa del congelador a la nevera, para mañana: ${e.descongelar.map(esc).join(", ")}.`);
   const hotel = e.hotel && PLAN_DOC.hotel;
-  let html = `<div class="card pd-dia">
+  const f = dia.fecha;
+  let html = `<details class="card qlt-card pd-dia"${pdAbierto(f, "dia")} ontoggle="PB.pdToggle('${f}','dia',this)">
+    <summary class="sem-cab">
+      <h2>${f === HOY_ISO ? "Qué le toca hoy" : "Plan del día"}<span class="n">${esc(pauta.etiqueta)}${
+        e.nuevo ? ` · nuevo: ${esc(e.nuevo)} (día ${e.nuevoDia} de ${e.nuevoTotal})` : ""}</span></h2>
+      <span class="sem-chevron" aria-hidden="true">&#8250;</span>
+    </summary>
     <div class="pd-cab">
-      <h2>${dia.fecha === HOY_ISO ? "Qué le toca hoy" : "Plan del día"}</h2>
       <div class="pd-cab-l">${capitalizar(fmtFechaLarga(dia.fecha))} · ${pdEdadTexto(dia.fecha)} · ${esc(pauta.etiqueta)}</div>
       ${e.nuevo ? `<div class="pd-cab-nuevo"><span class="pd-tag nuevo">NUEVO</span> <b>${esc(e.nuevo)}</b>
         (día ${e.nuevoDia} de ${e.nuevoTotal}, en el ${pauta.bloques[e.nuevoComida].et.toLowerCase()})
@@ -11086,8 +11124,8 @@ function htmlPlanDia(dia, marcarFn) {
     if (!meta) continue;
     const its = porBloque[s] || [];
     const comida = meta.tipo === "comida";
-    html += `<section class="pd-bloque ${comida ? "comida" : "leche"} b-${s}">
-      <div class="pd-bloque-cab"><span class="pd-bloque-tit">${esc(meta.et)}</span><span class="pd-bloque-hora">${esc(meta.hora)}</span></div>
+    html += `<details class="pd-bloque ${comida ? "comida" : "leche"} b-${s}"${pdAbierto(f, s)} ontoggle="PB.pdToggle('${f}','${s}',this)">
+      <summary class="pd-bloque-cab"><span class="pd-bloque-tit">${esc(meta.et)}</span><span class="pd-bloque-hora">${esc(meta.hora)}</span><span class="pd-bloque-chev" aria-hidden="true">&#8250;</span></summary>
       ${meta.nota ? `<p class="pd-nota">${esc(meta.nota)}</p>` : ""}`;
     if (comida) {
       /* receta debajo del último alimento que la usa en este bloque */
@@ -11106,7 +11144,7 @@ function htmlPlanDia(dia, marcarFn) {
       if (frutas.length) html += `<div class="pd-cat"><div class="pd-cat-tit">Fruta${s === "mm" ? " (pequeña)" : ""}</div>${frutas.map(it => pdItem(dia, it, marcarFn, true)).join("")}</div>`;
       html += pdBiberon(dia, s, meta, tomasObj);
     }
-    html += `</section>`;
+    html += `</details>`;
   }
   /* --- pie --- */
   const total = totalMlDia(dia.fecha);
@@ -11115,7 +11153,7 @@ function htmlPlanDia(dia, marcarFn) {
     <b>Fórmula hoy: ${total} ml</b>
     ${total < 500 ? `<div>${pasado ? "Quedó" : "Va"} por debajo de ~500 ml/día. El total de fórmula no debería bajar de ahí de forma sostenida (AEPap): si se repite varios días, coméntalo con la pediatra.</div>` : ""}
     <div class="pd-nota">BLW: siempre sentado y erguido, con un adulto delante; 2-3 trozos a la vez y él decide cuánto come. Las cantidades son orientativas.</div>
-  </div></div>`;
+  </div></details>`;
   return html;
 }
 
@@ -16674,7 +16712,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
