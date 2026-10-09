@@ -37,7 +37,7 @@ T.ap("s40", "VIII.2 Requisitos y elección", f"""
 
 {unidad("2.4 La excepción del Defensor: el cargo que no nombra el Rey",
   "Si repasas los cargos que has visto en este bloque, descubrirás una regla muy útil: **casi todos los nombramientos constitucionales los firma el Rey**, aunque la propuesta venga de otro órgano. Los **doce Magistrados del Tribunal Constitucional**, por ejemplo, son «nombrados por el Rey» a propuesta del Congreso, del Senado, del Gobierno y del Consejo General del Poder Judicial (art. 159.1 CE), y su Presidente también (art. 160 CE). El **Defensor del Pueblo es la excepción**: lo **eligen las Cortes Generales** y su nombramiento lo **acreditan conjuntamente con sus firmas los Presidentes del Congreso y del Senado** (art. 4 LO 3/1981), con publicación en el BOE. Sin Rey. Por eso, ante una pregunta que mencione al Defensor, piensa: *«la regla es el Rey; el Defensor es la excepción»*. [[M101]]",
-  f"!> {IMP} **Trampa típica:** que el Defensor del Pueblo lo «nombra el Rey a propuesta de las Cortes». Es **falso**: lo nombran, **conjuntamente, los Presidentes del Congreso y del Senado**.",
+  f"!> {IMP} **Trampa típica:** que el Defensor del Pueblo lo «nombra el Rey a propuesta de las Cortes». Es **falso**: lo eligen las Cortes y el nombramiento lo **acreditan conjuntamente con sus firmas los Presidentes del Congreso y del Senado** (art. 4.1 LO 3/1981).",
   "Y no te líes con la elección: aunque se parezca al «plan B» de la reforma constitucional, **no es lo mismo** (→ tema I.1 · IV.6). Aquí, si no se alcanza el 3/5 en el Senado, basta con su **mayoría absoluta** (art. 2.5), **una vez lograda la mayoría de 3/5 en el Congreso**.")}
 """, 2)
 

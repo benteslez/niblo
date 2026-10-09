@@ -261,6 +261,13 @@ class Tema:
                 return NOM[c] + ", " + (f"pregunta {n[0]}" if len(n) == 1 else "preguntas " + ", ".join(map(str, n[:-1])) + f" y {n[-1]}")
             partes = [_fmt(c, n) for c, n in sorted(ex.items())]
             texto = "; ".join(partes + sorted(set(libres)))
+            def _ademas(nota):
+                """«Además: …» sin repetir las preguntas de 2025 que la nota manual ya cita («GACE-L, pregunta 18»)."""
+                ETQ = {"L": r"GACE-L,", "P": r"GACE-P,", "X": r"GACE-L extraordinario,"}
+                def ya(c, n_): return c in ETQ and re.search(ETQ[c] + r"[^;(]*?\b" + str(n_) + r"\b", nota)
+                ex2 = {c: {n_ for n_ in ns if not ya(c, n_)} for c, ns in ex.items()}
+                t2 = "; ".join([_fmt(c, n) for c, n in sorted(ex2.items()) if n] + sorted(set(libres)))
+                return " Además: " + t2 + "." if t2 else ""
             # «{{EXAMEN:L24.48,P24.3}}»: la pill (y su frase) abren el diálogo con la pregunta y su respuesta (oposicion.html)
             refs = [f"{c}.{n_}" for c, ns in sorted(ex.items()) for n_ in sorted(ns)]
             CONV = {"GACE-L 2025": "L25", "GACE-L y GACE-P 2024": "LP24", "GACE-L extraordinario 2024": "X24", "GACE-L y GACE-P 2022": "LP22",
@@ -277,7 +284,7 @@ class Tema:
             if cab is None:
                 lin0 = sec["body"].split("\n", 1)[0]
                 if lin0.startswith("{{EXAMEN}}"):
-                    sec["body"] = PILL + lin0[len("{{EXAMEN}}"):].rstrip() + " Además: " + texto + "." + sec["body"][len(lin0):]
+                    sec["body"] = PILL + lin0[len("{{EXAMEN}}"):].rstrip() + _ademas(lin0) + sec["body"][len(lin0):]
                 else:
                     sec["body"] = PILL + " **Preguntado en exámenes oficiales:** " + texto + ".\n\n" + sec["body"]
                 continue
@@ -285,7 +292,7 @@ class Tema:
             resto = sec["body"][i:]
             mm = re.match(r"\n\n(\{\{EXAMEN\}\}[^\n]*)", resto)
             if mm:
-                nueva = PILL + mm.group(1)[len("{{EXAMEN}}"):].rstrip() + " Además: " + texto + "."
+                nueva = PILL + mm.group(1)[len("{{EXAMEN}}"):].rstrip() + _ademas(mm.group(1))
                 sec["body"] = sec["body"][:i] + "\n\n" + nueva + resto[mm.end():]
             else:
                 sec["body"] = sec["body"][:i] + "\n\n" + PILL + " **Preguntado en exámenes oficiales:** " + texto + "." + resto
