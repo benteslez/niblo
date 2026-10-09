@@ -8646,7 +8646,6 @@ const VACCINES= [
 
   { id: "a9_vph",    grupo: "9 años",   age: "A partir de los 9 años", vaccine: "Virus del papiloma humano (VPH)", dose: "Según esquema" },
 
-  { id: "x_covid",   grupo: "Otras",    age: "Sin rango de edad", vaccine: "Covid-19",              dose: "Según esquema" },
   { id: "x_vrs",     grupo: "Otras",    age: "Recién nacido (temporada)", vaccine: "Nirsevimab (VRS)", dose: "Única estacional" },
   { id: "x_menc",    grupo: "Otras",    age: "Complementaria",   vaccine: "Meningococo C",          dose: "Según pauta" },
   { id: "x_menb",    grupo: "Otras",    age: "Complementaria",   vaccine: "Meningococo B",          dose: "1ª" },
@@ -8899,8 +8898,13 @@ function sembrarCarnetTanda2(st) {
   return st;
 }
 
+/* Vacunas que se quitaron del catalogo y no deben volver aunque una lista
+   guardada (editada a mano o de otro movil) aun las lleve. Covid-19: la
+   familia confirmo que no se la ponen, y con edad "sin rango" avisaba a diario. */
+const VACUNAS_RETIRADAS = new Set(["x_covid"]);
 function normalizarVacunas(guardadas, hechas, editadas) {
   const ids = new Set(VACCINES.map(v => v.id));
+  if (Array.isArray(guardadas)) guardadas = guardadas.filter(v => !(v && VACUNAS_RETIRADAS.has(v.id)));
   /* Si en esta casa han quitado alguna vacuna o han añadido una suya, manda su
      lista: reponer el catalogo entero les resucitaria lo borrado en cada
      arranque. La bandera vive en config y viaja con el documento, asi que los
@@ -14619,6 +14623,9 @@ function vacunasPendientes() {
   });
 }
 
+/* Pausa del aviso de vitamina D pedida por la familia: no sale hasta este
+   dia (incluido vuelve a salir). Lo que se apunte a mano sigue en la linea. */
+const VITD_PAUSA_HASTA = "2026-10-13";
 function calcularAvisos() {
   const out = [];
   const vistos = avisosVistos();
@@ -14629,7 +14636,7 @@ function calcularAvisos() {
   /* El aviso ya no desaparece al marcarlo: se queda con el boton en verde.
      Asi se ve que ESTA dada, y no solo que ya no lo recuerda — y se puede
      desmarcar si se toco por error. */
-  if (meses != null && meses < 12) {
+  if (meses != null && meses < 12 && HOY_ISO >= VITD_PAUSA_HASTA) {
     const dada = !!STATE.vitaminaD[HOY_ISO];
     out.push({ id: "vitd:" + HOY_ISO, tipo: "diario", icono: "💊", hecho: dada,
       titulo: "Vitamina D de hoy",
