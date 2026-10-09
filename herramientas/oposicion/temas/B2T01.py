@@ -1231,7 +1231,7 @@ EX_P9 = examen("P", 9, {
   [("Al Consejo, que se pronunciará por unanimidad", "TUE", "Artículo 49", "dirigirá su solicitud al Consejo, que se pronunciará por unanimidad")])
 EX_X28 = examen("X", 28, {
   "a": f"Cambia quién informa y a quién: informan {cF(328, 'La Comisión y, en su caso, el Alto Representante')}, no el Parlamento Europeo.",
-  "b": "Cambia quién informa: no es el Consejo, que es destinatario de la información junto con el Parlamento Europeo.",
+  "b": "Cambia quién informa y a quién: no informa el Consejo, que es destinatario de la información junto con el Parlamento Europeo; y la Comisión no la recibe, es quien informa.",
   "c": f"Literal del art. 328.2: {cF(328, 'La Comisión y, en su caso, el Alto Representante de la Unión para Asuntos Exteriores y Política de Seguridad informarán periódicamente al Parlamento Europeo y al Consejo')}.",
   "d": "Cambia el segundo informante (el Consejo en vez del Alto Representante) y los destinatarios (Consejo Europeo en vez de Consejo)."},
   [("La Comisión y, en su caso, el Alto Representante de la Unión para Asuntos Exteriores y Política de Seguridad informarán periódicamente al Parlamento Europeo y al Consejo", "TFUE", "Artículo 328", "La Comisión y, en su caso, el Alto Representante de la Unión para Asuntos Exteriores y Política de Seguridad informarán periódicamente al Parlamento Europeo y al Consejo")])
@@ -1339,7 +1339,7 @@ Q("TUE", "Artículo 47", "Naturaleza jurídica", "Según el artículo 47 del Tra
   "Art. 47 TUE.", "La Unión tiene personalidad jurídica")
 Q("TUE", "Artículo 2", "Valores y objetivos", "¿Cuál de los siguientes figura entre los valores en que se fundamenta la Unión según el artículo 2 del Tratado de la Unión Europea?",
   ["El Estado de Derecho.", "La economía social de mercado.", "La estabilidad de los precios.", "El pleno empleo."],
-  "Art. 2 TUE: dignidad humana, libertad, democracia, igualdad, Estado de Derecho y respeto de los derechos humanos. Las demás opciones aparecen en el art. 3.3 como objetivos.", "democracia, igualdad, Estado de Derecho")
+  "Art. 2 TUE: dignidad humana, libertad, democracia, igualdad, Estado de Derecho y respeto de los derechos humanos. Las demás opciones no son valores: aparecen en el art. 3.3, dentro del desarrollo sostenible por el que obrará la Unión.", "democracia, igualdad, Estado de Derecho")
 Q("TUE", "Artículo 3", "Valores y objetivos", "Según el artículo 3.1 del Tratado de la Unión Europea, la Unión tiene como finalidad promover:",
   ["La paz, sus valores y el bienestar de sus pueblos.", "El mercado interior, la competencia y el empleo.", "La seguridad, la defensa y la libertad de sus ciudadanos.", "La unión económica y monetaria y la estabilidad de los precios."],
   "Art. 3.1 TUE.", "La Unión tiene como finalidad promover la paz, sus valores y el bienestar de sus pueblos")
@@ -1420,7 +1420,7 @@ Q("TUE", "Artículo 53", "TUE y TFUE", "Según el artículo 53 del Tratado de la
   "Art. 53 TUE. Los cincuenta años eran del Tratado CECA.", "El presente Tratado se concluye por un período de tiempo ilimitado")
 Q("TFUE", "Artículo 1", "TUE y TFUE", "Según el artículo 1.1 del Tratado de Funcionamiento de la Unión Europea, este Tratado:",
   ["Organiza el funcionamiento de la Unión y determina los ámbitos, la delimitación y las condiciones de ejercicio de sus competencias.", "Establece los valores y objetivos de la Unión.", "Regula la adhesión y la retirada de los Estados miembros.", "Crea la Unión Europea y le atribuye personalidad jurídica."],
-  "Art. 1.1 TFUE. Las demás son contenido del TUE (arts. 2, 3, 47, 49 y 50).", "El presente Tratado organiza el funcionamiento de la Unión y determina los ámbitos, la delimitación y las condiciones de ejercicio de sus competencias")
+  "Art. 1.1 TFUE. Las demás son contenido del TUE (arts. 1, 2, 3, 47, 49 y 50).", "El presente Tratado organiza el funcionamiento de la Unión y determina los ámbitos, la delimitación y las condiciones de ejercicio de sus competencias")
 Q("LO1_2008", "a1", "Tratados", "Según el artículo 1 de la Ley Orgánica 1/2008, el Tratado de Lisboa se firmó en la capital de la República de Portugal el:",
   ["13 de diciembre de 2007.", "1 de diciembre de 2009.", "18 de junio de 2004.", "7 de febrero de 1992."],
   "Art. 1 LO 1/2008. El 1-12-2009 es su entrada en vigor; el 18-6-2004, el acuerdo del Consejo Europeo sobre el Proyecto de Constitución europea (se firmó el 29-10-2004); el 7-2-1992, la firma de Maastricht.", "firmado en la capital de la República de Portugal el 13 de diciembre de 2007")
@@ -1524,9 +1524,9 @@ for q_, a_, cat in [
   ("Art. 7 TUE: mayorías", "Riesgo claro: Consejo, 4/5 + aprobación del PE. Violación grave y persistente: Consejo Europeo, unanimidad + aprobación del PE. Suspensión de derechos: Consejo, mayoría cualificada.", "Defensa de los valores"),
   ("Revisión ordinaria (art. 48 TUE): ¿quién puede presentar proyectos?", "El Gobierno de cualquier Estado miembro, el Parlamento Europeo o la Comisión, al Consejo.", "Revisión de los Tratados"),
   ("Adhesión (art. 49 TUE): ¿a quién se dirige la solicitud y cómo decide?", "Al Consejo, que decide por unanimidad, tras consultar a la Comisión y con aprobación del PE (mayoría de sus miembros).", "Ampliación"),
-  ("Criterios de Copenhague", "Consejo Europeo de 1993: instituciones estables (democracia, Estado de Derecho, derechos humanos, minorías); economía de mercado viable; capacidad de asumir el acervo (ficha 5.5.1 del PE).", "Ampliación"),
+  ("Criterios de Copenhague", "Consejo Europeo de 1993: instituciones estables (democracia, Estado de Derecho, derechos humanos, minorías); economía de mercado viable y capacidad de hacer frente a la presión competitiva y las fuerzas del mercado dentro de la Unión; capacidad de asumir el acervo (ficha 5.5.1 del PE).", "Ampliación"),
   ("¿Cuándo se adhirieron España y Portugal?", "En 1986 (fichas 1.1.2 y 5.5.1 del PE).", "Ampliación"),
-  ("Retirada (art. 50 TUE): notificación, acuerdo y plazo", "Notificación al Consejo Europeo; acuerdo celebrado por el Consejo por mayoría cualificada con aprobación del PE; dos años, prorrogables por unanimidad del Consejo Europeo.", "Retirada"),
+  ("Retirada (art. 50 TUE): notificación, acuerdo y plazo", "Notificación al Consejo Europeo; acuerdo celebrado por el Consejo por mayoría cualificada con aprobación del PE; dos años, prorrogables por unanimidad del Consejo Europeo de acuerdo con dicho Estado (art. 50.3).", "Retirada"),
   ("Cooperación reforzada: requisitos del art. 20 TUE", "Competencias no exclusivas; último recurso; al menos nueve Estados; abierta a todos; actos vinculan solo a los participantes.", "Cooperaciones reforzadas"),
   ("Cooperación reforzada: ¿a quién se dirige la solicitud?", "Régimen general: a la Comisión (que puede proponer o debe motivar que no lo hace); autoriza el Consejo, a propuesta de la Comisión y con aprobación del PE. PESC: al Consejo, que decide por unanimidad (art. 329 TFUE).", "Cooperaciones reforzadas"),
   ("Art. 328.2 TFUE: ¿quién informa sobre las cooperaciones reforzadas y a quién?", "La Comisión y, en su caso, el Alto Representante, al Parlamento Europeo y al Consejo.", "Cooperaciones reforzadas"),
@@ -1577,7 +1577,7 @@ for q_, a_, cat in [
 ]: T.fc(q_, a_, cat)
 
 T.glos("Consejo de Europa", "Organización intergubernamental europea fundada el 5-5-1949; no es una institución de la Unión (46 países según el vídeo M108, frente a 27 Estados miembros).", "s1", "Antecedentes")
-T.glos("Mayoría cualificada", "Doble mayoría en el Consejo: 55 % de los miembros (al menos quince) que representen el 65 % de la población (art. 16.4 TUE); 72 % si no se actúa a propuesta de la Comisión o del Alto Representante (art. 238 TFUE).", "s6", "Mayoría cualificada")
+T.glos("Mayoría cualificada", "Doble mayoría en el Consejo: 55 % de los miembros (al menos quince) que representen el 65 % de la población (art. 16.4 TUE); 72 % si no se actúa a propuesta de la Comisión o del Alto Representante (art. 238.2 TFUE). Si no participan en la votación todos los miembros del Consejo, los porcentajes se calculan sobre los Estados participantes (art. 238.3 TFUE).", "s6", "Mayoría cualificada")
 T.glos("Ciudadanía de la Unión", "Toda persona con la nacionalidad de un Estado miembro; se añade a la ciudadanía nacional sin sustituirla (art. 9 TUE). Se crea en Maastricht.", "s6b", "Principios democráticos")
 T.glos("Iniciativa ciudadana europea", "Un millón de ciudadanos de un número significativo de Estados invitan a la Comisión a presentar una propuesta (art. 11.4 TUE); se introduce con Lisboa.", "s6b", "Principios democráticos")
 T.glos("Convención", "Órgano de la revisión ordinaria (art. 48.3 TUE) compuesto por representantes de los Parlamentos nacionales, de los Jefes de Estado o de Gobierno, del PE y de la Comisión; adopta por consenso una recomendación.", "s10b", "Revisión de los Tratados")
