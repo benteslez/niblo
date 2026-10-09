@@ -154,7 +154,7 @@ Los apuntes siguen **el orden y los epígrafes de la guía de estudio M108** [[M
 
 - Cada punto empieza por el **texto de la guía M108** [[M108]] (reescrito y precisado donde la norma vigente lo exige) y sigue con el **texto literal** del Tratado (versión consolidada de EUR-Lex, etiqueta **DOUE**) o de la ley española (etiqueta **BOE**) y su **ficha** (Qué · Quién · Cómo · Plazos y mayorías · ⚠ Ojo en el examen). Los cuadros y esquemas de la guía van en su sitio; no son texto legal.
 - Lo que añade la fuente oficial (fichas temáticas del **Parlamento Europeo**, portal de la **Unión**) va **literal** y con su etiqueta y la advertencia «fuente oficial, no es texto legal».
-- **Si la guía o el vídeo discrepan de la norma vigente, prevalece la norma** y se avisa donde ocurre (hoy: mayoría cualificada del art. 7, Schengen, clasificación de los Tratados «originarios», categorías de competencias, «candidato potencial», rúbrica de la 1.ª parte del TFUE, referéndum «consultivo», tratados de adhesión que «no modifican» los Tratados, «alerta temprana», acción exterior solo en el TUE y resumen del art. 48.7).
+- **Si la guía o el vídeo discrepan de la norma vigente, prevalece la norma** y se avisa donde ocurre (hoy: mayoría cualificada del art. 7, Schengen, clasificación de los Tratados «originarios», categorías de competencias, «candidato potencial», rúbrica de la 1.ª parte del TFUE, referéndum «consultivo», tratados de adhesión que «no modifican» los Tratados, «alerta temprana», acción exterior solo en el TUE, resumen del art. 48.7 y cadena de procedimientos legislativos del cuadro).
 - Lo que el epígrafe comparte con otros temas se remite allí: instituciones (tema II.2 y tema II.3), Carta de Derechos Fundamentales y fuentes del Derecho (tema II.4), políticas (tema II.6).
 - Al final: el **Cierre** (repaso por bloques). Las preguntas de exámenes oficiales de este tema están en el **test** («Práctica activa», barra lateral).
 
@@ -606,7 +606,7 @@ U10_5 = unidad("4.5 Reglas de memoria y trampas del cuadro",
     "**Maastricht** y **Lisboa** son los que más políticas introducen y entre los que más se juega en las preguntas. En Maastricht: **defensa del consumidor, fondo de cohesión, cooperación al desarrollo, cultura, industria, educación, sanidad, redes transeuropeas** y calendario de la UEM; la guía propone inventar **una historia propia con esas iniciales** (cuanto más absurda, mejor).",
     "**Lisboa y las políticas:** **tres** evolucionan —cohesión económica, social y **territorial**; I+D y **política espacial**; educación, **formación profesional, juventud y deporte**— y **cuatro** son nuevas —**energía, turismo, protección civil y cooperación administrativa**—; además clasifica las políticas en **exclusivas, compartidas y de apoyo**.",
     "**Cadenas de políticas** (el color del cuadro): Fondo Social Europeo (Roma) → Cohesión económica y social (Acta Única) → Fondo de Cohesión (Maastricht) → Cohesión económica, social y territorial (Lisboa). Libre circulación y competencia (Roma) → Objetivo 92 (Acta Única) → Espacio Schengen. Educación (Maastricht) → Educación, formación profesional, juventud y deporte (Lisboa).",
-    "**Procedimientos legislativos:** **consulta** (Roma) y **dictamen conforme** (Acta Única, hoy «aprobación») → **procedimientos legislativos especiales** (PLE); **codecisión** (Maastricht) → **procedimiento legislativo ordinario** (PLO); el procedimiento de **cooperación** (Acta Única) desaparece; Lisboa define ambos (art. 289 TFUE). Siglas útiles según el vídeo: ICE, ELSJ, PLO, PLE.",
+    "**Procedimientos legislativos:** **consulta** (Roma) y **dictamen conforme** (Acta Única, hoy «aprobación») → **procedimientos legislativos especiales** (PLE); **codecisión** (Maastricht) → **procedimiento legislativo ordinario** (PLO); el procedimiento de **cooperación** (Acta Única) desaparece; Lisboa define ambos (art. 289 TFUE). *Matiz (la norma prevalece): el cuadro de la guía pone en la misma fila de color consulta → cooperación → PLE; la cooperación ya no existe, y lo que hoy recuerda al dictamen conforme es la «aprobación» del Parlamento Europeo en algunos procedimientos especiales.* Siglas útiles según el vídeo: ICE, ELSJ, PLO, PLE.",
     "**Procedimientos de control entre Estados:** violación (**Ámsterdam**, art. 7.2) y alerta temprana (**Niza**, art. 7.1); con **Lisboa**, retirada (art. 50) y revisión simplificada (art. 48)."),
   "?> **Discrepancia dentro de la guía (Schengen):** el cuadro sitúa el **Espacio Schengen** en **Ámsterdam**, y el vídeo lo atribuye a Maastricht. Prevalecen el cuadro y la fuente oficial: la ficha 1.1.3 del Parlamento Europeo cita la integración del acervo de Schengen entre los casos de cooperación reforzada regulada por disposiciones específicas, al tratar de Ámsterdam (→ VI.1.2); que el Protocolo de Schengen se anexó a Ámsterdam es dato de la norma, no de la guía.",
   ESQ)
@@ -759,7 +759,7 @@ U_IV5_3 = unidad("5.3 Resto de las disposiciones finales (arts. 47 y 49 a 55)",
      ["**53**", "Tiempo ilimitado del TUE"],
      ["**54**", "Ratificación y entrada en vigor del TUE"],
      ["**55**", "Idiomas en los que se redacta el TUE"]]),
-  GUIA_NOTA + " Resumen del vídeo: el art. 52 enumera los Estados miembros, el 53 dice que el TUE se celebra «por un período de tiempo ilimitado», el 54 regula su ratificación y entrada en vigor y el 55 los idiomas, que son los **oficiales de la Unión**.",
+  GUIA_NOTA + " Resumen del vídeo: el art. 52 enumera los Estados miembros, el 53 dice que el TUE «se concluye por un período de tiempo ilimitado», el 54 regula su ratificación y entrada en vigor y el 55 los idiomas, que son los **oficiales de la Unión**.",
   fichab("Valor de los Protocolos, ámbito, duración, ratificación e idiomas del TUE", "—",
          ["Los **Protocolos y Anexos** forman parte integrante de los Tratados (51)", "Ámbito territorial: art. 355 TFUE (52.2); el art. 52.1 enumera a los Estados miembros (no se reproduce: la versión consolidada de 2016 aún incluye al Reino Unido)", "Duración **ilimitada** (53)", "Ratificación «de conformidad con sus respectivas normas constitucionales» (54.1); la fecha de entrada en vigor del art. 54.2 es la **prevista inicialmente** (1-1-1993), no la real (1-11-1993, → III.2.3)", "Textos **igualmente auténticos** en las lenguas en que está redactado el Tratado (55.1)"],
          "Duración: **ilimitada**",
@@ -774,7 +774,7 @@ U_IV5_4 = unidad("5.4 Cuadro: ¿Consejo o Consejo Europeo?",
      ["**Art. 48.6 y 48.7** · revisión simplificada", "No aparece", "**Decide** (unanimidad)"],
      ["**Art. 49** · adhesión", "**Recibe la solicitud** y decide (unanimidad)", "Fija los criterios de elegibilidad"],
      ["**Art. 50** · retirada", "**Celebra** el acuerdo (mayoría cualificada)", "**Recibe la notificación**, da orientaciones y puede **prorrogar** el plazo (unanimidad)"],
-     ["**Art. 329 TFUE** · cooperación reforzada", "**Autoriza**", "**No interviene**"]]),
+     ["**Art. 329 TFUE** · cooperación reforzada", "**Autoriza**", "**No interviene** (salvo en los arts. 82.3, 83.3, 86.1 y 87.3 TFUE, → VI.1.3)"]]),
   ESQ,
   "!> **Regla del «hermano mayor»** (vídeo M108): lo **más grave** va al **Consejo Europeo**: la **violación** de los valores (7.2) y la **retirada** (50.2) se dirigen a él, mientras que la alerta temprana y la adhesión van al **Consejo**. El propio vídeo avisa de que es solo una ayuda para recordar: **no hay jerarquía** entre ambas instituciones, tienen funciones distintas.",
   "**Técnica de estudio del vídeo:** asignar un objeto (un bolígrafo, por ejemplo) a cada institución y **escenificar** el procedimiento moviendo quién habla con quién. Al pensar qué bolígrafo toca ahora estás pensando **qué institución hace qué**, que es justo lo que se pregunta. [[M108]]")
@@ -1581,7 +1581,7 @@ for q_, a_, cat in [
 ]: T.fc(q_, a_, cat)
 
 T.glos("Consejo de Europa", "Organización intergubernamental europea fundada el 5-5-1949; no es una institución de la Unión (46 países según el vídeo M108, frente a 27 Estados miembros).", "s1", "Antecedentes")
-T.glos("Mayoría cualificada", "Doble mayoría en el Consejo: 55 % de los miembros (al menos quince) que representen el 65 % de la población (art. 16.4 TUE); 72 % si no se actúa a propuesta de la Comisión o del Alto Representante (art. 238.2 TFUE). Si no participan en la votación todos los miembros del Consejo, los porcentajes se calculan sobre los Estados participantes (art. 238.3 TFUE).", "s6", "Mayoría cualificada")
+T.glos("Mayoría cualificada", "Doble mayoría en el Consejo: 55 % de los miembros (al menos quince) que representen el 65 % de la población (art. 16.4 TUE); 72 % si no se actúa a propuesta de la Comisión o del Alto Representante (art. 238.2 TFUE). Cuando, en aplicación de los Tratados, no participen en la votación todos los miembros del Consejo, los porcentajes se calculan sobre los Estados participantes (art. 238.3 TFUE).", "s6", "Mayoría cualificada")
 T.glos("Ciudadanía de la Unión", "Toda persona con la nacionalidad de un Estado miembro; se añade a la ciudadanía nacional sin sustituirla (art. 9 TUE). Se crea en Maastricht.", "s6b", "Principios democráticos")
 T.glos("Iniciativa ciudadana europea", "Un millón de ciudadanos de un número significativo de Estados invitan a la Comisión a presentar una propuesta (art. 11.4 TUE); se introduce con Lisboa.", "s6b", "Principios democráticos")
 T.glos("Convención", "Órgano de la revisión ordinaria (art. 48.3 TUE) compuesto por representantes de los Parlamentos nacionales, de los Jefes de Estado o de Gobierno, del PE y de la Comisión; adopta por consenso una recomendación.", "s10b", "Revisión de los Tratados")
@@ -1736,7 +1736,7 @@ MAPA_U, MAPA_A = IND.reorganizar(T, BLOQUES, BARE, OMITIR, REMAP_U, REMAP_A, PAR
 if os.environ.get("NIBLO_MAPA"):
     for k, v in sorted(MAPA_U.items()): print(k, "→", v)
 # Pill «Examen»: lo que la guía M108 da como muy preguntado o casi todos los años, y lo preguntado en los exámenes oficiales de 2025
-VAL = "La guía M108 lo valora entre lo que se pregunta **casi todos los años**. [[M108]]"
+VAL = "El vídeo M108 lo valora entre lo que se pregunta **casi todos los años**. [[M108]]"
 T.marcar_examen([
     (r"Categorías y ámbitos de competencias de la Unión", "Preguntas oficiales de 2025 sobre el art. 3 TFUE: GACE-L, pregunta 28; GACE-P, preguntas 8 y 19."),
     (r"La naturaleza jurídica en tres etapas", VAL),
@@ -1745,7 +1745,7 @@ T.marcar_examen([
     (r"Regla de memoria de los valores: LÍDER", VAL),
     (r"Qué aporta cada Tratado", "El vídeo M108 lo valora como **muy preguntado**: dominar el cuadro maestro resuelve entre el 40 % y el 50 % de las preguntas de Unión Europea. [[M108]]"),
     (r"La ciudadanía de la Unión \(art\. 9\)", VAL),
-    (r"Los tratados de adhesión y las candidaturas", "La guía M108 incluye entre lo que se pregunta casi todos los años **qué países entran y cuándo**. [[M108]]"),
+    (r"Los tratados de adhesión y las candidaturas", "El vídeo M108 incluye entre lo que se pregunta casi todos los años **qué países entran y cuándo**. [[M108]]"),
     (r"Los países fundadores y la Declaración Schuman", "Pregunta oficial de 2025: GACE-L, pregunta 18 (qué conmemora el Día de Europa)."),
     (r"Quién puede solicitar el ingreso y cómo se decide", "Pregunta oficial de 2025: GACE-P, pregunta 9 (a quién se dirige la solicitud; art. 49 TUE)."),
     (r"El procedimiento de revisión ordinario", "Pregunta oficial de 2025: GACE-L extraordinario, pregunta 30 (quiénes pueden presentar proyectos de revisión; art. 48.2 TUE)."),

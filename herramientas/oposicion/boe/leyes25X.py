@@ -29,7 +29,7 @@ Revisión manual (SI con dato None: no hay dato automático que discrimine):
 """
 from leyes25L import NOMBRE as _N
 
-NOMBRE = dict(_N, RD466_2026="Real Decreto 466/2026, por el que se aprueba el Estatuto de MUFACE",
+NOMBRE = dict(_N, RD466_2026="Real Decreto 466/2026, de adaptación de organismos públicos existentes en el ámbito estatal a la Ley 40/2015",
   CE="Constitución Española",
   LODP="Ley Orgánica 3/1981, del Defensor del Pueblo",
   LOTC="Ley Orgánica 2/1979, del Tribunal Constitucional",
@@ -359,7 +359,8 @@ TEMA = {1:"I.1",2:"I.1",3:"I.1",4:"I.2",5:"I.2",6:"I.2",7:"I.3",8:"I.3",9:"I.3",
   79:"V.6",80:"V.6",81:"V.3",82:"V.7",83:"V.8",84:"V.8",85:"V.9",86:"V.9",87:"V.9",88:"V.10",89:"VI.2",90:"VI.1",91:"VI.2",92:"VI.1",93:"VI.4",94:"VI.4",
   95:"VI.5",96:"VI.6",97:"VI.7",98:"V.6",99:"V.6",100:"VI.8",101:"III.6",102:"III.1",103:"III.1",104:"V.10",105:"I.7"}
 assert sorted(TEMA) == list(range(1, 106))
-# 96: RETENIDA. La plantilla definitiva da la b («10% del total de créditos del capítulo destinado a
+# 96: ya no se retiene: se publica con la etiqueta «Discrepancia» (boe/discrepancias.py), que prevalece sobre
+# RETENIDA. Nota original: la plantilla definitiva da la b («10% del total de créditos del capítulo destinado a
 # gastos corrientes en bienes y servicios»), pero el art. 78.3 LGP fija el límite general en el 7 % del
 # capítulo 2 y el 10 % lo calcula sobre los créditos del artículo 23 y solo para el programa 222A de
 # Interior. Revisado a mano sobre el texto vigente. Se muestra el texto legal y la pregunta queda fuera
@@ -371,7 +372,7 @@ NOMBRE["OPGE27"] = "Orden HAC/557/2026, por la que se dictan las normas para la 
 LEY[91] = [("OPGE27", "a6", [3, 5], "artículo 6.1.1", ["Los programas finalistas son aquellos a los que se puede asignar objetivos cuantificables e indicadores de ejecución mensurables"])]
 SI[91] = [("objetivos cuantificables e indicadores de ejecución mensurables", "OPGE27", "a6", "Los programas finalistas son aquellos a los que se puede asignar objetivos cuantificables e indicadores de ejecución mensurables")]
 # 85: el art. tercero del RD 466/2026 recoge literal el título original del RD 577/1997 (el de la pregunta) y lo sustituye.
-LEY[85] = [("RD466_2026", "at", [0, 1, 2, 3], "Real Decreto 466/2026 · artículo tercero (modificación del Real Decreto 577/1997)", ["Real Decreto 577/1997, de 18 de abril, por el que se establece la estructura de los órganos de gobierno, administración y representación de la Mutualidad General de Funcionarios Civiles del Estado"])]
+LEY[85] = [("RD466_2026", "at", [0, 1, 2, 3], "artículo tercero (modificación del Real Decreto 577/1997)", ["Real Decreto 577/1997, de 18 de abril, por el que se establece la estructura de los órganos de gobierno, administración y representación de la Mutualidad General de Funcionarios Civiles del Estado"])]
 SI[85] = [("Real Decreto 577/1997", "RD466_2026", "at", "Real Decreto 577/1997, de 18 de abril, por el que se establece la estructura de los órganos de gobierno, administración y representación de la Mutualidad General de Funcionarios Civiles del Estado")]
 LEY[96] = [("LGP", "Artículo 78", [4, 5, 6], "artículo 78.3", ["el siete por ciento del total de créditos del capítulo destinado a gastos corrientes en bienes y servicios", "hasta un máximo del 10 por ciento de los créditos del artículo 23", "del programa 222A, \"Seguridad ciudadana\", del Ministerio del Interior"])]
 assert not set(SIN_LEY) & set(LEY) and set(SIN_LEY) | set(LEY) == set(range(1, 106)), "LEY + SIN_LEY deben cubrir las 105"

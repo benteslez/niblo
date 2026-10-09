@@ -120,7 +120,7 @@ Las cuatro reformas tienen una **causa externa o social** que explica su conteni
 
 {IMP} **El texto que figura en cada reforma (2.1 a 2.4) es el redactado definitivo**: el artículo tal como **quedó** tras la reforma y como está **hoy en vigor** en el texto consolidado del BOE. Cada reforma sustituye el texto anterior; no se acumulan. Dos matices de eficacia: en el art. 135, los límites de déficit estructural del apartado 2 «entrarán en vigor a partir de 2020», y en el 69.3, las nuevas circunscripciones del Senado se aplican desde las **primeras elecciones al Senado posteriores** a la reforma.
 
-!> {IMP} **Para el examen:** artículos reformados **13.2, 135, 49 y 69.3**, y año de cada reforma (**1992, 2011, 2024, 2026**). La del 135 es la más «radical»: se reescribió entero (como el 49 en 2024), en plena crisis económica y financiera.
+!> {IMP} **Para el examen:** artículos reformados **13.2, 135, 49 y 69.3**, y año de cada reforma (**1992, 2011, 2024, 2026**). Los arts. 135 (2011, en plena crisis económica y financiera) y 49 (2024) se reescribieron enteros; en el 13.2 (1992) y el 69.3 (2026) cambió solo una parte.
 
 ?> La **guía M101** da el art. 69.3 el «20 de mayo de 2026»: es la fecha de **publicación y entrada en vigor**. La reforma es de **19 de mayo de 2026** (sanción).
 """, 2)

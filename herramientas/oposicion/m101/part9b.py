@@ -11,7 +11,7 @@ T.ap("s44", "IX.1 La iniciativa de reforma (arts. 87.1 y 2 y 166)", f"""
   fichab("Iniciativa a la que remite el art. 166 (→ IX.1.2)",
          ["El **Gobierno**", "El **Congreso** y el **Senado**", "Las **Asambleas de las Comunidades Autónomas**"],
          [f"Asambleas autonómicas: {c('CE', 'Artículo 87', 'solicitar del Gobierno la adopción de un proyecto de ley')} o {c('CE', 'Artículo 87', 'remitir a la Mesa del Congreso una proposición de ley')}"],
-         "Las Asambleas delegan ante el Congreso **un máximo de tres** miembros. Iniciativa popular (87.3): **no menos de 500.000 firmas acreditadas**",
+         "Las Asambleas delegan ante el Congreso **un máximo de tres** miembros.",
          "Las Asambleas autonómicas **no** presentan la iniciativa ante el Senado: la remiten a la **Mesa del Congreso** o la piden al **Gobierno**. La **iniciativa popular** (87.3) no cabe en materias propias de ley orgánica, tributarias o de carácter internacional ni en la prerrogativa de gracia, y **no** sirve para reformar la Constitución (el art. 166 solo remite a los apartados 1 y 2)."))}
 
 {unidad("1.2 Remisión al art. 87 (art. 166)",

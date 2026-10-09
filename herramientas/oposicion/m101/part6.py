@@ -95,7 +95,7 @@ Hay **tres estados**, de menor a mayor gravedad: **alarma < excepción < sitio**
   ["**Papel del Congreso**", "Se le **da cuenta** (reunido inmediatamente)", "**Autoriza** antes", "**Declara**"],
   ["**Duración**", "**No más de 15 días**", "**No más de 30 días**", "**La que determine el Congreso**"],
   ["**Prórroga**", "Solo con **autorización** del Congreso", "**Otro plazo igual** (30 días), con los **mismos requisitos**", "La que fije el Congreso"],
-  ["**Derechos**", "**No se suspende ninguno** (solo limitaciones)", "**Pueden suspenderse** los del art. 55.1, **salvo el 17.3** (solo los que pida la solicitud de autorización: art. 13.2.a LOEAS)", "**Pueden suspenderse** los del art. 55.1, **incluido el 17.3** (art. 32.3 LOEAS)"],
+  ["**Derechos**", "**No se suspende ninguno** (solo limitaciones)", "**Pueden suspenderse** los del art. 55.1, **salvo el 17.3** (los que determine la autorización del Congreso, que puede modificar la solicitud del Gobierno: art. 116.3 CE; art. 13 LOEAS)", "**Pueden suspenderse** los del art. 55.1, **incluido el 17.3** (art. 32.3 LOEAS)"],
   ["**Artículos**", "CE 116.2; LO 4/1981, arts. 4 a 12", "CE 116.3; LO 4/1981, arts. 13 a 31", "CE 116.4; LO 4/1981, arts. 32 a 36"]])}
 
 {unidad("2.1 Estado de alarma (art. 116.2 CE; art. 6 LO 4/1981)",
