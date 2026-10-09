@@ -10482,8 +10482,14 @@ function semAlimentacion() {
   return { nivel: "verde", txt: `${recientes} apuntes esta semana, sin reacciones pendientes de consulta.` };
 }
 
+/* Pausa de la vitamina D pedida por la familia: hasta este dia no sale el
+   aviso ni cuenta en el semaforo; desde el (incluido) vuelve a contar, sin
+   arrastrar los dias anteriores. Lo que se apunte a mano sigue en la linea. */
+const VITD_PAUSA_HASTA = "2026-10-13";
 function semVitaminaD(meses) {
   if (meses == null || meses >= 12) return null;
+  if (HOY_ISO < VITD_PAUSA_HASTA) return { nivel: "sindatos",
+    txt: `En pausa: vuelve a contar desde el ${fmtFechaCorta(VITD_PAUSA_HASTA)}.` };
   const dado = f => !!(STATE.vitaminaD || {})[f];
   /* Si no se marca nunca, no es que se le olvide la dosis: es que no se usa
      esa casilla. Lo mismo que con los pañales — sin apuntes no se opina. */
@@ -10492,14 +10498,14 @@ function semVitaminaD(meses) {
   /* La cuenta empieza el primer dia que se marco, no siete dias atras: antes
      de empezar a darsela no habia nada que marcar, y contar esos dias como
      olvidos es inventarse un problema. */
-  const desde = marcados[0];
+  const desde = marcados[0] > VITD_PAUSA_HASTA ? marcados[0] : VITD_PAUSA_HASTA;
   const completos = semDiasPrevios(SEM_DIAS).filter(f => f >= desde);
   /* Hoy no cuenta como olvido: puede que la dosis sea de despues de comer. */
   if (!completos.length) {
     const hoyMarcada = dado(HOY_ISO);
     return { nivel: "verde", txt: hoyMarcada
       ? "Empezada hoy y ya marcada."
-      : `Empezada el ${fmtFechaCorta(desde)}; mañana ya se puede valorar.` };
+      : `Cuenta desde el ${fmtFechaCorta(desde)}; mañana ya se puede valorar.` };
   }
   const sin = completos.filter(f => !dado(f)).length;
   const n = completos.length;
@@ -14625,9 +14631,6 @@ function vacunasPendientes() {
   });
 }
 
-/* Pausa del aviso de vitamina D pedida por la familia: no sale hasta este
-   dia (incluido vuelve a salir). Lo que se apunte a mano sigue en la linea. */
-const VITD_PAUSA_HASTA = "2026-10-13";
 function calcularAvisos() {
   const out = [];
   const vistos = avisosVistos();
