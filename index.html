@@ -8170,6 +8170,8 @@
  /*__END__*/</script>
 
   <script>
+/* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
+const NIBLO_BUILD = "346";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -31422,6 +31424,7 @@ function boot(vistaInicial) {
             <button type="button" class="iox-boton secundario" data-accion="forzar-recarga">🔄 Forzar reinstalación (limpiar caché)</button>
           </div>
           <p class="iox-info">Tras pulsar, la app se cierra, borra su caché y vuelve a abrir con la versión más nueva.</p>
+          <p class="iox-info">Versión cargada de Niblo: <b>${NIBLO_BUILD}</b> (tiene que coincidir con la del pie del inicio de la oposición).</p>
         </div>
 
         ${sesion.modoDev ? `
@@ -33059,6 +33062,11 @@ function boot(vistaInicial) {
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("sw.js").then((reg) => {
+          /* Una app instalada en el movil no se recarga al volver a ella: se
+             reanuda. Sin esto, solo buscaba version nueva al abrirse en frio. */
+          document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") reg.update().catch(() => {});
+          });
           const vigilar = (sw) => {
             if (!sw) return;
             sw.addEventListener("statechange", () => {
