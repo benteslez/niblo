@@ -9417,6 +9417,8 @@ function fusionarConRemoto(datosRemotos, tsRemoto) {
   limpiarProbando(STATE);
   CONFIG = STATE.config;
   ESTADO = STATE.alimentos || {};
+  if (!STATE.alimentosPropios) STATE.alimentosPropios = {};
+  unificarPropios();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
   recalcularCalendario();
   if (_arrancado) { renderHeader(); irA(VISTA_ACTUAL); }
@@ -9432,6 +9434,8 @@ function importarEstadoSync(remoto) {
   purgarFantasmas(STATE);
   CONFIG = STATE.config;
   ESTADO = STATE.alimentos || {};
+  if (!STATE.alimentosPropios) STATE.alimentosPropios = {};
+  unificarPropios();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
   recalcularCalendario();
   if (_arrancado) { renderHeader(); irA(VISTA_ACTUAL); }
@@ -9540,7 +9544,8 @@ function alimentoPorId(id) { return LIBRO.alimentos.find(a => a.id === id); }
 function nombreDeId(id) {
   const a = alimentoPorId(id);
   const p = (STATE.alimentosPropios || {})[id];
-  return (a && nombreLocal(a)) || (p && capitalizar(p.nombre)) || id;
+  const pl = !a && !p && Object.values((typeof PLAN_DOC !== "undefined" && PLAN_DOC && PLAN_DOC.alimentos) || {}).find(v => v.id === id);
+  return (a && nombreLocal(a)) || (p && capitalizar(p.nombre)) || (pl && pl.n) || id;
 }
 
 /** Alimento anadido fuera del libro, apoyado en guias pediatricas. */
@@ -12676,17 +12681,108 @@ function modalAnadir(fecha, refrescarFn) {
    marca va al mismo historial que los botones del plan, asi que cuenta en
    el registro del dia, la lista de alimentos, los alergenos y los informes. */
 let AM_RES = "tolerado";
-const sinTildes = t => String(t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+function sinTildes(t) { return String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+/* Formas de un nombre para reconocerlo: sin tildes ni signos, sin lo que va
+   entre parentesis y con ello como alias ("Banano (plátano)" vale por banano
+   y por platano; "Carne de res (ternera)", por ternera), y en singular. Lo
+   de los parentesis que es una aclaracion ("sin azúcar", "colada", "muslo")
+   no cuenta como nombre. */
+const NO_ALIAS = new Set(["colada", "colado", "muslo", "cocido", "cocida", "entero", "entera", "madura", "maduro"]);
+function variantesNombre(t) {
+  const limpia = x => sinTildes(x).replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+  const base = sinTildes(t);
+  const out = new Set([limpia(base.replace(/\([^)]*\)/g, " ")), limpia(base)]);
+  for (const m of base.matchAll(/\(([^)]*)\)/g)) {
+    const x = limpia(m[1]);
+    if (x && !/^(sin|con|o|y|\d)/.test(x) && !NO_ALIAS.has(x) && x.split(" ").length <= 3) out.add(x);
+  }
+  for (const v of [...out]) {
+    if (/[^aeiou]es$/.test(v)) out.add(v.slice(0, -2));
+    if (v.endsWith("s")) out.add(v.slice(0, -1));
+  }
+  out.delete("");
+  return [...out];
+}
+/* Candidatos por orden de preferencia: los del plan (asi lo apuntado a mano
+   cae en el mismo alimento que saldra en el plan), los del libro y, al final,
+   los añadidos a mano. */
 function alimentosParaElegir() {
-  const out = [];
+  const out = [], vistos = new Set();
+  const meter = (id, nombre, otros) => {
+    if (!id) return;
+    const claves = new Set();
+    for (const n of [nombre, ...(otros || [])].filter(Boolean)) variantesNombre(n).forEach(v => claves.add(v));
+    const ya = out.find(x => x.id === id);
+    if (ya) { claves.forEach(c => ya.claves.add(c)); return; }
+    out.push({ id, nombre, claves });
+    vistos.add(id);
+  };
+  for (const [k, v] of Object.entries((PLAN_DOC && PLAN_DOC.alimentos) || {})) {
+    const a = v.id && alimentoPorId(v.id);
+    meter(v.id, (a && nombreLocal(a)) || v.n, [v.n, k.replace(/_/g, " ")]);
+  }
   for (const a of LIBRO.alimentos) {
-    const nombres = [nombreLocal(a), a.nombre.es_MX, a.nombre.es_ES, a.nombre.es_CO].filter(Boolean);
-    out.push({ id: a.id, nombre: nombreLocal(a), claves: nombres.map(sinTildes) });
+    const alias = ALIAS.terminos[a.id] || {};
+    meter(a.id, nombreLocal(a), [a.nombre.es_MX, a.nombre.es_ES, a.nombre.es_CO, alias.es_ES, alias.es_CO, a.id.replace(/_/g, " ")]);
   }
-  for (const [id, p] of Object.entries(STATE.alimentosPropios || {})) {
-    out.push({ id, nombre: capitalizar(p.nombre), claves: [sinTildes(p.nombre)] });
-  }
+  for (const [id, p] of Object.entries(STATE.alimentosPropios || {})) meter(id, capitalizar(p.nombre), []);
   return out;
+}
+function buscarAlimentoPorNombre(texto, sinPropios) {
+  const vs = variantesNombre(texto);
+  const todos = alimentosParaElegir();
+  const exacto = todos.find(x => !(sinPropios && esPropio(x.id)) && vs.some(v => x.claves.has(v)));
+  if (exacto) return exacto;
+  /* "Pasta" por "Pasta de trigo": vale si el nombre empieza por lo escrito
+     y solo hay un alimento (del plan o de la lista) que lo cumpla. */
+  const pref = todos.filter(x => !esPropio(x.id) && vs.some(v => [...x.claves].some(c => c.startsWith(v + " "))));
+  return pref.length === 1 ? pref[0] : null;
+}
+function esPropio(id) { return !!(STATE.alimentosPropios || {})[id]; }
+/** Id para un nombre: el alimento que ya existe o uno propio nuevo. */
+function idParaNombre(escrito, fecha) {
+  const hallado = buscarAlimentoPorNombre(escrito);
+  if (hallado) return hallado.id;
+  let id = "propio_" + variantesNombre(escrito)[0].replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 40);
+  if (alimentoPorId(id)) id += "_m";
+  STATE.alimentosPropios[id] = { nombre: escrito, creado: fecha };
+  olvidarBorradoClave("alimentosPropios", id);
+  return id;
+}
+/* Pasa los apuntes de un alimento a otro (unir un propio con el del plan o
+   cambiar de alimento un apunte). Si el destino ya tiene apunte ese dia,
+   se queda el suyo. */
+function moverApunte(idOrigen, fecha, idDestino) {
+  const hist = (ESTADO[idOrigen] && ESTADO[idOrigen].historial) || [];
+  const i = hist.findIndex(x => x.fecha === fecha);
+  if (i < 0) return;
+  const [h] = hist.splice(i, 1);
+  anotarBorradoClave("alimentos", idOrigen + ":" + fecha);
+  if (!hist.length) delete ESTADO[idOrigen];
+  if (!ESTADO[idDestino]) ESTADO[idDestino] = { historial: [] };
+  const dest = ESTADO[idDestino].historial;
+  if (!dest.some(x => x.fecha === fecha)) { dest.push(h); dest.sort((a, b) => a.fecha.localeCompare(b.fecha)); }
+  olvidarBorradoClave("alimentos", idDestino + ":" + fecha);
+}
+function quitarPropio(id) {
+  for (const h of [...((ESTADO[id] && ESTADO[id].historial) || [])]) anotarBorradoClave("alimentos", id + ":" + h.fecha);
+  delete ESTADO[id];
+  delete STATE.alimentosPropios[id];
+  anotarBorradoClave("alimentosPropios", id);
+}
+/* Un añadido a mano cuyo nombre ya es el de un alimento del plan o del libro
+   (porque se apunto antes de que existiera el reconocimiento, o desde una
+   version anterior en el otro movil) se une a el. */
+function unificarPropios() {
+  let cambio = false;
+  for (const [id, p] of Object.entries(STATE.alimentosPropios || {})) {
+    const otro = buscarAlimentoPorNombre(p.nombre, true);
+    if (!otro) continue;
+    for (const h of [...((ESTADO[id] && ESTADO[id].historial) || [])]) moverApunte(id, h.fecha, otro.id);
+    quitarPropio(id);
+    cambio = true;
+  }
+  return cambio;
 }
 function modalAlimentoManual(fecha, nombre) {
   AM_RES = "tolerado";
@@ -12717,15 +12813,7 @@ function guardarAlimentoManual(fecha) {
   const inp = document.getElementById("am-nombre");
   const escrito = (inp.value || "").trim().replace(/\s+/g, " ");
   if (!escrito) { inp.focus(); return; }
-  const clave = sinTildes(escrito);
-  const hallado = alimentosParaElegir().find(x => x.claves.includes(clave));
-  let id = hallado && hallado.id;
-  if (!id) {
-    id = "propio_" + clave.replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 40);
-    if (alimentoPorId(id)) id += "_m";
-    STATE.alimentosPropios[id] = { nombre: escrito, creado: fecha };
-    olvidarBorradoClave("alimentosPropios", id);
-  }
+  const id = idParaNombre(escrito, fecha);
   if (!ESTADO[id]) ESTADO[id] = { historial: [] };
   const hora = document.getElementById("am-hora").value || nuevaHoraSugerida();
   const h = ESTADO[id].historial.find(x => x.fecha === fecha);
@@ -12736,6 +12824,61 @@ function guardarAlimentoManual(fecha) {
   guardarEstado();
   cerrarModal();
   refrescarTrasToma();
+}
+/* Ficha de un alimento añadido a mano: cambiarle el nombre (si el nuevo es
+   el de un alimento del plan o del libro, se une a el), ver y editar sus
+   apuntes, o borrarlo con todos ellos. */
+let PROPIO_ABIERTO = null;
+function modalPropio(id) {
+  const p = (STATE.alimentosPropios || {})[id];
+  if (!p) return;
+  PROPIO_ABIERTO = id;
+  const hist = ((ESTADO[id] && ESTADO[id].historial) || []).slice().reverse();
+  const ET = { tolerado: "Tolerado", rechazo: "Rechazo", reaccion: "Reacción", probando: "Probando" };
+  abrirModal(capitalizar(p.nombre), `
+    <div class="campo"><label for="pr-nombre">Nombre</label>
+      <input type="text" id="pr-nombre" value="${esc(p.nombre)}" autocomplete="off"></div>
+    <p class="modal-p faint">Si le pones el nombre de un alimento del plan o de la lista (p. ej. «Sandía»), se une a él con todos sus apuntes.</p>
+    <div class="campo"><label>Apuntes</label>
+      ${hist.length ? hist.map(h => `<button type="button" class="linea-fila" onclick="PB.cerrarModal();PB.editarMarcaAlimento('${id}','${h.fecha}')">
+        <span class="linea-hora">${fmtFechaCorta(diaComido(h))}</span>
+        <span class="linea-texto"><b>${ET[h.resultado] || esc(h.resultado)}</b>${h.hora ? `<span class="linea-sub">${esc(h.hora)}</span>` : ""}</span></button>`).join("")
+        : `<p class="faint">Sin apuntes.</p>`}</div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Borrar alimento", peligro: true, accion: "PB.borrarPropio()" },
+     { et: "Apuntar hoy", accion: `PB.cerrarModal();PB.modalAlimentoManual('${HOY_ISO}', ${esc(JSON.stringify(p.nombre))})` },
+     { et: "Guardar", primario: true, accion: "PB.guardarPropio()" }]);
+}
+function guardarPropio() {
+  const id = PROPIO_ABIERTO;
+  const p = id && STATE.alimentosPropios[id];
+  const nuevo = ((document.getElementById("pr-nombre") || {}).value || "").trim().replace(/\s+/g, " ");
+  if (p && nuevo && nuevo !== p.nombre) {
+    p.nombre = nuevo;
+    unificarPropios();
+    guardarEstado();
+  }
+  PROPIO_ABIERTO = null;
+  cerrarModal();
+  irA(VISTA_ACTUAL);
+}
+function borrarPropio() {
+  const id = PROPIO_ABIERTO;
+  const p = id && STATE.alimentosPropios[id];
+  if (!p) return;
+  const n = ((ESTADO[id] && ESTADO[id].historial) || []).length;
+  abrirModal("¿Borrar este alimento?",
+    `<p class="modal-p">${esc(capitalizar(p.nombre))}${n ? ` y sus ${n} ${n === 1 ? "apunte" : "apuntes"}` : ""}.</p>
+     <p class="modal-p faint">Desaparece del registro, de la lista de alimentos y de los informes.</p>`,
+    [{ et: "Cancelar", accion: `PB.modalPropio('${id}')` },
+     { et: "Borrar", peligro: true, accion: "PB.confirmarBorrarPropio()" }]);
+}
+function confirmarBorrarPropio() {
+  const id = PROPIO_ABIERTO;
+  if (id && STATE.alimentosPropios[id]) { quitarPropio(id); guardarEstado(); }
+  PROPIO_ABIERTO = null;
+  cerrarModal();
+  irA(VISTA_ACTUAL);
 }
 function horaAhoraEn(fecha) {
   /* Si el dia es hoy, la hora de ahora; si es otro dia, las 12:00 de ese dia. */
@@ -13479,8 +13622,8 @@ function htmlAlimentosPropios() {
   }).sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
   const ET = { tolerado: "Tolerado", rechazo: "Rechazo", reaccion: "Reacción", probando: "Probando" };
   return `<div class="card" style="margin-top:12px"><h2>Añadidos a mano <span class="n">${filas.length}</span></h2>
-    <p class="faint">Alimentos que no están en el libro y se apuntaron desde «Registrado hoy». Toca uno para apuntarlo otra vez hoy.</p>
-    ${filas.map(f => `<div class="lista-alimento est-${f.est}" onclick="PB.modalAlimentoManual('${HOY_ISO}', ${esc(JSON.stringify(f.nombre))})">
+    <p class="faint">Alimentos que no están en la lista y se apuntaron desde «Registrado hoy». Toca uno para cambiarle el nombre, ver o editar sus apuntes, apuntarlo hoy o borrarlo.</p>
+    ${filas.map(f => `<div class="lista-alimento est-${f.est}" onclick="PB.modalPropio('${f.id}')">
       <span class="dot" style="background:var(--text-muted)"></span>
       <div><div class="nombre">${esc(f.nombre)}</div><div class="grupo">${ET[f.est] || f.est} · último ${fmtFechaCorta(f.fecha)} · ${f.n} ${f.n === 1 ? "vez" : "veces"}</div></div>
       <span class="dot estado-dot" style="background:${colorEstado(f.est)}"></span>
@@ -13699,6 +13842,9 @@ function editarMarcaAlimento(id, fecha) {
   if (!h) return;
   MARCA_ABIERTA = { id, fecha };
   abrirModal(`Editar ${nombreDeId(id)}`, `
+    ${h.manual || esPropio(id) ? `<div class="campo"><label for="ma-nombre">Alimento</label>
+      <input type="text" id="ma-nombre" list="ma-lista" value="${esc(nombreDeId(id))}" autocomplete="off">
+      <datalist id="ma-lista">${alimentosParaElegir().map(x => `<option value="${esc(x.nombre)}"></option>`).join("")}</datalist></div>` : ""}
     <div class="grid-campos2">
       <div class="campo"><label for="ma-res">Resultado</label>
         <select id="ma-res">
@@ -13726,6 +13872,23 @@ function guardarMarcaAlimento() {
     h.hora = document.getElementById("ma-hora").value || h.hora;
     const dia = (document.getElementById("ma-dia") || {}).value || "";
     if (dia && dia !== h.fecha) h.comido = dia; else delete h.comido;
+    /* Apunte hecho a mano con el alimento equivocado: se pasa al correcto. */
+    const nom = ((document.getElementById("ma-nombre") || {}).value || "").trim().replace(/\s+/g, " ");
+    const { id, fecha } = MARCA_ABIERTA;
+    if (nom && sinTildes(nom) !== sinTildes(nombreDeId(id))) {
+      const destino = idParaNombre(nom, fecha);
+      if (destino !== id) {
+        if (ESTADO[destino] && ESTADO[destino].historial.some(x => x.fecha === fecha)) {
+          const d = ESTADO[destino].historial.find(x => x.fecha === fecha);
+          Object.assign(d, { resultado: h.resultado, hora: h.hora }); if (h.comido) d.comido = h.comido; else delete d.comido;
+          const hist = ESTADO[id].historial; hist.splice(hist.indexOf(h), 1);
+          anotarBorradoClave("alimentos", id + ":" + fecha);
+          if (!hist.length) delete ESTADO[id];
+        } else moverApunte(id, fecha, destino);
+        /* Un propio que se queda sin apuntes no pinta nada en la lista. */
+        if (esPropio(id) && !ESTADO[id]) quitarPropio(id);
+      }
+    }
     guardarEstado();
   }
   MARCA_ABIERTA = null;
@@ -13741,6 +13904,7 @@ function borrarMarcaAlimento() {
     hist.splice(i, 1);
     anotarBorradoClave("alimentos", id + ":" + fecha);
     if (!hist.length) delete ESTADO[id];
+    if (esPropio(id) && !ESTADO[id]) quitarPropio(id);
     guardarEstado();
   }
   MARCA_ABIERTA = null;
@@ -16797,6 +16961,7 @@ let _arrancado = false;
 function boot(vistaInicial) {
   if (_arrancado) return;
   _arrancado = true;
+  if (unificarPropios()) guardarEstado();
   document.getElementById("pb-drawer-bg").addEventListener("click", cerrarDrawer);
   document.getElementById("pb-drawer-close").addEventListener("click", cerrarDrawer);
   calWiring();
@@ -16808,7 +16973,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalAlimentoManual, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
