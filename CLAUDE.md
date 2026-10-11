@@ -2,7 +2,7 @@
 
 ## Subir los cambios
 
-- **Versión**: al subir, cambiar `CACHE_NAME` en `sw.js` **y** `BUILD_ID` en `oposicion.html` (mismo número; se ve al pie del inicio de la oposición). GitHub Pages tarda 1-3 minutos en publicar; si el usuario «no ve los cambios», comprobar primero que el despliegue («pages build and deployment») terminó y que el número de versión coincide.
+- **Versión**: al subir, cambiar `CACHE_NAME` en `sw.js`, `BUILD_ID` en `oposicion.html` **y** `NIBLO_BUILD` en `index.html` (mismo número; el de la oposición se ve al pie de su inicio y el de Niblo en Ajustes → «¿La app no se actualiza?»). El documento de Niblo se sirve **red primero** (`no-cache`, 4 s de espera y luego la copia guardada) y la app busca versión nueva al volver a primer plano: no volver a stale-while-revalidate, que dejaba la versión vieja varias aperturas. GitHub Pages tarda 1-3 minutos en publicar; si el usuario «no ve los cambios», comprobar primero que el despliegue («pages build and deployment») terminó y que el número de versión coincide.
 
 - Al terminar un cambio, sin preguntar: commit, push a la rama de trabajo,
   abrir una pull request contra `main` y fusionarla.

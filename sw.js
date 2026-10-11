@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v345";  // Alimentos a mano: editar, borrar y reconocer los del plan
+const CACHE_NAME = "niblo-v346";  // Niblo: red primero para el documento; versión visible en Ajustes
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manrope.woff2",
@@ -108,18 +108,24 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (esHTML) {
-    /* STALE-WHILE-REVALIDATE: se sirve la copia guardada al momento y la
-       version nueva se descarga por detras. Cuando llega, el service worker
-       nuevo dispara el aviso de "version nueva" que ya existe en la app. */
+    /* RED PRIMERO con espera corta (antes, stale-while-revalidate): se pide
+       la version del servidor saltandose la cache HTTP («no-cache»; GitHub
+       Pages da max-age=600) y, si no llega en 4 s o no hay conexion, se sirve
+       la copia guardada. Con la copia primero, la app abria la version vieja
+       y la descarga de fondo podia traer otra vez la vieja de la cache HTTP:
+       un cambio publicado no se veia hasta varias aperturas despues. */
     event.respondWith((async () => {
       const cache = await caches.open(CACHE_DOC);
+      const red = fetch(event.request, { cache: "no-cache" }).then((resp) => {
+        if (resp && resp.ok) cache.put(DOC_KEY, resp.clone());
+        return resp;
+      });
+      const espera = new Promise(res => setTimeout(res, 4000, null));
+      try {
+        const resp = await Promise.race([red, espera]);
+        if (resp) return resp;
+      } catch (_) {}
       const guardado = await cache.match(DOC_KEY);
-      const red = fetch(event.request)
-        .then((resp) => {
-          if (resp && resp.ok) cache.put(DOC_KEY, resp.clone());
-          return resp;
-        })
-        .catch(() => guardado);
       return guardado || red;
     })());
     return;
