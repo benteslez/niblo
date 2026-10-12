@@ -229,11 +229,17 @@ CADUCA_CONGELADO = 30   # dias (practica habitual)
 class Batch:
     """Lo cocinado en cada sesion y lo que queda: cada tanda deja raciones en
     la nevera (hasta el dia siguiente: 48 h) o en el congelador (1 mes). Los
-    menus gastan primero lo que ya hay."""
-    def __init__(self):
+    menus gastan primero lo que ya hay.
+    Un alimento no se cocina en una sesion anterior a su primer dia (si da
+    reaccion, se tiraria todo): el primer dia se cocina la receta entera,
+    recien hecha, y lo que sobra (nevera 48 h o congelador) cubre los dias
+    siguientes; lo mismo si la sesion de la semana fue antes del estreno."""
+    def __init__(self, estrenos=None):
         self.ses = sesiones()
-        self.stock = defaultdict(list)    # clave -> [{ses, quedan}]
+        self.estrenos = estrenos or {}     # k -> fecha del primer dia
+        self.stock = defaultdict(list)    # clave -> [{ses, quedan, dia}]
         self.tareas = defaultdict(dict)   # ses -> clave -> {...}
+        self.cocina_dia = defaultdict(dict)   # dia -> clave -> {...}: recetas enteras cocinadas ese dia
         self.descongelar = defaultdict(list)
     def clave(self, rec, k):
         return f"{rec}|{k}" if rec in GENERICAS else rec
@@ -255,13 +261,20 @@ class Batch:
             if rec: it["origen"] = "Preparar al momento"
             return
         S = self.sesion(d)
-        if not r["batch"] or S is None or fresco:
-            it["origen"] = "Cocinar hoy: el primer día de un alimento nuevo, recién hecho" if fresco and r["batch"] else "Cocinar hoy"
+        if not r["batch"] or S is None:
+            it["origen"] = "Cocinar hoy"
             return
         clave = self.clave(rec, it["k"])
-        lotes = [l for l in self.stock[clave] if self._usable(l, d, r)]
+        estreno = self.estrenos.get(it["k"])
+        lotes = [] if fresco else [l for l in self.stock[clave] if self._usable(l, d, r)]
         if lotes:
             lote = lotes[0]
+        elif (fresco and S != d) or (estreno and S < estreno):
+            # receta entera hoy: lo que sobre, para los dias siguientes
+            lote = dict(ses=d, quedan=r["rinde"], dia=True)
+            self.stock[clave].append(lote)
+            t = self.cocina_dia[d].setdefault(clave, dict(rec=rec, k=it["k"], tandas=0, raciones=0, dias=[], congelar=0))
+            t["tandas"] += 1
         else:
             if (d - S).days >= 2 and not r["congela"]:
                 it["origen"] = "Cocinar hoy"; return
@@ -271,12 +284,24 @@ class Batch:
             t["tandas"] += 1
         lote["quedan"] -= 1
         gap = (d - lote["ses"]).days
-        t = self.tareas[lote["ses"]][clave]
+        t = (self.cocina_dia if lote.get("dia") else self.tareas)[lote["ses"]][clave]
         t["raciones"] += 1
         if iso(d) not in t["dias"]: t["dias"].append(iso(d))
         cuando = fecha_txt(lote["ses"])
+        if lote.get("dia"):
+            if gap == 0:
+                it["origen"] = ("Cocinar hoy: el primer día de un alimento nuevo, recién hecho" if fresco
+                                else "Cocinar hoy (la receta entera: sobra para otros días)")
+                it["lote"] = "dia"
+            elif gap == 1:
+                it["origen"] = f"Sobra de lo cocinado el {cuando}: en la nevera"
+            else:
+                t["congelar"] += 1
+                it["origen"] = f"Sobra de lo cocinado el {cuando}: sacar del congelador la noche anterior"
+                self.descongelar[iso(d - dt.timedelta(days=1))].append(titulo_clave(rec, it["k"]))
+            return
         if gap == 0:
-            it["origen"] = "Cocinar hoy (sesión de cocina)"
+            it["origen"] = "Cocinar hoy (sesión de cocina; primer día de un alimento nuevo)" if fresco else "Cocinar hoy (sesión de cocina)"
         elif gap == 1:
             it["origen"] = f"Del batch del {cuando}: en la nevera"
         else:
@@ -608,6 +633,19 @@ def plan_batch(dias, batch):
                                 tandas=x["tandas"], rinde=r["rinde"], dias=x["dias"], congelar=x["congelar"],
                                 sobran=x["tandas"] * r["rinde"] - x["raciones"]))
         out.append(dict(fecha=iso(S), cocinar=cocinar))
+    return out
+
+def plan_cocina_dia(batch):
+    out = []
+    for d in sorted(batch.cocina_dia):
+        for clave, x in sorted(batch.cocina_dia[d].items()):
+            r = RECETAS[x["rec"]]
+            out.append(dict(fecha=iso(d), rec=x["rec"], k=x["k"], titulo=titulo_clave(x["rec"], x["k"]), raciones=x["raciones"],
+                            tandas=x["tandas"], rinde=r["rinde"], dias=x["dias"], congelar=x["congelar"],
+                            sobran=x["tandas"] * r["rinde"] - x["raciones"]))
+    return out
+
+def marcar_dias(dias, batch, out):
     for e in dias:
         if e["fecha"] in batch.descongelar:
             e["descongelar"] = sorted(set(batch.descongelar[e["fecha"]]))
@@ -623,7 +661,7 @@ CANON = {"calabacín rallado": "calabacín", "calabacín (zucchini)": "calabací
          "fórmula preparada": None, "agua de la cocción": None, "aceite de oliva": None}
 UNIDAD_G = {"zanahoria": 80, "calabacín": 200, "papa": 150}
 
-def lista_compra(dias, plan_b):
+def lista_compra(dias, plan_b, cocina_dia=()):
     """Por semana (domingo a sabado): lo que hace falta comprar, por seccion."""
     semanas = defaultdict(lambda: defaultdict(float))
     def suma(d, prod, cant, uni, sec):
@@ -638,7 +676,7 @@ def lista_compra(dias, plan_b):
             else: return
         dom = d - dt.timedelta(days=(d.weekday() + 1) % 7)
         semanas[iso(dom)][(sec, prod, "unidad" if uni == "unidades" else uni)] += cant
-    for b in plan_b:
+    for b in list(plan_b) + [dict(fecha=c["fecha"], cocinar=[c]) for c in cocina_dia]:
         d = dt.date.fromisoformat(b["fecha"])
         for c in b["cocinar"]:
             r = RECETAS[c["rec"]]
@@ -661,7 +699,7 @@ def lista_compra(dias, plan_b):
                     q, u = POR_RACION_FRUTA.get(k, (25, "g"))
                     suma(d, ALIMENTOS[k]["n"], q, u, ALIMENTOS[k]["sec"]); continue
                 r = RECETAS.get(rec)
-                if not r or (i.get("origen") or "").startswith(("Del batch", "Cocinar hoy (sesión")):
+                if not r or i.get("lote") == "dia" or (i.get("origen") or "").startswith(("Del batch", "Cocinar hoy (sesión", "Sobra de lo cocinado")):
                     continue
                 if rec in GENERICAS:
                     suma(d, ALIMENTOS[i["k"]]["n"], r["ing"][0][1], "g", "Frutas y verduras"); continue
@@ -819,10 +857,11 @@ def main():
     historia = [dict(x, fecha=iso(INICIO_AC + dt.timedelta(days=i))) for i, x in enumerate(viejo["dias"][:n_hist])]
 
     intro, por_dia = calendario()
-    bt = Batch()
+    bt = Batch({x["k"]: dt.date.fromisoformat(x["fecha"]) for x in intro})
     dias = generar_menus(intro, por_dia, bt)
-    batch = plan_batch(dias, bt)
-    compra = lista_compra(dias, batch)
+    batch = marcar_dias(dias, bt, plan_batch(dias, bt))
+    cocina_dia = plan_cocina_dia(bt)
+    compra = lista_compra(dias, batch, cocina_dia)
     errores, avisos, usadas = verificar(dias, intro, batch)
 
     recetas = {}
@@ -842,7 +881,7 @@ def main():
     plan = dict(dias=historia + dias, semanas=[], notasMes=viejo["notasMes"], version=2,
                 desde=iso(HOY_PLAN), pautas=PAUTAS, recetas=recetas, alimentos=alimentos,
                 introducciones=intro, introducidosAntes=[k for k in INTRODUCIDOS if k != "agua"],
-                batch=batch, compra=compra, hotel=HOTEL_GUIA)
+                batch=batch, cocinaDia=cocina_dia, compra=compra, hotel=HOTEL_GUIA)
     txt = json.dumps(plan, ensure_ascii=False, separators=(",", ":"))
     print(f"días: {len(plan['dias'])} ({len(historia)} conservados + {len(dias)} nuevos) · recetas: {len(recetas)} · "
           f"introducciones: {len(intro)} · sesiones de batch: {len(batch)} · semanas de compra: {len(compra)} · {len(txt)//1024} KB")
