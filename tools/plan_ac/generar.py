@@ -585,9 +585,13 @@ def generar_menus(intro, por_dia, batch):
 # ---------------------------------------------------------------- batch
 def sesiones():
     out = [PRIMERA_SESION]
-    d = dt.date(2026, 10, 18)   # tras la primera (martes 13, vuelta del hotel), domingos y miercoles
+    # Tras la primera (martes 13, vuelta del hotel), una sola sesion por semana,
+    # el domingo, para toda la semana (domingo a sabado): domingo y lunes de la
+    # nevera (48 h) y de martes a sabado del congelador. Lo que no se congela
+    # (receta con congela=False) se cocina el mismo dia (peticion de la familia).
+    d = dt.date(2026, 10, 18)
     while d <= FIN:
-        if d.weekday() in (6, 2):   # domingo, miercoles
+        if d.weekday() == 6:   # domingo
             out.append(d)
         d += dt.timedelta(days=1)
     return out
