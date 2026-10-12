@@ -664,7 +664,8 @@ UNIDAD_G = {"zanahoria": 80, "calabacín": 200, "papa": 150}
 def lista_compra(dias, plan_b, cocina_dia=()):
     """Por semana (domingo a sabado): lo que hace falta comprar, por seccion."""
     semanas = defaultdict(lambda: defaultdict(float))
-    def suma(d, prod, cant, uni, sec):
+    para = defaultdict(lambda: defaultdict(float))   # (semana, clave) -> plato -> cantidad
+    def suma(d, prod, cant, uni, sec, de=None):
         if not sec: return
         prod = prod.lower()
         prod = CANON.get(prod, prod)
@@ -675,17 +676,20 @@ def lista_compra(dias, plan_b, cocina_dia=()):
             if "harina" in prod: cant, uni = cant * (10 if uni.startswith("cucharada") else 3), "g"
             else: return
         dom = d - dt.timedelta(days=(d.weekday() + 1) % 7)
-        semanas[iso(dom)][(sec, prod, "unidad" if uni == "unidades" else uni)] += cant
+        clave = (sec, prod, "unidad" if uni == "unidades" else uni)
+        semanas[iso(dom)][clave] += cant
+        if de: para[(iso(dom), clave)][de] += cant
     for b in list(plan_b) + [dict(fecha=c["fecha"], cocinar=[c]) for c in cocina_dia]:
         d = dt.date.fromisoformat(b["fecha"])
         for c in b["cocinar"]:
             r = RECETAS[c["rec"]]
+            de = titulo_clave(c["rec"], c["k"])
             if c["rec"] in GENERICAS:
-                suma(d, ALIMENTOS[c["k"]]["n"], r["ing"][0][1] * c["tandas"] * r["rinde"], "g", "Frutas y verduras")
-                for prod, cant, uni, sec in r["ing"][1:]: suma(d, prod, cant * c["tandas"], uni, sec)
+                suma(d, ALIMENTOS[c["k"]]["n"], r["ing"][0][1] * c["tandas"] * r["rinde"], "g", "Frutas y verduras", de)
+                for prod, cant, uni, sec in r["ing"][1:]: suma(d, prod, cant * c["tandas"], uni, sec, de)
                 continue
             for prod, cant, uni, sec in r["ing"]:
-                suma(d, prod, cant * c["tandas"], uni, sec)
+                suma(d, prod, cant * c["tandas"], uni, sec, de)
     for e in dias:
         if e.get("hotel"): continue
         d = dt.date.fromisoformat(e["fecha"])
@@ -697,24 +701,25 @@ def lista_compra(dias, plan_b, cocina_dia=()):
                     k = rec[7:]
                     if k in ("cacahuete", "almendra", "maranon", "nuez", "avellana", "pistacho", "chia", "tahini", "mostaza"): continue
                     q, u = POR_RACION_FRUTA.get(k, (25, "g"))
-                    suma(d, ALIMENTOS[k]["n"], q, u, ALIMENTOS[k]["sec"]); continue
+                    suma(d, ALIMENTOS[k]["n"], q, u, ALIMENTOS[k]["sec"], "fruta del día" if ALIMENTOS[k]["cat"] == "fru" else "en el plato, al natural"); continue
                 r = RECETAS.get(rec)
                 if not r or i.get("lote") == "dia" or (i.get("origen") or "").startswith(("Del batch", "Cocinar hoy (sesión", "Sobra de lo cocinado")):
                     continue
                 if rec in GENERICAS:
-                    suma(d, ALIMENTOS[i["k"]]["n"], r["ing"][0][1], "g", "Frutas y verduras"); continue
+                    suma(d, ALIMENTOS[i["k"]]["n"], r["ing"][0][1], "g", "Frutas y verduras", titulo_clave(rec, i["k"])); continue
                 for prod, cant, uni, sec in r["ing"]:
-                    suma(d, prod, cant / r["rinde"], uni, sec)
+                    suma(d, prod, cant / r["rinde"], uni, sec, r["titulo"])
     BOTES = {"cacahuete": "crema 100 % de maní (cacahuete), sin sal ni azúcar", "tahini": "tahini 100 % sésamo",
              "almendra": "crema 100 % de almendra", "maranon": "crema 100 % de marañón (anacardo)",
              "nuez": "nueces (para moler) o crema 100 % de nuez", "avellana": "crema 100 % de avellana (sin cacao ni azúcar)",
              "pistacho": "crema 100 % de pistacho", "chia": "semillas de chía", "mostaza": "mostaza suave"}
     for e in dias:
         if e.get("pri") and e.get("nuevoK") in BOTES:
-            suma(dt.date.fromisoformat(e["fecha"]), BOTES[e["nuevoK"]], 1, "bote", "Despensa")
+            suma(dt.date.fromisoformat(e["fecha"]), BOTES[e["nuevoK"]], 1, "bote", "Despensa", "alimento nuevo de la semana")
     out = []
     for sem in sorted(semanas):
         secs = defaultdict(list)
+        items = []
         for (sec, prod, uni), cant in sorted(semanas[sem].items()):
             if prod.startswith("crema 100 % del fruto seco"): continue
             if uni == "g" and cant >= 1000: txt = f"{cant/1000:.1f} kg".replace(".0 kg", " kg")
@@ -723,8 +728,14 @@ def lista_compra(dias, plan_b, cocina_dia=()):
             elif uni == "unidad": n = math.ceil(cant); txt = f"{n} {'unidad' if n == 1 else 'unidades'}"
             else: n = math.ceil(cant); txt = f"{n} {uni}{'s' if n > 1 and not uni.endswith('s') else ''}"
             secs[sec].append(f"{prod}: {txt}")
+            det = para.get((sem, (sec, prod, uni)), {})
+            def cuanto(q):
+                if uni in ("g", "ml"): return f"{int(round(q))} {uni}"
+                if uni == "unidad": return f"{q:g}".replace(".", ",") if q != int(q) else f"{int(q)}"
+                return f"{q:g}"
+            items.append(dict(sec=sec, prod=prod, txt=txt, para=[[x, cuanto(det[x])] for x in sorted(det, key=lambda x: -det[x])]))
         secs["Despensa"].append("aceite de oliva virgen extra (el de casa; se usa a diario)")
-        out.append(dict(semana=sem, secciones={k: v for k, v in sorted(secs.items())}))
+        out.append(dict(semana=sem, secciones={k: v for k, v in sorted(secs.items())}, items=items))
     return out
 
 # ---------------------------------------------------------------- pautas
