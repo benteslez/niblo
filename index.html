@@ -6003,6 +6003,11 @@
     .pb-app .pd-semana > summary { cursor: pointer; font-weight: 700; color: var(--teal); }
     .pb-app .pd-sem-ing, .pb-app .pd-sem-dias { font-size: 0.8125rem; color: var(--text-muted); }
     .pb-app .pd-ingsem { margin: 6px 0 4px; }
+    .pb-app .pd-sem-prep { list-style: none; margin-left: -18px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .pb-app .pd-sem-check { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
+    .pb-app .pd-sem-check input { width: 20px; height: 20px; accent-color: var(--green); }
+    .pb-app .pd-sem-prep.hecho .pd-sem-check b { text-decoration: line-through; opacity: .6; }
+    .pb-app .pd-sem-cuenta { font-weight: 600; color: var(--green); margin-left: 6px; }
     .pb-app .pd-ingsem > summary { cursor: pointer; font-weight: 700; color: var(--blue); }
     .pb-app .pd-ingsem-l { list-style: none; margin: 4px 0; padding: 0; }
     .pb-app .pd-ingsem-l li { padding: 4px 0; border-bottom: 1px solid var(--border); }
@@ -8184,7 +8189,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "352";
+const NIBLO_BUILD = "353";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -8780,6 +8785,9 @@ function defaultState() {
     /* Alimentos apuntados a mano que no estan en el libro: id -> { nombre }.
        Sus marcas viven en "alimentos" como las de cualquier otro. */
     alimentosPropios: {},
+    /* Preparaciones de la sesion de cocina ya hechas: "fecha|receta|k" -> fecha
+       en que se marco. Se sincroniza: lo ve el otro movil. */
+    batchHecho: {},
   };
 }
 /* El catalogo de vacunas paso del calendario español al PAI de Colombia y los
@@ -8972,6 +8980,7 @@ function cargarEstadoGlobal() {
   st.vaccines = normalizarVacunas(st.vaccines, st.vaccinesDone, st.config.vacunasEditadas);
   migrarVitaminaD(st);
   if (!st.alimentosPropios || typeof st.alimentosPropios !== "object") st.alimentosPropios = {};
+  if (!st.batchHecho || typeof st.batchHecho !== "object") st.batchHecho = {};
   sembrarCarnet(st);
   if (purgarFantasmas(st)) st.modificado = new Date().toISOString();
   /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
@@ -9224,7 +9233,7 @@ function cerrarModal() {
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
 const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos"];
-const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios"];
+const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho"];
 
 function sello() { return new Date().toISOString(); }
 
@@ -11134,16 +11143,36 @@ function htmlIngredientesSemana(fecha) {
     </ul>
   </details>`;
 }
+function pdBatchMarcar(clave, el) {
+  if (!STATE.batchHecho) STATE.batchHecho = {};
+  if (el.checked) { STATE.batchHecho[clave] = HOY_ISO; olvidarBorradoClave("batchHecho", clave); }
+  else { delete STATE.batchHecho[clave]; anotarBorradoClave("batchHecho", clave); }
+  guardarEstado();
+  const li = el.closest("li"); if (li) li.classList.toggle("hecho", el.checked);
+  /* El contador de arriba, sin repintar (no se cierran las recetas abiertas). */
+  const caja = el.closest(".pd-semana");
+  if (caja) {
+    const cs = caja.querySelectorAll(".pd-sem-prep input[type=checkbox]");
+    const n = [...cs].filter(x => x.checked).length;
+    const t = caja.querySelector(".pd-sem-cuenta"); if (t) t.textContent = `${n} de ${cs.length} hechas`;
+  }
+}
 function htmlSemanaCocina(ses) {
   const sesiones = (PLAN_DOC.batch || []).map(b => b.fecha).sort();
   const sig = sesiones.find(x => x > ses.fecha);
   const fin = sig ? isoMas(sig, -1) : isoMas(ses.fecha, 6);
   const R = PLAN_DOC.recetas || {};
+  const hechas = STATE.batchHecho || {};
+  const claveDe = c => `${ses.fecha}|${c.rec}|${c.k}`;
+  const nHechas = ses.cocinar.filter(c => hechas[claveDe(c)]).length;
   const filas = ses.cocinar.map(c => {
     const r = R[c.rec] || { ing: [] };
     const semana = c.dias.filter(d => d <= fin), despues = c.dias.filter(d => d > fin);
     const nevera = c.raciones - (c.congelar || 0);
-    return `<li><b>${esc(c.titulo)}</b>: ${c.raciones} ${c.raciones === 1 ? "ración" : "raciones"}
+    const on = !!hechas[claveDe(c)];
+    return `<li class="pd-sem-prep${on ? " hecho" : ""}"><label class="pd-sem-check"><input type="checkbox"${on ? " checked" : ""}
+        onchange='PB.pdBatchMarcar(${esc(JSON.stringify(claveDe(c)))}, this)' aria-label="Hecha: ${esc(c.titulo)}">
+      <span><b>${esc(c.titulo)}</b></span></label>: ${c.raciones} ${c.raciones === 1 ? "ración" : "raciones"}
       (${c.tandas === 1 ? "la receta una vez" : `la receta ${c.tandas} veces`}${c.rinde > 1 ? `, rinde ${c.rinde} cada vez` : ""})
       ${r.ing.length ? `<div class="pd-sem-ing">${r.ing.map(x => esc(pdEscalar(x, c.tandas))).join(" · ")}</div>` : ""}
       <div class="pd-sem-dias">${semana.length ? `Esta semana: ${semana.map(pdDiaCorto).join(", ")}` : ""}${
@@ -11175,7 +11204,7 @@ function htmlSemanaCocina(ses) {
   return `<details class="pd-semana" open><summary>Cocina de la semana (${pdDiaCorto(ses.fecha)} a ${pdDiaCorto(fin)})</summary>
     ${htmlIngredientesSemana(ses.fecha)}
     <p class="pd-nota">Hoy se cocina todo lo que aguanta congelado. Hoy y mañana, de la nevera (48 h como mucho); a partir de pasado mañana, del congelador: porciones individuales con fecha y, la noche antes, a la nevera para descongelar (el plan lo recuerda cada día). Hasta 1 mes congelado (práctica habitual).</p>
-    <div class="pd-rec-sub">Cocinar hoy y guardar</div>
+    <div class="pd-rec-sub">Cocinar hoy y guardar <span class="pd-sem-cuenta">${nHechas} de ${ses.cocinar.length} hechas</span></div>
     <ul class="pd-lista">${filas.join("")}</ul>
     ${ms.length ? `<div class="pd-rec-sub">Durante la semana, el mismo día</div>
       <ul class="pd-lista">${ms.map(x => `<li><b>${esc(x.tit)}</b> (${x.porque}): ${[...x.dias].sort().map(pdDiaCorto).join(", ")}
@@ -17194,7 +17223,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, pdCompraMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
