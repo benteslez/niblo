@@ -11098,11 +11098,12 @@ function htmlSemanaCocina(ses) {
         if (!/^Cocinar hoy/.test(o) || /sesión/.test(o) || !it.rec || !R[it.rec]) continue;
         const r = R[it.rec];
         const tit = PD_GENERICAS.has(it.rec) ? `${r.titulo}: ${String(it.n || "").toLowerCase()}` : r.titulo;
-        const x = mismo.get(tit) || { tit, dias: new Set(), porque: /primer día/.test(o) ? "alimento nuevo: su primer día, recién hecho; lo que sobra cubre los días siguientes"
+        const porque0 = /primer día/.test(o) ? 1 : it.lote === "dia" ? 2 : 3;
+        const x = mismo.get(tit + porque0) || { tit, dias: new Set(), porque: /primer día/.test(o) ? "alimento nuevo: su primer día, recién hecho; lo que sobra cubre los días siguientes"
           : it.lote === "dia" ? "aún no se había estrenado el día de la sesión: la receta entera ese día, y lo que sobra para los siguientes"
           : r.batch && !r.congela ? "no se congela bien" : "se hace al momento" };
         x.dias.add(d.fecha);
-        mismo.set(tit, x);
+        mismo.set(tit + porque0, x);
       }
     }
   }
@@ -11131,7 +11132,7 @@ function pdComoCocinar(dia, it) {
     return `<div class="pd-cc"><b>Cuánto cocinar:</b> ${cd.tandas === 1 ? "la receta entera" : `la receta ${cd.tandas} veces`}${cd.rinde > 1 ? ` (rinde ${cd.rinde * cd.tandas})` : ""}:
       ${ings(cd.tandas)}
       <div>${otros.length ? `Hoy, 1 ración; lo demás es para ${otros.map(fCorta).join(", ")}.` : "Todo para hoy."}
-        ${otros.length ? (cd.congelar ? `A la nevera ${Math.max(0, nevera - 1)} y <b>al congelador ${cd.congelar}</b> hoy mismo, en porciones con fecha.` : "Lo de los próximos días, a la nevera (48 h como mucho).") : ""}
+        ${otros.length ? (cd.congelar ? `${nevera - 1 > 0 ? `A la nevera ${nevera - 1} y ` : ""}<b>al congelador ${cd.congelar}</b> hoy mismo, en porciones con fecha.` : "Lo de los próximos días, a la nevera (48 h como mucho).") : ""}
         ${cd.sobran ? ` Sobra${cd.sobran === 1 ? "" : "n"} ${cd.sobran} que el plan no usa.` : ""}</div>
       ${/primer día/.test(o) ? `<div class="pd-nota">Se cocina hoy y no antes porque es su primer día: si sienta mal, no se ha cocinado de más.</div>` : ""}
     </div>`;
