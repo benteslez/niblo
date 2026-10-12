@@ -27,7 +27,7 @@ HOY_PLAN = dt.date(2026, 10, 8)          # primer dia que se regenera
 FIN = dt.date(2027, 6, 2)                # ultimo dia del plan (FECHA_FIN en la app)
 OCHO_MESES = dt.date(2026, 11, 5)
 HOTEL = (dt.date(2026, 10, 8), dt.date(2026, 10, 12))
-PRIMERA_SESION = dt.date(2026, 10, 13)   # vuelta del hotel (martes)
+PRIMERA_SESION = dt.date(2026, 10, 12)   # lunes 12: se cocina para el resto de la semana (peticion de la familia)
 
 # Ya introducidos y tolerados (fuente: plan anterior + registros + confirmacion de la familia)
 INTRODUCIDOS = ["aguacate", "pollo", "ahuyama", "papa", "trigo_pasta", "pan", "calabacin", "banano",
@@ -585,7 +585,7 @@ def generar_menus(intro, por_dia, batch):
 # ---------------------------------------------------------------- batch
 def sesiones():
     out = [PRIMERA_SESION]
-    # Tras la primera (martes 13, vuelta del hotel), una sola sesion por semana,
+    # Tras la primera (lunes 12, para el resto de esa semana), una sola sesion por semana,
     # el domingo, para toda la semana (domingo a sabado): domingo y lunes de la
     # nevera (48 h) y de martes a sabado del congelador. Lo que no se congela
     # (receta con congela=False) se cocina el mismo dia (peticion de la familia).
@@ -800,7 +800,12 @@ def PAUTA_DE(d):
 # ---------------------------------------------------------------- salida
 def ing_txt(p, c, u):
     if not c: return p
-    if u in ("unidad", "unidades"): return f"{c:g} {p}"
+    if u in ("unidad", "unidades"):
+        if c > 1:   # "2 huevos", "2 bananos maduros"
+            w = p.split(" ", 1)
+            p = w[0] + ("s" if w[0][-1] in "aeiou" else "es") + (" " + w[1] if len(w) > 1 else "")
+        return f"{c:g} {p}"
+    if c > 1 and u in ("cucharadita", "cucharada"): u += "s"
     if u == "ración": return p[:1].upper() + p[1:]
     if u == "punta de cuchillo": return f"Una punta de cuchillo de {p}"
     if c == 0.5 and u == "cucharadita": return f"½ cucharadita de {p}"
