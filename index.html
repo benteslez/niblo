@@ -5997,6 +5997,8 @@
     .pb-app .pd-linea { display: flex; gap: 8px; font-size: 0.84375rem; line-height: 1.5; margin-top: 3px; }
     .pb-app .pd-linea > span { flex: none; width: 58px; font-weight: 600; color: var(--text-muted); }
     .pb-app .pd-origen { font-size: 0.8125rem; color: var(--teal); font-weight: 600; margin-top: 4px; }
+    .pb-app .pd-cc { font-size: 0.8125rem; line-height: 1.5; background: var(--teal-soft, var(--green-soft)); border-radius: var(--r-md); padding: 8px 10px; margin-top: 6px; }
+    .pb-app .pd-cc-ing { margin: 4px 0 4px 18px; padding: 0; }
     .pb-app .pd-tag { font-size: 0.6875rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
     .pb-app .pd-tag.nuevo { background: var(--purple-soft); color: var(--purple); }
     .pb-app .pd-tag.al { background: var(--red-soft); color: var(--red); }
@@ -8171,7 +8173,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "346";
+const NIBLO_BUILD = "347";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -11036,6 +11038,69 @@ function pdReceta(rid) {
     </div>
   </details>`;
 }
+/* «Cocinar hoy» decia que habia que cocinar, pero no cuanto ni para que
+   dias. Ahora, debajo del ultimo alimento que usa la receta en ese bloque:
+   - si es de la sesion de batch de hoy: raciones, veces la receta con sus
+     cantidades, dias que cubre y cuantas van al congelador;
+   - si se cocina para el dia: cuantas comidas de hoy la usan, cuantas veces
+     hacer la receta (con cantidades) y que hacer con lo que sobre. */
+function pdEscalar(txt, f) {
+  if (f === 1) return txt;
+  const FR = { "½": 0.5, "¼": 0.25, "¾": 0.75 };
+  return txt.replace(/^(\d+(?:[.,]\d+)?|½|¼|¾)(?=\s)/, m => {
+    const v = (FR[m] != null ? FR[m] : Number(m.replace(",", "."))) * f;
+    if (Number.isInteger(v)) return String(v);
+    const ent = Math.floor(v), dec = Math.round((v - ent) * 100) / 100;
+    const q = { 0.25: "¼", 0.5: "½", 0.75: "¾" }[dec];
+    if (q) return (ent ? ent + " " : "") + q;
+    return v >= 10 ? String(Math.round(v)) : String(Math.round(v * 10) / 10).replace(".", ",");
+  });
+}
+function pdComoCocinar(dia, it) {
+  const o = it.origen || "";
+  if (!/^Cocinar hoy/.test(o) || !it.rec) return "";
+  const r = (PLAN_DOC.recetas || {})[it.rec];
+  if (!r) return "";
+  const pauta = pdPauta(dia.fecha);
+  const fCorta = f => f === dia.fecha ? "hoy" : fmtFechaCorta(f);
+  const ings = f => r.ing.length ? `<ul class="pd-cc-ing">${r.ing.map(x => `<li>${esc(pdEscalar(x, f))}</li>`).join("")}</ul>` : "";
+  if (/sesión/.test(o)) {
+    const ses = (PLAN_DOC.batch || []).find(b => b.fecha === dia.fecha);
+    const c = ses && ses.cocinar.find(x => x.rec === it.rec);
+    if (!c) return "";
+    const nevera = c.raciones - (c.congelar || 0);
+    return `<div class="pd-cc"><b>Cuánto cocinar (sesión de hoy):</b> ${c.raciones} ${c.raciones === 1 ? "ración" : "raciones"},
+      ${c.tandas === 1 ? "la receta una vez" : `la receta ${c.tandas} veces`}${c.rinde > 1 ? ` (cada vez rinde ${c.rinde})` : ""}:
+      ${ings(c.tandas)}
+      <div>Para ${c.dias.length === 1 ? "el día" : `${c.dias.length} días`}: ${c.dias.map(fCorta).join(", ")}.</div>
+      <div>${c.congelar ? `A la nevera ${nevera} (lo que se come en las próximas 48 h) y <b>al congelador ${c.congelar}</b> el mismo día, en porciones con fecha.` : "Todo a la nevera (48 h como mucho)."}</div>
+    </div>`;
+  }
+  /* Para el dia: las comidas de hoy que usan esta receta y se cocinan hoy. */
+  const comidas = [];
+  for (const b of dia.comidas || []) {
+    if ((b.alimentos || []).some(x => x.rec === it.rec && /^Cocinar hoy/.test(x.origen || "") && !/sesión/.test(x.origen || ""))) {
+      const et0 = pauta && pauta.bloques[b.bloque] ? pauta.bloques[b.bloque].et.toLowerCase() : b.bloque;
+      const et = (/^(cena|merienda|media|noche)/.test(et0) ? "la " : "el ") + et0;
+      if (!comidas.includes(et)) comidas.push(et);
+    }
+  }
+  const n = Math.max(1, comidas.length);
+  const rinde = r.rinde || 1;
+  /* Si la receta da para mas de lo que toca hoy, se hace solo la parte
+     necesaria (en cuartos de receta), no la receta entera para tirar. */
+  const veces = n >= rinde ? Math.ceil(n / rinde) : Math.ceil((n / rinde) * 4) / 4;
+  const sobran = Math.round((veces * rinde - n) * 10) / 10;
+  const vecesTxt = veces === 1 ? "la receta una vez" : veces < 1
+    ? `${{ 0.25: "¼", 0.5: "la mitad", 0.75: "¾" }[veces] || veces} de la receta`
+    : `la receta ${veces} veces`;
+  return `<div class="pd-cc"><b>Cuánto cocinar:</b> ${n === 1 ? `1 ración, solo para ${comidas[0] || "esta comida"} de hoy` : `${n} raciones, para ${comidas.join(" y ")} de hoy`}
+    → ${vecesTxt}${rinde > 1 ? ` (la receta entera rinde ${rinde})` : ""}:
+    ${ings(veces)}
+    <div>${sobran ? `Sobra${sobran === 1 ? "" : "n"} ${sobran} ${sobran === 1 ? "ración" : "raciones"}: a la nevera (48 h como mucho)${r.congela ? " o al congelador el mismo día" : ""}; no cuenta para otros días del plan.` : "No sobra nada: no se guarda para otros días."}
+    ${comidas.length > 1 ? " Puedes hacerlo todo de una vez por la mañana y guardar en la nevera lo de la comida siguiente." : ""}</div>
+  </div>`;
+}
 function pdItem(dia, it, marcarFn, recetaAqui) {
   const meses = dia.edadMeses;
   const r = (PLAN_DOC.recetas || {})[it.rec] || {};
@@ -11058,6 +11123,7 @@ function pdItem(dia, it, marcarFn, recetaAqui) {
     ${it.notaPlan ? `<div class="pd-linea"><span>Nota</span>${esc(it.notaPlan)}</div>` : ""}
     ${notaAl ? `<div class="pd-linea"><span>Ojo</span>${esc(notaAl)}</div>` : ""}
     ${it.origen ? `<div class="pd-origen">${esc(it.origen)}</div>` : ""}
+    ${recetaAqui ? pdComoCocinar(dia, it) : ""}
     ${marcaId ? `<div class="pd-reac"><span>¿Cómo le fue?</span><div class="seg-btns">
         <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}" onclick="${marcarFn}('${marcaId}','tolerado')" aria-pressed="${est === 'tolerado'}">Tolerado</button>
         <button type="button" class="${est === 'rechazo' ? 'on rechazo' : ''}" onclick="${marcarFn}('${marcaId}','rechazo')" aria-pressed="${est === 'rechazo'}">Rechazo</button>
