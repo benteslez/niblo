@@ -8240,7 +8240,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "356";
+const NIBLO_BUILD = "357";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -8889,6 +8889,37 @@ const CARNET_PABLO = {
        segun la pediatra: 11-09-2027. */
     programadas: { m7_flu: "2026-10-10", m12_flu: "2027-09-11" },
   },
+  /* Tercera tanda (fotos del carnet del 13-10-2026, Colsanitas Calle 96):
+     - las tres del 13-10: 2ª de gripe, Menveo (ACWY) y 2ª de Bexsero;
+     - correcciones de lote leidas en las pegatinas: Hexaxim de los 2 y 4
+       meses es Y3C27D1 (cad. 12-2027), no 43C2701; la gripe de los 6 meses
+       es N08 (cad. 01-2027), no NDB;
+     - cita del 08-03-2027: neumococo 15 (refuerzo), hepatitis A y ProQuad
+       (sarampion, rubeola, paperas + varicela) — peticion de la familia;
+     - vacuna bivalente para el viaje a Mexico: vacuna propia, con aviso en
+       Pendientes desde el 15-11-2026 hasta que se marque. */
+  tanda4: {
+    puestas: {
+      m7_flu:    { fecha: "2026-10-13", pais: "co", lote: "N08",      lab: "Influvac Tetra · Abbott", notas: "Colsanitas Calle 96 · Cad. 01-2027 · Andrea Chavés" },
+      x_menacwy: { fecha: "2026-10-13", pais: "co", lote: "AMXB110A", lab: "Menveo · GSK",            notas: "Colsanitas Calle 96 · lote leído del carnet a mano (revisar) · Andrea Chavés" },
+      x_menb2:   { fecha: "2026-10-13", pais: "co", lote: "ABXF61AZ", lab: "Bexsero · GSK",           notas: "Colsanitas Calle 96 · Cad. 09-2028 · Andrea Chavés" },
+    },
+    corregir: {
+      m2_polio: { de: "43C2701", lote: "Y3C27D1", notas: "Cad. 12-2027" }, m2_penta: { de: "43C2701", lote: "Y3C27D1", notas: "Cad. 12-2027" },
+      m4_polio: { de: "43C2701", lote: "Y3C27D1", notas: "Cad. 12-2027" }, m4_penta: { de: "43C2701", lote: "Y3C27D1", notas: "Cad. 12-2027" },
+      m6_flu:   { de: "NDB", lote: "N08" },
+    },
+    programadas: {
+      m12_neumo: { fecha: "2027-03-08", lab: "Vaxneuvance (PCV15) · MSD", notas: "Cita 08-03-2027 junto con hepatitis A y ProQuad" },
+      m12_hepa:  { fecha: "2027-03-08", lab: "",                          notas: "Cita 08-03-2027 junto con neumococo 15 y ProQuad" },
+      m12_srp:   { fecha: "2027-03-08", lab: "ProQuad · MSD",             notas: "ProQuad: sarampión, rubéola, paperas y varicela en una sola inyección" },
+      m12_vari:  { fecha: "2027-03-08", lab: "ProQuad · MSD",             notas: "ProQuad: sarampión, rubéola, paperas y varicela en una sola inyección" },
+    },
+    nuevas: [
+      { id: "vx_mexico_biv", grupo: "Otras", age: "Viaje a México", vaccine: "Vacuna bivalente (viaje a México)", dose: "Única",
+        aviso: { desde: "2026-11-15", texto: "Para el viaje a México. Recomendado: vacunarse en el centro de vacunación de La Calleja. Márcala en Vacunas cuando se la pongan." } },
+    ],
+  },
 };
 /* "Probando" dejo de ser un estado que se pueda poner, asi que se borran los
    apuntes que lo usaban: un alimento no puede quedarse con una pastilla de
@@ -8917,8 +8948,57 @@ function sembrarCarnet(st) {
   /* La tanda 2 va despues de la primera: si fuera antes, la primera veria
      vacunas marcadas y se creeria que el carnet ya estaba sembrado. */
   sembrarCarnetTanda1(st);
-  return sembrarCarnetTanda2(st);
+  sembrarCarnetTanda2(st);
+  return sembrarCarnetTanda4(st);
 }
+/* Una sola vez por movil (bandera en config, que viaja con el documento).
+   Las fechas de las puestas son las del carnet; las programadas no pisan una
+   vacuna ya puesta; los lotes solo se corrigen si siguen con la lectura mala. */
+function sembrarCarnetTanda4(st) {
+  if (!st.config || st.config.carnetSembrado4) return st;
+  if (st.config.fechaNacimiento !== CARNET_PABLO.nacimiento) return st;
+  const t = CARNET_PABLO.tanda4;
+  const hoy = new Date().toISOString().slice(0, 10);
+  st.vaccinesDone = st.vaccinesDone || {};
+  st.vaccinesInfo = st.vaccinesInfo || {};
+  if (!Array.isArray(st.vaccines) || !st.vaccines.length) st.vaccines = JSON.parse(JSON.stringify(VACCINES));
+  const sinLapida = id => { if (st.borrados) { delete st.borrados["vaccinesDone:" + id]; delete st.borrados["vaccinesInfo:" + id]; } };
+  for (const [id, d] of Object.entries(t.puestas)) {
+    st.vaccinesDone[id] = d.fecha;
+    const info = st.vaccinesInfo[id] || {};
+    for (const k of ["pais", "lote", "lab", "notas"]) if (!info[k]) info[k] = d[k];
+    st.vaccinesInfo[id] = info; sinLapida(id);
+  }
+  for (const [id, c] of Object.entries(t.corregir)) {
+    const info = st.vaccinesInfo[id];
+    if (info && info.lote === c.de) {
+      info.lote = c.lote;
+      if (c.notas && !(info.notas || "").includes(c.notas)) info.notas = [info.notas, c.notas].filter(Boolean).join(" · ");
+    }
+  }
+  for (const [id, d] of Object.entries(t.programadas)) {
+    const actual = st.vaccinesDone[id];
+    if (actual && actual <= hoy) continue;            // ya puesta: no se toca
+    st.vaccinesDone[id] = d.fecha;
+    const info = st.vaccinesInfo[id] || {};
+    if (!info.pais) info.pais = "co";
+    if (d.lab && !info.lab) info.lab = d.lab;
+    if (!info.notas) info.notas = d.notas;
+    st.vaccinesInfo[id] = info; sinLapida(id);
+  }
+  for (const n of t.nuevas) {
+    if (!st.vaccines.some(v => v.id === n.id)) {
+      st.vaccines.push({ id: n.id, grupo: n.grupo, age: n.age, vaccine: n.vaccine, dose: n.dose });
+      st.config.vacunasEditadas = true;
+    }
+  }
+  st.config.carnetSembrado4 = true;
+  st.modificado = new Date().toISOString();
+  return st;
+}
+/* Vacunas con aviso propio en Pendientes desde una fecha (y que no cuentan
+   como «vacuna atrasada» por edad). */
+const VACUNAS_CON_AVISO = Object.fromEntries(CARNET_PABLO.tanda4.nuevas.filter(n => n.aviso).map(n => [n.id, n]));
 function sembrarCarnetTanda1(st) {
   if (st.config && st.config.carnetSembrado) return st;
   if (!st.config || st.config.fechaNacimiento !== CARNET_PABLO.nacimiento) return st;
@@ -15534,6 +15614,7 @@ function vacunasPendientes() {
   if (meses == null) return [];
   return (STATE.vaccines || []).filter(v => {
     if (STATE.vaccinesDone[v.id]) return false;
+    if (VACUNAS_CON_AVISO[v.id]) return false;      // su aviso va aparte, con fecha
     const prevista = parseVaccineAgeMonths(v.age);
     return meses >= prevista + 0.5;    // medio mes de cortesia
   });
@@ -15571,6 +15652,18 @@ function calcularAvisos() {
       titulo: "Apiretal a las 07:00",
       texto: `Hoy tiene vacunas (${vacHoy.map(v => `${v.vaccine} ${v.dose}`).join(" · ")}). Márcalo cuando se lo hayas dado.`,
       accion: { et: dado ? "✓ Dado" : "Marcar", fn: "PB.marcarApiretal()" } });
+  }
+
+  /* Vacunas con aviso desde una fecha (p. ej. la bivalente del viaje). */
+  for (const [id, n] of Object.entries(VACUNAS_CON_AVISO)) {
+    if (HOY_ISO < n.aviso.desde) continue;
+    if (!(STATE.vaccines || []).some(v => v.id === id)) continue;
+    const f = STATE.vaccinesDone[id];
+    if (f && f <= HOY_ISO) continue;                  // ya puesta
+    out.push({ id: "vacav:" + id, tipo: "diario", icono: "💉", hecho: false,
+      titulo: f ? `${n.vaccine}: cita el ${fmtFechaCorta(f)}` : n.vaccine,
+      texto: n.aviso.texto,
+      accion: { et: "Ver vacunas", fn: "PB.irA('vacunas')" } });
   }
 
   /* Medicamentos con «Repetir»: 10 min antes de la siguiente dosis. */
