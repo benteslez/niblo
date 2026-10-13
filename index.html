@@ -6003,6 +6003,11 @@
     .pb-app .pd-semana > summary { cursor: pointer; font-weight: 700; color: var(--teal); }
     .pb-app .pd-sem-ing, .pb-app .pd-sem-dias { font-size: 0.8125rem; color: var(--text-muted); }
     .pb-app .pd-ingsem { margin: 6px 0 4px; }
+    .pb-app .campo label.md-rep-check { display: flex; flex-direction: row; justify-content: flex-start; gap: 10px; align-items: center;
+      font-size: 0.9375rem; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--text); cursor: pointer; margin-bottom: 8px; }
+    .pb-app .campo label.md-rep-check input[type=checkbox] { width: 22px; height: 22px; flex: none; margin: 0; padding: 0; }
+    .pb-app .md-rep-fila { display: flex; gap: 8px; }
+    .pb-app .md-rep-fila > * { flex: 1; }
     .pb-app .pd-sem-prep { list-style: none; margin-left: -18px; padding: 6px 0; border-bottom: 1px solid var(--border); }
     .pb-app .pd-sem-check { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
     .pb-app .pd-sem-check input { width: 20px; height: 20px; accent-color: var(--green); }
@@ -8189,7 +8194,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "354";
+const NIBLO_BUILD = "355";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -9140,6 +9145,7 @@ function editarRegistro(col, id) {
   const titulo = def.titulo.charAt(0).toUpperCase() + def.titulo.slice(1);
   const desc = iso ? `${titulo} del ${fmtFechaCorta(iso)}` : titulo;
   abrirModal(`Editar ${def.titulo}`, `<div class="grid-campos2">${campos}</div>
+    ${col === "medicamentos" ? htmlRepetir("ed", reg.repetir) : ""}
     <div class="modal-aviso" id="ed-aviso"></div>`,
     [{ et: "Cancelar", accion: "PB.cerrarModal()" },
      { et: "Borrar", peligro: true, accion: `PB.pedirBorrado('${col}','${id}','${esc(desc)}')` },
@@ -9165,8 +9171,21 @@ function guardarEdicion() {
     return;
   }
   Object.assign(reg, nuevo);
+  if (col === "medicamentos") {
+    const h = leerRepetir("ed");
+    if (h) reg.repetir = h;
+    else if (reg.repetir) {
+      /* Desmarcar «Repetir» para la serie: se quita de esta dosis y de las
+         posteriores del mismo medicamento. Las dosis siguen en el historial. */
+      for (const m of (STATE.medicamentos || [])) {
+        if (m !== reg && mismoMed(m.nombre, reg.nombre) && (m.datetime || "") >= (reg.datetime || "") && m.repetir) { delete m.repetir; sellar(m); }
+      }
+      delete reg.repetir;
+    }
+  }
   sellar(reg);
   guardarEstado();
+  if (col === "medicamentos") renderAvisos();
   cerrarModal();
   irA(VISTA_ACTUAL);
   /* El panel del dia del calendario no cuelga de VISTA_ACTUAL: si esta
@@ -12756,7 +12775,7 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
         <span class="linea-hora">${(m.datetime || "").slice(11, 16)}</span>
         ${iconoLinea("medicamento")}
         <span class="linea-texto"><b>${esc(m.nombre || "Medicamento")}</b>${
-          m.ml ? `<span class="linea-sub">${esc(String(m.ml).replace(".", ","))} ml</span>` : ""}</span>
+          m.ml || m.repetir ? `<span class="linea-sub">${[m.ml ? `${esc(String(m.ml).replace(".", ","))} ml` : "", m.repetir ? `cada ${esc(String(m.repetir).replace(".", ","))} h` : ""].filter(Boolean).join(" · ")}</span>` : ""}</span>
       </button>` })),
     ...((STATE.vitaminaD || {})[dia.fecha] ? [{ hora: horaVitaminaD(dia.fecha), html: `
       <button type="button" class="linea-fila" onclick="PB.modalVitaminaD('${dia.fecha}')">
@@ -13248,13 +13267,89 @@ function deleteCompra(id) {
   STATE.compras = (STATE.compras || []).filter(x => x.id !== id);
   guardarEstado();
 }
+/* ---- Repetir un medicamento -------------------------------------------
+   Con «Repetir» marcado, el registro guarda cada cuantas horas (repetir). No
+   se apuntan dosis solas: 10 min antes de que toque la siguiente sale en
+   Pendientes, y al darla (con su boton o apuntandola) vuelve a contar desde
+   esa dosis. Manda la ultima dosis de cada medicamento; para pararlo, se
+   desmarca «Repetir» al editarla. El historial no se toca. */
+const REPETIR_OPS = [2, 4, 6, 8];
+const REPETIR_ANTES_MIN = 10;
+function htmlRepetir(pre, horas) {
+  const h = Number(horas) || 0;
+  const otro = h > 0 && !REPETIR_OPS.includes(h);
+  return `<div class="campo md-rep">
+    <label class="md-rep-check"><input type="checkbox" id="${pre}-rep"${h > 0 ? " checked" : ""}
+      onchange="document.getElementById('${pre}-rep-op').hidden = !this.checked"> Repetir</label>
+    <div id="${pre}-rep-op"${h > 0 ? "" : " hidden"}>
+      <label for="${pre}-rep-h">Repetir cada</label>
+      <div class="md-rep-fila">
+        <select id="${pre}-rep-h" onchange="document.getElementById('${pre}-rep-otro').hidden = this.value !== 'otro'">
+          ${REPETIR_OPS.map(x => `<option value="${x}"${h === x || (!h && x === 6) ? " selected" : ""}>${x} h</option>`).join("")}
+          <option value="otro"${otro ? " selected" : ""}>Otro</option>
+        </select>
+        <input type="text" id="${pre}-rep-otro" inputmode="decimal" placeholder="horas (p. ej. 3,5)" autocomplete="off"${otro ? ` value="${String(h).replace(".", ",")}"` : " hidden"}>
+      </div>
+      <div class="faint">Saldrá en Pendientes ${REPETIR_ANTES_MIN} min antes de la siguiente dosis; al dársela, vuelve a contar.</div>
+    </div>
+  </div>`;
+}
+function leerRepetir(pre) {
+  const c = document.getElementById(pre + "-rep");
+  if (!c || !c.checked) return 0;
+  const sel = document.getElementById(pre + "-rep-h").value;
+  const h = sel === "otro" ? parseFloat(String(document.getElementById(pre + "-rep-otro").value).replace(",", ".")) : Number(sel);
+  return h > 0 ? h : 0;
+}
+const mismoMed = (a, b) => (a || "").trim().toLowerCase() === (b || "").trim().toLowerCase();
+function ultimaDosis(nombre) {
+  return (STATE.medicamentos || []).filter(m => mismoMed(m.nombre, nombre))
+    .sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop() || null;
+}
+/* Medicamentos con repeticion activa: la ultima dosis de cada uno y cuando toca. */
+function medicamentosRepetidos() {
+  const ult = {};
+  for (const m of (STATE.medicamentos || [])) {
+    const k = (m.nombre || "").trim().toLowerCase();
+    if (!k || !m.datetime) continue;
+    if (!ult[k] || m.datetime > ult[k].datetime) ult[k] = m;
+  }
+  return Object.values(ult).filter(m => Number(m.repetir) > 0).map(m => {
+    const toca = new Date(new Date(m.datetime).getTime() + Number(m.repetir) * 3600000);
+    return { m, toca, aviso: new Date(toca.getTime() - REPETIR_ANTES_MIN * 60000) };
+  });
+}
+function darDosisRepetida(id) {
+  const m = (STATE.medicamentos || []).find(x => x.id === id);
+  if (!m) return;
+  modalMedicamento(HOY_ISO, { nombre: m.nombre, ml: m.ml, repetir: m.repetir });
+}
+/* Cada minuto: si cambia lo pendiente (una dosis que ya toca), se repinta la
+   tarjeta y, con las notificaciones activadas, se avisa una vez por dosis. */
+let REP_FIRMA = "";
+function vigilarRepeticiones() {
+  const ahora = new Date();
+  const tocan = medicamentosRepetidos().filter(x => ahora >= x.aviso);
+  const firma = tocan.map(x => x.m.id).join(",");
+  if (firma !== REP_FIRMA) { REP_FIRMA = firma; renderAvisos(); }
+  if (!notificacionesActivas()) return;
+  for (const x of tocan) {
+    const k = "niblo.med.notif." + x.m.id;
+    if (localStorage.getItem(k)) continue;
+    notificar(`${x.m.nombre}: toca otra dosis`, { body: `A las ${x.toca.toTimeString().slice(0, 5)} (cada ${String(x.m.repetir).replace(".", ",")} h).`, icon: "icon-192.png", tag: k })
+      .then(ok => { if (ok) localStorage.setItem(k, "1"); });
+  }
+}
+
 /* Medicamento. Los nombres ya usados salen como sugerencia, junto a los de
    siempre, para no teclear "Apiretal" cada vez. */
 const MEDICAMENTOS_HABITUALES = ["Dolex", "Apiretal", "Dalsy", "Vitamina D"];
-function modalMedicamento(fecha) {
+function modalMedicamento(fecha, pre) {
   const usados = (STATE.medicamentos || []).map(m => m.nombre).filter(Boolean);
   const nombres = [...new Set([...usados.reverse(), ...MEDICAMENTOS_HABITUALES])];
-  const ult = (STATE.medicamentos || []).slice().sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop() || {};
+  const ult = pre || (STATE.medicamentos || []).slice().sort((a, b) => (a.datetime || "").localeCompare(b.datetime || "")).pop() || {};
+  /* Si ese medicamento se esta repitiendo, la nueva dosis sigue la serie. */
+  const serie = pre ? pre.repetir : (ult.nombre && (ultimaDosis(ult.nombre) || {}).repetir);
   abrirModal("Medicamento", `
     <div class="campo"><label for="md-dt">Fecha y hora</label>
       <input type="datetime-local" id="md-dt" value="${horaAhoraEn(fecha)}"></div>
@@ -13267,6 +13362,7 @@ function modalMedicamento(fecha) {
     </div>
     <div class="campo"><label for="md-notas">Notas</label>
       <input type="text" id="md-notas" placeholder="Opcional" autocomplete="off"></div>
+    ${htmlRepetir("md", serie)}
     <div class="modal-aviso" id="md-aviso"></div>`,
     [{ et: "Cancelar", accion: "PB.cerrarModal()" },
      { et: "Guardar", primario: true, accion: "PB.guardarMedicamento()" }]);
@@ -13282,8 +13378,9 @@ function guardarMedicamento() {
     return;
   }
   if (!STATE.medicamentos) STATE.medicamentos = [];
-  STATE.medicamentos.push(sellar({ id: "md_" + Date.now().toString(36), datetime: dt, nombre,
-    ml: Number.isFinite(ml) ? ml : null, notas }));
+  const repetir = leerRepetir("md");
+  STATE.medicamentos.push(sellar(Object.assign({ id: "md_" + Date.now().toString(36), datetime: dt, nombre,
+    ml: Number.isFinite(ml) ? ml : null, notas }, repetir ? { repetir } : {})));
   guardarEstado();
   cerrarModal();
   refrescarTrasToma();
@@ -13316,6 +13413,7 @@ function marcarApiretal() {
     </div>
     <div class="campo"><label for="ap-dt">Hora</label>
       <input type="datetime-local" id="ap-dt" value="${HOY_ISO}T07:00"></div>
+    ${htmlRepetir("ap", 0)}
     <div class="modal-aviso" id="ap-aviso"></div>`,
     [{ et: "Cancelar", accion: "PB.cerrarModal()" },
      { et: "Guardar", primario: true, accion: "PB.guardarApiretal()" }]);
@@ -13330,7 +13428,8 @@ function guardarApiretal() {
     return;
   }
   if (!STATE.medicamentos) STATE.medicamentos = [];
-  STATE.medicamentos.push(sellar({ id: "md_" + Date.now().toString(36), datetime: dt, nombre, ml, notas: "Día de vacunas" }));
+  const repetir = leerRepetir("ap");
+  STATE.medicamentos.push(sellar(Object.assign({ id: "md_" + Date.now().toString(36), datetime: dt, nombre, ml, notas: "Día de vacunas" }, repetir ? { repetir } : {})));
   guardarEstado();
   cerrarModal();
   renderAvisos();
@@ -15220,6 +15319,19 @@ function calcularAvisos() {
       titulo: "Apiretal a las 07:00",
       texto: `Hoy tiene vacunas (${vacHoy.map(v => `${v.vaccine} ${v.dose}`).join(" · ")}). Márcalo cuando se lo hayas dado.`,
       accion: { et: dado ? "✓ Dado" : "Marcar", fn: "PB.marcarApiretal()" } });
+  }
+
+  /* Medicamentos con «Repetir»: 10 min antes de la siguiente dosis. */
+  const ahoraRep = new Date();
+  for (const x of medicamentosRepetidos()) {
+    if (ahoraRep < x.aviso) continue;
+    const hh = d => d.toTimeString().slice(0, 5);
+    const ml = x.m.ml != null ? ` (${String(x.m.ml).replace(".", ",")} ml)` : "";
+    const tarde = ahoraRep > x.toca;
+    out.push({ id: "rep:" + x.m.id, tipo: "diario", icono: "💊", hecho: false,
+      titulo: `${x.m.nombre}: ${tarde ? "toca otra dosis" : `otra dosis a las ${hh(x.toca)}`}`,
+      texto: `Cada ${String(x.m.repetir).replace(".", ",")} h. Última: ${fmtFechaCorta(x.m.datetime.slice(0, 10)) === fmtFechaCorta(HOY_ISO) ? "hoy" : fmtFechaCorta(x.m.datetime.slice(0, 10))} a las ${x.m.datetime.slice(11, 16)}${ml}${tarde ? `; tocaba a las ${hh(x.toca)}` : ""}. Para dejar de repetirlo, edita esa dosis y desmarca «Repetir».`,
+      accion: { et: "Dar ahora", fn: `PB.darDosisRepetida('${x.m.id}')` } });
   }
 
   /* Vacunas ya vencidas y sin marcar. Con la cita puesta no se avisa: ya sale
@@ -17220,6 +17332,7 @@ let _arrancado = false;
 function boot(vistaInicial) {
   if (_arrancado) return;
   _arrancado = true;
+  setInterval(vigilarRepeticiones, 60000);
   if (unificarPropios()) guardarEstado();
   document.getElementById("pb-drawer-bg").addEventListener("click", cerrarDrawer);
   document.getElementById("pb-drawer-close").addEventListener("click", cerrarDrawer);
@@ -17232,7 +17345,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
