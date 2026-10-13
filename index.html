@@ -8189,7 +8189,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "353";
+const NIBLO_BUILD = "354";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -10439,15 +10439,24 @@ function semSueno(meses) {
   }
   const e = estandarSueno(meses);
   const media = dias.reduce((t, d) => t + d.h, 0) / dias.length;
-  const fuera = dias.filter(d => d.h < e.ok[0] || d.h > e.ok[1]).length;
-  const m = media.toFixed(1).replace(".", ",");
+  /* Margen de 30 min antes de avisar (peticion de la familia): con la media
+     redondeada, 11 h 58 min salia como «12,0 h fuera de las 12-15 h». Ahora
+     la media va en horas y minutos y solo cuenta como fuera lo que se pasa
+     de la banda en mas de media hora. */
+  const MARGEN = 0.5;
+  const fuera = dias.filter(d => d.h < e.ok[0] - MARGEN || d.h > e.ok[1] + MARGEN).length;
+  const hm = h => { const t = Math.round(h * 60); return `${Math.floor(t / 60)} h${t % 60 ? ` ${t % 60} min` : ""}`; };
+  const m = hm(media);
   if (fuera >= 3) {
-    return { nivel: "rojo", txt: `${fuera} de ${dias.length} días fuera de ${e.ok[0]}-${e.ok[1]} h (media ${m} h/día).` };
+    return { nivel: "rojo", txt: `${fuera} de ${dias.length} días fuera de ${e.ok[0]}-${e.ok[1]} h, contando 30 min de margen (media ${m} al día).` };
+  }
+  if (media < e.rec[0] - MARGEN || media > e.rec[1] + MARGEN) {
+    return { nivel: "ambar", txt: `Media de ${m} al día, fuera de las ${e.rec[0]}-${e.rec[1]} h recomendadas (más de 30 min de diferencia).` };
   }
   if (media < e.rec[0] || media > e.rec[1]) {
-    return { nivel: "ambar", txt: `Media de ${m} h/día, fuera de las ${e.rec[0]}-${e.rec[1]} h recomendadas.` };
+    return { nivel: "verde", txt: `Media de ${m} al día, ${media < e.rec[0] ? "algo por debajo" : "algo por encima"} de las ${e.rec[0]}-${e.rec[1]} h recomendadas, dentro del margen de 30 min.` };
   }
-  return { nivel: "verde", txt: `Media de ${m} h/día, dentro de las ${e.rec[0]}-${e.rec[1]} h recomendadas.` };
+  return { nivel: "verde", txt: `Media de ${m} al día, dentro de las ${e.rec[0]}-${e.rec[1]} h recomendadas.` };
 }
 
 function semLeche(meses) {
