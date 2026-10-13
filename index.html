@@ -7073,6 +7073,52 @@
     .pb-app details.grupo-edad summary::-webkit-details-marker { display: none; }
     .pb-app .badge-dominio { font-size: 0.625rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-faint); font-weight: 800; margin: 8px 0 2px; }
     .pb-app .tooth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .pb-app .des-hero { background: linear-gradient(135deg, var(--blue-soft), var(--green-soft)); }
+    .pb-app .des-hero-tit { font-size: 1.125rem; font-weight: 800; }
+    .pb-app .des-hero-l { font-size: 0.84375rem; color: var(--text-muted); margin-top: 2px; }
+    .pb-app .des-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 12px 0; }
+    .pb-app .des-kpis div { background: var(--bg-card); border-radius: 12px; padding: 8px 4px; text-align: center; }
+    .pb-app .des-kpis b { display: block; font-size: 1.125rem; }
+    .pb-app .des-kpis span { font-size: 0.6875rem; color: var(--text-muted); }
+    .pb-app .des-add { width: 100%; margin: 0; }
+    .pb-app .des-tl { display: flex; flex-direction: column; border-left: 2px solid var(--border); margin-left: 16px; }
+    .pb-app .des-ev { display: flex; gap: 10px; align-items: flex-start; text-align: left; background: none; border: 0; padding: 8px 0 8px 0; margin-left: -17px; cursor: pointer; color: var(--text); font: inherit; }
+    .pb-app .des-ev-ico { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-size: 1rem; background-color: var(--bg-card); box-shadow: 0 0 0 3px var(--bg-card); }
+    .pb-app .des-ev-txt { display: flex; flex-direction: column; font-size: 0.875rem; }
+    .pb-app .des-ev-sub { font-size: 0.75rem; color: var(--text-muted); }
+    .pb-app .des-ev-nota { font-size: 0.78125rem; font-style: italic; margin-top: 2px; }
+    .pb-app .des-ideas { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pb-app .des-tabs { flex-wrap: nowrap; overflow-x: auto; }
+    .pb-app .des-tabs button { flex: 1 0 auto; padding: 6px 10px; font-size: 0.8125rem; }
+    .pb-app .des-grupo > summary { list-style: none; }
+    .pb-app .des-grupo > summary .des-ev-ico { font-size: 0.6875rem; letter-spacing: -2px; }
+    .pb-app .des-grupo > summary::-webkit-details-marker { display: none; }
+    .pb-app .des-grupo-l { margin-left: 14px; border-left: 2px dashed var(--border); padding-left: 2px; }
+    .pb-app .des-ideas button { border: 1px dashed var(--border); background: var(--bg-card); border-radius: 99px; padding: 6px 10px; font-size: 0.8125rem; cursor: pointer; color: var(--text); }
+    .pb-app .des-cal-cab { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .pb-app .des-cal-cab button { border: 1px solid var(--border); background: var(--bg-card); border-radius: 50%; width: 32px; height: 32px; font-size: 1.125rem; cursor: pointer; color: var(--text); }
+    .pb-app .des-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .pb-app .des-cal-d { text-align: center; font-size: 0.6875rem; font-weight: 700; color: var(--text-faint); }
+    .pb-app .des-cel { aspect-ratio: 1; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--text-muted); padding: 0; }
+    .pb-app .des-cel.con { background: var(--green-soft); color: var(--text); font-weight: 700; cursor: pointer; border-color: transparent; }
+    .pb-app .des-cel.hoy { border: 2px solid var(--blue); }
+    .pb-app .des-cel.sel { outline: 2px solid var(--green); }
+    .pb-app .des-cel i { font-style: normal; font-size: 0.625rem; line-height: 1; }
+    .pb-app .des-ventana { position: relative; height: 10px; background: var(--border); border-radius: 99px; margin: 6px 0 4px; }
+    .pb-app .des-ventana .v { position: absolute; top: 0; bottom: 0; background: var(--blue-soft); border: 1px solid var(--blue); border-radius: 99px; }
+    .pb-app .des-ventana .me { position: absolute; top: -2px; bottom: -2px; width: 3px; background: var(--text); border-radius: 2px; }
+    .pb-app .des-ventana .yo { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--blue); }
+    .pb-app .des-oms.ok .des-ventana .v { background: var(--green-soft); border-color: var(--green); }
+    .pb-app .des-escala { display: flex; justify-content: space-between; font-size: 0.625rem; color: var(--text-faint); margin: 4px 0 0 29px; }
+    .pb-app .des-prog { flex: 1; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .pb-app .des-prog i { display: block; height: 100%; background: var(--green); }
+    .pb-app .des-boca { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 8px; }
+    .pb-app .des-arcada { display: flex; gap: 3px; }
+    .pb-app .des-boca-et { font-size: 0.625rem; color: var(--text-faint); }
+    .pb-app .des-diente { width: 26px; height: 30px; border: 1.5px solid var(--border); background: var(--bg-card); border-radius: 8px 8px 12px 12px; cursor: pointer; font-size: 0.75rem; padding: 0; }
+    .pb-app .des-arcada.inf .des-diente { border-radius: 12px 12px 8px 8px; }
+    .pb-app .des-diente.p4, .pb-app .des-diente.p5 { width: 30px; }
+    .pb-app .des-diente.si { background: var(--green-soft); border-color: var(--green); }
     .pb-app .tooth-card { border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; background: var(--bg-card); }
     .pb-app .tooth-card.erupted { background: var(--green-soft); border-color: transparent; }
     .pb-app .tooth-card label { display: flex; align-items: center; gap: 7px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
@@ -8194,7 +8240,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "355";
+const NIBLO_BUILD = "356";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -8793,6 +8839,8 @@ function defaultState() {
     /* Preparaciones de la sesion de cocina ya hechas: "fecha|receta|k" -> fecha
        en que se marco. Se sincroniza: lo ve el otro movil. */
     batchHecho: {},
+    /* Hitos apuntados a mano: id -> { t, fecha, cat, nota }. */
+    hitosPropios: {},
   };
 }
 /* El catalogo de vacunas paso del calendario español al PAI de Colombia y los
@@ -8986,6 +9034,7 @@ function cargarEstadoGlobal() {
   migrarVitaminaD(st);
   if (!st.alimentosPropios || typeof st.alimentosPropios !== "object") st.alimentosPropios = {};
   if (!st.batchHecho || typeof st.batchHecho !== "object") st.batchHecho = {};
+  if (!st.hitosPropios || typeof st.hitosPropios !== "object") st.hitosPropios = {};
   sembrarCarnet(st);
   if (purgarFantasmas(st)) st.modificado = new Date().toISOString();
   /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
@@ -9252,7 +9301,7 @@ function cerrarModal() {
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
 const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos"];
-const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho"];
+const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho", "hitosPropios"];
 
 function sello() { return new Date().toISOString(); }
 
@@ -14986,64 +15035,267 @@ function htmlSeguimientoAlergenos() {
 
 
 /* ======================== render: DESARROLLO (hitos + dientes) ======================== */
+/* ======================== render: DESARROLLO ========================
+   Cuatro pestañas: «Momentos» (todo lo conseguido, en linea de tiempo, y los
+   hitos propios), «Calendario» (los dias en que hizo algo), «Por edad» (OMS y
+   CDC, como siempre) y «Dientes». Los hitos propios (primera palabra, a
+   cuatro patas...) son texto libre con fecha: no son de ninguna escala y no
+   cuentan para el semaforo. */
+let DES_TAB = "momentos";
+let DES_MES = null;      // "AAAA-MM" del calendario
+let DES_DIA = null;      // dia elegido en el calendario
+const DES_CAT = {
+  motor:   { et: "Motor",                ico: "🤸", col: "var(--blue)" },
+  lenguaje:{ et: "Comunicación",         ico: "💬", col: "var(--purple, #7c3aed)" },
+  social:  { et: "Social y emocional",   ico: "😊", col: "var(--amber)" },
+  cognitivo:{ et: "Cognitivo",           ico: "🧠", col: "var(--teal)" },
+  diente:  { et: "Dientes",              ico: "🦷", col: "var(--text-muted)" },
+  primera: { et: "Primera vez",          ico: "⭐", col: "var(--green)" },
+};
+const CDC_A_CAT = { "Social/Emocional": "social", "Comunicación/Lenguaje": "lenguaje", "Cognitivo": "cognitivo", "Motor/Físico": "motor" };
+/* Ideas de «primeras veces» para apuntar con un toque. No son hitos de
+   ninguna escala ni tienen edad esperada: son recuerdos. */
+const PRIMERAS_VECES = [
+  ["Primera sonrisa", "social"], ["Primera carcajada", "social"], ["Se da la vuelta solo", "motor"],
+  ["Se sienta solo", "motor"], ["Se pone a cuatro patas", "motor"], ["Gatea", "motor"], ["Se pone de pie agarrado", "motor"],
+  ["Primeros pasos", "motor"], ["Primera palabra", "lenguaje"], ["Dice «mamá»", "lenguaje"], ["Dice «papá»", "lenguaje"],
+  ["Dice adiós con la mano", "lenguaje"], ["Aplaude", "social"], ["Señala lo que quiere", "lenguaje"], ["Da un beso", "social"],
+  ["Hace la pinza (pulgar e índice)", "motor"], ["Come solo con la mano", "primera"], ["Bebe de vaso abierto", "primera"],
+  ["Primera noche durmiendo de un tirón", "primera"], ["Primer baño en piscina o mar", "primera"], ["Primer viaje en avión", "primera"],
+  ["Primer corte de pelo", "primera"],
+];
+function hitosPropios() { return STATE.hitosPropios || {}; }
+/* Todo lo conseguido, con fecha, de las cuatro fuentes. */
+function eventosDesarrollo() {
+  const out = [];
+  OMS_MILESTONES.forEach(m => { const f = STATE.milestonesAchieved[m.id]; if (f) out.push({ fecha: f, t: m.text, cat: "motor", fuente: "OMS", ref: `oms:${m.id}` }); });
+  CDC_MILESTONES.forEach(g => g.items.forEach((it, idx) => { const k = `cdc-${g.age}-${idx}`; const f = STATE.cdcAchieved[k];
+    if (f) out.push({ fecha: f, t: it.t, cat: CDC_A_CAT[it.d] || "social", fuente: `CDC ${g.age} m`, ref: `cdc:${k}` }); }));
+  TEETH.forEach(t => { const f = STATE.teethErupted[t.id]; if (f) out.push({ fecha: f, t: `Diente: ${t.name.toLowerCase()} ${t.side.toLowerCase()}`, cat: "diente", fuente: "Dientes", ref: `diente:${t.id}` }); });
+  Object.entries(hitosPropios()).forEach(([id, h]) => { if (h && h.fecha) out.push({ fecha: h.fecha, t: h.t, cat: h.cat || "primera", fuente: "Propio", nota: h.nota, ref: `propio:${id}` }); });
+  return out.sort((a, b) => b.fecha.localeCompare(a.fecha) || a.t.localeCompare(b.t, "es"));
+}
+function desEdadEn(fecha) {
+  const m = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date(fecha + "T12:00:00"));
+  if (m == null) return "";
+  const mm = Math.floor(m), d = Math.round((m - mm) * 30.4);
+  return mm ? `${mm} ${mm === 1 ? "mes" : "meses"}${d ? ` y ${d} ${d === 1 ? "día" : "días"}` : ""}` : `${d} días`;
+}
+function desFila(e) {
+  const c = DES_CAT[e.cat] || DES_CAT.primera;
+  return `<button type="button" class="des-ev" onclick="PB.desEditar('${e.ref}')">
+    <span class="des-ev-ico" style="background:color-mix(in srgb, ${c.col} 16%, transparent)">${c.ico}</span>
+    <span class="des-ev-txt"><b>${esc(e.t)}</b>
+      <span class="des-ev-sub">${fmtFechaLarga(e.fecha)} · ${desEdadEn(e.fecha)} · ${esc(e.fuente === "Propio" ? c.et : e.fuente)}</span>
+      ${e.nota ? `<span class="des-ev-nota">${esc(e.nota)}</span>` : ""}</span></button>`;
+}
+/* Linea de tiempo agrupada por dia: un dia con muchos hitos (p. ej. al
+   marcar de golpe el checklist) se pliega en un solo bloque. */
+function desLinea(evs) {
+  const dias = [];
+  for (const e of evs) { const u = dias[dias.length - 1]; if (u && u.f === e.fecha) u.es.push(e); else dias.push({ f: e.fecha, es: [e] }); }
+  return `<div class="des-tl">${dias.map(d => d.es.length <= 3 ? d.es.map(desFila).join("")
+    : `<details class="des-grupo"><summary class="des-ev"><span class="des-ev-ico">${[...new Set(d.es.map(e => (DES_CAT[e.cat] || DES_CAT.primera).ico))].slice(0, 2).join("")}</span>
+        <span class="des-ev-txt"><b>${d.es.length} hitos marcados</b><span class="des-ev-sub">${fmtFechaLarga(d.f)} · ${desEdadEn(d.f)} · toca para verlos</span></span></summary>
+        <div class="des-grupo-l">${d.es.map(desFila).join("")}</div></details>`).join("")}</div>`;
+}
 function renderDesarrollo(el) {
   const ageM = ageInMonthsDecimal(CONFIG.fechaNacimiento, HOY_REAL);
-  let html = "";
+  const evs = eventosDesarrollo();
+  const nProp = Object.keys(hitosPropios()).length;
+  const omsN = OMS_MILESTONES.filter(m => STATE.milestonesAchieved[m.id]).length;
+  const cdcHasta = CDC_MILESTONES.filter(g => ageM != null && g.age <= Math.max(2, Math.floor(ageM)));
+  const cdcTot = cdcHasta.reduce((t, g) => t + g.items.length, 0);
+  const cdcOk = cdcHasta.reduce((t, g) => t + g.items.filter((_, i) => STATE.cdcAchieved[`cdc-${g.age}-${i}`]).length, 0);
+  const dientes = TEETH.filter(t => STATE.teethErupted[t.id]).length;
+  let html = `<div class="card des-hero">
+    <div class="des-hero-tit">Desarrollo de ${esc(CONFIG.nombre || "Pablo")}</div>
+    <div class="des-hero-l">${ageM != null ? desEdadEn(HOY_ISO) : ""}${evs[0] ? ` · último: <b>${esc(evs[0].t)}</b> (${fmtFechaCorta(evs[0].fecha)})` : ""}</div>
+    <div class="des-kpis">
+      <div><b>${evs.length}</b><span>momentos</span></div>
+      <div><b>${omsN}/6</b><span>motores OMS</span></div>
+      <div><b>${cdcOk}/${cdcTot}</b><span>CDC hasta su edad</span></div>
+      <div><b>${dientes}</b><span>dientes</span></div>
+    </div>
+    <button type="button" class="btn-primario des-add" onclick="PB.desNuevo()">＋ Añadir hito propio</button>
+  </div>
+  <div class="pd-tabs des-tabs">${[["momentos", "Momentos"], ["calendario", "Calendario"], ["edad", "Por edad"], ["dientes", "Dientes"]]
+    .map(([k, t]) => `<button type="button" class="${DES_TAB === k ? "on" : ""}" onclick="PB.desTab('${k}')">${t}</button>`).join("")}</div>`;
 
-  html += `<div class="card"><h2>Hitos motores oficiales (OMS)</h2>
-    <div class="faint" style="margin-top:-6px;margin-bottom:8px">Los 6 hitos del WHO Motor Development Study (2006), con la ventana de edad normal (percentil 1-99).</div>`;
-  OMS_MILESTONES.forEach(m => {
-    const fecha = STATE.milestonesAchieved[m.id];
-    let tag = "";
-    if (!fecha && ageM != null) {
-      if (ageM > m.max) tag = '<span class="pill limite">fuera de ventana — coméntalo si te preocupa</span>';
-      else if (ageM >= m.min) tag = '<span class="pill info">dentro de ventana</span>';
+  if (DES_TAB === "momentos") {
+    const ya = new Set(Object.values(hitosPropios()).map(h => (h.t || "").toLowerCase()));
+    const ideas = PRIMERAS_VECES.filter(([t]) => !ya.has(t.toLowerCase()));
+    html += `<div class="card"><h2>Línea de tiempo <span class="n">${evs.length}</span></h2>
+      ${evs.length ? desLinea(evs)
+        : `<p class="faint">Todavía no hay nada marcado. Marca hitos en «Por edad» o añade los vuestros.</p>`}</div>
+      <div class="card"><h2>Ideas de primeras veces</h2>
+      <p class="faint">Para apuntar con un toque (se puede cambiar la fecha). No son hitos de ninguna escala ni tienen una edad esperada: son recuerdos.</p>
+      <div class="des-ideas">${ideas.map(([t, c]) => `<button type="button" onclick='PB.desNuevo(${esc(JSON.stringify(t))}, "${c}")'>${DES_CAT[c].ico} ${esc(t)}</button>`).join("")}</div></div>`;
+  } else if (DES_TAB === "calendario") {
+    const porDia = {};
+    evs.forEach(e => (porDia[e.fecha] = porDia[e.fecha] || []).push(e));
+    if (!DES_MES) DES_MES = (evs[0] ? evs[0].fecha : HOY_ISO).slice(0, 7);
+    const [y, mo] = DES_MES.split("-").map(Number);
+    const primero = new Date(y, mo - 1, 1), dias = new Date(y, mo, 0).getDate();
+    const hueco = (primero.getDay() + 6) % 7;
+    const meses = Object.keys(porDia).map(f => f.slice(0, 7));
+    let celdas = "";
+    for (let i = 0; i < hueco; i++) celdas += `<div></div>`;
+    for (let d = 1; d <= dias; d++) {
+      const f = `${DES_MES}-${String(d).padStart(2, "0")}`, es = porDia[f] || [];
+      celdas += `<button type="button" class="des-cel${es.length ? " con" : ""}${f === HOY_ISO ? " hoy" : ""}${f === DES_DIA ? " sel" : ""}"
+        ${es.length ? `onclick="PB.desDia('${f}')"` : "disabled"}><span>${d}</span>${es.length ? `<i>${es.slice(0, 3).map(e => (DES_CAT[e.cat] || DES_CAT.primera).ico).join("")}</i>` : ""}</button>`;
     }
-    html += `<div class="milestone-row">
-      <input type="checkbox" ${fecha ? "checked" : ""} onchange="PB.toggleOmsMilestone('${m.id}', this.checked)">
-      <div><div class="txt">${m.text}</div>
-        <div class="meta">Mediana OMS: ${m.median} m · Ventana: ${m.min}-${m.max} m ${fecha ? `· <b>cumplido ${fmtFechaCorta(fecha)}</b>` : ''} ${tag}</div>
-        ${m.note ? `<div class="meta">${m.note}</div>` : ''}
-      </div>
-    </div>`;
-  });
-  html += `</div>`;
-
-  html += `<div class="card"><h2>Checklist ampliado por edad (CDC)</h2>
-    <div class="faint" style="margin-top:-6px;margin-bottom:8px">Hitos que el 75% o más de los niños alcanza a esa edad — orientativo, no diagnóstico. Fuente: CDC "Learn the Signs. Act Early."</div>`;
-  CDC_MILESTONES.forEach(group => {
-    const total = group.items.length;
-    const done = group.items.filter((it, idx) => STATE.cdcAchieved[`cdc-${group.age}-${idx}`]).length;
-    const abierto = ageM != null && Math.abs(ageM - group.age) < 6;
-    const porDominio = {};
-    group.items.forEach((it, idx) => { (porDominio[it.d] ||= []).push({ ...it, idx }); });
-    html += `<details class="grupo-edad" ${abierto ? "open" : ""}>
-      <summary>${group.age} meses <span class="pill ${done===total&&total?'ok':'neutro'}">${done}/${total}</span></summary>`;
-    Object.keys(porDominio).forEach(dom => {
-      html += `<div class="badge-dominio">${dom}</div>`;
-      porDominio[dom].forEach(it => {
-        const key = `cdc-${group.age}-${it.idx}`;
-        const fecha = STATE.cdcAchieved[key];
-        html += `<div class="milestone-row"><input type="checkbox" ${fecha?"checked":""} onchange="PB.toggleCdcMilestone('${key}', this.checked)"><div class="txt">${it.t}${fecha?` <span class="faint">· ${fmtFechaCorta(fecha)}</span>`:''}</div></div>`;
-      });
+    const nombreMes = capitalizar(primero.toLocaleDateString("es-ES", { month: "long", year: "numeric" }));
+    const delMes = evs.filter(e => e.fecha.startsWith(DES_MES)).sort((a, b) => a.fecha.localeCompare(b.fecha));
+    const sel = DES_DIA && DES_DIA.startsWith(DES_MES) ? (porDia[DES_DIA] || []) : delMes;
+    html += `<div class="card"><div class="des-cal-cab">
+        <button type="button" onclick="PB.desMes(-1)" aria-label="Mes anterior">‹</button>
+        <b>${nombreMes}</b>
+        <button type="button" onclick="PB.desMes(1)" aria-label="Mes siguiente">›</button></div>
+      <div class="des-cal">${["L", "M", "X", "J", "V", "S", "D"].map(x => `<div class="des-cal-d">${x}</div>`).join("")}${celdas}</div>
+      ${meses.length ? `<p class="faint" style="margin-top:8px">Meses con momentos: ${[...new Set(meses)].sort().map(m => `<a href="#" onclick="PB.desIrMes('${m}');return false">${new Date(m + "-01T00:00:00").toLocaleDateString("es-ES", { month: "short", year: "2-digit" })}</a>`).join(" · ")}</p>` : ""}
+    </div>
+    <div class="card"><h2>${DES_DIA && DES_DIA.startsWith(DES_MES) ? capitalizar(fmtFechaLarga(DES_DIA)) : `En ${nombreMes.toLowerCase()}`} <span class="n">${sel.length}</span></h2>
+      ${sel.length ? `<div class="des-tl">${sel.map(desFila).join("")}</div>` : `<p class="faint">Nada marcado este mes.</p>`}</div>`;
+  } else if (DES_TAB === "edad") {
+    /* OMS: barra 0-18 meses con la ventana normal, la mediana y su edad. */
+    const ESC = 18, pct = v => Math.max(0, Math.min(100, v / ESC * 100));
+    html += `<div class="card"><h2>Hitos motores (OMS)</h2>
+      <p class="faint">Los 6 hitos del WHO Motor Development Study (2006). La barra es la ventana normal (percentil 1-99), el trazo oscuro la mediana y la línea azul, su edad hoy.</p>`;
+    OMS_MILESTONES.forEach(m => {
+      const fecha = STATE.milestonesAchieved[m.id];
+      let tag = "";
+      if (!fecha && ageM != null) {
+        if (ageM > m.max) tag = '<span class="pill limite">fuera de ventana: coméntalo si te preocupa</span>';
+        else if (ageM >= m.min) tag = '<span class="pill info">dentro de ventana</span>';
+      }
+      html += `<div class="milestone-row des-oms${fecha ? " ok" : ""}">
+        <input type="checkbox" ${fecha ? "checked" : ""} onchange="PB.toggleOmsMilestone('${m.id}', this.checked)" aria-label="${esc(m.text)}">
+        <div style="flex:1"><div class="txt">${m.text}</div>
+          <div class="des-ventana"><span class="v" style="left:${pct(m.min)}%;width:${pct(m.max) - pct(m.min)}%"></span>
+            <span class="me" style="left:${pct(m.median)}%"></span>${ageM != null ? `<span class="yo" style="left:${pct(ageM)}%"></span>` : ""}</div>
+          <div class="meta">Mediana ${String(m.median).replace(".", ",")} m · ventana ${String(m.min).replace(".", ",")}-${String(m.max).replace(".", ",")} m
+            ${fecha ? `· <a href="#" onclick="PB.desEditar('oms:${m.id}');return false"><b>conseguido ${fmtFechaCorta(fecha)}</b></a>` : ""} ${tag}</div>
+          ${m.note ? `<div class="meta">${m.note}</div>` : ""}</div></div>`;
     });
-    html += `</details>`;
-  });
-  html += `</div>`;
-
-  html += `<div class="card"><h2>Erupción dental</h2>
-    <div class="faint" style="margin-top:-6px;margin-bottom:8px">Rangos orientativos de la dentición temporal.</div>
-    <div class="tooth-grid">`;
-  [...TEETH].sort((a,b)=>a.min-b.min).forEach(t => {
-    const fecha = STATE.teethErupted[t.id];
-    html += `<div class="tooth-card ${fecha?'erupted':''}">
-      <label><input type="checkbox" ${fecha?"checked":""} onchange="PB.toggleTooth('${t.id}', this.checked)">${t.name} (${t.side})</label>
-      <div class="rango">${t.min}-${t.max} m${fecha?` · erupcionó ${fmtFechaCorta(fecha)}`:''}</div>
-    </div>`;
-  });
-  html += `</div></div>`;
-
+    html += `<div class="des-escala"><span>0</span><span>6 m</span><span>12 m</span><span>18 m</span></div></div>`;
+    html += `<div class="card"><h2>Checklist por edad (CDC)</h2>
+      <p class="faint">Lo que el 75 % o más de los niños hace a esa edad: orientativo, no es un diagnóstico. Fuente: CDC «Learn the Signs. Act Early.» (2022).</p>`;
+    CDC_MILESTONES.forEach(group => {
+      const total = group.items.length;
+      const done = group.items.filter((it, idx) => STATE.cdcAchieved[`cdc-${group.age}-${idx}`]).length;
+      const abierto = ageM != null && Math.abs(ageM - group.age) < 3;
+      const porDominio = {};
+      group.items.forEach((it, idx) => { (porDominio[it.d] ||= []).push({ ...it, idx }); });
+      html += `<details class="grupo-edad" ${abierto ? "open" : ""}>
+        <summary><span>${group.age} meses</span><span class="des-prog"><i style="width:${total ? done / total * 100 : 0}%"></i></span>
+          <span class="pill ${done === total && total ? "ok" : "neutro"}">${done}/${total}</span></summary>`;
+      Object.keys(porDominio).forEach(dom => {
+        const c = DES_CAT[CDC_A_CAT[dom]] || DES_CAT.social;
+        html += `<div class="badge-dominio">${c.ico} ${dom}</div>`;
+        porDominio[dom].forEach(it => {
+          const key = `cdc-${group.age}-${it.idx}`;
+          const fecha = STATE.cdcAchieved[key];
+          html += `<div class="milestone-row"><input type="checkbox" ${fecha ? "checked" : ""} onchange="PB.toggleCdcMilestone('${key}', this.checked)" aria-label="${esc(it.t)}">
+            <div class="txt">${it.t}${fecha ? ` <a href="#" class="faint" onclick="PB.desEditar('cdc:${key}');return false">· ${fmtFechaCorta(fecha)}</a>` : ""}</div></div>`;
+        });
+      });
+      html += `</details>`;
+    });
+    html += `</div>`;
+  } else {
+    /* Boca: arriba la arcada superior y abajo la inferior, de su derecha a su izquierda. */
+    const pos = n => /central/.test(n) ? 1 : /lateral/.test(n) ? 2 : /Canino/.test(n) ? 3 : /Primer molar/.test(n) ? 4 : 5;
+    const fila = jaw => {
+      const ts = TEETH.filter(t => t.jaw === jaw);
+      const der = ts.filter(t => t.side === "Derecho").sort((a, b) => pos(b.name) - pos(a.name));
+      const izq = ts.filter(t => t.side === "Izquierdo").sort((a, b) => pos(a.name) - pos(b.name));
+      return [...der, ...izq].map(t => { const f = STATE.teethErupted[t.id];
+        return `<button type="button" class="des-diente p${pos(t.name)}${f ? " si" : ""}" title="${esc(t.name + " " + t.side.toLowerCase())}"
+          onclick="PB.toggleTooth('${t.id}', ${!f})">${f ? "🦷" : ""}</button>`; }).join("");
+    };
+    html += `<div class="card"><h2>Dientes <span class="n">${dientes} de 20</span></h2>
+      <p class="faint">Toca un diente para marcarlo (o desmarcarlo). Vista como si le miraras de frente: a la izquierda de la imagen, su lado derecho.</p>
+      <div class="des-boca"><div class="des-arcada sup">${fila("Superior")}</div><div class="des-boca-et">superior · inferior</div><div class="des-arcada inf">${fila("Inferior")}</div></div>
+      <div class="tooth-grid" style="margin-top:12px">`;
+    [...TEETH].sort((a, b) => a.min - b.min).forEach(t => {
+      const fecha = STATE.teethErupted[t.id];
+      html += `<div class="tooth-card ${fecha ? "erupted" : ""}">
+        <label><input type="checkbox" ${fecha ? "checked" : ""} onchange="PB.toggleTooth('${t.id}', this.checked)">${t.name} (${t.side})</label>
+        <div class="rango">${t.min}-${t.max} m${fecha ? ` · <a href="#" onclick="PB.desEditar('diente:${t.id}');return false">salió ${fmtFechaCorta(fecha)}</a>` : ""}</div>
+      </div>`;
+    });
+    html += `</div><p class="faint" style="margin-top:8px">Rangos orientativos de la dentición temporal.</p></div>`;
+  }
   el.innerHTML = html;
+}
+function desTab(t) { DES_TAB = t; DES_DIA = null; renderDesarrollo(document.getElementById("view-desarrollo")); }
+function desMes(n) {
+  const [y, m] = (DES_MES || HOY_ISO.slice(0, 7)).split("-").map(Number);
+  const d = new Date(y, m - 1 + n, 1);
+  DES_MES = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`; DES_DIA = null;
+  renderDesarrollo(document.getElementById("view-desarrollo"));
+}
+function desIrMes(m) { DES_MES = m; DES_DIA = null; renderDesarrollo(document.getElementById("view-desarrollo")); }
+function desDia(f) { DES_DIA = DES_DIA === f ? null : f; renderDesarrollo(document.getElementById("view-desarrollo")); }
+/* Hito propio nuevo (o una idea de «primeras veces») y edicion de cualquier
+   momento: en los de OMS, CDC y dientes solo se cambia la fecha o se quita. */
+let DES_EDIT = null;
+function desNuevo(t, cat) { desModal(null, { t: t || "", fecha: HOY_ISO, cat: cat || "primera", nota: "" }); }
+function desEditar(ref) {
+  const [tipo, id] = [ref.slice(0, ref.indexOf(":")), ref.slice(ref.indexOf(":") + 1)];
+  if (tipo === "propio") return desModal(id, hitosPropios()[id]);
+  const mapa = { oms: "milestonesAchieved", cdc: "cdcAchieved", diente: "teethErupted" }[tipo];
+  const ev = eventosDesarrollo().find(e => e.ref === ref);
+  if (!ev) return;
+  DES_EDIT = { tipo, id, mapa };
+  abrirModal("Fecha del hito", `<p class="modal-p"><b>${esc(ev.t)}</b> <span class="faint">(${esc(ev.fuente)})</span></p>
+    <div class="campo"><label for="des-f">Día en que lo hizo</label><input type="date" id="des-f" value="${ev.fecha}" max="${HOY_ISO}"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Quitar", peligro: true, accion: "PB.desQuitar()" },
+     { et: "Guardar", primario: true, accion: "PB.desGuardar()" }]);
+}
+function desModal(id, h) {
+  DES_EDIT = { tipo: "propio", id };
+  abrirModal(id ? "Editar hito" : "Nuevo hito", `
+    <div class="campo"><label for="des-t">Qué hizo</label>
+      <input type="text" id="des-t" list="des-ideas" value="${esc(h.t || "")}" placeholder="Se pone a cuatro patas" autocomplete="off">
+      <datalist id="des-ideas">${PRIMERAS_VECES.map(([t]) => `<option value="${esc(t)}">`).join("")}</datalist></div>
+    <div class="grid-campos2">
+      <div class="campo"><label for="des-f">Fecha</label><input type="date" id="des-f" value="${h.fecha || HOY_ISO}" max="${HOY_ISO}"></div>
+      <div class="campo"><label for="des-c">Tipo</label><select id="des-c">${Object.entries(DES_CAT).filter(([k]) => k !== "diente")
+        .map(([k, c]) => `<option value="${k}"${(h.cat || "primera") === k ? " selected" : ""}>${c.ico} ${c.et}</option>`).join("")}</select></div>
+    </div>
+    <div class="campo"><label for="des-n">Nota</label><textarea id="des-n" rows="2" placeholder="Opcional: dónde, con quién, cómo fue">${esc(h.nota || "")}</textarea></div>
+    <div class="modal-aviso" id="des-aviso"></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     ...(id ? [{ et: "Borrar", peligro: true, accion: "PB.desQuitar()" }] : []),
+     { et: "Guardar", primario: true, accion: "PB.desGuardar()" }]);
+}
+function desGuardar() {
+  const E = DES_EDIT; if (!E) return;
+  const f = (document.getElementById("des-f") || {}).value || HOY_ISO;
+  if (E.tipo === "propio") {
+    const t = ((document.getElementById("des-t") || {}).value || "").trim();
+    if (!t) { const a = document.getElementById("des-aviso"); if (a) { a.textContent = "Escribe qué hizo."; a.hidden = false; } return; }
+    if (!STATE.hitosPropios) STATE.hitosPropios = {};
+    const id = E.id || ("h_" + Date.now().toString(36));
+    STATE.hitosPropios[id] = { t, fecha: f, cat: document.getElementById("des-c").value, nota: (document.getElementById("des-n").value || "").trim() };
+    olvidarBorradoClave("hitosPropios", id);
+  } else {
+    STATE[E.mapa][E.id] = f; olvidarBorradoClave(E.mapa, E.id);
+  }
+  guardarEstado(); DES_EDIT = null; cerrarModal();
+  DES_MES = f.slice(0, 7);
+  renderDesarrollo(document.getElementById("view-desarrollo"));
+}
+function desQuitar() {
+  const E = DES_EDIT; if (!E) return;
+  if (E.tipo === "propio") { delete STATE.hitosPropios[E.id]; anotarBorradoClave("hitosPropios", E.id); }
+  else { delete STATE[E.mapa][E.id]; anotarBorradoClave(E.mapa, E.id); }
+  guardarEstado(); DES_EDIT = null; cerrarModal();
+  renderDesarrollo(document.getElementById("view-desarrollo"));
 }
 function toggleOmsMilestone(id, checked) {
   if (checked) { STATE.milestonesAchieved[id] = HOY_ISO; olvidarBorradoClave("milestonesAchieved", id); }
@@ -15843,6 +16095,9 @@ function generarInformeCompleto() {
     doc += `<h3>Desarrollo</h3>
       <p class="inf-nota">Hitos motores OMS conseguidos: <b>${hitos.length} de ${OMS_MILESTONES.length}</b>. Dientes salidos: <b>${dientes}</b>.</p>`
       + tabla(["Hito", "Conseguido", "Ventana normal"], hitos);
+    const propios = Object.values(STATE.hitosPropios || {}).filter(h => h && h.fecha).sort((a, b) => a.fecha.localeCompare(b.fecha))
+      .map(h => [esc(h.t), fmtFechaCorta(h.fecha), esc((DES_CAT[h.cat] || DES_CAT.primera).et)]);
+    if (propios.length) doc += `<h4>Otros hitos apuntados por la familia</h4>` + tabla(["Hito", "Fecha", "Tipo"], propios);
   }
 
   /* ---- vacunas ---- */
@@ -17346,7 +17601,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
 
