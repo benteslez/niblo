@@ -6003,6 +6003,7 @@
     .pb-app .pd-semana > summary { cursor: pointer; font-weight: 700; color: var(--teal); }
     .pb-app .pd-sem-ing, .pb-app .pd-sem-dias { font-size: 0.8125rem; color: var(--text-muted); }
     .pb-app .pd-ingsem { margin: 6px 0 4px; }
+    .pb-app .vac-tag.vac-confirmar { color: var(--amber); }
     .pb-app .campo label.md-rep-check { display: flex; flex-direction: row; justify-content: flex-start; gap: 10px; align-items: center;
       font-size: 0.9375rem; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--text); cursor: pointer; margin-bottom: 8px; }
     .pb-app .campo label.md-rep-check input[type=checkbox] { width: 22px; height: 22px; flex: none; margin: 0; padding: 0; }
@@ -8240,7 +8241,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "357";
+const NIBLO_BUILD = "358";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -8910,13 +8911,13 @@ const CARNET_PABLO = {
       m6_flu:   { de: "NDB", lote: "N08" },
     },
     programadas: {
-      m12_neumo: { fecha: "2027-03-08", lab: "Vaxneuvance (PCV15) · MSD", notas: "Cita 08-03-2027 junto con hepatitis A y ProQuad" },
-      m12_hepa:  { fecha: "2027-03-08", lab: "",                          notas: "Cita 08-03-2027 junto con neumococo 15 y ProQuad" },
-      m12_srp:   { fecha: "2027-03-08", lab: "ProQuad · MSD",             notas: "ProQuad: sarampión, rubéola, paperas y varicela en una sola inyección" },
-      m12_vari:  { fecha: "2027-03-08", lab: "ProQuad · MSD",             notas: "ProQuad: sarampión, rubéola, paperas y varicela en una sola inyección" },
+      m12_neumo: { fecha: "2027-03-08", lab: "Vaxneuvance (PCV15) · MSD", notas: "Pendiente confirmar fecha · Cita 08-03-2027 junto con hepatitis A y ProQuad" },
+      m12_hepa:  { fecha: "2027-03-08", lab: "",                          notas: "Pendiente confirmar fecha · Cita 08-03-2027 junto con neumococo 15 y ProQuad" },
+      m12_srp:   { fecha: "2027-03-08", lab: "ProQuad · MSD",             notas: "Pendiente confirmar fecha · ProQuad: sarampión, rubéola, paperas y varicela en una sola inyección" },
+      m12_vari:  { fecha: "2027-03-08", lab: "ProQuad · MSD",             notas: "Pendiente confirmar fecha · ProQuad: sarampión, rubéola, paperas y varicela en una sola inyección" },
     },
     nuevas: [
-      { id: "vx_mexico_biv", grupo: "Otras", age: "Viaje a México", vaccine: "Vacuna bivalente (viaje a México)", dose: "Única",
+      { id: "vx_mexico_biv", grupo: "Otras", age: "Viaje a México", vaccine: "Sarampión-rubéola (SR, bivalente) · viaje a México", dose: "Única",
         aviso: { desde: "2026-11-15", texto: "Para el viaje a México. Recomendado: vacunarse en el centro de vacunación de La Calleja. Márcala en Vacunas cuando se la pongan." } },
     ],
   },
@@ -8949,7 +8950,28 @@ function sembrarCarnet(st) {
      vacunas marcadas y se creeria que el carnet ya estaba sembrado. */
   sembrarCarnetTanda1(st);
   sembrarCarnetTanda2(st);
-  return sembrarCarnetTanda4(st);
+  sembrarCarnetTanda4(st);
+  return sembrarCarnetTanda5(st);
+}
+/* Tanda 5 (para los moviles que ya pasaron la 4): la bivalente es la de
+   sarampion-rubeola (SR) y la cita del 08-03-2027 queda «pendiente confirmar
+   fecha» hasta que se cambie la fecha. */
+const PENDIENTE_CONFIRMAR = "Pendiente confirmar fecha";
+function sembrarCarnetTanda5(st) {
+  if (!st.config || st.config.carnetSembrado5) return st;
+  if (st.config.fechaNacimiento !== CARNET_PABLO.nacimiento) return st;
+  const nueva = CARNET_PABLO.tanda4.nuevas[0];
+  const v = (st.vaccines || []).find(x => x.id === nueva.id);
+  if (v) v.vaccine = nueva.vaccine;
+  for (const id of Object.keys(CARNET_PABLO.tanda4.programadas)) {
+    if ((st.vaccinesDone || {})[id] !== "2027-03-08") continue;
+    const info = (st.vaccinesInfo = st.vaccinesInfo || {})[id] || {};
+    if (!(info.notas || "").includes(PENDIENTE_CONFIRMAR)) info.notas = [PENDIENTE_CONFIRMAR, info.notas].filter(Boolean).join(" · ");
+    st.vaccinesInfo[id] = info;
+  }
+  st.config.carnetSembrado5 = true;
+  st.modificado = new Date().toISOString();
+  return st;
 }
 /* Una sola vez por movil (bandera en config, que viaja con el documento).
    Las fechas de las puestas son las del carnet; las programadas no pisan una
@@ -17480,7 +17502,7 @@ function htmlFilaVacuna(v) {
       <div class="vac-cuerpo">
         <div class="vac-nombre">${esc(v.vaccine)}</div>
         <div class="vac-dosis">${esc(v.dose)}${estado === "pendiente" ? " · " + esc(v.age || "") : ""}${
-          estado === "programada" ? ` · <b class="vac-tag">programada</b>` : ""}</div>
+          estado === "programada" ? ` · <b class="vac-tag">programada</b>${(infoVacuna(v.id).notas || "").includes(PENDIENTE_CONFIRMAR) ? ` · <b class="vac-tag vac-confirmar">pendiente confirmar fecha</b>` : ""}` : ""}</div>
       </div>
       <input type="date" class="vac-fecha" value="${fecha}"
         aria-label="Fecha de ${esc(v.vaccine)}" onchange="PB.fecharVacuna('${v.id}', this.value)">
@@ -17575,6 +17597,11 @@ function fecharVacuna(id, fecha) {
     anotarBorradoClave("vaccinesDone", id);
   } else {
     olvidarBorradoClave("vaccinesDone", id);
+    /* Cambiar la fecha de una cita «pendiente confirmar» es confirmarla. */
+    const inf = STATE.vaccinesInfo && STATE.vaccinesInfo[id];
+    if (inf && (inf.notas || "").includes(PENDIENTE_CONFIRMAR) && STATE.vaccinesDone[id] !== fecha) {
+      inf.notas = inf.notas.replace(PENDIENTE_CONFIRMAR, "").replace(/^\s*·\s*/, "").trim();
+    }
     STATE.vaccinesDone[id] = fecha;
     /* Las del calendario oficial se quedan en su mes pase lo que pase; las
        añadidas a mano se recolocan segun la fecha que se les ponga. */
