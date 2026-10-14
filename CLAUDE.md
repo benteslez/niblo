@@ -11,6 +11,16 @@
   (idempotente) y hay que decir claramente que se ejecuta en el SQL Editor de
   Supabase: eso lo hace el usuario.
 
+## Niblo: Recetas y Gestiones (`index.html`; petición del usuario, 14-10-2026)
+
+- **Recetas** abre una pantalla intermedia (`recetas_menu`, `renderRecetasMenu`) con dos tarjetas: **Biblioteca** y **Plan Semanal**. El área `plan` sigue existiendo (chips, permisos) pero con `oculta: true`: no sale en el inicio. La marca de la cabecera vuelve del plan/biblioteca a esa pantalla, y desde ella al inicio. `AREAS[].alias` hace que un hogar con `plan` vea Recetas y uno con `documentos` vea Gestiones (sin SQL).
+- **Gestiones** (área `gestiones`, sustituye a la tarjeta Documentos; Documentos es su pestaña): pestañas **Todo** (vencido y próximo de todos los ámbitos: gestiones pendientes, caducidades de documentos y fin de contrato de inquilinos, con filtro por ámbito), **Pisos**, **Lima**, **Familia** y **Documentos**. Código: módulo `GS` / `GSUI` junto a `DOCS` (prefijo `gs`, CSS `gs-`).
+- **Pisos**: los alquilados (rol `propietario`: inquilinos, ingresos, balance y préstamo) y aquel donde somos inquilinos (rol `inquilino`: solo gastos y gestiones). Ficha con Resumen (año, balance, gastos por categoría, mes a mes), Movimientos (gasto/ingreso/gestión, pagado/cobrado, repetición, CSV), Inquilinos (contrato, renta, fianza, «Registrar cobro») y Préstamo.
+- **Amortización** (`gsAmortizar`): sistema francés mensual, revisiones de interés (recalculan la cuota sobre las que quedan) y amortizaciones anticipadas (`plazo` mantiene la cuota, `cuota` mantiene el plazo). Comprobada: 100 000 € al 3 % a 300 meses = 474,21 €. La tabla definitiva del Excel del usuario está **pendiente** (la aportará él): adaptar columnas y reglas a ese Excel, no inventar.
+- **Datos**: `supabase/migrations/011_gestiones.sql` (tablas `gs_*` con RLS por hogar, Realtime y área `gestiones`); lo ejecuta el usuario. Tiempo real en un segundo canal (`realtime:niblo-gs`, `rtUnirGestiones`) para que, si faltan las tablas, no afecte al canal de siempre. Sergio comparte todo por hogar.
+- **Google Sheets**: no hay sincronización automática (una web estática no puede escribir en Drive sin autorización). Hoy: botones **CSV** (se abre en Excel/Sheets). Opción pendiente: Apps Script como webhook de la hoja, cuando el usuario aporte el Excel.
+- `isoLocal` NO existe en el script principal de `index.html` (vive en el de Pablo): usar `hoyISO()` o `gsIso`.
+
 ## Hub de la oposición (`oposicion.html`): contenido de los temas
 
 Regla del usuario para **todos los temas, siempre**: prima la **literalidad**.

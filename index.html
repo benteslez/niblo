@@ -5095,6 +5095,164 @@
       flex-shrink: 0;
     }
     /* ========================================================================
+       GESTIONES — pisos, gastos, Lima, familia y amortizacion (prefijo gs-)
+       ======================================================================== */
+    :root { --gs-pos: #15803d; --gs-neg: #b91c1c; --gs-ambar: #b45309; }
+    :root[data-tema="oscuro"] { --gs-pos: #4ade80; --gs-neg: #f87171; --gs-ambar: #fbbf24; }
+    .pos { color: var(--gs-pos); }
+    .neg { color: var(--gs-neg); }
+    .gs-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-3); margin: 0 0 var(--gap-4); }
+    .gs-kpis4 { grid-template-columns: repeat(4, 1fr); }
+    .gs-kpi {
+      background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-lg);
+      padding: var(--gap-3) var(--gap-4); display: flex; flex-direction: column; gap: 2px;
+      min-width: 0; box-shadow: var(--sh-1);
+    }
+    .gs-kpi.alerta { border-color: var(--danger); }
+    .gs-kpi-et { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .gs-kpi-v { font-family: var(--font-num); font-size: 1.375rem; font-weight: 700; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+    .gs-kpi-v.peq { font-size: 1rem; line-height: 1.25; }
+    .gs-kpi-v small { font-size: 0.8125rem; color: var(--text-muted); font-weight: 500; }
+    .gs-kpi-s { font-size: 0.75rem; color: var(--text-muted); }
+    .gs-filtros { display: flex; flex-wrap: wrap; gap: var(--gap-2); margin: 0 0 var(--gap-4); }
+    .gs-filtros button {
+      padding: 6px 14px; border-radius: var(--r-pill); font-size: 0.8125rem; font-weight: 600;
+      background: var(--bg-soft); color: var(--text-muted); transition: background .15s, color .15s;
+    }
+    .gs-filtros button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+    .gs-n { opacity: .7; font-weight: 500; }
+    .gs-grupo { margin: 0 0 var(--gap-5); }
+    .gs-grupo-tit {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-muted); margin: 0 0 var(--gap-2);
+    }
+    .gs-grupo-tit.rojo { color: var(--gs-neg); }
+    .gs-grupo-tit.ambar { color: var(--gs-ambar); }
+    .gs-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap-2); }
+    .gs-fila {
+      display: flex; align-items: center; gap: var(--gap-3); padding: 10px var(--gap-3);
+      background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-md);
+    }
+    .gs-fila.vencido { border-color: color-mix(in srgb, var(--danger) 45%, transparent); }
+    .gs-fila.hecho .gs-fila-tit { text-decoration: line-through; color: var(--text-muted); }
+    .gs-fila-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: left; color: inherit; font: inherit; }
+    .gs-fila-tit { font-weight: 600; font-size: 0.9375rem; overflow-wrap: anywhere; }
+    .gs-fila-sub { font-size: 0.75rem; color: var(--text-muted); overflow-wrap: anywhere; }
+    .gs-check {
+      flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line);
+      color: transparent; font-size: 0.875rem; font-weight: 800; line-height: 1;
+      display: inline-flex; align-items: center; justify-content: center; transition: background .12s, border-color .12s;
+    }
+    .gs-check:hover { border-color: var(--gs-pos); }
+    .gs-check.on { background: var(--gs-pos); border-color: var(--gs-pos); color: #fff; }
+    .gs-ico { flex: none; width: 28px; text-align: center; font-size: 1.125rem; }
+    .gs-importe { flex: none; font-family: var(--font-num); font-weight: 700; font-size: 0.9375rem; }
+    .gs-importe.gasto { color: var(--gs-neg); }
+    .gs-importe.ingreso { color: var(--gs-pos); }
+    .gs-enlace { flex: none; text-decoration: none; font-size: 1rem; }
+    .gs-pill {
+      display: inline-block; padding: 1px 8px; border-radius: var(--r-pill); font-size: 0.6875rem; font-weight: 700;
+      background: var(--bg-soft); color: var(--text-muted); vertical-align: middle; white-space: nowrap;
+    }
+    .gs-pill.rojo { background: color-mix(in srgb, var(--danger) 16%, transparent); color: var(--gs-neg); }
+    .gs-pill.ambar { background: color-mix(in srgb, var(--gs-ambar) 18%, transparent); color: var(--gs-ambar); }
+    .gs-pill.verde { background: color-mix(in srgb, var(--gs-pos) 16%, transparent); color: var(--gs-pos); }
+    .gs-pill.azul { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+    .gs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--gap-3); margin-bottom: var(--gap-4); }
+    .gs-card {
+      display: flex; flex-direction: column; gap: var(--gap-2); text-align: left; font: inherit; color: inherit;
+      background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-lg);
+      padding: var(--gap-4); box-shadow: var(--sh-1); transition: transform .14s, box-shadow .14s;
+    }
+    button.gs-card { cursor: pointer; }
+    button.gs-card:hover { transform: translateY(-2px); box-shadow: var(--sh-3); }
+    .gs-card.inactivo { opacity: .65; }
+    .gs-card-cab { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--gap-2); }
+    .gs-card-tit { font-family: var(--font-titulo); font-weight: 700; font-size: 1.125rem; letter-spacing: -0.01em; }
+    .gs-card-sub { font-size: 0.8125rem; color: var(--text-muted); overflow-wrap: anywhere; }
+    .gs-card-cifras { display: flex; flex-wrap: wrap; gap: var(--gap-2) var(--gap-4); }
+    .gs-card-cifras span { display: flex; flex-direction: column; min-width: 0; }
+    .gs-card-cifras i { font-style: normal; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); }
+    .gs-card-cifras b { font-family: var(--font-num); font-size: 0.9375rem; }
+    .gs-card-acc { display: flex; flex-wrap: wrap; gap: var(--gap-2); margin-top: var(--gap-1); }
+    .gs-btn {
+      padding: 8px 16px; border-radius: var(--r-pill); font-weight: 600; font-size: 0.8125rem;
+      background: var(--bg-soft); color: var(--text); transition: transform .12s, background .12s;
+    }
+    .gs-btn:hover { background: var(--line); }
+    .gs-btn.pri { background: var(--btn-bg, var(--text)); color: var(--btn-fg, var(--bg)); }
+    .gs-btn.pri:hover { transform: translateY(-1px); background: var(--btn-bg, var(--text)); }
+    .gs-btn.pel { color: var(--danger); }
+    .gs-borrar-izq { margin-right: auto; }
+    .gs-volver { margin: 0 0 var(--gap-2); }
+    .gs-volver button { color: var(--accent); font-weight: 600; font-size: 0.875rem; padding: 4px 0; }
+    .gs-tabs { margin: 0 0 var(--gap-4); max-width: 100%; overflow-x: auto; }
+    .gs-tabs button { white-space: nowrap; }
+    .gs-anio { display: inline-flex; align-items: center; gap: var(--gap-2); font-family: var(--font-num); }
+    .gs-anio button { width: 30px; height: 30px; border-radius: 50%; background: var(--bg-soft); font-size: 0.6875rem; }
+    .gs-resumen-cab { margin: 0 0 var(--gap-3); }
+    .gs-barra-acc { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-3); margin: 0 0 var(--gap-3); flex-wrap: wrap; }
+    .gs-barra-acc .gs-filtros { margin: 0; }
+    .gs-acc-grupo { display: inline-flex; gap: var(--gap-2); }
+    .gs-acciones-fila { display: flex; flex-wrap: wrap; gap: var(--gap-2); margin: 0 0 var(--gap-5); }
+    .gs-h2 { font-family: var(--font-titulo); font-size: 1.25rem; margin: 0; }
+    .gs-nota {
+      background: var(--bg-soft); border-radius: var(--r-md); padding: var(--gap-3) var(--gap-4);
+      font-size: 0.8125rem; margin: 0 0 var(--gap-4); line-height: 1.5;
+    }
+    .gs-barras { display: flex; flex-direction: column; gap: 6px; }
+    .gs-barra { display: grid; grid-template-columns: 110px 1fr auto; gap: var(--gap-2); align-items: center; font-size: 0.8125rem; }
+    .gs-barra-pista { height: 10px; background: var(--bg-soft); border-radius: 5px; overflow: hidden; }
+    .gs-barra-pista span { display: block; height: 100%; background: var(--accent); border-radius: 5px; }
+    .gs-barra-v { font-family: var(--font-num); font-weight: 600; }
+    .gs-tabla-wrap { overflow-x: auto; border: 1px solid var(--line-soft); border-radius: var(--r-md); background: var(--bg-elev); }
+    .gs-tabla-wrap.alta { max-height: 70vh; overflow-y: auto; }
+    .gs-tabla { width: 100%; border-collapse: collapse; font-size: 0.8125rem; white-space: nowrap; }
+    .gs-tabla th {
+      position: sticky; top: 0; background: var(--bg-soft); padding: 8px 12px;
+      font-size: 0.6875rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted);
+    }
+    .gs-tabla td { padding: 7px 12px; border-top: 1px solid var(--line-soft); }
+    .gs-tabla th { text-align: right; }
+    .gs-tabla th:first-child, .gs-tabla th.izq { text-align: left; }
+    .gs-tabla td.num { text-align: right; font-family: var(--font-num); }
+    .gs-tabla tr.pasada td { color: var(--text-muted); }
+    .gs-tabla tr.proxima td { background: color-mix(in srgb, var(--accent) 12%, transparent); font-weight: 700; }
+    .gs-tabla tr.con-extra td { background: color-mix(in srgb, var(--gs-pos) 12%, transparent); }
+    .gs-pie { font-size: 0.75rem; margin: var(--gap-2) 0 0; }
+    .gs-menu { display: flex; flex-direction: column; gap: var(--gap-2); }
+    .gs-menu-op {
+      display: flex; align-items: center; gap: var(--gap-3); text-align: left; padding: 12px var(--gap-3);
+      border-radius: var(--r-md); background: var(--bg-soft); font-weight: 600; font-size: 0.9375rem; color: inherit;
+    }
+    .gs-menu-op:hover { background: var(--line); }
+    .gs-form { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-3); }
+    .gs-ancho { grid-column: 1 / -1; }
+    .gs-check-campo { display: flex; align-items: center; gap: var(--gap-2); font-size: 0.9375rem; }
+    .gs-check-campo input { width: auto !important; }
+    #modal-gestiones .modal { width: min(520px, 100%); max-height: 92vh; overflow-y: auto; }
+    #modal-gestiones input, #modal-gestiones select, #modal-gestiones textarea {
+      width: 100%; padding: 10px 12px; border-radius: var(--r-sm); border: 1px solid var(--line);
+      background: var(--bg-input); color: var(--text); font: inherit; font-size: 1rem;
+    }
+    #modal-gestiones input:focus-visible, #modal-gestiones select:focus-visible, #modal-gestiones textarea:focus-visible {
+      outline: 2px solid var(--focus); outline-offset: 1px;
+    }
+    #modal-gestiones .campo label { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); margin-bottom: var(--gap-1); }
+    #modal-gestiones .modal-p { font-size: 0.9375rem; }
+    #modal-gestiones .modal-acciones { flex-wrap: wrap; }
+    @media (max-width: 600px) {
+      .gs-kpis { grid-template-columns: 1fr 1fr; }
+      .gs-kpis > .gs-kpi:last-child:nth-child(odd) { grid-column: 1 / -1; }
+      .gs-kpis4 { grid-template-columns: 1fr 1fr; }
+      .gs-barra { grid-template-columns: 84px 1fr auto; }
+      .gs-form { grid-template-columns: 1fr; }
+      .gs-form .gs-campo { grid-column: 1 / -1; }
+      #modal-gestiones { padding: 0; align-items: flex-end; }
+      #modal-gestiones .modal { width: 100%; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+    }
+
+    /* ========================================================================
        INICIO (hub de areas) — pantalla de entrada: Recetas | Plan semanal
        ======================================================================== */
     .hub { max-width: 900px; margin: 0 auto; padding-top: var(--gap-5); }
@@ -5161,6 +5319,9 @@
     }
     .hub-card[data-area="plan"] .hub-card-icono {
       background: var(--tipo-verduras_ensaladas-bg);
+    }
+    .hub-card[data-area="gestiones"] .hub-card-icono {
+      background: var(--tipo-huevos-bg);
     }
     .hub-card[data-area="pablo"] .hub-card-icono {
       background: var(--tipo-desayunos-bg);
@@ -8116,8 +8277,22 @@
       </div>
     </section>
 
+    <!-- Recetas: pantalla intermedia con Biblioteca y Plan semanal. -->
+    <section class="vista" data-vista="recetas_menu">
+      <div class="hub">
+        <h1 class="hub-titulo">Recetas</h1>
+        <div class="hub-grid" id="recetas-menu-grid"></div>
+      </div>
+    </section>
+
     <section class="vista" data-vista="biblioteca">
       <div id="biblioteca-contenedor"></div>
+    </section>
+
+    <!-- Gestiones: Todo, Pisos, Lima y Familia comparten esta seccion; las
+         pinta el modulo GS segun la pestana activa. -->
+    <section class="vista" data-vista="gestiones">
+      <div id="gestiones-contenedor"></div>
     </section>
 
     <section class="vista" data-vista="buscar">
@@ -8227,6 +8402,9 @@
   <!-- Modal de Documentos (nuevo/editar y gestion de tipos). -->
   <div id="modal-documentos" class="modal-overlay" hidden></div>
 
+  <!-- Modal de Gestiones (alta y edicion de pisos, gastos, prestamos...). -->
+  <div id="modal-gestiones" class="modal-overlay" hidden></div>
+
   <!-- Input file oculto para importar JSON. -->
   <input type="file" id="iox-archivo" class="iox-input-file" accept="application/json,.json">
 
@@ -8316,7 +8494,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "372";
+const NIBLO_BUILD = "373";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -24337,12 +24515,18 @@ function boot(vistaInicial) {
     const AREAS = [
       { id: "pablo",   label: "Pablo",        labelCorto: "Pablo",   icono: "&#128118;",
         desc: "Alimentaci\u00f3n complementaria de Pablo: qu\u00e9 toca hoy, ficha de cada alimento, al\u00e9rgenos, crecimiento, sue\u00f1o y vacunas." },
-      { id: "plan",    label: "Plan semanal", labelCorto: "Plan",    icono: "&#128197;",
+      /* El plan semanal ya no tiene tarjeta propia: vive dentro de Recetas
+         (pantalla intermedia con Biblioteca y Plan semanal). Sigue siendo un
+         area para la cabecera, los chips y los permisos del hogar. */
+      { id: "plan",    label: "Plan semanal", labelCorto: "Plan",    icono: "&#128197;", oculta: true,
         desc: "Dieta y entreno d\u00eda a d\u00eda: comidas con cantidades por comensales, macros y rutinas de gimnasio." },
-      { id: "recetas", label: "Recetas",      labelCorto: "Recetas", icono: "&#127859;",
-        desc: "El recetario de casa: biblioteca, b\u00fasqueda por ingredientes, lista de la compra, planificador y modo cocina." },
-      { id: "documentos", label: "Documentos", labelCorto: "Docs",    icono: "&#128194;",
-        desc: "Enlaces a la documentaci\u00f3n de casa: DNI, pasaportes, seguros, titulaciones. Agrupados por tipo." },
+      { id: "recetas", label: "Recetas",      labelCorto: "Recetas", icono: "&#127859;", alias: ["plan"],
+        desc: "Biblioteca de recetas y plan semanal: dieta y entreno d\u00eda a d\u00eda, b\u00fasqueda por ingredientes, compra y modo cocina." },
+      /* Gestiones sustituye a la tarjeta de Documentos (que pasa a ser una
+         pestana). Un hogar que solo tenga "documentos" en sus areas la sigue
+         viendo gracias al alias. */
+      { id: "gestiones", label: "Gestiones", labelCorto: "Gestiones", icono: "&#128203;", alias: ["documentos"],
+        desc: "Pisos, inquilinos, gastos y amortizaci\u00f3n, Lima, tr\u00e1mites y documentos. Todo junto o por separado." },
       /* El hub de la oposicion es una pagina aparte (oposicion.html), del
          mismo sitio: se abre en la misma pestana y vuelve aqui con su flecha. */
       { id: "oposicion", label: "Oposici\u00f3n", labelCorto: "Oposici\u00f3n", icono: "&#127891;",
@@ -24363,6 +24547,9 @@ function boot(vistaInicial) {
        "inicio" es el hub y no aparece como chip (no pertenece a ningun area). */
     const VISTAS = [
       { id: "inicio",       label: "Inicio",       area: null      },
+      /* Pantalla intermedia de Recetas: dos tarjetas (Biblioteca y Plan
+         semanal). Su "area" no esta en AREAS: no tiene chips ni permisos. */
+      { id: "recetas_menu", label: "Recetas",      area: "recetas_menu" },
       { id: "biblioteca",   label: "Biblioteca",   area: "recetas" },
       { id: "buscar",       label: "Buscar",       area: "recetas" },
       { id: "inversa",      label: "Inversa",      area: "recetas" },
@@ -24393,7 +24580,13 @@ function boot(vistaInicial) {
       { id: "pb_pediatra",   label: "Pediatra",    area: "pablo", seccion: "pablo" },
       { id: "pb_vacunas",    label: "Vacunas",     area: "pablo", seccion: "pablo" },
       { id: "pb_mas",        label: "M\u00e1s",        area: "pablo", seccion: "pablo" },
-      { id: "documentos",    label: "Documentos",  area: "documentos" }
+      /* Gestiones: todas sus pestanas viven en la misma <section>; el modulo
+         GS decide que pintar segun la vista activa. Documentos tiene la suya. */
+      { id: "gs_todo",    label: "Todo",       area: "gestiones", seccion: "gestiones" },
+      { id: "gs_pisos",   label: "Pisos",      area: "gestiones", seccion: "gestiones" },
+      { id: "gs_lima",    label: "Lima",       area: "gestiones", seccion: "gestiones" },
+      { id: "gs_familia", label: "Familia",    area: "gestiones", seccion: "gestiones" },
+      { id: "documentos", label: "Documentos", area: "gestiones" }
     ];
 
     /* Puente entre los chips de Recetas y el router interno de Pablo. */
@@ -24925,7 +25118,7 @@ function boot(vistaInicial) {
 
     /* Ultima vista visitada dentro de cada area, para volver donde lo dejaste
        al entrar de nuevo desde el hub. */
-    let ultimaVistaArea = { recetas: "biblioteca", plan: "pc_calendario", pablo: "pb_hoy" };
+    let ultimaVistaArea = { recetas: "biblioteca", plan: "pc_calendario", pablo: "pb_hoy", gestiones: "gs_todo" };
 
     function cargarVistaGuardada() {
       try {
@@ -24970,6 +25163,8 @@ function boot(vistaInicial) {
       renderVistaActiva();
       // Las vistas del plan comparten estado: al mostrarlas, refrescar su DOM.
       if (id === "documentos") docsCargar(false);
+      if (id === "recetas_menu") renderRecetasMenu();
+      if (areaActiva === "gestiones" && id !== "documentos") gsEntrar(id);
       if (id === "pc_calendario") renderPcCalendario();
       if (id === "pc_hoy")      { pcEstado.diaHoy = null; renderPcHoy(); }
       if (areaDeVista(id) === "pablo") pbEntrar(id);
@@ -24979,7 +25174,7 @@ function boot(vistaInicial) {
     /* Areas que abren siempre por el mismo sitio en vez de por donde te
        quedaste: en Pablo lo que se quiere al entrar es el dia de hoy, no la
        pantalla de vacunas de la ultima vez. */
-    const ENTRADA_FIJA = { pablo: "pb_hoy" };
+    const ENTRADA_FIJA = { pablo: "pb_hoy", gestiones: "gs_todo", recetas: "recetas_menu" };
 
     function entrarEnArea(area) {
       const def = AREAS.find(a => a.id === area);
@@ -26714,6 +26909,11 @@ function boot(vistaInicial) {
     /* El esqueleto tiene plazo: si el hogar no ha llegado en 3 s, se pinta
        con lo que se sepa (la cache, o todas las areas) y ya se corregira. */
     let hubTardando = false, hubPlazo = null;
+    /* Un area se ve si el hogar la tiene o tiene alguno de sus alias (el plan
+       semanal da acceso a Recetas; documentos, a Gestiones). */
+    function areasDeLista(ids) {
+      return AREAS.filter(a => ids.indexOf(a.id) >= 0 || (a.alias || []).some(x => ids.indexOf(x) >= 0));
+    }
     function areasVisibles() {
       const h = sesion.hogar;
       /* Hasta saber de que hogar es la sesion no se pinta ningun area: antes
@@ -26721,7 +26921,7 @@ function boot(vistaInicial) {
          otro hogar se veian medio segundo antes de desaparecer. */
       if (sesion.supabase.token && !hogarResuelto) {
         const guardadas = areasEnCache();
-        if (guardadas) return AREAS.filter(a => guardadas.indexOf(a.id) >= 0);
+        if (guardadas) return areasDeLista(guardadas);
         if (hubTardando) return AREAS;
         if (!hubPlazo) hubPlazo = setTimeout(() => { hubPlazo = null; if (!hogarResuelto) { hubTardando = true; renderHub(); } }, 3000);
         return null;
@@ -26731,10 +26931,10 @@ function boot(vistaInicial) {
            hogar false es "no hay hogar". En el primer caso vale mas lo ultimo
            que se supo de este usuario que enseñar todas las areas. */
         const guardadas = (h === null && sesion.supabase.token) ? areasEnCache() : null;
-        if (guardadas) return AREAS.filter(a => guardadas.indexOf(a.id) >= 0);
+        if (guardadas) return areasDeLista(guardadas);
         return AREAS;
       }
-      return AREAS.filter(a => h.areas.indexOf(a.id) >= 0);
+      return areasDeLista(h.areas);
     }
 
 /* Dos disparadores independientes (guardar algo en local y el aviso en vivo
@@ -26994,7 +27194,7 @@ function boot(vistaInicial) {
        ======================================================================== */
     const RT = {
       ws: null, ref: 0, latido: null, reintento: null, intentos: 0,
-      conectado: false, suscritas: null, pedidas: 0, errorCanal: null,
+      conectado: false, suscritas: null, pedidas: 0, errorCanal: null, gsUnido: false,
       tablas: ["pablo_estado", "documents", "document_types", "recetas", "ingredientes", "estado_usuario"],
     };
 
@@ -27029,10 +27229,18 @@ function boot(vistaInicial) {
         });
         clearInterval(RT.latido);
         RT.latido = setInterval(() => rtEnviar("phoenix", "heartbeat", {}), 25000);
+        RT.gsUnido = false;
+        rtUnirGestiones();
       };
 
       ws.onmessage = (ev) => {
         let m; try { m = JSON.parse(ev.data); } catch (_) { return; }
+        /* Gestiones va en su propio canal: si las tablas gs_* aun no existen
+           (falta la migracion 011), solo falla ese canal, no el de siempre. */
+        if (m.topic === "realtime:niblo-gs") {
+          if (m.event === "postgres_changes") gsRecargarPronto();
+          return;
+        }
         if (m.event === "phx_reply" && m.topic === "realtime:niblo") {
           RT.conectado = m.payload && m.payload.status === "ok";
           /* El servidor devuelve una entrada por cada tabla a la que ha podido
@@ -27060,7 +27268,7 @@ function boot(vistaInicial) {
         rtBajarPronto();
       };
 
-      ws.onclose = () => { RT.conectado = false; clearInterval(RT.latido); rtReintentar(); renderEstadoSyncPablo(); };
+      ws.onclose = () => { RT.conectado = false; RT.gsUnido = false; clearInterval(RT.latido); rtReintentar(); renderEstadoSyncPablo(); };
       ws.onerror  = () => { try { ws.close(); } catch (_) {} };
     }
 
@@ -27080,6 +27288,20 @@ function boot(vistaInicial) {
       }, espera);
     }
 
+    /* Segundo canal, solo para las tablas de Gestiones; se une cuando ya se
+       han cargado (es decir, cuando se sabe que existen). */
+    function rtUnirGestiones() {
+      if (RT.gsUnido || !RT.ws || RT.ws.readyState !== 1 || !GS.cargado || !hogarId()) return;
+      RT.gsUnido = true;
+      rtEnviar("realtime:niblo-gs", "phx_join", {
+        config: {
+          broadcast: { self: false },
+          postgres_changes: GS_TABLAS.map(t => ({ event: "*", schema: "public", table: t, filter: `hogar_id=eq.${hogarId()}` })),
+        },
+        access_token: sesion.supabase.token,
+      });
+    }
+
     function rtReintentar() {
       clearTimeout(RT.reintento);
       // Espera creciente hasta 30 s: si no hay red, no machacar.
@@ -27090,6 +27312,7 @@ function boot(vistaInicial) {
     function rtCerrar() {
       clearTimeout(RT.reintento); clearInterval(RT.latido);
       RT.conectado = false;
+      RT.gsUnido = false;
       if (RT.ws) { try { RT.ws.onclose = null; RT.ws.close(); } catch (_) {} RT.ws = null; }
     }
 
@@ -29197,6 +29420,7 @@ function boot(vistaInicial) {
       sub.innerHTML = "";
       sub.hidden = true;
       if (!areaActiva) { nav.hidden = false; return; }   // en el hub no hay chips de seccion
+      if (areaActiva === "recetas_menu") { nav.hidden = true; return; }   // solo dos tarjetas
       const padre = seccionPadre(vistaActiva);
 
       const crear = (v, clase, activo) => {
@@ -29245,7 +29469,8 @@ function boot(vistaInicial) {
 
     /** Cabecera: la marca actua de titulo en el hub y de "volver" dentro de un area. */
     function renderCabecera() {
-      const area = AREAS.find(a => a.id === areaActiva);
+      /* La pantalla intermedia de Recetas se presenta como Recetas. */
+      const area = AREAS.find(a => a.id === (areaActiva === "recetas_menu" ? "recetas" : areaActiva));
       const btn  = document.getElementById("marca");
       const txt  = document.getElementById("marca-texto");
       const ico  = document.getElementById("marca-icono");
@@ -29258,7 +29483,8 @@ function boot(vistaInicial) {
       // ninguna de las tres zonas.
       if (ico) ico.innerHTML = area ? area.icono : MARCA_NIBLO;
       if (btn) {
-        btn.setAttribute("aria-label", area ? "Volver al inicio" : "Inicio");
+        btn.setAttribute("aria-label", !area ? "Inicio"
+          : (areaActiva === "recetas" || areaActiva === "plan") ? "Volver a Recetas" : "Volver al inicio");
       }
     }
 
@@ -29273,21 +29499,21 @@ function boot(vistaInicial) {
       let nAlimentos = 0;
       try { nAlimentos = PB.numeroAlimentos(); } catch (_) {}
       const meta = {
-        recetas: `<span><b class="num">${nRecetas}</b> recetas</span>`,
-        plan:    `<span><b class="num">${PC_PLAN.length}</b> días planificados</span>`,
+        recetas: `<span><b class="num">${nRecetas}</b> recetas</span><span><b class="num">${PC_PLAN.length}</b> días de plan</span>`,
         pablo:   `<span><b class="num">${nAlimentos}</b> alimentos</span>`,
-        documentos: `<span>${DOCS.cargado ? `<b class="num">${DOCS.documentos.length}</b> enlaces` : "enlaces guardados"}</span>`,
+        gestiones: gsMetaHub(),
         oposicion: `<span><b class="num">58</b> temas</span>`
       };
       /* Las areas externas se pintan como enlace, no como boton: asi el
          navegador hace su trabajo (abrir en otra pestana, copiar el enlace) y
          el listener del grid, que busca button.hub-card, no las intercepta. */
-      const visibles = areasVisibles();
-      if (visibles === null) {
+      const todas = areasVisibles();
+      if (todas === null) {
         // Esqueleto del mismo tamaño: la pagina no da un salto al llegar.
         grid.innerHTML = '<span class="hub-card hub-card-esqueleto" aria-hidden="true"></span>'.repeat(4);
         return;
       }
+      const visibles = todas.filter(a => !a.oculta);   // el plan semanal vive dentro de Recetas
       grid.innerHTML = visibles.map(a => {
         const cuerpo = `<span class="hub-card-icono" aria-hidden="true">${a.icono}</span>
           <span class="hub-card-nombre">${a.label}</span>
@@ -29401,6 +29627,7 @@ function boot(vistaInicial) {
         DOCS.cargando = false;
         renderDocumentos();
         renderHub();
+        gsRender();
       }
     }
 
@@ -29988,6 +30215,1017 @@ function boot(vistaInicial) {
     window.DOCSUI = DOCSUI;
 
     /* ========================================================================
+       RECETAS — pantalla intermedia: Biblioteca y Plan semanal
+       ======================================================================== */
+    function renderRecetasMenu() {
+      const grid = document.getElementById("recetas-menu-grid");
+      if (!grid) return;
+      let nRec = 0;
+      try { nRec = recetasResueltas().length; } catch (_) {}
+      const ids = new Set((areasVisibles() || AREAS).map(a => a.id));
+      const plan = AREAS.find(a => a.id === "plan");
+      const tarjetas = [
+        { que: "recetas", area: "recetas", icono: "&#128214;", nombre: "Biblioteca",
+          desc: "Todas las recetas de casa, búsqueda por ingredientes, lista de la compra, planificador y modo cocina.",
+          meta: `<span><b class="num">${nRec}</b> recetas</span>` },
+      ];
+      if (ids.has("plan") && plan) {
+        tarjetas.push({ que: "plan", area: "plan", icono: plan.icono, nombre: "Plan Semanal", desc: plan.desc,
+          meta: `<span><b class="num">${PC_PLAN.length}</b> días planificados</span>` });
+      }
+      grid.innerHTML = tarjetas.map(t => `
+        <button type="button" class="hub-card" data-area="${t.area}" onclick="GSUI.recetasIr('${t.que}')">
+          <span class="hub-card-icono" aria-hidden="true">${t.icono}</span>
+          <span class="hub-card-nombre">${t.nombre}</span>
+          <span class="hub-card-desc">${t.desc}</span>
+          <span class="hub-card-meta">${t.meta}<span class="hub-card-ir" aria-hidden="true">&#8594;</span></span>
+        </button>`).join("");
+    }
+    function recetasMenuIr(que) {
+      if (que === "plan") {
+        fijarVista(areaDeVista(ultimaVistaArea.plan) === "plan" ? ultimaVistaArea.plan : "pc_calendario");
+      } else {
+        fijarVista("biblioteca");
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* ========================================================================
+       GESTIONES — pisos, inquilinos, gastos, Lima, familia y amortizacion
+       Todo vive en Supabase (tablas gs_*, migracion 011) y se comparte por
+       hogar. Las pestanas Todo / Pisos / Lima / Familia comparten estado y
+       se pintan con gsRender(); Documentos sigue siendo su propio modulo.
+       ======================================================================== */
+    const GS = {
+      props: [], inqs: [], gests: [], prest: [], revs: [], pagos: [],
+      cargado: false, cargando: false, error: null,
+      pisoId: null, pisoTab: "resumen", anio: new Date().getFullYear(),
+      movFiltro: "todos", prestId: null, filtroTodo: "todo",
+    };
+
+    const GS_TABLAS = ["gs_propiedades", "gs_inquilinos", "gs_gestiones", "gs_prestamos", "gs_prestamo_revisiones", "gs_pagos_prestamo"];
+    const GS_TIPOS = { gasto: "Gasto", ingreso: "Ingreso", gestion: "Gestión" };
+    const GS_CATS = {
+      piso: {
+        gasto:   ["Comunidad", "IBI", "Seguro", "Reparaciones", "Suministros", "Hipoteca", "Alquiler", "Impuestos", "Gestoría", "Mobiliario", "Otros"],
+        ingreso: ["Renta", "Fianza", "Otros"],
+        gestion: ["Contrato", "Incidencia", "Comunicación", "Revisión de renta", "Renovación", "Inspección", "Otros"],
+      },
+      lima: {
+        gasto:   ["Veterinario", "Comida", "Peluquería", "Seguro", "Medicación", "Otros"],
+        gestion: ["Vacuna", "Desparasitación", "Veterinario", "Chip", "Peluquería", "Revisión", "Otros"],
+      },
+      familia: {
+        gasto:   ["Salud", "Colegio", "Seguro", "Impuestos", "Otros"],
+        gestion: ["Trámite", "Salud", "Seguro", "Impuestos", "Otros"],
+      },
+    };
+    const GS_AMBITOS = {
+      piso:    { nombre: "Pisos",      emoji: "\u{1F3E0}" },
+      lima:    { nombre: "Lima",       emoji: "\u{1F436}" },
+      familia: { nombre: "Familia",    emoji: "\u{1F46A}" },
+      doc:     { nombre: "Documentos", emoji: "\u{1F4C2}" },
+    };
+    const GS_REPITE = { mensual: 1, trimestral: 3, semestral: 6, anual: 12 };
+    const GS_MESES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+    /* ---- utilidades ------------------------------------------------------- */
+    const GS_EUR = new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" });
+    function gsEur(n) { return n === null || n === undefined || n === "" || Number.isNaN(+n) ? "—" : GS_EUR.format(+n); }
+    function gsIso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+    function gsHoy() { return gsIso(new Date()); }
+    function gsFecha(iso) {
+      return iso ? new Date(iso + "T00:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }) : "";
+    }
+    function gsDias(iso) {
+      const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+      return Math.round((new Date(iso + "T00:00:00") - hoy) / 86400000);
+    }
+    function gsSumaMeses(iso, n) {
+      const [y, m, d] = iso.split("-").map(Number);
+      const t = new Date(y, m - 1 + n, 1);
+      const ult = new Date(t.getFullYear(), t.getMonth() + 1, 0).getDate();
+      t.setDate(Math.min(d, ult));
+      return gsIso(t);
+    }
+    const gsErr = m => Object.assign(new Error(m), { gs: true });
+    const gsProp = id => GS.props.find(p => p.id === id) || null;
+    const gsInq = id => GS.inqs.find(i => i.id === id) || null;
+    const gsGest = id => GS.gests.find(g => g.id === id) || null;
+    function gsPersona(clave) {
+      const p = DOCS_PERSONAS.find(x => x.clave === clave);
+      return p ? p.nombre : "";
+    }
+    function gsEstadoTxt(tipo, estado) {
+      if (tipo === "gasto")   return estado === "hecho" ? "Pagado" : "Pendiente de pago";
+      if (tipo === "ingreso") return estado === "hecho" ? "Cobrado" : "Pendiente de cobro";
+      return estado === "hecho" ? "Hecha" : "Pendiente";
+    }
+
+    /* ---- carga ------------------------------------------------------------ */
+    async function gsCargar(forzar) {
+      if (!sesion.supabase.token || !hogarId()) { GS.cargado = false; return; }
+      if (GS.cargado && !forzar) return;
+      if (GS.cargando) return;
+      const silencioso = GS.cargado;   // recarga en vivo: sin parpadeo
+      GS.cargando = true; GS.error = null;
+      if (!silencioso) gsRender();
+      try {
+        const [props, inqs, gests, prest, revs, pagos] = await Promise.all([
+          supaFetch("/rest/v1/gs_propiedades?select=*&order=sort_order.asc,nombre.asc"),
+          supaFetch("/rest/v1/gs_inquilinos?select=*&order=nombre.asc"),
+          supaFetch("/rest/v1/gs_gestiones?select=*&order=fecha.desc"),
+          supaFetch("/rest/v1/gs_prestamos?select=*&order=created_at.asc"),
+          supaFetch("/rest/v1/gs_prestamo_revisiones?select=*&order=desde.asc"),
+          supaFetch("/rest/v1/gs_pagos_prestamo?select=*&order=fecha.asc"),
+        ]);
+        GS.props = props || []; GS.inqs = inqs || []; GS.gests = gests || [];
+        GS.prest = prest || []; GS.revs = revs || []; GS.pagos = pagos || [];
+        GS.cargado = true;
+        rtUnirGestiones();
+      } catch (e) {
+        if (!GS.cargado) {
+          GS.error = /(42P01|PGRST205|does not exist|Could not find the table)/i.test(e.message || "")
+            ? "Falta ejecutar 011_gestiones.sql en el SQL Editor de Supabase."
+            : "No se han podido cargar las gestiones. Revisa la conexión.";
+        }
+      } finally {
+        GS.cargando = false;
+        gsRender();
+        renderHub();
+      }
+    }
+    function gsEntrar() {
+      gsCargar(false);
+      if (typeof docsCargar === "function") docsCargar(false);
+      gsRender();
+    }
+    /* Un cambio del otro movil: se recarga sin repintar de golpe. */
+    let _gsTimer = null;
+    function gsRecargarPronto() {
+      clearTimeout(_gsTimer);
+      _gsTimer = setTimeout(() => gsCargar(true).catch(() => {}), 700);
+    }
+
+    /* ---- Todo: lo vencido y lo proximo de todos los ambitos ---------------- */
+    function gsItemsTodo() {
+      const items = [];
+      GS.gests.filter(g => g.estado === "pendiente").forEach(g => items.push({
+        origen: "g", ambito: g.ambito, fecha: g.fecha, titulo: g.titulo, g,
+        linea: gsLineaGestion(g, true), importe: g.tipo === "gestion" ? null : g.importe, tipo: g.tipo,
+      }));
+      (DOCS.documentos || []).forEach(d => {
+        if (!d.expires_on || gsDias(d.expires_on) > 365) return;
+        const quien = docsNombreAsignado(d);
+        items.push({
+          origen: "d", ambito: "doc", fecha: d.expires_on, titulo: d.title, d,
+          linea: "Caducidad" + (quien ? " · " + quien : ""),
+        });
+      });
+      GS.inqs.filter(i => i.activo && i.fin && gsDias(i.fin) <= 180).forEach(i => {
+        const p = gsProp(i.propiedad_id);
+        items.push({
+          origen: "c", ambito: "piso", fecha: i.fin, titulo: "Fin de contrato · " + i.nombre, i,
+          linea: p ? p.nombre : "",
+        });
+      });
+      return items.sort((a, b) => a.fecha.localeCompare(b.fecha));
+    }
+    function gsMetaHub() {
+      if (!GS.cargado) return "<span>pisos, Lima y trámites</span>";
+      const n = gsItemsTodo().filter(i => gsDias(i.fecha) <= 30).length;
+      return n ? `<span><b class="num">${n}</b> por atender</span>` : "<span>todo al día</span>";
+    }
+
+    function gsLineaGestion(g, conAmbito) {
+      const partes = [gsFecha(g.fecha)];
+      if (conAmbito) {
+        const p = g.propiedad_id ? gsProp(g.propiedad_id) : null;
+        partes.push(p ? p.nombre : GS_AMBITOS[g.ambito].nombre);
+      }
+      if (g.categoria) partes.push(g.categoria);
+      const inq = g.inquilino_id ? gsInq(g.inquilino_id) : null;
+      if (inq) partes.push(inq.nombre);
+      if (g.asignado && g.ambito === "familia") partes.push(gsPersona(g.asignado));
+      if (g.repite) partes.push("↻ " + ({ mensual: "cada mes", trimestral: "cada 3 meses", semestral: "cada 6 meses", anual: "cada año" })[g.repite]);
+      return partes.filter(Boolean).join(" · ");
+    }
+
+    function gsCab(titulo, acciones, sub) {
+      return `<div class="doc-cab"><h1 class="vista-titulo">${titulo}</h1>
+        <div class="doc-cab-acciones">${acciones || ""}</div></div>
+        ${sub ? `<p class="vista-subtitulo doc-subtitulo">${sub}</p>` : ""}`;
+    }
+    const gsBtnNuevo = (onclick, txt) =>
+      `<button type="button" class="doc-btn-nuevo" onclick="${onclick}"><span aria-hidden="true">+</span><span>${txt}</span></button>`;
+
+    function gsEstadoGeneral() {
+      if (!sesion.supabase.token) return "";
+      if (GS.error) {
+        return `<div class="empty-state"><p>${esc(GS.error)}</p>
+          <button type="button" class="btn-primario" onclick="GSUI.recargar()">Reintentar</button></div>`;
+      }
+      if (!GS.cargado) return `<div class="empty-state">Cargando gestiones…</div>`;
+      return null;
+    }
+
+    function gsRender() {
+      const cont = document.getElementById("gestiones-contenedor");
+      if (!cont || areaActiva !== "gestiones" || vistaActiva === "documentos") return;
+      if (!sesion.supabase.token) { cont.innerHTML = ""; return; }
+      const estado = gsEstadoGeneral();
+      if (estado !== null) {
+        const titulo = { gs_todo: "Gestiones", gs_pisos: "Pisos", gs_lima: "Lima", gs_familia: "Familia" }[vistaActiva] || "Gestiones";
+        cont.innerHTML = gsCab(titulo) + estado;
+        return;
+      }
+      const vistas = {
+        gs_todo: gsVistaTodo, gs_pisos: gsVistaPisos,
+        gs_lima: () => gsVistaAmbito("lima"), gs_familia: () => gsVistaAmbito("familia"),
+      };
+      const f = vistas[vistaActiva];
+      cont.innerHTML = f ? f() : "";
+    }
+
+    /* Fila de una gestion/gasto/ingreso. */
+    function gsFila(g, opc) {
+      opc = opc || {};
+      const hecho = g.estado === "hecho";
+      const vencido = !hecho && gsDias(g.fecha) < 0;
+      const signo = g.tipo === "gasto" ? "−" : g.tipo === "ingreso" ? "+" : "";
+      const imp = g.importe !== null && g.importe !== undefined
+        ? `<span class="gs-importe ${g.tipo}">${signo}${gsEur(g.importe)}</span>` : "";
+      return `<li class="gs-fila${hecho ? " hecho" : ""}${vencido ? " vencido" : ""}">
+        <button type="button" class="gs-check${hecho ? " on" : ""}" onclick="GSUI.toggle('${g.id}')"
+          aria-pressed="${hecho}" title="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}"
+          aria-label="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}: ${esc(g.titulo)}">&#10003;</button>
+        <button type="button" class="gs-fila-main" onclick="GSUI.editarMov('${g.id}')">
+          <span class="gs-fila-tit">${esc(g.titulo)}${vencido ? ` <span class="gs-pill rojo">Vencido</span>` : ""}</span>
+          <span class="gs-fila-sub">${esc(gsLineaGestion(g, opc.ambito))}</span>
+        </button>
+        ${imp}
+        ${g.url && docsUrlValida(g.url) ? `<a class="gs-enlace" href="${esc(g.url)}" target="_blank" rel="noopener noreferrer" title="Abrir enlace" aria-label="Abrir enlace">&#128279;</a>` : ""}
+      </li>`;
+    }
+
+    function gsVistaTodo() {
+      const items = gsItemsTodo();
+      const f = GS.filtroTodo;
+      const cuenta = k => items.filter(i => i.ambito === k).length;
+      const vis = f === "todo" ? items : items.filter(i => i.ambito === f);
+      const grupos = [
+        ["Vencido", vis.filter(i => gsDias(i.fecha) < 0), "rojo"],
+        ["Esta semana", vis.filter(i => { const d = gsDias(i.fecha); return d >= 0 && d <= 7; }), "ambar"],
+        ["Este mes", vis.filter(i => { const d = gsDias(i.fecha); return d > 7 && d <= 30; }), ""],
+        ["Más adelante", vis.filter(i => gsDias(i.fecha) > 30), ""],
+      ].filter(g => g[1].length);
+      const vencidos = items.filter(i => gsDias(i.fecha) < 0).length;
+      const prox = items.filter(i => { const d = gsDias(i.fecha); return d >= 0 && d <= 30; }).length;
+      const bal = gsBalanceGlobal(new Date().getFullYear());
+      const seg = [["todo", "Todo", items.length], ["piso", "Pisos", cuenta("piso")], ["lima", "Lima", cuenta("lima")],
+                   ["familia", "Familia", cuenta("familia")], ["doc", "Documentos", cuenta("doc")]];
+      return `${gsCab("Gestiones", gsBtnNuevo("GSUI.menuNuevo()", "Añadir"),
+          "Lo que hay que atender, de todos los ámbitos. Usa las pestañas de arriba para ver cada uno por separado.")}
+        <div class="gs-kpis">
+          <div class="gs-kpi${vencidos ? " alerta" : ""}"><span class="gs-kpi-et">Vencido</span><span class="gs-kpi-v">${vencidos}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Próximos 30 días</span><span class="gs-kpi-v">${prox}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Balance pisos ${new Date().getFullYear()}</span>
+            <span class="gs-kpi-v ${bal >= 0 ? "pos" : "neg"}">${gsEur(bal)}</span></div>
+        </div>
+        <div class="gs-filtros" role="group" aria-label="Filtrar por ámbito">${seg.map(([k, t, n]) =>
+          `<button type="button" aria-pressed="${f === k}" onclick="GSUI.filtroTodo('${k}')">${t}${n ? ` <span class="gs-n">${n}</span>` : ""}</button>`).join("")}</div>
+        ${grupos.length ? grupos.map(([tit, lista, cl]) => `
+          <section class="gs-grupo"><h3 class="gs-grupo-tit ${cl}">${tit} <span class="doc-cuenta">· ${lista.length}</span></h3>
+          <ul class="gs-lista">${lista.map(gsFilaTodo).join("")}</ul></section>`).join("")
+          : `<div class="empty-state"><p>No hay nada pendiente${f === "todo" ? "" : " en este ámbito"}.</p></div>`}`;
+    }
+    function gsFilaTodo(i) {
+      if (i.origen === "g") return gsFila(i.g, { ambito: true });
+      const d = gsDias(i.fecha);
+      const txt = d < 0 ? `hace ${docsTiempo(d)}` : d === 0 ? "hoy" : `en ${docsTiempo(d)}`;
+      const accion = i.origen === "d" ? `GSUI.verDocumentos()` : `GSUI.abrirPiso('${i.i.propiedad_id}','inq')`;
+      return `<li class="gs-fila${d < 0 ? " vencido" : ""}">
+        <span class="gs-ico" aria-hidden="true">${i.origen === "d" ? "\u{1F4C4}" : "\u{1F4DD}"}</span>
+        <button type="button" class="gs-fila-main" onclick="${accion}">
+          <span class="gs-fila-tit">${esc(i.titulo)}${d < 0 ? ` <span class="gs-pill rojo">Vencido</span>` : ""}</span>
+          <span class="gs-fila-sub">${esc(gsFecha(i.fecha))} · ${txt}${i.linea ? " · " + esc(i.linea) : ""}</span>
+        </button></li>`;
+    }
+
+    /* ---- Lima y Familia: lista por ambito ---------------------------------- */
+    function gsVistaAmbito(ambito) {
+      const def = GS_AMBITOS[ambito];
+      const todas = GS.gests.filter(g => g.ambito === ambito);
+      const pend = todas.filter(g => g.estado === "pendiente").sort((a, b) => a.fecha.localeCompare(b.fecha));
+      const hechas = todas.filter(g => g.estado === "hecho").sort((a, b) => b.fecha.localeCompare(a.fecha));
+      const anio = new Date().getFullYear();
+      const gastoAnio = todas.filter(g => g.tipo === "gasto" && g.estado === "hecho" && +g.fecha.slice(0, 4) === anio)
+        .reduce((s, g) => s + (+g.importe || 0), 0);
+      const prox = pend.find(g => g.tipo === "gestion");
+      const sub = ambito === "lima"
+        ? "Vacunas, desparasitación, veterinario y gastos de Lima."
+        : "Trámites y gastos de la familia que no son un documento.";
+      return `${gsCab(def.nombre, gsBtnNuevo(`GSUI.menuAmbito('${ambito}')`, "Añadir"), sub)}
+        <div class="gs-kpis">
+          <div class="gs-kpi"><span class="gs-kpi-et">Próxima gestión</span>
+            <span class="gs-kpi-v peq">${prox ? esc(prox.titulo) : "—"}</span>
+            <span class="gs-kpi-s">${prox ? esc(gsFecha(prox.fecha)) : "Nada pendiente"}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Pendientes</span><span class="gs-kpi-v">${pend.length}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Gasto ${anio}</span><span class="gs-kpi-v">${gsEur(gastoAnio)}</span></div>
+        </div>
+        ${pend.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Pendiente <span class="doc-cuenta">· ${pend.length}</span></h3>
+          <ul class="gs-lista">${pend.map(g => gsFila(g)).join("")}</ul></section>` : ""}
+        ${hechas.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Historial <span class="doc-cuenta">· ${hechas.length}</span></h3>
+          <ul class="gs-lista">${hechas.map(g => gsFila(g)).join("")}</ul></section>` : ""}
+        ${!todas.length ? `<div class="empty-state"><p>Todavía no hay nada registrado${ambito === "lima" ? " de Lima" : ""}.</p>
+          <button type="button" class="btn-primario" onclick="GSUI.menuAmbito('${ambito}')">Añadir la primera</button></div>` : ""}`;
+    }
+
+    /* ---- calculos de un piso ----------------------------------------------- */
+    function gsCalcPiso(propId, anio) {
+      const r = { ing: 0, gas: 0, pIng: 0, pGas: 0, cats: {}, meses: Array.from({ length: 12 }, () => ({ ing: 0, gas: 0 })) };
+      GS.gests.forEach(g => {
+        if (g.propiedad_id !== propId || g.tipo === "gestion" || !g.importe) return;
+        if (+g.fecha.slice(0, 4) !== anio) return;
+        const m = +g.fecha.slice(5, 7) - 1, imp = +g.importe;
+        if (g.estado === "hecho") {
+          if (g.tipo === "ingreso") { r.ing += imp; r.meses[m].ing += imp; }
+          else { r.gas += imp; r.meses[m].gas += imp; const c = g.categoria || "Otros"; r.cats[c] = (r.cats[c] || 0) + imp; }
+        } else if (g.tipo === "ingreso") r.pIng += imp; else r.pGas += imp;
+      });
+      r.bal = r.ing - r.gas;
+      return r;
+    }
+    function gsBalanceGlobal(anio) {
+      return GS.props.filter(p => p.rol === "propietario").reduce((s, p) => s + gsCalcPiso(p.id, anio).bal, 0);
+    }
+    /* Cuotas del prestamo pagadas en un anio, segun su tabla. */
+    function gsCuotasAnio(propId, anio) {
+      let total = 0;
+      GS.prest.filter(p => p.propiedad_id === propId).forEach(p => {
+        gsAmortizar(p).filas.forEach(f => {
+          if (+f.fecha.slice(0, 4) === anio && f.fecha <= gsHoy()) total += f.cuota;
+        });
+      });
+      return total;
+    }
+
+    /* ---- Pisos: lista y detalle -------------------------------------------- */
+    function gsSelAnio() {
+      return `<div class="gs-anio"><button type="button" onclick="GSUI.anio(-1)" aria-label="Año anterior">&#9664;</button>
+        <b>${GS.anio}</b><button type="button" onclick="GSUI.anio(1)" aria-label="Año siguiente">&#9654;</button></div>`;
+    }
+    function gsVistaPisos() {
+      if (GS.pisoId && gsProp(GS.pisoId)) return gsVistaPisoDetalle(gsProp(GS.pisoId));
+      GS.pisoId = null;
+      if (!GS.props.length) {
+        return `${gsCab("Pisos", gsBtnNuevo("GSUI.nuevoPiso()", "Piso"))}
+          <div class="empty-state"><p>Añade tus pisos: los alquilados a inquilinos y aquel donde sois inquilinos.</p>
+          <button type="button" class="btn-primario" onclick="GSUI.nuevoPiso()">Añadir el primero</button></div>`;
+      }
+      const prop = GS.props.filter(p => p.rol === "propietario");
+      const tot = prop.reduce((a, p) => { const c = gsCalcPiso(p.id, GS.anio); a.ing += c.ing; a.gas += c.gas; return a; }, { ing: 0, gas: 0 });
+      return `${gsCab("Pisos", gsSelAnio() + gsBtnNuevo("GSUI.nuevoPiso()", "Piso"))}
+        ${prop.length ? `<div class="gs-kpis">
+          <div class="gs-kpi"><span class="gs-kpi-et">Ingresos ${GS.anio}</span><span class="gs-kpi-v pos">${gsEur(tot.ing)}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Gastos ${GS.anio}</span><span class="gs-kpi-v neg">${gsEur(tot.gas)}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Balance (en propiedad)</span>
+            <span class="gs-kpi-v ${tot.ing - tot.gas >= 0 ? "pos" : "neg"}">${gsEur(tot.ing - tot.gas)}</span></div>
+        </div>` : ""}
+        <div class="gs-grid">${GS.props.map(p => {
+          const c = gsCalcPiso(p.id, GS.anio);
+          const inq = GS.inqs.filter(i => i.propiedad_id === p.id && i.activo);
+          const pend = GS.gests.filter(g => g.propiedad_id === p.id && g.estado === "pendiente").length;
+          return `<button type="button" class="gs-card" onclick="GSUI.abrirPiso('${p.id}')">
+            <span class="gs-card-cab"><span class="gs-card-tit">${esc(p.nombre)}</span>
+              <span class="gs-pill ${p.rol === "propietario" ? "verde" : "azul"}">${p.rol === "propietario" ? "En propiedad" : "Somos inquilinos"}</span></span>
+            ${p.direccion ? `<span class="gs-card-sub">${esc(p.direccion)}</span>` : ""}
+            <span class="gs-card-cifras">
+              ${p.rol === "propietario"
+                ? `<span><i>Balance ${GS.anio}</i><b class="${c.bal >= 0 ? "pos" : "neg"}">${gsEur(c.bal)}</b></span>`
+                : `<span><i>Gastos ${GS.anio}</i><b class="neg">${gsEur(c.gas)}</b></span>`}
+              ${p.rol === "propietario" ? `<span><i>Inquilinos</i><b>${inq.length}</b></span>` : ""}
+              <span><i>Pendientes</i><b>${pend}</b></span>
+            </span></button>`;
+        }).join("")}</div>`;
+    }
+
+    function gsVistaPisoDetalle(p) {
+      const prop = p.rol === "propietario";
+      const tabs = [["resumen", "Resumen"], ["mov", "Movimientos"]];
+      if (prop) tabs.push(["inq", "Inquilinos"], ["prest", "Préstamo"]);
+      if (!tabs.some(t => t[0] === GS.pisoTab)) GS.pisoTab = "resumen";
+      const cuerpo = { resumen: gsPisoResumen, mov: gsPisoMov, inq: gsPisoInq, prest: gsPisoPrest }[GS.pisoTab](p);
+      return `<div class="gs-volver"><button type="button" onclick="GSUI.cerrarPiso()">&larr; Pisos</button></div>
+        <div class="doc-cab"><h1 class="vista-titulo">${esc(p.nombre)}</h1>
+          <div class="doc-cab-acciones">
+            <button type="button" class="doc-btn-tipos" onclick="GSUI.editarPiso('${p.id}')" title="Editar piso" aria-label="Editar piso">&#9998;<span class="doc-btn-tipos-txt">Editar</span></button>
+            ${GS.pisoTab === "mov" || GS.pisoTab === "resumen" ? gsBtnNuevo(`GSUI.menuPiso('${p.id}')`, "Añadir") : ""}
+          </div></div>
+        <p class="vista-subtitulo doc-subtitulo">${prop ? "Piso en propiedad" : "Piso donde somos inquilinos"}${p.direccion ? " · " + esc(p.direccion) : ""}</p>
+        <div class="gs-tabs doc-seg" role="tablist">${tabs.map(([k, t]) =>
+          `<button type="button" role="tab" aria-pressed="${GS.pisoTab === k}" onclick="GSUI.tabPiso('${k}')">${t}</button>`).join("")}</div>
+        ${cuerpo}`;
+    }
+
+    function gsPisoResumen(p) {
+      const prop = p.rol === "propietario";
+      const c = gsCalcPiso(p.id, GS.anio);
+      const cats = Object.entries(c.cats).sort((a, b) => b[1] - a[1]);
+      const max = cats.length ? cats[0][1] : 1;
+      const cuotas = prop ? gsCuotasAnio(p.id, GS.anio) : 0;
+      const tienePrest = prop && GS.prest.some(x => x.propiedad_id === p.id);
+      const pend = GS.gests.filter(g => g.propiedad_id === p.id && g.estado === "pendiente")
+        .sort((a, b) => a.fecha.localeCompare(b.fecha));
+      const contratos = prop ? GS.inqs.filter(i => i.propiedad_id === p.id && i.activo && i.fin && gsDias(i.fin) <= 180) : [];
+      return `<div class="gs-resumen-cab">${gsSelAnio()}</div>
+        <div class="gs-kpis">
+          ${prop ? `<div class="gs-kpi"><span class="gs-kpi-et">Ingresos cobrados</span><span class="gs-kpi-v pos">${gsEur(c.ing)}</span>
+            ${c.pIng ? `<span class="gs-kpi-s">+ ${gsEur(c.pIng)} pendiente</span>` : ""}</div>` : ""}
+          <div class="gs-kpi"><span class="gs-kpi-et">Gastos pagados</span><span class="gs-kpi-v neg">${gsEur(c.gas)}</span>
+            ${c.pGas ? `<span class="gs-kpi-s">+ ${gsEur(c.pGas)} pendiente</span>` : ""}</div>
+          ${prop ? `<div class="gs-kpi"><span class="gs-kpi-et">Balance</span><span class="gs-kpi-v ${c.bal >= 0 ? "pos" : "neg"}">${gsEur(c.bal)}</span></div>` : ""}
+        </div>
+        ${tienePrest ? `<div class="gs-nota">Cuotas del préstamo pagadas en ${GS.anio} (según su tabla): <b>${gsEur(cuotas)}</b> ·
+          Balance tras el préstamo: <b class="${c.bal - cuotas >= 0 ? "pos" : "neg"}">${gsEur(c.bal - cuotas)}</b>.
+          <span class="faint">No registres la cuota también como gasto: se contaría dos veces.</span></div>` : ""}
+        ${contratos.length ? `<div class="doc-alerta"><span class="doc-alerta-tit">Contratos que terminan pronto</span><ul>${contratos.map(i =>
+          `<li><b>${esc(i.nombre)}</b> · ${gsDias(i.fin) < 0 ? "terminó" : "termina"} el ${esc(gsFecha(i.fin))}</li>`).join("")}</ul></div>` : ""}
+        ${cats.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Gastos por categoría</h3><div class="gs-barras">${cats.map(([k, v]) =>
+          `<div class="gs-barra"><span class="gs-barra-et">${esc(k)}</span><span class="gs-barra-pista"><span style="width:${Math.max(3, v / max * 100)}%"></span></span><span class="gs-barra-v">${gsEur(v)}</span></div>`).join("")}</div></section>` : ""}
+        <section class="gs-grupo"><h3 class="gs-grupo-tit">Mes a mes</h3>
+          <div class="gs-tabla-wrap"><table class="gs-tabla"><thead><tr><th>Mes</th>${prop ? "<th>Ingresos</th>" : ""}<th>Gastos</th>${prop ? "<th>Balance</th>" : ""}</tr></thead><tbody>${
+            c.meses.map((m, i) => (m.ing || m.gas) ? `<tr><td>${GS_MESES[i]}</td>${prop ? `<td class="num pos">${gsEur(m.ing)}</td>` : ""}<td class="num neg">${gsEur(m.gas)}</td>${prop ? `<td class="num ${m.ing - m.gas >= 0 ? "pos" : "neg"}">${gsEur(m.ing - m.gas)}</td>` : ""}</tr>` : "").join("")
+            || `<tr><td colspan="4" class="faint">Sin movimientos pagados o cobrados en ${GS.anio}.</td></tr>`}</tbody></table></div></section>
+        ${pend.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Pendiente <span class="doc-cuenta">· ${pend.length}</span></h3>
+          <ul class="gs-lista">${pend.map(g => gsFila(g)).join("")}</ul></section>` : ""}`;
+    }
+
+    function gsPisoMov(p) {
+      const f = GS.movFiltro;
+      const lista = GS.gests.filter(g => g.propiedad_id === p.id && (f === "todos" || g.tipo === f))
+        .sort((a, b) => b.fecha.localeCompare(a.fecha));
+      const seg = [["todos", "Todos"], ["gasto", "Gastos"], ["ingreso", "Ingresos"], ["gestion", "Gestiones"]]
+        .filter(([k]) => p.rol === "propietario" || k !== "ingreso");
+      return `<div class="gs-barra-acc">
+          <div class="gs-filtros" role="group" aria-label="Filtrar">${seg.map(([k, t]) =>
+            `<button type="button" aria-pressed="${f === k}" onclick="GSUI.movFiltro('${k}')">${t}</button>`).join("")}</div>
+          <button type="button" class="doc-btn-tipos" onclick="GSUI.csvMov('${p.id}')" title="Exportar a CSV (Excel)">&#11015;<span class="doc-btn-tipos-txt">CSV</span></button>
+        </div>
+        ${lista.length ? `<ul class="gs-lista">${lista.map(g => gsFila(g)).join("")}</ul>`
+          : `<div class="empty-state"><p>No hay movimientos${f === "todos" ? "" : " de este tipo"}.</p></div>`}`;
+    }
+
+    function gsPisoInq(p) {
+      const lista = GS.inqs.filter(i => i.propiedad_id === p.id).sort((a, b) => (b.activo - a.activo) || a.nombre.localeCompare(b.nombre, "es"));
+      return `<div class="gs-barra-acc"><span></span>${gsBtnNuevo(`GSUI.nuevoInq('${p.id}')`, "Inquilino")}</div>
+        ${lista.length ? `<div class="gs-grid">${lista.map(i => {
+          const d = i.fin ? gsDias(i.fin) : null;
+          const cobrado = GS.gests.filter(g => g.inquilino_id === i.id && g.tipo === "ingreso" && g.estado === "hecho" && g.categoria === "Renta")
+            .sort((a, b) => b.fecha.localeCompare(a.fecha))[0];
+          return `<div class="gs-card sin-click${i.activo ? "" : " inactivo"}">
+            <span class="gs-card-cab"><span class="gs-card-tit">${esc(i.nombre)}</span>
+              <span class="gs-pill ${i.activo ? "verde" : ""}">${i.activo ? "Activo" : "Anterior"}</span></span>
+            <span class="gs-card-sub">${[i.telefono, i.email].filter(Boolean).map(esc).join(" · ") || "Sin contacto"}</span>
+            <span class="gs-card-cifras">
+              <span><i>Renta</i><b>${gsEur(i.renta)}</b></span>
+              <span><i>Fianza</i><b>${gsEur(i.fianza)}</b></span>
+              <span><i>Contrato</i><b>${i.inicio ? esc(gsFecha(i.inicio)) : "—"}${i.fin ? " → " + esc(gsFecha(i.fin)) : ""}</b></span>
+            </span>
+            ${d !== null && i.activo && d <= 180 ? `<span class="gs-pill ${d < 0 ? "rojo" : "ambar"}">${d < 0 ? "Contrato vencido" : "Termina en " + esc(docsTiempo(d))}</span>` : ""}
+            ${cobrado ? `<span class="gs-card-sub">Última renta cobrada: ${esc(gsFecha(cobrado.fecha))}</span>` : ""}
+            <span class="gs-card-acc">
+              ${i.activo && i.renta ? `<button type="button" class="gs-btn" onclick="GSUI.cobrarRenta('${i.id}')">Registrar cobro</button>` : ""}
+              <button type="button" class="gs-btn" onclick="GSUI.nuevaGestionInq('${i.id}')">Nueva gestión</button>
+              <button type="button" class="gs-btn" onclick="GSUI.editarInq('${i.id}')">Editar</button>
+            </span></div>`;
+        }).join("")}</div>` : `<div class="empty-state"><p>Todavía no hay inquilinos en este piso.</p></div>`}`;
+    }
+
+    /* ---- Amortizacion ------------------------------------------------------- */
+    function gsCuotaFrancesa(saldo, r, n) {
+      if (n <= 0) return saldo;
+      if (!r) return saldo / n;
+      return saldo * r / (1 - Math.pow(1 + r, -n));
+    }
+    const gsRedondea = n => Math.round(n * 100) / 100;
+
+    /* Sistema frances con cuota mensual. Las revisiones de interes recalculan
+       la cuota sobre las cuotas que quedan; las amortizaciones anticipadas
+       restan capital tras la cuota del mes: "plazo" mantiene la cuota (termina
+       antes) y "cuota" mantiene el plazo (baja la cuota). */
+    function gsAmortizar(p, sinExtras) {
+      const capital = +p.capital, n0 = +p.meses;
+      const revs = GS.revs.filter(r => r.prestamo_id === p.id).sort((a, b) => a.desde.localeCompare(b.desde));
+      const extras = sinExtras ? [] : GS.pagos.filter(x => x.prestamo_id === p.id).sort((a, b) => a.fecha.localeCompare(b.fecha));
+      let tasa = +p.interes, saldo = capital, ex = 0, ri = 0;
+      let cuota = p.cuota ? +p.cuota : gsCuotaFrancesa(saldo, tasa / 1200, n0);
+      const filas = []; let intereses = 0, totalExtra = 0;
+      for (let i = 0; i < n0 && saldo > 0.005; i++) {
+        const fecha = gsSumaMeses(p.inicio, i);
+        while (ri < revs.length && revs[ri].desde <= fecha) {
+          if (+revs[ri].interes !== tasa) { tasa = +revs[ri].interes; cuota = gsCuotaFrancesa(saldo, tasa / 1200, n0 - i); }
+          ri++;
+        }
+        const interes = saldo * tasa / 1200;
+        let cap = cuota - interes;
+        if (i === n0 - 1 || cap > saldo) cap = saldo;
+        saldo -= cap;
+        let extra = 0, recalcular = false;
+        while (ex < extras.length && extras[ex].fecha <= fecha) {
+          const imp = Math.min(+extras[ex].importe, saldo);
+          saldo -= imp; extra += imp;
+          if (extras[ex].modo === "cuota") recalcular = true;
+          ex++;
+        }
+        if (recalcular && saldo > 0.005) cuota = gsCuotaFrancesa(saldo, tasa / 1200, n0 - i - 1);
+        intereses += interes; totalExtra += extra;
+        filas.push({ n: i + 1, fecha, cuota: gsRedondea(cap + interes), interes: gsRedondea(interes),
+                     capital: gsRedondea(cap), extra: gsRedondea(extra), saldo: gsRedondea(Math.max(0, saldo)) });
+      }
+      return { filas, intereses: gsRedondea(intereses), extra: gsRedondea(totalExtra) };
+    }
+
+    function gsPisoPrest(p) {
+      const lista = GS.prest.filter(x => x.propiedad_id === p.id);
+      if (!lista.some(x => x.id === GS.prestId)) GS.prestId = lista.length === 1 ? lista[0].id : null;
+      if (GS.prestId) return gsPrestDetalle(GS.prest.find(x => x.id === GS.prestId), lista.length > 1);
+      return `<div class="gs-barra-acc"><span></span>${gsBtnNuevo(`GSUI.nuevoPrest('${p.id}')`, "Préstamo")}</div>
+        ${lista.length ? `<div class="gs-grid">${lista.map(x => {
+          const a = gsAmortizar(x), hoy = gsHoy();
+          const pasadas = a.filas.filter(f => f.fecha <= hoy);
+          const saldo = pasadas.length ? pasadas[pasadas.length - 1].saldo : +x.capital;
+          return `<button type="button" class="gs-card" onclick="GSUI.abrirPrest('${x.id}')">
+            <span class="gs-card-cab"><span class="gs-card-tit">${esc(x.nombre)}</span></span>
+            <span class="gs-card-cifras"><span><i>Capital</i><b>${gsEur(x.capital)}</b></span>
+              <span><i>Pendiente hoy</i><b>${gsEur(saldo)}</b></span><span><i>Interés</i><b>${String(x.interes).replace(".", ",")} %</b></span></span></button>`;
+        }).join("")}</div>`
+        : `<div class="empty-state"><p>Sin préstamos. Añade la hipoteca o el préstamo de este piso para ver su tabla de amortización y anotar lo que vas amortizando.</p></div>`}`;
+    }
+
+    function gsPrestDetalle(x, conVolver) {
+      const a = gsAmortizar(x), sin = gsAmortizar(x, true), hoy = gsHoy();
+      const pasadas = a.filas.filter(f => f.fecha <= hoy);
+      const saldo = pasadas.length ? pasadas[pasadas.length - 1].saldo : +x.capital;
+      const interesPagado = pasadas.reduce((s, f) => s + f.interes, 0);
+      const proxima = a.filas.find(f => f.fecha > hoy);
+      const ahorro = sin.intereses - a.intereses;
+      const mesesMenos = sin.filas.length - a.filas.length;
+      const extras = GS.pagos.filter(e => e.prestamo_id === x.id).sort((p, q) => q.fecha.localeCompare(p.fecha));
+      const revs = GS.revs.filter(r => r.prestamo_id === x.id).sort((p, q) => q.desde.localeCompare(p.desde));
+      const ultima = a.filas[a.filas.length - 1];
+      return `${conVolver ? `<div class="gs-volver"><button type="button" onclick="GSUI.cerrarPrest()">&larr; Préstamos</button></div>` : ""}
+        <div class="gs-barra-acc"><h2 class="gs-h2">${esc(x.nombre)}</h2>
+          <span class="gs-acc-grupo">
+            <button type="button" class="doc-btn-tipos" onclick="GSUI.editarPrest('${x.id}')" title="Editar préstamo">&#9998;<span class="doc-btn-tipos-txt">Editar</span></button>
+            <button type="button" class="doc-btn-tipos" onclick="GSUI.csvPrest('${x.id}')" title="Exportar la tabla a CSV (Excel)">&#11015;<span class="doc-btn-tipos-txt">CSV</span></button>
+          </span></div>
+        <div class="gs-kpis gs-kpis4">
+          <div class="gs-kpi"><span class="gs-kpi-et">Pendiente hoy</span><span class="gs-kpi-v">${gsEur(saldo)}</span>
+            <span class="gs-kpi-s">de ${gsEur(x.capital)}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Próxima cuota</span><span class="gs-kpi-v">${proxima ? gsEur(proxima.cuota) : "—"}</span>
+            <span class="gs-kpi-s">${proxima ? esc(gsFecha(proxima.fecha)) : "Pagado"}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Cuotas pagadas</span><span class="gs-kpi-v">${pasadas.length}<small> / ${a.filas.length}</small></span>
+            <span class="gs-kpi-s">${gsEur(interesPagado)} de intereses</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Termina</span><span class="gs-kpi-v peq">${ultima ? esc(gsFecha(ultima.fecha)) : "—"}</span>
+            <span class="gs-kpi-s">${mesesMenos > 0 ? `${mesesMenos} meses menos · ahorras ${gsEur(ahorro)}` : `${gsEur(a.intereses)} de intereses en total`}</span></div>
+        </div>
+        <div class="gs-acciones-fila">
+          ${gsBtnNuevo(`GSUI.nuevoExtra('${x.id}')`, "Amortización anticipada")}
+          <button type="button" class="doc-btn-tipos" onclick="GSUI.nuevaRev('${x.id}')">+ Revisión de interés</button>
+        </div>
+        ${extras.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Amortizaciones anticipadas <span class="doc-cuenta">· ${extras.length} · ${gsEur(extras.reduce((s, e) => s + +e.importe, 0))}</span></h3>
+          <ul class="gs-lista">${extras.map(e => `<li class="gs-fila"><span class="gs-ico" aria-hidden="true">&#128181;</span>
+            <button type="button" class="gs-fila-main" onclick="GSUI.editarExtra('${e.id}')">
+              <span class="gs-fila-tit">${gsEur(e.importe)}</span>
+              <span class="gs-fila-sub">${esc(gsFecha(e.fecha))} · ${e.modo === "cuota" ? "Reduce la cuota" : "Reduce el plazo"}${e.notas ? " · " + esc(e.notas) : ""}</span>
+            </button></li>`).join("")}</ul></section>` : ""}
+        ${revs.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Revisiones de interés</h3>
+          <ul class="gs-lista">${revs.map(r => `<li class="gs-fila"><span class="gs-ico" aria-hidden="true">&#128200;</span>
+            <button type="button" class="gs-fila-main" onclick="GSUI.editarRev('${r.id}')">
+              <span class="gs-fila-tit">${String(r.interes).replace(".", ",")} %</span>
+              <span class="gs-fila-sub">Desde ${esc(gsFecha(r.desde))}</span></button></li>`).join("")}</ul></section>` : ""}
+        <section class="gs-grupo"><h3 class="gs-grupo-tit">Tabla de amortización</h3>
+          <div class="gs-tabla-wrap alta"><table class="gs-tabla"><thead><tr>
+            <th>N.º</th><th class="izq">Fecha</th><th>Cuota</th><th>Intereses</th><th>Capital</th><th>Extra</th><th>Pendiente</th></tr></thead><tbody>${
+            a.filas.map(f => `<tr class="${f.fecha <= hoy ? "pasada" : ""}${proxima && f.n === proxima.n ? " proxima" : ""}${f.extra ? " con-extra" : ""}">
+              <td>${f.n}</td><td>${esc(gsFecha(f.fecha))}</td><td class="num">${gsEur(f.cuota)}</td><td class="num">${gsEur(f.interes)}</td>
+              <td class="num">${gsEur(f.capital)}</td><td class="num">${f.extra ? gsEur(f.extra) : ""}</td><td class="num">${gsEur(f.saldo)}</td></tr>`).join("")}</tbody></table></div>
+          <p class="faint gs-pie">Sistema francés, cuota mensual. Las filas con fecha pasada se dan por pagadas. Si tu banco redondea distinto, la diferencia es de céntimos.</p>
+        </section>`;
+    }
+
+    /* ---- modal y formularios -------------------------------------------------- */
+    let GS_ESC = null, GS_FORM = null;
+    function gsModal(titulo, cuerpo, botones) {
+      const ov = document.getElementById("modal-gestiones");
+      ov.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="gs-modal-tit">
+          <h3 id="gs-modal-tit">${esc(titulo)}</h3>${cuerpo}<div class="modal-acciones">${botones}</div></div>`;
+      ov.hidden = false;
+      ov.onclick = ev => { if (ev.target === ov) gsCerrar(); };
+      if (GS_ESC) document.removeEventListener("keydown", GS_ESC, true);
+      GS_ESC = ev => {
+        if (ev.key === "Escape") { ev.preventDefault(); gsCerrar(); return; }
+        if (ev.key !== "Tab") return;
+        const f = ov.querySelectorAll('a[href],button:not([disabled]),input,select,textarea');
+        if (!f.length) return;
+        const a = f[0], z = f[f.length - 1];
+        if (ev.shiftKey && document.activeElement === a) { ev.preventDefault(); z.focus(); }
+        else if (!ev.shiftKey && document.activeElement === z) { ev.preventDefault(); a.focus(); }
+      };
+      document.addEventListener("keydown", GS_ESC, true);
+      const primero = ov.querySelector("input,select,textarea");
+      if (primero) setTimeout(() => primero.focus(), 40);
+    }
+    function gsCerrar() {
+      const ov = document.getElementById("modal-gestiones");
+      if (ov) { ov.hidden = true; ov.innerHTML = ""; ov.onclick = null; }
+      if (GS_ESC) { document.removeEventListener("keydown", GS_ESC, true); GS_ESC = null; }
+      GS_FORM = null;
+    }
+    function gsAviso(t) {
+      const a = document.getElementById("gs-aviso");
+      if (a) { a.textContent = t; a.hidden = !t; }
+    }
+    function gsMenu(titulo, opciones) {
+      gsModal(titulo, `<div class="gs-menu">${opciones.map(([txt, js, ico]) =>
+        `<button type="button" class="gs-menu-op" onclick="${js}"><span aria-hidden="true">${ico || ""}</span>${txt}</button>`).join("")}</div>`,
+        `<button type="button" class="gs-btn" onclick="GSUI.cerrar()">Cancelar</button>`);
+    }
+
+    function gsCampoHTML(c, val) {
+      const id = "gsf-" + c.id, v = val === null || val === undefined ? "" : val;
+      if (c.tipo === "check") {
+        return `<label class="gs-check-campo gs-ancho"><input type="checkbox" id="${id}"${val ? " checked" : ""}> ${esc(c.label)}</label>`;
+      }
+      let ctl;
+      if (c.tipo === "select") {
+        ctl = `<select id="${id}">${c.opciones.map(([k, t]) =>
+          `<option value="${esc(k)}"${String(k) === String(v) ? " selected" : ""}>${esc(t)}</option>`).join("")}</select>`;
+      } else if (c.tipo === "textarea") {
+        ctl = `<textarea id="${id}" rows="2" placeholder="${esc(c.ph || "")}">${esc(v)}</textarea>`;
+      } else {
+        const t = c.tipo || "text";
+        ctl = `<input id="${id}" type="${t}"${t === "number" ? ' step="any" inputmode="decimal"' : ""}${t === "url" ? ' spellcheck="false"' : ""}
+          value="${esc(v)}" placeholder="${esc(c.ph || "")}" autocomplete="off">`;
+      }
+      return `<div class="campo gs-campo${c.mitad ? "" : " gs-ancho"}"><label for="${id}">${esc(c.label)}${c.req ? "" : ` <span class="faint">(opcional)</span>`}</label>${ctl}${c.hint ? `<span class="hint">${esc(c.hint)}</span>` : ""}</div>`;
+    }
+    /* Formulario generico: campos [{id,label,tipo,req,mitad,opciones,hint}],
+       valores iniciales y una funcion guardar(v) que puede lanzar gsErr(). */
+    function gsFormulario(o) {
+      GS_FORM = o;
+      const valores = o.valores || {};
+      gsModal(o.titulo,
+        `<div class="gs-form">${o.campos.map(c => gsCampoHTML(c, valores[c.id])).join("")}</div>
+         <div id="gs-aviso" class="doc-aviso" hidden></div>`,
+        `${o.borrar ? `<button type="button" class="gs-btn pel gs-borrar-izq" onclick="GSUI.borrarForm()">Eliminar</button>` : ""}
+         <button type="button" class="gs-btn" onclick="GSUI.cerrar()">Cancelar</button>
+         <button type="button" class="gs-btn pri" onclick="GSUI.enviar()">Guardar</button>`);
+    }
+    async function gsEnviar() {
+      if (!GS_FORM) return;
+      const v = {};
+      for (const c of GS_FORM.campos) {
+        const el = document.getElementById("gsf-" + c.id);
+        if (!el) continue;
+        let x;
+        if (c.tipo === "check") x = el.checked;
+        else {
+          x = el.value.trim();
+          if (c.tipo === "number") x = x === "" ? null : Number(x.replace(",", "."));
+          else x = x === "" ? null : x;
+        }
+        if (c.req && (x === null || Number.isNaN(x))) return gsAviso(`Falta: ${c.label}.`);
+        if (c.tipo === "number" && x !== null && Number.isNaN(x)) return gsAviso(`${c.label}: número no válido.`);
+        v[c.id] = x;
+      }
+      gsAviso("");
+      try { await GS_FORM.guardar(v); }
+      catch (e) { gsAviso(e && e.gs ? e.message : "No se ha podido guardar. Inténtalo de nuevo."); }
+    }
+    function gsBorrarForm() { if (GS_FORM && GS_FORM.borrar) GS_FORM.borrar(); }
+
+    async function gsGuardarFila(tabla, id, fila) {
+      if (id) {
+        await supaFetch(`/rest/v1/${tabla}?id=eq.${encodeURIComponent(id)}`, {
+          method: "PATCH", headers: { "Prefer": "return=minimal" }, body: JSON.stringify(fila) });
+      } else {
+        await supaFetch(`/rest/v1/${tabla}`, {
+          method: "POST", headers: { "Prefer": "return=minimal" },
+          body: JSON.stringify([Object.assign({ hogar_id: hogarId() }, fila)]) });
+      }
+    }
+    async function gsTras(msg) { gsCerrar(); await gsCargar(true); toast(msg); }
+    function gsConfirmarBorrar(tabla, id, texto, aviso, mensaje) {
+      gsModal("¿Borrar?", `<p class="modal-p">${esc(texto)}</p>${aviso ? `<p class="modal-p faint">${esc(aviso)}</p>` : ""}
+        <div id="gs-aviso" class="doc-aviso" hidden></div>`,
+        `<button type="button" class="gs-btn" onclick="GSUI.cerrar()">Cancelar</button>
+         <button type="button" class="gs-btn pel" id="gs-borrar-ok">Borrar</button>`);
+      document.getElementById("gs-borrar-ok").onclick = async () => {
+        try {
+          await supaFetch(`/rest/v1/${tabla}?id=eq.${encodeURIComponent(id)}`, { method: "DELETE" });
+          await gsTras(mensaje || "Borrado");
+        } catch (e) { gsAviso("No se ha podido borrar."); }
+      };
+    }
+    const gsOpts = (lista, vacio) => (vacio ? [["", vacio]] : []).concat(lista.map(x => [x, x]));
+
+    /* Piso */
+    function gsFormPiso(p) {
+      gsFormulario({
+        titulo: p ? "Editar piso" : "Nuevo piso",
+        campos: [
+          { id: "nombre", label: "Nombre", req: true, ph: "Piso de Gran Vía" },
+          { id: "rol", label: "Situación", tipo: "select", req: true,
+            opciones: [["propietario", "Es nuestro (alquilado a inquilinos)"], ["inquilino", "Somos inquilinos"]] },
+          { id: "direccion", label: "Dirección" },
+          { id: "notas", label: "Notas", tipo: "textarea" },
+        ],
+        valores: p || { rol: "propietario" },
+        borrar: p ? () => {
+          const m = GS.gests.filter(g => g.propiedad_id === p.id).length, i = GS.inqs.filter(x => x.propiedad_id === p.id).length;
+          gsConfirmarBorrar("gs_propiedades", p.id, p.nombre,
+            `Se borran también sus ${m} movimientos y ${i} inquilinos. Los préstamos se conservan sin piso.`, "Piso borrado");
+        } : null,
+        guardar: async v => {
+          await gsGuardarFila("gs_propiedades", p && p.id, { nombre: v.nombre, rol: v.rol, direccion: v.direccion, notas: v.notas });
+          if (p && GS.pisoId === p.id && v.rol !== "propietario") GS.pisoTab = "resumen";
+          await gsTras(p ? "Piso actualizado" : "Piso añadido");
+        },
+      });
+    }
+    /* Inquilino */
+    function gsFormInq(propId, i) {
+      gsFormulario({
+        titulo: i ? "Editar inquilino" : "Nuevo inquilino",
+        campos: [
+          { id: "nombre", label: "Nombre", req: true },
+          { id: "telefono", label: "Teléfono", mitad: true }, { id: "email", label: "Correo", mitad: true },
+          { id: "inicio", label: "Inicio del contrato", tipo: "date", mitad: true }, { id: "fin", label: "Fin del contrato", tipo: "date", mitad: true },
+          { id: "renta", label: "Renta mensual (€)", tipo: "number", mitad: true }, { id: "fianza", label: "Fianza (€)", tipo: "number", mitad: true },
+          { id: "activo", label: "Inquilino actual", tipo: "check" },
+          { id: "notas", label: "Notas", tipo: "textarea" },
+        ],
+        valores: i || { activo: true },
+        borrar: i ? () => gsConfirmarBorrar("gs_inquilinos", i.id, i.nombre, "Sus movimientos se conservan, sin inquilino asignado.", "Inquilino borrado") : null,
+        guardar: async v => {
+          if (v.inicio && v.fin && v.fin <= v.inicio) throw gsErr("El fin del contrato tiene que ser posterior al inicio.");
+          await gsGuardarFila("gs_inquilinos", i && i.id, {
+            propiedad_id: propId, nombre: v.nombre, telefono: v.telefono, email: v.email,
+            inicio: v.inicio, fin: v.fin, renta: v.renta, fianza: v.fianza, activo: v.activo, notas: v.notas });
+          await gsTras(i ? "Inquilino actualizado" : "Inquilino añadido");
+        },
+      });
+    }
+    /* Gasto / ingreso / gestion */
+    function gsFormMov(tipo, ambito, ctx, g) {
+      ctx = ctx || {};
+      const cats = ((GS_CATS[ambito] || {})[tipo] || ["Otros"]).slice();
+      if (g && g.categoria && !cats.includes(g.categoria)) cats.push(g.categoria);
+      const propId = g ? g.propiedad_id : ctx.propiedad_id;
+      const inqs = propId ? GS.inqs.filter(i => i.propiedad_id === propId && (i.activo || (g && g.inquilino_id === i.id) || ctx.inquilino_id === i.id)) : [];
+      const gestion = tipo === "gestion";
+      const campos = [
+        { id: "titulo", label: "Título", ph: gestion ? "Segunda dosis, avería del calentador…" : "Recibo de febrero" },
+        { id: "categoria", label: "Categoría", tipo: "select", opciones: gsOpts(cats), mitad: true },
+        { id: "fecha", label: gestion ? "Fecha o vencimiento" : "Fecha", tipo: "date", req: true, mitad: true },
+        { id: "importe", label: "Importe (€)", tipo: "number", req: !gestion, mitad: true },
+        { id: "estado", label: "Estado", tipo: "select", mitad: true,
+          opciones: [["pendiente", gsEstadoTxt(tipo, "pendiente")], ["hecho", gsEstadoTxt(tipo, "hecho")]] },
+      ];
+      if (inqs.length) campos.push({ id: "inquilino_id", label: "Inquilino",
+        tipo: "select", opciones: [["", "— Ninguno —"]].concat(inqs.map(i => [i.id, i.nombre])) });
+      if (ambito === "familia") campos.push({ id: "asignado", label: "Para", tipo: "select",
+        opciones: [["", "Toda la familia"]].concat(DOCS_PERSONAS.filter(x => ["ruben", "sergio", "pablo"].includes(x.clave)).map(x => [x.clave, x.nombre])) });
+      campos.push(
+        { id: "repite", label: "Se repite", tipo: "select",
+          opciones: [["", "No se repite"], ["mensual", "Cada mes"], ["trimestral", "Cada 3 meses"], ["semestral", "Cada 6 meses"], ["anual", "Cada año"]],
+          hint: "Al marcarla como hecha, se crea la siguiente." },
+        { id: "url", label: "Enlace (factura, justificante…)", tipo: "url", ph: "https://…" },
+        { id: "notas", label: "Notas", tipo: "textarea" });
+      gsFormulario({
+        titulo: (g ? "Editar " : "Nuevo ") + (tipo === "gasto" ? "gasto" : tipo === "ingreso" ? "ingreso" : "gestión"),
+        campos, borrar: g ? () => gsConfirmarBorrar("gs_gestiones", g.id, g.titulo, "", "Borrado") : null,
+        valores: g || { categoria: cats[0], fecha: gsHoy(), estado: "pendiente", inquilino_id: ctx.inquilino_id || "" },
+        guardar: async v => {
+          if (v.url && !docsUrlValida(v.url)) throw gsErr("El enlace tiene que empezar por https://");
+          if (v.importe !== null && v.importe < 0) throw gsErr("El importe no puede ser negativo.");
+          const fila = {
+            ambito, propiedad_id: propId || null, tipo,
+            inquilino_id: inqs.length ? (v.inquilino_id || null) : (g ? g.inquilino_id : null),
+            categoria: v.categoria, titulo: v.titulo || v.categoria || GS_TIPOS[tipo], fecha: v.fecha,
+            importe: v.importe, estado: v.estado, repite: v.repite || null,
+            asignado: ambito === "familia" ? (v.asignado || null) : ambito === "lima" ? "lima" : null,
+            url: v.url, notas: v.notas,
+          };
+          await gsGuardarFila("gs_gestiones", g && g.id, fila);
+          if (fila.estado === "hecho" && fila.repite && !(g && g.estado === "hecho")) await gsSiguiente(fila);
+          await gsTras(g ? "Guardado" : "Añadido");
+        },
+      });
+    }
+    /* Crea la siguiente ocurrencia de algo que se repite (sin duplicarla). */
+    async function gsSiguiente(g) {
+      const n = GS_REPITE[g.repite];
+      if (!n) return;
+      const fecha = gsSumaMeses(g.fecha, n);
+      const dup = GS.gests.some(x => x.fecha === fecha && x.titulo === g.titulo && x.ambito === g.ambito
+        && x.tipo === g.tipo && (x.propiedad_id || null) === (g.propiedad_id || null) && (x.categoria || null) === (g.categoria || null));
+      if (dup) return;
+      await gsGuardarFila("gs_gestiones", null, {
+        ambito: g.ambito, propiedad_id: g.propiedad_id || null, inquilino_id: g.inquilino_id || null, tipo: g.tipo,
+        categoria: g.categoria || null, titulo: g.titulo, fecha, importe: g.importe === undefined ? null : g.importe,
+        estado: "pendiente", repite: g.repite, asignado: g.asignado || null, url: g.url || null, notas: g.notas || null });
+    }
+    async function gsToggle(id) {
+      const g = gsGest(id);
+      if (!g) return;
+      const nuevo = g.estado === "hecho" ? "pendiente" : "hecho";
+      g.estado = nuevo;
+      gsRender();
+      try {
+        await gsGuardarFila("gs_gestiones", id, { estado: nuevo });
+        if (nuevo === "hecho" && g.repite) await gsSiguiente(g);
+        await gsCargar(true);
+      } catch (e) {
+        g.estado = nuevo === "hecho" ? "pendiente" : "hecho";
+        gsRender();
+        toast("No se ha podido actualizar");
+      }
+    }
+    async function gsCobrarRenta(inqId) {
+      const i = gsInq(inqId);
+      if (!i) return;
+      try {
+        await gsGuardarFila("gs_gestiones", null, {
+          ambito: "piso", propiedad_id: i.propiedad_id, inquilino_id: i.id, tipo: "ingreso", categoria: "Renta",
+          titulo: "Renta · " + i.nombre, fecha: gsHoy(), importe: i.renta, estado: "hecho" });
+        await gsCargar(true);
+        toast("Cobro registrado");
+      } catch (e) { toast("No se ha podido registrar"); }
+    }
+    /* Prestamo, amortizacion anticipada y revision de interes */
+    function gsFormPrest(propId, x) {
+      gsFormulario({
+        titulo: x ? "Editar préstamo" : "Nuevo préstamo",
+        campos: [
+          { id: "nombre", label: "Nombre", req: true, ph: "Hipoteca" },
+          { id: "capital", label: "Capital inicial (€)", tipo: "number", req: true, mitad: true },
+          { id: "interes", label: "Interés anual (%)", tipo: "number", req: true, mitad: true },
+          { id: "meses", label: "Plazo (meses)", tipo: "number", req: true, mitad: true, hint: "25 años = 300" },
+          { id: "inicio", label: "Fecha de la primera cuota", tipo: "date", req: true, mitad: true },
+          { id: "cuota", label: "Cuota mensual del banco (€)", tipo: "number", hint: "Si la dejas vacía, se calcula." },
+          { id: "notas", label: "Notas", tipo: "textarea" },
+        ],
+        valores: x || {},
+        borrar: x ? () => gsConfirmarBorrar("gs_prestamos", x.id, x.nombre, "Se borran también sus amortizaciones anticipadas y revisiones.", "Préstamo borrado") : null,
+        guardar: async v => {
+          if (v.capital <= 0 || v.meses < 1 || v.interes < 0) throw gsErr("Revisa capital, interés y plazo.");
+          await gsGuardarFila("gs_prestamos", x && x.id, {
+            propiedad_id: propId || null, nombre: v.nombre, capital: v.capital, interes: v.interes,
+            meses: Math.round(v.meses), inicio: v.inicio, cuota: v.cuota, notas: v.notas });
+          await gsTras(x ? "Préstamo actualizado" : "Préstamo añadido");
+        },
+      });
+    }
+    function gsFormExtra(prestId, e) {
+      gsFormulario({
+        titulo: e ? "Editar amortización anticipada" : "Amortización anticipada",
+        campos: [
+          { id: "fecha", label: "Fecha", tipo: "date", req: true, mitad: true },
+          { id: "importe", label: "Importe (€)", tipo: "number", req: true, mitad: true },
+          { id: "modo", label: "Qué reduce", tipo: "select", opciones: [["plazo", "El plazo (misma cuota)"], ["cuota", "La cuota (mismo plazo)"]] },
+          { id: "notas", label: "Notas", tipo: "textarea" },
+        ],
+        valores: e || { fecha: gsHoy(), modo: "plazo" },
+        borrar: e ? () => gsConfirmarBorrar("gs_pagos_prestamo", e.id, `${gsEur(e.importe)} · ${gsFecha(e.fecha)}`, "", "Borrada") : null,
+        guardar: async v => {
+          if (v.importe <= 0) throw gsErr("El importe tiene que ser mayor que cero.");
+          await gsGuardarFila("gs_pagos_prestamo", e && e.id, { prestamo_id: prestId, fecha: v.fecha, importe: v.importe, modo: v.modo, notas: v.notas });
+          await gsTras(e ? "Guardado" : "Amortización registrada");
+        },
+      });
+    }
+    function gsFormRev(prestId, r) {
+      gsFormulario({
+        titulo: r ? "Editar revisión" : "Revisión de interés",
+        campos: [
+          { id: "desde", label: "Desde (primera cuota con el nuevo tipo)", tipo: "date", req: true },
+          { id: "interes", label: "Nuevo interés anual (%)", tipo: "number", req: true },
+        ],
+        valores: r || { desde: gsHoy() },
+        borrar: r ? () => gsConfirmarBorrar("gs_prestamo_revisiones", r.id, `${r.interes} % desde ${gsFecha(r.desde)}`, "", "Borrada") : null,
+        guardar: async v => {
+          if (v.interes < 0) throw gsErr("El interés no puede ser negativo.");
+          await gsGuardarFila("gs_prestamo_revisiones", r && r.id, { prestamo_id: prestId, desde: v.desde, interes: v.interes });
+          await gsTras(r ? "Guardado" : "Revisión añadida");
+        },
+      });
+    }
+
+    /* Menus de alta */
+    function gsPisoParaAlta() {
+      const props = GS.props;
+      if (!props.length) { toast("A\u00f1ade antes un piso"); return gsFormPiso(null); }
+      if (props.length === 1) return gsMenuPiso(props[0].id);
+      gsMenu("\u00bfDe qu\u00e9 piso?", props.map(p => [esc(p.nombre), `GSUI.menuPiso('${p.id}')`, "\u{1F3E0}"]));
+    }
+    function gsMenuPiso(propId) {
+      const p = gsProp(propId);
+      const op = [["Gasto", `GSUI.mov('gasto','piso','${propId}')`, "\u{1F4B8}"]];
+      if (p && p.rol === "propietario") op.push(["Ingreso", `GSUI.mov('ingreso','piso','${propId}')`, "\u{1F4B6}"]);
+      op.push(["Gestión (incidencia, contrato…)", `GSUI.mov('gestion','piso','${propId}')`, "\u{1F4DD}"]);
+      gsMenu("Añadir a " + (p ? p.nombre : "piso"), op);
+    }
+    function gsMenuAmbito(ambito) {
+      if (ambito === "lima") return gsMenu("Añadir a Lima", [
+        ["Vacuna, veterinario u otra gestión", "GSUI.mov('gestion','lima')", "\u{1F489}"],
+        ["Gasto", "GSUI.mov('gasto','lima')", "\u{1F4B8}"]]);
+      gsMenu("Añadir a Familia", [
+        ["Trámite o gestión", "GSUI.mov('gestion','familia')", "\u{1F4DD}"],
+        ["Gasto", "GSUI.mov('gasto','familia')", "\u{1F4B8}"]]);
+    }
+    function gsMenuNuevo() {
+      gsMenu("¿Qué quieres añadir?", [
+        ["Gasto, ingreso o gestión de un piso", "GSUI.pisoParaAlta()", "\u{1F3E0}"],
+        ["Vacuna o gestión de Lima", "GSUI.mov('gestion','lima')", "\u{1F436}"],
+        ["Trámite de la familia", "GSUI.mov('gestion','familia')", "\u{1F46A}"],
+        ["Documento (enlace con caducidad)", "GSUI.nuevoDocumento()", "\u{1F4C2}"]]);
+    }
+
+    /* ---- exportar a CSV (se abre en Excel / Google Sheets) -------------------- */
+    function gsCSV(nombre, filas) {
+      const celda = c => {
+        let s = c === null || c === undefined ? "" : typeof c === "number" ? String(c).replace(".", ",") : String(c);
+        return /[;"\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+      };
+      const txt = "﻿" + filas.map(r => r.map(celda).join(";")).join("\r\n");
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([txt], { type: "text/csv;charset=utf-8" }));
+      a.download = nombre;
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 800);
+    }
+    function gsCsvMov(propId) {
+      const p = gsProp(propId);
+      const filas = [["Fecha", "Tipo", "Categoría", "Título", "Importe", "Estado", "Inquilino", "Notas"]];
+      GS.gests.filter(g => g.propiedad_id === propId).sort((a, b) => a.fecha.localeCompare(b.fecha)).forEach(g => {
+        const i = g.inquilino_id ? gsInq(g.inquilino_id) : null;
+        filas.push([g.fecha, GS_TIPOS[g.tipo], g.categoria, g.titulo, g.importe === null ? "" : +g.importe,
+          gsEstadoTxt(g.tipo, g.estado), i ? i.nombre : "", g.notas]);
+      });
+      gsCSV(`movimientos-${(p ? p.nombre : "piso").replace(/\s+/g, "-")}.csv`, filas);
+    }
+    function gsCsvPrest(id) {
+      const x = GS.prest.find(y => y.id === id);
+      if (!x) return;
+      const filas = [["N.º", "Fecha", "Cuota", "Intereses", "Capital", "Extra", "Pendiente"]];
+      gsAmortizar(x).filas.forEach(f => filas.push([f.n, f.fecha, f.cuota, f.interes, f.capital, f.extra || "", f.saldo]));
+      gsCSV(`amortizacion-${x.nombre.replace(/\s+/g, "-")}.csv`, filas);
+    }
+
+    /* ---- puente para los onclick del HTML generado ------------------------------ */
+    const GSUI = {
+      recargar: () => gsCargar(true),
+      cerrar: gsCerrar, enviar: gsEnviar, borrarForm: gsBorrarForm,
+      toggle: gsToggle,
+      filtroTodo: k => { GS.filtroTodo = k; gsRender(); },
+      anio: d => { GS.anio += d; gsRender(); },
+      menuNuevo: gsMenuNuevo, menuAmbito: gsMenuAmbito, menuPiso: gsMenuPiso,
+      pisoParaAlta: gsPisoParaAlta,
+      mov: (tipo, ambito, propId) => { gsCerrar(); gsFormMov(tipo, ambito, { propiedad_id: propId || null }); },
+      editarMov: id => { const g = gsGest(id); if (g) gsFormMov(g.tipo, g.ambito, {}, g); },
+      nuevoPiso: () => gsFormPiso(null),
+      editarPiso: id => gsFormPiso(gsProp(id)),
+      abrirPiso: (id, tab) => {
+        GS.pisoId = id; GS.pisoTab = tab || "resumen"; GS.prestId = null; GS.movFiltro = "todos";
+        if (vistaActiva !== "gs_pisos") fijarVista("gs_pisos"); else gsRender();
+        window.scrollTo(0, 0);
+      },
+      cerrarPiso: () => { GS.pisoId = null; GS.prestId = null; gsRender(); },
+      tabPiso: k => { GS.pisoTab = k; GS.prestId = null; gsRender(); },
+      movFiltro: k => { GS.movFiltro = k; gsRender(); },
+      nuevoInq: propId => gsFormInq(propId, null),
+      editarInq: id => { const i = gsInq(id); if (i) gsFormInq(i.propiedad_id, i); },
+      cobrarRenta: gsCobrarRenta,
+      nuevaGestionInq: id => { const i = gsInq(id); if (i) gsFormMov("gestion", "piso", { propiedad_id: i.propiedad_id, inquilino_id: i.id }); },
+      nuevoPrest: propId => gsFormPrest(propId, null),
+      editarPrest: id => { const x = GS.prest.find(y => y.id === id); if (x) gsFormPrest(x.propiedad_id, x); },
+      abrirPrest: id => { GS.prestId = id; gsRender(); },
+      cerrarPrest: () => { GS.prestId = null; gsRender(); },
+      nuevoExtra: id => gsFormExtra(id, null),
+      editarExtra: id => { const e = GS.pagos.find(y => y.id === id); if (e) gsFormExtra(e.prestamo_id, e); },
+      nuevaRev: id => gsFormRev(id, null),
+      editarRev: id => { const r = GS.revs.find(y => y.id === id); if (r) gsFormRev(r.prestamo_id, r); },
+      csvMov: gsCsvMov, csvPrest: gsCsvPrest,
+      verDocumentos: () => { fijarVista("documentos"); window.scrollTo(0, 0); },
+      nuevoDocumento: () => { gsCerrar(); fijarVista("documentos"); docsFormulario(null); },
+      recetasIr: recetasMenuIr,
+    };
+    window.GSUI = GSUI;
+
+    /* ========================================================================
        ALTA DE HOGAR — cuando entra alguien que no pertenece a ninguno.
        Crea su hogar (solo con el area de seguimiento del bebe) y el estado
        inicial con lo que rellene. Lo hace una funcion SECURITY DEFINER en la
@@ -30017,12 +31255,13 @@ function boot(vistaInicial) {
          aviso de caducidad no saltaba nunca si no la abrias. Con sesion y
          hogar, la consulta es de datos propios y protegidos por RLS. */
       if (sesion.hogar) docsCargar(false).catch(() => {});
+      if (sesion.hogar) gsCargar(false).catch(() => {});
     }
 
     function mostrarAlta() {
       const el = document.getElementById("alta-hogar");
       if (!el) return;
-      const hoy = isoLocal(new Date());
+      const hoy = hoyISO();
       el.innerHTML = `<form class="gate-box" id="alta-form" autocomplete="off">
           <h1 class="gate-titulo">Bienvenida a Niblo</h1>
           <p class="gate-subtitulo">Cuéntanos de quién vas a llevar el seguimiento. Tus datos son solo tuyos: nadie más los ve.</p>
@@ -32988,6 +34227,8 @@ function boot(vistaInicial) {
       renderDatos();
       renderPlanSemanal();
       renderDocumentos();
+      renderRecetasMenu();
+      gsRender();
       pintarPuntoSync();
       renderTimers();
     }
@@ -33129,7 +34370,13 @@ function boot(vistaInicial) {
 
       // ---- Hub de inicio: marca (volver) y tarjetas de area --------------
       document.getElementById("marca").addEventListener("click", () => {
-        if (areaActiva) irAInicio();
+        if (!areaActiva) return;
+        /* Biblioteca y Plan semanal cuelgan de Recetas: la flecha vuelve a sus
+           dos tarjetas, y desde ahi al inicio. */
+        if (areaActiva === "recetas" || areaActiva === "plan") {
+          fijarVista("recetas_menu");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else irAInicio();
       });
       document.getElementById("hub-grid").addEventListener("click", (ev) => {
         const b = ev.target.closest("button.hub-card");
