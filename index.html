@@ -8295,7 +8295,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "364";
+const NIBLO_BUILD = "365";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -15829,11 +15829,13 @@ function calcularAvisos() {
   /* Recordatorios creados desde una visita, en su dia o intervalo. */
   for (const r of recordatoriosDeHoy()) {
     const v = (STATE.pediatricVisits || []).find(x => x.id === r.visitId);
-    const ultimo = (r.hasta || r.desde) === HOY_ISO && r.hasta;
+    const fin = r.hasta || r.desde;
+    const ultimo = fin === HOY_ISO && r.hasta;
+    const atrasado = HOY_ISO > fin;
     out.push({ id: "rec:" + r.id, tipo: "diario", icono: "🔔", hecho: false,
       titulo: r.texto,
       texto: [v && `${especialistaDe(v)}${v.doctor ? ` (${v.doctor})` : ""} · visita del ${fmtFechaCorta(v.date)}`,
-              r.hasta ? (ultimo ? "Último día" : `Hasta el ${fmtFechaCorta(r.hasta)}`) : ""].filter(Boolean).join(". ")
+              atrasado ? `⚠ Atrasado: era ${rangoRec(r)}` : (r.hasta ? (ultimo ? "Último día" : `Hasta el ${fmtFechaCorta(r.hasta)}`) : "")].filter(Boolean).join(". ")
               + ". Al marcarlo te pide el día y la hora.",
       accion: { et: "Marcar", fn: `PB.recMarcar('${r.id}')` } });
   }
@@ -16759,8 +16761,8 @@ function htmlVisita(v) {
 }
 
 /* ---- Recordatorios de una visita ---------------------------------------
-   «Programar radiografía» del 20 al 24: sale en Pendientes esos dias (o solo
-   el dia elegido si no hay fin). Al marcarlo pide dia y hora de la cita y la
+   «Programar radiografía» del 20 al 24: sale en Pendientes desde el 20 y, si
+   pasa el 24 sin marcar, sigue saliendo como atrasado hasta que se marque. Al marcarlo pide dia y hora de la cita y la
    deja como visita programada, que sale en Próximos. */
 function rangoRec(r) {
   return r.hasta && r.hasta !== r.desde
@@ -16771,7 +16773,7 @@ function htmlRecordatorio(r) {
   let estado;
   if (r.hecho) estado = cita ? `<span class="pill ok">Cita el ${fmtFechaCorta(cita.date)}${cita.hora ? ` · ${esc(cita.hora)}` : ""}</span>` : `<span class="pill ok">Hecho</span>`;
   else if (HOY_ISO < r.desde) estado = `<span class="pill info">Programado</span>`;
-  else if (HOY_ISO > (r.hasta || r.desde)) estado = `<span class="pill evitar">Sin marcar</span>`;
+  else if (HOY_ISO > (r.hasta || r.desde)) estado = `<span class="pill evitar">Atrasado · en Pendientes</span>`;
   else estado = `<span class="pill limite">En Pendientes</span>`;
   return `<button type="button" class="vh-rec${r.hecho ? " hecho" : ""}" onclick="PB.recModal('${r.visitId}','${r.id}')">
     <span class="vh-rec-txt"><b>${esc(r.texto)}</b><span>${rangoRec(r)}</span></span>${estado}</button>`;
@@ -16791,7 +16793,7 @@ function recModal(visitId, recId) {
     <label class="check-linea"><input type="checkbox" id="rc-intervalo"${intervalo ? " checked" : ""}
       onchange="document.getElementById('rc-hasta-campo').hidden = !this.checked; document.getElementById('rc-desde-et').textContent = this.checked ? 'Desde' : 'Fecha'">
       Varios días (inicio y fin)</label>
-    <div class="faint" style="margin-top:8px">Saldrá en <b>Pendientes</b> ${intervalo ? "esos días" : "ese día"}. Al darle a «Marcar» te pedirá el día y la hora de la cita.</div>
+    <div class="faint" style="margin-top:8px">Saldrá en <b>Pendientes</b> desde esa fecha y seguirá saliendo hasta que lo marques. Al darle a «Marcar» te pedirá el día y la hora de la cita.</div>
     ${r && r.hecho ? `<label class="check-linea" style="margin-top:10px"><input type="checkbox" id="rc-reabrir"> Volver a ponerlo como pendiente</label>` : ""}
     <div class="modal-aviso" id="rc-aviso" hidden></div>`,
     [{ et: "Cancelar", accion: "PB.cerrarModal()" },
@@ -16838,9 +16840,10 @@ function recBorrar(id) {
   STATE.recordatorios = (STATE.recordatorios || []).filter(x => x.id !== id);
   recRepintar();
 }
-/* Recordatorios que tocan hoy y siguen sin marcar. */
+/* Recordatorios que ya han empezado y siguen sin marcar: pasado el fin
+   siguen saliendo (como atrasados) hasta que se marquen. */
 function recordatoriosDeHoy() {
-  return (STATE.recordatorios || []).filter(r => !r.hecho && r.desde && HOY_ISO >= r.desde && HOY_ISO <= (r.hasta || r.desde));
+  return (STATE.recordatorios || []).filter(r => !r.hecho && r.desde && HOY_ISO >= r.desde);
 }
 /* «Programar radiografía» -> «Radiografía»: lo que se va a hacer, no la tarea. */
 function pruebaDeRecordatorio(t) {
