@@ -8248,7 +8248,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "362";
+const NIBLO_BUILD = "363";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -16586,6 +16586,9 @@ function renderPediatra(el) {
     <div class="faint" style="margin-bottom:10px">Con una fecha futura queda como cita programada y sale en <b>Próximos</b>, en Hoy.</div>
     <button class="btn-primario" onclick="PB.savePediatricVisit()">Guardar visita</button>
   `);
+  /* Orden: visitas (registrar + historial) y despues sintomas e informe. */
+  const visitas = html;
+  html = "";
   html += htmlRegistro('pediatra-sintomas', 'Registrar síntomas', `
     <div class="grid-campos2">
       <div class="campo"><label for="sn-dt">Fecha y hora</label>
@@ -16613,6 +16616,8 @@ function renderPediatra(el) {
     `<div class="faint" style="margin-top:-4px;margin-bottom:10px">Marca lo que quieres incluir y el rango de fechas. Se abre el diálogo de impresión: elige <b>Guardar como PDF</b>.</div>
      <div id="infc-panel">${htmlInformeCompleto()}</div>`);
 
+  const resto = html;
+  html = "";
   html += `<div class="card"><h2>Historial de visitas <span class="n">${sorted.length}</span></h2>`;
   if (!sorted.length) html += `<div class="faint">Sin visitas registradas.</div>`;
   /* Cada visita, plegada: la lista era un muro de tarjetas abiertas y para
@@ -16655,7 +16660,7 @@ function renderPediatra(el) {
     </details>`;
   });
   html += `</div>`;
-  el.innerHTML = html;
+  el.innerHTML = visitas + html + resto;
 }
 /* ---- Sintomas ----------------------------------------------------------
    Un registro puede llevar temperatura, sintomas, las dos cosas o solo notas.
