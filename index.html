@@ -5835,6 +5835,53 @@
     .pb-app .visit-acciones { display: flex; gap: 8px; }
     @media (max-width: 420px) { .pb-app .visit-cuerpo { padding-left: 0; } }
 
+    /* Historial de visitas (rediseño): tarjetas con bloque de fecha y letra
+       de lectura, no de nota al pie. */
+    .pb-app .visitas-card .vh-grupo { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); margin: 14px 2px 8px; }
+    .pb-app .visitas-card h2 + .vh-grupo { margin-top: 4px; }
+    .pb-app details.vh { border: 1px solid var(--line); border-radius: 14px; margin-bottom: 10px; background: var(--bg-elev, transparent); overflow: hidden; }
+    .pb-app details.vh.futura { border-color: var(--blue); }
+    .pb-app details.vh > summary { display: flex; align-items: center; gap: 12px; padding: 12px; cursor: pointer; list-style: none; }
+    .pb-app details.vh > summary::-webkit-details-marker { display: none; }
+    .pb-app details.vh[open] > summary { border-bottom: 1px solid var(--line-soft); }
+    .pb-app details.vh[open] > summary .visit-chevron { transform: rotate(90deg); }
+    .pb-app .vh-fecha { flex: none; width: 54px; padding: 6px 0; border-radius: 12px; text-align: center; line-height: 1.1; }
+    .pb-app .vh-fecha b { display: block; font-size: 1.375rem; font-weight: 700; }
+    .pb-app .vh-fecha span { display: block; font-size: .8125rem; font-weight: 600; text-transform: capitalize; }
+    .pb-app .vh-fecha small { display: block; font-size: .6875rem; opacity: .75; }
+    .pb-app .t-blue { background: var(--blue-soft); color: var(--blue); }
+    .pb-app .t-green { background: var(--green-soft); color: var(--green); }
+    .pb-app .t-amber { background: var(--amber-soft); color: var(--amber); }
+    .pb-app .t-red { background: var(--red-soft); color: var(--red); }
+    .pb-app .t-violet { background: #ede9fe; color: #6d28d9; }
+    :root[data-tema="oscuro"] .pb-app .t-violet { background: rgba(139,92,246,.18); color: #c4b5fd; }
+    .pb-app .vh-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+    .pb-app .vh-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .pb-app .vh-esp { align-self: flex-start; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+    .pb-app .vh-motivo { font-size: 1rem; font-weight: 600; line-height: 1.3; }
+    .pb-app .vh-quien { font-size: .875rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pb-app .vh-campana { font-size: .75rem; font-weight: 700; color: var(--amber); }
+    .pb-app .vh-cuerpo { padding: 12px 14px 14px; }
+    .pb-app .vh-filas { display: flex; flex-direction: column; gap: 10px; }
+    .pb-app .vh-fila { display: flex; gap: 12px; align-items: flex-start; }
+    .pb-app .vh-ico { flex: none; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--bg-soft, var(--line-soft)); font-size: 1rem; }
+    .pb-app .vh-et { font-size: .75rem; color: var(--text-muted); font-weight: 600; }
+    .pb-app .vh-val { font-size: .9375rem; line-height: 1.45; word-break: break-word; }
+    .pb-app .vh-val a { color: var(--blue); font-weight: 600; }
+    .pb-app .vh-notas { white-space: pre-wrap; }
+    .pb-app .vh-vacio { font-size: .875rem; color: var(--text-muted); }
+    .pb-app .vh-recs { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); }
+    .pb-app .vh-recs-tit { font-size: .8125rem; font-weight: 700; margin-bottom: 8px; }
+    .pb-app .vh-rec { display: flex; width: 100%; align-items: center; gap: 10px; text-align: left; padding: 10px 12px; margin-bottom: 8px;
+      border: 1px solid var(--line); border-radius: 12px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+    .pb-app .vh-rec.hecho { opacity: .7; }
+    .pb-app .vh-rec-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .pb-app .vh-rec-txt b { font-size: .9375rem; font-weight: 600; }
+    .pb-app .vh-rec-txt span { font-size: .8125rem; color: var(--text-muted); }
+    .pb-app .vh-btn-rec { width: 100%; padding: 10px; border-radius: 12px; border: 1px dashed var(--blue); background: var(--blue-soft); color: var(--blue); font: inherit; font-weight: 600; font-size: .9375rem; cursor: pointer; }
+    .pb-app .vh-acciones { display: flex; gap: 8px; margin-top: 14px; }
+    .pb-app .vh-acciones button { flex: 1; padding: 9px 10px; font-size: .875rem; }
+    .pb-app .check-linea { display: flex; align-items: center; gap: 8px; font-size: .9375rem; cursor: pointer; }
     .pb-app .mes-header { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px; }
     .pb-app .mes-header h3 { font-size: 0.9375rem; margin: 0; text-transform: capitalize; }
     .pb-app .grid-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
@@ -8248,7 +8295,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "363";
+const NIBLO_BUILD = "364";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -8851,6 +8898,9 @@ function defaultState() {
     hitosPropios: {},
     /* Especialistas añadidos a mano para las visitas: nombre -> fecha. */
     especialidades: {},
+    /* Recordatorios creados desde una visita: { visitId, texto, desde, hasta,
+       hecho, citaId }. Salen en Pendientes entre desde y hasta. */
+    recordatorios: [],
   };
 }
 /* El catalogo de vacunas paso del calendario español al PAI de Colombia y los
@@ -9147,6 +9197,7 @@ function cargarEstadoGlobal() {
   if (!st.batchHecho || typeof st.batchHecho !== "object") st.batchHecho = {};
   if (!st.hitosPropios || typeof st.hitosPropios !== "object") st.hitosPropios = {};
   if (!st.especialidades || typeof st.especialidades !== "object") st.especialidades = {};
+  if (!Array.isArray(st.recordatorios)) st.recordatorios = [];
   sembrarCarnet(st);
   if (purgarFantasmas(st)) st.modificado = new Date().toISOString();
   /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
@@ -9264,6 +9315,7 @@ const CAMPOS_REGISTRO = {
     { k: "especialidad", et: "Especialista", tipo: "especialidad" },
     { k: "medico", et: "Datos del especialista", tipo: "medico" },
     { k: "date",   et: "Fecha", tipo: "date" },
+    { k: "hora",   et: "Hora (opcional)", tipo: "time" },
     { k: "reason", et: "Motivo", tipo: "select",
       ops: [["rutina","Revisión rutinaria"],["vacunacion","Vacunación"],["prueba","Prueba médica"],
             ["enfermedad","Enfermedad / consulta"],["otro","Otro"]] },
@@ -9418,7 +9470,7 @@ function cerrarModal() {
    Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
-const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos"];
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos", "recordatorios"];
 const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho", "hitosPropios", "especialidades"];
 
 function sello() { return new Date().toISOString(); }
@@ -10549,7 +10601,7 @@ function htmlProximos() {
     ...(STATE.pediatricVisits || []).filter(v => v.date > HOY_ISO).map(v => ({
       fecha: v.date,
       titulo: `${especialistaDe(v)}${v.doctor ? ` (${v.doctor})` : ""}: ${(PV_MOTIVOS[v.reason] || v.reason).toLowerCase()}`,
-      sub: v.prueba || "",
+      sub: [v.hora && `a las ${v.hora}`, v.prueba, v.centro].filter(Boolean).join(" · "),
       accion: `PB.editarRegistro('pediatricVisits','${v.id}')`,
     })),
     ...(STATE.vaccines || []).filter(v => (STATE.vaccinesDone[v.id] || "") > HOY_ISO).map(v => ({
@@ -15774,6 +15826,18 @@ function calcularAvisos() {
       accion: { et: "Ver vacunas", fn: "PB.irA('vacunas')" } });
   }
 
+  /* Recordatorios creados desde una visita, en su dia o intervalo. */
+  for (const r of recordatoriosDeHoy()) {
+    const v = (STATE.pediatricVisits || []).find(x => x.id === r.visitId);
+    const ultimo = (r.hasta || r.desde) === HOY_ISO && r.hasta;
+    out.push({ id: "rec:" + r.id, tipo: "diario", icono: "🔔", hecho: false,
+      titulo: r.texto,
+      texto: [v && `${especialistaDe(v)}${v.doctor ? ` (${v.doctor})` : ""} · visita del ${fmtFechaCorta(v.date)}`,
+              r.hasta ? (ultimo ? "Último día" : `Hasta el ${fmtFechaCorta(r.hasta)}`) : ""].filter(Boolean).join(". ")
+              + ". Al marcarlo te pide el día y la hora.",
+      accion: { et: "Marcar", fn: `PB.recMarcar('${r.id}')` } });
+  }
+
   /* Medicamentos con «Repetir»: 10 min antes de la siguiente dosis. */
   const ahoraRep = new Date();
   for (const x of medicamentosRepetidos()) {
@@ -16559,6 +16623,7 @@ function renderPediatra(el) {
     ${htmlDatosMedico("pv")}
     <div class="grid-campos2">
       <div class="campo"><label>Fecha</label><input type="date" id="pv-date" value="${HOY_ISO}"></div>
+      <div class="campo"><label for="pv-hora">Hora (opcional)</label><input type="time" id="pv-hora"></div>
       <div class="campo"><label>Motivo</label><select id="pv-reason" onchange="PB.pvMotivo()">
         ${Object.entries(PV_MOTIVOS).map(([v, et]) => `<option value="${v}">${et}</option>`).join("")}
       </select></div>
@@ -16618,50 +16683,210 @@ function renderPediatra(el) {
 
   const resto = html;
   html = "";
-  html += `<div class="card"><h2>Historial de visitas <span class="n">${sorted.length}</span></h2>`;
+  const futuras = sorted.filter(v => v.date > HOY_ISO).reverse();
+  const pasadas = sorted.filter(v => v.date <= HOY_ISO);
+  html += `<div class="card visitas-card"><h2>Historial de visitas <span class="n">${sorted.length}</span></h2>`;
   if (!sorted.length) html += `<div class="faint">Sin visitas registradas.</div>`;
-  /* Cada visita, plegada: la lista era un muro de tarjetas abiertas y para
-     encontrar una habia que leerlas todas. Cerrada deja fecha, motivo y como
-     quedo; lo demas sale al tocarla. */
-  sorted.forEach(v => {
-    const res = PV_RESULTADOS[v.resultado];
-    const medidas = [v.weight && `${v.weight} kg`, v.height && `${v.height} cm`,
-                     v.head && `${v.head} cm de perímetro`].filter(Boolean).join(" · ");
-    const url = enlaceSeguro(v.enlace);
-    const quien = medicoTexto(v);
-    const tel = (v.telefono || "").replace(/[^\d+]/g, "");
-    const contacto = [
-      v.doctor && `<b>${esc(v.doctor)}</b>`,
-      v.centro && esc(v.centro),
-      v.direccion && `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([v.centro, v.direccion].filter(Boolean).join(", "))}" target="_blank" rel="noopener noreferrer">📍 ${esc(v.direccion)}</a>`,
-      v.telefono && (tel ? `<a href="tel:${esc(tel)}">📞 ${esc(v.telefono)}</a>` : esc(v.telefono)),
-    ].filter(Boolean);
-    html += `<details class="visit-card">
-      <summary>
-        <span class="visit-fecha">${fmtFechaCorta(v.date)}</span>
-        <span class="visit-txt"><span class="visit-esp">${esc(especialistaDe(v))}${quien ? ` <span class="visit-quien">· ${esc(quien)}</span>` : ""}</span><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
-          v.prueba ? `<span>${esc(v.prueba)}</span>` : ""}</span>
-        ${v.date > HOY_ISO ? `<span class="pill info">Programada</span>`
-          : (res ? `<span class="pill ${res.pill}">${res.et}</span>` : "")}
-        <span class="visit-chevron" aria-hidden="true">&#8250;</span>
-      </summary>
-      <div class="visit-cuerpo">
-        ${contacto.length ? `<div class="visit-dato visit-contacto">${contacto.join("<br>")}</div>` : ""}
-        ${medidas ? `<div class="visit-dato">${medidas}</div>` : ""}
-        ${url ? `<div class="visit-dato"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Ver los resultados</a></div>`
-              : (v.enlace ? `<div class="visit-dato faint">Enlace guardado: ${esc(v.enlace)}</div>` : "")}
-        ${v.notes ? `<div class="visit-notas">${esc(v.notes)}</div>` : ""}
-        ${!contacto.length && !medidas && !url && !v.enlace && !v.notes ? `<div class="visit-dato faint">Sin más datos apuntados.</div>` : ""}
-        <div class="visit-acciones">
-          <button class="ed-row" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">Editar</button>
-          <button class="del-row" onclick="PB.pedirBorrado('pediatricVisits','${v.id}','Visita del ${fmtFechaCorta(v.date)}')">Eliminar</button>
-        </div>
-      </div>
-    </details>`;
-  });
+  if (futuras.length) html += `<div class="vh-grupo">Programadas</div>` + futuras.map(htmlVisita).join("");
+  if (futuras.length && pasadas.length) html += `<div class="vh-grupo">Anteriores</div>`;
+  html += pasadas.map(htmlVisita).join("");
   html += `</div>`;
   el.innerHTML = visitas + html + resto;
 }
+/* ---- Historial de visitas ----------------------------------------------
+   Cada visita es una tarjeta plegada: fecha en un bloque a la izquierda,
+   especialista con su color, motivo y quien atendio. Al abrirla, los datos en
+   filas con icono (letra de lectura normal, no la de nota al pie) y sus
+   recordatorios. */
+const ESP_TONOS = ["blue", "green", "amber", "violet", "red"];
+function tonoEspecialidad(e) {
+  if (!e || e === ESPECIALISTA_DEF) return "blue";
+  let h = 0;
+  for (const ch of e) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return ESP_TONOS[1 + (h % (ESP_TONOS.length - 1))];
+}
+function htmlVisita(v) {
+  const res = PV_RESULTADOS[v.resultado];
+  const medidas = [v.weight && `${String(v.weight).replace(".", ",")} kg`, v.height && `${String(v.height).replace(".", ",")} cm`,
+                   v.head && `${String(v.head).replace(".", ",")} cm de perímetro`].filter(Boolean).join(" · ");
+  const url = enlaceSeguro(v.enlace);
+  const quien = medicoTexto(v);
+  const tel = (v.telefono || "").replace(/[^\d+]/g, "");
+  const d = new Date(v.date + "T00:00:00");
+  const mes = d.toLocaleDateString("es-ES", { month: "short" }).replace(".", "");
+  const futura = v.date > HOY_ISO;
+  const esp = especialistaDe(v);
+  const recs = (STATE.recordatorios || []).filter(r => r.visitId === v.id)
+    .sort((a, b) => (a.desde || "").localeCompare(b.desde || ""));
+  const recActivos = recs.filter(r => !r.hecho).length;
+  const fila = (ico, et, valor) => `<div class="vh-fila"><span class="vh-ico" aria-hidden="true">${ico}</span>
+      <div><div class="vh-et">${et}</div><div class="vh-val">${valor}</div></div></div>`;
+  const filas = [
+    v.doctor && fila("🩺", "Doctor/a", esc(v.doctor)),
+    v.centro && fila("🏥", "Centro", esc(v.centro)),
+    v.direccion && fila("📍", "Dirección", `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([v.centro, v.direccion].filter(Boolean).join(", "))}" target="_blank" rel="noopener noreferrer">${esc(v.direccion)}</a>`),
+    v.telefono && fila("📞", "Teléfono", tel ? `<a href="tel:${esc(tel)}">${esc(v.telefono)}</a>` : esc(v.telefono)),
+    medidas && fila("📏", "Medidas", medidas),
+    url ? fila("🔗", "Resultados", `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Ver los resultados</a>`)
+        : (v.enlace && fila("🔗", "Enlace guardado", esc(v.enlace))),
+    v.notes && fila("📝", "Notas", `<span class="vh-notas">${esc(v.notes)}</span>`),
+  ].filter(Boolean);
+  return `<details class="vh${futura ? " futura" : ""}" data-id="${v.id}">
+    <summary>
+      <span class="vh-fecha t-${tonoEspecialidad(esp)}"><b>${d.getDate()}</b><span>${mes}</span><small>${d.getFullYear()}</small></span>
+      <span class="vh-txt">
+        <span class="vh-top"><span class="vh-esp t-${tonoEspecialidad(esp)}">${esc(esp)}</span>${
+          futura ? `<span class="pill info">Programada</span>` : (res ? `<span class="pill ${res.pill}">${res.et}</span>` : "")}${
+          recActivos ? `<span class="vh-campana" title="Recordatorios activos">🔔 ${recActivos}</span>` : ""}</span>
+        <span class="vh-motivo">${esc(PV_MOTIVOS[v.reason] || v.reason)}${v.prueba ? ` · ${esc(v.prueba)}` : ""}</span>
+        ${quien || v.hora ? `<span class="vh-quien">${[v.hora && `🕒 ${esc(v.hora)}`, quien && esc(quien)].filter(Boolean).join(" · ")}</span>` : ""}
+      </span>
+      <span class="visit-chevron" aria-hidden="true">&#8250;</span>
+    </summary>
+    <div class="vh-cuerpo">
+      ${filas.length ? `<div class="vh-filas">${filas.join("")}</div>` : `<div class="vh-vacio">Sin más datos apuntados.</div>`}
+      <div class="vh-recs">
+        <div class="vh-recs-tit">Recordatorios</div>
+        ${recs.map(htmlRecordatorio).join("") || `<div class="vh-vacio">Ninguno. Crea uno para que salga en Pendientes en la fecha que elijas.</div>`}
+        <button type="button" class="vh-btn-rec" onclick="PB.recModal('${v.id}')">🔔 Crear recordatorio</button>
+      </div>
+      <div class="vh-acciones">
+        <button class="ed-row" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">Editar visita</button>
+        <button class="del-row" onclick="PB.pedirBorrado('pediatricVisits','${v.id}','Visita del ${fmtFechaCorta(v.date)}')">Eliminar</button>
+      </div>
+    </div>
+  </details>`;
+}
+
+/* ---- Recordatorios de una visita ---------------------------------------
+   «Programar radiografía» del 20 al 24: sale en Pendientes esos dias (o solo
+   el dia elegido si no hay fin). Al marcarlo pide dia y hora de la cita y la
+   deja como visita programada, que sale en Próximos. */
+function rangoRec(r) {
+  return r.hasta && r.hasta !== r.desde
+    ? `del ${fmtFechaCorta(r.desde)} al ${fmtFechaCorta(r.hasta)}` : `el ${fmtFechaCorta(r.desde)}`;
+}
+function htmlRecordatorio(r) {
+  const cita = r.citaId && (STATE.pediatricVisits || []).find(v => v.id === r.citaId);
+  let estado;
+  if (r.hecho) estado = cita ? `<span class="pill ok">Cita el ${fmtFechaCorta(cita.date)}${cita.hora ? ` · ${esc(cita.hora)}` : ""}</span>` : `<span class="pill ok">Hecho</span>`;
+  else if (HOY_ISO < r.desde) estado = `<span class="pill info">Programado</span>`;
+  else if (HOY_ISO > (r.hasta || r.desde)) estado = `<span class="pill evitar">Sin marcar</span>`;
+  else estado = `<span class="pill limite">En Pendientes</span>`;
+  return `<button type="button" class="vh-rec${r.hecho ? " hecho" : ""}" onclick="PB.recModal('${r.visitId}','${r.id}')">
+    <span class="vh-rec-txt"><b>${esc(r.texto)}</b><span>${rangoRec(r)}</span></span>${estado}</button>`;
+}
+function recModal(visitId, recId) {
+  const r = recId ? (STATE.recordatorios || []).find(x => x.id === recId) : null;
+  const intervalo = !!(r && r.hasta && r.hasta !== r.desde);
+  abrirModal(r ? "Editar recordatorio" : "Crear recordatorio", `
+    <div class="campo"><label for="rc-texto">Qué hay que hacer</label>
+      <input type="text" id="rc-texto" value="${esc(r ? r.texto : "")}" placeholder="Programar radiografía, pedir cita…" autocomplete="off"></div>
+    <div class="grid-campos2">
+      <div class="campo"><label for="rc-desde" id="rc-desde-et">${intervalo ? "Desde" : "Fecha"}</label>
+        <input type="date" id="rc-desde" value="${r ? r.desde : HOY_ISO}"></div>
+      <div class="campo" id="rc-hasta-campo"${intervalo ? "" : " hidden"}><label for="rc-hasta">Hasta</label>
+        <input type="date" id="rc-hasta" value="${intervalo ? r.hasta : ""}"></div>
+    </div>
+    <label class="check-linea"><input type="checkbox" id="rc-intervalo"${intervalo ? " checked" : ""}
+      onchange="document.getElementById('rc-hasta-campo').hidden = !this.checked; document.getElementById('rc-desde-et').textContent = this.checked ? 'Desde' : 'Fecha'">
+      Varios días (inicio y fin)</label>
+    <div class="faint" style="margin-top:8px">Saldrá en <b>Pendientes</b> ${intervalo ? "esos días" : "ese día"}. Al darle a «Marcar» te pedirá el día y la hora de la cita.</div>
+    ${r && r.hecho ? `<label class="check-linea" style="margin-top:10px"><input type="checkbox" id="rc-reabrir"> Volver a ponerlo como pendiente</label>` : ""}
+    <div class="modal-aviso" id="rc-aviso" hidden></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     ...(r ? [{ et: "Borrar", peligro: true, accion: `PB.recBorrar('${r.id}')` }] : []),
+     { et: "Guardar", primario: true, accion: `PB.recGuardar('${visitId}'${r ? `,'${r.id}'` : ""})` }]);
+}
+function recAviso(id, t) { const a = document.getElementById(id); if (a) { a.textContent = t; a.hidden = false; } }
+function recRepintar() {
+  guardarEstado();
+  cerrarModal();
+  if (typeof renderAvisos === "function") renderAvisos();
+  if (VISTA_ACTUAL === "hoy") renderHoy(document.getElementById("view-hoy"));
+  if (VISTA_ACTUAL === "pediatra") {
+    const abiertas = [...document.querySelectorAll("#view-pediatra details.vh[open]")].map(d => d.dataset.id);
+    renderPediatra(document.getElementById("view-pediatra"));
+    abiertas.forEach(id => { const d = document.querySelector(`#view-pediatra details.vh[data-id="${id}"]`); if (d) d.open = true; });
+  }
+}
+function recGuardar(visitId, recId) {
+  const texto = (document.getElementById("rc-texto").value || "").trim().replace(/\s+/g, " ");
+  const desde = document.getElementById("rc-desde").value;
+  const intervalo = document.getElementById("rc-intervalo").checked;
+  let hasta = intervalo ? document.getElementById("rc-hasta").value : "";
+  if (!texto) return recAviso("rc-aviso", "Escribe qué hay que hacer.");
+  if (!desde) return recAviso("rc-aviso", "Elige la fecha.");
+  if (intervalo && !hasta) return recAviso("rc-aviso", "Elige la fecha de fin, o desmarca «Varios días».");
+  if (hasta && hasta < desde) return recAviso("rc-aviso", "La fecha de fin no puede ser anterior a la de inicio.");
+  if (hasta === desde) hasta = "";
+  if (!STATE.recordatorios) STATE.recordatorios = [];
+  const r = recId && STATE.recordatorios.find(x => x.id === recId);
+  if (r) {
+    Object.assign(r, { texto, desde, hasta });
+    const re = document.getElementById("rc-reabrir");
+    if (re && re.checked) { r.hecho = ""; r.citaId = ""; }
+    sellar(r);
+  } else {
+    STATE.recordatorios.push(sellar({ id: "rc_" + Date.now().toString(36), visitId, texto, desde, hasta, hecho: "", citaId: "" }));
+  }
+  recRepintar();
+}
+function recBorrar(id) {
+  const r = (STATE.recordatorios || []).find(x => x.id === id);
+  anotarBorrado(id, r);
+  STATE.recordatorios = (STATE.recordatorios || []).filter(x => x.id !== id);
+  recRepintar();
+}
+/* Recordatorios que tocan hoy y siguen sin marcar. */
+function recordatoriosDeHoy() {
+  return (STATE.recordatorios || []).filter(r => !r.hecho && r.desde && HOY_ISO >= r.desde && HOY_ISO <= (r.hasta || r.desde));
+}
+/* «Programar radiografía» -> «Radiografía»: lo que se va a hacer, no la tarea. */
+function pruebaDeRecordatorio(t) {
+  const x = (t || "").replace(/^(programar|pedir( cita( para| de)?)?|reservar|hacer|llamar para)\s+(la |el |una |un )?/i, "").trim();
+  return x ? x.charAt(0).toUpperCase() + x.slice(1) : t;
+}
+function recMarcar(id) {
+  const r = (STATE.recordatorios || []).find(x => x.id === id);
+  if (!r) return;
+  abrirModal(r.texto, `
+    <div class="faint" style="margin-bottom:10px">¿Cuándo es? Quedará como visita programada y saldrá en <b>Próximos</b>.</div>
+    <div class="campo"><label for="rm-que">Qué</label>
+      <input type="text" id="rm-que" value="${esc(pruebaDeRecordatorio(r.texto))}" autocomplete="off"></div>
+    <div class="grid-campos2">
+      <div class="campo"><label for="rm-fecha">Día</label><input type="date" id="rm-fecha" min="${HOY_ISO}"></div>
+      <div class="campo"><label for="rm-hora">Hora</label><input type="time" id="rm-hora"></div>
+      <div class="campo"><label for="rm-motivo">Motivo</label><select id="rm-motivo">
+        ${Object.entries(PV_MOTIVOS).map(([k, et]) => `<option value="${k}"${k === "prueba" ? " selected" : ""}>${et}</option>`).join("")}</select></div>
+    </div>
+    <div class="modal-aviso" id="rm-aviso" hidden></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Hecho, sin cita", accion: `PB.recCita('${id}', false)` },
+     { et: "Guardar cita", primario: true, accion: `PB.recCita('${id}', true)` }]);
+}
+function recCita(id, conCita) {
+  const r = (STATE.recordatorios || []).find(x => x.id === id);
+  if (!r) return cerrarModal();
+  if (conCita) {
+    const fecha = document.getElementById("rm-fecha").value;
+    const hora = document.getElementById("rm-hora").value || "";
+    if (!fecha) return recAviso("rm-aviso", "Elige el día de la cita.");
+    const que = (document.getElementById("rm-que").value || "").trim();
+    const reason = document.getElementById("rm-motivo").value || "prueba";
+    const origen = (STATE.pediatricVisits || []).find(v => v.id === r.visitId);
+    const citaId = "pv_" + Date.now().toString(36);
+    STATE.pediatricVisits.push(sellar({ id: citaId, date: fecha, hora, reason,
+      especialidad: origen ? especialistaDe(origen) : ESPECIALISTA_DEF,
+      prueba: reason === "prueba" ? que : "", notes: reason === "prueba" ? "" : que,
+      enlace: "", resultado: "", weight: null, height: null, head: null }));
+    r.citaId = citaId;
+  }
+  r.hecho = HOY_ISO;
+  sellar(r);
+  recRepintar();
+}
+
 /* ---- Sintomas ----------------------------------------------------------
    Un registro puede llevar temperatura, sintomas, las dos cosas o solo notas.
    La fiebre no es un sintoma de la lista: es un numero, y ese numero es lo
@@ -16750,7 +16975,8 @@ function savePediatricVisit() {
   const resultado = esPrueba ? PV_RESULTADO : "";
   const id = "pv_"+Date.now().toString(36);
   const especialidad = leerEspecialista("pv");
-  STATE.pediatricVisits.push(sellar({ id, date, reason, especialidad, ...leerDatosMedico("pv"), weight: weight||null, height: height||null, head: head||null,
+  const hora = (document.getElementById("pv-hora") || {}).value || "";
+  STATE.pediatricVisits.push(sellar({ id, date, hora, reason, especialidad, ...leerDatosMedico("pv"), weight: weight||null, height: height||null, head: head||null,
     notes, prueba, enlace, resultado }));
   PV_RESULTADO = "";
   if (weight || height || head) STATE.growth.push(sellar({ id: "gr_"+id, date, weight: weight||null, height: height||null, head: head||null, visitId: id }));
@@ -16762,7 +16988,11 @@ function deletePediatricVisit(id) {
   anotarBorrado(id, (STATE.pediatricVisits || []).find(x => x && x.id === id));
   STATE.pediatricVisits = STATE.pediatricVisits.filter(v => v.id !== id);
   STATE.growth = STATE.growth.filter(g => g.visitId !== id);
+  /* Sus recordatorios se van con ella: si no, seguirian saliendo en Pendientes. */
+  (STATE.recordatorios || []).filter(r => r.visitId === id).forEach(r => anotarBorrado(r.id, r));
+  STATE.recordatorios = (STATE.recordatorios || []).filter(r => r.visitId !== id);
   guardarEstado();
+  renderAvisos();
   renderPediatra(document.getElementById("view-pediatra"));
 }
 
@@ -17914,7 +18144,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
 
