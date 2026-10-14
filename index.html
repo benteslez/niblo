@@ -5101,19 +5101,19 @@
     :root[data-tema="oscuro"] { --gs-pos: #4ade80; --gs-neg: #f87171; --gs-ambar: #fbbf24; }
     .pos { color: var(--gs-pos); }
     .neg { color: var(--gs-neg); }
-    .gs-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-3); margin: 0 0 var(--gap-4); }
+    .gs-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap-2); margin: 0 0 var(--gap-3); }
     .gs-kpis4 { grid-template-columns: repeat(4, 1fr); }
     .gs-kpi {
       background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-lg);
-      padding: var(--gap-3) var(--gap-4); display: flex; flex-direction: column; gap: 2px;
-      min-width: 0; box-shadow: var(--sh-1);
+      padding: 8px var(--gap-3); display: flex; flex-direction: column; gap: 1px;
+      min-width: 0; box-shadow: none;
     }
     .gs-kpi.alerta { border-color: var(--danger); }
-    .gs-kpi-et { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
-    .gs-kpi-v { font-family: var(--font-num); font-size: 1.375rem; font-weight: 700; letter-spacing: -0.02em; overflow-wrap: anywhere; }
-    .gs-kpi-v.peq { font-size: 1rem; line-height: 1.25; }
+    .gs-kpi-et { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .gs-kpi-v { font-family: var(--font-num); font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+    .gs-kpi-v.peq { font-size: 0.875rem; line-height: 1.25; }
     .gs-kpi-v small { font-size: 0.8125rem; color: var(--text-muted); font-weight: 500; }
-    .gs-kpi-s { font-size: 0.75rem; color: var(--text-muted); }
+    .gs-kpi-s { font-size: 0.6875rem; color: var(--text-muted); }
     .gs-filtros { display: flex; flex-wrap: wrap; gap: var(--gap-2); margin: 0 0 var(--gap-4); }
     .gs-filtros button {
       padding: 6px 14px; border-radius: var(--r-pill); font-size: 0.8125rem; font-weight: 600;
@@ -5121,33 +5121,35 @@
     }
     .gs-filtros button[aria-pressed="true"] { background: var(--text); color: var(--bg); }
     .gs-n { opacity: .7; font-weight: 500; }
-    .gs-grupo { margin: 0 0 var(--gap-5); }
+    .gs-grupo { margin: 0 0 var(--gap-4); }
     .gs-grupo-tit {
       font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
       color: var(--text-muted); margin: 0 0 var(--gap-2);
     }
     .gs-grupo-tit.rojo { color: var(--gs-neg); }
     .gs-grupo-tit.ambar { color: var(--gs-ambar); }
-    .gs-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--gap-2); }
+    .gs-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
     .gs-fila {
-      display: flex; align-items: center; gap: var(--gap-3); padding: 10px var(--gap-3);
-      background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-md);
+      display: flex; align-items: center; gap: var(--gap-2); padding: 5px var(--gap-3);
+      background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-sm);
     }
-    .gs-fila.vencido { border-color: color-mix(in srgb, var(--danger) 45%, transparent); }
+    .gs-alerta { display: inline-flex; vertical-align: -2px; margin-left: 4px; color: var(--gs-neg); }
+    .gs-mas-btn { display: block; margin: 4px auto 0; padding: 4px 14px; border-radius: var(--r-pill); font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+    .gs-mas-btn:hover { background: var(--bg-soft); }
     .gs-fila.hecho .gs-fila-tit { color: var(--text-muted); }
     .gs-fila.hecho.t-gestion .gs-fila-tit { text-decoration: line-through; }
     .gs-fila-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: left; color: inherit; font: inherit; }
-    .gs-fila-tit { font-weight: 600; font-size: 0.9375rem; overflow-wrap: anywhere; }
-    .gs-fila-sub { font-size: 0.75rem; color: var(--text-muted); overflow-wrap: anywhere; }
+    .gs-fila-tit { font-weight: 600; font-size: 0.875rem; overflow-wrap: anywhere; }
+    .gs-fila-sub { font-size: 0.6875rem; color: var(--text-muted); overflow-wrap: anywhere; }
     .gs-check {
-      flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line);
-      color: transparent; font-size: 0.875rem; font-weight: 800; line-height: 1;
+      flex: none; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line);
+      color: transparent; font-size: 0.75rem; font-weight: 800; line-height: 1;
       display: inline-flex; align-items: center; justify-content: center; transition: background .12s, border-color .12s;
     }
     .gs-check:hover { border-color: var(--gs-pos); }
     .gs-check.on { background: var(--gs-pos); border-color: var(--gs-pos); color: #fff; }
-    .gs-ico { flex: none; width: 28px; text-align: center; font-size: 1.125rem; }
-    .gs-importe { flex: none; font-family: var(--font-num); font-weight: 700; font-size: 0.9375rem; }
+    .gs-ico { flex: none; width: 22px; text-align: center; font-size: 1rem; }
+    .gs-importe { flex: none; font-family: var(--font-num); font-weight: 700; font-size: 0.8125rem; }
     .gs-importe.gasto { color: var(--gs-neg); }
     .gs-importe.ingreso { color: var(--gs-pos); }
     .gs-enlace { flex: none; text-decoration: none; font-size: 1rem; }
@@ -8502,7 +8504,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "374";
+const NIBLO_BUILD = "375";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30269,6 +30271,7 @@ function boot(vistaInicial) {
       cargado: false, cargando: false, error: null,
       pisoId: null, pisoTab: "resumen", anio: new Date().getFullYear(),
       movFiltro: "todos", prestId: null, filtroTodo: "todo", mes: null,
+      abiertos: {}, sinOrigen: false,   // listas desplegadas; true si falta la migracion 012
     };
 
     const GS_TABLAS = ["gs_propiedades", "gs_inquilinos", "gs_gestiones", "gs_prestamos", "gs_prestamo_revisiones", "gs_pagos_prestamo"];
@@ -30350,6 +30353,7 @@ function boot(vistaInicial) {
         ]);
         GS.props = props || []; GS.inqs = inqs || []; GS.gests = gests || [];
         GS.prest = prest || []; GS.revs = revs || []; GS.pagos = pagos || [];
+        if (GS.gests.length) GS.sinOrigen = !("origen_id" in GS.gests[0]);
         GS.cargado = true;
         rtUnirGestiones();
       } catch (e) {
@@ -30457,6 +30461,14 @@ function boot(vistaInicial) {
     }
 
     /* Fila de una gestion/gasto/ingreso. */
+    /* Lista que muestra los primeros `max` y se despliega con un boton: lo que
+       queda lejos no debe ocupar la pantalla. */
+    function gsListaTope(clave, items, max, pintar) {
+      const abierta = !!GS.abiertos[clave], resto = items.length - max;
+      const vis = abierta || resto <= 0 ? items : items.slice(0, max);
+      return `<ul class="gs-lista">${vis.map(pintar).join("")}</ul>${resto > 0
+        ? `<button type="button" class="gs-mas-btn" onclick="GSUI.desplegar('${clave}')">${abierta ? "Ver menos" : `Ver ${resto} más`}</button>` : ""}`;
+    }
     function gsFila(g, opc) {
       opc = opc || {};
       const hecho = g.estado === "hecho";
@@ -30469,7 +30481,7 @@ function boot(vistaInicial) {
           aria-pressed="${hecho}" title="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}"
           aria-label="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}: ${esc(g.titulo)}">&#10003;</button>
         <button type="button" class="gs-fila-main" onclick="GSUI.editarMov('${g.id}')">
-          <span class="gs-fila-tit">${esc(g.titulo)}${vencido ? ` <span class="gs-pill rojo">Vencido</span>` : ""}</span>
+          <span class="gs-fila-tit">${esc(g.titulo)}${vencido ? ` <span class="gs-alerta" role="img" title="Vencido hace ${esc(docsTiempo(gsDias(g.fecha)))}" aria-label="Vencido"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>` : ""}</span>
           <span class="gs-fila-sub">${esc(gsLineaGestion(g, opc.ambito))}</span>
           ${opc.notas && g.notas ? `<span class="gs-fila-sub gs-fila-notas">${esc(g.notas)}</span>` : ""}
         </button>
@@ -30506,7 +30518,7 @@ function boot(vistaInicial) {
           `<button type="button" aria-pressed="${f === k}" onclick="GSUI.filtroTodo('${k}')">${t}${n ? ` <span class="gs-n">${n}</span>` : ""}</button>`).join("")}</div>
         ${grupos.length ? grupos.map(([tit, lista, cl]) => `
           <section class="gs-grupo"><h3 class="gs-grupo-tit ${cl}">${tit} <span class="doc-cuenta">· ${lista.length}</span></h3>
-          <ul class="gs-lista">${lista.map(gsFilaTodo).join("")}</ul></section>`).join("")
+          ${gsListaTope("todo-" + tit, lista, tit === "Vencido" || tit === "Esta semana" ? 99 : 4, gsFilaTodo)}</section>`).join("")
           : `<div class="empty-state"><p>No hay nada pendiente${f === "todo" ? "" : " en este ámbito"}.</p></div>`}`;
     }
     function gsFilaTodo(i) {
@@ -30517,7 +30529,7 @@ function boot(vistaInicial) {
       return `<li class="gs-fila${d < 0 ? " vencido" : ""}">
         <span class="gs-ico" aria-hidden="true">${i.origen === "d" ? "\u{1F4C4}" : "\u{1F4DD}"}</span>
         <button type="button" class="gs-fila-main" onclick="${accion}">
-          <span class="gs-fila-tit">${esc(i.titulo)}${d < 0 ? ` <span class="gs-pill rojo">Vencido</span>` : ""}</span>
+          <span class="gs-fila-tit">${esc(i.titulo)}${d < 0 ? ` <span class="gs-alerta" role="img" title="Vencido hace ${esc(docsTiempo(d))}" aria-label="Vencido"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>` : ""}</span>
           <span class="gs-fila-sub">${esc(gsFecha(i.fecha))} · ${txt}${i.linea ? " · " + esc(i.linea) : ""}</span>
         </button></li>`;
     }
@@ -30540,13 +30552,13 @@ function boot(vistaInicial) {
           <div class="gs-kpi"><span class="gs-kpi-et">Próxima gestión</span>
             <span class="gs-kpi-v peq">${prox ? esc(prox.titulo) : "—"}</span>
             <span class="gs-kpi-s">${prox ? esc(gsFecha(prox.fecha)) : "Nada pendiente"}</span></div>
-          <div class="gs-kpi"><span class="gs-kpi-et">Pendientes</span><span class="gs-kpi-v">${pend.length}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Próximos</span><span class="gs-kpi-v">${pend.length}</span></div>
           <div class="gs-kpi"><span class="gs-kpi-et">Gasto ${anio}</span><span class="gs-kpi-v">${gsEur(gastoAnio)}</span></div>
         </div>
-        ${pend.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Pendiente <span class="doc-cuenta">· ${pend.length}</span></h3>
-          <ul class="gs-lista">${pend.map(g => gsFila(g)).join("")}</ul></section>` : ""}
+        ${pend.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Próximos <span class="doc-cuenta">· ${pend.length}</span></h3>
+          ${gsListaTope("prox-" + ambito, pend, 5, g => gsFila(g))}</section>` : ""}
         ${hechas.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Historial <span class="doc-cuenta">· ${hechas.length}</span></h3>
-          <ul class="gs-lista">${hechas.map(g => gsFila(g)).join("")}</ul></section>` : ""}
+          ${gsListaTope("hist-" + ambito, hechas, 4, g => gsFila(g))}</section>` : ""}
         ${!todas.length ? `<div class="empty-state"><p>Todavía no hay nada registrado${ambito === "lima" ? " de Lima" : ""}.</p>
           <button type="button" class="btn-primario" onclick="GSUI.menuAmbito('${ambito}')">Añadir la primera</button></div>` : ""}`;
     }
@@ -30615,7 +30627,7 @@ function boot(vistaInicial) {
                 ? `<span><i>Balance ${GS.anio}</i><b class="${c.bal >= 0 ? "pos" : "neg"}">${gsEur(c.bal)}</b></span>`
                 : `<span><i>Gastos ${GS.anio}</i><b class="neg">${gsEur(c.gas)}</b></span>`}
               ${p.rol === "propietario" ? `<span><i>Inquilinos</i><b>${inq.length}</b></span>` : ""}
-              <span><i>Pendientes</i><b>${pend}</b></span>
+              <span><i>Próximos</i><b>${pend}</b></span>
             </span></button>`;
         }).join("")}</div>`;
     }
@@ -30668,8 +30680,8 @@ function boot(vistaInicial) {
           <div class="gs-tabla-wrap"><table class="gs-tabla"><thead><tr><th>Mes</th>${prop ? "<th>Ingresos</th>" : ""}<th>Gastos</th>${prop ? "<th>Balance</th>" : ""}</tr></thead><tbody>${
             c.meses.map((m, i) => (m.ing || m.gas) ? `<tr class="clic" tabindex="0" role="button" title="Ver el detalle de ${GS_MESES_LARGO[i].toLowerCase()}" onclick="GSUI.verMes(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();GSUI.verMes(${i})}"><td>${GS_MESES[i]} <span class="gs-mas" aria-hidden="true">&rsaquo;</span></td>${prop ? `<td class="num pos">${gsEur(m.ing)}</td>` : ""}<td class="num neg">${gsEur(m.gas)}</td>${prop ? `<td class="num ${m.ing - m.gas >= 0 ? "pos" : "neg"}">${gsEur(m.ing - m.gas)}</td>` : ""}</tr>` : "").join("")
             || `<tr><td colspan="4" class="faint">Sin movimientos pagados o cobrados en ${GS.anio}.</td></tr>`}</tbody></table></div></section>
-        ${pend.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Pendiente <span class="doc-cuenta">· ${pend.length}</span></h3>
-          <ul class="gs-lista">${pend.map(g => gsFila(g)).join("")}</ul></section>` : ""}`;
+        ${pend.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Próximos <span class="doc-cuenta">· ${pend.length}</span></h3>
+          ${gsListaTope("prox-" + p.id, pend, 4, g => gsFila(g))}</section>` : ""}`;
     }
 
     /* Detalle de un mes: todo lo que suma o resta en el, con su nombre,
@@ -30951,11 +30963,12 @@ function boot(vistaInicial) {
       if (id) {
         await supaFetch(`/rest/v1/${tabla}?id=eq.${encodeURIComponent(id)}`, {
           method: "PATCH", headers: { "Prefer": "return=minimal" }, body: JSON.stringify(fila) });
-      } else {
-        await supaFetch(`/rest/v1/${tabla}`, {
-          method: "POST", headers: { "Prefer": "return=minimal" },
-          body: JSON.stringify([Object.assign({ hogar_id: hogarId() }, fila)]) });
+        return Object.assign({ id }, fila);
       }
+      const r = await supaFetch(`/rest/v1/${tabla}`, {
+        method: "POST", headers: { "Prefer": "return=representation" },
+        body: JSON.stringify([Object.assign({ hogar_id: hogarId() }, fila)]) });
+      return (r && r[0]) || fila;
     }
     async function gsTras(msg) { gsCerrar(); await gsCargar(true); toast(msg); }
     function gsConfirmarBorrar(tabla, id, texto, aviso, mensaje) {
@@ -31060,24 +31073,39 @@ function boot(vistaInicial) {
             asignado: ambito === "familia" ? (v.asignado || null) : ambito === "lima" ? "lima" : null,
             url: v.url, notas: v.notas,
           };
-          await gsGuardarFila("gs_gestiones", g && g.id, fila);
-          if (fila.estado === "hecho" && fila.repite && !(g && g.estado === "hecho")) await gsSiguiente(fila);
+          const guardada = await gsGuardarFila("gs_gestiones", g && g.id, fila);
+          if (fila.estado === "hecho" && fila.repite && !(g && g.estado === "hecho")) await gsSiguiente(Object.assign({}, fila, { id: guardada && guardada.id }));
           await gsTras(g ? "Guardado" : "Añadido");
         },
       });
     }
-    /* Crea la siguiente ocurrencia de algo que se repite (sin duplicarla). */
+    /* Crea la siguiente ocurrencia de algo que se repite. Cada siguiente
+       apunta a la fila de la que sale (origen_id): solo se evita crear dos
+       siguientes de LA MISMA fila, no de filas distintas con el mismo nombre
+       (dos pagos de Comunidad al mes son dos series). Sin la migracion 012 se
+       cae al criterio antiguo, ahora tambien con el importe. */
     async function gsSiguiente(g) {
       const n = GS_REPITE[g.repite];
       if (!n) return;
       const fecha = gsSumaMeses(g.fecha, n);
-      const dup = GS.gests.some(x => x.fecha === fecha && x.titulo === g.titulo && x.ambito === g.ambito
-        && x.tipo === g.tipo && (x.propiedad_id || null) === (g.propiedad_id || null) && (x.categoria || null) === (g.categoria || null));
-      if (dup) return;
-      await gsGuardarFila("gs_gestiones", null, {
+      const imp = v => (v === null || v === undefined ? null : +v);
+      const yaHay = !GS.sinOrigen && g.id
+        ? GS.gests.some(x => x.origen_id === g.id)
+        : GS.gests.some(x => x.fecha === fecha && x.titulo === g.titulo && x.ambito === g.ambito && x.tipo === g.tipo
+            && (x.propiedad_id || null) === (g.propiedad_id || null) && (x.categoria || null) === (g.categoria || null) && imp(x.importe) === imp(g.importe));
+      if (yaHay) return;
+      const fila = {
         ambito: g.ambito, propiedad_id: g.propiedad_id || null, inquilino_id: g.inquilino_id || null, tipo: g.tipo,
         categoria: g.categoria || null, titulo: g.titulo, fecha, importe: g.importe === undefined ? null : g.importe,
-        estado: "pendiente", repite: g.repite, asignado: g.asignado || null, url: g.url || null, notas: g.notas || null });
+        estado: "pendiente", repite: g.repite, asignado: g.asignado || null, url: g.url || null, notas: g.notas || null };
+      if (!GS.sinOrigen && g.id) fila.origen_id = g.id;
+      try { await gsGuardarFila("gs_gestiones", null, fila); }
+      catch (e) {
+        if (fila.origen_id && /origen_id/i.test(e.message || "")) {   // falta la 012
+          GS.sinOrigen = true; delete fila.origen_id;
+          await gsGuardarFila("gs_gestiones", null, fila);
+        } else throw e;
+      }
     }
     async function gsToggle(id) {
       const g = gsGest(id);
@@ -31231,6 +31259,7 @@ function boot(vistaInicial) {
       recargar: () => gsCargar(true),
       cerrar: gsCerrar, enviar: gsEnviar, borrarForm: gsBorrarForm,
       toggle: gsToggle,
+      desplegar: k => { GS.abiertos[k] = !GS.abiertos[k]; gsRender(); },
       filtroTodo: k => { GS.filtroTodo = k; gsRender(); },
       anio: d => { GS.anio += d; GS.mes = null; gsRender(); },
       menuNuevo: gsMenuNuevo, menuAmbito: gsMenuAmbito, menuPiso: gsMenuPiso,
