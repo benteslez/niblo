@@ -5134,7 +5134,8 @@
       background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-md);
     }
     .gs-fila.vencido { border-color: color-mix(in srgb, var(--danger) 45%, transparent); }
-    .gs-fila.hecho .gs-fila-tit { text-decoration: line-through; color: var(--text-muted); }
+    .gs-fila.hecho .gs-fila-tit { color: var(--text-muted); }
+    .gs-fila.hecho.t-gestion .gs-fila-tit { text-decoration: line-through; }
     .gs-fila-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: left; color: inherit; font: inherit; }
     .gs-fila-tit { font-weight: 600; font-size: 0.9375rem; overflow-wrap: anywhere; }
     .gs-fila-sub { font-size: 0.75rem; color: var(--text-muted); overflow-wrap: anywhere; }
@@ -5220,6 +5221,13 @@
     .gs-tabla tr.proxima td { background: color-mix(in srgb, var(--accent) 12%, transparent); font-weight: 700; }
     .gs-tabla tr.con-extra td { background: color-mix(in srgb, var(--gs-pos) 12%, transparent); }
     .gs-pie { font-size: 0.75rem; margin: var(--gap-2) 0 0; }
+    .gs-tabla tr.clic { cursor: pointer; }
+    .gs-tabla tr.clic:hover td, .gs-tabla tr.clic:focus-visible td { background: var(--bg-soft); }
+    .gs-tabla tr.clic:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+    .gs-mas { color: var(--accent); font-weight: 700; }
+    .gs-pista { font-weight: 500; text-transform: none; letter-spacing: 0; }
+    .gs-mes-tit { margin: 0 0 var(--gap-3); font-size: 1.5rem; }
+    .gs-fila-notas { font-style: italic; }
     .gs-menu { display: flex; flex-direction: column; gap: var(--gap-2); }
     .gs-menu-op {
       display: flex; align-items: center; gap: var(--gap-3); text-align: left; padding: 12px var(--gap-3);
@@ -8494,7 +8502,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "373";
+const NIBLO_BUILD = "374";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30260,7 +30268,7 @@ function boot(vistaInicial) {
       props: [], inqs: [], gests: [], prest: [], revs: [], pagos: [],
       cargado: false, cargando: false, error: null,
       pisoId: null, pisoTab: "resumen", anio: new Date().getFullYear(),
-      movFiltro: "todos", prestId: null, filtroTodo: "todo",
+      movFiltro: "todos", prestId: null, filtroTodo: "todo", mes: null,
     };
 
     const GS_TABLAS = ["gs_propiedades", "gs_inquilinos", "gs_gestiones", "gs_prestamos", "gs_prestamo_revisiones", "gs_pagos_prestamo"];
@@ -30287,6 +30295,7 @@ function boot(vistaInicial) {
       doc:     { nombre: "Documentos", emoji: "\u{1F4C2}" },
     };
     const GS_REPITE = { mensual: 1, trimestral: 3, semestral: 6, anual: 12 };
+    const GS_MESES_LARGO = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     const GS_MESES = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
     /* ---- utilidades ------------------------------------------------------- */
@@ -30455,13 +30464,14 @@ function boot(vistaInicial) {
       const signo = g.tipo === "gasto" ? "−" : g.tipo === "ingreso" ? "+" : "";
       const imp = g.importe !== null && g.importe !== undefined
         ? `<span class="gs-importe ${g.tipo}">${signo}${gsEur(g.importe)}</span>` : "";
-      return `<li class="gs-fila${hecho ? " hecho" : ""}${vencido ? " vencido" : ""}">
+      return `<li class="gs-fila t-${g.tipo}${hecho ? " hecho" : ""}${vencido ? " vencido" : ""}">
         <button type="button" class="gs-check${hecho ? " on" : ""}" onclick="GSUI.toggle('${g.id}')"
           aria-pressed="${hecho}" title="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}"
           aria-label="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}: ${esc(g.titulo)}">&#10003;</button>
         <button type="button" class="gs-fila-main" onclick="GSUI.editarMov('${g.id}')">
           <span class="gs-fila-tit">${esc(g.titulo)}${vencido ? ` <span class="gs-pill rojo">Vencido</span>` : ""}</span>
           <span class="gs-fila-sub">${esc(gsLineaGestion(g, opc.ambito))}</span>
+          ${opc.notas && g.notas ? `<span class="gs-fila-sub gs-fila-notas">${esc(g.notas)}</span>` : ""}
         </button>
         ${imp}
         ${g.url && docsUrlValida(g.url) ? `<a class="gs-enlace" href="${esc(g.url)}" target="_blank" rel="noopener noreferrer" title="Abrir enlace" aria-label="Abrir enlace">&#128279;</a>` : ""}
@@ -30615,7 +30625,8 @@ function boot(vistaInicial) {
       const tabs = [["resumen", "Resumen"], ["mov", "Movimientos"]];
       if (prop) tabs.push(["inq", "Inquilinos"], ["prest", "Préstamo"]);
       if (!tabs.some(t => t[0] === GS.pisoTab)) GS.pisoTab = "resumen";
-      const cuerpo = { resumen: gsPisoResumen, mov: gsPisoMov, inq: gsPisoInq, prest: gsPisoPrest }[GS.pisoTab](p);
+      const cuerpo = GS.mes !== null && GS.pisoTab === "resumen" ? gsPisoMes(p)
+        : { resumen: gsPisoResumen, mov: gsPisoMov, inq: gsPisoInq, prest: gsPisoPrest }[GS.pisoTab](p);
       return `<div class="gs-volver"><button type="button" onclick="GSUI.cerrarPiso()">&larr; Pisos</button></div>
         <div class="doc-cab"><h1 class="vista-titulo">${esc(p.nombre)}</h1>
           <div class="doc-cab-acciones">
@@ -30653,12 +30664,42 @@ function boot(vistaInicial) {
           `<li><b>${esc(i.nombre)}</b> · ${gsDias(i.fin) < 0 ? "terminó" : "termina"} el ${esc(gsFecha(i.fin))}</li>`).join("")}</ul></div>` : ""}
         ${cats.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Gastos por categoría</h3><div class="gs-barras">${cats.map(([k, v]) =>
           `<div class="gs-barra"><span class="gs-barra-et">${esc(k)}</span><span class="gs-barra-pista"><span style="width:${Math.max(3, v / max * 100)}%"></span></span><span class="gs-barra-v">${gsEur(v)}</span></div>`).join("")}</div></section>` : ""}
-        <section class="gs-grupo"><h3 class="gs-grupo-tit">Mes a mes</h3>
+        <section class="gs-grupo"><h3 class="gs-grupo-tit">Mes a mes <span class="gs-pista">· toca un mes para ver el detalle</span></h3>
           <div class="gs-tabla-wrap"><table class="gs-tabla"><thead><tr><th>Mes</th>${prop ? "<th>Ingresos</th>" : ""}<th>Gastos</th>${prop ? "<th>Balance</th>" : ""}</tr></thead><tbody>${
-            c.meses.map((m, i) => (m.ing || m.gas) ? `<tr><td>${GS_MESES[i]}</td>${prop ? `<td class="num pos">${gsEur(m.ing)}</td>` : ""}<td class="num neg">${gsEur(m.gas)}</td>${prop ? `<td class="num ${m.ing - m.gas >= 0 ? "pos" : "neg"}">${gsEur(m.ing - m.gas)}</td>` : ""}</tr>` : "").join("")
+            c.meses.map((m, i) => (m.ing || m.gas) ? `<tr class="clic" tabindex="0" role="button" title="Ver el detalle de ${GS_MESES_LARGO[i].toLowerCase()}" onclick="GSUI.verMes(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();GSUI.verMes(${i})}"><td>${GS_MESES[i]} <span class="gs-mas" aria-hidden="true">&rsaquo;</span></td>${prop ? `<td class="num pos">${gsEur(m.ing)}</td>` : ""}<td class="num neg">${gsEur(m.gas)}</td>${prop ? `<td class="num ${m.ing - m.gas >= 0 ? "pos" : "neg"}">${gsEur(m.ing - m.gas)}</td>` : ""}</tr>` : "").join("")
             || `<tr><td colspan="4" class="faint">Sin movimientos pagados o cobrados en ${GS.anio}.</td></tr>`}</tbody></table></div></section>
         ${pend.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Pendiente <span class="doc-cuenta">· ${pend.length}</span></h3>
           <ul class="gs-lista">${pend.map(g => gsFila(g)).join("")}</ul></section>` : ""}`;
+    }
+
+    /* Detalle de un mes: todo lo que suma o resta en el, con su nombre,
+       categoria, fecha, inquilino y estado. Los totales son los de la tabla
+       (solo pagado/cobrado); lo pendiente del mes se ve aparte. */
+    function gsPisoMes(p) {
+      const prop = p.rol === "propietario", mes = GS.mes;
+      const delMes = GS.gests.filter(g => g.propiedad_id === p.id && g.tipo !== "gestion" && g.importe
+        && +g.fecha.slice(0, 4) === GS.anio && +g.fecha.slice(5, 7) - 1 === mes)
+        .sort((a, b) => a.fecha.localeCompare(b.fecha) || a.titulo.localeCompare(b.titulo, "es"));
+      const suma = (tipo, estado) => delMes.filter(g => g.tipo === tipo && g.estado === estado).reduce((s, g) => s + +g.importe, 0);
+      const ing = suma("ingreso", "hecho"), gas = suma("gasto", "hecho"), pIng = suma("ingreso", "pendiente"), pGas = suma("gasto", "pendiente");
+      const grupo = (tit, tipo, cl) => {
+        const l = delMes.filter(g => g.tipo === tipo);
+        if (!l.length) return "";
+        const tot = l.reduce((s, g) => s + +g.importe, 0);
+        return `<section class="gs-grupo"><h3 class="gs-grupo-tit">${tit} <span class="doc-cuenta">\u00b7 ${l.length} \u00b7 <span class="${cl}">${gsEur(tot)}</span></span></h3>
+          <ul class="gs-lista">${l.map(g => gsFila(g, { notas: true })).join("")}</ul></section>`;
+      };
+      return `<div class="gs-volver"><button type="button" onclick="GSUI.cerrarMes()">&larr; Resumen de ${GS.anio}</button></div>
+        <h2 class="gs-h2 gs-mes-tit">${GS_MESES_LARGO[mes]} ${GS.anio}</h2>
+        <div class="gs-kpis">
+          ${prop ? `<div class="gs-kpi"><span class="gs-kpi-et">Ingresos cobrados</span><span class="gs-kpi-v pos">${gsEur(ing)}</span>
+            ${pIng ? `<span class="gs-kpi-s">+ ${gsEur(pIng)} pendiente</span>` : ""}</div>` : ""}
+          <div class="gs-kpi"><span class="gs-kpi-et">Gastos pagados</span><span class="gs-kpi-v neg">${gsEur(gas)}</span>
+            ${pGas ? `<span class="gs-kpi-s">+ ${gsEur(pGas)} pendiente</span>` : ""}</div>
+          ${prop ? `<div class="gs-kpi"><span class="gs-kpi-et">Balance</span><span class="gs-kpi-v ${ing - gas >= 0 ? "pos" : "neg"}">${gsEur(ing - gas)}</span></div>` : ""}
+        </div>
+        ${prop ? grupo("Ingresos", "ingreso", "pos") : ""}${grupo("Gastos", "gasto", "neg")}
+        ${delMes.length ? "" : `<div class="empty-state"><p>No hay ingresos ni gastos en este mes.</p></div>`}`;
     }
 
     function gsPisoMov(p) {
@@ -31191,7 +31232,7 @@ function boot(vistaInicial) {
       cerrar: gsCerrar, enviar: gsEnviar, borrarForm: gsBorrarForm,
       toggle: gsToggle,
       filtroTodo: k => { GS.filtroTodo = k; gsRender(); },
-      anio: d => { GS.anio += d; gsRender(); },
+      anio: d => { GS.anio += d; GS.mes = null; gsRender(); },
       menuNuevo: gsMenuNuevo, menuAmbito: gsMenuAmbito, menuPiso: gsMenuPiso,
       pisoParaAlta: gsPisoParaAlta,
       mov: (tipo, ambito, propId) => { gsCerrar(); gsFormMov(tipo, ambito, { propiedad_id: propId || null }); },
@@ -31199,12 +31240,14 @@ function boot(vistaInicial) {
       nuevoPiso: () => gsFormPiso(null),
       editarPiso: id => gsFormPiso(gsProp(id)),
       abrirPiso: (id, tab) => {
-        GS.pisoId = id; GS.pisoTab = tab || "resumen"; GS.prestId = null; GS.movFiltro = "todos";
+        GS.pisoId = id; GS.pisoTab = tab || "resumen"; GS.prestId = null; GS.movFiltro = "todos"; GS.mes = null;
         if (vistaActiva !== "gs_pisos") fijarVista("gs_pisos"); else gsRender();
         window.scrollTo(0, 0);
       },
-      cerrarPiso: () => { GS.pisoId = null; GS.prestId = null; gsRender(); },
-      tabPiso: k => { GS.pisoTab = k; GS.prestId = null; gsRender(); },
+      cerrarPiso: () => { GS.pisoId = null; GS.prestId = null; GS.mes = null; gsRender(); },
+      tabPiso: k => { GS.pisoTab = k; GS.prestId = null; GS.mes = null; gsRender(); },
+      verMes: i => { GS.mes = i; gsRender(); window.scrollTo(0, 0); },
+      cerrarMes: () => { GS.mes = null; gsRender(); },
       movFiltro: k => { GS.movFiltro = k; gsRender(); },
       nuevoInq: propId => gsFormInq(propId, null),
       editarInq: id => { const i = gsInq(id); if (i) gsFormInq(i.propiedad_id, i); },
