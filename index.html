@@ -8242,7 +8242,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "359";
+const NIBLO_BUILD = "360";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -9417,7 +9417,19 @@ function sellar(reg) { reg.mod = sello(); return reg; }
 function anotarBorradoClave(mapa, clave) { anotarBorrado(mapa + ":" + clave); }
 /** Volver a marcar algo anula su borrado. */
 function olvidarBorradoClave(mapa, clave) {
-  if (STATE.borrados) delete STATE.borrados[mapa + ":" + clave];
+  const k = mapa + ":" + clave;
+  if (STATE.borrados && STATE.borrados[k]) {
+    delete STATE.borrados[k];
+    /* Quitar la lapida aqui no basta: la copia de la nube la sigue teniendo y
+       en la siguiente fusion volvia y borraba lo que se acababa de volver a
+       marcar (desmarcar y marcar otra vez un alimento o la vitamina D). Se
+       apunta cuando se revivio; en la fusion, una lapida anterior a eso no
+       cuenta. */
+    if (!STATE.revividos) STATE.revividos = {};
+    STATE.revividos[k] = new Date().toISOString();
+    const limite = new Date(Date.now() - 90 * 86400000).toISOString();
+    for (const [x, v] of Object.entries(STATE.revividos)) if (v < limite) delete STATE.revividos[x];
+  }
 }
 
 /** Deja constancia de un borrado para que la fusion no lo resucite. */
@@ -9487,9 +9499,21 @@ function fusionarEstado(local, remoto, tsLocal, tsRemoto) {
   out.config = Object.assign({}, defaultState().config, (remotoGana ? remoto : local).config || {});
   out.vaccines = normalizarVacunas((remotoGana ? remoto : local).vaccines, null, out.config.vacunasEditadas);
 
-  // Lapidas: la union de las dos partes.
-  const borrados = Object.assign({}, local.borrados || {}, remoto.borrados || {});
+  // Lapidas: la union de las dos partes (la mas reciente de cada clave).
+  const unionMax = (a, b) => {
+    const o = Object.assign({}, a || {});
+    for (const [k, v] of Object.entries(b || {})) if (!o[k] || msDeSello(v) > msDeSello(o[k])) o[k] = v;
+    return o;
+  };
+  const borrados = unionMax(local.borrados, remoto.borrados);
+  /* Una clave vuelta a marcar despues de borrarla (revividos) deja sin
+     efecto la lapida anterior, venga de la copia que venga. */
+  const revividos = unionMax(local.revividos, remoto.revividos);
+  for (const [k, t] of Object.entries(revividos)) {
+    if (borrados[k] && msDeSello(t) > msDeSello(borrados[k])) delete borrados[k];
+  }
   out.borrados = borrados;
+  out.revividos = revividos;
 
   // Colecciones con id: se unen por id y gana la version tocada mas tarde.
   for (const col of COLECCIONES) {
