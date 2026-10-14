@@ -6003,6 +6003,7 @@
     .pb-app .pd-semana > summary { cursor: pointer; font-weight: 700; color: var(--teal); }
     .pb-app .pd-sem-ing, .pb-app .pd-sem-dias { font-size: 0.8125rem; color: var(--text-muted); }
     .pb-app .pd-ingsem { margin: 6px 0 4px; }
+    .pb-app .visit-txt .visit-esp { display: block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--blue); }
     .pb-app .pd-reac-otra { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
     .pb-app .vac-tag.vac-confirmar { color: var(--amber); }
     .pb-app .campo label.md-rep-check { display: flex; flex-direction: row; justify-content: flex-start; gap: 10px; align-items: center;
@@ -8242,7 +8243,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "360";
+const NIBLO_BUILD = "361";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -8843,6 +8844,8 @@ function defaultState() {
     batchHecho: {},
     /* Hitos apuntados a mano: id -> { t, fecha, cat, nota }. */
     hitosPropios: {},
+    /* Especialistas añadidos a mano para las visitas: nombre -> fecha. */
+    especialidades: {},
   };
 }
 /* El catalogo de vacunas paso del calendario español al PAI de Colombia y los
@@ -9138,6 +9141,7 @@ function cargarEstadoGlobal() {
   if (!st.alimentosPropios || typeof st.alimentosPropios !== "object") st.alimentosPropios = {};
   if (!st.batchHecho || typeof st.batchHecho !== "object") st.batchHecho = {};
   if (!st.hitosPropios || typeof st.hitosPropios !== "object") st.hitosPropios = {};
+  if (!st.especialidades || typeof st.especialidades !== "object") st.especialidades = {};
   sembrarCarnet(st);
   if (purgarFantasmas(st)) st.modificado = new Date().toISOString();
   /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
@@ -9252,6 +9256,7 @@ const CAMPOS_REGISTRO = {
     { k: "notas", et: "Notas", tipo: "textarea" },
   ]},
   pediatricVisits: { titulo: "visita", col: "pediatricVisits", campos: [
+    { k: "especialidad", et: "Especialista", tipo: "especialidad" },
     { k: "date",   et: "Fecha", tipo: "date" },
     { k: "reason", et: "Motivo", tipo: "select",
       ops: [["rutina","Revisión rutinaria"],["vacunacion","Vacunación"],["prueba","Prueba médica"],
@@ -9287,6 +9292,7 @@ function editarRegistro(col, id) {
     if (c.tipo === "textarea") {
       return `<div class="campo"><label>${c.et}</label><textarea id="ed-${c.k}" rows="3">${esc(v)}</textarea></div>`;
     }
+    if (c.tipo === "especialidad") return htmlEspecialista("ed", v);
     return `<div class="campo"><label>${c.et}</label><input type="${c.tipo}" id="ed-${c.k}"
       ${c.paso ? `step="${c.paso}"` : ""} value="${esc(v)}"></div>`;
   }).join("");
@@ -9312,6 +9318,7 @@ function guardarEdicion() {
   if (!def || !reg) return cerrarModal();
   const nuevo = {};
   for (const c of def.campos) {
+    if (c.tipo === "especialidad") { nuevo[c.k] = leerEspecialista("ed"); continue; }
     const el = document.getElementById("ed-" + c.k);
     if (!el) continue;
     nuevo[c.k] = c.tipo === "number" ? (el.value === "" ? null : el.value) : el.value;
@@ -9404,7 +9411,7 @@ function cerrarModal() {
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
 const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos"];
-const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho", "hitosPropios"];
+const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho", "hitosPropios", "especialidades"];
 
 function sello() { return new Date().toISOString(); }
 
@@ -10533,7 +10540,7 @@ function htmlProximos() {
   const eventos = [
     ...(STATE.pediatricVisits || []).filter(v => v.date > HOY_ISO).map(v => ({
       fecha: v.date,
-      titulo: PV_MOTIVOS[v.reason] || v.reason,
+      titulo: `${especialistaDe(v)}: ${(PV_MOTIVOS[v.reason] || v.reason).toLowerCase()}`,
       sub: v.prueba || "",
       accion: `PB.editarRegistro('pediatricVisits','${v.id}')`,
     })),
@@ -16322,8 +16329,8 @@ function generarInformeCompleto() {
     const vs = STATE.pediatricVisits.filter(v => enRango(v.date)).sort((a, b) => a.date.localeCompare(b.date));
     /* Una prueba medica sin decir cual fue ni como quedo no le sirve de nada
        al pediatra, que es quien lee esto. */
-    doc += `<h3>Visitas al pediatra</h3>` + tabla(["Fecha", "Motivo", "Medidas", "Notas"],
-      vs.map(v => [fmtFechaCorta(v.date),
+    doc += `<h3>Visitas médicas</h3>` + tabla(["Fecha", "Especialista", "Motivo", "Medidas", "Notas"],
+      vs.map(v => [fmtFechaCorta(v.date), esc(especialistaDe(v)),
         [PV_MOTIVOS[v.reason] || v.reason, v.prueba && esc(v.prueba),
          (PV_RESULTADOS[v.resultado] || {}).et].filter(Boolean).join(" · "),
         [v.weight && v.weight + " kg", v.height && v.height + " cm", v.head && v.head + " cm"].filter(Boolean).join(" · ") || "—",
@@ -16410,6 +16417,45 @@ function imprimirDocumento(html) {
 /* ---- Pediatra: registro de citas ---------------------------------------
    "Prueba medica" abre tres campos mas, los tres opcionales: que prueba fue,
    un enlace a los resultados y como quedo la cosa. */
+/* ---- Especialista de cada visita -------------------------------------
+   «Pediatra» por defecto; con «Añadir…» se escribe otra (Ortopedia...) y
+   queda en la lista para las siguientes. La lista sale de las ya usadas en
+   las visitas y de las añadidas (STATE.especialidades, que se sincroniza),
+   ordenada alfabeticamente. Las visitas antiguas sin especialista cuentan
+   como de pediatra. */
+const ESPECIALISTA_DEF = "Pediatra";
+function especialidades() {
+  const set = new Set([ESPECIALISTA_DEF, ...Object.keys(STATE.especialidades || {}),
+    ...(STATE.pediatricVisits || []).map(v => v.especialidad).filter(Boolean)]);
+  return [...set].sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+}
+function especialistaDe(v) { return (v && v.especialidad) || ESPECIALISTA_DEF; }
+function htmlEspecialista(pre, valor) {
+  const v = valor || ESPECIALISTA_DEF;
+  return `<div class="campo"><label for="${pre}-esp">Especialista</label>
+    <select id="${pre}-esp" onchange="document.getElementById('${pre}-esp-nueva').hidden = this.value !== '__nueva'; if (this.value === '__nueva') document.getElementById('${pre}-esp-txt').focus()">
+      ${especialidades().map(e => `<option value="${esc(e)}"${e === v ? " selected" : ""}>${esc(e)}</option>`).join("")}
+      <option value="__nueva">＋ Añadir…</option>
+    </select>
+    <div id="${pre}-esp-nueva" hidden style="margin-top:6px">
+      <input type="text" id="${pre}-esp-txt" placeholder="Ortopedia, Dermatología…" autocomplete="off">
+    </div></div>`;
+}
+/* Lee el especialista elegido; si es nuevo, lo deja guardado en la lista. */
+function leerEspecialista(pre) {
+  const sel = document.getElementById(pre + "-esp");
+  if (!sel) return ESPECIALISTA_DEF;
+  if (sel.value !== "__nueva") return sel.value || ESPECIALISTA_DEF;
+  const t = ((document.getElementById(pre + "-esp-txt") || {}).value || "").trim().replace(/\s+/g, " ");
+  if (!t) return ESPECIALISTA_DEF;
+  const nombre = t.charAt(0).toUpperCase() + t.slice(1);
+  const ya = especialidades().find(e => e.toLowerCase() === nombre.toLowerCase());
+  if (ya) return ya;
+  if (!STATE.especialidades) STATE.especialidades = {};
+  STATE.especialidades[nombre] = HOY_ISO;
+  olvidarBorradoClave("especialidades", nombre);
+  return nombre;
+}
 const PV_MOTIVOS = {
   rutina: "Revisión rutinaria",
   vacunacion: "Vacunación",
@@ -16450,6 +16496,7 @@ function renderPediatra(el) {
   const sorted = [...STATE.pediatricVisits].sort((a,b) => new Date(b.date)-new Date(a.date));
   let html = "";
   html += htmlRegistro('pediatra', 'Registrar visita', `
+    ${htmlEspecialista("pv", ESPECIALISTA_DEF)}
     <div class="grid-campos2">
       <div class="campo"><label>Fecha</label><input type="date" id="pv-date" value="${HOY_ISO}"></div>
       <div class="campo"><label>Motivo</label><select id="pv-reason" onchange="PB.pvMotivo()">
@@ -16519,7 +16566,7 @@ function renderPediatra(el) {
     html += `<details class="visit-card">
       <summary>
         <span class="visit-fecha">${fmtFechaCorta(v.date)}</span>
-        <span class="visit-txt"><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
+        <span class="visit-txt"><span class="visit-esp">${esc(especialistaDe(v))}</span><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
           v.prueba ? `<span>${esc(v.prueba)}</span>` : ""}</span>
         ${v.date > HOY_ISO ? `<span class="pill info">Programada</span>`
           : (res ? `<span class="pill ${res.pill}">${res.et}</span>` : "")}
@@ -16628,7 +16675,8 @@ function savePediatricVisit() {
   const enlace = esPrueba ? (document.getElementById("pv-enlace").value || "").trim() : "";
   const resultado = esPrueba ? PV_RESULTADO : "";
   const id = "pv_"+Date.now().toString(36);
-  STATE.pediatricVisits.push(sellar({ id, date, reason, weight: weight||null, height: height||null, head: head||null,
+  const especialidad = leerEspecialista("pv");
+  STATE.pediatricVisits.push(sellar({ id, date, reason, especialidad, weight: weight||null, height: height||null, head: head||null,
     notes, prueba, enlace, resultado }));
   PV_RESULTADO = "";
   if (weight || height || head) STATE.growth.push(sellar({ id: "gr_"+id, date, weight: weight||null, height: height||null, head: head||null, visitId: id }));
