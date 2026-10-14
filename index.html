@@ -5891,6 +5891,13 @@
     /* Notas: pequeñas hasta que se pulsan; entonces se abren para escribir. */
     .pb-app .campo textarea.notas-crece { min-height: 64px; transition: min-height .2s ease; resize: vertical; }
     .pb-app .campo textarea.notas-crece:focus { min-height: 45vh; }
+    .pb-app .vh-doc { border: 0; background: none; padding: 0; font: inherit; font-size: .9375rem; color: var(--blue); font-weight: 600; cursor: pointer; text-align: left; }
+    .pb-app .vh-doc span { font-size: .75rem; font-weight: 600; opacity: .8; margin-left: 4px; }
+    .pb-app .dm-grupo { margin: 12px 0 6px; }
+    .pb-app .dm-fila { display: flex; align-items: center; gap: 6px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); }
+    .pb-app .dm-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .pb-app .dm-txt b { font-size: .9375rem; font-weight: 600; }
+    .pb-app .dm-txt span { font-size: .8125rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .pb-app .med-tel { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; }
     .pb-app .med-tel input { flex: 1; min-width: 0; }
     .pb-app .med-tel-x { flex: none; border: 0; background: none; color: var(--red); font-size: 1rem; cursor: pointer; padding: 4px 6px; }
@@ -8309,7 +8316,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "371";
+const NIBLO_BUILD = "372";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -8915,6 +8922,10 @@ function defaultState() {
     /* Recordatorios creados desde una visita: { visitId, texto, desde, hasta,
        hecho, citaId }. Salen en Pendientes entre desde y hasta. */
     recordatorios: [],
+    /* Ficha de cada doctor por especialidad: "esp|doctor" -> { esp, doctor,
+       centro, consultorio, direccion, telefonos } o { esp, doctor, borrado }.
+       Manda sobre lo que sale de las visitas. */
+    medicos: {},
   };
 }
 /* El catalogo de vacunas paso del calendario español al PAI de Colombia y los
@@ -9212,6 +9223,7 @@ function cargarEstadoGlobal() {
   if (!st.hitosPropios || typeof st.hitosPropios !== "object") st.hitosPropios = {};
   if (!st.especialidades || typeof st.especialidades !== "object") st.especialidades = {};
   if (!Array.isArray(st.recordatorios)) st.recordatorios = [];
+  if (!st.medicos || typeof st.medicos !== "object") st.medicos = {};
   sembrarCarnet(st);
   if (purgarFantasmas(st)) st.modificado = new Date().toISOString();
   /* Se guarda en el momento: si no, el almacenamiento seguiria con la copia
@@ -9438,6 +9450,7 @@ function guardarEdicion() {
     }
   }
   sellar(reg);
+  if (col === "pediatricVisits") recordarMedico(reg, false);
   guardarEstado();
   if (col === "medicamentos") renderAvisos();
   cerrarModal();
@@ -9506,7 +9519,7 @@ function cerrarModal() {
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
 const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos", "recordatorios"];
-const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho", "hitosPropios", "especialidades"];
+const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho", "hitosPropios", "especialidades", "medicos"];
 
 function sello() { return new Date().toISOString(); }
 
@@ -16595,7 +16608,122 @@ function medicosDe(esp) {
         consultorio: v.consultorio || prev.consultorio || "", direccion: v.direccion || prev.direccion || "",
         telefonos: telefonosDe(v).length ? telefonosDe(v) : (prev.telefonos || []) });
     });
+  /* Fichas editadas o borradas a mano (y la ultima visita guardada). */
+  for (const m of Object.values(STATE.medicos || {})) {
+    if (!m || normMed(m.esp) !== normMed(esp)) continue;
+    if (m.borrado) porDoc.delete(normMed(m.doctor));
+    else porDoc.set(normMed(m.doctor), { doctor: m.doctor, centro: m.centro || "", consultorio: m.consultorio || "",
+      direccion: m.direccion || "", telefonos: Array.isArray(m.telefonos) ? m.telefonos.filter(Boolean) : [] });
+  }
   return [...porDoc.values()].sort((a, b) => a.doctor.localeCompare(b.doctor, "es", { sensitivity: "base" }));
+}
+function enlaceTel(t) { const n = String(t).replace(/[^\d+]/g, ""); return n ? `<a href="tel:${esc(n)}">${esc(t)}</a>` : esc(t); }
+function enlaceMapa(m) {
+  return `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([m.centro, m.direccion].filter(Boolean).join(", "))}" target="_blank" rel="noopener noreferrer">${esc(m.direccion)}</a>`;
+}
+/* Ficha del doctor de una visita: sus datos actuales (los de la lista) y,
+   si se quito de la lista, los que se apuntaron en esa visita. */
+function medVer(visitId) {
+  const v = (STATE.pediatricVisits || []).find(x => x.id === visitId);
+  if (!v || !v.doctor) return;
+  const esp = especialistaDe(v);
+  const m = medicosDe(esp).find(x => normMed(x.doctor) === normMed(v.doctor));
+  const d = m || { doctor: v.doctor, centro: v.centro, consultorio: v.consultorio, direccion: v.direccion, telefonos: telefonosDe(v) };
+  const fila = (ico, et, valor) => `<div class="vh-fila"><span class="vh-ico" aria-hidden="true">${ico}</span>
+      <div><div class="vh-et">${et}</div><div class="vh-val">${valor}</div></div></div>`;
+  const tels = d.telefonos || [];
+  const filas = [
+    d.centro && fila("🏥", "Centro", esc(d.centro)),
+    d.consultorio && fila("🚪", "Consultorio", esc(d.consultorio)),
+    d.direccion && fila("📍", "Dirección", enlaceMapa(d)),
+    ...tels.map((t, i) => fila("📞", tels.length > 1 ? `Teléfono ${i + 1}` : "Teléfono", enlaceTel(t))),
+  ].filter(Boolean).join("");
+  const q = t => esc(t).replace(/'/g, "\\'");
+  abrirModal(d.doctor, `<div style="margin-bottom:12px"><span class="vh-esp t-${tonoEspecialidad(esp)}">${esc(esp)}</span>${
+      m ? "" : ` <span class="faint">· ya no está en la lista; datos de esta visita</span>`}</div>
+    <div class="vh-filas">${filas || `<div class="vh-vacio">Sin datos de contacto.</div>`}</div>`,
+    [{ et: "Cerrar", accion: "PB.cerrarModal()" },
+     ...(m ? [{ et: "Quitar", peligro: true, accion: `PB.medBorrarPedir('${q(esp)}','${q(d.doctor)}')` },
+              { et: "Editar", primario: true, accion: `PB.medEditar('${q(esp)}','${q(d.doctor)}')` }] : [])]);
+}
+const claveMed = (esp, doc) => normMed(esp) + "|" + normMed(doc);
+function fichaMedico(esp, doctor, datos) {
+  const k = claveMed(esp, doctor);
+  STATE.medicos[k] = { esp, doctor, centro: datos.centro || "", consultorio: datos.consultorio || "",
+    direccion: datos.direccion || "", telefonos: datos.telefonos || [] };
+  olvidarBorradoClave("medicos", k);
+}
+/* Al guardar una visita, su doctor queda con estos datos. Una visita vieja
+   editada no resucita a un doctor quitado de la lista. */
+function recordarMedico(v, esNueva) {
+  if (!v || !v.doctor) return;
+  if (!STATE.medicos) STATE.medicos = {};
+  const previo = STATE.medicos[claveMed(especialistaDe(v), v.doctor)];
+  if (previo && previo.borrado && !esNueva) return;
+  fichaMedico(especialistaDe(v), v.doctor, { centro: v.centro, consultorio: v.consultorio, direccion: v.direccion, telefonos: telefonosDe(v) });
+}
+/* Todas las especialidades con doctores, para la lista «Doctores». */
+function htmlListaMedicos() {
+  const grupos = especialidades().map(e => [e, medicosDe(e)]).filter(([, l]) => l.length);
+  const fila = (e, m) => `<div class="dm-fila">
+      <div class="dm-txt"><b>${esc(m.doctor)}</b><span>${esc([m.centro, m.consultorio, m.telefonos[0]].filter(Boolean).join(" · ") || "Sin datos de contacto")}</span></div>
+      <button type="button" class="ed-row" onclick="PB.medEditar('${esc(e).replace(/'/g, "\\'")}','${esc(m.doctor).replace(/'/g, "\\'")}')">Editar</button>
+      <button type="button" class="del-row" onclick="PB.medBorrarPedir('${esc(e).replace(/'/g, "\\'")}','${esc(m.doctor).replace(/'/g, "\\'")}')">Borrar</button></div>`;
+  return (grupos.length ? grupos.map(([e, l]) => `<div class="dm-grupo"><span class="vh-esp t-${tonoEspecialidad(e)}">${esc(e)}</span></div>${l.map(m => fila(e, m)).join("")}`).join("")
+    : `<div class="vh-vacio">Todavía no hay doctores. Se añaden solos al guardar una visita con doctor, o aquí.</div>`)
+    + `<button type="button" class="med-tel-mas" style="margin-top:10px" onclick="PB.medEditar()">＋ Añadir doctor</button>`;
+}
+function medEditar(esp, doctor) {
+  const m = doctor ? medicosDe(esp).find(x => normMed(x.doctor) === normMed(doctor)) : null;
+  const r = m || { telefonos: [] };
+  abrirModal(m ? "Editar doctor" : "Añadir doctor", `
+    ${m ? `<div class="campo"><label>Especialista</label><div><span class="vh-esp t-${tonoEspecialidad(esp)}">${esc(esp)}</span></div></div>` : htmlEspecialista("dm", ESPECIALISTA_DEF)}
+    <div class="campo"><label for="dm-nombre">Nombre</label><input type="text" id="dm-nombre" value="${esc(m ? m.doctor : "")}" placeholder="Nombre del doctor/a" autocomplete="off"></div>
+    <div class="grid-campos2">${MEDICO_CAMPOS.map(([k, et, ph]) => `<div class="campo"><label for="dm-${k}">${et}</label>
+      <input type="text" id="dm-${k}" value="${esc(r[k] || "")}" placeholder="${esc(ph)}" autocomplete="off"></div>`).join("")}
+      <div class="campo" style="grid-column:1/-1"><label>Teléfono</label>
+        <div id="dm-tels">${(r.telefonos.length ? r.telefonos : [""]).map((t, i) => htmlTel("dm", t, i > 0)).join("")}</div>
+        <button type="button" class="med-tel-mas" onclick="PB.medTelMas('dm')">＋ Añadir teléfono</button></div></div>
+    ${m ? `<div class="faint" style="margin-top:6px">Si cambias el nombre, se cambia también en sus visitas. Los datos de contacto de las visitas pasadas no se tocan.</div>` : ""}
+    <div class="modal-aviso" id="dm-aviso" hidden></div>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Guardar", primario: true, accion: m ? `PB.medGuardar('${esc(esp).replace(/'/g, "\\'")}','${esc(m.doctor).replace(/'/g, "\\'")}')` : "PB.medGuardar()" }]);
+}
+function medGuardar(esp, antes) {
+  const limpio = t => String(t || "").trim().replace(/\s+/g, " ");
+  const nombre = limpio(document.getElementById("dm-nombre").value);
+  if (!nombre) return recAviso("dm-aviso", "Escribe el nombre.");
+  const e = antes ? esp : leerEspecialista("dm");
+  const datos = {};
+  MEDICO_CAMPOS.forEach(([k]) => { datos[k] = limpio(document.getElementById("dm-" + k).value); });
+  datos.telefonos = [...document.querySelectorAll("#dm-tels input")].map(i => limpio(i.value)).filter(Boolean);
+  if (!STATE.medicos) STATE.medicos = {};
+  if (antes && normMed(antes) !== normMed(nombre)) {
+    STATE.medicos[claveMed(e, antes)] = { esp: e, doctor: antes, borrado: true };
+    (STATE.pediatricVisits || []).forEach(v => {
+      if (normMed(v.doctor) === normMed(antes) && normMed(especialistaDe(v)) === normMed(e)) { v.doctor = nombre; sellar(v); }
+    });
+  } else if (antes && antes !== nombre) {
+    (STATE.pediatricVisits || []).forEach(v => {
+      if (normMed(v.doctor) === normMed(antes) && normMed(especialistaDe(v)) === normMed(e)) { v.doctor = nombre; sellar(v); }
+    });
+  }
+  fichaMedico(e, nombre, datos);
+  guardarEstado();
+  cerrarModal();
+  renderPediatra(document.getElementById("view-pediatra"));
+}
+function medBorrarPedir(esp, doctor) {
+  abrirModal("¿Quitar de la lista?", `<p>${esc(doctor)} (${esc(esp)}) dejará de salir en el desplegable. Sus visitas pasadas no se tocan.</p>`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Quitar", peligro: true, accion: `PB.medBorrar('${esc(esp).replace(/'/g, "\\'")}','${esc(doctor).replace(/'/g, "\\'")}')` }]);
+}
+function medBorrar(esp, doctor) {
+  if (!STATE.medicos) STATE.medicos = {};
+  STATE.medicos[claveMed(esp, doctor)] = { esp, doctor, borrado: true };
+  guardarEstado();
+  cerrarModal();
+  renderPediatra(document.getElementById("view-pediatra"));
 }
 function valoresMedico(k) {
   const vistos = new Map();
@@ -16829,6 +16957,7 @@ function renderPediatra(el) {
   if (futuras.length && pasadas.length) html += `<div class="vh-grupo">Anteriores</div>`;
   html += pasadas.map(htmlVisita).join("");
   html += `</div>`;
+  html += htmlRegistro("pediatra-doctores", "Doctores guardados", htmlListaMedicos());
   el.innerHTML = visitas + html + resto;
 }
 /* ---- Historial de visitas ----------------------------------------------
@@ -16863,14 +16992,16 @@ function htmlVisita(v) {
   const fila = (ico, et, valor) => `<div class="vh-fila"><span class="vh-ico" aria-hidden="true">${ico}</span>
       <div><div class="vh-et">${et}</div><div class="vh-val">${valor}</div></div></div>`;
   const filas = [
-    v.doctor && fila("🩺", "Doctor/a", esc(v.doctor)),
-    v.centro && fila("🏥", "Centro", esc(v.centro)),
-    v.consultorio && fila("🚪", "Consultorio", esc(v.consultorio)),
-    v.direccion && fila("📍", "Dirección", `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([v.centro, v.direccion].filter(Boolean).join(", "))}" target="_blank" rel="noopener noreferrer">${esc(v.direccion)}</a>`),
-    ...telefonosDe(v).map((t, i, a) => {
-      const n = t.replace(/[^\d+]/g, "");
-      return fila("📞", a.length > 1 ? `Teléfono ${i + 1}` : "Teléfono", n ? `<a href="tel:${esc(n)}">${esc(t)}</a>` : esc(t));
-    }),
+    /* Con doctor: su nombre abre su ficha (centro, telefonos…), que no se
+       repite aqui. Sin doctor, los datos de contacto van sueltos. */
+    v.doctor && fila("🩺", "Doctor/a", `<button type="button" class="vh-doc" onclick="PB.medVer('${v.id}')">${esc(v.doctor)} <span>Ver ficha ›</span></button>`),
+    v.doctor && v.centro && fila("🏥", "Centro", esc(v.centro)),
+    ...(v.doctor ? [] : [
+      v.centro && fila("🏥", "Centro", esc(v.centro)),
+      v.consultorio && fila("🚪", "Consultorio", esc(v.consultorio)),
+      v.direccion && fila("📍", "Dirección", enlaceMapa(v)),
+      ...telefonosDe(v).map(t => fila("📞", "Teléfono", enlaceTel(t))),
+    ]),
     medidas && fila("📏", "Medidas", medidas),
     url ? fila("🔗", "Resultados", `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Ver los resultados</a>`)
         : (v.enlace && fila("🔗", "Enlace guardado", esc(v.enlace))),
@@ -17125,7 +17256,9 @@ function savePediatricVisit() {
   const especialidad = leerEspecialista("pv");
   const hora = (document.getElementById("pv-hora") || {}).value || "";
   const motivoOtro = reason === "otro" ? ((document.getElementById("pv-motivoOtro") || {}).value || "").trim() : "";
-  STATE.pediatricVisits.push(sellar({ id, date, hora, reason, motivoOtro, especialidad, ...leerDatosMedico("pv"), weight: weight||null, height: height||null, head: head||null,
+  const datosMed = leerDatosMedico("pv");
+  recordarMedico({ especialidad, ...datosMed }, true);
+  STATE.pediatricVisits.push(sellar({ id, date, hora, reason, motivoOtro, especialidad, ...datosMed, weight: weight||null, height: height||null, head: head||null,
     notes, prueba, enlace, resultado }));
   PV_RESULTADO = "";
   if (weight || height || head) STATE.growth.push(sellar({ id: "gr_"+id, date, weight: weight||null, height: height||null, head: head||null, visitId: id }));
@@ -18293,7 +18426,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, medElegir, medRefrescar, medTelMas, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, medEditar, medGuardar, medBorrarPedir, medBorrar, medVer, medElegir, medRefrescar, medTelMas, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
 
