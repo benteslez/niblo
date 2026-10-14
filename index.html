@@ -8305,7 +8305,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "369";
+const NIBLO_BUILD = "370";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -9332,7 +9332,7 @@ const CAMPOS_REGISTRO = {
     { k: "motivoOtro", et: "¿Cuál?", tipo: "text", si: "otro", ph: "Escribe el motivo" },
     { k: "prueba", et: "Tipo de prueba", tipo: "text", si: "prueba" },
     { k: "enlace", et: "Enlace a los resultados", tipo: "url", si: "prueba" },
-    { k: "resultado", et: "Cómo quedó", tipo: "select", si: "prueba",
+    { k: "resultado", et: "Cómo quedó", tipo: "select",
       ops: [["","—"],["bien","Todo bien"],["revision","Requiere control"],["tratamiento","En tratamiento"]] },
     { k: "weight", et: "Peso (kg)", tipo: "number", paso: "0.01", grupo: "med" },
     { k: "height", et: "Longitud (cm)", tipo: "number", paso: "0.1", grupo: "med" },
@@ -16680,13 +16680,13 @@ function renderPediatra(el) {
         <div class="campo"><label for="pv-enlace">Enlace a los resultados</label>
           <input type="url" id="pv-enlace" placeholder="https://…" inputmode="url"></div>
       </div>
-      <div class="campo"><label>Cómo quedó</label>
+    </div>
+    <div class="campo"><label>Cómo quedó</label>
         <div class="seg-btns" id="pv-resultado">${Object.entries(PV_RESULTADOS).map(([v, r]) =>
           `<button type="button" data-v="${v}" onclick="PB.pvResultado('${v}')">${r.et}</button>`).join("")}
         </div>
         <div class="faint" style="margin-top:6px">«Requiere control» es que hay que volver por eso;
           «en tratamiento», que ya hay algo pautado.</div></div>
-    </div>
     <div class="grid-campos3 medidas3">
       <div class="campo"><label>Peso (kg)</label><input type="number" id="pv-weight" step="0.01" min="0" inputmode="decimal"></div>
       <div class="campo"><label>Longitud (cm)</label><input type="number" id="pv-height" step="0.1" min="0" inputmode="decimal"></div>
@@ -17023,7 +17023,9 @@ function savePediatricVisit() {
   const esPrueba = reason === "prueba";
   const prueba = esPrueba ? (document.getElementById("pv-prueba").value || "").trim() : "";
   const enlace = esPrueba ? (document.getElementById("pv-enlace").value || "").trim() : "";
-  const resultado = esPrueba ? PV_RESULTADO : "";
+  /* «Cómo quedó» vale para cualquier visita (una consulta de Ortopedia
+     tambien puede quedar «Requiere control»), no solo para las pruebas. */
+  const resultado = PV_RESULTADO;
   const id = "pv_"+Date.now().toString(36);
   const especialidad = leerEspecialista("pv");
   const hora = (document.getElementById("pv-hora") || {}).value || "";
