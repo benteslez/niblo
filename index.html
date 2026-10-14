@@ -8298,7 +8298,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "366";
+const NIBLO_BUILD = "367";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -10604,7 +10604,7 @@ function htmlProximos() {
     ...(STATE.pediatricVisits || []).filter(v => v.date > HOY_ISO).map(v => ({
       fecha: v.date,
       titulo: `${especialistaDe(v)}${v.doctor ? ` (${v.doctor})` : ""}: ${(PV_MOTIVOS[v.reason] || v.reason).toLowerCase()}`,
-      sub: [v.hora && `a las ${v.hora}`, v.prueba, v.centro].filter(Boolean).join(" · "),
+      sub: [v.hora && `a las ${v.hora}`, v.prueba, v.centro, v.consultorio && `consultorio ${v.consultorio}`].filter(Boolean).join(" · "),
       accion: `PB.editarRegistro('pediatricVisits','${v.id}')`,
     })),
     ...(STATE.vaccines || []).filter(v => (STATE.vaccinesDone[v.id] || "") > HOY_ISO).map(v => ({
@@ -16407,7 +16407,7 @@ function generarInformeCompleto() {
     /* Una prueba medica sin decir cual fue ni como quedo no le sirve de nada
        al pediatra, que es quien lee esto. */
     doc += `<h3>Visitas médicas</h3>` + tabla(["Fecha", "Especialista", "Motivo", "Medidas", "Notas"],
-      vs.map(v => [fmtFechaCorta(v.date), [esc(especialistaDe(v)), ...[v.doctor, v.centro, v.direccion, v.telefono].filter(Boolean).map(esc)].join("<br>"),
+      vs.map(v => [fmtFechaCorta(v.date), [esc(especialistaDe(v)), ...[v.doctor, v.centro, v.consultorio && `Consultorio ${v.consultorio}`, v.direccion, v.telefono].filter(Boolean).map(esc)].join("<br>"),
         [PV_MOTIVOS[v.reason] || v.reason, v.prueba && esc(v.prueba),
          (PV_RESULTADOS[v.resultado] || {}).et].filter(Boolean).join(" · "),
         [v.weight && v.weight + " kg", v.height && v.height + " cm", v.head && v.head + " cm"].filter(Boolean).join(" · ") || "—",
@@ -16540,6 +16540,7 @@ function leerEspecialista(pre) {
 const MEDICO_CAMPOS = [
   ["doctor", "Doctor/a", "Dra. García…", "text"],
   ["centro", "Centro o clínica", "Clínica, hospital, centro de salud…", "text"],
+  ["consultorio", "Consultorio", "N.º o nombre del consultorio", "text"],
   ["direccion", "Dirección", "Calle, número, ciudad", "text"],
   ["telefono", "Teléfono", "", "tel"],
 ];
@@ -16577,7 +16578,7 @@ function pvMedicoAuto(pre, k) {
   const v = [...(STATE.pediatricVisits || [])].sort((a, b) => (b.date || "").localeCompare(a.date || ""))
     .find(x => (x[k] || "").trim().toLowerCase() === t);
   if (!v) return;
-  const sigue = k === "doctor" ? ["centro", "direccion", "telefono"] : ["direccion", "telefono"];
+  const sigue = k === "doctor" ? ["centro", "consultorio", "direccion", "telefono"] : ["direccion", "telefono"];
   sigue.forEach(c => {
     const i = document.getElementById(`${pre}-${c}`);
     if (i && !i.value.trim() && v[c]) i.value = v[c];
@@ -16729,6 +16730,7 @@ function htmlVisita(v) {
   const filas = [
     v.doctor && fila("🩺", "Doctor/a", esc(v.doctor)),
     v.centro && fila("🏥", "Centro", esc(v.centro)),
+    v.consultorio && fila("🚪", "Consultorio", esc(v.consultorio)),
     v.direccion && fila("📍", "Dirección", `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([v.centro, v.direccion].filter(Boolean).join(", "))}" target="_blank" rel="noopener noreferrer">${esc(v.direccion)}</a>`),
     v.telefono && fila("📞", "Teléfono", tel ? `<a href="tel:${esc(tel)}">${esc(v.telefono)}</a>` : esc(v.telefono)),
     medidas && fila("📏", "Medidas", medidas),
