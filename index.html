@@ -5870,17 +5870,20 @@
     .pb-app .vh-val a { color: var(--blue); font-weight: 600; }
     .pb-app .vh-notas { white-space: pre-wrap; }
     .pb-app .vh-vacio { font-size: .875rem; color: var(--text-muted); }
-    .pb-app .vh-recs { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); }
-    .pb-app .vh-recs-tit { font-size: .8125rem; font-weight: 700; margin-bottom: 8px; }
-    .pb-app .vh-rec { display: flex; width: 100%; align-items: center; gap: 10px; text-align: left; padding: 10px 12px; margin-bottom: 8px;
+    .pb-app .vh-recs { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); }
+    .pb-app .vh-recs-cab { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .pb-app .vh-recs-cab + .vh-rec { margin-top: 8px; }
+    .pb-app .vh-recs-tit { font-size: .8125rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pb-app .vh-recs-n { font-weight: 400; color: var(--text-muted); }
+    .pb-app .vh-rec { display: flex; width: 100%; align-items: center; gap: 10px; text-align: left; padding: 8px 10px; margin-bottom: 6px;
       border: 1px solid var(--line); border-radius: 12px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
     .pb-app .vh-rec.hecho { opacity: .7; }
     .pb-app .vh-rec-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; }
     .pb-app .vh-rec-txt b { font-size: .9375rem; font-weight: 600; }
     .pb-app .vh-rec-txt span { font-size: .8125rem; color: var(--text-muted); }
-    .pb-app .vh-btn-rec { width: 100%; padding: 10px; border-radius: 12px; border: 1px dashed var(--blue); background: var(--blue-soft); color: var(--blue); font: inherit; font-weight: 600; font-size: .9375rem; cursor: pointer; }
-    .pb-app .vh-acciones { display: flex; gap: 8px; margin-top: 14px; }
-    .pb-app .vh-acciones button { flex: 1; padding: 9px 10px; font-size: .875rem; }
+    .pb-app .vh-btn-rec { flex: none; padding: 4px 10px; border-radius: 999px; border: 0; background: var(--blue-soft); color: var(--blue); font: inherit; font-weight: 600; font-size: .8125rem; cursor: pointer; }
+    .pb-app .vh-acciones { display: flex; justify-content: flex-end; gap: 6px; margin-top: 12px; }
+    .pb-app .vh-acciones button { flex: none; padding: 5px 12px; font-size: .8125rem; }
     .pb-app .check-linea { display: flex; align-items: center; gap: 8px; font-size: .9375rem; cursor: pointer; }
     .pb-app .mes-header { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px; }
     .pb-app .mes-header h3 { font-size: 0.9375rem; margin: 0; text-transform: capitalize; }
@@ -8295,7 +8298,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "365";
+const NIBLO_BUILD = "366";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -16748,9 +16751,9 @@ function htmlVisita(v) {
     <div class="vh-cuerpo">
       ${filas.length ? `<div class="vh-filas">${filas.join("")}</div>` : `<div class="vh-vacio">Sin más datos apuntados.</div>`}
       <div class="vh-recs">
-        <div class="vh-recs-tit">Recordatorios</div>
-        ${recs.map(htmlRecordatorio).join("") || `<div class="vh-vacio">Ninguno. Crea uno para que salga en Pendientes en la fecha que elijas.</div>`}
-        <button type="button" class="vh-btn-rec" onclick="PB.recModal('${v.id}')">🔔 Crear recordatorio</button>
+        <div class="vh-recs-cab"><span class="vh-recs-tit">🔔 Recordatorios${recs.length ? "" : ` <span class="vh-recs-n">· ninguno</span>`}</span>
+          <button type="button" class="vh-btn-rec" onclick="PB.recModal('${v.id}')">＋ Crear</button></div>
+        ${recs.map(htmlRecordatorio).join("")}
       </div>
       <div class="vh-acciones">
         <button class="ed-row" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">Editar visita</button>
