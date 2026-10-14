@@ -8305,7 +8305,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "368";
+const NIBLO_BUILD = "369";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -16744,8 +16744,12 @@ function renderPediatra(el) {
    filas con icono (letra de lectura normal, no la de nota al pie) y sus
    recordatorios. */
 const ESP_TONOS = ["blue", "green", "amber", "violet", "red"];
+/* Colores fijados a mano (petición del usuario); el resto sale por hash. */
+const ESP_TONO_FIJO = [[/radiolog|radiograf/i, "violet"], [/cardiolog/i, "red"]];
 function tonoEspecialidad(e) {
   if (!e || e === ESPECIALISTA_DEF) return "blue";
+  const fijo = ESP_TONO_FIJO.find(([re]) => re.test(e));
+  if (fijo) return fijo[1];
   let h = 0;
   for (const ch of e) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
   return ESP_TONOS[1 + (h % (ESP_TONOS.length - 1))];
