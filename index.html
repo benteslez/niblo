@@ -8597,7 +8597,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "377";
+const NIBLO_BUILD = "378";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -31536,7 +31536,7 @@ function boot(vistaInicial) {
       const sin = GS.sinPlan;   // falta la migracion 013: solo los campos de siempre
       const campos = [
         { id: "nombre", label: "Nombre", req: true, ph: "Hipoteca" },
-        { id: "entidad", label: "Banco", ph: "UCI, BBVA…" },
+        { id: "entidad", label: "Banco", ph: "Nombre del banco" },
         { id: "capital", label: "Capital pendiente al empezar (€)", tipo: "number", req: true, mitad: true, hint: "El saldo que debes en la fecha de la primera cuota." },
         { id: "interes", label: "Interés anual (%)", tipo: "number", req: true, mitad: true },
         { id: "meses", label: "Cuotas que quedan", tipo: "number", req: true, mitad: true, hint: "25 años = 300" },
