@@ -8597,7 +8597,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "376";
+const NIBLO_BUILD = "377";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30614,7 +30614,7 @@ function boot(vistaInicial) {
         <div class="gs-kpis">
           <div class="gs-kpi${vencidos ? " alerta" : ""}"><span class="gs-kpi-et">Vencido</span><span class="gs-kpi-v">${vencidos}</span></div>
           <div class="gs-kpi"><span class="gs-kpi-et">Próximos 30 días</span><span class="gs-kpi-v">${prox}</span></div>
-          <div class="gs-kpi"><span class="gs-kpi-et">Balance pisos ${new Date().getFullYear()}</span>
+          <div class="gs-kpi"><span class="gs-kpi-et">Balance en propiedad ${new Date().getFullYear()}</span>
             <span class="gs-kpi-v ${bal >= 0 ? "pos" : "neg"}">${gsEur(bal)}</span></div>
         </div>
         <div class="gs-filtros" role="group" aria-label="Filtrar por ámbito">${seg.map(([k, t, n]) =>
@@ -30712,8 +30712,8 @@ function boot(vistaInicial) {
       const tot = prop.reduce((a, p) => { const c = gsCalcPiso(p.id, GS.anio); a.ing += c.ing; a.gas += c.gas; return a; }, { ing: 0, gas: 0 });
       return `${gsCab("Pisos", gsSelAnio() + gsBtnNuevo("GSUI.nuevoPiso()", "Piso"))}
         ${prop.length ? `<div class="gs-kpis">
-          <div class="gs-kpi"><span class="gs-kpi-et">Ingresos ${GS.anio}</span><span class="gs-kpi-v pos">${gsEur(tot.ing)}</span></div>
-          <div class="gs-kpi"><span class="gs-kpi-et">Gastos ${GS.anio}</span><span class="gs-kpi-v neg">${gsEur(tot.gas)}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Ingresos (en propiedad)</span><span class="gs-kpi-v pos">${gsEur(tot.ing)}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Gastos (en propiedad)</span><span class="gs-kpi-v neg">${gsEur(tot.gas)}</span></div>
           <div class="gs-kpi"><span class="gs-kpi-et">Balance (en propiedad)</span>
             <span class="gs-kpi-v ${tot.ing - tot.gas >= 0 ? "pos" : "neg"}">${gsEur(tot.ing - tot.gas)}</span></div>
         </div>` : ""}
@@ -31387,11 +31387,12 @@ function boot(vistaInicial) {
         campos: [
           { id: "nombre", label: "Nombre", req: true, ph: "Piso de Gran Vía" },
           { id: "rol", label: "Situación", tipo: "select", req: true,
-            opciones: [["propietario", "Es nuestro (alquilado a inquilinos)"], ["inquilino", "Somos inquilinos"]] },
+            hint: "Los pisos donde somos inquilinos no cuentan en el balance de los pisos en propiedad.",
+            opciones: [["", "Elige una opción…"], ["propietario", "Es nuestro (alquilado a inquilinos)"], ["inquilino", "Somos inquilinos"]] },
           { id: "direccion", label: "Dirección" },
           { id: "notas", label: "Notas", tipo: "textarea" },
         ],
-        valores: p || { rol: "propietario" },
+        valores: p || { rol: "" },
         borrar: p ? () => {
           const m = GS.gests.filter(g => g.propiedad_id === p.id).length, i = GS.inqs.filter(x => x.propiedad_id === p.id).length;
           gsConfirmarBorrar("gs_propiedades", p.id, p.nombre,
