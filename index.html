@@ -6003,6 +6003,7 @@
     .pb-app .pd-semana > summary { cursor: pointer; font-weight: 700; color: var(--teal); }
     .pb-app .pd-sem-ing, .pb-app .pd-sem-dias { font-size: 0.8125rem; color: var(--text-muted); }
     .pb-app .pd-ingsem { margin: 6px 0 4px; }
+    .pb-app .pd-reac-otra { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
     .pb-app .vac-tag.vac-confirmar { color: var(--amber); }
     .pb-app .campo label.md-rep-check { display: flex; flex-direction: row; justify-content: flex-start; gap: 10px; align-items: center;
       font-size: 0.9375rem; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--text); cursor: pointer; margin-bottom: 8px; }
@@ -8241,7 +8242,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "358";
+const NIBLO_BUILD = "359";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -11461,7 +11462,43 @@ function pdLoteDe(dia, it) {
   }
   return null;
 }
-function pdItem(dia, it, marcarFn, recetaAqui) {
+/* Marcas por comida. Un mismo alimento puede salir en varias comidas del
+   dia (trigo en la tortita del desayuno y en la pasta del almuerzo): cada
+   comida guarda su resultado en h.porComida[bloque] y h.resultado es el mas
+   serio de todos (reaccion > rechazo > tolerado), que es lo que leen el
+   registro, el historial y los alergenos. Las marcas antiguas, sin
+   porComida, cuentan como de la primera comida del dia en que sale. */
+const PESO_RES = { tolerado: 1, rechazo: 2, reaccion: 3 };
+function bloquesDeAlimento(dia, id) {
+  return (dia && dia.comidas || []).filter(b => (b.alimentos || []).some(a => a.id === id)).map(b => b.bloque);
+}
+function porComidaDe(h, dia, id) {
+  if (!h) return {};
+  if (h.porComida && Object.keys(h.porComida).length) return h.porComida;
+  const primero = bloquesDeAlimento(dia, id)[0] || "*";
+  return { [primero]: h.resultado };
+}
+function marcarComida(id, estado, fecha, bloque, desde) {
+  if (!ESTADO[id]) ESTADO[id] = { historial: [] };
+  const hist = ESTADO[id].historial;
+  let h = hist.find(x => x.fecha === fecha);
+  const pc = Object.assign({}, porComidaDe(h, diaDeCalendario(fecha), id));
+  if (pc[bloque] === estado) delete pc[bloque]; else pc[bloque] = estado;
+  if (!Object.keys(pc).length) {
+    if (h) { hist.splice(hist.indexOf(h), 1); anotarBorradoClave("alimentos", id + ":" + fecha); }
+    if (!hist.length) delete ESTADO[id];
+  } else {
+    const peor = Object.values(pc).sort((a, b) => (PESO_RES[b] || 0) - (PESO_RES[a] || 0))[0];
+    if (!h) { h = { fecha, hora: fecha === HOY_ISO ? nuevaHoraSugerida() : "12:00" }; hist.push(h); }
+    h.resultado = peor; h.porComida = pc;
+    hist.sort((a, b) => a.fecha.localeCompare(b.fecha));
+    olvidarBorradoClave("alimentos", id + ":" + fecha);
+  }
+  guardarEstado();
+  if (desde === "drawer" && DRAWER_ISO_ACTUAL) abrirDiaCalendario(DRAWER_ISO_ACTUAL);
+  else renderHoy(document.getElementById("view-hoy"));
+}
+function pdItem(dia, it, marcarFn, recetaAqui, bloque) {
   const meses = dia.edadMeses;
   const r = (PLAN_DOC.recetas || {})[it.rec] || {};
   const al = it.k && (PLAN_DOC.alimentos || {})[it.k] ? PLAN_DOC.alimentos[it.k].al : null;
@@ -11471,7 +11508,14 @@ function pdItem(dia, it, marcarFn, recetaAqui) {
   const notaAl = it.k && (PLAN_DOC.alimentos || {})[it.k] ? PLAN_DOC.alimentos[it.k].nota : null;
   const marcaId = it.id;
   const marca = marcaId ? marcaDelDia(marcaId, dia.fecha) : null;
-  const est = marca ? marca.resultado : null;
+  const est = marca ? (bloque ? porComidaDe(marca, dia, marcaId)[bloque] || null : marca.resultado) : null;
+  /* Si el alimento ya esta marcado en otra comida de hoy, se dice: asi no
+     parece que esta este sin marcar ni que este se haya marcado solo. */
+  const otras = marca && bloque ? Object.entries(porComidaDe(marca, dia, marcaId)).filter(([b]) => b !== bloque) : [];
+  const pauta = pdPauta(dia.fecha);
+  const et = b => (pauta && pauta.bloques[b] ? pauta.bloques[b].et.toLowerCase() : b);
+  const RES_TXT = { tolerado: "tolerado", rechazo: "rechazo", reaccion: "reacción" };
+  const fn = (r) => bloque ? `PB.marcarComida('${marcaId}','${r}','${dia.fecha}','${bloque}','${/Drawer/.test(marcarFn) ? "drawer" : "hoy"}')` : `${marcarFn}('${marcaId}','${r}')`;
   return `<div class="pd-item${nuevo ? " nuevo" : ""}">
     <div class="pd-item-cab"><b>${esc(it.nombre)}</b>
       ${nuevo ? `<span class="pd-tag nuevo">${it.nuevoDia === 1 ? "NUEVO" : `NUEVO · día ${it.nuevoDia}`}</span>` : ""}
@@ -11485,10 +11529,10 @@ function pdItem(dia, it, marcarFn, recetaAqui) {
     ${it.origen ? `<div class="pd-origen">${esc(it.origen)}</div>` : ""}
     ${recetaAqui ? pdComoCocinar(dia, it) : ""}
     ${marcaId ? `<div class="pd-reac"><span>¿Cómo le fue?</span><div class="seg-btns">
-        <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}" onclick="${marcarFn}('${marcaId}','tolerado')" aria-pressed="${est === 'tolerado'}">Tolerado</button>
-        <button type="button" class="${est === 'rechazo' ? 'on rechazo' : ''}" onclick="${marcarFn}('${marcaId}','rechazo')" aria-pressed="${est === 'rechazo'}">Rechazo</button>
-        <button type="button" class="${est === 'reaccion' ? 'on reaccion' : ''}" onclick="${marcarFn}('${marcaId}','reaccion')" aria-pressed="${est === 'reaccion'}">Reacción</button>
-      </div></div>` : ""}
+        <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}" onclick="${fn('tolerado')}" aria-pressed="${est === 'tolerado'}">Tolerado</button>
+        <button type="button" class="${est === 'rechazo' ? 'on rechazo' : ''}" onclick="${fn('rechazo')}" aria-pressed="${est === 'rechazo'}">Rechazo</button>
+        <button type="button" class="${est === 'reaccion' ? 'on reaccion' : ''}" onclick="${fn('reaccion')}" aria-pressed="${est === 'reaccion'}">Reacción</button>
+      </div>${otras.length ? `<div class="pd-reac-otra">Hoy también: ${otras.map(([b, r]) => `${esc(et(b))}, ${RES_TXT[r] || r}`).join(" · ")}</div>` : ""}</div>` : ""}
     ${recetaAqui ? pdReceta(it.rec, pdLoteDe(dia, it)) : ""}
   </div>`;
 }
@@ -11580,13 +11624,13 @@ function htmlPlanDia(dia, marcarFn) {
         const grupo = its.map((it, i) => ({ it, i })).filter(x => x.it.cat === cat);
         if (!grupo.length) continue;
         html += `<div class="pd-cat"><div class="pd-cat-tit">${PD_CAT[cat]}</div>
-          ${grupo.map(({ it, i }) => pdItem(dia, it, marcarFn, ultimoDe[it.rec] === i)).join("")}</div>`;
+          ${grupo.map(({ it, i }) => pdItem(dia, it, marcarFn, ultimoDe[it.rec] === i, s)).join("")}</div>`;
       }
       if (its.some(it => it.cat === "agua")) html += `<div class="pd-agua">Agua en vaso abierto.</div>`;
       html += s === "c" ? `<div class="pd-sin">${meta.fruta ? "Sin biberón" : "Sin fruta ni biberón"}</div>` : pdBiberon(dia, s, meta, tomasObj);
     } else {
       const frutas = its.filter(it => it.cat === "fru");
-      if (frutas.length) html += `<div class="pd-cat"><div class="pd-cat-tit">Fruta${s === "mm" ? " (pequeña)" : ""}</div>${frutas.map(it => pdItem(dia, it, marcarFn, true)).join("")}</div>`;
+      if (frutas.length) html += `<div class="pd-cat"><div class="pd-cat-tit">Fruta${s === "mm" ? " (pequeña)" : ""}</div>${frutas.map(it => pdItem(dia, it, marcarFn, true, s)).join("")}</div>`;
       html += pdBiberon(dia, s, meta, tomasObj);
     }
     html += `</details>`;
@@ -14377,7 +14421,10 @@ function guardarMarcaAlimento() {
   if (!MARCA_ABIERTA) return;
   const h = marcaDelDia(MARCA_ABIERTA.id, MARCA_ABIERTA.fecha);
   if (h) {
-    h.resultado = document.getElementById("ma-res").value;
+    const nuevoRes = document.getElementById("ma-res").value;
+    /* Cambiado a mano para el dia entero: vale para todas sus comidas. */
+    if (nuevoRes !== h.resultado) delete h.porComida;
+    h.resultado = nuevoRes;
     h.hora = document.getElementById("ma-hora").value || h.hora;
     const dia = (document.getElementById("ma-dia") || {}).value || "";
     if (dia && dia !== h.fecha) h.comido = dia; else delete h.comido;
@@ -17720,7 +17767,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
