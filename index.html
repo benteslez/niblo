@@ -6003,6 +6003,11 @@
     .pb-app .pd-semana > summary { cursor: pointer; font-weight: 700; color: var(--teal); }
     .pb-app .pd-sem-ing, .pb-app .pd-sem-dias { font-size: 0.8125rem; color: var(--text-muted); }
     .pb-app .pd-ingsem { margin: 6px 0 4px; }
+    .pb-app .visit-txt .visit-quien { text-transform: none; letter-spacing: 0; font-weight: 600; color: inherit; opacity: .75; }
+    .pb-app .visit-contacto { line-height: 1.5; }
+    .pb-app details.pv-medico { grid-column: 1 / -1; margin: 4px 0 10px; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+    .pb-app details.pv-medico > summary { cursor: pointer; font-weight: 600; font-size: .875rem; }
+    .pb-app details.pv-medico[open] > summary { margin-bottom: 8px; }
     .pb-app .visit-txt .visit-esp { display: block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: var(--blue); }
     .pb-app .pd-reac-otra { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
     .pb-app .vac-tag.vac-confirmar { color: var(--amber); }
@@ -8243,7 +8248,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "361";
+const NIBLO_BUILD = "362";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -9257,6 +9262,7 @@ const CAMPOS_REGISTRO = {
   ]},
   pediatricVisits: { titulo: "visita", col: "pediatricVisits", campos: [
     { k: "especialidad", et: "Especialista", tipo: "especialidad" },
+    { k: "medico", et: "Datos del especialista", tipo: "medico" },
     { k: "date",   et: "Fecha", tipo: "date" },
     { k: "reason", et: "Motivo", tipo: "select",
       ops: [["rutina","Revisión rutinaria"],["vacunacion","Vacunación"],["prueba","Prueba médica"],
@@ -9293,6 +9299,7 @@ function editarRegistro(col, id) {
       return `<div class="campo"><label>${c.et}</label><textarea id="ed-${c.k}" rows="3">${esc(v)}</textarea></div>`;
     }
     if (c.tipo === "especialidad") return htmlEspecialista("ed", v);
+    if (c.tipo === "medico") return htmlDatosMedico("ed", reg);
     return `<div class="campo"><label>${c.et}</label><input type="${c.tipo}" id="ed-${c.k}"
       ${c.paso ? `step="${c.paso}"` : ""} value="${esc(v)}"></div>`;
   }).join("");
@@ -9319,6 +9326,7 @@ function guardarEdicion() {
   const nuevo = {};
   for (const c of def.campos) {
     if (c.tipo === "especialidad") { nuevo[c.k] = leerEspecialista("ed"); continue; }
+    if (c.tipo === "medico") { Object.assign(nuevo, leerDatosMedico("ed")); continue; }
     const el = document.getElementById("ed-" + c.k);
     if (!el) continue;
     nuevo[c.k] = c.tipo === "number" ? (el.value === "" ? null : el.value) : el.value;
@@ -10540,7 +10548,7 @@ function htmlProximos() {
   const eventos = [
     ...(STATE.pediatricVisits || []).filter(v => v.date > HOY_ISO).map(v => ({
       fecha: v.date,
-      titulo: `${especialistaDe(v)}: ${(PV_MOTIVOS[v.reason] || v.reason).toLowerCase()}`,
+      titulo: `${especialistaDe(v)}${v.doctor ? ` (${v.doctor})` : ""}: ${(PV_MOTIVOS[v.reason] || v.reason).toLowerCase()}`,
       sub: v.prueba || "",
       accion: `PB.editarRegistro('pediatricVisits','${v.id}')`,
     })),
@@ -16330,7 +16338,7 @@ function generarInformeCompleto() {
     /* Una prueba medica sin decir cual fue ni como quedo no le sirve de nada
        al pediatra, que es quien lee esto. */
     doc += `<h3>Visitas médicas</h3>` + tabla(["Fecha", "Especialista", "Motivo", "Medidas", "Notas"],
-      vs.map(v => [fmtFechaCorta(v.date), esc(especialistaDe(v)),
+      vs.map(v => [fmtFechaCorta(v.date), [esc(especialistaDe(v)), ...[v.doctor, v.centro, v.direccion, v.telefono].filter(Boolean).map(esc)].join("<br>"),
         [PV_MOTIVOS[v.reason] || v.reason, v.prueba && esc(v.prueba),
          (PV_RESULTADOS[v.resultado] || {}).et].filter(Boolean).join(" · "),
         [v.weight && v.weight + " kg", v.height && v.height + " cm", v.head && v.head + " cm"].filter(Boolean).join(" · ") || "—",
@@ -16456,6 +16464,57 @@ function leerEspecialista(pre) {
   olvidarBorradoClave("especialidades", nombre);
   return nombre;
 }
+/* ---- Datos del especialista: quien atendio y donde -------------------
+   Doctor/a, centro o clinica, direccion y telefono; todo opcional. Lo ya
+   apuntado en otras visitas sale como sugerencia y, al elegir un doctor o un
+   centro conocido, se rellenan los huecos con lo de su ultima visita. */
+const MEDICO_CAMPOS = [
+  ["doctor", "Doctor/a", "Dra. García…", "text"],
+  ["centro", "Centro o clínica", "Clínica, hospital, centro de salud…", "text"],
+  ["direccion", "Dirección", "Calle, número, ciudad", "text"],
+  ["telefono", "Teléfono", "", "tel"],
+];
+function valoresMedico(k) {
+  const vistos = new Map();
+  [...(STATE.pediatricVisits || [])].sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+    .forEach(v => { const t = (v[k] || "").trim(); if (t && !vistos.has(t.toLowerCase())) vistos.set(t.toLowerCase(), t); });
+  return [...vistos.values()].sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+}
+function htmlDatosMedico(pre, reg) {
+  const r = reg || {};
+  const hay = MEDICO_CAMPOS.some(([k]) => r[k]);
+  return `<details class="pv-medico"${hay ? " open" : ""}><summary>Datos del especialista <span class="faint">(opcional)</span></summary>
+    <div class="grid-campos2">${MEDICO_CAMPOS.map(([k, et, ph, tipo]) => {
+      const lista = k === "doctor" || k === "centro";
+      return `<div class="campo"><label for="${pre}-${k}">${et}</label>
+        <input type="${tipo}" id="${pre}-${k}" value="${esc(r[k] || "")}" placeholder="${esc(ph)}" autocomplete="off"
+          ${tipo === "tel" ? 'inputmode="tel"' : ""}${lista ? ` list="${pre}-${k}-lista" onchange="PB.pvMedicoAuto('${pre}','${k}')"` : ""}>
+        ${lista ? `<datalist id="${pre}-${k}-lista">${valoresMedico(k).map(t => `<option value="${esc(t)}">`).join("")}</datalist>` : ""}</div>`;
+    }).join("")}</div></details>`;
+}
+function leerDatosMedico(pre) {
+  const o = {};
+  MEDICO_CAMPOS.forEach(([k]) => {
+    const el = document.getElementById(`${pre}-${k}`);
+    o[k] = el ? el.value.trim().replace(/\s+/g, " ") : "";
+  });
+  return o;
+}
+/* Al escribir un doctor o centro ya usado, rellena lo que este vacio. */
+function pvMedicoAuto(pre, k) {
+  const el = document.getElementById(`${pre}-${k}`);
+  const t = el ? el.value.trim().toLowerCase() : "";
+  if (!t) return;
+  const v = [...(STATE.pediatricVisits || [])].sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+    .find(x => (x[k] || "").trim().toLowerCase() === t);
+  if (!v) return;
+  const sigue = k === "doctor" ? ["centro", "direccion", "telefono"] : ["direccion", "telefono"];
+  sigue.forEach(c => {
+    const i = document.getElementById(`${pre}-${c}`);
+    if (i && !i.value.trim() && v[c]) i.value = v[c];
+  });
+}
+function medicoTexto(v) { return [v.doctor, v.centro].filter(Boolean).join(" · "); }
 const PV_MOTIVOS = {
   rutina: "Revisión rutinaria",
   vacunacion: "Vacunación",
@@ -16497,6 +16556,7 @@ function renderPediatra(el) {
   let html = "";
   html += htmlRegistro('pediatra', 'Registrar visita', `
     ${htmlEspecialista("pv", ESPECIALISTA_DEF)}
+    ${htmlDatosMedico("pv")}
     <div class="grid-campos2">
       <div class="campo"><label>Fecha</label><input type="date" id="pv-date" value="${HOY_ISO}"></div>
       <div class="campo"><label>Motivo</label><select id="pv-reason" onchange="PB.pvMotivo()">
@@ -16563,21 +16623,30 @@ function renderPediatra(el) {
     const medidas = [v.weight && `${v.weight} kg`, v.height && `${v.height} cm`,
                      v.head && `${v.head} cm de perímetro`].filter(Boolean).join(" · ");
     const url = enlaceSeguro(v.enlace);
+    const quien = medicoTexto(v);
+    const tel = (v.telefono || "").replace(/[^\d+]/g, "");
+    const contacto = [
+      v.doctor && `<b>${esc(v.doctor)}</b>`,
+      v.centro && esc(v.centro),
+      v.direccion && `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([v.centro, v.direccion].filter(Boolean).join(", "))}" target="_blank" rel="noopener noreferrer">📍 ${esc(v.direccion)}</a>`,
+      v.telefono && (tel ? `<a href="tel:${esc(tel)}">📞 ${esc(v.telefono)}</a>` : esc(v.telefono)),
+    ].filter(Boolean);
     html += `<details class="visit-card">
       <summary>
         <span class="visit-fecha">${fmtFechaCorta(v.date)}</span>
-        <span class="visit-txt"><span class="visit-esp">${esc(especialistaDe(v))}</span><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
+        <span class="visit-txt"><span class="visit-esp">${esc(especialistaDe(v))}${quien ? ` <span class="visit-quien">· ${esc(quien)}</span>` : ""}</span><b>${PV_MOTIVOS[v.reason] || v.reason}</b>${
           v.prueba ? `<span>${esc(v.prueba)}</span>` : ""}</span>
         ${v.date > HOY_ISO ? `<span class="pill info">Programada</span>`
           : (res ? `<span class="pill ${res.pill}">${res.et}</span>` : "")}
         <span class="visit-chevron" aria-hidden="true">&#8250;</span>
       </summary>
       <div class="visit-cuerpo">
+        ${contacto.length ? `<div class="visit-dato visit-contacto">${contacto.join("<br>")}</div>` : ""}
         ${medidas ? `<div class="visit-dato">${medidas}</div>` : ""}
         ${url ? `<div class="visit-dato"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Ver los resultados</a></div>`
               : (v.enlace ? `<div class="visit-dato faint">Enlace guardado: ${esc(v.enlace)}</div>` : "")}
         ${v.notes ? `<div class="visit-notas">${esc(v.notes)}</div>` : ""}
-        ${!medidas && !url && !v.enlace && !v.notes ? `<div class="visit-dato faint">Sin más datos apuntados.</div>` : ""}
+        ${!contacto.length && !medidas && !url && !v.enlace && !v.notes ? `<div class="visit-dato faint">Sin más datos apuntados.</div>` : ""}
         <div class="visit-acciones">
           <button class="ed-row" onclick="PB.editarRegistro('pediatricVisits','${v.id}')">Editar</button>
           <button class="del-row" onclick="PB.pedirBorrado('pediatricVisits','${v.id}','Visita del ${fmtFechaCorta(v.date)}')">Eliminar</button>
@@ -16676,7 +16745,7 @@ function savePediatricVisit() {
   const resultado = esPrueba ? PV_RESULTADO : "";
   const id = "pv_"+Date.now().toString(36);
   const especialidad = leerEspecialista("pv");
-  STATE.pediatricVisits.push(sellar({ id, date, reason, especialidad, weight: weight||null, height: height||null, head: head||null,
+  STATE.pediatricVisits.push(sellar({ id, date, reason, especialidad, ...leerDatosMedico("pv"), weight: weight||null, height: height||null, head: head||null,
     notes, prueba, enlace, resultado }));
   PV_RESULTADO = "";
   if (weight || height || head) STATE.growth.push(sellar({ id: "gr_"+id, date, weight: weight||null, height: height||null, head: head||null, visitId: id }));
@@ -17840,7 +17909,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
 
