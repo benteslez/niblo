@@ -5891,6 +5891,10 @@
     /* Notas: pequeñas hasta que se pulsan; entonces se abren para escribir. */
     .pb-app .campo textarea.notas-crece { min-height: 64px; transition: min-height .2s ease; resize: vertical; }
     .pb-app .campo textarea.notas-crece:focus { min-height: 45vh; }
+    .pb-app .med-tel { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; }
+    .pb-app .med-tel input { flex: 1; min-width: 0; }
+    .pb-app .med-tel-x { flex: none; border: 0; background: none; color: var(--red); font-size: 1rem; cursor: pointer; padding: 4px 6px; }
+    .pb-app .med-tel-mas { width: auto; align-self: flex-start; display: inline-block; border: 0; background: var(--blue-soft); color: var(--blue); font: inherit; font-weight: 600; font-size: .8125rem; padding: 4px 10px; border-radius: 999px; cursor: pointer; }
     .pb-app .check-linea { display: flex; align-items: center; gap: 8px; font-size: .9375rem; cursor: pointer; }
     .pb-app .mes-header { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 8px; }
     .pb-app .mes-header h3 { font-size: 0.9375rem; margin: 0; text-transform: capitalize; }
@@ -8305,7 +8309,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "370";
+const NIBLO_BUILD = "371";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -9369,7 +9373,7 @@ function editarRegistro(col, id) {
       return `<div class="campo"${attrs}><label>${c.et}</label><textarea id="ed-${c.k}" rows="3" class="notas-crece">${esc(v)}</textarea></div>`;
     }
     if (c.tipo === "especialidad") return htmlEspecialista("ed", v);
-    if (c.tipo === "medico") return htmlDatosMedico("ed", reg);
+    if (c.tipo === "medico") return htmlDatosMedico("ed", reg, especialistaDe(reg));
     return `<div class="campo"${attrs}><label>${c.et}</label><input type="${c.tipo}" id="ed-${c.k}"
       ${c.paso ? `step="${c.paso}"` : ""}${c.ph ? ` placeholder="${esc(c.ph)}"` : ""} value="${esc(v)}"></div>`;
   };
@@ -16435,7 +16439,7 @@ function generarInformeCompleto() {
     /* Una prueba medica sin decir cual fue ni como quedo no le sirve de nada
        al pediatra, que es quien lee esto. */
     doc += `<h3>Visitas médicas</h3>` + tabla(["Fecha", "Especialista", "Motivo", "Medidas", "Notas"],
-      vs.map(v => [fmtFechaCorta(v.date), [esc(especialistaDe(v)), ...[v.doctor, v.centro, v.consultorio && `Consultorio ${v.consultorio}`, v.direccion, v.telefono].filter(Boolean).map(esc)].join("<br>"),
+      vs.map(v => [fmtFechaCorta(v.date), [esc(especialistaDe(v)), ...[v.doctor, v.centro, v.consultorio && `Consultorio ${v.consultorio}`, v.direccion, telefonosDe(v).join(" / ")].filter(Boolean).map(esc)].join("<br>"),
         [esc(motivoDe(v)), v.prueba && esc(v.prueba),
          (PV_RESULTADOS[v.resultado] || {}).et].filter(Boolean).join(" · "),
         [v.weight && v.weight + " kg", v.height && v.height + " cm", v.head && v.head + " cm"].filter(Boolean).join(" · ") || "—",
@@ -16538,12 +16542,12 @@ function especialistaDe(v) { return (v && v.especialidad) || ESPECIALISTA_DEF; }
 function htmlEspecialista(pre, valor) {
   const v = valor || ESPECIALISTA_DEF;
   return `<div class="campo"><label for="${pre}-esp">Especialista</label>
-    <select id="${pre}-esp" onchange="document.getElementById('${pre}-esp-nueva').hidden = this.value !== '__nueva'; if (this.value === '__nueva') document.getElementById('${pre}-esp-txt').focus()">
+    <select id="${pre}-esp" onchange="document.getElementById('${pre}-esp-nueva').hidden = this.value !== '__nueva'; if (this.value === '__nueva') document.getElementById('${pre}-esp-txt').focus(); PB.medRefrescar('${pre}')">
       ${especialidades().map(e => `<option value="${esc(e)}"${e === v ? " selected" : ""}>${esc(e)}</option>`).join("")}
       <option value="__nueva">＋ Añadir…</option>
     </select>
     <div id="${pre}-esp-nueva" hidden style="margin-top:6px">
-      <input type="text" id="${pre}-esp-txt" placeholder="Ortopedia, Dermatología…" autocomplete="off">
+      <input type="text" id="${pre}-esp-txt" placeholder="Ortopedia, Dermatología…" autocomplete="off" onchange="PB.medRefrescar('${pre}')">
     </div></div>`;
 }
 /* Lee el especialista elegido; si es nuevo, lo deja guardado en la lista. */
@@ -16562,43 +16566,133 @@ function leerEspecialista(pre) {
   return nombre;
 }
 /* ---- Datos del especialista: quien atendio y donde -------------------
-   Doctor/a, centro o clinica, direccion y telefono; todo opcional. Lo ya
-   apuntado en otras visitas sale como sugerencia y, al elegir un doctor o un
-   centro conocido, se rellenan los huecos con lo de su ultima visita. */
+   El doctor/a se elige de un desplegable con los ya apuntados EN ESA
+   especialidad (Syra Maria solo con Pediatra, Iván Carlos solo con
+   Ortopedia); al elegirlo se rellenan centro, consultorio, direccion y
+   telefonos con los de su ultima visita guardada. «＋ Añadir…» deja escribir
+   uno nuevo. Todo opcional. El directorio sale de las propias visitas: no
+   hay otra lista que mantener ni sincronizar. */
 const MEDICO_CAMPOS = [
-  ["doctor", "Doctor/a", "Dra. García…", "text"],
   ["centro", "Centro o clínica", "Clínica, hospital, centro de salud…", "text"],
   ["consultorio", "Consultorio", "N.º o nombre del consultorio", "text"],
   ["direccion", "Dirección", "Calle, número, ciudad", "text"],
-  ["telefono", "Teléfono", "", "tel"],
 ];
+function telefonosDe(v) {
+  const t = Array.isArray(v && v.telefonos) ? v.telefonos : (v && v.telefono ? [v.telefono] : []);
+  return t.map(x => String(x || "").trim()).filter(Boolean);
+}
+const normMed = t => String(t || "").trim().toLowerCase();
+/* Doctores de una especialidad, con los datos de su visita guardada mas tarde. */
+function medicosDe(esp) {
+  const porDoc = new Map();
+  [...(STATE.pediatricVisits || [])]
+    .filter(v => v.doctor && normMed(especialistaDe(v)) === normMed(esp))
+    .sort((a, b) => (modDe(a) - modDe(b)) || (a.date || "").localeCompare(b.date || ""))
+    .forEach(v => {
+      const k = normMed(v.doctor), prev = porDoc.get(k) || {};
+      /* Lo que la ultima visita deja en blanco se completa con lo anterior. */
+      porDoc.set(k, { doctor: v.doctor.trim(), centro: v.centro || prev.centro || "",
+        consultorio: v.consultorio || prev.consultorio || "", direccion: v.direccion || prev.direccion || "",
+        telefonos: telefonosDe(v).length ? telefonosDe(v) : (prev.telefonos || []) });
+    });
+  return [...porDoc.values()].sort((a, b) => a.doctor.localeCompare(b.doctor, "es", { sensitivity: "base" }));
+}
 function valoresMedico(k) {
   const vistos = new Map();
   [...(STATE.pediatricVisits || [])].sort((a, b) => (b.date || "").localeCompare(a.date || ""))
     .forEach(v => { const t = (v[k] || "").trim(); if (t && !vistos.has(t.toLowerCase())) vistos.set(t.toLowerCase(), t); });
   return [...vistos.values()].sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
 }
-function htmlDatosMedico(pre, reg) {
+function espActual(pre) {
+  const sel = document.getElementById(pre + "-esp");
+  if (!sel) return ESPECIALISTA_DEF;
+  if (sel.value !== "__nueva") return sel.value || ESPECIALISTA_DEF;
+  return ((document.getElementById(pre + "-esp-txt") || {}).value || "").trim();
+}
+function opcionesDoctor(esp, actual) {
+  const lista = medicosDe(esp);
+  const hay = actual && lista.some(m => normMed(m.doctor) === normMed(actual));
+  return `<option value="">— Sin indicar —</option>
+    ${lista.map(m => `<option value="${esc(m.doctor)}"${hay && normMed(m.doctor) === normMed(actual) ? " selected" : ""}>${esc(m.doctor)}</option>`).join("")}
+    ${actual && !hay ? `<option value="${esc(actual)}" selected>${esc(actual)}</option>` : ""}
+    <option value="__nuevo">＋ Añadir…</option>`;
+}
+function htmlTel(pre, t, quitar) {
+  return `<div class="med-tel"><input type="tel" class="${pre}-tel" inputmode="tel" value="${esc(t || "")}" placeholder="Teléfono" autocomplete="off">${
+    quitar ? `<button type="button" class="med-tel-x" title="Quitar" onclick="this.parentNode.remove()">✕</button>` : ""}</div>`;
+}
+function htmlDatosMedico(pre, reg, esp) {
   const r = reg || {};
-  const hay = MEDICO_CAMPOS.some(([k]) => r[k]);
-  return `<details class="pv-medico"${hay ? " open" : ""}><summary>Datos del especialista <span class="faint">(opcional)</span></summary>
-    <div class="grid-campos2">${MEDICO_CAMPOS.map(([k, et, ph, tipo]) => {
-      const lista = k === "doctor" || k === "centro";
+  const tels = telefonosDe(r);
+  const hay = MEDICO_CAMPOS.some(([k]) => r[k]) || tels.length;
+  return `<div class="campo"><label for="${pre}-doctor-sel">Doctor/a</label>
+      <select id="${pre}-doctor-sel" onchange="PB.medElegir('${pre}')">${opcionesDoctor(esp || especialistaDe(r), r.doctor || "")}</select>
+      <div id="${pre}-doctor-nuevo" hidden style="margin-top:6px">
+        <input type="text" id="${pre}-doctor" placeholder="Nombre del doctor/a" autocomplete="off"></div></div>
+    <details class="pv-medico" id="${pre}-medico"${hay ? " open" : ""}><summary>Centro y contacto <span class="faint">(opcional)</span></summary>
+    <div class="grid-campos2">${MEDICO_CAMPOS.map(([k, et, ph]) => {
+      const lista = k === "centro";
       return `<div class="campo"><label for="${pre}-${k}">${et}</label>
-        <input type="${tipo}" id="${pre}-${k}" value="${esc(r[k] || "")}" placeholder="${esc(ph)}" autocomplete="off"
-          ${tipo === "tel" ? 'inputmode="tel"' : ""}${lista ? ` list="${pre}-${k}-lista" onchange="PB.pvMedicoAuto('${pre}','${k}')"` : ""}>
+        <input type="text" id="${pre}-${k}" value="${esc(r[k] || "")}" placeholder="${esc(ph)}" autocomplete="off"
+          ${lista ? ` list="${pre}-${k}-lista" onchange="PB.pvMedicoAuto('${pre}','${k}')"` : ""}>
         ${lista ? `<datalist id="${pre}-${k}-lista">${valoresMedico(k).map(t => `<option value="${esc(t)}">`).join("")}</datalist>` : ""}</div>`;
-    }).join("")}</div></details>`;
+    }).join("")}
+      <div class="campo" style="grid-column:1/-1"><label>Teléfono</label>
+        <div id="${pre}-tels">${(tels.length ? tels : [""]).map((t, i) => htmlTel(pre, t, i > 0)).join("")}</div>
+        <button type="button" class="med-tel-mas" onclick="PB.medTelMas('${pre}')">＋ Añadir teléfono</button></div>
+    </div></details>`;
+}
+function medTelMas(pre) {
+  const c = document.getElementById(pre + "-tels");
+  if (!c) return;
+  c.insertAdjacentHTML("beforeend", htmlTel(pre, "", true));
+  const ins = c.querySelectorAll("input");
+  ins[ins.length - 1].focus();
+}
+function ponerTelefonos(pre, tels) {
+  const c = document.getElementById(pre + "-tels");
+  if (c) c.innerHTML = (tels.length ? tels : [""]).map((t, i) => htmlTel(pre, t, i > 0)).join("");
+}
+/* Al elegir un doctor del desplegable se ponen sus datos. */
+function medElegir(pre) {
+  const sel = document.getElementById(pre + "-doctor-sel");
+  const nuevo = document.getElementById(pre + "-doctor-nuevo");
+  if (!sel) return;
+  if (nuevo) nuevo.hidden = sel.value !== "__nuevo";
+  if (sel.value === "__nuevo") { document.getElementById(pre + "-doctor").focus(); return; }
+  if (!sel.value) return;
+  const m = medicosDe(espActual(pre)).find(x => normMed(x.doctor) === normMed(sel.value));
+  if (!m) return;
+  MEDICO_CAMPOS.forEach(([k]) => { const i = document.getElementById(`${pre}-${k}`); if (i) i.value = m[k] || ""; });
+  ponerTelefonos(pre, m.telefonos || []);
+  const det = document.getElementById(pre + "-medico");
+  if (det) det.open = true;
+}
+/* Al cambiar de especialidad, el desplegable pasa a sus doctores. */
+function medRefrescar(pre) {
+  const sel = document.getElementById(pre + "-doctor-sel");
+  if (!sel) return;
+  const antes = sel.value === "__nuevo" ? "" : sel.value;
+  const esp = espActual(pre);
+  const sigue = antes && medicosDe(esp).some(m => normMed(m.doctor) === normMed(antes));
+  sel.innerHTML = opcionesDoctor(esp, sigue ? antes : "");
+  const nuevo = document.getElementById(pre + "-doctor-nuevo");
+  if (nuevo) nuevo.hidden = true;
 }
 function leerDatosMedico(pre) {
   const o = {};
+  const limpio = t => String(t || "").trim().replace(/\s+/g, " ");
+  const sel = document.getElementById(pre + "-doctor-sel");
+  o.doctor = sel ? limpio(sel.value === "__nuevo" ? (document.getElementById(pre + "-doctor") || {}).value : sel.value) : "";
   MEDICO_CAMPOS.forEach(([k]) => {
     const el = document.getElementById(`${pre}-${k}`);
-    o[k] = el ? el.value.trim().replace(/\s+/g, " ") : "";
+    o[k] = el ? limpio(el.value) : "";
   });
+  o.telefonos = [...document.querySelectorAll(`#${pre}-tels input`)].map(i => limpio(i.value)).filter(Boolean);
+  o.telefono = o.telefonos[0] || "";
   return o;
 }
-/* Al escribir un doctor o centro ya usado, rellena lo que este vacio. */
+/* Al escribir un centro ya usado, rellena lo que este vacio. */
 function pvMedicoAuto(pre, k) {
   const el = document.getElementById(`${pre}-${k}`);
   const t = el ? el.value.trim().toLowerCase() : "";
@@ -16606,8 +16700,7 @@ function pvMedicoAuto(pre, k) {
   const v = [...(STATE.pediatricVisits || [])].sort((a, b) => (b.date || "").localeCompare(a.date || ""))
     .find(x => (x[k] || "").trim().toLowerCase() === t);
   if (!v) return;
-  const sigue = k === "doctor" ? ["centro", "consultorio", "direccion", "telefono"] : ["direccion", "telefono"];
-  sigue.forEach(c => {
+  ["direccion"].forEach(c => {
     const i = document.getElementById(`${pre}-${c}`);
     if (i && !i.value.trim() && v[c]) i.value = v[c];
   });
@@ -16760,7 +16853,6 @@ function htmlVisita(v) {
                    v.head && `${String(v.head).replace(".", ",")} cm de perímetro`].filter(Boolean).join(" · ");
   const url = enlaceSeguro(v.enlace);
   const quien = medicoTexto(v);
-  const tel = (v.telefono || "").replace(/[^\d+]/g, "");
   const d = new Date(v.date + "T00:00:00");
   const mes = d.toLocaleDateString("es-ES", { month: "short" }).replace(".", "");
   const futura = v.date > HOY_ISO;
@@ -16775,7 +16867,10 @@ function htmlVisita(v) {
     v.centro && fila("🏥", "Centro", esc(v.centro)),
     v.consultorio && fila("🚪", "Consultorio", esc(v.consultorio)),
     v.direccion && fila("📍", "Dirección", `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([v.centro, v.direccion].filter(Boolean).join(", "))}" target="_blank" rel="noopener noreferrer">${esc(v.direccion)}</a>`),
-    v.telefono && fila("📞", "Teléfono", tel ? `<a href="tel:${esc(tel)}">${esc(v.telefono)}</a>` : esc(v.telefono)),
+    ...telefonosDe(v).map((t, i, a) => {
+      const n = t.replace(/[^\d+]/g, "");
+      return fila("📞", a.length > 1 ? `Teléfono ${i + 1}` : "Teléfono", n ? `<a href="tel:${esc(n)}">${esc(t)}</a>` : esc(t));
+    }),
     medidas && fila("📏", "Medidas", medidas),
     url ? fila("🔗", "Resultados", `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Ver los resultados</a>`)
         : (v.enlace && fila("🔗", "Enlace guardado", esc(v.enlace))),
@@ -18198,7 +18293,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, medElegir, medRefrescar, medTelMas, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
 
