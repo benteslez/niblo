@@ -5223,6 +5223,7 @@
     .gs-tabla tr.proxima td { background: color-mix(in srgb, var(--accent) 12%, transparent); font-weight: 700; }
     .gs-tabla tr.con-extra td { background: color-mix(in srgb, var(--gs-pos) 12%, transparent); }
     .gs-btn-ancho { white-space: nowrap; }
+    .gs-otros { margin: var(--gap-2) 0 0; }
     .gs-sec-tit { font-family: var(--font-titulo); font-size: 1rem; font-weight: 700; margin: 0 0 var(--gap-2); letter-spacing: -0.01em; }
     .gs-hero {
       display: flex; align-items: center; gap: var(--gap-4); padding: var(--gap-4);
@@ -8597,7 +8598,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "378";
+const NIBLO_BUILD = "379";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30364,7 +30365,7 @@ function boot(vistaInicial) {
       cargado: false, cargando: false, error: null,
       pisoId: null, pisoTab: "resumen", anio: new Date().getFullYear(),
       movFiltro: "todos", prestId: null, filtroTodo: "todo", mes: null,
-      abiertos: {}, sinOrigen: false, sinPlan: false,
+      abiertos: {}, sinOrigen: false, sinPlan: false, ultimaCarga: 0,
       sim: { pid: null, mensual: 0, unico: 0, meses: 36 },   // simulacion «y si amortizo…»
         // listas desplegadas; true si falta la migracion 012
     };
@@ -30450,7 +30451,7 @@ function boot(vistaInicial) {
         GS.prest = prest || []; GS.revs = revs || []; GS.pagos = pagos || [];
         if (GS.gests.length) GS.sinOrigen = !("origen_id" in GS.gests[0]);
         if (GS.prest.length) GS.sinPlan = !("obj_fecha" in GS.prest[0]);
-        GS.cargado = true;
+        GS.cargado = true; GS.ultimaCarga = Date.now();
         rtUnirGestiones();
       } catch (e) {
         if (!GS.cargado) {
@@ -30464,8 +30465,20 @@ function boot(vistaInicial) {
         renderHub();
       }
     }
+    /* Los datos se cargaban una vez por sesion y luego dependian del tiempo
+       real: si se cambiaba algo fuera de la app (el SQL Editor) o el movil
+       dormia la conexion, no se veia hasta cerrar la app del todo. Ahora se
+       vuelven a pedir al entrar, al abrir un piso y al volver a primer plano
+       si tienen mas de 20 s. */
+    function gsRefrescar() {
+      if (!GS.cargado) return gsCargar(false);
+      if (Date.now() - GS.ultimaCarga > 20000) return gsCargar(true);
+    }
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && areaActiva === "gestiones" && sesion.supabase.token) gsRefrescar();
+    });
     function gsEntrar() {
-      gsCargar(false);
+      gsRefrescar();
       if (typeof docsCargar === "function") docsCargar(false);
       gsRender();
     }
@@ -30999,7 +31012,25 @@ function boot(vistaInicial) {
             <span class="gs-card-cifras"><span><i>Pendiente hoy</i><b>${gsEur(I.saldoHoy)}</b></span>
               <span><i>Termina</i><b>${esc(gsMesTxt(I.plan.fin))}</b></span><span><i>Interés</i><b>${String(x.interes).replace(".", ",")} %</b></span></span></button>`;
         }).join("")}</div>`
-        : `<div class="empty-state"><p>Sin préstamos. Añade la hipoteca de este piso para ver cuánto te queda, simular amortizaciones y llevar lo que vas amortizando.</p></div>`}`;
+        : gsPrestVacio(p)}`;
+    }
+    /* Sin prestamos en este piso: se dice si hay en otros (o sin piso) y se
+       pueden traer con un toque, o si no hay ninguno en todo el hogar. */
+    function gsPrestVacio(p) {
+      const otros = GS.prest.filter(x => x.propiedad_id !== p.id);
+      const recargar = `<button type="button" class="gs-btn" onclick="GSUI.recargar()">&#8635; Volver a cargar</button>`;
+      if (!otros.length) {
+        return `<div class="empty-state"><p>Este piso no tiene ningún préstamo, y tu hogar tampoco tiene ninguno guardado en otro piso.
+          Añade la hipoteca con «+ Préstamo» para ver cuánto te queda, simular amortizaciones y llevar lo que vas amortizando.</p>
+          <p class="faint">Si acabas de crearla desde fuera de la app (por ejemplo con SQL), pulsa «Volver a cargar».</p>${recargar}</div>`;
+      }
+      return `<div class="gs-nota"><b>Este piso no tiene préstamos, pero tu hogar tiene ${otros.length === 1 ? "uno" : otros.length} en ${otros.length === 1 ? "otro sitio" : "otros sitios"}:</b>
+        <ul class="gs-lista gs-otros">${otros.map(x => {
+          const q = x.propiedad_id ? gsProp(x.propiedad_id) : null;
+          return `<li class="gs-fila"><span class="gs-fila-main"><span class="gs-fila-tit">${esc(x.nombre)}</span>
+            <span class="gs-fila-sub">${q ? "Ahora está en «" + esc(q.nombre) + "»" : "No está en ningún piso"} · ${gsEur(x.capital)}</span></span>
+            <button type="button" class="gs-btn pri" onclick="GSUI.moverPrest('${x.id}','${p.id}')">Traer aquí</button></li>`;
+        }).join("")}</ul></div>${recargar}`;
     }
 
     const gsEurK = n => Math.abs(n) >= 1000 ? (n / 1000).toLocaleString("es-ES", { maximumFractionDigits: 0 }) + " mil €" : gsEur(n);
@@ -31687,11 +31718,12 @@ function boot(vistaInicial) {
       editarPiso: id => gsFormPiso(gsProp(id)),
       abrirPiso: (id, tab) => {
         GS.pisoId = id; GS.pisoTab = tab || "resumen"; GS.prestId = null; GS.movFiltro = "todos"; GS.mes = null;
+        if (tab === "prest") gsRefrescar();
         if (vistaActiva !== "gs_pisos") fijarVista("gs_pisos"); else gsRender();
         window.scrollTo(0, 0);
       },
       cerrarPiso: () => { GS.pisoId = null; GS.prestId = null; GS.mes = null; gsRender(); },
-      tabPiso: k => { GS.pisoTab = k; GS.prestId = null; GS.mes = null; gsRender(); },
+      tabPiso: k => { GS.pisoTab = k; GS.prestId = null; GS.mes = null; gsRender(); if (k === "prest") gsRefrescar(); },
       verMes: i => { GS.mes = i; gsRender(); window.scrollTo(0, 0); },
       cerrarMes: () => { GS.mes = null; gsRender(); },
       movFiltro: k => { GS.movFiltro = k; gsRender(); },
@@ -31708,6 +31740,10 @@ function boot(vistaInicial) {
       nuevaRev: id => gsFormRev(id, null),
       editarRev: id => { const r = GS.revs.find(y => y.id === id); if (r) gsFormRev(r.prestamo_id, r); },
       csvMov: gsCsvMov, csvPrest: gsCsvPrest,
+      moverPrest: async (id, propId) => {
+        try { await gsGuardarFila("gs_prestamos", id, { propiedad_id: propId }); await gsCargar(true); toast("Préstamo movido a este piso"); }
+        catch (e) { toast("No se ha podido mover"); }
+      },
       sim: (campo, v, origen) => {
         GS.sim[campo] = Math.max(0, +v || 0);
         if (campo === "mensual") {   // número y deslizador van a la par
