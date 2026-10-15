@@ -5223,6 +5223,7 @@
     .gs-tabla tr.proxima td { background: color-mix(in srgb, var(--accent) 12%, transparent); font-weight: 700; }
     .gs-tabla tr.con-extra td { background: color-mix(in srgb, var(--gs-pos) 12%, transparent); }
     .gs-btn-ancho { white-space: nowrap; }
+    .gs-pago-btn { flex: none; padding: 5px 12px; font-size: 0.75rem; }
     .gs-otros { margin: var(--gap-2) 0 0; }
     .gs-sec-tit { font-family: var(--font-titulo); font-size: 1rem; font-weight: 700; margin: 0 0 var(--gap-2); letter-spacing: -0.01em; }
     .gs-hero {
@@ -8598,7 +8599,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "380";
+const NIBLO_BUILD = "381";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30416,7 +30417,7 @@ function boot(vistaInicial) {
     const GS_TIPOS = { gasto: "Gasto", ingreso: "Ingreso", gestion: "Gestión" };
     const GS_CATS = {
       piso: {
-        gasto:   ["Comunidad", "IBI", "Seguro", "Reparaciones", "Suministros", "Hipoteca", "Alquiler", "Impuestos", "Gestoría", "Mobiliario", "Otros"],
+        gasto:   ["Comunidad", "IBI", "Seguro", "Reparaciones", "Suministros", "Hipoteca", "Hipoteca (otros)", "Alquiler", "Impuestos", "Gestoría", "Mobiliario", "Otros"],
         ingreso: ["Renta", "Fianza", "Otros"],
         gestion: ["Contrato", "Incidencia", "Comunicación", "Revisión de renta", "Renovación", "Inspección", "Otros"],
       },
@@ -30927,6 +30928,15 @@ function boot(vistaInicial) {
 
     /* ---- Amortizacion: motor ------------------------------------------------- */
     /*@motor-inicio*/
+    /* Pagos de la hipoteca de un piso: los gastos de categoria «Hipoteca» son
+       cuotas del prestamo del piso (si el piso tiene uno solo); «Hipoteca
+       (otros)» son pagos de la hipoteca que NO son una cuota del calendario
+       (intereses del primer periodo, comisiones…) y no cambian el saldo. */
+    function gsPagosHipoteca(x) {
+      if (!x || !x.propiedad_id || GS.prest.filter(y => y.propiedad_id === x.propiedad_id).length !== 1) return { cuotas: [], otros: [] };
+      const l = GS.gests.filter(g => g.propiedad_id === x.propiedad_id && g.tipo === "gasto" && g.importe).sort((a, b) => a.fecha.localeCompare(b.fecha));
+      return { cuotas: l.filter(g => g.categoria === "Hipoteca"), otros: l.filter(g => g.categoria === "Hipoteca (otros)") };
+    }
     function gsCuotaFrancesa(saldo, r, n) {
       if (n <= 0) return saldo;
       if (!r) return saldo / n;
@@ -30964,6 +30974,11 @@ function boot(vistaInicial) {
       const revs = GS.revs.filter(r => r.prestamo_id === p.id).sort((a, b) => a.desde.localeCompare(b.desde));
       const reales = o.extras === "ninguno" ? [] : GS.pagos.filter(x => x.prestamo_id === p.id).sort((a, b) => a.fecha.localeCompare(b.fecha));
       const metaYM = p.obj_fecha ? gsYM(p.obj_fecha) : null, planYM = gsYM(p.plan_inicio || p.inicio);
+      /* Cuotas pagadas y registradas como gasto «Hipoteca»: en ese mes manda lo
+         pagado (no la cuota teorica). No se usan en «sin amortizar», que es la
+         referencia teorica. */
+      const pagosMes = {};
+      if (o.extras !== "ninguno") gsPagosHipoteca(p).cuotas.filter(g => g.estado === "hecho").forEach(g => { const k = gsYM(g.fecha); pagosMes[k] = (pagosMes[k] || 0) + +g.importe; });
       let tasa = +p.interes, saldo = +p.capital, ex = 0, ri = 0, acum = 0, unico = false;
       let cuota = p.cuota ? +p.cuota : gsCuotaFrancesa(saldo, tasa / 1200, n0);
       const filas = []; let intereses = 0, totalExtra = 0;
@@ -30974,8 +30989,9 @@ function boot(vistaInicial) {
           ri++;
         }
         const interes = saldo * tasa / 1200;
-        let cap = cuota - interes;
-        if (i === n0 - 1 || cap > saldo) cap = saldo;
+        const pagoReal = pagosMes[ym];
+        let cap = pagoReal !== undefined ? Math.max(0, Math.min(saldo, pagoReal - interes)) : cuota - interes;
+        if (pagoReal === undefined && (i === n0 - 1 || cap > saldo)) cap = saldo;
         saldo -= cap;
         let real = 0, prevista = 0, recalcular = false;
         while (ex < reales.length && gsYM(reales[ex].fecha) <= ym) {
@@ -31001,7 +31017,8 @@ function boot(vistaInicial) {
         if (ym >= planYM) acum += real + prevista;
         if (recalcular && saldo > 0.005) cuota = gsCuotaFrancesa(saldo, tasa / 1200, n0 - i - 1);
         intereses += interes; totalExtra += real + prevista;
-        filas.push({ n: i + 1, fecha, ym, cuota: gsRedondea(cap + interes), interes: gsRedondea(interes), capital: gsRedondea(cap),
+        filas.push({ n: i + 1, fecha, ym, cuota: gsRedondea(pagoReal !== undefined ? Math.min(pagoReal, cap + interes) : cap + interes), pagoReal: pagoReal !== undefined,
+                     interes: gsRedondea(interes), capital: gsRedondea(cap),
                      extra: gsRedondea(real + prevista), real: gsRedondea(real), prevista: gsRedondea(prevista),
                      saldoIni: gsRedondea(saldoIni), saldo: gsRedondea(Math.max(0, saldo)) });
       }
@@ -31030,6 +31047,7 @@ function boot(vistaInicial) {
         interesPagado: gsRedondea(pasadas.reduce((s, f) => s + f.interes, 0)),
         pct: +p.capital > 0 ? Math.max(0, Math.min(1, 1 - saldoHoy / +p.capital)) : 0,
         registradoMes: filaMes ? filaMes.real : 0,
+        pagoMes: gsRedondea(gsPagosHipoteca(p).cuotas.filter(g => g.estado === "hecho" && gsYM(g.fecha) === hoyYM).reduce((t, g) => t + +g.importe, 0)),
         recomendadoMes: filaMes ? filaMes.prevista : 0,
         extraAnioReal: gsRedondea(extraAnioReal), extraAnioPlan: gsRedondea(extraAnioPlan),
       };
@@ -31120,6 +31138,7 @@ function boot(vistaInicial) {
 
         ${gsMesCard(x, I, cuotaMes)}
         ${limite ? gsLimiteAnual(x, I, limite) : ""}
+        ${gsPagosHTML(x, I)}
 
         <section class="gs-sim">
           <h3 class="gs-sec-tit">¿Y si amortizo…?</h3>
@@ -31187,7 +31206,8 @@ function boot(vistaInicial) {
       const f = I.filaMes;
       return `<section class="gs-mes-card">
         <div class="gs-mes-cab"><h3 class="gs-sec-tit">Este mes · ${esc(gsMesTxt(I.hoyYM))}</h3>
-          ${reg > 0.5 ? `<span class="gs-pill verde">✓ Registrado ${gsEur(reg)}</span>` : ""}</div>
+          ${reg > 0.5 ? `<span class="gs-pill verde">✓ Amortizado ${gsEur(reg)}</span>` : ""}
+          ${I.pagoMes > 0.5 ? `<span class="gs-pill verde">✓ Cuota pagada ${gsEur(I.pagoMes)}</span>` : x.propiedad_id && GS.prest.filter(y => y.propiedad_id === x.propiedad_id).length === 1 ? `<span class="gs-pill">Cuota sin registrar</span>` : ""}</div>
         <div class="gs-mes-grid">
           <div><span class="gs-kpi-et">Cuota ordinaria</span><b>${gsEur(f.cuota)}</b>
             <span class="gs-kpi-s">${gsEur(f.interes)} intereses · ${gsEur(f.capital)} capital</span></div>
@@ -31195,8 +31215,43 @@ function boot(vistaInicial) {
             <span class="gs-kpi-s">${rec > 0.5 ? "para llegar al objetivo" : "no hace falta más este mes"}</span></div>` : ""}
         </div>
         ${rec > 0.5 && minimo && rec < minimo ? `<p class="gs-aviso-linea">&#9888; Por debajo del mínimo por amortización parcial (${gsEur(minimo)}): el banco no la admitiría.</p>` : ""}
+        ${I.pagoMes <= 0.5 && x.propiedad_id && GS.prest.filter(y => y.propiedad_id === x.propiedad_id).length === 1
+          ? `<button type="button" class="gs-btn gs-mes-btn" onclick="GSUI.registrarCuota('${x.id}')">Registrar la cuota pagada (${gsEur(f.cuota)})</button>` : ""}
         <button type="button" class="gs-btn pri gs-mes-btn" onclick="GSUI.registrarMes('${x.id}')">${rec > 0.5 ? `Registrar ${gsEur(rec)} amortizados` : "Registrar una amortización"}</button>
       </section>`;
+    }
+    /* Pagos de la hipoteca enlazados con este prestamo (gastos «Hipoteca» del piso). */
+    function gsPagosHTML(x, I) {
+      const piso = x.propiedad_id ? gsProp(x.propiedad_id) : null;
+      if (!piso) return "";
+      if (GS.prest.filter(y => y.propiedad_id === x.propiedad_id).length !== 1) {
+        return `<section class="gs-grupo"><h3 class="gs-sec-tit">Pagos de la hipoteca</h3>
+          <p class="faint gs-vacio">Este piso tiene varios préstamos: los gastos «Hipoteca» no se pueden enlazar solos con uno de ellos.</p></section>`;
+      }
+      const P = gsPagosHipoteca(x), todos = P.cuotas.concat(P.otros).sort((a, b) => a.fecha.localeCompare(b.fecha));
+      const pagado = todos.filter(g => g.estado === "hecho").reduce((s, g) => s + +g.importe, 0);
+      const fila = g => {
+        const esCuota = g.categoria === "Hipoteca", hecho = g.estado === "hecho", ym = gsYM(g.fecha);
+        const teo = I.base.filas.find(f => f.ym === ym);
+        let nota;
+        if (!esCuota) nota = "No es una cuota: no cambia el saldo (intereses iniciales, comisiones…).";
+        else if (!hecho) nota = "Pendiente de pago.";
+        else if (!teo) nota = `Fuera del calendario del préstamo (${gsMesTxt(ym)}): no cambia el saldo.`;
+        else {
+          const d = +g.importe - teo.cuota;
+          nota = Math.abs(d) <= 1 ? `Coincide con la cuota de ${gsMesTxt(ym)}.`
+            : `La cuota de ${gsMesTxt(ym)} es ${gsEur(teo.cuota)}: ${d > 0 ? "+" : "−"}${gsEur(Math.abs(d))}. En esa fila se usa lo que pagaste.`;
+        }
+        return `<li class="gs-fila${hecho ? " hecho" : ""} t-gasto">
+          <button type="button" class="gs-fila-main" onclick="GSUI.editarMov('${g.id}')">
+            <span class="gs-fila-tit">${gsEur(g.importe)} <span class="gs-pill${esCuota ? " verde" : ""}">${esCuota ? "Cuota" : "Otros"}</span></span>
+            <span class="gs-fila-sub">${esc(gsFecha(g.fecha))} · ${esc(nota)}</span></button>
+          <button type="button" class="gs-btn gs-pago-btn" onclick="GSUI.cuotaTipo('${g.id}', ${esCuota ? "false" : "true"})">${esCuota ? "No es una cuota" : "Es una cuota"}</button></li>`;
+      };
+      return `<section class="gs-grupo"><h3 class="gs-grupo-tit">Pagos de la hipoteca <span class="doc-cuenta">· ${todos.length}${todos.length ? " · " + gsEur(pagado) + " pagados" : ""}</span></h3>
+        ${todos.length ? gsListaTope("pagos-" + x.id, todos.slice().reverse(), 4, fila)
+          : `<p class="faint gs-vacio">Aún no hay ningún gasto «Hipoteca» en este piso. Cuando lo registres, se enlaza aquí y la tabla usa lo que pagaste.</p>`}
+        <p class="faint gs-pie">Los gastos de categoría «Hipoteca» de «${esc(piso.nombre)}» cuentan como cuotas de este préstamo. «Hipoteca (otros)» es para lo que no es una cuota del calendario.</p></section>`;
     }
     function gsLimiteAnual(x, I, limite) {
       const usado = I.extraAnioReal, previsto = Math.max(usado, I.extraAnioPlan);
@@ -31511,7 +31566,9 @@ function boot(vistaInicial) {
       const gestion = tipo === "gestion";
       const campos = [
         { id: "titulo", label: "Título", ph: gestion ? "Segunda dosis, avería del calentador…" : "Recibo de febrero" },
-        { id: "categoria", label: "Categoría", tipo: "select", opciones: gsOpts(cats), mitad: true },
+        { id: "categoria", label: "Categoría", tipo: "select", opciones: gsOpts(cats), mitad: true,
+          hint: ambito === "piso" && tipo === "gasto" && propId && GS.prest.filter(y => y.propiedad_id === propId).length === 1
+            ? "«Hipoteca» cuenta como cuota del préstamo de este piso; «Hipoteca (otros)» no (intereses iniciales, comisiones…)." : "" },
         { id: "fecha", label: gestion ? "Fecha o vencimiento" : "Fecha", tipo: "date", req: true, mitad: true },
         { id: "importe", label: "Importe (€)", tipo: "number", req: !gestion, mitad: true },
         { id: "estado", label: "Estado", tipo: "select", mitad: true,
@@ -31530,7 +31587,7 @@ function boot(vistaInicial) {
       gsFormulario({
         titulo: (g ? "Editar " : "Nuevo ") + (tipo === "gasto" ? "gasto" : tipo === "ingreso" ? "ingreso" : "gestión"),
         campos, borrar: g ? () => gsConfirmarBorrar("gs_gestiones", g.id, g.titulo, "", "Borrado") : null,
-        valores: g || { categoria: cats[0], fecha: gsHoy(), estado: "pendiente", inquilino_id: ctx.inquilino_id || "" },
+        valores: g || Object.assign({ categoria: cats[0], fecha: gsHoy(), estado: "pendiente", inquilino_id: ctx.inquilino_id || "" }, ctx.valores || {}),
         guardar: async v => {
           if (v.url && !docsUrlValida(v.url)) throw gsErr("El enlace tiene que empezar por https://");
           if (v.importe !== null && v.importe < 0) throw gsErr("El importe no puede ser negativo.");
@@ -31814,6 +31871,15 @@ function boot(vistaInicial) {
         gsSimRender();
       },
       chartMove: gsChartMove, chartOut: gsChartOut,
+      registrarCuota: id => {
+        const x = GS.prest.find(y => y.id === id); if (!x || !x.propiedad_id) return;
+        const I = gsInfoPrest(x);
+        gsFormMov("gasto", "piso", { propiedad_id: x.propiedad_id, valores: { titulo: "Hipoteca", categoria: "Hipoteca", importe: I.filaMes ? I.filaMes.cuota : "", estado: "hecho" } });
+      },
+      cuotaTipo: async (id, esCuota) => {
+        try { await gsGuardarFila("gs_gestiones", id, { categoria: esCuota ? "Hipoteca" : "Hipoteca (otros)" }); await gsCargar(true); toast(esCuota ? "Ahora cuenta como cuota" : "Ya no cuenta como cuota"); }
+        catch (e) { toast("No se ha podido cambiar"); }
+      },
       registrarMes: id => {
         const x = GS.prest.find(y => y.id === id); if (!x) return;
         const I = gsInfoPrest(x);
