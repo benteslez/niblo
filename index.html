@@ -5222,6 +5222,99 @@
     .gs-tabla tr.pasada td { color: var(--text-muted); }
     .gs-tabla tr.proxima td { background: color-mix(in srgb, var(--accent) 12%, transparent); font-weight: 700; }
     .gs-tabla tr.con-extra td { background: color-mix(in srgb, var(--gs-pos) 12%, transparent); }
+    .gs-btn-ancho { white-space: nowrap; }
+    .gs-sec-tit { font-family: var(--font-titulo); font-size: 1rem; font-weight: 700; margin: 0 0 var(--gap-2); letter-spacing: -0.01em; }
+    .gs-hero {
+      display: flex; align-items: center; gap: var(--gap-4); padding: var(--gap-4);
+      background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-lg); margin: 0 0 var(--gap-3);
+    }
+    .gs-anillo { width: 104px; height: 104px; flex: none; }
+    .gs-anillo-pista { fill: none; stroke: var(--bg-soft); stroke-width: 9; }
+    .gs-anillo-val { fill: none; stroke: var(--gs-pos); stroke-width: 9; stroke-linecap: round; transition: stroke-dasharray .4s; }
+    .gs-anillo-n { font-family: var(--font-num); font-size: 17px; font-weight: 800; fill: var(--text); }
+    .gs-anillo-t { font-size: 8px; fill: var(--text-muted); }
+    .gs-hero-datos { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .gs-hero-et { font-size: 0.625rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+    .gs-hero-v { font-family: var(--font-num); font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    .gs-hero-s { font-size: 0.75rem; color: var(--text-muted); }
+    .gs-hero-fin { font-size: 0.875rem; margin-top: 4px; }
+    .gs-objetivo { font-size: 0.8125rem; background: var(--bg-soft); border-radius: var(--r-md); padding: 8px var(--gap-3); margin: 0 0 var(--gap-3); line-height: 1.5; }
+    .gs-mes-card, .gs-limite, .gs-sim {
+      background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-lg);
+      padding: var(--gap-3) var(--gap-4); margin: 0 0 var(--gap-3);
+    }
+    .gs-mes-cab { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-2); }
+    .gs-mes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-3); margin: var(--gap-1) 0 var(--gap-3); }
+    .gs-mes-grid > div { display: flex; flex-direction: column; gap: 1px; }
+    .gs-mes-grid b { font-family: var(--font-num); font-size: 1.25rem; }
+    .gs-mes-btn { width: 100%; padding: 11px 16px; font-size: 0.875rem; }
+    .gs-aviso-linea { font-size: 0.75rem; color: var(--gs-ambar); margin: 0 0 var(--gap-2); }
+    .gs-limite-cab { display: flex; justify-content: space-between; align-items: baseline; gap: var(--gap-2); flex-wrap: wrap; margin-bottom: 6px; }
+    .gs-medidor { position: relative; height: 10px; background: var(--bg-soft); border-radius: 5px; overflow: hidden; margin-bottom: 6px; }
+    .gs-medidor span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; }
+    .gs-medidor-prev { background: color-mix(in srgb, var(--accent) 35%, transparent); }
+    .gs-medidor-val { background: var(--accent); }
+    .gs-sim-ctl { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-4); margin: var(--gap-2) 0 var(--gap-3); }
+    .gs-sim-campo { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .gs-sim-campo label, .gs-meta label { font-size: 0.8125rem; font-weight: 600; color: var(--text-muted); }
+    .gs-sim-fila { display: flex; align-items: center; gap: 6px; }
+    .gs-sim-fila input {
+      width: 100%; min-width: 0; padding: 9px 12px; border-radius: var(--r-sm); border: 1px solid var(--line);
+      background: var(--bg-input); color: var(--text); font: inherit; font-size: 1.0625rem; font-family: var(--font-num); font-weight: 700;
+    }
+    .gs-sim-fila span { color: var(--text-muted); font-weight: 600; }
+    .gs-sim input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .gs-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .gs-chips button { padding: 4px 11px; border-radius: var(--r-pill); background: var(--bg-soft); font-size: 0.75rem; font-weight: 600; color: var(--text); }
+    .gs-chips button:hover { background: var(--line); }
+    .gs-comp { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--gap-2); margin-bottom: var(--gap-2); }
+    .gs-comp-card { display: flex; flex-direction: column; gap: 2px; padding: 10px var(--gap-3); border-radius: var(--r-md); background: var(--bg-soft); border: 2px solid transparent; }
+    .gs-comp-card.plan { border-color: var(--accent); }
+    .gs-comp-card.sim1 { border-color: var(--gs-ambar); }
+    .gs-comp-card.sim2 { border-color: var(--gs-pos); }
+    .gs-comp-tit { font-size: 0.625rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+    .gs-comp-fin { font-family: var(--font-num); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+    .gs-comp-queda { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+    .gs-comp-lin { font-size: 0.75rem; }
+    .gs-comp-ahorro { font-size: 0.75rem; font-weight: 700; color: var(--gs-pos); margin-top: 2px; }
+    .gs-meta { border-top: 1px solid var(--line-soft); padding-top: var(--gap-3); margin-top: var(--gap-2); display: flex; flex-direction: column; gap: 6px; }
+    .gs-meta .gs-sim-fila { max-width: 180px; }
+    .gs-meta-res { font-size: 0.875rem; line-height: 1.6; margin: 0; }
+    .gs-meta-res .gs-btn { margin-left: 4px; padding: 5px 12px; }
+    .gs-vacio { font-size: 0.8125rem; margin: var(--gap-1) 0; }
+    .gs-chart-wrap { position: relative; touch-action: pan-y; background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 6px; }
+    .gs-chart { width: 100%; height: auto; display: block; }
+    .gs-ch-malla { stroke: var(--line-soft); stroke-width: 1; }
+    .gs-ch-eje { font-size: 10px; fill: var(--text-muted); }
+    .gs-ch-area { fill: color-mix(in srgb, var(--accent) 12%, transparent); }
+    .gs-ch-hoy { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 2 3; }
+    .gs-ch-cur { stroke: var(--text); stroke-width: 1; }
+    .gs-tip {
+      position: absolute; top: 8px; z-index: 2; pointer-events: none; display: flex; flex-direction: column; gap: 2px;
+      background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--r-sm); box-shadow: var(--sh-2);
+      padding: 6px 10px; font-size: 0.6875rem; white-space: nowrap;
+    }
+    .gs-tip[hidden] { display: none; }
+    .gs-tip i, .gs-leyenda i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; }
+    .gs-leyenda { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.6875rem; color: var(--text-muted); margin-top: 6px; }
+    .gs-det { margin: 0 0 var(--gap-4); }
+    .gs-det summary { cursor: pointer; font-size: 0.8125rem; font-weight: 600; color: var(--accent); padding: 6px 0; }
+    .gs-prest-mini {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--gap-3); width: 100%; text-align: left;
+      background: var(--bg-elev); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 8px var(--gap-3); margin: 0 0 var(--gap-3); color: inherit;
+    }
+    .gs-prest-mini span:first-child { display: flex; flex-direction: column; min-width: 0; }
+    .gs-prest-mini i { font-style: normal; font-size: 0.75rem; color: var(--text-muted); }
+    .gs-prest-mini-pct { font-family: var(--font-num); font-weight: 800; color: var(--gs-pos); text-align: right; }
+    .gs-prest-mini-pct small { display: block; font-size: 0.625rem; font-weight: 500; color: var(--text-muted); }
+    @media (max-width: 600px) {
+      .gs-hero { gap: var(--gap-3); padding: var(--gap-3); }
+      .gs-anillo { width: 84px; height: 84px; }
+      .gs-hero-v { font-size: 1.5rem; }
+      .gs-sim-ctl { grid-template-columns: 1fr; }
+      .gs-comp { grid-template-columns: 1fr 1fr; }
+    }
+
     .gs-pie { font-size: 0.75rem; margin: var(--gap-2) 0 0; }
     .gs-tabla tr.clic { cursor: pointer; }
     .gs-tabla tr.clic:hover td, .gs-tabla tr.clic:focus-visible td { background: var(--bg-soft); }
@@ -8504,7 +8597,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "375";
+const NIBLO_BUILD = "378";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30271,7 +30364,9 @@ function boot(vistaInicial) {
       cargado: false, cargando: false, error: null,
       pisoId: null, pisoTab: "resumen", anio: new Date().getFullYear(),
       movFiltro: "todos", prestId: null, filtroTodo: "todo", mes: null,
-      abiertos: {}, sinOrigen: false,   // listas desplegadas; true si falta la migracion 012
+      abiertos: {}, sinOrigen: false, sinPlan: false,
+      sim: { pid: null, mensual: 0, unico: 0, meses: 36 },   // simulacion «y si amortizo…»
+        // listas desplegadas; true si falta la migracion 012
     };
 
     const GS_TABLAS = ["gs_propiedades", "gs_inquilinos", "gs_gestiones", "gs_prestamos", "gs_prestamo_revisiones", "gs_pagos_prestamo"];
@@ -30354,6 +30449,7 @@ function boot(vistaInicial) {
         GS.props = props || []; GS.inqs = inqs || []; GS.gests = gests || [];
         GS.prest = prest || []; GS.revs = revs || []; GS.pagos = pagos || [];
         if (GS.gests.length) GS.sinOrigen = !("origen_id" in GS.gests[0]);
+        if (GS.prest.length) GS.sinPlan = !("obj_fecha" in GS.prest[0]);
         GS.cargado = true;
         rtUnirGestiones();
       } catch (e) {
@@ -30394,6 +30490,13 @@ function boot(vistaInicial) {
           origen: "d", ambito: "doc", fecha: d.expires_on, titulo: d.title, d,
           linea: "Caducidad" + (quien ? " · " + quien : ""),
         });
+      });
+      GS.prest.filter(x => x.obj_fecha).forEach(x => {
+        const I = gsInfoPrest(x);
+        if (I.recomendadoMes < 0.5 || I.registradoMes >= 0.5) return;
+        const p = x.propiedad_id ? gsProp(x.propiedad_id) : null, ult = new Date(+I.hoyYM.slice(0, 4), +I.hoyYM.slice(5, 7), 0);
+        items.push({ origen: "a", ambito: "piso", fecha: gsIso(ult), titulo: "Amortizar " + x.nombre, p: x, importe: I.recomendadoMes,
+          linea: (p ? p.nombre + " · " : "") + "recomendado este mes" });
       });
       GS.inqs.filter(i => i.activo && i.fin && gsDias(i.fin) <= 180).forEach(i => {
         const p = gsProp(i.propiedad_id);
@@ -30511,7 +30614,7 @@ function boot(vistaInicial) {
         <div class="gs-kpis">
           <div class="gs-kpi${vencidos ? " alerta" : ""}"><span class="gs-kpi-et">Vencido</span><span class="gs-kpi-v">${vencidos}</span></div>
           <div class="gs-kpi"><span class="gs-kpi-et">Próximos 30 días</span><span class="gs-kpi-v">${prox}</span></div>
-          <div class="gs-kpi"><span class="gs-kpi-et">Balance pisos ${new Date().getFullYear()}</span>
+          <div class="gs-kpi"><span class="gs-kpi-et">Balance en propiedad ${new Date().getFullYear()}</span>
             <span class="gs-kpi-v ${bal >= 0 ? "pos" : "neg"}">${gsEur(bal)}</span></div>
         </div>
         <div class="gs-filtros" role="group" aria-label="Filtrar por ámbito">${seg.map(([k, t, n]) =>
@@ -30525,13 +30628,13 @@ function boot(vistaInicial) {
       if (i.origen === "g") return gsFila(i.g, { ambito: true });
       const d = gsDias(i.fecha);
       const txt = d < 0 ? `hace ${docsTiempo(d)}` : d === 0 ? "hoy" : `en ${docsTiempo(d)}`;
-      const accion = i.origen === "d" ? `GSUI.verDocumentos()` : `GSUI.abrirPiso('${i.i.propiedad_id}','inq')`;
+      const accion = i.origen === "d" ? `GSUI.verDocumentos()` : i.origen === "a" ? `GSUI.abrirPiso('${i.p.propiedad_id}','prest')` : `GSUI.abrirPiso('${i.i.propiedad_id}','inq')`;
       return `<li class="gs-fila${d < 0 ? " vencido" : ""}">
-        <span class="gs-ico" aria-hidden="true">${i.origen === "d" ? "\u{1F4C4}" : "\u{1F4DD}"}</span>
+        <span class="gs-ico" aria-hidden="true">${i.origen === "d" ? "\u{1F4C4}" : i.origen === "a" ? "\u{1F4B6}" : "\u{1F4DD}"}</span>
         <button type="button" class="gs-fila-main" onclick="${accion}">
           <span class="gs-fila-tit">${esc(i.titulo)}${d < 0 ? ` <span class="gs-alerta" role="img" title="Vencido hace ${esc(docsTiempo(d))}" aria-label="Vencido"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>` : ""}</span>
           <span class="gs-fila-sub">${esc(gsFecha(i.fecha))} · ${txt}${i.linea ? " · " + esc(i.linea) : ""}</span>
-        </button></li>`;
+        </button>${i.origen === "a" ? `<span class="gs-importe">${gsEur(i.importe)}</span>` : ""}</li>`;
     }
 
     /* ---- Lima y Familia: lista por ambito ---------------------------------- */
@@ -30609,8 +30712,8 @@ function boot(vistaInicial) {
       const tot = prop.reduce((a, p) => { const c = gsCalcPiso(p.id, GS.anio); a.ing += c.ing; a.gas += c.gas; return a; }, { ing: 0, gas: 0 });
       return `${gsCab("Pisos", gsSelAnio() + gsBtnNuevo("GSUI.nuevoPiso()", "Piso"))}
         ${prop.length ? `<div class="gs-kpis">
-          <div class="gs-kpi"><span class="gs-kpi-et">Ingresos ${GS.anio}</span><span class="gs-kpi-v pos">${gsEur(tot.ing)}</span></div>
-          <div class="gs-kpi"><span class="gs-kpi-et">Gastos ${GS.anio}</span><span class="gs-kpi-v neg">${gsEur(tot.gas)}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Ingresos (en propiedad)</span><span class="gs-kpi-v pos">${gsEur(tot.ing)}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Gastos (en propiedad)</span><span class="gs-kpi-v neg">${gsEur(tot.gas)}</span></div>
           <div class="gs-kpi"><span class="gs-kpi-et">Balance (en propiedad)</span>
             <span class="gs-kpi-v ${tot.ing - tot.gas >= 0 ? "pos" : "neg"}">${gsEur(tot.ing - tot.gas)}</span></div>
         </div>` : ""}
@@ -30651,6 +30754,20 @@ function boot(vistaInicial) {
         ${cuerpo}`;
     }
 
+    /* En el resumen del piso: el prestamo en una linea, y el balance tras el
+       prestamo solo si la cuota no esta ya registrada como gasto «Hipoteca». */
+    function gsResumenPrestamo(p, c, cuotas) {
+      const yaGasto = GS.gests.some(g => g.propiedad_id === p.id && g.tipo === "gasto" && g.categoria === "Hipoteca" && +g.fecha.slice(0, 4) === GS.anio);
+      const lineas = GS.prest.filter(x => x.propiedad_id === p.id).map(x => {
+        const I = gsInfoPrest(x);
+        return `<button type="button" class="gs-prest-mini" onclick="GSUI.abrirPiso('${p.id}','prest');GSUI.abrirPrest('${x.id}')">
+          <span><b>${esc(x.nombre)}</b><i>Pendiente ${gsEur(I.saldoHoy)} · termina ${esc(gsMesTxt(I.plan.fin))}</i></span>
+          <span class="gs-prest-mini-pct">${(I.pct * 100).toLocaleString("es-ES", { maximumFractionDigits: 1 })} %<small>amortizado</small></span></button>`;
+      }).join("");
+      return `${lineas}${yaGasto ? "" : `<div class="gs-nota">Cuotas del préstamo pagadas en ${GS.anio} (según su tabla): <b>${gsEur(cuotas)}</b> ·
+          Balance tras el préstamo: <b class="${c.bal - cuotas >= 0 ? "pos" : "neg"}">${gsEur(c.bal - cuotas)}</b>.
+          <span class="faint">No registres la cuota también como gasto: se contaría dos veces.</span></div>`}`;
+    }
     function gsPisoResumen(p) {
       const prop = p.rol === "propietario";
       const c = gsCalcPiso(p.id, GS.anio);
@@ -30669,9 +30786,7 @@ function boot(vistaInicial) {
             ${c.pGas ? `<span class="gs-kpi-s">+ ${gsEur(c.pGas)} pendiente</span>` : ""}</div>
           ${prop ? `<div class="gs-kpi"><span class="gs-kpi-et">Balance</span><span class="gs-kpi-v ${c.bal >= 0 ? "pos" : "neg"}">${gsEur(c.bal)}</span></div>` : ""}
         </div>
-        ${tienePrest ? `<div class="gs-nota">Cuotas del préstamo pagadas en ${GS.anio} (según su tabla): <b>${gsEur(cuotas)}</b> ·
-          Balance tras el préstamo: <b class="${c.bal - cuotas >= 0 ? "pos" : "neg"}">${gsEur(c.bal - cuotas)}</b>.
-          <span class="faint">No registres la cuota también como gasto: se contaría dos veces.</span></div>` : ""}
+        ${tienePrest ? gsResumenPrestamo(p, c, cuotas) : ""}
         ${contratos.length ? `<div class="doc-alerta"><span class="doc-alerta-tit">Contratos que terminan pronto</span><ul>${contratos.map(i =>
           `<li><b>${esc(i.nombre)}</b> · ${gsDias(i.fin) < 0 ? "terminó" : "termina"} el ${esc(gsFecha(i.fin))}</li>`).join("")}</ul></div>` : ""}
         ${cats.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Gastos por categoría</h3><div class="gs-barras">${cats.map(([k, v]) =>
@@ -30755,27 +30870,50 @@ function boot(vistaInicial) {
         }).join("")}</div>` : `<div class="empty-state"><p>Todavía no hay inquilinos en este piso.</p></div>`}`;
     }
 
-    /* ---- Amortizacion ------------------------------------------------------- */
+    /* ---- Amortizacion: motor ------------------------------------------------- */
+    /*@motor-inicio*/
     function gsCuotaFrancesa(saldo, r, n) {
       if (n <= 0) return saldo;
       if (!r) return saldo / n;
       return saldo * r / (1 - Math.pow(1 + r, -n));
     }
     const gsRedondea = n => Math.round(n * 100) / 100;
+    const gsYM = iso => iso.slice(0, 7);
+    function gsMesesEntre(a, b) { return (+b.slice(0, 4) - +a.slice(0, 4)) * 12 + (+b.slice(5, 7) - +a.slice(5, 7)); }
+    function gsSumaYM(ym, n) {
+      const t = new Date(+ym.slice(0, 4), +ym.slice(5, 7) - 1 + n, 1);
+      return t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0");
+    }
+    function gsDur(n) {
+      if (n <= 0) return "este mes";
+      const a = Math.floor(n / 12), m = n % 12;
+      return [a ? `${a} ${a === 1 ? "año" : "años"}` : "", m ? `${m} ${m === 1 ? "mes" : "meses"}` : ""].filter(Boolean).join(" y ");
+    }
+    function gsMesTxt(ym) { return GS_MESES[+ym.slice(5, 7) - 1].toLowerCase() + " " + ym.slice(0, 4); }
 
-    /* Sistema frances con cuota mensual. Las revisiones de interes recalculan
-       la cuota sobre las cuotas que quedan; las amortizaciones anticipadas
-       restan capital tras la cuota del mes: "plazo" mantiene la cuota (termina
-       antes) y "cuota" mantiene el plazo (baja la cuota). */
-    function gsAmortizar(p, sinExtras) {
-      const capital = +p.capital, n0 = +p.meses;
+    /* Sistema frances con cuota mensual, calculado como la hoja de Excel del
+       plan: el interes de cada mes es el del saldo a principio de mes, la
+       cuota ordinaria amortiza capital y lo que se amortiza de mas se resta
+       despues, en ese mismo mes.
+       Opciones:
+         extras: "reales" (lo registrado, por defecto) | "ninguno"
+         plan:   true = en los meses que quedan, anade la amortizacion
+                 RECOMENDADA para cumplir el objetivo (liquidar en una fecha o
+                 amortizar un total hasta esa fecha); lo registrado manda.
+         sim:    {mensual, unico, modo} = simulacion «y si amortizo…» desde el
+                 mes actual; "plazo" mantiene la cuota, "cuota" mantiene el plazo.
+       Cada fila lleva `real` (registrado) y `prevista` (plan o simulacion). */
+    function gsSimular(p, o) {
+      o = o || {};
+      const n0 = +p.meses, hoyYM = gsYM(gsHoy());
       const revs = GS.revs.filter(r => r.prestamo_id === p.id).sort((a, b) => a.desde.localeCompare(b.desde));
-      const extras = sinExtras ? [] : GS.pagos.filter(x => x.prestamo_id === p.id).sort((a, b) => a.fecha.localeCompare(b.fecha));
-      let tasa = +p.interes, saldo = capital, ex = 0, ri = 0;
+      const reales = o.extras === "ninguno" ? [] : GS.pagos.filter(x => x.prestamo_id === p.id).sort((a, b) => a.fecha.localeCompare(b.fecha));
+      const metaYM = p.obj_fecha ? gsYM(p.obj_fecha) : null, planYM = gsYM(p.plan_inicio || p.inicio);
+      let tasa = +p.interes, saldo = +p.capital, ex = 0, ri = 0, acum = 0, unico = false;
       let cuota = p.cuota ? +p.cuota : gsCuotaFrancesa(saldo, tasa / 1200, n0);
       const filas = []; let intereses = 0, totalExtra = 0;
       for (let i = 0; i < n0 && saldo > 0.005; i++) {
-        const fecha = gsSumaMeses(p.inicio, i);
+        const fecha = gsSumaMeses(p.inicio, i), ym = gsYM(fecha), saldoIni = saldo;
         while (ri < revs.length && revs[ri].desde <= fecha) {
           if (+revs[ri].interes !== tasa) { tasa = +revs[ri].interes; cuota = gsCuotaFrancesa(saldo, tasa / 1200, n0 - i); }
           ri++;
@@ -30784,88 +30922,345 @@ function boot(vistaInicial) {
         let cap = cuota - interes;
         if (i === n0 - 1 || cap > saldo) cap = saldo;
         saldo -= cap;
-        let extra = 0, recalcular = false;
-        while (ex < extras.length && extras[ex].fecha <= fecha) {
-          const imp = Math.min(+extras[ex].importe, saldo);
-          saldo -= imp; extra += imp;
-          if (extras[ex].modo === "cuota") recalcular = true;
+        let real = 0, prevista = 0, recalcular = false;
+        while (ex < reales.length && gsYM(reales[ex].fecha) <= ym) {
+          const imp = Math.min(+reales[ex].importe, saldo);
+          saldo -= imp; real += imp;
+          if (reales[ex].modo === "cuota") recalcular = true;
           ex++;
         }
+        const futuro = ym >= hoyYM;
+        if (futuro && o.sim) {
+          let s = +o.sim.mensual || 0;
+          if (!unico) { s += +o.sim.unico || 0; unico = true; }
+          s = Math.min(s, saldo);
+          if (s > 0) { saldo -= s; prevista += s; if (o.sim.modo === "cuota") recalcular = true; }
+        } else if (futuro && o.plan && !real && metaYM) {
+          const N = gsMesesEntre(ym, metaYM) + 1;
+          if (N > 0) {
+            let rec = p.obj_importe ? (+p.obj_importe - acum) / N : gsCuotaFrancesa(saldoIni, tasa / 1200, N) - cuota;
+            rec = Math.max(0, Math.min(rec, saldo));
+            saldo -= rec; prevista += rec;
+          }
+        }
+        if (ym >= planYM) acum += real + prevista;
         if (recalcular && saldo > 0.005) cuota = gsCuotaFrancesa(saldo, tasa / 1200, n0 - i - 1);
-        intereses += interes; totalExtra += extra;
-        filas.push({ n: i + 1, fecha, cuota: gsRedondea(cap + interes), interes: gsRedondea(interes),
-                     capital: gsRedondea(cap), extra: gsRedondea(extra), saldo: gsRedondea(Math.max(0, saldo)) });
+        intereses += interes; totalExtra += real + prevista;
+        filas.push({ n: i + 1, fecha, ym, cuota: gsRedondea(cap + interes), interes: gsRedondea(interes), capital: gsRedondea(cap),
+                     extra: gsRedondea(real + prevista), real: gsRedondea(real), prevista: gsRedondea(prevista),
+                     saldoIni: gsRedondea(saldoIni), saldo: gsRedondea(Math.max(0, saldo)) });
       }
-      return { filas, intereses: gsRedondea(intereses), extra: gsRedondea(totalExtra) };
+      return { filas, intereses: gsRedondea(intereses), extra: gsRedondea(totalExtra), fin: filas.length ? filas[filas.length - 1].ym : gsYM(p.inicio) };
     }
+    /* Lo registrado y nada mas (para los totales y el CSV de siempre). */
+    function gsAmortizar(p, sinExtras) { return gsSimular(p, { extras: sinExtras ? "ninguno" : "reales" }); }
 
+    /* Todo lo que necesita el panel de un prestamo, de una vez. */
+    function gsInfoPrest(p) {
+      const hoy = gsHoy(), hoyYM = gsYM(hoy);
+      const base = gsSimular(p, { extras: "ninguno" });
+      const real = gsSimular(p, {});
+      const plan = p.obj_fecha ? gsSimular(p, { plan: true }) : real;
+      const pasadas = real.filas.filter(f => f.fecha <= hoy);
+      const saldoHoy = pasadas.length ? pasadas[pasadas.length - 1].saldo : +p.capital;
+      const filaMes = plan.filas.find(f => f.ym === hoyYM) || null;
+      const anterior = real.filas.filter(f => f.ym < hoyYM);
+      const saldoIniMes = anterior.length ? anterior[anterior.length - 1].saldo : +p.capital;
+      const anio = hoyYM.slice(0, 4);
+      const extraAnioReal = real.filas.filter(f => f.ym.slice(0, 4) === anio).reduce((s, f) => s + f.real, 0);
+      const extraAnioPlan = plan.filas.filter(f => f.ym.slice(0, 4) === anio).reduce((s, f) => s + f.extra, 0);
+      return {
+        hoy, hoyYM, base, real, plan, saldoHoy, filaMes, saldoIniMes,
+        pagadas: pasadas.length,
+        interesPagado: gsRedondea(pasadas.reduce((s, f) => s + f.interes, 0)),
+        pct: +p.capital > 0 ? Math.max(0, Math.min(1, 1 - saldoHoy / +p.capital)) : 0,
+        registradoMes: filaMes ? filaMes.real : 0,
+        recomendadoMes: filaMes ? filaMes.prevista : 0,
+        extraAnioReal: gsRedondea(extraAnioReal), extraAnioPlan: gsRedondea(extraAnioPlan),
+      };
+    }
+    /* Tipo vigente a una fecha (el del prestamo o el de su ultima revision). */
+    function gsTasaVigente(p, fecha) {
+      const r = GS.revs.filter(x => x.prestamo_id === p.id && x.desde <= fecha).sort((a, b) => b.desde.localeCompare(a.desde))[0];
+      return r ? +r.interes : +p.interes;
+    }
+    /*@motor-fin*/
+
+    /* ---- Prestamo: panel interactivo ------------------------------------------ */
     function gsPisoPrest(p) {
       const lista = GS.prest.filter(x => x.propiedad_id === p.id);
       if (!lista.some(x => x.id === GS.prestId)) GS.prestId = lista.length === 1 ? lista[0].id : null;
       if (GS.prestId) return gsPrestDetalle(GS.prest.find(x => x.id === GS.prestId), lista.length > 1);
       return `<div class="gs-barra-acc"><span></span>${gsBtnNuevo(`GSUI.nuevoPrest('${p.id}')`, "Préstamo")}</div>
         ${lista.length ? `<div class="gs-grid">${lista.map(x => {
-          const a = gsAmortizar(x), hoy = gsHoy();
-          const pasadas = a.filas.filter(f => f.fecha <= hoy);
-          const saldo = pasadas.length ? pasadas[pasadas.length - 1].saldo : +x.capital;
+          const I = gsInfoPrest(x);
           return `<button type="button" class="gs-card" onclick="GSUI.abrirPrest('${x.id}')">
             <span class="gs-card-cab"><span class="gs-card-tit">${esc(x.nombre)}</span></span>
-            <span class="gs-card-cifras"><span><i>Capital</i><b>${gsEur(x.capital)}</b></span>
-              <span><i>Pendiente hoy</i><b>${gsEur(saldo)}</b></span><span><i>Interés</i><b>${String(x.interes).replace(".", ",")} %</b></span></span></button>`;
+            <span class="gs-card-cifras"><span><i>Pendiente hoy</i><b>${gsEur(I.saldoHoy)}</b></span>
+              <span><i>Termina</i><b>${esc(gsMesTxt(I.plan.fin))}</b></span><span><i>Interés</i><b>${String(x.interes).replace(".", ",")} %</b></span></span></button>`;
         }).join("")}</div>`
-        : `<div class="empty-state"><p>Sin préstamos. Añade la hipoteca o el préstamo de este piso para ver su tabla de amortización y anotar lo que vas amortizando.</p></div>`}`;
+        : `<div class="empty-state"><p>Sin préstamos. Añade la hipoteca de este piso para ver cuánto te queda, simular amortizaciones y llevar lo que vas amortizando.</p></div>`}`;
+    }
+
+    const gsEurK = n => Math.abs(n) >= 1000 ? (n / 1000).toLocaleString("es-ES", { maximumFractionDigits: 0 }) + " mil €" : gsEur(n);
+
+    /* Anillo de progreso. */
+    function gsAnillo(pct) {
+      const r = 42, c = 2 * Math.PI * r;
+      return `<svg class="gs-anillo" viewBox="0 0 100 100" role="img" aria-label="${(pct * 100).toFixed(1).replace(".", ",")} % amortizado">
+        <circle cx="50" cy="50" r="${r}" class="gs-anillo-pista"/>
+        <circle cx="50" cy="50" r="${r}" class="gs-anillo-val" stroke-dasharray="${(c * pct).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 50 50)"/>
+        <text x="50" y="48" text-anchor="middle" class="gs-anillo-n">${(pct * 100).toLocaleString("es-ES", { maximumFractionDigits: pct < 0.1 ? 1 : 0 })} %</text>
+        <text x="50" y="62" text-anchor="middle" class="gs-anillo-t">amortizado</text></svg>`;
     }
 
     function gsPrestDetalle(x, conVolver) {
-      const a = gsAmortizar(x), sin = gsAmortizar(x, true), hoy = gsHoy();
-      const pasadas = a.filas.filter(f => f.fecha <= hoy);
-      const saldo = pasadas.length ? pasadas[pasadas.length - 1].saldo : +x.capital;
-      const interesPagado = pasadas.reduce((s, f) => s + f.interes, 0);
-      const proxima = a.filas.find(f => f.fecha > hoy);
-      const ahorro = sin.intereses - a.intereses;
-      const mesesMenos = sin.filas.length - a.filas.length;
+      if (GS.sim.pid !== x.id) GS.sim = { pid: x.id, mensual: 0, unico: 0, meses: 36 };
+      const I = gsInfoPrest(x), S = gsSimResultados(x);
       const extras = GS.pagos.filter(e => e.prestamo_id === x.id).sort((p, q) => q.fecha.localeCompare(p.fecha));
       const revs = GS.revs.filter(r => r.prestamo_id === x.id).sort((p, q) => q.desde.localeCompare(p.desde));
-      const ultima = a.filas[a.filas.length - 1];
+      const meta = x.obj_fecha ? gsYM(x.obj_fecha) : null;
+      const quedaPlan = gsDur(gsMesesEntre(I.hoyYM, I.plan.fin));
+      const cuotaMes = I.filaMes ? I.filaMes.cuota : (I.real.filas.find(f => f.ym >= I.hoyYM) || { cuota: 0 }).cuota;
+      const limite = x.max_anual_pct ? (+x.max_anual_pct / 100) * +x.capital : null;
+      const condiciones = [x.min_amort ? `Mínimo por amortización parcial: <b>${gsEur(x.min_amort)}</b>` : "",
+                           limite ? `Sin comisión hasta <b>${gsEur(limite)}</b> al año (${String(x.max_anual_pct).replace(".", ",")} % del capital inicial)` : "",
+                           x.condiciones ? esc(x.condiciones) : ""].filter(Boolean);
       return `${conVolver ? `<div class="gs-volver"><button type="button" onclick="GSUI.cerrarPrest()">&larr; Préstamos</button></div>` : ""}
-        <div class="gs-barra-acc"><h2 class="gs-h2">${esc(x.nombre)}</h2>
+        <div class="gs-barra-acc"><h2 class="gs-h2">${esc(x.nombre)}${x.entidad ? ` <span class="gs-pill">${esc(x.entidad)}</span>` : ""}</h2>
           <span class="gs-acc-grupo">
-            <button type="button" class="doc-btn-tipos" onclick="GSUI.editarPrest('${x.id}')" title="Editar préstamo">&#9998;<span class="doc-btn-tipos-txt">Editar</span></button>
-            <button type="button" class="doc-btn-tipos" onclick="GSUI.csvPrest('${x.id}')" title="Exportar la tabla a CSV (Excel)">&#11015;<span class="doc-btn-tipos-txt">CSV</span></button>
+            <button type="button" class="doc-btn-tipos" onclick="GSUI.editarPrest('${x.id}')" title="Editar préstamo y objetivo">&#9998;<span class="doc-btn-tipos-txt">Editar</span></button>
+            <button type="button" class="doc-btn-tipos" onclick="GSUI.csvPrest('${x.id}')" title="Exportar la tabla a CSV">&#11015;<span class="doc-btn-tipos-txt">CSV</span></button>
           </span></div>
-        <div class="gs-kpis gs-kpis4">
-          <div class="gs-kpi"><span class="gs-kpi-et">Pendiente hoy</span><span class="gs-kpi-v">${gsEur(saldo)}</span>
-            <span class="gs-kpi-s">de ${gsEur(x.capital)}</span></div>
-          <div class="gs-kpi"><span class="gs-kpi-et">Próxima cuota</span><span class="gs-kpi-v">${proxima ? gsEur(proxima.cuota) : "—"}</span>
-            <span class="gs-kpi-s">${proxima ? esc(gsFecha(proxima.fecha)) : "Pagado"}</span></div>
-          <div class="gs-kpi"><span class="gs-kpi-et">Cuotas pagadas</span><span class="gs-kpi-v">${pasadas.length}<small> / ${a.filas.length}</small></span>
-            <span class="gs-kpi-s">${gsEur(interesPagado)} de intereses</span></div>
-          <div class="gs-kpi"><span class="gs-kpi-et">Termina</span><span class="gs-kpi-v peq">${ultima ? esc(gsFecha(ultima.fecha)) : "—"}</span>
-            <span class="gs-kpi-s">${mesesMenos > 0 ? `${mesesMenos} meses menos · ahorras ${gsEur(ahorro)}` : `${gsEur(a.intereses)} de intereses en total`}</span></div>
-        </div>
-        <div class="gs-acciones-fila">
-          ${gsBtnNuevo(`GSUI.nuevoExtra('${x.id}')`, "Amortización anticipada")}
-          <button type="button" class="doc-btn-tipos" onclick="GSUI.nuevaRev('${x.id}')">+ Revisión de interés</button>
-        </div>
-        ${extras.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Amortizaciones anticipadas <span class="doc-cuenta">· ${extras.length} · ${gsEur(extras.reduce((s, e) => s + +e.importe, 0))}</span></h3>
-          <ul class="gs-lista">${extras.map(e => `<li class="gs-fila"><span class="gs-ico" aria-hidden="true">&#128181;</span>
+
+        <section class="gs-hero">
+          ${gsAnillo(I.pct)}
+          <div class="gs-hero-datos">
+            <span class="gs-hero-et">Pendiente hoy</span>
+            <span class="gs-hero-v">${gsEur(I.saldoHoy)}</span>
+            <span class="gs-hero-s">de ${gsEur(x.capital)} · ${gsEur(I.interesPagado)} de intereses pagados</span>
+            <span class="gs-hero-fin">${I.saldoHoy <= 0.5 ? "Préstamo liquidado" : `Termina en <b>${esc(gsMesTxt(I.plan.fin))}</b> <span class="faint">· ${quedaPlan}</span>`}</span>
+          </div>
+        </section>
+        ${meta ? `<p class="gs-objetivo">&#127919; Objetivo: ${x.obj_importe ? `amortizar <b>${gsEur(x.obj_importe)}</b> hasta` : "liquidar en"} <b>${esc(gsMesTxt(meta))}</b>.
+          Sin amortizar más de lo ya registrado acabarías en <b>${esc(gsMesTxt(I.real.fin))}</b>.</p>` : ""}
+
+        ${gsMesCard(x, I, cuotaMes)}
+        ${limite ? gsLimiteAnual(x, I, limite) : ""}
+
+        <section class="gs-sim">
+          <h3 class="gs-sec-tit">¿Y si amortizo…?</h3>
+          <div class="gs-sim-ctl">
+            <div class="gs-sim-campo">
+              <label for="gs-sim-m">Extra cada mes</label>
+              <div class="gs-sim-fila"><input type="number" id="gs-sim-m" inputmode="decimal" min="0" step="50" value="${GS.sim.mensual || ""}" placeholder="0" oninput="GSUI.sim('mensual', this.value, 'm')"><span>€</span></div>
+              <input type="range" id="gs-sim-mr" min="0" max="${Math.max(1000, Math.ceil(I.saldoHoy / 60 / 500) * 500)}" step="50" value="${GS.sim.mensual || 0}" aria-label="Extra cada mes" oninput="GSUI.sim('mensual', this.value, 'r')">
+              <div class="gs-chips">${[250, 500, 1000, 2000].map(v => `<button type="button" onclick="GSUI.simChip(${v})">+${v.toLocaleString("es-ES")}</button>`).join("")}</div>
+            </div>
+            <div class="gs-sim-campo">
+              <label for="gs-sim-u">Pago único ahora</label>
+              <div class="gs-sim-fila"><input type="number" id="gs-sim-u" inputmode="decimal" min="0" step="500" value="${GS.sim.unico || ""}" placeholder="0" oninput="GSUI.sim('unico', this.value)"><span>€</span></div>
+              <div class="gs-chips"><button type="button" onclick="GSUI.simQuitar()">Quitar simulación</button></div>
+            </div>
+          </div>
+          <div id="gs-sim-res">${gsComparar(x, I, S)}</div>
+          <div class="gs-meta">
+            <label for="gs-meta-n">¿Cuánto necesito para acabar de pagar en…?</label>
+            <div class="gs-sim-fila"><input type="number" id="gs-meta-n" inputmode="numeric" min="1" max="600" step="1" value="${GS.sim.meses}" oninput="GSUI.metaMeses(this.value)"><span>meses</span></div>
+            <div id="gs-meta-res">${gsMetaHTML(x, I)}</div>
+          </div>
+        </section>
+
+        <section class="gs-grupo">
+          <h3 class="gs-sec-tit">Cómo evoluciona la deuda</h3>
+          <div id="gs-chart-box">${gsGrafico(x, I, S)}</div>
+        </section>
+
+        ${gsTablaAnios(x, I)}
+
+        <section class="gs-grupo">
+          <h3 class="gs-grupo-tit">Amortizaciones registradas <span class="doc-cuenta">· ${extras.length}${extras.length ? " · " + gsEur(extras.reduce((s, e) => s + +e.importe, 0)) : ""}</span></h3>
+          ${extras.length ? gsListaTope("extras-" + x.id, extras, 4, e => `<li class="gs-fila"><span class="gs-ico" aria-hidden="true">&#128181;</span>
             <button type="button" class="gs-fila-main" onclick="GSUI.editarExtra('${e.id}')">
               <span class="gs-fila-tit">${gsEur(e.importe)}</span>
               <span class="gs-fila-sub">${esc(gsFecha(e.fecha))} · ${e.modo === "cuota" ? "Reduce la cuota" : "Reduce el plazo"}${e.notas ? " · " + esc(e.notas) : ""}</span>
-            </button></li>`).join("")}</ul></section>` : ""}
-        ${revs.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Revisiones de interés</h3>
-          <ul class="gs-lista">${revs.map(r => `<li class="gs-fila"><span class="gs-ico" aria-hidden="true">&#128200;</span>
+            </button></li>`) : `<p class="faint gs-vacio">Aún no has registrado ninguna.</p>`}
+          <div class="gs-acciones-fila">
+            ${gsBtnNuevo(`GSUI.nuevoExtra('${x.id}')`, "Registrar amortización")}
+            <button type="button" class="gs-btn gs-btn-ancho" onclick="GSUI.nuevaRev('${x.id}')">+ Revisión de interés</button>
+          </div>
+          ${revs.length ? `<h3 class="gs-grupo-tit">Revisiones de interés</h3><ul class="gs-lista">${revs.map(r => `<li class="gs-fila"><span class="gs-ico" aria-hidden="true">&#128200;</span>
             <button type="button" class="gs-fila-main" onclick="GSUI.editarRev('${r.id}')">
               <span class="gs-fila-tit">${String(r.interes).replace(".", ",")} %</span>
-              <span class="gs-fila-sub">Desde ${esc(gsFecha(r.desde))}</span></button></li>`).join("")}</ul></section>` : ""}
-        <section class="gs-grupo"><h3 class="gs-grupo-tit">Tabla de amortización</h3>
+              <span class="gs-fila-sub">Desde ${esc(gsFecha(r.desde))}</span></button></li>`).join("")}</ul>` : ""}
+        </section>
+        ${condiciones.length ? `<section class="gs-nota"><b>Condiciones</b><br>${condiciones.join("<br>")}</section>` : ""}
+
+        <details class="gs-det"><summary>Ver tabla mes a mes</summary>
           <div class="gs-tabla-wrap alta"><table class="gs-tabla"><thead><tr>
             <th>N.º</th><th class="izq">Fecha</th><th>Cuota</th><th>Intereses</th><th>Capital</th><th>Extra</th><th>Pendiente</th></tr></thead><tbody>${
-            a.filas.map(f => `<tr class="${f.fecha <= hoy ? "pasada" : ""}${proxima && f.n === proxima.n ? " proxima" : ""}${f.extra ? " con-extra" : ""}">
+            I.plan.filas.map(f => `<tr class="${f.fecha <= I.hoy ? "pasada" : ""}${f.ym === I.hoyYM ? " proxima" : ""}${f.extra ? " con-extra" : ""}">
               <td>${f.n}</td><td>${esc(gsFecha(f.fecha))}</td><td class="num">${gsEur(f.cuota)}</td><td class="num">${gsEur(f.interes)}</td>
-              <td class="num">${gsEur(f.capital)}</td><td class="num">${f.extra ? gsEur(f.extra) : ""}</td><td class="num">${gsEur(f.saldo)}</td></tr>`).join("")}</tbody></table></div>
-          <p class="faint gs-pie">Sistema francés, cuota mensual. Las filas con fecha pasada se dan por pagadas. Si tu banco redondea distinto, la diferencia es de céntimos.</p>
-        </section>`;
+              <td class="num">${gsEur(f.capital)}</td><td class="num">${f.extra ? gsEur(f.extra) + (f.prevista ? " *" : "") : ""}</td><td class="num">${gsEur(f.saldo)}</td></tr>`).join("")}</tbody></table></div>
+          <p class="faint gs-pie">Sistema francés, cuota mensual. * = amortización recomendada por el objetivo (aún no registrada). Las filas pasadas se dan por pagadas.</p>
+        </details>`;
+    }
+
+    /* «Este mes»: lo que toca y el boton para registrarlo. */
+    function gsMesCard(x, I, cuotaMes) {
+      if (I.saldoHoy <= 0.5 || !I.filaMes) return "";
+      const rec = I.recomendadoMes, reg = I.registradoMes, minimo = x.min_amort ? +x.min_amort : 0;
+      const aldia = rec <= 0.5 && reg > 0 ? true : (rec > 0.5 ? false : null);
+      const f = I.filaMes;
+      return `<section class="gs-mes-card">
+        <div class="gs-mes-cab"><h3 class="gs-sec-tit">Este mes · ${esc(gsMesTxt(I.hoyYM))}</h3>
+          ${reg > 0.5 ? `<span class="gs-pill verde">✓ Registrado ${gsEur(reg)}</span>` : ""}</div>
+        <div class="gs-mes-grid">
+          <div><span class="gs-kpi-et">Cuota ordinaria</span><b>${gsEur(f.cuota)}</b>
+            <span class="gs-kpi-s">${gsEur(f.interes)} intereses · ${gsEur(f.capital)} capital</span></div>
+          ${x.obj_fecha ? `<div><span class="gs-kpi-et">Amortización recomendada</span><b class="${rec > 0.5 ? "pos" : ""}">${rec > 0.5 ? gsEur(rec) : reg > 0.5 ? "Cumplida" : "—"}</b>
+            <span class="gs-kpi-s">${rec > 0.5 ? "para llegar al objetivo" : "no hace falta más este mes"}</span></div>` : ""}
+        </div>
+        ${rec > 0.5 && minimo && rec < minimo ? `<p class="gs-aviso-linea">&#9888; Por debajo del mínimo por amortización parcial (${gsEur(minimo)}): el banco no la admitiría.</p>` : ""}
+        <button type="button" class="gs-btn pri gs-mes-btn" onclick="GSUI.registrarMes('${x.id}')">${rec > 0.5 ? `Registrar ${gsEur(rec)} amortizados` : "Registrar una amortización"}</button>
+      </section>`;
+    }
+    function gsLimiteAnual(x, I, limite) {
+      const usado = I.extraAnioReal, previsto = Math.max(usado, I.extraAnioPlan);
+      const pct = v => Math.min(100, v / limite * 100);
+      const pasa = previsto > limite + 0.5;
+      return `<section class="gs-limite"><div class="gs-limite-cab"><span class="gs-kpi-et">Límite anual sin comisión · ${I.hoyYM.slice(0, 4)}</span>
+          <b>${gsEur(usado)} <span class="faint">de ${gsEur(limite)}</span></b></div>
+        <div class="gs-medidor"><span class="gs-medidor-prev" style="width:${pct(previsto)}%"></span><span class="gs-medidor-val" style="width:${pct(usado)}%"></span></div>
+        <span class="gs-kpi-s">${pasa ? `⚠ Con tu plan este año amortizarías ${gsEur(previsto)}: pasas del límite.` : `Con tu plan este año: ${gsEur(previsto)}.`} Se calcula sobre el capital inicial; confírmalo en tu contrato.</span></section>`;
+    }
+
+    /* Resultados de la simulacion (los dos modos), o null si no hay. */
+    function gsSimResultados(x) {
+      const s = GS.sim;
+      if (!(+s.mensual > 0 || +s.unico > 0)) return null;
+      return { plazo: gsSimular(x, { sim: { mensual: +s.mensual || 0, unico: +s.unico || 0, modo: "plazo" } }),
+               cuota: gsSimular(x, { sim: { mensual: +s.mensual || 0, unico: +s.unico || 0, modo: "cuota" } }) };
+    }
+    /* Tarjetas para comparar escenarios. */
+    function gsComparar(x, I, S) {
+      const base = I.base;
+      const filaFut = res => res.filas.find(f => f.ym >= I.hoyYM) || res.filas[res.filas.length - 1] || { cuota: 0 };
+      const f12 = res => res.filas.find(f => f.ym >= gsSumaYM(I.hoyYM, 12));
+      const tarjeta = (titulo, res, cl, nota) => {
+        const queda = gsDur(gsMesesEntre(I.hoyYM, res.fin)), ahorro = base.intereses - res.intereses, menos = base.filas.length - res.filas.length;
+        const c0 = filaFut(res), c12 = f12(res);
+        return `<div class="gs-comp-card ${cl}">
+          <span class="gs-comp-tit">${titulo}</span>
+          <span class="gs-comp-fin">${esc(gsMesTxt(res.fin))}</span>
+          <span class="gs-comp-queda">quedan ${queda}</span>
+          <span class="gs-comp-lin">Cuota <b>${gsEur(c0.cuota)}</b>${c12 && Math.abs(c12.cuota - c0.cuota) > 0.5 ? ` <span class="faint">→ ${gsEur(c12.cuota)} en 1 año</span>` : ""}</span>
+          <span class="gs-comp-lin">Intereses <b>${gsEur(res.intereses)}</b></span>
+          ${ahorro > 0.5 ? `<span class="gs-comp-ahorro">Ahorras ${gsEur(ahorro)}${menos > 0 ? ` · ${gsDur(menos)} menos` : ""}</span>` : `<span class="gs-comp-lin faint">${nota || ""}</span>`}
+        </div>`;
+      };
+      const tarjetas = [tarjeta("Sin amortizar", base, "base", "Solo la cuota")];
+      if (x.obj_fecha) tarjetas.push(tarjeta("Con tu plan", I.plan, "plan", ""));
+      else if (GS.pagos.some(e => e.prestamo_id === x.id)) tarjetas.push(tarjeta("Con lo registrado", I.real, "plan", ""));
+      if (S) {
+        tarjetas.push(tarjeta("Reduciendo el plazo", S.plazo, "sim1", ""), tarjeta("Reduciendo la cuota", S.cuota, "sim2", ""));
+      }
+      const minimo = x.min_amort ? +x.min_amort : 0;
+      return `<div class="gs-comp">${tarjetas.join("")}</div>
+        ${S && minimo && +GS.sim.mensual > 0 && +GS.sim.mensual < minimo ? `<p class="gs-aviso-linea">&#9888; ${gsEur(GS.sim.mensual)} está por debajo del mínimo por amortización parcial (${gsEur(minimo)}).</p>` : ""}
+        ${S ? "" : `<p class="faint gs-vacio">Mueve el control de arriba para ver cuánto te queda si amortizas el plazo o la cuota.</p>`}`;
+    }
+    /* «¿Cuanto necesito para acabar en N meses?» */
+    function gsMetaHTML(x, I) {
+      const N = Math.round(+GS.sim.meses);
+      if (!(N >= 1) || I.saldoHoy <= 0.5) return "";
+      const fin = gsSumaYM(I.hoyYM, N - 1);
+      const sinExtra = gsMesesEntre(I.hoyYM, I.base.fin) + 1;
+      const cuota = (I.real.filas.find(f => f.ym >= I.hoyYM) || { cuota: +x.cuota || 0 }).cuota;
+      const pmt = gsCuotaFrancesa(I.saldoIniMes, gsTasaVigente(x, I.hoy) / 1200, N);
+      const extra = Math.max(0, pmt - cuota);
+      if (N >= sinExtra || extra < 0.5) return `<p class="gs-meta-res">Con solo la cuota ya terminas antes de ${esc(gsMesTxt(fin))}.</p>`;
+      return `<p class="gs-meta-res">Para terminar en <b>${esc(gsMesTxt(fin))}</b> (${gsDur(N)}) tienes que amortizar <b>${gsEur(extra)} extra al mes</b>
+        <span class="faint">(${gsEur(pmt)} en total al mes con la cuota)</span>.
+        <button type="button" class="gs-btn" onclick="GSUI.simDesdeMeta(${(Math.ceil(extra * 100) / 100).toFixed(2)})">Probar en la simulación</button></p>`;
+    }
+    function gsSimRender() {
+      const x = GS.prest.find(y => y.id === GS.sim.pid);
+      if (!x) return;
+      const I = gsInfoPrest(x), S = gsSimResultados(x);
+      const r = document.getElementById("gs-sim-res"); if (r) r.innerHTML = gsComparar(x, I, S);
+      const c = document.getElementById("gs-chart-box"); if (c) c.innerHTML = gsGrafico(x, I, S);
+      const m = document.getElementById("gs-meta-res"); if (m) m.innerHTML = gsMetaHTML(x, I);
+    }
+
+    /* Grafico: deuda pendiente mes a mes, con lo que pasaria en cada escenario. */
+    let GS_CHART = null;
+    function gsGrafico(x, I, S) {
+      const W = 640, H = 230, L = 50, R = 12, T = 12, B = 26, w = W - L - R, h = H - T - B;
+      const M = Math.max(2, I.base.filas.length), cap = +x.capital, iniYM = gsYM(x.inicio);
+      const X = i => L + i / M * w, Y = v => T + (1 - v / cap) * h;
+      const ser = res => { const a = [cap]; for (let i = 1; i <= M; i++) { const f = res.filas[i - 1]; a.push(f ? f.saldo : 0); } return a; };
+      const series = [{ k: "base", t: "Sin amortizar", a: ser(I.base), c: "var(--text-muted)" }];
+      if (x.obj_fecha) series.push({ k: "plan", t: "Con tu plan", a: ser(I.plan), c: "var(--accent)" });
+      else if (I.real.extra > 0) series.push({ k: "plan", t: "Con lo registrado", a: ser(I.real), c: "var(--accent)" });
+      if (S) series.push({ k: "sim1", t: "Reduciendo el plazo", a: ser(S.plazo), c: "var(--gs-ambar)" }, { k: "sim2", t: "Reduciendo la cuota", a: ser(S.cuota), c: "var(--gs-pos)" });
+      const path = a => a.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join("");
+      const area = a => path(a) + `L${X(M).toFixed(1)} ${Y(0).toFixed(1)}L${X(0).toFixed(1)} ${Y(0).toFixed(1)}Z`;
+      const ticks = [];
+      for (let i = 0; i <= M; i++) { const ym = gsSumaYM(iniYM, i); if (ym.slice(5) === "01" || i === 0) ticks.push([i, ym.slice(0, 4)]); }
+      const paso = Math.ceil(ticks.length / 7);
+      const ih = gsMesesEntre(iniYM, I.hoyYM) + 1;
+      GS_CHART = { M, L, w, W, series, iniYM, cap };
+      const plan = series.find(s => s.k === "plan");
+      return `<div class="gs-chart-wrap" onpointermove="GSUI.chartMove(event)" onpointerdown="GSUI.chartMove(event)" onpointerleave="GSUI.chartOut()">
+        <svg viewBox="0 0 ${W} ${H}" class="gs-chart" role="img" aria-label="Deuda pendiente mes a mes, sin amortizar${plan ? " y con tu plan" : ""}${S ? " y en la simulación" : ""}">
+          ${[0, .5, 1].map(f => `<line x1="${L}" x2="${W - R}" y1="${Y(cap * f).toFixed(1)}" y2="${Y(cap * f).toFixed(1)}" class="gs-ch-malla"/>
+            <text x="${L - 6}" y="${(Y(cap * f) + 3).toFixed(1)}" text-anchor="end" class="gs-ch-eje">${gsEurK(cap * f)}</text>`).join("")}
+          ${ticks.filter((_, k) => k % paso === 0).map(([i, a]) => `<text x="${X(i).toFixed(1)}" y="${H - 8}" text-anchor="middle" class="gs-ch-eje">${a}</text>`).join("")}
+          ${plan ? `<path d="${area(plan.a)}" class="gs-ch-area"/>` : ""}
+          ${series.map(s => `<path d="${path(s.a)}" fill="none" stroke="${s.c}" stroke-width="${s.k === "plan" ? 2.6 : 2}" ${s.k === "base" ? 'stroke-dasharray="5 4"' : ""} stroke-linejoin="round" stroke-linecap="round"/>`).join("")}
+          ${ih > 0 && ih < M ? `<line x1="${X(ih).toFixed(1)}" x2="${X(ih).toFixed(1)}" y1="${T}" y2="${T + h}" class="gs-ch-hoy"/><text x="${(X(ih) + 4).toFixed(1)}" y="${T + 10}" class="gs-ch-eje">hoy</text>` : ""}
+          <line id="gs-cur" x1="0" x2="0" y1="${T}" y2="${T + h}" class="gs-ch-cur" visibility="hidden"/>
+        </svg>
+        <div id="gs-tip" class="gs-tip" hidden></div>
+      </div>
+      <div class="gs-leyenda">${series.map(s => `<span><i style="background:${s.c}"></i>${s.t}</span>`).join("")}</div>`;
+    }
+    function gsChartMove(ev) {
+      if (!GS_CHART) return;
+      const wrap = ev.currentTarget, rect = wrap.getBoundingClientRect(), g = GS_CHART;
+      const esc_ = rect.width / g.W;
+      const i = Math.max(0, Math.min(g.M, Math.round(((ev.clientX - rect.left) / esc_ - g.L) / g.w * g.M)));
+      const xs = g.L + i / g.M * g.w;
+      const cur = document.getElementById("gs-cur"); if (cur) { cur.setAttribute("x1", xs); cur.setAttribute("x2", xs); cur.setAttribute("visibility", "visible"); }
+      const tip = document.getElementById("gs-tip"); if (!tip) return;
+      const ym = gsSumaYM(g.iniYM, i - 1 < 0 ? 0 : i - 1);
+      tip.innerHTML = `<b>${i === 0 ? "Inicio" : esc(gsMesTxt(ym))}</b>${g.series.map(s => `<span><i style="background:${s.c}"></i>${s.t}: <b>${gsEur(s.a[i])}</b></span>`).join("")}`;
+      tip.hidden = false;
+      const px = xs * esc_;
+      tip.style.left = Math.max(4, Math.min(rect.width - tip.offsetWidth - 4, px - tip.offsetWidth / 2)) + "px";
+    }
+    function gsChartOut() {
+      const cur = document.getElementById("gs-cur"); if (cur) cur.setAttribute("visibility", "hidden");
+      const tip = document.getElementById("gs-tip"); if (tip) tip.hidden = true;
+    }
+
+    /* Por anios: el resumen que cabe en una pantalla. */
+    function gsTablaAnios(x, I) {
+      const por = new Map();
+      I.plan.filas.forEach(f => {
+        const a = f.ym.slice(0, 4);
+        if (!por.has(a)) por.set(a, { a, cuotas: 0, interes: 0, extra: 0, saldo: 0, prev: false });
+        const o = por.get(a); o.cuotas += f.cuota; o.interes += f.interes; o.extra += f.extra; o.saldo = f.saldo; o.prev = o.prev || f.prevista > 0;
+      });
+      const filas = [...por.values()];
+      const abierto = !!GS.abiertos["anios-" + x.id], vis = abierto ? filas : filas.slice(0, 6);
+      return `<section class="gs-grupo"><h3 class="gs-sec-tit">Año a año</h3>
+        <div class="gs-tabla-wrap"><table class="gs-tabla"><thead><tr><th class="izq">Año</th><th>Intereses</th><th>Extra</th><th>Queda a 31/12</th></tr></thead><tbody>${
+          vis.map(o => `<tr class="${o.a === I.hoyYM.slice(0, 4) ? "proxima" : ""}"><td>${o.a}</td><td class="num">${gsEur(o.interes)}</td>
+            <td class="num">${o.extra ? gsEur(o.extra) + (o.prev ? " *" : "") : "—"}</td><td class="num">${gsEur(o.saldo)}</td></tr>`).join("")}</tbody></table></div>
+        ${filas.length > 6 ? `<button type="button" class="gs-mas-btn" onclick="GSUI.desplegar('anios-${x.id}')">${abierto ? "Ver menos" : `Ver los ${filas.length - 6} años restantes`}</button>` : ""}
+        <p class="faint gs-pie">* incluye amortización recomendada por el objetivo, aún sin registrar.</p></section>`;
     }
 
     /* ---- modal y formularios -------------------------------------------------- */
@@ -30992,11 +31387,12 @@ function boot(vistaInicial) {
         campos: [
           { id: "nombre", label: "Nombre", req: true, ph: "Piso de Gran Vía" },
           { id: "rol", label: "Situación", tipo: "select", req: true,
-            opciones: [["propietario", "Es nuestro (alquilado a inquilinos)"], ["inquilino", "Somos inquilinos"]] },
+            hint: "Los pisos donde somos inquilinos no cuentan en el balance de los pisos en propiedad.",
+            opciones: [["", "Elige una opción…"], ["propietario", "Es nuestro (alquilado a inquilinos)"], ["inquilino", "Somos inquilinos"]] },
           { id: "direccion", label: "Dirección" },
           { id: "notas", label: "Notas", tipo: "textarea" },
         ],
-        valores: p || { rol: "propietario" },
+        valores: p || { rol: "" },
         borrar: p ? () => {
           const m = GS.gests.filter(g => g.propiedad_id === p.id).length, i = GS.inqs.filter(x => x.propiedad_id === p.id).length;
           gsConfirmarBorrar("gs_propiedades", p.id, p.nombre,
@@ -31135,39 +31531,60 @@ function boot(vistaInicial) {
       } catch (e) { toast("No se ha podido registrar"); }
     }
     /* Prestamo, amortizacion anticipada y revision de interes */
+    const GS_COLS_PLAN = ["entidad", "obj_fecha", "obj_importe", "plan_inicio", "min_amort", "max_anual_pct", "condiciones"];
     function gsFormPrest(propId, x) {
+      const sin = GS.sinPlan;   // falta la migracion 013: solo los campos de siempre
+      const campos = [
+        { id: "nombre", label: "Nombre", req: true, ph: "Hipoteca" },
+        { id: "entidad", label: "Banco", ph: "Nombre del banco" },
+        { id: "capital", label: "Capital pendiente al empezar (€)", tipo: "number", req: true, mitad: true, hint: "El saldo que debes en la fecha de la primera cuota." },
+        { id: "interes", label: "Interés anual (%)", tipo: "number", req: true, mitad: true },
+        { id: "meses", label: "Cuotas que quedan", tipo: "number", req: true, mitad: true, hint: "25 años = 300" },
+        { id: "inicio", label: "Fecha de la primera cuota", tipo: "date", req: true, mitad: true },
+        { id: "cuota", label: "Cuota mensual del banco (€)", tipo: "number", hint: "Si la dejas vacía, se calcula." },
+        { id: "obj_fecha", label: "Objetivo: acabar en…", tipo: "month", mitad: true, hint: "Opcional. Niblo calcula lo que toca amortizar cada mes." },
+        { id: "obj_importe", label: "…o amortizar un total de (€)", tipo: "number", mitad: true, hint: "Si lo dejas vacío, el objetivo es liquidar." },
+        { id: "plan_inicio", label: "El plan empieza", tipo: "date", mitad: true },
+        { id: "min_amort", label: "Mínimo por amortización (€)", tipo: "number", mitad: true },
+        { id: "max_anual_pct", label: "Máximo sin comisión al año (%)", tipo: "number", hint: "Sobre el capital inicial. Opcional." },
+        { id: "condiciones", label: "Condiciones y comisiones", tipo: "textarea" },
+        { id: "notas", label: "Notas", tipo: "textarea" },
+      ].filter(c => !sin || !GS_COLS_PLAN.includes(c.id));
       gsFormulario({
         titulo: x ? "Editar préstamo" : "Nuevo préstamo",
-        campos: [
-          { id: "nombre", label: "Nombre", req: true, ph: "Hipoteca" },
-          { id: "capital", label: "Capital inicial (€)", tipo: "number", req: true, mitad: true },
-          { id: "interes", label: "Interés anual (%)", tipo: "number", req: true, mitad: true },
-          { id: "meses", label: "Plazo (meses)", tipo: "number", req: true, mitad: true, hint: "25 años = 300" },
-          { id: "inicio", label: "Fecha de la primera cuota", tipo: "date", req: true, mitad: true },
-          { id: "cuota", label: "Cuota mensual del banco (€)", tipo: "number", hint: "Si la dejas vacía, se calcula." },
-          { id: "notas", label: "Notas", tipo: "textarea" },
-        ],
-        valores: x || {},
+        campos,
+        valores: x ? Object.assign({}, x, { obj_fecha: x.obj_fecha ? x.obj_fecha.slice(0, 7) : "" }) : { plan_inicio: gsHoy().slice(0, 7) + "-01" },
         borrar: x ? () => gsConfirmarBorrar("gs_prestamos", x.id, x.nombre, "Se borran también sus amortizaciones anticipadas y revisiones.", "Préstamo borrado") : null,
         guardar: async v => {
           if (v.capital <= 0 || v.meses < 1 || v.interes < 0) throw gsErr("Revisa capital, interés y plazo.");
-          await gsGuardarFila("gs_prestamos", x && x.id, {
-            propiedad_id: propId || null, nombre: v.nombre, capital: v.capital, interes: v.interes,
-            meses: Math.round(v.meses), inicio: v.inicio, cuota: v.cuota, notas: v.notas });
+          const base = { propiedad_id: propId || null, nombre: v.nombre, capital: v.capital, interes: v.interes,
+            meses: Math.round(v.meses), inicio: v.inicio, cuota: v.cuota, notas: v.notas };
+          const plan = sin ? {} : { entidad: v.entidad, obj_fecha: v.obj_fecha ? v.obj_fecha + "-01" : null, obj_importe: v.obj_importe,
+            plan_inicio: v.plan_inicio, min_amort: v.min_amort, max_anual_pct: v.max_anual_pct, condiciones: v.condiciones };
+          try { await gsGuardarFila("gs_prestamos", x && x.id, Object.assign(base, plan)); }
+          catch (e) {
+            if (!sin && /(obj_fecha|entidad|min_amort|plan_inicio|max_anual|condiciones)/i.test(e.message || "")) {
+              GS.sinPlan = true;
+              throw gsErr("Falta ejecutar 013_gestiones_plan.sql en Supabase para guardar el objetivo y las condiciones.");
+            }
+            throw e;
+          }
           await gsTras(x ? "Préstamo actualizado" : "Préstamo añadido");
         },
       });
     }
-    function gsFormExtra(prestId, e) {
+    function gsFormExtra(prestId, e, sugerido) {
+      const pr = GS.prest.find(y => y.id === prestId);
       gsFormulario({
         titulo: e ? "Editar amortización anticipada" : "Amortización anticipada",
         campos: [
           { id: "fecha", label: "Fecha", tipo: "date", req: true, mitad: true },
-          { id: "importe", label: "Importe (€)", tipo: "number", req: true, mitad: true },
+          { id: "importe", label: "Importe (€)", tipo: "number", req: true, mitad: true,
+            hint: pr && pr.min_amort ? `Mínimo del banco: ${gsEur(pr.min_amort)}` : "" },
           { id: "modo", label: "Qué reduce", tipo: "select", opciones: [["plazo", "El plazo (misma cuota)"], ["cuota", "La cuota (mismo plazo)"]] },
           { id: "notas", label: "Notas", tipo: "textarea" },
         ],
-        valores: e || { fecha: gsHoy(), modo: "plazo" },
+        valores: e || { fecha: gsHoy(), modo: "plazo", importe: sugerido || "" },
         borrar: e ? () => gsConfirmarBorrar("gs_pagos_prestamo", e.id, `${gsEur(e.importe)} · ${gsFecha(e.fecha)}`, "", "Borrada") : null,
         guardar: async v => {
           if (v.importe <= 0) throw gsErr("El importe tiene que ser mayor que cero.");
@@ -31249,8 +31666,8 @@ function boot(vistaInicial) {
     function gsCsvPrest(id) {
       const x = GS.prest.find(y => y.id === id);
       if (!x) return;
-      const filas = [["N.º", "Fecha", "Cuota", "Intereses", "Capital", "Extra", "Pendiente"]];
-      gsAmortizar(x).filas.forEach(f => filas.push([f.n, f.fecha, f.cuota, f.interes, f.capital, f.extra || "", f.saldo]));
+      const filas = [["N.º", "Fecha", "Cuota", "Intereses", "Capital", "Extra", "Extra prevista (plan)", "Pendiente"]];
+      gsInfoPrest(x).plan.filas.forEach(f => filas.push([f.n, f.fecha, f.cuota, f.interes, f.capital, f.real || "", f.prevista || "", f.saldo]));
       gsCSV(`amortizacion-${x.nombre.replace(/\s+/g, "-")}.csv`, filas);
     }
 
@@ -31291,6 +31708,39 @@ function boot(vistaInicial) {
       nuevaRev: id => gsFormRev(id, null),
       editarRev: id => { const r = GS.revs.find(y => y.id === id); if (r) gsFormRev(r.prestamo_id, r); },
       csvMov: gsCsvMov, csvPrest: gsCsvPrest,
+      sim: (campo, v, origen) => {
+        GS.sim[campo] = Math.max(0, +v || 0);
+        if (campo === "mensual") {   // número y deslizador van a la par
+          if (origen !== "m") { const n = document.getElementById("gs-sim-m"); if (n) n.value = GS.sim.mensual || ""; }
+          if (origen !== "r") { const r = document.getElementById("gs-sim-mr"); if (r) r.value = GS.sim.mensual; }
+        }
+        gsSimRender();
+      },
+      simChip: v => {
+        GS.sim.mensual = (GS.sim.mensual || 0) + v;
+        const n = document.getElementById("gs-sim-m"); if (n) n.value = GS.sim.mensual;
+        const r = document.getElementById("gs-sim-mr"); if (r) r.value = GS.sim.mensual;
+        gsSimRender();
+      },
+      simQuitar: () => {
+        GS.sim.mensual = 0; GS.sim.unico = 0;
+        ["gs-sim-m", "gs-sim-u"].forEach(id => { const n = document.getElementById(id); if (n) n.value = ""; });
+        const r = document.getElementById("gs-sim-mr"); if (r) r.value = 0;
+        gsSimRender();
+      },
+      metaMeses: v => { GS.sim.meses = Math.max(1, Math.round(+v || 1)); gsSimRender(); },
+      simDesdeMeta: v => {
+        GS.sim.mensual = v;
+        const n = document.getElementById("gs-sim-m"); if (n) n.value = v;
+        const r = document.getElementById("gs-sim-mr"); if (r) { r.max = Math.max(+r.max, Math.ceil(v / 500) * 500); r.value = v; }
+        gsSimRender();
+      },
+      chartMove: gsChartMove, chartOut: gsChartOut,
+      registrarMes: id => {
+        const x = GS.prest.find(y => y.id === id); if (!x) return;
+        const I = gsInfoPrest(x);
+        gsFormExtra(id, null, I.recomendadoMes > 0.5 ? Math.round(I.recomendadoMes * 100) / 100 : "");
+      },
       verDocumentos: () => { fijarVista("documentos"); window.scrollTo(0, 0); },
       nuevoDocumento: () => { gsCerrar(); fijarVista("documentos"); docsFormulario(null); },
       recetasIr: recetasMenuIr,
