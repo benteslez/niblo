@@ -5190,6 +5190,20 @@
     .gs-borrar-izq { margin-right: auto; }
     .gs-volver { margin: 0 0 var(--gap-2); }
     .gs-volver button { color: var(--accent); font-weight: 600; font-size: 0.875rem; padding: 4px 0; }
+    .gs-sumis { display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 10px; margin: 0 0 var(--gap-3, 12px); }
+    .gs-sumi { flex: none; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font: inherit; }
+    .gs-sumi-c { position: relative; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-size: 1.4rem; background: var(--surface-2, #f1f5f9); border: 2px solid var(--border, #e2e8f0); }
+    .gs-sumi-c.aviso { border-color: #f59e0b; } .gs-sumi-c.vencido { border-color: #dc2626; }
+    .gs-sumi-c b { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; border-radius: 9px; background: #f59e0b; color: #fff; font-size: .6875rem; display: grid; place-items: center; padding: 0 4px; }
+    .gs-sumi-c.vencido b { background: #dc2626; }
+    .gs-sumi.mas .gs-sumi-c { border-style: dashed; background: transparent; font-size: 1.5rem; color: var(--muted, #6b7280); }
+    .gs-sumi-n { font-size: .6875rem; max-width: 64px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .gs-sum-edit { margin: 14px 0 4px; padding-top: 10px; border-top: 1px solid var(--border, #e2e8f0); }
+    .gs-sum-edit h4 { margin: 0 0 6px; font-size: .875rem; }
+    .gs-sum-edit ul { list-style: none; margin: 0 0 8px; padding: 0; }
+    .gs-sum-edit li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; font-size: .875rem; }
+    .gs-sum-det { display: grid; gap: 6px; font-size: .9rem; }
+    .gs-sum-det dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; } .gs-sum-det dt { color: var(--muted, #6b7280); } .gs-sum-det dd { margin: 0; word-break: break-word; }
     .gs-tabs { margin: 0 0 var(--gap-4); max-width: 100%; overflow-x: auto; }
     .gs-tabs button { white-space: nowrap; }
     .gs-anio { display: inline-flex; align-items: center; gap: var(--gap-2); font-family: var(--font-num); }
@@ -8600,7 +8614,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "382";
+const NIBLO_BUILD = "383";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -27444,7 +27458,7 @@ function boot(vistaInicial) {
       rtEnviar("realtime:niblo-gs", "phx_join", {
         config: {
           broadcast: { self: false },
-          postgres_changes: GS_TABLAS.map(t => ({ event: "*", schema: "public", table: t, filter: `hogar_id=eq.${hogarId()}` })),
+          postgres_changes: GS_TABLAS.filter(t => t !== "gs_suministros" || !GS.sinSuministros).map(t => ({ event: "*", schema: "public", table: t, filter: `hogar_id=eq.${hogarId()}` })),
         },
         access_token: sesion.supabase.token,
       });
@@ -30405,7 +30419,7 @@ function boot(vistaInicial) {
        se pintan con gsRender(); Documentos sigue siendo su propio modulo.
        ======================================================================== */
     const GS = {
-      props: [], inqs: [], gests: [], prest: [], revs: [], pagos: [],
+      props: [], inqs: [], gests: [], prest: [], revs: [], pagos: [], sumis: [], sinSuministros: false,
       cargado: false, cargando: false, error: null,
       pisoId: null, pisoTab: "resumen", anio: new Date().getFullYear(),
       movFiltro: "todos", prestId: null, filtroTodo: "todo", mes: null,
@@ -30414,7 +30428,7 @@ function boot(vistaInicial) {
         // listas desplegadas; true si falta la migracion 012
     };
 
-    const GS_TABLAS = ["gs_propiedades", "gs_inquilinos", "gs_gestiones", "gs_prestamos", "gs_prestamo_revisiones", "gs_pagos_prestamo"];
+    const GS_TABLAS = ["gs_propiedades", "gs_inquilinos", "gs_gestiones", "gs_prestamos", "gs_prestamo_revisiones", "gs_pagos_prestamo", "gs_suministros"];
     const GS_TIPOS = { gasto: "Gasto", ingreso: "Ingreso", gestion: "Gestión" };
     const GS_CATS = {
       piso: {
@@ -30483,14 +30497,17 @@ function boot(vistaInicial) {
       GS.cargando = true; GS.error = null;
       if (!silencioso) gsRender();
       try {
-        const [props, inqs, gests, prest, revs, pagos] = await Promise.all([
+        const [props, inqs, gests, prest, revs, pagos, sumis] = await Promise.all([
           supaFetch("/rest/v1/gs_propiedades?select=*&order=sort_order.asc,nombre.asc"),
           supaFetch("/rest/v1/gs_inquilinos?select=*&order=nombre.asc"),
           supaFetch("/rest/v1/gs_gestiones?select=*&order=fecha.desc"),
           supaFetch("/rest/v1/gs_prestamos?select=*&order=created_at.asc"),
           supaFetch("/rest/v1/gs_prestamo_revisiones?select=*&order=desde.asc"),
           supaFetch("/rest/v1/gs_pagos_prestamo?select=*&order=fecha.asc"),
+          supaFetch("/rest/v1/gs_suministros?select=*&order=sort_order.asc,nombre.asc").catch(() => null),   // sin la 016 no existe
         ]);
+        GS.sinSuministros = sumis === null || (!!(props && props.length) && !("suministros_activos" in props[0]));
+        GS.sumis = sumis || [];
         GS.props = props || []; GS.inqs = inqs || []; GS.gests = gests || [];
         GS.prest = prest || []; GS.revs = revs || []; GS.pagos = pagos || [];
         if (GS.gests.length) GS.sinOrigen = !("origen_id" in GS.gests[0]);
@@ -30714,6 +30731,93 @@ function boot(vistaInicial) {
       const t = g.tasa_cop ? ` · ${GS_COP.format(+g.tasa_cop)} COP/€` : "";
       return `${GS_COP.format(+g.importe_cop)} COP${t}${g.tasa_prov ? " (provisional)" : g.tasa_manual ? " (a mano)" : ""}`;
     }
+    /* Suministros del piso: circulos de acceso directo (agua, luz, gas…). */
+    const GS_ICONOS = [["", "Automático (según el nombre)"], ["\u{1F4A7}", "\u{1F4A7} Agua"], ["\u26A1", "\u26A1 Luz"], ["\u{1F525}", "\u{1F525} Gas"],
+      ["\u{1F4F6}", "\u{1F4F6} Internet"], ["\u{1F4F1}", "\u{1F4F1} Móvil / teléfono"], ["\u{1F5D1}", "\u{1F5D1} Basuras"], ["\u{1F321}", "\u{1F321} Calefacción"], ["\u{1F9FE}", "\u{1F9FE} Otro"]];
+    function gsSumIcono(s) {
+      if (s.icono) return s.icono;
+      const n = (s.nombre || "").toLowerCase();
+      if (/agua/.test(n)) return "\u{1F4A7}";
+      if (/luz|electric/.test(n)) return "\u26A1";
+      if (/gas|butano/.test(n)) return "\u{1F525}";
+      if (/internet|fibra|wifi|wi-fi|router/.test(n)) return "\u{1F4F6}";
+      if (/m[oó]vil|tel[eé]fon/.test(n)) return "\u{1F4F1}";
+      if (/basura|residuo|tasa/.test(n)) return "\u{1F5D1}";
+      if (/calefac|gasoil|pellet/.test(n)) return "\u{1F321}";
+      return "\u{1F9FE}";
+    }
+    const gsSumDe = pid => GS.sumis.filter(s => s.propiedad_id === pid);
+    const gsSumPend = sid => GS.gests.filter(g => g.suministro_id === sid && g.estado === "pendiente").sort((a, b) => a.fecha.localeCompare(b.fecha));
+    function gsSumEstado(s) {
+      const p = gsSumPend(s.id)[0];
+      if (!p) return { p: null, cl: "", d: null };
+      const d = gsDias(p.fecha);
+      return { p, d, cl: d < 0 ? "vencido" : d <= (s.aviso_dias || 0) ? "aviso" : "" };
+    }
+    function gsCirculos(p) {
+      if (GS.sinSuministros || !p.suministros_activos) return "";
+      const l = gsSumDe(p.id);
+      return `<div class="gs-sumis" role="group" aria-label="Suministros">${l.map(s => {
+        const e = gsSumEstado(s);
+        return `<button type="button" class="gs-sumi" onclick="GSUI.suministro('${s.id}')" title="${esc(s.nombre)}${e.cl ? (e.d < 0 ? " · pago vencido" : " · pago próximo") : ""}">
+          <span class="gs-sumi-c ${e.cl}" aria-hidden="true">${gsSumIcono(s)}${e.cl ? `<b>!</b>` : ""}</span><span class="gs-sumi-n">${esc(s.nombre)}</span></button>`;
+      }).join("")}<button type="button" class="gs-sumi mas" onclick="GSUI.nuevoSum('${p.id}')" title="Añadir suministro" aria-label="Añadir suministro"><span class="gs-sumi-c" aria-hidden="true">+</span><span class="gs-sumi-n">Añadir</span></button></div>`;
+    }
+    /* Avisos del resumen: pagos de suministros ya vencidos o dentro de sus dias de aviso. */
+    function gsSumAvisos(p) {
+      if (GS.sinSuministros || !p.suministros_activos) return "";
+      const l = gsSumDe(p.id).map(s => ({ s, e: gsSumEstado(s) })).filter(x => x.e.cl);
+      if (!l.length) return "";
+      return `<div class="doc-alerta"><span class="doc-alerta-tit">Suministros por pagar</span><ul>${l.map(({ s, e }) =>
+        `<li><b>${esc(s.nombre)}</b> · ${e.d < 0 ? "venció hace " + esc(docsTiempo(e.d)) : e.d === 0 ? "vence hoy" : "vence en " + esc(docsTiempo(e.d))} (${esc(gsFecha(e.p.fecha))})${e.p.importe ? " · " + gsEur(e.p.importe) : ""}</li>`).join("")}</ul></div>`;
+    }
+    function gsSumHoja(id) {
+      const s = GS.sumis.find(x => x.id === id);
+      if (!s) return;
+      const e = gsSumEstado(s);
+      const hist = GS.gests.filter(g => g.suministro_id === id && g.estado === "hecho").sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 4);
+      const fila = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "";
+      gsModal(`${gsSumIcono(s)} ${s.nombre}`,
+        `<div class="gs-sum-det"><dl>${fila("Empresa", esc(s.empresa || ""))}${fila("Contrato", esc(s.contrato || ""))}
+          ${s.url && docsUrlValida(s.url) ? fila("Web", `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">Abrir la web &#8599;</a>`) : ""}
+          ${fila("Aviso", (s.aviso_dias || 0) + " días antes")}${fila("Notas", esc(s.notas || ""))}</dl>
+          ${e.p ? `<div class="doc-alerta"><span class="doc-alerta-tit">Próximo pago</span><ul><li>${esc(gsFecha(e.p.fecha))}${e.p.importe ? " · " + gsEur(e.p.importe) : ""}${e.p.repite ? " · se repite" : ""}${e.d < 0 ? " · vencido" : ""}</li></ul></div>` : `<p class="faint">Sin pago programado.</p>`}
+          ${hist.length ? `<h4 style="margin:8px 0 2px">Últimos pagos</h4><ul class="gs-lista">${hist.map(g => gsFila(g)).join("")}</ul>` : ""}
+          <button type="button" class="gs-btn" onclick="GSUI.editarSumDesdeHoja('${s.id}')">Editar suministro</button></div>`,
+        `<button type="button" class="gs-btn" onclick="GSUI.sumPago('${s.id}','pendiente')">Programar pago</button>
+         <button type="button" class="gs-btn pri" onclick="GSUI.sumPago('${s.id}','hecho')">Registrar pago</button>`);
+    }
+    function gsSumPago(id, estado) {
+      const s = GS.sumis.find(x => x.id === id);
+      if (!s) return;
+      gsCerrar();
+      gsFormMov("gasto", "piso", { propiedad_id: s.propiedad_id, suministro_id: s.id, valores: {
+        categoria: "Suministros", titulo: s.nombre, estado, fecha: estado === "hecho" ? gsHoy() : gsSumaMeses(gsHoy(), 1), repite: estado === "hecho" ? "" : "mensual" } });
+    }
+    function gsFormSum(propId, s) {
+      gsFormulario({
+        titulo: s ? "Editar suministro" : "Nuevo suministro",
+        campos: [
+          { id: "nombre", label: "Suministro", req: true, ph: "Agua, Luz, Gas, Internet…" },
+          { id: "empresa", label: "Empresa" },
+          { id: "url", label: "Web", tipo: "url", ph: "https://…" },
+          { id: "contrato", label: "Número de contrato", mitad: true },
+          { id: "aviso_dias", label: "Avisar (días antes)", tipo: "number", mitad: true, hint: "Se marca en rojo/ámbar el círculo y el resumen del piso." },
+          { id: "icono", label: "Icono", tipo: "select", opciones: GS_ICONOS },
+          { id: "notas", label: "Notas", tipo: "textarea" },
+        ],
+        valores: s || { aviso_dias: 3, icono: "" },
+        borrar: s ? () => gsConfirmarBorrar("gs_suministros", s.id, s.nombre, "Sus pagos se conservan en el historial del piso.", "Suministro borrado") : null,
+        guardar: async v => {
+          if (v.url && !docsUrlValida(v.url)) throw gsErr("El enlace tiene que empezar por https://");
+          if (v.aviso_dias !== null && v.aviso_dias < 0) throw gsErr("Los días de aviso no pueden ser negativos.");
+          await gsGuardarFila("gs_suministros", s && s.id, { propiedad_id: propId, nombre: v.nombre, empresa: v.empresa, url: v.url, contrato: v.contrato,
+            aviso_dias: v.aviso_dias === null ? 3 : Math.round(v.aviso_dias), icono: v.icono || null, notas: v.notas });
+          gsCerrar(); await gsCargar(true); toast(s ? "Suministro actualizado" : "Suministro añadido");
+          gsFormPiso(gsProp(propId));   // vuelve a «Editar piso» para seguir con los demás
+        },
+      });
+    }
     function gsFila(g, opc) {
       opc = opc || {};
       const hecho = g.estado === "hecho";
@@ -30891,6 +30995,7 @@ function boot(vistaInicial) {
             ${GS.pisoTab === "mov" || GS.pisoTab === "resumen" ? gsBtnNuevo(`GSUI.menuPiso('${p.id}')`, "Añadir") : ""}
           </div></div>
         <p class="vista-subtitulo doc-subtitulo">${prop ? "Piso en propiedad" : "Piso donde somos inquilinos"}${p.direccion ? " · " + esc(p.direccion) : ""}</p>
+        ${gsCirculos(p)}
         <div class="gs-tabs doc-seg" role="tablist">${tabs.map(([k, t]) =>
           `<button type="button" role="tab" aria-pressed="${GS.pisoTab === k}" onclick="GSUI.tabPiso('${k}')">${t}</button>`).join("")}</div>
         ${cuerpo}`;
@@ -30929,6 +31034,7 @@ function boot(vistaInicial) {
           ${prop ? `<div class="gs-kpi"><span class="gs-kpi-et">Balance</span><span class="gs-kpi-v ${c.bal >= 0 ? "pos" : "neg"}">${gsEur(c.bal)}</span></div>` : ""}
         </div>
         ${tienePrest ? gsResumenPrestamo(p, c, cuotas) : ""}
+        ${gsSumAvisos(p)}
         ${contratos.length ? `<div class="doc-alerta"><span class="doc-alerta-tit">Contratos que terminan pronto</span><ul>${contratos.map(i =>
           `<li><b>${esc(i.nombre)}</b> · ${gsDias(i.fin) < 0 ? "terminó" : "termina"} el ${esc(gsFecha(i.fin))}</li>`).join("")}</ul></div>` : ""}
         ${cats.length ? `<section class="gs-grupo"><h3 class="gs-grupo-tit">Gastos por categoría</h3><div class="gs-barras">${cats.map(([k, v]) =>
@@ -31539,7 +31645,7 @@ function boot(vistaInicial) {
       GS_FORM = o;
       const valores = o.valores || {};
       gsModal(o.titulo,
-        `<div class="gs-form">${o.campos.map(c => gsCampoHTML(c, valores[c.id])).join("")}</div>
+        `<div class="gs-form">${o.campos.map(c => gsCampoHTML(c, valores[c.id])).join("")}</div>${o.extra || ""}
          <div id="gs-aviso" class="doc-aviso" hidden></div>`,
         `${o.borrar ? `<button type="button" class="gs-btn pel gs-borrar-izq" onclick="GSUI.borrarForm()">Eliminar</button>` : ""}
          <button type="button" class="gs-btn" onclick="GSUI.cerrar()">Cancelar</button>
@@ -31604,8 +31710,14 @@ function boot(vistaInicial) {
             hint: "Los pisos donde somos inquilinos no cuentan en el balance de los pisos en propiedad.",
             opciones: [["", "Elige una opción…"], ["propietario", "Es nuestro (alquilado a inquilinos)"], ["inquilino", "Somos inquilinos"]] },
           { id: "direccion", label: "Dirección" },
+          ...(GS.sinSuministros ? [] : [{ id: "suministros_activos", label: "Activar suministros (vivimos aquí): accesos directos a agua, luz, gas, internet…", tipo: "check" }]),
           { id: "notas", label: "Notas", tipo: "textarea" },
         ],
+        extra: GS.sinSuministros ? "" : p && p.suministros_activos
+          ? `<div class="gs-sum-edit"><h4>Suministros</h4>${gsSumDe(p.id).length ? `<ul>${gsSumDe(p.id).map(s =>
+              `<li><span>${gsSumIcono(s)} ${esc(s.nombre)}${s.empresa ? " · " + esc(s.empresa) : ""}</span><button type="button" class="gs-btn" onclick="GSUI.editarSum('${s.id}')">Editar</button></li>`).join("")}</ul>` : `<p class="faint">Aún no hay ninguno.</p>`}
+            <button type="button" class="gs-btn" onclick="GSUI.nuevoSum('${p.id}')">+ Añadir suministro</button></div>`
+          : `<p class="faint gs-sum-edit">Marca «Activar suministros» y guarda: después podrás añadir aquí agua, luz, gas, internet… con su empresa, web y nº de contrato.</p>`,
         valores: p || { rol: "" },
         borrar: p ? () => {
           const m = GS.gests.filter(g => g.propiedad_id === p.id).length, i = GS.inqs.filter(x => x.propiedad_id === p.id).length;
@@ -31613,8 +31725,13 @@ function boot(vistaInicial) {
             `Se borran también sus ${m} movimientos y ${i} inquilinos. Los préstamos se conservan sin piso.`, "Piso borrado");
         } : null,
         guardar: async v => {
-          await gsGuardarFila("gs_propiedades", p && p.id, { nombre: v.nombre, rol: v.rol, direccion: v.direccion, notas: v.notas });
+          const fila = { nombre: v.nombre, rol: v.rol, direccion: v.direccion, notas: v.notas };
+          if (!GS.sinSuministros) fila.suministros_activos = !!v.suministros_activos;
+          await gsGuardarFila("gs_propiedades", p && p.id, fila);
           if (p && GS.pisoId === p.id && v.rol !== "propietario") GS.pisoTab = "resumen";
+          if (p && fila.suministros_activos && !p.suministros_activos) {   // recien activado: a anadir el primero
+            gsCerrar(); await gsCargar(true); toast("Suministros activados"); gsFormPiso(gsProp(p.id)); return;
+          }
           await gsTras(p ? "Piso actualizado" : "Piso añadido");
         },
       });
@@ -31650,6 +31767,7 @@ function boot(vistaInicial) {
       const propId = g ? g.propiedad_id : ctx.propiedad_id;
       const inqs = propId ? GS.inqs.filter(i => i.propiedad_id === propId && (i.activo || (g && g.inquilino_id === i.id) || ctx.inquilino_id === i.id)) : [];
       const gestion = tipo === "gestion";
+      const sumId = g ? g.suministro_id : ctx.suministro_id;
       const campos = [
         { id: "titulo", label: "Título", ph: gestion ? "Segunda dosis, avería del calentador…" : "Recibo de febrero" },
         { id: "categoria", label: "Categoría", tipo: "select", opciones: gsOpts(cats), mitad: true,
@@ -31692,6 +31810,7 @@ function boot(vistaInicial) {
             asignado: ambito === "familia" ? (v.asignado || null) : ambito === "lima" ? "lima" : null,
             url: v.url, notas: v.notas,
           };
+          if (sumId && !GS.sinSuministros) fila.suministro_id = sumId;
           Object.assign(fila, await gsCamposMoneda(v, g));
           const guardada = await gsGuardarFila("gs_gestiones", g && g.id, fila);
           if (fila.estado === "hecho" && fila.repite && !(g && g.estado === "hecho")) await gsSiguiente(Object.assign({}, fila, { id: guardada && guardada.id }));
@@ -31719,6 +31838,7 @@ function boot(vistaInicial) {
         categoria: g.categoria || null, titulo: g.titulo, fecha, importe: g.importe === undefined ? null : g.importe,
         estado: "pendiente", repite: g.repite, asignado: g.asignado || null, url: g.url || null, notas: g.notas || null };
       if (!GS.sinOrigen && g.id) fila.origen_id = g.id;
+      if (g.suministro_id && !GS.sinSuministros) fila.suministro_id = g.suministro_id;
       if (g.moneda === "COP" && !GS.sinMoneda) Object.assign(fila, { moneda: "COP", importe_cop: g.importe_cop, tasa_cop: g.tasa_cop, tasa_prov: true, tasa_manual: false });
       try { await gsGuardarFila("gs_gestiones", null, fila); }
       catch (e) {
@@ -31911,6 +32031,10 @@ function boot(vistaInicial) {
       editarMov: id => { const g = gsGest(id); if (g) gsFormMov(g.tipo, g.ambito, {}, g); },
       nuevoPiso: () => gsFormPiso(null),
       editarPiso: id => gsFormPiso(gsProp(id)),
+      suministro: gsSumHoja, sumPago: gsSumPago,
+      nuevoSum: pid => { gsCerrar(); gsFormSum(pid); },
+      editarSum: id => { const s = GS.sumis.find(x => x.id === id); if (s) { gsCerrar(); gsFormSum(s.propiedad_id, s); } },
+      editarSumDesdeHoja: id => { const s = GS.sumis.find(x => x.id === id); if (s) { gsCerrar(); gsFormSum(s.propiedad_id, s); } },
       abrirPiso: (id, tab) => {
         GS.pisoId = id; GS.pisoTab = tab || "resumen"; GS.prestId = null; GS.movFiltro = "todos"; GS.mes = null;
         if (tab === "prest") gsRefrescar();
