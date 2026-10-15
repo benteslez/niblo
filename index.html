@@ -5190,14 +5190,43 @@
     .gs-borrar-izq { margin-right: auto; }
     .gs-volver { margin: 0 0 var(--gap-2); }
     .gs-volver button { color: var(--accent); font-weight: 600; font-size: 0.875rem; padding: 4px 0; }
-    .gs-sumis { display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 10px; margin: 0 0 var(--gap-3, 12px); }
-    .gs-sumi { flex: none; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font: inherit; }
-    .gs-sumi-c { position: relative; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-size: 1.4rem; background: var(--surface-2, #f1f5f9); border: 2px solid var(--border, #e2e8f0); }
-    .gs-sumi-c.aviso { border-color: #f59e0b; } .gs-sumi-c.vencido { border-color: #dc2626; }
-    .gs-sumi-c b { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; border-radius: 9px; background: #f59e0b; color: #fff; font-size: .6875rem; display: grid; place-items: center; padding: 0 4px; }
-    .gs-sumi-c.vencido b { background: #dc2626; }
-    .gs-sumi.mas .gs-sumi-c { border-style: dashed; background: transparent; font-size: 1.5rem; color: var(--muted, #6b7280); }
-    .gs-sumi-n { font-size: .6875rem; max-width: 64px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .gs-sumis { display: flex; gap: 12px; overflow-x: auto; padding: 6px 4px 12px; margin: 0 0 var(--gap-3, 12px); scrollbar-width: none; }
+    .gs-sumis::-webkit-scrollbar { display: none; }
+    .gs-sumi { --sc: var(--accent); flex: none; width: 68px; display: flex; flex-direction: column; align-items: center; gap: 6px; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font: inherit; -webkit-tap-highlight-color: transparent; }
+    .gs-sumi-c { position: relative; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem; line-height: 1;
+      background: linear-gradient(145deg, color-mix(in srgb, var(--sc) 20%, var(--bg-elev)), color-mix(in srgb, var(--sc) 8%, var(--bg-elev)));
+      border: 1px solid color-mix(in srgb, var(--sc) 35%, transparent);
+      box-shadow: 0 1px 2px color-mix(in srgb, var(--sc) 22%, transparent), 0 6px 14px -6px color-mix(in srgb, var(--sc) 55%, transparent);
+      transition: transform .14s, box-shadow .14s; }
+    .gs-sumi:hover .gs-sumi-c, .gs-sumi:focus-visible .gs-sumi-c { transform: translateY(-2px) scale(1.04); }
+    .gs-sumi:active .gs-sumi-c { transform: scale(.96); }
+    .gs-sumi:focus-visible { outline: none; } .gs-sumi:focus-visible .gs-sumi-c { outline: 2px solid var(--focus); outline-offset: 2px; }
+    .gs-sumi-c.aviso { box-shadow: 0 0 0 3px color-mix(in srgb, var(--gs-ambar, #d97706) 40%, transparent); border-color: var(--gs-ambar, #d97706); }
+    .gs-sumi-c.vencido { box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 40%, transparent); border-color: var(--danger); }
+    .gs-sumi-c b { position: absolute; top: -3px; right: -3px; min-width: 20px; height: 20px; border-radius: 10px; background: var(--gs-ambar, #d97706); color: #fff; font-size: .75rem; font-weight: 800; display: grid; place-items: center; padding: 0 5px; border: 2px solid var(--bg); }
+    .gs-sumi-c.vencido b { background: var(--danger); }
+    .gs-sumi.mas .gs-sumi-c { background: transparent; border: 1.5px dashed var(--line); box-shadow: none; font-size: 1.5rem; font-weight: 300; color: var(--text-muted); }
+    .gs-sumi.mas:hover .gs-sumi-c { border-color: var(--accent); color: var(--accent); }
+    .gs-sumi-n { font-size: .75rem; font-weight: 600; max-width: 68px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+    .gs-sumi.mas .gs-sumi-n { color: var(--text-muted); font-weight: 500; }
+    .gs-card.piso { --pc: var(--accent); border-color: color-mix(in srgb, var(--pc) 30%, var(--line-soft)); border-left: 5px solid var(--pc);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--pc) 13%, var(--bg-elev)), var(--bg-elev) 75%); }
+    .gs-card.piso .gs-card-tit { color: color-mix(in srgb, var(--pc) 55%, var(--text)); }
+    .gs-pill.aqui { background: var(--pc); color: #fff; }
+    .gs-atajo { --pc: var(--accent); margin: 0 0 var(--gap-4); padding: var(--gap-3) var(--gap-4) 2px; border-radius: var(--r-lg); border: 1px solid color-mix(in srgb, var(--pc) 30%, var(--line-soft)); border-left: 5px solid var(--pc);
+      background: linear-gradient(135deg, color-mix(in srgb, var(--pc) 13%, var(--bg-elev)), var(--bg-elev) 75%); box-shadow: var(--sh-1); }
+    .gs-atajo-main { display: flex; align-items: center; gap: var(--gap-3); width: 100%; background: none; border: 0; padding: 0 0 var(--gap-2); text-align: left; font: inherit; color: inherit; cursor: pointer; }
+    .gs-atajo-ico { font-size: 1.5rem; }
+    .gs-atajo-main span:nth-child(2) { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .gs-atajo-main b { font-family: var(--font-titulo); font-size: 1.0625rem; letter-spacing: -0.01em; }
+    .gs-atajo-main i { font-style: normal; font-size: .8125rem; color: var(--text-muted); }
+    .gs-atajo .gs-sumis { margin: 0; padding-top: 2px; }
+    /* Campos en dos columnas: la etiqueta, el control y la ayuda de cada fila se alinean aunque una etiqueta ocupe dos lineas */
+    #modal-gestiones .gs-form { row-gap: 0; }
+    .gs-atajo .gs-sumis { flex-wrap: wrap; overflow: visible; }
+    .gs-form > .gs-campo { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 4px; margin-bottom: var(--gap-3); align-content: start; }
+    .gs-form > .gs-campo > label { margin-bottom: 0 !important; align-self: end; }
+    .gs-form > .gs-check-campo { margin-bottom: var(--gap-3); }
     .gs-sum-edit { margin: 14px 0 4px; padding-top: 10px; border-top: 1px solid var(--border, #e2e8f0); }
     .gs-sum-edit h4 { margin: 0 0 6px; font-size: .875rem; }
     .gs-sum-edit ul { list-style: none; margin: 0 0 8px; padding: 0; }
@@ -5371,6 +5400,7 @@
       .gs-barra { grid-template-columns: 84px 1fr auto; }
       .gs-form { grid-template-columns: 1fr; }
       .gs-form .gs-campo { grid-column: 1 / -1; }
+      .gs-form > .gs-campo { grid-row: span 3; }
       #modal-gestiones { padding: 0; align-items: flex-end; }
       #modal-gestiones .modal { width: 100%; border-radius: var(--r-lg) var(--r-lg) 0 0; }
     }
@@ -8617,7 +8647,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "384";
+const NIBLO_BUILD = "385";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30737,7 +30767,11 @@ function boot(vistaInicial) {
     }
     /* Suministros del piso: circulos de acceso directo (agua, luz, gas…). */
     const GS_ICONOS = [["", "Automático (según el nombre)"], ["\u{1F4A7}", "\u{1F4A7} Agua"], ["\u26A1", "\u26A1 Luz"], ["\u{1F525}", "\u{1F525} Gas"],
-      ["\u{1F4F6}", "\u{1F4F6} Internet"], ["\u{1F4F1}", "\u{1F4F1} Móvil / teléfono"], ["\u{1F5D1}", "\u{1F5D1} Basuras"], ["\u{1F321}", "\u{1F321} Calefacción"], ["\u{1F9FE}", "\u{1F9FE} Otro"]];
+      ["\u{1F4F6}", "\u{1F4F6} Internet"], ["\u{1F4F1}", "\u{1F4F1} Móvil / teléfono"], ["\u{1F5D1}", "\u{1F5D1} Basuras"], ["\u{1F321}", "\u{1F321} Calefacción"],
+      ["\u260E\uFE0F", "\u260E\uFE0F Teléfono fijo"], ["\u{1F33F}", "\u{1F33F} Salud / seguro médico"], ["\u{1F48A}", "\u{1F48A} Seguridad social / aportes"], ["\u{1F9FE}", "\u{1F9FE} Otro"]];
+    const GS_ICONO_COLOR = { "\u{1F4A7}": "#0ea5e9", "\u26A1": "#f59e0b", "\u{1F525}": "#f97316", "\u{1F4F6}": "#8b5cf6", "\u{1F4F1}": "#6366f1",
+      "\u{1F5D1}": "#64748b", "\u{1F321}": "#ef4444", "\u260E\uFE0F": "#0d9488", "\u{1F33F}": "#16a34a", "\u{1F48A}": "#ec4899", "\u{1F9FE}": "#64748b" };
+    const gsSumColor = s => GS_ICONO_COLOR[gsSumIcono(s)] || "#64748b";
     function gsSumIcono(s) {
       if (s.icono) return s.icono;
       const n = (s.nombre || "").toLowerCase();
@@ -30745,10 +30779,28 @@ function boot(vistaInicial) {
       if (/luz|electric/.test(n)) return "\u26A1";
       if (/gas|butano/.test(n)) return "\u{1F525}";
       if (/internet|fibra|wifi|wi-fi|router/.test(n)) return "\u{1F4F6}";
-      if (/m[oó]vil|tel[eé]fon/.test(n)) return "\u{1F4F1}";
+      if (/m[oó]vil|celular/.test(n)) return "\u{1F4F1}";
+      if (/tel[eé]fon|\bfijo\b|claro/.test(n)) return "\u260E\uFE0F";
+      if (/salud|colsanitas|\beps\b|prepagada|seguro m[eé]dico|m[eé]dic/.test(n)) return "\u{1F33F}";
+      if (/aportes|seguridad social|\bpila\b/.test(n)) return "\u{1F48A}";
       if (/basura|residuo|tasa/.test(n)) return "\u{1F5D1}";
       if (/calefac|gasoil|pellet/.test(n)) return "\u{1F321}";
       return "\u{1F9FE}";
+    }
+    const GS_COL_PISO = ["#2563eb", "#7c3aed", "#0d9488", "#d97706", "#db2777", "#16a34a", "#0891b2", "#ea580c"];
+    const gsColorPiso = p => GS_COL_PISO[Math.max(0, GS.props.findIndex(x => x.id === p.id)) % GS_COL_PISO.length];
+    /* El piso donde se vive: el que tiene activados los suministros; si no, aquel donde somos inquilinos. */
+    const gsPisoActual = () => GS.props.find(p => p.suministros_activos && !GS.sinSuministros) || GS.props.find(p => p.rol === "inquilino") || null;
+    function gsAtajoPiso() {
+      const p = gsPisoActual();
+      if (!p) return "";
+      const n = GS.gests.filter(g => g.propiedad_id === p.id && g.estado === "pendiente").length;
+      return `<div class="gs-atajo" style="--pc:${gsColorPiso(p)}">
+        <button type="button" class="gs-atajo-main" onclick="GSUI.abrirPiso('${p.id}')">
+          <span class="gs-atajo-ico" aria-hidden="true">\u{1F3E0}</span>
+          <span><b>${esc(p.nombre)}</b><i>Vivimos aquí${n ? ` · ${n} ${n === 1 ? "pago o gestión próximo" : "pagos o gestiones próximos"}` : ""}</i></span>
+          <span class="gs-mas" aria-hidden="true">&rsaquo;</span></button>
+        ${gsCirculos(p)}</div>`;
     }
     const gsSumDe = pid => GS.sumis.filter(s => s.propiedad_id === pid);
     const gsSumPend = sid => GS.gests.filter(g => g.suministro_id === sid && g.estado === "pendiente").sort((a, b) => a.fecha.localeCompare(b.fecha));
@@ -30763,7 +30815,7 @@ function boot(vistaInicial) {
       const l = gsSumDe(p.id);
       return `<div class="gs-sumis" role="group" aria-label="Suministros">${l.map(s => {
         const e = gsSumEstado(s);
-        return `<button type="button" class="gs-sumi" onclick="GSUI.suministro('${s.id}')" title="${esc(s.nombre)}${e.cl ? (e.d < 0 ? " · pago vencido" : " · pago próximo") : ""}">
+        return `<button type="button" class="gs-sumi" style="--sc:${gsSumColor(s)}" onclick="GSUI.suministro('${s.id}')" title="${esc(s.nombre)}${e.cl ? (e.d < 0 ? " · pago vencido" : " · pago próximo") : ""}">
           <span class="gs-sumi-c ${e.cl}" aria-hidden="true">${gsSumIcono(s)}${e.cl ? `<b>!</b>` : ""}</span><span class="gs-sumi-n">${esc(s.nombre)}</span></button>`;
       }).join("")}<button type="button" class="gs-sumi mas" onclick="GSUI.nuevoSum('${p.id}')" title="Añadir suministro" aria-label="Añadir suministro"><span class="gs-sumi-c" aria-hidden="true">+</span><span class="gs-sumi-n">Añadir</span></button></div>`;
     }
@@ -30817,8 +30869,7 @@ function boot(vistaInicial) {
           if (v.aviso_dias !== null && v.aviso_dias < 0) throw gsErr("Los días de aviso no pueden ser negativos.");
           await gsGuardarFila("gs_suministros", s && s.id, { propiedad_id: propId, nombre: v.nombre, empresa: v.empresa, url: v.url, contrato: v.contrato,
             aviso_dias: v.aviso_dias === null ? 3 : Math.round(v.aviso_dias), icono: v.icono || null, notas: v.notas });
-          gsCerrar(); await gsCargar(true); toast(s ? "Suministro actualizado" : "Suministro añadido");
-          gsFormPiso(gsProp(propId));   // vuelve a «Editar piso» para seguir con los demás
+          await gsTras(s ? "Suministro actualizado" : "Suministro añadido");
         },
       });
     }
@@ -30861,6 +30912,7 @@ function boot(vistaInicial) {
                    ["familia", "Familia", cuenta("familia")], ["doc", "Documentos", cuenta("doc")]];
       return `${gsCab("Gestiones", gsBtnNuevo("GSUI.menuNuevo()", "Añadir"),
           "Lo que hay que atender, de todos los ámbitos. Usa las pestañas de arriba para ver cada uno por separado.")}
+        ${gsAtajoPiso()}
         <div class="gs-kpis">
           <div class="gs-kpi${vencidos ? " alerta" : ""}"><span class="gs-kpi-et">Vencido</span><span class="gs-kpi-v">${vencidos}</span></div>
           <div class="gs-kpi"><span class="gs-kpi-et">Próximos 30 días</span><span class="gs-kpi-v">${prox}</span></div>
@@ -30971,9 +31023,10 @@ function boot(vistaInicial) {
           const c = gsCalcPiso(p.id, GS.anio);
           const inq = GS.inqs.filter(i => i.propiedad_id === p.id && i.activo);
           const pend = GS.gests.filter(g => g.propiedad_id === p.id && g.estado === "pendiente").length;
-          return `<button type="button" class="gs-card" onclick="GSUI.abrirPiso('${p.id}')">
+          const aqui = gsPisoActual() && gsPisoActual().id === p.id;
+          return `<button type="button" class="gs-card piso" style="--pc:${gsColorPiso(p)}" onclick="GSUI.abrirPiso('${p.id}')">
             <span class="gs-card-cab"><span class="gs-card-tit">${esc(p.nombre)}</span>
-              <span class="gs-pill ${p.rol === "propietario" ? "verde" : "azul"}">${p.rol === "propietario" ? "En propiedad" : "Somos inquilinos"}</span></span>
+              <span class="gs-pill ${aqui ? "aqui" : p.rol === "propietario" ? "verde" : "azul"}">${aqui ? "\u{1F3E0} Vivimos aquí" : p.rol === "propietario" ? "En propiedad" : "Somos inquilinos"}</span></span>
             ${p.direccion ? `<span class="gs-card-sub">${esc(p.direccion)}</span>` : ""}
             <span class="gs-card-cifras">
               ${p.rol === "propietario"
@@ -31734,9 +31787,6 @@ function boot(vistaInicial) {
           if (!GS.sinSuministros) fila.suministros_activos = !!v.suministros_activos;
           await gsGuardarFila("gs_propiedades", p && p.id, fila);
           if (p && GS.pisoId === p.id && v.rol !== "propietario") GS.pisoTab = "resumen";
-          if (p && fila.suministros_activos && !p.suministros_activos) {   // recien activado: a anadir el primero
-            gsCerrar(); await gsCargar(true); toast("Suministros activados"); gsFormPiso(gsProp(p.id)); return;
-          }
           await gsTras(p ? "Piso actualizado" : "Piso añadido");
         },
       });
