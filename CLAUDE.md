@@ -21,6 +21,14 @@
 - **Google Sheets**: no hay sincronización automática (una web estática no puede escribir en Drive sin autorización). Hoy: botones **CSV** (se abre en Excel/Sheets). Opción pendiente: Apps Script como webhook de la hoja, cuando el usuario aporte el Excel.
 - `isoLocal` NO existe en el script principal de `index.html` (vive en el de Pablo): usar `hoyISO()` o `gsIso`.
 
+## Supabase: tráfico de salida (egress) — plan gratuito (aviso de Supabase, 15-10-2026)
+
+- El plan gratuito incluye 5 GB/mes de salida; Supabase avisó de que se superaban (política de uso justo desde el 14-11-2026). **Regla: nada de descargar documentos o tablas enteras en cada sincronización.** Una consulta que se repite (cada guardado, cada 2 min, cada vez que se vuelve a la app, cada aviso en vivo) debe pedir primero una marca barata (`modificado`/`actualizado`) o usar un cursor, y bajar el contenido solo si cambió.
+- **Oposición** (`bajar()`): los temas se piden primero solo con metadatos (sin `datos`, que lleva el tema entero) y el contenido se baja únicamente de las filas que el dispositivo no ha procesado (`SYNC.vT[tema] = actualizado`, se guarda en `gestion_hub_sync_v1`). El cursor incluye siempre la última fila (−2 min), así que sin esto cada sincronización bajaba el último tema entero.
+- **Niblo** (`sincronizarPablo`, `sincronizarInterno`): el documento de Pablo se baja entero solo si lo avisa el tiempo real (`_forzarBajada`), si el canal no está conectado, si no hay marca vista (`niblo.pablo.visto`) o si pasaron 3 min; si no, se pregunta solo `modificado`. Las listas de ids para detectar borrados remotos (`recetas?select=id`, `ingredientes?select=clave`) van como mucho cada 5 min o tras un aviso en vivo. Un fallo de la parte de Pablo ya no deja `ultimoSync` atrás (antes cada intento siguiente bajaba todas las recetas).
+- `014_pablo_realtime_ligero.sql` (opcional): `pablo_estado` con identidad de réplica por defecto, para que el tiempo real mande solo el documento nuevo y no también el anterior.
+- Si se vuelve a avisar: Usage Dashboard de Supabase → Egress; medir con un banco de pruebas que cuente los bytes de cada respuesta antes de optimizar a ciegas.
+
 ## Hub de la oposición (`oposicion.html`): contenido de los temas
 
 Regla del usuario para **todos los temas, siempre**: prima la **literalidad**.
