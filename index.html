@@ -5150,6 +5150,7 @@
     .gs-check.on { background: var(--gs-pos); border-color: var(--gs-pos); color: #fff; }
     .gs-ico { flex: none; width: 22px; text-align: center; font-size: 1rem; }
     .gs-importe { flex: none; font-family: var(--font-num); font-weight: 700; font-size: 0.8125rem; }
+    .gs-importe small { display: block; font-weight: 500; font-size: 0.6875rem; color: var(--muted, #6b7280); text-align: right; max-width: 9.5rem; line-height: 1.25; }
     .gs-importe.gasto { color: var(--gs-neg); }
     .gs-importe.ingreso { color: var(--gs-pos); }
     .gs-enlace { flex: none; text-decoration: none; font-size: 1rem; }
@@ -8599,7 +8600,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "381";
+const NIBLO_BUILD = "382";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30408,7 +30409,7 @@ function boot(vistaInicial) {
       cargado: false, cargando: false, error: null,
       pisoId: null, pisoTab: "resumen", anio: new Date().getFullYear(),
       movFiltro: "todos", prestId: null, filtroTodo: "todo", mes: null,
-      abiertos: {}, sinOrigen: false, sinPlan: false, ultimaCarga: 0,
+      abiertos: {}, sinOrigen: false, sinPlan: false, sinMoneda: false, ultimaCarga: 0,
       sim: { pid: null, mensual: 0, unico: 0, meses: 36 },   // simulacion «y si amortizo…»
         // listas desplegadas; true si falta la migracion 012
     };
@@ -30494,8 +30495,10 @@ function boot(vistaInicial) {
         GS.prest = prest || []; GS.revs = revs || []; GS.pagos = pagos || [];
         if (GS.gests.length) GS.sinOrigen = !("origen_id" in GS.gests[0]);
         if (GS.prest.length) GS.sinPlan = !("obj_fecha" in GS.prest[0]);
+        if (GS.gests.length) GS.sinMoneda = !("moneda" in GS.gests[0]);
         GS.cargado = true; GS.ultimaCarga = Date.now();
         rtUnirGestiones();
+        gsActualizarCambios();
       } catch (e) {
         if (!GS.cargado) {
           GS.error = /(42P01|PGRST205|does not exist|Could not find the table)/i.test(e.message || "")
@@ -30628,13 +30631,96 @@ function boot(vistaInicial) {
       return `<ul class="gs-lista">${vis.map(pintar).join("")}</ul>${resto > 0
         ? `<button type="button" class="gs-mas-btn" onclick="GSUI.desplegar('${clave}')">${abierta ? "Ver menos" : `Ver ${resto} más`}</button>` : ""}`;
     }
+    /* Pagos en pesos colombianos: «importe» es siempre euros; el cambio es el
+       del DIA del pago (tasa de mercado de referencia, no la que aplique el
+       banco; se puede escribir a mano). Fuente: currency-api (datos abiertos
+       con una version por dia). Los cambios de un dia ya pasado no cambian,
+       asi que se guardan en el movil. */
+    const GS_COP_URLS = f => [
+      `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${f}/v1/currencies/eur.json`,
+      `https://${f}.currency-api.pages.dev/v1/currencies/eur.json`,
+    ];
+    const gsCopMem = {};
+    async function gsPedirTasa(f) {
+      for (const url of GS_COP_URLS(f)) {
+        try {
+          const ac = new AbortController(), t = setTimeout(() => ac.abort(), 7000);
+          const r = await fetch(url, { signal: ac.signal, cache: "force-cache" });
+          clearTimeout(t);
+          if (!r.ok) continue;
+          const j = await r.json(), v = j && j.eur && +j.eur.cop;
+          if (v > 0) return v;
+        } catch (e) { /* siguiente fuente */ }
+      }
+      return null;
+    }
+    /* Cambio COP por 1 € de una fecha; si es futura (o hoy aun sin publicar),
+       el ultimo disponible. Devuelve {tasa, dia, exacta} o null. */
+    async function gsTasaCOP(fecha) {
+      const hoy = gsHoy();
+      const futura = fecha > hoy;
+      const quiero = futura ? "latest" : fecha;
+      const k = "niblo.gs.cop." + quiero;
+      if (!futura && gsCopMem[k]) return gsCopMem[k];
+      if (!futura) { try { const c = JSON.parse(localStorage.getItem(k) || "null"); if (c && c.tasa > 0) return (gsCopMem[k] = c); } catch (e) {} }
+      let tasa = await gsPedirTasa(quiero), dia = quiero;
+      if (!tasa && !futura && fecha === hoy) { tasa = await gsPedirTasa("latest"); dia = "latest"; }
+      if (!tasa) return null;
+      const r = { tasa, dia, exacta: !futura && dia === fecha };
+      if (r.exacta) { gsCopMem[k] = r; try { localStorage.setItem(k, JSON.stringify(r)); } catch (e) {} }
+      return r;
+    }
+    /* Campos de moneda de una fila segun lo escrito en el formulario. */
+    async function gsCamposMoneda(v, previa) {
+      if (v.moneda !== "COP") return GS.sinMoneda ? {} : { moneda: "EUR", importe_cop: null, tasa_cop: null, tasa_prov: false, tasa_manual: false };
+      if (GS.sinMoneda) throw gsErr("Para guardar pagos en COP falta ejecutar 015_gestiones_moneda.sql en el SQL Editor de Supabase.");
+      if (v.importe === null) throw gsErr("Escribe el importe en pesos.");
+      const final = v.estado === "hecho" && v.fecha <= gsHoy();
+      if (v.tasa_cop) {
+        if (!(v.tasa_cop > 0)) throw gsErr("El cambio tiene que ser mayor que 0.");
+        return { moneda: "COP", importe_cop: v.importe, tasa_cop: v.tasa_cop, tasa_prov: false, tasa_manual: true, importe: gsRedondea(v.importe / v.tasa_cop) };
+      }
+      if (previa && previa.moneda === "COP" && !previa.tasa_manual && !previa.tasa_prov && previa.fecha === v.fecha && +previa.importe_cop === v.importe && previa.tasa_cop)
+        return { moneda: "COP", importe_cop: v.importe, tasa_cop: previa.tasa_cop, tasa_prov: false, tasa_manual: false, importe: gsRedondea(v.importe / previa.tasa_cop) };
+      const t = await gsTasaCOP(v.fecha);
+      if (!t) throw gsErr("No he podido obtener el cambio de ese día (sin conexión o sin dato). Escríbelo tú en «Cambio» o inténtalo más tarde.");
+      return { moneda: "COP", importe_cop: v.importe, tasa_cop: t.tasa, tasa_prov: !(final && t.exacta), tasa_manual: false, importe: gsRedondea(v.importe / t.tasa) };
+    }
+    /* Los pagos en COP ya hechos con cambio provisional pasan al cambio de su
+       dia en cuanto se puede. Solo escribe lo que cambia; un fallo no se
+       reintenta hasta recargar la app. */
+    GS.cambioFallo = {};
+    async function gsActualizarCambios() {
+      if (GS.sinMoneda || GS.actualizandoCambios) return;
+      const hoy = gsHoy();
+      const l = GS.gests.filter(g => g.moneda === "COP" && g.tasa_prov && !g.tasa_manual && g.estado === "hecho" && g.fecha <= hoy && !GS.cambioFallo[g.id]);
+      if (!l.length) return;
+      GS.actualizandoCambios = true; let n = 0;
+      try {
+        for (const g of l) {
+          const t = await gsTasaCOP(g.fecha);
+          if (!t || !t.exacta) { GS.cambioFallo[g.id] = 1; continue; }
+          try {
+            await gsGuardarFila("gs_gestiones", g.id, { tasa_cop: t.tasa, tasa_prov: false, importe: gsRedondea(+g.importe_cop / t.tasa) });
+            n++;
+          } catch (e) { GS.cambioFallo[g.id] = 1; }
+        }
+      } finally { GS.actualizandoCambios = false; }
+      if (n) await gsCargar(true);
+    }
+    const GS_COP = new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 });
+    function gsCopTxt(g) {
+      if (!g || g.moneda !== "COP" || g.importe_cop === null || g.importe_cop === undefined) return "";
+      const t = g.tasa_cop ? ` · ${GS_COP.format(+g.tasa_cop)} COP/€` : "";
+      return `${GS_COP.format(+g.importe_cop)} COP${t}${g.tasa_prov ? " (provisional)" : g.tasa_manual ? " (a mano)" : ""}`;
+    }
     function gsFila(g, opc) {
       opc = opc || {};
       const hecho = g.estado === "hecho";
       const vencido = !hecho && gsDias(g.fecha) < 0;
       const signo = g.tipo === "gasto" ? "−" : g.tipo === "ingreso" ? "+" : "";
       const imp = g.importe !== null && g.importe !== undefined
-        ? `<span class="gs-importe ${g.tipo}">${signo}${gsEur(g.importe)}</span>` : "";
+        ? `<span class="gs-importe ${g.tipo}">${signo}${g.moneda === "COP" && g.tasa_prov ? "≈" : ""}${gsEur(g.importe)}${g.moneda === "COP" ? `<small>${esc(gsCopTxt(g))}</small>` : ""}</span>` : "";
       return `<li class="gs-fila t-${g.tipo}${hecho ? " hecho" : ""}${vencido ? " vencido" : ""}">
         <button type="button" class="gs-check${hecho ? " on" : ""}" onclick="GSUI.toggle('${g.id}')"
           aria-pressed="${hecho}" title="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}"
@@ -31570,7 +31656,12 @@ function boot(vistaInicial) {
           hint: ambito === "piso" && tipo === "gasto" && propId && GS.prest.filter(y => y.propiedad_id === propId).length === 1
             ? "«Hipoteca» cuenta como cuota del préstamo de este piso; «Hipoteca (otros)» no (intereses iniciales, comisiones…)." : "" },
         { id: "fecha", label: gestion ? "Fecha o vencimiento" : "Fecha", tipo: "date", req: true, mitad: true },
-        { id: "importe", label: "Importe (€)", tipo: "number", req: !gestion, mitad: true },
+        { id: "importe", label: "Importe", tipo: "number", req: !gestion, mitad: true },
+        ...(GS.sinMoneda && !(g && g.moneda === "COP") ? [] : [
+          { id: "moneda", label: "Moneda", tipo: "select", mitad: true, opciones: [["EUR", "Euros (€)"], ["COP", "Pesos colombianos (COP)"]],
+            hint: "En COP se calcula el cambio del día del pago y se guarda el importe en euros." },
+          { id: "tasa_cop", label: "Cambio (COP por 1 €)", tipo: "number", mitad: true,
+            hint: "Solo si es COP. Vacío = el cambio de mercado del día del pago; escríbelo si quieres el de tu banco." }]),
         { id: "estado", label: "Estado", tipo: "select", mitad: true,
           opciones: [["pendiente", gsEstadoTxt(tipo, "pendiente")], ["hecho", gsEstadoTxt(tipo, "hecho")]] },
       ];
@@ -31587,9 +31678,11 @@ function boot(vistaInicial) {
       gsFormulario({
         titulo: (g ? "Editar " : "Nuevo ") + (tipo === "gasto" ? "gasto" : tipo === "ingreso" ? "ingreso" : "gestión"),
         campos, borrar: g ? () => gsConfirmarBorrar("gs_gestiones", g.id, g.titulo, "", "Borrado") : null,
-        valores: g || Object.assign({ categoria: cats[0], fecha: gsHoy(), estado: "pendiente", inquilino_id: ctx.inquilino_id || "" }, ctx.valores || {}),
+        valores: g ? Object.assign({}, g, g.moneda === "COP" ? { importe: g.importe_cop, tasa_cop: g.tasa_manual ? g.tasa_cop : null } : {})
+          : Object.assign({ categoria: cats[0], fecha: gsHoy(), estado: "pendiente", inquilino_id: ctx.inquilino_id || "", moneda: "EUR" }, ctx.valores || {}),
         guardar: async v => {
           if (v.url && !docsUrlValida(v.url)) throw gsErr("El enlace tiene que empezar por https://");
+          v.moneda = v.moneda || "EUR";
           if (v.importe !== null && v.importe < 0) throw gsErr("El importe no puede ser negativo.");
           const fila = {
             ambito, propiedad_id: propId || null, tipo,
@@ -31599,6 +31692,7 @@ function boot(vistaInicial) {
             asignado: ambito === "familia" ? (v.asignado || null) : ambito === "lima" ? "lima" : null,
             url: v.url, notas: v.notas,
           };
+          Object.assign(fila, await gsCamposMoneda(v, g));
           const guardada = await gsGuardarFila("gs_gestiones", g && g.id, fila);
           if (fila.estado === "hecho" && fila.repite && !(g && g.estado === "hecho")) await gsSiguiente(Object.assign({}, fila, { id: guardada && guardada.id }));
           await gsTras(g ? "Guardado" : "Añadido");
@@ -31625,6 +31719,7 @@ function boot(vistaInicial) {
         categoria: g.categoria || null, titulo: g.titulo, fecha, importe: g.importe === undefined ? null : g.importe,
         estado: "pendiente", repite: g.repite, asignado: g.asignado || null, url: g.url || null, notas: g.notas || null };
       if (!GS.sinOrigen && g.id) fila.origen_id = g.id;
+      if (g.moneda === "COP" && !GS.sinMoneda) Object.assign(fila, { moneda: "COP", importe_cop: g.importe_cop, tasa_cop: g.tasa_cop, tasa_prov: true, tasa_manual: false });
       try { await gsGuardarFila("gs_gestiones", null, fila); }
       catch (e) {
         if (fila.origen_id && /origen_id/i.test(e.message || "")) {   // falta la 012
@@ -31785,11 +31880,12 @@ function boot(vistaInicial) {
     }
     function gsCsvMov(propId) {
       const p = gsProp(propId);
-      const filas = [["Fecha", "Tipo", "Categoría", "Título", "Importe", "Estado", "Inquilino", "Notas"]];
+      const filas = [["Fecha", "Tipo", "Categoría", "Título", "Importe", "Estado", "Inquilino", "Notas", "Moneda original", "Importe original", "Cambio (COP por €)"]];
       GS.gests.filter(g => g.propiedad_id === propId).sort((a, b) => a.fecha.localeCompare(b.fecha)).forEach(g => {
         const i = g.inquilino_id ? gsInq(g.inquilino_id) : null;
         filas.push([g.fecha, GS_TIPOS[g.tipo], g.categoria, g.titulo, g.importe === null ? "" : +g.importe,
-          gsEstadoTxt(g.tipo, g.estado), i ? i.nombre : "", g.notas]);
+          gsEstadoTxt(g.tipo, g.estado), i ? i.nombre : "", g.notas,
+          g.moneda === "COP" ? "COP" : "", g.moneda === "COP" ? +g.importe_cop : "", g.moneda === "COP" && g.tasa_cop ? +g.tasa_cop : ""]);
       });
       gsCSV(`movimientos-${(p ? p.nombre : "piso").replace(/\s+/g, "-")}.csv`, filas);
     }
