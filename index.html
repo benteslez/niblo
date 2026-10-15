@@ -8647,7 +8647,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "385";
+const NIBLO_BUILD = "386";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -31019,7 +31019,7 @@ function boot(vistaInicial) {
           <div class="gs-kpi"><span class="gs-kpi-et">Balance (en propiedad)</span>
             <span class="gs-kpi-v ${tot.ing - tot.gas >= 0 ? "pos" : "neg"}">${gsEur(tot.ing - tot.gas)}</span></div>
         </div>` : ""}
-        <div class="gs-grid">${GS.props.map(p => {
+        <div class="gs-grid">${GS.props.slice().sort((x, y) => (gsPisoActual() && gsPisoActual().id === y.id) - (gsPisoActual() && gsPisoActual().id === x.id)).map(p => {
           const c = gsCalcPiso(p.id, GS.anio);
           const inq = GS.inqs.filter(i => i.propiedad_id === p.id && i.activo);
           const pend = GS.gests.filter(g => g.propiedad_id === p.id && g.estado === "pendiente").length;
