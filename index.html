@@ -5202,6 +5202,9 @@
     .gs-sum-edit h4 { margin: 0 0 6px; font-size: .875rem; }
     .gs-sum-edit ul { list-style: none; margin: 0 0 8px; padding: 0; }
     .gs-sum-edit li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; font-size: .875rem; }
+    .gs-cotit { border: 1px solid var(--border, #e2e8f0); border-radius: 12px; padding: 10px; margin: 10px 0; }
+    .gs-cotit-cab { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .gs-nota-cot { margin: 8px 0 0; font-size: .75rem; }
     .gs-sum-det { display: grid; gap: 6px; font-size: .9rem; }
     .gs-sum-det dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; } .gs-sum-det dt { color: var(--muted, #6b7280); } .gs-sum-det dd { margin: 0; word-break: break-word; }
     .gs-tabs { margin: 0 0 var(--gap-4); max-width: 100%; overflow-x: auto; }
@@ -8614,7 +8617,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "383";
+const NIBLO_BUILD = "384";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30419,7 +30422,7 @@ function boot(vistaInicial) {
        se pintan con gsRender(); Documentos sigue siendo su propio modulo.
        ======================================================================== */
     const GS = {
-      props: [], inqs: [], gests: [], prest: [], revs: [], pagos: [], sumis: [], sinSuministros: false,
+      props: [], inqs: [], gests: [], prest: [], revs: [], pagos: [], sumis: [], sinSuministros: false, sinNif: false,
       cargado: false, cargando: false, error: null,
       pisoId: null, pisoTab: "resumen", anio: new Date().getFullYear(),
       movFiltro: "todos", prestId: null, filtroTodo: "todo", mes: null,
@@ -30506,6 +30509,7 @@ function boot(vistaInicial) {
           supaFetch("/rest/v1/gs_pagos_prestamo?select=*&order=fecha.asc"),
           supaFetch("/rest/v1/gs_suministros?select=*&order=sort_order.asc,nombre.asc").catch(() => null),   // sin la 016 no existe
         ]);
+        GS.sinNif = !!(inqs && inqs.length) && !("nif" in inqs[0]);
         GS.sinSuministros = sumis === null || (!!(props && props.length) && !("suministros_activos" in props[0]));
         GS.sumis = sumis || [];
         GS.props = props || []; GS.inqs = inqs || []; GS.gests = gests || [];
@@ -31102,7 +31106,7 @@ function boot(vistaInicial) {
           return `<div class="gs-card sin-click${i.activo ? "" : " inactivo"}">
             <span class="gs-card-cab"><span class="gs-card-tit">${esc(i.nombre)}</span>
               <span class="gs-pill ${i.activo ? "verde" : ""}">${i.activo ? "Activo" : "Anterior"}</span></span>
-            <span class="gs-card-sub">${[i.telefono, i.email].filter(Boolean).map(esc).join(" · ") || "Sin contacto"}</span>
+            <span class="gs-card-sub">${[i.nif ? "NIF " + i.nif : "", i.telefono, i.email].filter(Boolean).map(esc).join(" · ") || "Sin contacto"}</span>
             <span class="gs-card-cifras">
               <span><i>Renta</i><b>${gsEur(i.renta)}</b></span>
               <span><i>Fianza</i><b>${gsEur(i.fianza)}</b></span>
@@ -31710,10 +31714,10 @@ function boot(vistaInicial) {
             hint: "Los pisos donde somos inquilinos no cuentan en el balance de los pisos en propiedad.",
             opciones: [["", "Elige una opción…"], ["propietario", "Es nuestro (alquilado a inquilinos)"], ["inquilino", "Somos inquilinos"]] },
           { id: "direccion", label: "Dirección" },
-          ...(GS.sinSuministros ? [] : [{ id: "suministros_activos", label: "Activar suministros (vivimos aquí): accesos directos a agua, luz, gas, internet…", tipo: "check" }]),
+          { id: "suministros_activos", label: "Activar suministros (vivimos aquí): accesos directos a agua, luz, gas, internet…", tipo: "check" },
           { id: "notas", label: "Notas", tipo: "textarea" },
         ],
-        extra: GS.sinSuministros ? "" : p && p.suministros_activos
+        extra: GS.sinSuministros ? `<div class="doc-aviso gs-sum-edit">Para usar los suministros falta ejecutar <b>016_gestiones_suministros.sql</b> en el SQL Editor de Supabase. Hasta entonces no se pueden activar.</div>` : p && p.suministros_activos
           ? `<div class="gs-sum-edit"><h4>Suministros</h4>${gsSumDe(p.id).length ? `<ul>${gsSumDe(p.id).map(s =>
               `<li><span>${gsSumIcono(s)} ${esc(s.nombre)}${s.empresa ? " · " + esc(s.empresa) : ""}</span><button type="button" class="gs-btn" onclick="GSUI.editarSum('${s.id}')">Editar</button></li>`).join("")}</ul>` : `<p class="faint">Aún no hay ninguno.</p>`}
             <button type="button" class="gs-btn" onclick="GSUI.nuevoSum('${p.id}')">+ Añadir suministro</button></div>`
@@ -31726,6 +31730,7 @@ function boot(vistaInicial) {
         } : null,
         guardar: async v => {
           const fila = { nombre: v.nombre, rol: v.rol, direccion: v.direccion, notas: v.notas };
+          if (GS.sinSuministros && v.suministros_activos) throw gsErr("Para activar los suministros falta ejecutar 016_gestiones_suministros.sql en el SQL Editor de Supabase.");
           if (!GS.sinSuministros) fila.suministros_activos = !!v.suministros_activos;
           await gsGuardarFila("gs_propiedades", p && p.id, fila);
           if (p && GS.pisoId === p.id && v.rol !== "propietario") GS.pisoTab = "resumen";
@@ -31742,6 +31747,7 @@ function boot(vistaInicial) {
         titulo: i ? "Editar inquilino" : "Nuevo inquilino",
         campos: [
           { id: "nombre", label: "Nombre", req: true },
+          { id: "nif", label: "NIF / NIE", mitad: true },
           { id: "telefono", label: "Teléfono", mitad: true }, { id: "email", label: "Correo", mitad: true },
           { id: "inicio", label: "Inicio del contrato", tipo: "date", mitad: true }, { id: "fin", label: "Fin del contrato", tipo: "date", mitad: true },
           { id: "renta", label: "Renta mensual (€)", tipo: "number", mitad: true }, { id: "fianza", label: "Fianza (€)", tipo: "number", mitad: true },
@@ -31749,13 +31755,34 @@ function boot(vistaInicial) {
           { id: "notas", label: "Notas", tipo: "textarea" },
         ],
         valores: i || { activo: true },
+        extra: i ? "" : `<div class="gs-cotits" id="gs-cotits"></div>
+          <button type="button" class="gs-btn" onclick="GSUI.masInq()">+ Añadir otro inquilino</button>
+          <p class="faint gs-nota-cot">Los demás inquilinos del contrato se guardan con su nombre, NIF y contacto; la renta, la fianza y las fechas van en el primero, para no contarlas dos veces.</p>`,
         borrar: i ? () => gsConfirmarBorrar("gs_inquilinos", i.id, i.nombre, "Sus movimientos se conservan, sin inquilino asignado.", "Inquilino borrado") : null,
         guardar: async v => {
           if (v.inicio && v.fin && v.fin <= v.inicio) throw gsErr("El fin del contrato tiene que ser posterior al inicio.");
-          await gsGuardarFila("gs_inquilinos", i && i.id, {
-            propiedad_id: propId, nombre: v.nombre, telefono: v.telefono, email: v.email,
-            inicio: v.inicio, fin: v.fin, renta: v.renta, fianza: v.fianza, activo: v.activo, notas: v.notas });
-          await gsTras(i ? "Inquilino actualizado" : "Inquilino añadido");
+          const extras = [...document.querySelectorAll("#gs-cotits .gs-cotit")].map(b => {
+            const f = k => (b.querySelector("[data-k=" + k + "]").value || "").trim() || null;
+            return { nombre: f("nombre"), nif: f("nif"), telefono: f("telefono"), email: f("email") };
+          }).filter(e => e.nombre || e.nif || e.telefono || e.email);
+          if (extras.some(e => !e.nombre)) throw gsErr("Falta el nombre de uno de los inquilinos añadidos.");
+          const fila = { propiedad_id: propId, nombre: v.nombre, telefono: v.telefono, email: v.email,
+            inicio: v.inicio, fin: v.fin, renta: v.renta, fianza: v.fianza, activo: v.activo, notas: v.notas };
+          if (!GS.sinNif) fila.nif = v.nif || null;
+          else if (v.nif || extras.some(e => e.nif)) throw gsErr("Para guardar el NIF falta ejecutar 017_gestiones_nif.sql en el SQL Editor de Supabase.");
+          try {
+            await gsGuardarFila("gs_inquilinos", i && i.id, fila);
+            for (const e of extras) {
+              const x = { propiedad_id: propId, nombre: e.nombre, telefono: e.telefono, email: e.email, activo: v.activo,
+                notas: "Inquilino del contrato de " + v.nombre };
+              if (!GS.sinNif) x.nif = e.nif;
+              await gsGuardarFila("gs_inquilinos", null, x);
+            }
+          } catch (e) {
+            if (/nif/i.test(e.message || "")) { GS.sinNif = true; throw gsErr("Para guardar el NIF falta ejecutar 017_gestiones_nif.sql en el SQL Editor de Supabase."); }
+            throw e;
+          }
+          await gsTras(i ? "Inquilino actualizado" : extras.length ? `${extras.length + 1} inquilinos añadidos` : "Inquilino añadido");
         },
       });
     }
@@ -32047,6 +32074,16 @@ function boot(vistaInicial) {
       cerrarMes: () => { GS.mes = null; gsRender(); },
       movFiltro: k => { GS.movFiltro = k; gsRender(); },
       nuevoInq: propId => gsFormInq(propId, null),
+      masInq: () => {
+        const c = document.getElementById("gs-cotits"); if (!c) return;
+        const d = document.createElement("div"); d.className = "gs-cotit";
+        d.innerHTML = `<div class="gs-cotit-cab"><b>Otro inquilino</b><button type="button" class="gs-btn pel" onclick="this.closest('.gs-cotit').remove()">Quitar</button></div>
+          <div class="gs-form"><div class="campo gs-campo"><label>Nombre</label><input data-k="nombre" autocomplete="off"></div>
+          <div class="campo gs-campo"><label>NIF / NIE <span class="faint">(opcional)</span></label><input data-k="nif" autocomplete="off"></div>
+          <div class="campo gs-campo"><label>Teléfono <span class="faint">(opcional)</span></label><input data-k="telefono" autocomplete="off"></div>
+          <div class="campo gs-campo"><label>Correo <span class="faint">(opcional)</span></label><input data-k="email" autocomplete="off"></div></div>`;
+        c.appendChild(d); d.querySelector("input").focus();
+      },
       editarInq: id => { const i = gsInq(id); if (i) gsFormInq(i.propiedad_id, i); },
       cobrarRenta: gsCobrarRenta,
       nuevaGestionInq: id => { const i = gsInq(id); if (i) gsFormMov("gestion", "piso", { propiedad_id: i.propiedad_id, inquilino_id: i.id }); },
