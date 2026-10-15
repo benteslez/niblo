@@ -8670,7 +8670,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "387";
+const NIBLO_BUILD = "388";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -29792,6 +29792,7 @@ function boot(vistaInicial) {
 
     /* Tipos que se siembran la primera vez que un hogar abre la pestaña. */
     const DOCS_TIPOS_INICIALES = [
+      { emoji: "\u{1FAAA}", name: "Identificación",   plural_label: "IDENTIFICACIÓN",      sort_order: 5 },
       { emoji: "\u{1FAAA}", name: "DNI",                 plural_label: "DNI",                 sort_order: 10 },
       { emoji: "\u{1F6C2}", name: "Pasaporte",           plural_label: "PASAPORTES",          sort_order: 20 },
       { emoji: "✈️", name: "Visa",             plural_label: "VISAS",               sort_order: 30 },
@@ -29800,6 +29801,7 @@ function boot(vistaInicial) {
       { emoji: "\u{1F4DC}", name: "Certificado",         plural_label: "CERTIFICADOS",        sort_order: 60 },
       { emoji: "\u{1F46A}", name: "Libro de familia",    plural_label: "LIBRO DE FAMILIA",    sort_order: 70 },
       { emoji: "\u{1F6E1}️", name: "Seguros",       plural_label: "SEGUROS",             sort_order: 80 },
+      { emoji: "\u{1F489}", name: "Vacunas",          plural_label: "VACUNAS",             sort_order: 85 },
       { emoji: "\u{1F393}", name: "Titulación",     plural_label: "TITULACIONES",        sort_order: 90 },
       { emoji: "\u{1F4C1}", name: "Otros",               plural_label: "OTROS",               sort_order: 100 },
     ];
@@ -29927,6 +29929,8 @@ function boot(vistaInicial) {
        tipos de serie tienen el suyo; uno creado a mano lo saca de su nombre,
        siempre el mismo. */
     const DOCS_COLORES = {
+      "identificacion":      ["#7dd3fc", "#0284c7", "#075985"],   // cielo
+      "vacunas":             ["#bef264", "#65a30d", "#3f6212"],   // lima
       "dni":                 ["#60a5fa", "#4f46e5", "#3730a3"],   // azul → indigo
       "pasaporte":           ["#fb7185", "#e11d48", "#9f1239"],   // rosa → carmin
       "visa":                ["#c084fc", "#9333ea", "#6b21a8"],   // lila → violeta
