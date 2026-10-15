@@ -2178,7 +2178,7 @@ function semaforo(t) {
    publicados en el mismo dominio (github.io comparte origen entre repos).
    ====================================================================== */
 const KEY_AJUSTES_V1 = "gestion_hub_ajustes_v1";   // progreso antiguo (por posición); se migra
-const BUILD_ID = "379";   // = CACHE_NAME de sw.js (súbelos juntos); se ve al pie del inicio para saber qué versión está cargada
+const BUILD_ID = "380";   // = CACHE_NAME de sw.js (súbelos juntos); se ve al pie del inicio para saber qué versión está cargada
 const KEY_PROG    = "gestion_hub_progreso_v2:";     // + uid | "local"
 const KEY_PEND    = "gestion_hub_pendientes_v1";    // { temas:{id:1}, prog:{"uid|clave":1} }
 const KEY_BORR    = "gestion_hub_borrados_v1";      // { id: ms } temas quitados, hasta subirlos
@@ -2408,7 +2408,8 @@ async function quitarTema(id, deServidor) {
    - En vivo: WebSocket de Realtime; cada aviso dispara una bajada.
    ====================================================================== */
 const SUPA = { url:null, anon:null, token:null, refresh:null, uid:null, email:null };
-const SYNC = Object.assign({ hogar:null, uid:null, cT:null, cP:null }, leerJSON(KEY_SYNC, {}));
+const SYNC = Object.assign({ hogar:null, uid:null, cT:null, cP:null, vT:{} }, leerJSON(KEY_SYNC, {}));
+if (!SYNC.vT || typeof SYNC.vT !== "object") SYNC.vT = {};
 const S = { estado:"local", detalle:"", enCurso:null, repetir:false, timer:null, ultimaSubida:0, ultimaOk:null };
 
 function jwt(token) {
@@ -2494,7 +2495,7 @@ async function supa(ruta, opts, reintento) {
 }
 const ms = iso => { const n = Date.parse(iso); return isNaN(n) ? 0 : n; };
 const iso = n => new Date(n).toISOString();
-function guardarSyncMeta() { escribirJSON(KEY_SYNC, { hogar:SYNC.hogar, uid:SYNC.uid, cT:SYNC.cT, cP:SYNC.cP }); }
+function guardarSyncMeta() { escribirJSON(KEY_SYNC, { hogar:SYNC.hogar, uid:SYNC.uid, cT:SYNC.cT, cP:SYNC.cP, vT:SYNC.vT }); }
 
 /** Hogar de la sesión (RLS solo devuelve los tuyos). Si cambia, lo guardado
     aquí era de otro hogar: se descarta el contenido local para no mezclarlo. */
@@ -2507,7 +2508,7 @@ async function asegurarHogar() {
     Object.keys(pend.temas).forEach(id => delete pend.temas[id]);
     Object.keys(borrados).forEach(id => delete borrados[id]);
     guardarPend();
-    SYNC.cT = null;
+    SYNC.cT = null; SYNC.vT = {};
   }
   if (SYNC.uid !== SUPA.uid) { SYNC.cP = null; SYNC.uid = SUPA.uid; }
   SYNC.hogar = h; guardarSyncMeta();
@@ -2527,8 +2528,22 @@ async function bajarTabla(base, cursor) {
 }
 async function bajar() {
   let cambios = 0;
-  // Temas del hogar
-  const ft = await bajarTabla(`/rest/v1/oposicion_temas?select=tema_id,datos,borrado,modificado,actualizado&hogar_id=eq.${SYNC.hogar}`, SYNC.cT);
+  // Temas del hogar. La consulta incluye siempre la ultima fila (cursor - 2 min),
+  // y `datos` lleva el tema ENTERO: pedirlo en cada sincronizacion (cada 2 min y
+  // en cada guardado) gastaba cientos de KB por vuelta. Primero se piden solo los
+  // metadatos y el contenido se baja unicamente de las filas que este
+  // dispositivo no ha procesado ya (SYNC.vT guarda su `actualizado`).
+  const meta = await bajarTabla(`/rest/v1/oposicion_temas?select=tema_id,borrado,modificado,actualizado&hogar_id=eq.${SYNC.hogar}`, SYNC.cT);
+  const ft = [];
+  for (const m of meta) {
+    if (SYNC.vT[m.tema_id] === m.actualizado || !TEMA_POR_ID[m.tema_id]) {
+      if (!SYNC.cT || ms(m.actualizado) > ms(SYNC.cT)) SYNC.cT = m.actualizado;
+      continue;
+    }
+    if (m.borrado) { ft.push(m); continue; }
+    const f = await supa(`/rest/v1/oposicion_temas?select=tema_id,datos,borrado,modificado,actualizado&hogar_id=eq.${SYNC.hogar}&tema_id=eq.${encodeURIComponent(m.tema_id)}`);
+    if (f && f[0]) ft.push(f[0]);
+  }
   for (const r of ft) {
     const id = r.tema_id;
     if (!TEMA_POR_ID[id]) continue;
@@ -2554,6 +2569,7 @@ async function bajar() {
         // Solo lo local es más nuevo (o son iguales): ya está en la cola o no hay nada que hacer.
       }
     }
+    SYNC.vT[id] = r.actualizado;
     if (!SYNC.cT || ms(r.actualizado) > ms(SYNC.cT)) SYNC.cT = r.actualizado;
   }
   // Progreso propio

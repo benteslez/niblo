@@ -8598,7 +8598,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "379";
+const NIBLO_BUILD = "380";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -27070,8 +27070,27 @@ function boot(vistaInicial) {
     /* Momento de la ultima subida propia: sirve para no salir corriendo a
        sincronizar por el eco de lo que acabamos de escribir nosotros. */
     let _ultimaSubida = 0;
+    /* Egress: cada sincronizacion bajaba el documento ENTERO de Pablo (crece con
+       el uso) y las listas de todos los ids de recetas e ingredientes. Ahora
+       solo se hace asi cuando de verdad hace falta:
+         - si lo avisa el tiempo real (otro dispositivo cambio algo),
+         - si el canal en vivo no esta conectado (podrian haberse perdido avisos),
+         - o si hace mas de PABLO_COMPLETA_MS / IDS_CADA_MS de la ultima vez.
+       El resto de sincronizaciones (las de cada guardado) preguntan antes solo
+       la marca `modificado` de Pablo (unos bytes) y, si no ha cambiado, no
+       bajan nada. */
+    let _forzarBajada = false;
+    const PABLO_COMPLETA_MS = 3 * 60 * 1000, IDS_CADA_MS = 5 * 60 * 1000;
+    let _pabloCompletaTs = 0, _idsTs = 0;
+    const KEY_PABLO_VISTO = "niblo.pablo.visto";
+    function pabloVisto() {
+      try { const o = JSON.parse(localStorage.getItem(KEY_PABLO_VISTO) || "null"); return o && o.hid === hogarId() ? o.ts : null; } catch (_) { return null; }
+    }
+    function guardarPabloVisto(ts) { try { localStorage.setItem(KEY_PABLO_VISTO, JSON.stringify({ hid: hogarId(), ts })); } catch (_) {} }
+    const mismoInstante = (a, b) => { const x = Date.parse(a), y = Date.parse(b); return !isNaN(x) && !isNaN(y) && x === y; };
 
     async function sincronizarInterno() {
+      const forzar = _forzarBajada; _forzarBajada = false;
       const s = sesion.supabase;
       if (!s.token) throw new Error("Inicia sesión primero");
       if (sesion.hogar === null) await cargarHogar();
@@ -27177,7 +27196,9 @@ function boot(vistaInicial) {
         //    Solo aplicamos esto si ya hubo un sync previo (para no perder
         //    recetas locales que aún no se hubieran subido por error).
         let borradosLocal = 0;
-        if (s.ultimoSync) {
+        const detectarBorrados = s.ultimoSync && (forzar || !RT.conectado || Date.now() - _idsTs > IDS_CADA_MS);
+        if (detectarBorrados) {
+          _idsTs = Date.now();
           const [todosIdsRec, todosClavesIng] = await Promise.all([
             supaFetch("/rest/v1/recetas?select=id"),
             supaFetch("/rest/v1/ingredientes?select=clave")
@@ -27207,9 +27228,14 @@ function boot(vistaInicial) {
         }
 
         // 6) Registros de Pablo: documento unico, ultima escritura gana.
-        const pablo = await sincronizarPablo();
+        /* Si falla solo lo de Pablo, lo demas ya esta sincronizado: se avanza
+           igualmente `ultimoSync`. Antes un fallo aqui dejaba el cursor atras y
+           cada intento siguiente volvia a bajar TODAS las recetas. */
+        let pablo, pabloError = null;
+        try { pablo = await sincronizarPablo(forzar); } catch (e) { pablo = "error"; pabloError = e; }
 
         s.ultimoSync = nowISO();
+        if (pabloError) { guardarSupabase(); throw pabloError; }
         s.estadoSync = "idle";
         pintarPuntoSync();
         rtConectar();          // por si el canal se habia caido
@@ -27246,17 +27272,30 @@ function boot(vistaInicial) {
        son datos del bebe, no de cada padre. Ultima escritura gana. */
     const PABLO_FILA = "pablo";
 
-    async function sincronizarPablo() {
+    async function sincronizarPablo(forzar) {
       if (typeof PB === "undefined" || !PB.exportarEstadoSync) return "sin módulo";
       /* hid tiene que vivir fuera del try: tambien lo usa la subida de mas
          abajo. Estaba declarado dentro y la subida petaba con "hid is not
          defined", asi que desde que se introdujo el hogar no subia nada. */
       const hid = hogarId();
       if (!hid) return "sin hogar";
-      let remoto = null;
+      let remoto = null, omitido = false;
       try {
-        const filas = await supaFetch("/rest/v1/pablo_estado?hogar_id=eq." + encodeURIComponent(hid));
-        remoto = (filas && filas[0]) || null;
+        const visto = pabloVisto();
+        let bajar = forzar || !visto || !RT.conectado || Date.now() - _pabloCompletaTs > PABLO_COMPLETA_MS;
+        if (!bajar) {
+          // Solo la marca (unos bytes). Tres casos: no hay fila (remoto = null, no hay nada que bajar),
+          // no ha cambiado desde la ultima vez (se omite), o ha cambiado (se baja entero y se fusiona).
+          const meta = await supaFetch("/rest/v1/pablo_estado?select=modificado&hogar_id=eq." + encodeURIComponent(hid));
+          if (!meta || !meta[0]) remoto = null;
+          else if (mismoInstante(meta[0].modificado, visto)) { remoto = { modificado: meta[0].modificado, datos: null }; omitido = true; }
+          else bajar = true;
+        }
+        if (bajar) {
+          const filas = await supaFetch("/rest/v1/pablo_estado?hogar_id=eq." + encodeURIComponent(hid));
+          remoto = (filas && filas[0]) || null;
+          _pabloCompletaTs = Date.now();
+        }
       } catch (e) {
         // La tabla puede no existir todavia: no debe tumbar el resto del sync.
         if (/(42P01|does not exist|Could not find the table)/i.test(e.message || "")) {
@@ -27270,21 +27309,23 @@ function boot(vistaInicial) {
       /* Fusion registro a registro en vez de "gana el documento entero mas
          nuevo": si Ruben apunta una toma y Sergio un pañal sin sincronizar
          entremedias, antes se perdia lo de uno de los dos. */
-      const cambioLocal = remoto ? PB.fusionarConRemoto(remoto.datos, remotoTs) : false;
+      const cambioLocal = remoto && !omitido ? PB.fusionarConRemoto(remoto.datos, remotoTs) : false;
 
       const tsFinal = PB.marcaDeTiempo() || localTs;
       if (!tsFinal) return "nada que subir";
 
       // Se sube siempre que lo local aporte algo que el remoto no tenga: o
       // bien somos mas nuevos, o bien la fusion ha juntado las dos partes.
-      if (!remoto || cambioLocal || masNuevo(tsFinal, remotoTs) || (PB.remotoDesfasado && PB.remotoDesfasado())) {
+      if (!remoto || cambioLocal || masNuevo(tsFinal, remotoTs) || (!omitido && PB.remotoDesfasado && PB.remotoDesfasado())) {
         await supaFetch("/rest/v1/pablo_estado?on_conflict=hogar_id", {
           method: "POST",
           headers: { "Prefer": "resolution=merge-duplicates" },
           body: JSON.stringify([{ id: PABLO_FILA, hogar_id: hid, datos: PB.exportarEstadoSync(), modificado: tsFinal }])
         });
+        guardarPabloVisto(tsFinal);
         return cambioLocal ? "fusionado" : "subido";
       }
+      if (remotoTs) guardarPabloVisto(remotoTs);
       return "al día";
     }
 
@@ -27388,6 +27429,7 @@ function boot(vistaInicial) {
       clearTimeout(_rtBajarTimer);
       const espera = Math.max(400, RT_ECO_MS - (Date.now() - _ultimaSubida));
       _rtBajarTimer = setTimeout(() => {
+        _forzarBajada = true;   // lo ha avisado el otro dispositivo: descarga completa
         sincronizar().catch(() => {});
       }, espera);
     }
