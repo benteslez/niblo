@@ -5207,6 +5207,18 @@
     .gs-sint-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
     .gs-sint-op { display: flex; align-items: center; gap: 6px; font-size: .875rem; padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer; }
     @media (max-width: 420px) { .gs-sint-grid { grid-template-columns: 1fr; } }
+    .gs-fam { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-3); align-items: start; margin-bottom: var(--gap-4); }
+    .gs-fam-col { --fc: var(--accent); min-width: 0; padding: 10px; border-radius: var(--r-lg); background: color-mix(in srgb, var(--fc) 7%, var(--bg-elev)); border: 1px solid color-mix(in srgb, var(--fc) 22%, var(--line-soft)); }
+    .fam-ruben { --fc: #2563eb; } .fam-comun { --fc: #b45309; } .fam-sergio { --fc: #15803d; }
+    :root[data-tema="oscuro"] .fam-ruben { --fc: #60a5fa; } :root[data-tema="oscuro"] .fam-comun { --fc: #fbbf24; } :root[data-tema="oscuro"] .fam-sergio { --fc: #4ade80; }
+    .gs-fam-cab { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-family: var(--font-titulo); font-size: 1rem; font-weight: 700; color: var(--fc); }
+    .gs-fam-n { font-size: .75rem; font-weight: 600; padding: 1px 8px; border-radius: var(--r-pill); background: color-mix(in srgb, var(--fc) 16%, transparent); }
+    .gs-fam-mas { margin-left: auto; width: 26px; height: 26px; border-radius: 50%; font-size: 1.1rem; line-height: 1; color: var(--fc); background: color-mix(in srgb, var(--fc) 14%, transparent); }
+    .gs-fam-vacio { margin: 4px 0; color: var(--text-muted); text-align: center; }
+    .gs-fam-col .gs-fila-tit { color: var(--fc); }
+    .gs-fam-col .gs-lista { display: flex; flex-direction: column; gap: 6px; }
+    .gs-fam-tit { margin-top: var(--gap-2); }
+    @media (max-width: 820px) { .gs-fam { grid-template-columns: 1fr; } }
     .gs-sum-det { display: grid; gap: 6px; font-size: .9rem; }
     .gs-sum-det dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; } .gs-sum-det dt { color: var(--muted, #6b7280); } .gs-sum-det dd { margin: 0; word-break: break-word; }
     .gs-tabs { margin: 0 0 var(--gap-4); max-width: 100%; overflow-x: auto; }
@@ -8620,7 +8632,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "390";
+const NIBLO_BUILD = "391";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30648,7 +30660,7 @@ function boot(vistaInicial) {
       return n ? `<span><b class="num">${n}</b> por atender</span>` : "<span>todo al día</span>";
     }
 
-    function gsLineaGestion(g, conAmbito) {
+    function gsLineaGestion(g, conAmbito, sinPersona) {
       const partes = [gsFecha(g.fecha)];
       if (conAmbito) {
         const p = g.propiedad_id ? gsProp(g.propiedad_id) : null;
@@ -30657,7 +30669,7 @@ function boot(vistaInicial) {
       if (g.categoria) partes.push(g.categoria);
       const inq = g.inquilino_id ? gsInq(g.inquilino_id) : null;
       if (inq) partes.push(inq.nombre);
-      if (g.asignado && g.ambito === "familia") partes.push(gsPersona(g.asignado));
+      if (g.asignado && g.ambito === "familia" && !sinPersona) partes.push(gsPersona(g.asignado));
       if (g.repite) partes.push("↻ " + ({ mensual: "cada mes", trimestral: "cada 3 meses", semestral: "cada 6 meses", anual: "cada año" })[g.repite]);
       return partes.filter(Boolean).join(" · ");
     }
@@ -30911,7 +30923,7 @@ function boot(vistaInicial) {
           aria-label="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}: ${esc(g.titulo)}">&#10003;</button>
         <button type="button" class="gs-fila-main" onclick="GSUI.editarMov('${g.id}')">
           <span class="gs-fila-tit">${esc(g.titulo)}${vencido ? ` <span class="gs-alerta" role="img" title="Vencido hace ${esc(docsTiempo(gsDias(g.fecha)))}" aria-label="Vencido"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>` : ""}</span>
-          <span class="gs-fila-sub">${esc(gsLineaGestion(g, opc.ambito))}</span>
+          <span class="gs-fila-sub">${esc(gsLineaGestion(g, opc.ambito, opc.sinPersona))}</span>
           ${opc.notas && g.notas ? `<span class="gs-fila-sub gs-fila-notas">${esc(g.notas)}</span>` : ""}
         </button>
         ${imp}
@@ -31182,9 +31194,41 @@ function boot(vistaInicial) {
       });
     }
 
+    /* ---- Familia: tres columnas (Ruben, Comun, Sergio); en el movil, una debajo de otra ---- */
+    const GS_FAM_COLS = [["ruben", "Rubén"], ["comun", "Común"], ["sergio", "Sergio"]];
+    const gsFamCol = g => g.asignado === "ruben" ? "ruben" : g.asignado === "sergio" ? "sergio" : "comun";
+    function gsVistaFamilia() {
+      const def = GS_AMBITOS.familia;
+      const todas = GS.gests.filter(g => g.ambito === "familia");
+      const pend = todas.filter(g => g.estado === "pendiente").sort((a, b) => a.fecha.localeCompare(b.fecha));
+      const hechas = todas.filter(g => g.estado === "hecho").sort((a, b) => b.fecha.localeCompare(a.fecha));
+      const anio = new Date().getFullYear();
+      const gastoAnio = todas.filter(g => g.tipo === "gasto" && g.estado === "hecho" && +g.fecha.slice(0, 4) === anio).reduce((s, g) => s + (+g.importe || 0), 0);
+      const prox = pend.find(g => g.tipo === "gestion");
+      const cols = (clave, tit, lista, max) => `<div class="gs-fam">${GS_FAM_COLS.map(([k, nom]) => {
+        const l = lista.filter(g => gsFamCol(g) === k);
+        return `<section class="gs-fam-col fam-${k}"><h4 class="gs-fam-cab"><span>${nom}</span><span class="gs-fam-n">${l.length}</span>
+          ${clave === "prox" ? `<button type="button" class="gs-fam-mas" onclick="GSUI.movFam('${k === "comun" ? "" : k}')" title="Añadir a ${nom}" aria-label="Añadir a ${nom}">+</button>` : ""}</h4>
+          ${l.length ? gsListaTope(`fam-${clave}-${k}`, l, max, g => gsFila(g, { sinPersona: true })) : `<p class="gs-fam-vacio">—</p>`}</section>`;
+      }).join("")}</div>`;
+      return `${gsCab(def.nombre, gsBtnNuevo("GSUI.menuAmbito('familia')", "Añadir"), "Trámites y gastos de la familia que no son un documento.")}
+        <div class="gs-kpis">
+          <div class="gs-kpi"><span class="gs-kpi-et">Próxima gestión</span>
+            <span class="gs-kpi-v peq">${prox ? esc(prox.titulo) : "—"}</span>
+            <span class="gs-kpi-s">${prox ? esc(gsFecha(prox.fecha)) : "Nada pendiente"}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Próximos</span><span class="gs-kpi-v">${pend.length}</span></div>
+          <div class="gs-kpi"><span class="gs-kpi-et">Gasto ${anio}</span><span class="gs-kpi-v">${gsEur(gastoAnio)}</span></div>
+        </div>
+        ${pend.length ? `<h3 class="gs-grupo-tit gs-fam-tit">Próximos <span class="doc-cuenta">· ${pend.length}</span></h3>${cols("prox", "Próximos", pend, 6)}` : ""}
+        ${hechas.length ? `<h3 class="gs-grupo-tit gs-fam-tit">Historial <span class="doc-cuenta">· ${hechas.length}</span></h3>${cols("hist", "Historial", hechas, 4)}` : ""}
+        ${!todas.length ? `<div class="empty-state"><p>Todavía no hay nada registrado de la familia.</p>
+          <button type="button" class="btn-primario" onclick="GSUI.menuAmbito('familia')">Añadir la primera</button></div>` : ""}`;
+    }
+
     /* ---- Lima y Familia: lista por ambito ---------------------------------- */
     function gsVistaAmbito(ambito) {
       if (ambito === "lima") return gsVistaLima();
+      if (ambito === "familia") return gsVistaFamilia();
       const def = GS_AMBITOS[ambito];
       const todas = GS.gests.filter(g => g.ambito === ambito);
       const pend = todas.filter(g => g.estado === "pendiente").sort((a, b) => a.fecha.localeCompare(b.fecha));
@@ -32107,7 +32151,7 @@ function boot(vistaInicial) {
       if (inqs.length) campos.push({ id: "inquilino_id", label: "Inquilino",
         tipo: "select", opciones: [["", "— Ninguno —"]].concat(inqs.map(i => [i.id, i.nombre])) });
       if (ambito === "familia") campos.push({ id: "asignado", label: "Para", tipo: "select",
-        opciones: [["", "Toda la familia"]].concat(DOCS_PERSONAS.filter(x => ["ruben", "sergio", "pablo"].includes(x.clave)).map(x => [x.clave, x.nombre])) });
+        opciones: [["", "Común"]].concat(DOCS_PERSONAS.filter(x => ["ruben", "sergio", "pablo"].includes(x.clave)).map(x => [x.clave, x.nombre])) });
       campos.push(
         { id: "repite", label: "Se repite", tipo: "select",
           opciones: [["", "No se repite"], ["mensual", "Cada mes"], ["trimestral", "Cada 3 meses"], ["semestral", "Cada 6 meses"], ["anual", "Cada año"]],
@@ -32352,6 +32396,7 @@ function boot(vistaInicial) {
       pisoParaAlta: gsPisoParaAlta,
       mov: (tipo, ambito, propId) => { gsCerrar(); gsFormMov(tipo, ambito, { propiedad_id: propId || null }); },
       editarMov: id => { const g = gsGest(id); if (g) gsFormMov(g.tipo, g.ambito, {}, g); },
+      movFam: asig => gsFormMov("gestion", "familia", { valores: { asignado: asig } }),
       nuevaVisita: () => { gsCerrar(); gsFormVisita(null); },
       editarVisita: id => { const v = GS.vvis.find(x => x.id === id); if (v) gsFormVisita(v); },
       nuevoSintoma: () => { gsCerrar(); gsFormSintoma(null); },
