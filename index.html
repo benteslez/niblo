@@ -5216,6 +5216,11 @@
     .gs-fam-mas { margin-left: auto; width: 26px; height: 26px; border-radius: 50%; font-size: 1.1rem; line-height: 1; color: var(--fc); background: color-mix(in srgb, var(--fc) 14%, transparent); }
     .gs-fam-vacio { margin: 4px 0; color: var(--text-muted); text-align: center; }
     .gs-fam-col .gs-fila-tit { color: var(--fc); }
+    .gs-fam-col .gs-fila { cursor: grab; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+    .gs-fam-col.gs-destino { outline: 2px dashed var(--fc); outline-offset: -2px; background: color-mix(in srgb, var(--fc) 16%, var(--bg-elev)); }
+    .gs-fila.gs-arrastrada { opacity: .35; }
+    .gs-fila.gs-fantasma { opacity: .95; box-shadow: 0 14px 28px -10px rgba(0,0,0,.35); transform: rotate(1.5deg) scale(1.02); background: var(--bg-elev); border-radius: var(--r-md); }
+    body.gs-arrastrando, body.gs-arrastrando * { cursor: grabbing !important; -webkit-user-select: none; user-select: none; }
     .gs-fam-col .gs-lista { display: flex; flex-direction: column; gap: 6px; }
     .gs-fam-tit { margin-top: var(--gap-2); }
     @media (max-width: 820px) { .gs-fam { grid-template-columns: 1fr; } }
@@ -8632,7 +8637,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "391";
+const NIBLO_BUILD = "392";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -30917,7 +30922,7 @@ function boot(vistaInicial) {
       const signo = g.tipo === "gasto" ? "−" : g.tipo === "ingreso" ? "+" : "";
       const imp = g.importe !== null && g.importe !== undefined
         ? `<span class="gs-importe ${g.tipo}">${signo}${g.moneda === "COP" && g.tasa_prov ? "≈" : ""}${gsEur(g.importe)}${g.moneda === "COP" ? `<small>${esc(gsCopTxt(g))}</small>` : ""}</span>` : "";
-      return `<li class="gs-fila t-${g.tipo}${hecho ? " hecho" : ""}${vencido ? " vencido" : ""}">
+      return `<li class="gs-fila t-${g.tipo}${hecho ? " hecho" : ""}${vencido ? " vencido" : ""}" data-gid="${g.id}">
         <button type="button" class="gs-check${hecho ? " on" : ""}" onclick="GSUI.toggle('${g.id}')"
           aria-pressed="${hecho}" title="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}"
           aria-label="${esc(gsEstadoTxt(g.tipo, hecho ? "pendiente" : "hecho"))}: ${esc(g.titulo)}">&#10003;</button>
@@ -32385,6 +32390,66 @@ function boot(vistaInicial) {
     }
 
     /* ---- puente para los onclick del HTML generado ------------------------------ */
+    /* Familia: arrastrar una fila de una columna a otra cambia la persona asignada.
+       Ratón: se arrastra tras mover 6 px. Táctil: mantener pulsado ~⅓ de segundo y
+       arrastrar (así el desplazamiento normal sigue funcionando). Soltar fuera de una
+       columna no hace nada. El formulario («Para») sigue valiendo para cambiarla. */
+    (function gsArrastreFamilia() {
+      const ASIG = { ruben: "ruben", comun: null, sergio: "sergio" }, NOM = { ruben: "Rubén", comun: "Común", sergio: "Sergio" };
+      let est = null, suprimir = false;
+      const clave = col => ["ruben", "comun", "sergio"].find(k => col && col.classList.contains("fam-" + k));
+      const colEn = (x, y) => { const e = document.elementFromPoint(x, y); return e && e.closest(".gs-fam-col"); };
+      function activar() {
+        if (!est || est.activo) return;
+        est.activo = true; clearTimeout(est.t);
+        const r = est.li.getBoundingClientRect(), g = est.li.cloneNode(true);
+        g.className += " gs-fantasma"; g.style.cssText = `position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;pointer-events:none;z-index:9999;`;
+        est.dx = est.x0 - r.left; est.dy = est.y0 - r.top; est.g = g; document.body.appendChild(g);
+        est.li.classList.add("gs-arrastrada"); document.body.classList.add("gs-arrastrando");
+        if (navigator.vibrate) { try { navigator.vibrate(10); } catch (e) {} }
+      }
+      function fin(ev, cancelar) {
+        if (!est) return;
+        const e = est; est = null; clearTimeout(e.t);
+        if (!e.activo) return;
+        suprimir = true; setTimeout(() => { suprimir = false; }, 0);
+        e.g.remove(); e.li.classList.remove("gs-arrastrada"); document.body.classList.remove("gs-arrastrando");
+        document.querySelectorAll(".gs-fam-col.gs-destino").forEach(c => c.classList.remove("gs-destino"));
+        if (cancelar) return;
+        const k = clave(colEn(ev.clientX, ev.clientY)), g = gsGest(e.id);
+        if (!k || !g || gsFamCol(g) === k) return;
+        const previa = g.asignado;
+        g.asignado = ASIG[k]; gsRender();
+        gsGuardarFila("gs_gestiones", g.id, { asignado: g.asignado })
+          .then(() => toast("Movida a " + NOM[k]))
+          .catch(() => { g.asignado = previa; gsRender(); toast("No se ha podido mover"); });
+      }
+      document.addEventListener("pointerdown", ev => {
+        if (ev.button > 0 || ev.target.closest(".gs-check, .gs-enlace, .gs-fam-mas")) return;
+        const li = ev.target.closest(".gs-fam-col .gs-fila[data-gid]");
+        if (!li) return;
+        est = { li, id: li.dataset.gid, x0: ev.clientX, y0: ev.clientY, touch: ev.pointerType === "touch", activo: false };
+        if (est.touch) est.t = setTimeout(activar, 320);
+      });
+      document.addEventListener("pointermove", ev => {
+        if (!est) return;
+        if (!est.activo) {
+          const d = Math.hypot(ev.clientX - est.x0, ev.clientY - est.y0);
+          if (est.touch) { if (d > 10) { clearTimeout(est.t); est = null; } }
+          else if (d > 6) activar();
+          return;
+        }
+        est.g.style.left = (ev.clientX - est.dx) + "px"; est.g.style.top = (ev.clientY - est.dy) + "px";
+        const c = colEn(ev.clientX, ev.clientY);
+        document.querySelectorAll(".gs-fam-col").forEach(x => x.classList.toggle("gs-destino", x === c));
+        if (ev.clientY < 70) window.scrollBy(0, -12); else if (ev.clientY > innerHeight - 70) window.scrollBy(0, 12);
+      });
+      document.addEventListener("pointerup", ev => fin(ev, false));
+      document.addEventListener("pointercancel", ev => fin(ev, true));
+      document.addEventListener("touchmove", ev => { if (est && est.activo) ev.preventDefault(); }, { passive: false });
+      document.addEventListener("contextmenu", ev => { if (est && est.touch) ev.preventDefault(); });
+      document.addEventListener("click", ev => { if (suprimir) { ev.stopPropagation(); ev.preventDefault(); suprimir = false; } }, true);
+    })();
     const GSUI = {
       recargar: () => gsCargar(true),
       cerrar: gsCerrar, enviar: gsEnviar, borrarForm: gsBorrarForm,
