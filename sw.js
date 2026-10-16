@@ -9,7 +9,7 @@
    error. Con once versiones en dos dias eso es justo lo que pasaba. El
    documento vive en CACHE_DOC, que no se borra nunca.
 */
-const CACHE_NAME = "niblo-v390";  // Alimentos: nombre del plan (Tilapia, no Merluza)
+const CACHE_NAME = "niblo-v391";  // Familia en tres columnas: Rubén, Común y Sergio
 const CACHE_DOC  = "niblo-doc";   // el documento; estable entre versiones
 const ASSETS_ESTATICOS = [
   "./manrope.woff2",
