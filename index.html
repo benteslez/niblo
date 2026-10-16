@@ -8620,7 +8620,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "389";
+const NIBLO_BUILD = "390";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -10162,12 +10162,38 @@ function fmtEdadLimite(meses) {
   return anios === 1 ? "el año" : `los ${anios} años`;
 }
 
+/* El plan reutiliza fichas del libro para alimentos parecidos (la tilapia
+   usa la ficha de la merluza, la arepa la de la mazorca...) y las marcas se
+   guardan con el id de la ficha. Sin esto, el registro decia «Merluza» el
+   dia que comio tilapia. Aqui manda el nombre de lo que se le da de verdad;
+   tambien se corrigen alias sin tilde. Texto suelto = para todos los paises. */
+const NOMBRE_PLAN = {
+  merluza: "Tilapia",
+  elote: "Arepa de maíz",
+  yogur_y_derivados_lacteos: "Yogur natural",
+  anacardo_pistacho: "Anacardo (marañón)",
+  nuez_avellana: "Nuez",
+  naranja_y_mandarina: "Mandarina",
+  blueberry: "Arándano",
+  pan_de_caja: "Pan sin sal",
+  calabacita: { es_ES: "Calabacín", es_CO: "Calabacín" },
+  ejote: { es_ES: "Judía verde" },
+  durazno: { es_ES: "Melocotón" },
+  camaron: { es_CO: "Camarón" },
+  frijol: { es_CO: "Fríjol" },
+  platano_macho: { es_CO: "Plátano maduro" },
+};
 function nombreLocal(alimento) {
   /* STATE.alimentos puede guardar ids que ya no estan en el libro (renombrados
      o retirados en una version posterior). Devolver "" deja que quien llama
      use su propio respaldo en vez de romper la pantalla entera. */
   if (!alimento || !alimento.nombre) return "";
   const campo = CONFIG.pais;
+  const fijo = NOMBRE_PLAN[alimento.id];
+  if (fijo) {
+    const f = typeof fijo === "string" ? fijo : fijo[campo];
+    if (f) return f;
+  }
   let nombre = alimento.nombre[campo];
   if (!nombre) {
     const alias = ALIAS.terminos[alimento.id];
