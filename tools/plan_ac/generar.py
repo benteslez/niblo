@@ -867,6 +867,13 @@ def ing_txt(p, c, u):
     if c == 0.5 and u == "cucharadita": return f"½ cucharadita de {p}"
     return f"{c:g} {u} de {p}"
 
+# Almuerzo del 17-10 (3.er dia de la tilapia): las laminas solas las
+# rechazaba; en crema de ahuyama con la pasta (peticion de la familia).
+RETOQUES = {
+    ("2026-10-17", "c", "pescado_blanco"): dict(rec="pescado-crema", origen="Cocinar hoy (la receta entera: lo que sobre, para mañana en la nevera)"),
+    ("2026-10-17", "c", "trigo_pasta"): dict(nota="Mézclala con la crema de ahuyama y el pescado: pasta con salsa naranja."),
+}
+
 def main():
     s = open(INDEX, encoding="utf-8").read()
     m = re.search(r'(<script id="pb-plan-data" type="application/json">)(.*?)(</script>)', s, re.S)
@@ -874,6 +881,12 @@ def main():
     n_hist = (HOY_PLAN - INICIO_AC).days
     historia = [dict(x, fecha=iso(INICIO_AC + dt.timedelta(days=i))) for i, x in enumerate(viejo["dias"][:n_hist])]
 
+    # Cambios pedidos por la familia en dias ya conservados.
+    for e in historia:
+        for (f, col, k), cambio in RETOQUES.items():
+            if e["fecha"] == f:
+                for i in e.get(col, []):
+                    if i.get("k") == k: i.update(cambio)
     intro, por_dia = calendario()
     bt = Batch({x["k"]: dt.date.fromisoformat(x["fecha"]) for x in intro})
     dias = generar_menus(intro, por_dia, bt)
