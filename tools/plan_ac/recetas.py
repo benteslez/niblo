@@ -35,7 +35,7 @@ RECETAS = {
          "Reposa 5 min. Haz 6 bolitas y aplánalas a 1 cm de grosor.",
          "Cocínalas en sartén antiadherente sin aceite (o con una gota) 5-6 min por lado, a fuego medio, hasta que estén hechas por dentro.",
          "Para él, ábrela y usa la parte blanda: la costra dura se quita."],
-        "Tira de arepa blanda del ancho de un dedo, sin costra.", "Desmigada y mezclada con el huevo, el queso o la fruta chafada.",
+        "Tira de arepa blanda del ancho de un dedo, sin costra.", "Desmigada y mezclada con el huevo o la fruta chafada (y, cuando ya tome queso, con el queso).",
         {"maiz"}, True, True),
     "tortita-trigo": R("Tortitas (pancakes) de banano sin azúcar", 6,
         [("banano maduro", 1, "unidad", V), ("huevo", 1, "unidad", H), ("harina de trigo", 30, "g", D), ("agua o fórmula", 2, "cucharadas", None)],
@@ -94,7 +94,7 @@ RECETAS = {
     "crema-fruto-seco": R("Crema de fruto seco (o tahini) diluida", 1,
         [("crema 100 % del fruto seco o tahini, sin sal ni azúcar", 0.5, "cucharadita", D)],
         ["Solo cremas cuyo único ingrediente sea el fruto seco (o el sésamo).",
-         "Primer día: ½ cucharadita diluida con un poco de agua caliente o mezclada con la avena, el yogur o la fruta, hasta que no quede pegote (práctica habitual: empezar con poca cantidad).",
+         "Primer día: ½ cucharadita diluida con un poco de agua caliente o mezclada con la avena o la fruta (o con el yogur, cuando ya lo tome), hasta que no quede pegote (práctica habitual: empezar con poca cantidad).",
          "Días siguientes, igual o hasta 1 cucharadita.", "Nunca el fruto seco entero ni a cucharadas del bote: se pega al paladar."],
         "Capa finísima untada sobre una tira de pan o de tortita.", "Diluida en la avena, el yogur o la fruta.",
         set(), False, False),
@@ -360,7 +360,7 @@ RECETAS = {
         ["Pide en el restaurante del hotel, explicando que es para un bebé: cocido o al vapor, SOLO EN AGUA, sin sal, sin caldo de cubito, sin mantequilla ni crema ni queso (los lácteos aún no están introducidos), sin adobo.",
          "Si no pueden garantizar que vaya sin sal, no lo des: ese día, fruta, aguacate y huevo duro.",
          "Cortado o chafado en la mesa con tu cuchillo y tu tenedor."],
-        "En bastones del tamaño de un dedo, blando.", "Chafado con el tenedor.",
+        None, None,   # la forma de darlo la pone cada alimento (pasta, pollo, verdura...)
         set(), False, False),
 }
 

@@ -140,6 +140,11 @@ DESAYUNO_CANT = {
     "avena-formula": "15 g de avena en seco (≈ 100-120 g de papilla)",
 }
 
+# Genero del nombre del alimento, para «cocido/cocida».
+FEM_CANT = {"zanahoria", "ahuyama", "habichuela", "coliflor", "berenjena", "cebolla", "espinaca", "acelga",
+            "arracacha", "yuca", "papa", "trigo_pasta", "quinua", "batata"}
+VA_DENTRO = "va dentro de la receta: ya está contado en ella, no se sirve aparte"
+
 def rango(a, b, u="g"):
     return f"≈ {a} {u}" if a == b else f"{a}-{b} {u}"
 
@@ -162,8 +167,9 @@ def cantidad(k, meses, nuevo_dia, frase_mm=False, slot=None, rec=None):
         if k == "yogur": return "2-3 cucharadas (≈ 30-45 g)"
         if k == "queso": return "1-2 cucharadas desmenuzado (≈ 10-20 g) o 2 tiras"
         if k in LEGUMBRES:
-            x, y = LEGUMBRE_G[m]
-            return f"{rango(x, y)} cocida" + (" (30 g en crudo)" if m == 12 else f" (≈ {round(x/15)}-{max(round(y/15), round(x/15))} cucharadas)".replace(f"≈ {round(x/15)}-{round(x/15)} ", f"≈ {round(x/15)} "))
+            x, y = LEGUMBRE_G[m] if not (k == "tofu" and m == 12) else (30, 45)   # el tofu no se pesa en crudo
+            estado = "" if k == "tofu" else (" cocida" if k in ("lenteja", "arveja") else " cocido")
+            return f"{rango(x, y)}{estado}" + (" (30 g en crudo)" if m == 12 and k != "tofu" else f" (≈ {round(x/15)}-{max(round(y/15), round(x/15))} cucharadas)".replace(f"≈ {round(x/15)}-{round(x/15)} ", f"≈ {round(x/15)} "))
         x, y = ANIMAL_G[m]
         pieza = {"hamb-pollo": "1 hamburguesita", "hamb-res": "1 hamburguesita", "pescado-tortitas": "1 tortita",
                  "camaron-papa": "1 pastelito", "atun-pastelito": "1 pastelito"}.get(rec)
@@ -179,7 +185,10 @@ def cantidad(k, meses, nuevo_dia, frase_mm=False, slot=None, rec=None):
     x, y = PLATO_G[m]
     x, y = x // 2, y // 2   # verdura y harina, a medias
     cuch = (round(x / 15), round(y / 15))
-    txt = f"{rango(x, y)} cocid{'a' if a['cat'] == 'ver' else 'o'}"
+    crudo = (rec or "").startswith("verdura-cruda")
+    if crudo:   # lo de la receta: unos gajos o un baston para roer
+        return "≈ 40 g (2-3 gajos pelados)" if k == "tomate" else "1 bastón grande para roer (≈ 40 g)"
+    txt = f"{rango(x, y)} {'crud' if crudo else 'cocid'}{'a' if k in FEM_CANT else 'o'}"
     txt += f" (≈ {cuch[0]}{'-' + str(cuch[1]) if cuch[1] != cuch[0] else ''} cucharada{'s' if cuch[1] > 1 else ''} sopera{'s' if cuch[1] > 1 else ''})"
     if k in EN_SECO:
         nom, f = EN_SECO[k]
@@ -647,6 +656,7 @@ def generar_menus(intro, por_dia, batch):
             for i in its:
                 if i["k"] != "agua":
                     i["cant"] = cantidad(i["k"], meses, nuevo[1] if nuevo and nuevo[0] == i["k"] else 0, frase_mm=(s == "mm"), slot=s, rec=i.get("rec"))
+                    if "(va " in i["n"]: i["cant"] = VA_DENTRO
                     if nuevo and nuevo[0] == i["k"]:
                         i["nuevo"] = True
                         i["nuevoDia"] = nuevo[1]
@@ -915,6 +925,98 @@ RETOQUES = {
     ("2026-10-17", "c", "trigo_pasta"): dict(nota="Mézclala con la crema de ahuyama y el pescado: pasta con salsa naranja."),
 }
 
+# ---------------------------------------------------------------- recetas propias
+# Las recetas genericas (verdura al vapor, asada, cruda, picada, tuberculo y
+# crema de fruto seco) se usaban tal cual para cada alimento, y la ficha de
+# la zanahoria decia «bastón o arbolito», la del pepino «gajo de tomate» y la
+# lista de ingredientes «verdura del día» (peticion de la familia, 17-10-2026).
+# Al exportar, cada una pasa a ser una receta de ESE alimento: «rec~clave».
+ESPECIALIZAR = set(GENERICAS) | {"crema-fruto-seco"}
+VAPOR_MIN = {"calabacin": "6-8 min", "zanahoria": "15-20 min", "ahuyama": "15-20 min", "habichuela": "12-15 min",
+             "brocoli": "8-10 min", "coliflor": "8-10 min"}
+CORTE = {"brocoli": "en arbolitos, con el tallo como mango", "coliflor": "en arbolitos, con el tallo como mango",
+         "repollo": "en tiras de hoja cortas, sin el tronco duro", "habichuela": "quitando las puntas y los hilos; enteras o en trozos de 6-8 cm"}
+
+def nombre_corto(k):
+    n = ALIMENTOS[k]["n"]
+    return {"tomate": "Tomate", "pimenton": "Pimentón", "repollo": "Repollo", "pepino": "Pepino",
+            "apio": "Apio", "espinaca": "Espinaca", "acelga": "Acelga", "platano_macho": "Plátano maduro"}.get(k, n.split(" (")[0])
+
+FEM = {"arracacha", "cebolla", "espinaca", "acelga", "berenjena", "zanahoria", "coliflor", "habichuela", "ahuyama"}
+
+def receta_de(rec, k, base):
+    nom = nombre_corto(k); nl = nom.lower()
+    fem = k in FEM
+    oa = lambda m, f: f if fem else m
+    r = dict(base)
+    r["requiere"] = sorted({k}); r["alergenos"] = [ALERGENO_TXT[grupo_alergeno(k)]] if grupo_alergeno(k) else []
+    r["blw"] = None; r["cuchara"] = None          # la forma la pone el alimento, segun su edad
+    r["ing"] = [x.replace("verdura del día", nl).replace("ñame, arracacha o plátano maduro", nl).replace("pimentón o berenjena", nl)
+                .replace("crema 100 % del fruto seco o tahini, sin sal ni azúcar", (ALIMENTOS[k]["n"] + (", sin sal" if "azúcar" in ALIMENTOS[k]["n"] else ", sin sal ni azúcar")).lower())
+                for x in base["ing"]]
+    if rec == "verduras-vapor":
+        r["titulo"] = f"{nom} al vapor"
+        r["pasos"] = [f"Lava{', pela' if k in ('zanahoria', 'ahuyama') else ''} y corta {CORTE.get(k, 'en bastones del grosor de un dedo adulto y 6-8 cm de largo')}.",
+                      f"Cuece al vapor{' ' + VAPOR_MIN[k] if k in VAPOR_MIN else ''}, hasta que se aplaste con facilidad entre tus dedos índice y pulgar.",
+                      "Al servir, un hilo de aceite de oliva en crudo."]
+    elif rec == "verdura-asada":
+        r["titulo"] = "Pimentón asado y pelado" if k == "pimenton" else f"{nom} asada"
+        r["pasos"] = [base["pasos"][0], base["pasos"][1 if k == "pimenton" else 2], base["pasos"][3]]
+    elif rec == "verdura-cruda":
+        r["titulo"] = "Tomate pelado en gajos" if k == "tomate" else "Pepino en bastón para roer"
+        r["pasos"] = [base["pasos"][0 if k == "tomate" else 1]]
+    elif rec == "verdura-en-guiso":
+        r["titulo"] = f"{nom} {oa('picado y bien cocido', 'picada y bien cocida')} ({oa('va mezclado', 'va mezclada')} en el plato)"
+        prep = {"apio": "Quita las hebras con el pelador, pícalo muy fino", "champinon": "Límpialo con un papel húmedo, córtalo en láminas, cuécelo bien y luego pícalo",
+                "cebolla": "Pélala y pícala muy fina", "puerro": "Quita la parte verde dura y las raíces, lávalo bien entre las capas y pícalo muy fino",
+                "espinaca": "Lava bien las hojas, quita los tallos duros y pícalas", "acelga": "Separa la penca de la hoja, lávalas bien y pícalas"}[k]
+        r["pasos"] = [f"{prep}. {oa('Cuécelo', 'Cuécela')} al vapor o {oa('rehógalo', 'rehógala')} con unas gotas de aceite hasta que esté muy {oa('blando', 'blanda')}.",
+                      f"{oa('Mézclalo', 'Mézclala')} al servir con la proteína, la harina o el puré; o {oa('cuájalo', 'cuájala')} dentro de una tortilla."] + ([base["pasos"][2]] if k in ("espinaca", "acelga") else [])
+    elif rec == "tuberculo-cocido":
+        r["titulo"] = f"{nom} {oa('cocido', 'cocida')} en bastones"
+        r["pasos"] = [f"Lava y pela {oa('el ', 'la ') + nl}.", f"{oa('Córtalo', 'Córtala')} en bastones del grosor de un dedo adulto y unos 6-8 cm de largo.",
+                      f"{oa('Cuécelo', 'Cuécela')} en agua hirviendo sin sal 20-30 min, hasta que se aplaste con facilidad entre tus dedos.", f"{oa('Escúrrelo', 'Escúrrela')} bien."]
+    elif rec == "crema-fruto-seco":
+        r["titulo"] = ("Tahini diluido" if k == "tahini" else ALIMENTOS[k]["n"].replace(" 100 %", "") + ", diluida")
+    return r
+
+def especializar(plan):
+    nuevos = {}
+    def cambia(o):
+        rec, k = o.get("rec"), o.get("k")
+        if rec in ESPECIALIZAR and k in ALIMENTOS:
+            o["rec"] = f"{rec}~{k}"
+            nuevos[o["rec"]] = (rec, k)
+            return True
+        return False
+    viejos_tit = {}
+    for e in plan["dias"]:
+        for c in e.get("cols", []):
+            for i in e.get(c, []) or []:
+                if isinstance(i, dict): cambia(i)
+    for b in plan["batch"]:
+        for c in b["cocinar"]:
+            if cambia(c): viejos_tit[c["titulo"]] = c["rec"]
+    for c in plan["cocinaDia"]:
+        if cambia(c): viejos_tit[c["titulo"]] = c["rec"]
+    for rid, (rec, k) in nuevos.items():
+        plan["recetas"][rid] = receta_de(rec, k, plan["recetas"][rec])
+    for b in plan["batch"]:
+        for c in b["cocinar"]:
+            if c["rec"] in nuevos: c["titulo"] = plan["recetas"][c["rec"]]["titulo"]
+    for c in plan["cocinaDia"]:
+        if c["rec"] in nuevos: c["titulo"] = plan["recetas"][c["rec"]]["titulo"]
+    nuevo_tit = {t: plan["recetas"][rid]["titulo"] for t, rid in viejos_tit.items()}
+    for e in plan["dias"]:
+        if e.get("descongelar"): e["descongelar"] = [nuevo_tit.get(t, t) for t in e["descongelar"]]
+    for sem in plan["compra"]:
+        for it in sem["items"]:
+            it["para"] = [[nuevo_tit.get(x, x), q] for x, q in it["para"]]
+    usadas = {i.get("rec") for e in plan["dias"] for c in e.get("cols", []) for i in (e.get(c) or []) if isinstance(i, dict)}
+    for rec in ESPECIALIZAR:
+        if rec in plan["recetas"] and rec not in usadas: del plan["recetas"][rec]
+    return plan
+
 def main():
     s = open(INDEX, encoding="utf-8").read()
     m = re.search(r'(<script id="pb-plan-data" type="application/json">)(.*?)(</script>)', s, re.S)
@@ -922,6 +1024,12 @@ def main():
     n_hist = (HOY_PLAN - INICIO_AC).days
     historia = [dict(x, fecha=iso(INICIO_AC + dt.timedelta(days=i))) for i, x in enumerate(viejo["dias"][:n_hist])]
 
+    # Recetas propias de una ejecucion anterior («rec~clave»): vuelven a la
+    # generica y especializar() las rehace al exportar.
+    for e in historia:
+        for col in e.get("cols", []):
+            for i in e.get(col, []) or []:
+                if isinstance(i, dict) and "~" in (i.get("rec") or ""): i["rec"] = i["rec"].split("~")[0]
     # Cambios pedidos por la familia en dias ya conservados.
     for e in historia:
         for (f, col, k), cambio in RETOQUES.items():
@@ -937,6 +1045,7 @@ def main():
                 if isinstance(i, dict) and i.get("k") in ALIMENTOS and i.get("k") != "agua" and i.get("cant") and meses_e is not None:
                     i["cant"] = cantidad(i["k"], meses_e, i.get("nuevoDia") or 0 if i.get("nuevo") else 0,
                                          frase_mm=(col == "mm"), slot=col, rec=i.get("rec"))
+                    if "(va " in (i.get("n") or ""): i["cant"] = VA_DENTRO
     intro, por_dia = calendario()
     bt = Batch({x["k"]: dt.date.fromisoformat(x["fecha"]) for x in intro})
     dias = generar_menus(intro, por_dia, bt)
@@ -969,6 +1078,7 @@ def main():
                 desde=iso(HOY_PLAN), pautas=PAUTAS, recetas=recetas, alimentos=alimentos,
                 introducciones=intro, introducidosAntes=[k for k in INTRODUCIDOS if k != "agua"],
                 batch=batch, cocinaDia=cocina_dia, compra=compra, hotel=HOTEL_GUIA)
+    plan = especializar(plan)
     txt = json.dumps(plan, ensure_ascii=False, separators=(",", ":"))
     print(f"días: {len(plan['dias'])} ({len(historia)} conservados + {len(dias)} nuevos) · recetas: {len(recetas)} · "
           f"introducciones: {len(intro)} · sesiones de batch: {len(batch)} · semanas de compra: {len(compra)} · {len(txt)//1024} KB")
