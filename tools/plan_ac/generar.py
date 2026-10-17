@@ -114,37 +114,78 @@ def calendario():
     return intro, por_dia
 
 # ---------------------------------------------------------------- menus
-CANT = {6: ("2-4 cucharadas soperas", "1-2 cucharadas (10-20 g)", "1-2 cucharadas"),
-        7: ("4-6 cucharadas soperas", "2 cucharadas (10-20 g)", "2 cucharadas"),
-        8: ("≈ ½ taza (120 ml)", "2 cucharadas (≈20 g)", "2 cucharadas"),
-        9: ("≈ ½ taza", "20-25 g", "2-3 cucharadas cocida"),
-        10: ("½ – ¾ taza", "25-30 g", "2-3 cucharadas cocida"),
-        11: ("¾ taza", "30-35 g", "3 cucharadas cocida"),
-        12: ("¾ – 1 taza (180-240 ml)", "30-35 g", "30 g en crudo")}
+# Cantidades en gramos (peticion de la familia, 17-10-2026: «4-6 cucharadas,
+# verdura y harina juntas» no servia). Salen de la misma tabla por edad de
+# antes (notasMes): ración del plato (verdura + harina), proteína animal y
+# legumbre. Conversiones orientativas (práctica habitual, no de una guía):
+# 1 cucharada sopera de chafado ≈ 15 g; ½ taza ≈ 120 g; la ración del plato
+# se reparte a medias entre verdura y harina. Pesos ya cocinados salvo que
+# se diga «en seco» o «en crudo».
+PLATO_G = {6: (30, 60), 7: (60, 90), 8: (120, 120), 9: (120, 120), 10: (120, 180), 11: (180, 180), 12: (180, 240)}
+ANIMAL_G = {6: (10, 20), 7: (10, 20), 8: (20, 20), 9: (20, 25), 10: (25, 30), 11: (30, 35), 12: (30, 35)}
+LEGUMBRE_G = {6: (15, 30), 7: (30, 30), 8: (30, 30), 9: (30, 45), 10: (30, 45), 11: (45, 45), 12: (75, 90)}
+# Fruta: peso aproximado de la parte que se come de la ración (pieza mediana).
+FRUTA_G = {"banano": 50, "pera": 70, "manzana": 70, "papaya": 80, "mango": 50, "pitahaya": 60, "durazno": 60,
+           "melon": 80, "kiwi": 35, "mandarina": 60, "pina": 60, "patilla": 80, "fresa": 35, "arandano": 12,
+           "guayaba": 60, "uva": 25, "granadilla": 30, "ciruela": 50, "breva": 40, "lulo": 40, "guanabana": 80}
+# Harinas que se pesan en seco: cocidas pesan unas veces mas (practica habitual).
+EN_SECO = {"trigo_pasta": ("de pasta", 2.5), "arroz": ("de arroz", 3), "quinua": ("de quinua", 3)}
+# Desayunos que van por piezas: peso aproximado de cada pieza segun su receta.
+DESAYUNO_CANT = {
+    "tortita-trigo": "1-2 tortitas (≈ 25-30 g cada una): ofrece tiras y repón",
+    "tortita-avena": "1-2 tortitas (≈ 25-30 g cada una): ofrece tiras y repón",
+    "muffins": "½-1 muffin (≈ 30-60 g)",
+    "arepa": "½ arepa (≈ 25-30 g), la parte blanda",
+    "pan-tostado": "≈ 20 g de pan (1-2 tiras)",
+    "avena-formula": "15 g de avena en seco (≈ 100-120 g de papilla)",
+}
+
+def rango(a, b, u="g"):
+    return f"≈ {a} {u}" if a == b else f"{a}-{b} {u}"
 
 LEGUMBRES = {"lenteja", "garbanzo", "frijol", "arveja", "tofu"}
 
-def cantidad(k, meses, nuevo_dia, frase_mm=False):
+def cantidad(k, meses, nuevo_dia, frase_mm=False, slot=None, rec=None):
     a = ALIMENTOS[k]
-    plato, animal, vegetal = CANT[min(max(meses, 6), 12)]
+    m = min(max(meses, 6), 12)
     if nuevo_dia == 1 and es_alergeno_nuevo(k):
-        base = "una cantidad pequeña (p. ej. ½ cucharadita o 1-2 trocitos)"
+        base = "una cantidad pequeña (p. ej. ½ cucharadita o 1-2 trocitos, ≈ 2-5 g)"
         return f"1.er día: {base}; si va bien, días 2 y 3 la ración normal (práctica habitual)"
     if a["cat"] == "gra":
-        if k == "aguacate": return "2-3 bastones o 2 cucharadas chafado"
-        if k == "chia": return "½ cucharadita, remojada ≥30 min"
-        if k == "mostaza": return "una punta de cuchillo"
-        return "½ – 1 cucharadita"
+        if k == "aguacate": return "≈ 30 g (2-3 bastones o 2 cucharadas chafado)"
+        if k == "chia": return "½ cucharadita (≈ 2 g), remojada ≥30 min"
+        if k == "mostaza": return "una punta de cuchillo (≈ 1 g)"
+        if k == "aove": return "1 cucharadita (≈ 5 ml)"
+        return "½ – 1 cucharadita (≈ 3-5 g)"
     if a["cat"] == "prot":
-        if k == "huevo": return "1 huevo: ofrece tiras y repón; no tiene por qué acabárselo"
-        if k == "yogur": return "2-3 cucharadas"
-        if k == "queso": return "1-2 cucharadas desmenuzado o 2 tiras"
-        return vegetal if k in LEGUMBRES else animal
+        if k == "huevo": return "1 huevo (≈ 50 g sin cáscara): ofrece tiras y repón; no tiene por qué acabárselo"
+        if k == "yogur": return "2-3 cucharadas (≈ 30-45 g)"
+        if k == "queso": return "1-2 cucharadas desmenuzado (≈ 10-20 g) o 2 tiras"
+        if k in LEGUMBRES:
+            x, y = LEGUMBRE_G[m]
+            return f"{rango(x, y)} cocida" + (" (30 g en crudo)" if m == 12 else f" (≈ {round(x/15)}-{max(round(y/15), round(x/15))} cucharadas)".replace(f"≈ {round(x/15)}-{round(x/15)} ", f"≈ {round(x/15)} "))
+        x, y = ANIMAL_G[m]
+        pieza = {"hamb-pollo": "1 hamburguesita", "hamb-res": "1 hamburguesita", "pescado-tortitas": "1 tortita",
+                 "camaron-papa": "1 pastelito", "atun-pastelito": "1 pastelito"}.get(rec)
+        return rango(x, y) + (f" (≈ {pieza}; ofrece y repón)" if pieza else " (≈ 1-2 cucharadas desmenuzado)" if y <= 20 else "")
     if a["cat"] == "fru":
         q, u = POR_RACION_FRUTA.get(k, (60, "g"))
         txt = f"{q:g} {u}".replace("0.5 unidad", "½ pieza").replace("0.25 unidad", "¼ de pieza").replace("1 unidad", "1 pieza")
+        g = FRUTA_G.get(k)
+        if g and u != "g": txt += f" (≈ {g} g)"
         return ("pequeña: " if frase_mm else "") + txt
-    return f"parte de la ración del plato ({plato}, verdura y harina juntas)"
+    if slot == "de" and rec in DESAYUNO_CANT:
+        return DESAYUNO_CANT[rec]
+    x, y = PLATO_G[m]
+    x, y = x // 2, y // 2   # verdura y harina, a medias
+    cuch = (round(x / 15), round(y / 15))
+    txt = f"{rango(x, y)} cocid{'a' if a['cat'] == 'ver' else 'o'}"
+    txt += f" (≈ {cuch[0]}{'-' + str(cuch[1]) if cuch[1] != cuch[0] else ''} cucharada{'s' if cuch[1] > 1 else ''} sopera{'s' if cuch[1] > 1 else ''})"
+    if k in EN_SECO:
+        nom, f = EN_SECO[k]
+        sx, sy = round(x / f / 5) * 5 or 5, round(y / f / 5) * 5 or 5
+        txt += f"; en seco, {rango(sx, sy)} {nom}"
+    return txt
 
 def item(k, cat=None, rec=None, nombre=None, nota=None):
     a = ALIMENTOS[k]
@@ -605,7 +646,7 @@ def generar_menus(intro, por_dia, batch):
             its = dia_items.get(s, [])
             for i in its:
                 if i["k"] != "agua":
-                    i["cant"] = cantidad(i["k"], meses, nuevo[1] if nuevo and nuevo[0] == i["k"] else 0, frase_mm=(s == "mm"))
+                    i["cant"] = cantidad(i["k"], meses, nuevo[1] if nuevo and nuevo[0] == i["k"] else 0, frase_mm=(s == "mm"), slot=s, rec=i.get("rec"))
                     if nuevo and nuevo[0] == i["k"]:
                         i["nuevo"] = True
                         i["nuevoDia"] = nuevo[1]
@@ -887,6 +928,15 @@ def main():
             if e["fecha"] == f:
                 for i in e.get(col, []):
                     if i.get("k") == k: i.update(cambio)
+    # Cantidades en gramos tambien en los dias conservados del plan v2.
+    for e in historia:
+        if e.get("v") != 2: continue
+        meses_e = e.get("m")
+        for col in e.get("cols", []):
+            for i in e.get(col, []) or []:
+                if isinstance(i, dict) and i.get("k") in ALIMENTOS and i.get("k") != "agua" and i.get("cant") and meses_e is not None:
+                    i["cant"] = cantidad(i["k"], meses_e, i.get("nuevoDia") or 0 if i.get("nuevo") else 0,
+                                         frase_mm=(col == "mm"), slot=col, rec=i.get("rec"))
     intro, por_dia = calendario()
     bt = Batch({x["k"]: dt.date.fromisoformat(x["fecha"]) for x in intro})
     dias = generar_menus(intro, por_dia, bt)
