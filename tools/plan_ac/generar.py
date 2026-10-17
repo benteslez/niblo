@@ -23,7 +23,7 @@ INDEX = os.path.join(RAIZ, "index.html")
 
 NACE = dt.date(2026, 3, 5)
 INICIO_AC = dt.date(2026, 9, 5)          # dia 1 del plan
-HOY_PLAN = dt.date(2026, 10, 8)          # primer dia que se regenera
+HOY_PLAN = dt.date(2026, 10, 18)         # primer dia que se regenera (recetas mas apetecibles, 17-10-2026)
 FIN = dt.date(2027, 6, 2)                # ultimo dia del plan (FECHA_FIN en la app)
 OCHO_MESES = dt.date(2026, 11, 5)
 HOTEL = (dt.date(2026, 10, 8), dt.date(2026, 10, 12))
@@ -167,7 +167,8 @@ CON_HUEVO = {"tortita-trigo", "tortita-avena", "muffins", "tortilla-calabacin", 
 
 PROT_MAIN = [
     ("hamb-pollo", "pollo"), ("pollo-desmenuzado", "pollo"), ("hamb-res", "res"), ("res-guisada", "res"),
-    ("pescado-laminas", "pescado_blanco"), ("salmon-horno", "salmon"), ("lenteja-chafada", "lenteja"),
+    ("pescado-crema", "pescado_blanco"), ("pescado-tortitas", "pescado_blanco"), ("pescado-laminas", "pescado_blanco"),
+    ("salmon-horno", "salmon"), ("lenteja-chafada", "lenteja"),
     ("hamb-lenteja", "lenteja"), ("tofu-dorado", "tofu"), ("camaron-papa", "camaron"),
     ("pasta-mariscos", "moluscos"), ("hummus", "garbanzo"), ("cerdo-guisado", "cerdo"),
     ("pavo-guisado", "pavo"), ("atun-pastelito", "atun"), ("tortilla-calabacin", "huevo"),
@@ -265,7 +266,10 @@ class Batch:
             it["origen"] = "Cocinar hoy"
             return
         clave = self.clave(rec, it["k"])
-        estreno = self.estrenos.get(it["k"])
+        # El estreno de CUALQUIER ingrediente de la receta cuenta: las tortitas
+        # de avena llevan huevo y el plato se apuntaba por el huevo, asi que
+        # entraban en una sesion anterior al primer dia de la avena.
+        estreno = max([self.estrenos[x] for x in (r["requiere"] | {it["k"]}) if x in self.estrenos], default=None)
         lotes = [] if fresco else [l for l in self.stock[clave] if self._usable(l, d, r)]
         if lotes:
             lote = lotes[0]
@@ -386,7 +390,7 @@ def generar_menus(intro, por_dia, batch):
                 return s
             hr = elegir(DESAYUNO_HAR, p_har)
             NOMBRE_HAR = {"tortita-trigo": "Tortita (pancake) de banano y harina de trigo", "tortita-avena": "Tortita de avena y banano",
-                          "muffins": "Muffin salado de verdura (harina de trigo)", "avena-formula": "Avena con fórmula",
+                          "muffins": "Muffin jugoso de zanahoria, manzana y banano (harina de trigo)", "avena-formula": "Avena con fórmula",
                           "pan-tostado": "Pan sin sal tostado (trigo)", "arepa": "Arepa de maíz casera sin sal"}
             har_items = [item(k, c2, hr[0], NOMBRE_HAR.get(hr[0])) for k, c2 in hr[1]]
             con_huevo = hr[0] in CON_HUEVO
@@ -468,10 +472,12 @@ def generar_menus(intro, por_dia, batch):
                 if k == "huevo" and nonlocal_huevos >= 1: return None
                 if evita_prot and k == evita_prot: return None
                 if k in ("arroz",) : return None
-                if "har" in fz and rec in ("camaron-papa", "pasta-mariscos"): return None
+                if "har" in fz and rec in ("camaron-papa", "pasta-mariscos", "pescado-tortitas"): return None
                 if k == "atun" and "prot" not in fz and hist.alimento("atun", 7) >= 1: return None   # ocasional
                 s = -5 * hist.usado(slot + "-prot", rec, 2) - 2 * hist.usado_dia(rec, 3) - hist.alimento(k, 4) - 0.7 * hist.alimento(k, 14)
                 if batch.disponible(rec, k, d): s += 3
+                # Varias recetas del mismo alimento (tilapia): que roten en la semana.
+                if sum(1 for r_, k_ in PROT_MAIN if k_ == k) > 1: s -= 2 * hist.usado_dia(rec, 7)
                 g = grupo_alergeno(k)
                 if g and reqgrupo.get(g, 9) < 2: s += 6
                 if g and reqgrupo.get(g, 9) >= 2: s -= 2
@@ -484,7 +490,8 @@ def generar_menus(intro, por_dia, batch):
             rec, kp = pr
             its.append(item(kp, "prot", rec))
             usados_hoy.add(kp)
-            COMBO = {"camaron-papa": ("papa", "Papa (va en los pastelitos)"), "pasta-mariscos": ("trigo_pasta", "Pasta (va en la misma receta)")}
+            COMBO = {"camaron-papa": ("papa", "Papa (va en los pastelitos)"), "pasta-mariscos": ("trigo_pasta", "Pasta (va en la misma receta)"),
+                     "pescado-tortitas": ("papa", "Papa (va en las tortitas)")}
             if rec in COMBO:
                 its.append(item(COMBO[rec][0], "har", rec, COMBO[rec][1]))
                 usados_hoy.add(COMBO[rec][0])
@@ -875,6 +882,12 @@ def main():
     compra = lista_compra(dias, batch, cocina_dia)
     errores, avisos, usadas = verificar(dias, intro, batch)
 
+    # Las recetas de los dias conservados tambien tienen que seguir ahi.
+    for e in historia:
+        for c_ in e.get("cols", []):
+            for i in e.get(c_, []) or []:
+                if isinstance(i, dict) and i.get("rec") and (i["rec"] in RECETAS or i["rec"].startswith("simple-")):
+                    usadas.add(i["rec"])
     recetas = {}
     for rid in sorted(usadas):
         if rid.startswith("simple-"):
