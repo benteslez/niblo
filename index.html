@@ -5171,12 +5171,11 @@
     .gs-atajo-main b { font-family: var(--font-titulo); font-size: 1.0625rem; letter-spacing: -0.01em; }
     .gs-atajo-main i { font-style: normal; font-size: .8125rem; color: var(--text-muted); }
     .gs-atajo .gs-sumis { margin: 0; padding-top: 2px; }
-    /* Campos en dos columnas: la etiqueta, el control y la ayuda de cada fila se alinean aunque una etiqueta ocupe dos lineas */
-    #modal-gestiones .gs-form { row-gap: 0; }
     .gs-atajo .gs-sumis { flex-wrap: wrap; overflow: visible; }
-    .gs-form > .gs-campo { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 4px; margin-bottom: var(--gap-3); align-content: start; }
-    .gs-form > .gs-campo > label { margin-bottom: 0 !important; align-self: end; }
-    .gs-form > .gs-check-campo { margin-bottom: var(--gap-3); }
+    /* Campos en dos columnas (solo escritorio): las etiquetas de los campos de media anchura
+       reservan dos lineas, asi el campo de al lado queda a la misma altura aunque una etiqueta
+       se parta. En el movil (una columna) no hace falta. Sin subgrid: Safari lo descolocaba. */
+    @media (min-width: 601px) { .gs-form > .gs-campo:not(.gs-ancho) > label { min-height: 2.6em; line-height: 1.3; display: flex; align-items: flex-end; } }
     .gs-sum-edit { margin: 14px 0 4px; padding-top: 10px; border-top: 1px solid var(--border, #e2e8f0); }
     .gs-sum-edit h4 { margin: 0 0 6px; font-size: .875rem; }
     .gs-sum-edit ul { list-style: none; margin: 0 0 8px; padding: 0; }
@@ -5390,7 +5389,6 @@
       .gs-barra { grid-template-columns: 84px 1fr auto; }
       .gs-form { grid-template-columns: 1fr; }
       .gs-form .gs-campo { grid-column: 1 / -1; }
-      .gs-form > .gs-campo { grid-row: span 3; }
       #modal-gestiones { padding: 0; align-items: flex-end; }
       #modal-gestiones .modal { width: 100%; border-radius: var(--r-lg) var(--r-lg) 0 0; }
     }
@@ -8643,7 +8641,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "397";
+const NIBLO_BUILD = "398";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
