@@ -140,6 +140,9 @@ LEGUMBRE_G = {6: (15, 30), 7: (30, 30), 8: (30, 30), 9: (30, 45), 10: (30, 45), 
 FRUTA_G = {"banano": 50, "pera": 70, "manzana": 70, "papaya": 80, "mango": 50, "pitahaya": 60, "durazno": 60,
            "melon": 80, "kiwi": 35, "mandarina": 60, "pina": 60, "patilla": 80, "fresa": 35, "arandano": 12,
            "guayaba": 60, "uva": 25, "granadilla": 30, "ciruela": 50, "breva": 40, "lulo": 40, "guanabana": 80}
+# Peso por racion en las fichas simples (fruta, aguacate, queso, chia).
+SIMPLE_G = {**{k: f"≈ {g} g por ración" for k, g in FRUTA_G.items()},
+            "aguacate": "≈ 30 g por ración", "queso": "10-20 g por ración", "chia": "½ cucharadita (≈ 2 g) por ración"}
 # Harinas que se pesan en seco: cocidas pesan unas veces mas (practica habitual).
 EN_SECO = {"trigo_pasta": ("de pasta", 2.5), "arroz": ("de arroz", 3), "quinua": ("de quinua", 3)}
 # Desayunos que van por piezas: peso aproximado de cada pieza segun su receta.
@@ -162,6 +165,21 @@ def rango(a, b, u="g"):
 
 LEGUMBRES = {"lenteja", "garbanzo", "frijol", "arveja", "tofu"}
 
+def racion_mezcla(rec, x, y):
+    """Legumbre mezclada con verdura: cuanto servir de la mezcla para dar x-y g de legumbre."""
+    r = RECETAS.get(rec or "")
+    if not r or r["rinde"] < 2: return ""
+    g = [(p, c) for p, c, u, _ in r["ing"] if u == "g"]
+    if len(g) < 2 or not any(w in p for p, _ in g[1:] for w in ("papa", "zanahoria", "ahuyama")): return ""
+    if "seco" in g[0][0]: return ""   # pesada en seco: la proporcion cocida no sale de la receta
+    leg = g[0][1]
+    if rec.startswith("hamb-"):
+        pz = leg / r["rinde"]
+        a_, b_ = max(1, round(x / pz)), max(1, round(y / pz))
+        return f": {a_}{'-' + str(b_) if b_ != a_ else ''} hamburguesita{'s' if b_ > 1 else ''} (lleva{'n' if b_ > 1 else ''} ≈ {round(pz)} g de lenteja cada una, más la verdura); ofrece y repón"
+    k = sum(c for _, c in g) / leg
+    return f" de legumbre = {rango(round(x * k / 5) * 5, round(y * k / 5) * 5)} de la mezcla (que lleva la verdura)"
+
 def cantidad(k, meses, nuevo_dia, frase_mm=False, slot=None, rec=None):
     a = ALIMENTOS[k]
     m = min(max(meses, 6), 12)
@@ -176,12 +194,13 @@ def cantidad(k, meses, nuevo_dia, frase_mm=False, slot=None, rec=None):
         return "½ – 1 cucharadita (≈ 3-5 g)"
     if a["cat"] == "prot":
         if k == "huevo": return "1 huevo (≈ 50 g sin cáscara): ofrece tiras y repón; no tiene por qué acabárselo"
-        if k == "yogur": return "2-3 cucharadas (≈ 30-45 g)"
-        if k == "queso": return "1-2 cucharadas desmenuzado (≈ 10-20 g) o 2 tiras"
+        if k == "yogur": return "30-45 g (2-3 cucharadas)"
+        if k == "queso": return "10-20 g desmenuzado (1-2 cucharadas) o 2 tiras"
         if k in LEGUMBRES:
             x, y = LEGUMBRE_G[m] if not (k == "tofu" and m == 12) else (30, 45)   # el tofu no se pesa en crudo
             estado = "" if k == "tofu" else (" cocida" if k in ("lenteja", "arveja") else " cocido")
-            return f"{rango(x, y)}{estado}" + (" (30 g en crudo)" if m == 12 and k != "tofu" else f" (≈ {round(x/15)}-{max(round(y/15), round(x/15))} cucharadas)".replace(f"≈ {round(x/15)}-{round(x/15)} ", f"≈ {round(x/15)} "))
+            txt = f"{rango(x, y)}{estado}" + (" (30 g en crudo)" if m == 12 and k != "tofu" else f" (≈ {round(x/15)}-{max(round(y/15), round(x/15))} cucharadas)".replace(f"≈ {round(x/15)}-{round(x/15)} ", f"≈ {round(x/15)} "))
+            return txt + (racion_mezcla(rec, x, y) if k != "tofu" else "")
         x, y = ANIMAL_G[m]
         pieza = {"hamb-pollo": "1 hamburguesita", "hamb-res": "1 hamburguesita", "pescado-tortitas": "1 tortita",
                  "camaron-papa": "1 pastelito", "atun-pastelito": "1 pastelito"}.get(rec)
@@ -858,10 +877,12 @@ def marcar_dias(dias, batch, out):
 # ---------------------------------------------------------------- compra
 CANON = {"calabacín rallado": "calabacín", "calabacín (zucchini)": "calabacín", "banano maduro": "banano",
          "banano (plátano)": "banano", "papa (patata)": "papa", "papa cocida": "papa", "zanahoria rallada": "zanahoria",
-         "ahuyama (calabaza)": "ahuyama", "lenteja cocida y escurrida": "lenteja", "garbanzo cocido": "garbanzo",
+         "ahuyama (calabaza)": "ahuyama", "lenteja cocida y escurrida": "lenteja", "lenteja cocida de bote, escurrida": "lenteja cocida de bote",
+         "garbanzo cocido de bote, escurrido": "garbanzo cocido de bote", "manzana": "manzana", "garbanzo cocido": "garbanzo",
          "harina de trigo o avena": "harina de trigo", "agua o fórmula": None, "agua": None, "agua tibia": None,
          "fórmula preparada": None, "agua de la cocción": None, "aceite de oliva": None}
 UNIDAD_G = {"zanahoria": 80, "calabacín": 200, "papa": 150}
+PIEZA_G = {"banano": 100, "manzana": 150}
 
 def lista_compra(dias, plan_b, cocina_dia=()):
     """Por semana (domingo a sabado): lo que hace falta comprar, por seccion."""
@@ -869,11 +890,13 @@ def lista_compra(dias, plan_b, cocina_dia=()):
     para = defaultdict(lambda: defaultdict(float))   # (semana, clave) -> plato -> cantidad
     def suma(d, prod, cant, uni, sec, de=None):
         if not sec: return
-        prod = prod.lower()
+        prod = re.sub(r"\s*\(≈[^)]*\)", "", prod.lower())
         prod = CANON.get(prod, prod)
         if prod is None: return
         if uni in ("unidad", "unidades") and prod in UNIDAD_G:
             cant, uni = cant * UNIDAD_G[prod], "g"
+        if uni == "g" and prod in PIEZA_G:   # la fruta se compra por piezas
+            cant, uni = cant / PIEZA_G[prod], "unidad"
         if uni in ("cucharada", "cucharadas", "cucharadita"):
             if "harina" in prod: cant, uni = cant * (10 if uni.startswith("cucharada") else 3), "g"
             else: return
@@ -1216,6 +1239,7 @@ def main():
     for rid in sorted(usadas):
         if rid.startswith("simple-"):
             r = receta_simple(rid[7:], ALIMENTOS)
+            r["ing"] = [(f"{p}: {SIMPLE_G[rid[7:]]}" if rid[7:] in SIMPLE_G else p, c, u, x) for p, c, u, x in r["ing"]]
         else:
             r = RECETAS[rid]
         al = sorted({ALERGENO_TXT[g] for g in (grupo_alergeno(k) for k in r["requiere"]) if g})
