@@ -39,13 +39,18 @@ INTRODUCIDOS = ["aguacate", "pollo", "ahuyama", "papa", "trigo_pasta", "pan", "c
 # Cola de introduccion: (clave, comida). Los alergenos nuevos ocupan 3 dias sin
 # otro nuevo; el resto, 2 (AEP 2023: 2-3 dias seguidos). Comida "de" o "c":
 # nunca la ultima del dia.
-COLA = [("res", "c"), ("pescado_blanco", "c"), ("papaya", "de"), ("avena", "de"), ("cacahuete", "de"),
-        ("mango", "de"), ("maiz", "de"), ("yogur", "de"), ("yuca", "c"), ("habichuela", "c"),
-        ("tahini", "c"), ("lenteja", "c"), ("salmon", "c"), ("pitahaya", "de"), ("almendra", "de"),
-        ("brocoli", "c"), ("maranon", "de"), ("queso", "de"), ("nuez", "de"), ("durazno", "de"),
-        ("tofu", "c"), ("arroz", "c"), ("camaron", "c"), ("arveja", "c"),
+# Reordenada el 21-10-2026 (peticion de la familia): el almuerzo y la cena
+# repetian lo mismo porque la cola metia sobre todo cremas de frutos secos y
+# frutas (desayuno). Ahora, tras lo ya introducido, van primero legumbres
+# (de bote) y verduras, intercaladas con los alergenos y las frutas.
+COLA = [("res", "c"), ("pescado_blanco", "c"), ("papaya", "de"), ("avena", "de"),
+        ("lenteja", "c"), ("cacahuete", "de"), ("garbanzo", "c"), ("arveja", "c"), ("yogur", "de"),
+        ("habichuela", "c"), ("batata", "c"), ("tahini", "c"), ("brocoli", "c"), ("mango", "de"),
+        ("salmon", "c"), ("yuca", "c"), ("maiz", "de"), ("almendra", "de"), ("coliflor", "c"), ("arroz", "c"),
+        ("queso", "de"), ("pitahaya", "de"), ("maranon", "de"), ("durazno", "de"), ("tofu", "c"),
+        ("camaron", "c"), ("nuez", "de"),
         # de diciembre en adelante
-        ("batata", "c"), ("avellana", "de"), ("coliflor", "c"), ("garbanzo", "c"), ("pistacho", "de"),
+        ("avellana", "de"), ("pistacho", "de"),
         ("pimenton", "c"), ("melon", "de"), ("moluscos", "c"), ("quinua", "c"), ("cerdo", "c"),
         ("kiwi", "de"), ("tomate", "c"), ("frijol", "c"), ("apio", "c"), ("berenjena", "c"),
         ("pavo", "c"), ("mandarina", "de"), ("pina", "de"), ("puerro", "c"), ("patilla", "de"),
@@ -92,6 +97,10 @@ def fecha_txt(d):
     return f"{DIAS[d.weekday()]} {d.day} {MESES[d.month - 1]}"
 
 # ---------------------------------------------------------------- calendario
+# La avena se quedo en un dia (el 20-10): el 21 empieza la lenteja, que
+# sustituye a la res en el almuerzo (la familia no tenia res).
+DURACION = {"avena": 1}
+
 def calendario():
     """Asigna fecha a cada alimento de la cola. Devuelve lista de
     introducciones y un dict fecha -> (k, dia_de, total, comida)."""
@@ -107,7 +116,7 @@ def calendario():
         if not elegido:
             d += dt.timedelta(days=1); continue
         k, comida = elegido
-        total = 3 if es_alergeno_nuevo(k) else 2
+        total = DURACION.get(k) or (3 if es_alergeno_nuevo(k) else 2)
         intro.append(dict(k=k, n=ALIMENTOS[k]["n"], id=ALIMENTOS[k]["id"], fecha=iso(d),
                           alergeno=texto_alergeno(k) if es_alergeno_nuevo(k) else None,
                           comida=comida, dias=total))
@@ -222,7 +231,7 @@ PROT_MAIN = [
     ("hamb-pollo", "pollo"), ("pollo-desmenuzado", "pollo"), ("hamb-res", "res"), ("res-guisada", "res"),
     ("pescado-crema", "pescado_blanco"), ("pescado-tortitas", "pescado_blanco"), ("pescado-laminas", "pescado_blanco"),
     ("salmon-horno", "salmon"), ("lenteja-chafada", "lenteja"),
-    ("hamb-lenteja", "lenteja"), ("tofu-dorado", "tofu"), ("camaron-papa", "camaron"),
+    ("hamb-lenteja", "lenteja"), ("garbanzo-chafado", "garbanzo"), ("tofu-dorado", "tofu"), ("camaron-papa", "camaron"),
     ("pasta-mariscos", "moluscos"), ("hummus", "garbanzo"), ("cerdo-guisado", "cerdo"),
     ("pavo-guisado", "pavo"), ("atun-pastelito", "atun"), ("tortilla-calabacin", "huevo"),
     ("arveja-chafada", "arveja"), ("frijol-chafado", "frijol"),
@@ -408,7 +417,7 @@ COMIDO_AL = {"pollo", "ahuyama", "zanahoria", "trigo_pasta", "aguacate"}
 # Tilapia (pescado_blanco): fuera del 21 al 23-10, a peticion de la familia
 # (21-10-2026); vuelve desde el 24. Para que la cena tenga proteina esos dias,
 # el pollo vuelve ya (en guiso); la hamburguesita de pollo sigue en descanso.
-DESCANSO = {"hamb-pollo": "2026-10-27", "pescado_blanco": "2026-10-23", "trigo_pasta": "2026-10-21",
+DESCANSO = {"hamb-pollo": "2026-10-27", "pescado_blanco": "2026-10-23", "res": "2026-10-24", "trigo_pasta": "2026-10-21",
             "zanahoria": "2026-10-22", "aguacate": "2026-10-22"}
 def descansa(clave, d):
     return iso(d) <= DESCANSO.get(clave, "")
