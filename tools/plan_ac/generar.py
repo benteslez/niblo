@@ -23,9 +23,12 @@ INDEX = os.path.join(RAIZ, "index.html")
 
 NACE = dt.date(2026, 3, 5)
 INICIO_AC = dt.date(2026, 9, 5)          # dia 1 del plan
-HOY_PLAN = dt.date(2026, 10, 18)         # primer dia que se regenera (recetas mas apetecibles, 17-10-2026)
+HOY_PLAN = dt.date(2026, 10, 21)         # primer dia que se regenera (cenas desde hoy y almuerzos variados, 21-10-2026)
 FIN = dt.date(2027, 6, 2)                # ultimo dia del plan (FECHA_FIN en la app)
-OCHO_MESES = dt.date(2026, 11, 5)
+# Tres comidas (desayuno, almuerzo y cena) desde el 21-10-2026, a peticion de
+# la familia (antes, el 5 de noviembre, a los 8 meses). La variable conserva
+# el nombre de siempre.
+OCHO_MESES = dt.date(2026, 10, 21)
 HOTEL = (dt.date(2026, 10, 8), dt.date(2026, 10, 12))
 PRIMERA_SESION = dt.date(2026, 10, 12)   # lunes 12: se cocina para el resto de la semana (peticion de la familia)
 
@@ -367,9 +370,50 @@ def titulo_clave(rec, k):
     t = RECETAS[rec]["titulo"]
     return f"{t}: {ALIMENTOS[k]['n'].lower()}" if rec in GENERICAS else t
 
-def generar_menus(intro, por_dia, batch):
+def semilla_historia(historia):
+    """Los ultimos 7 dias conservados entran en la historia, para que lo de
+    hoy no repita lo de ayer. Ademas, lo que la familia dice que comio de
+    verdad (COMIDO) sustituye al almuerzo del plan."""
+    out = []
+    for e in historia[-7:]:
+        if e.get("v") != 2: continue
+        slots, al = defaultdict(set), set()
+        for col in e.get("cols", []):
+            for i in e.get(col, []) or []:
+                if not isinstance(i, dict) or i.get("k") not in ALIMENTOS: continue
+                al.add(i["k"])
+                rec = (i.get("rec") or "").split("~")[0]
+                if col in ("c", "ce"):
+                    if i["cat"] == "prot": slots[col + "-prot"].add(rec)
+                    elif i["cat"] in ("har", "ver"): slots[col + "-" + i["cat"]].add(i["k"])
+                elif col == "de" and i["cat"] in ("har", "prot"):
+                    slots["de-" + i["cat"]].add(rec)
+                r = RECETAS.get(rec)
+                if r: al |= r["requiere"]
+        f = dt.date.fromisoformat(e["fecha"])
+        if iso(f) in COMIDO:
+            for slot, v in COMIDO[iso(f)].items(): slots[slot] = set(v)
+            al |= COMIDO_AL
+        gs = {grupo_alergeno(k) for k in al if grupo_alergeno(k)}
+        out.append((f, dict(slots), gs, al))
+    return out
+
+# Lo que comio de verdad (la familia, 21-10-2026): tres dias seguidos las
+# hamburguesitas de pollo con ahuyama, zanahoria, pasta y aguacate.
+COMIDO = {f: {"c-prot": {"hamb-pollo"}, "c-har": {"trigo_pasta"}, "c-ver": {"zanahoria"}}
+          for f in ("2026-10-18", "2026-10-19", "2026-10-20")}
+COMIDO_AL = {"pollo", "ahuyama", "zanahoria", "trigo_pasta", "aguacate"}
+# Descanso tras esos tres dias: hasta esa fecha (incluida) no vuelven al
+# almuerzo ni a la cena.
+DESCANSO = {"hamb-pollo": "2026-10-27", "pollo": "2026-10-23", "trigo_pasta": "2026-10-21",
+            "zanahoria": "2026-10-22", "aguacate": "2026-10-22"}
+def descansa(clave, d):
+    return iso(d) <= DESCANSO.get(clave, "")
+
+def generar_menus(intro, por_dia, batch, semilla=()):
     fecha_intro = {x["k"]: dt.date.fromisoformat(x["fecha"]) for x in intro}
     hist = Historia()
+    hist.dias = list(semilla)
     dias = []
     d = HOY_PLAN
     while d <= FIN:
@@ -435,7 +479,7 @@ def generar_menus(intro, por_dia, batch):
                 if har_forzada and its[0][0] != har_forzada: return None
                 if any(k not in disp and k != har_forzada for k, _ in its): return None
                 s = -4 * hist.usado("de-har", rec, 2) - hist.usado("de-har", rec, 6) + (3 if batch.disponible(rec, its[0][0], d) else 0)
-                if rec == "bastones-papa": s -= 3
+                if rec == "bastones-papa": s -= 8   # la papa ya sale mucho en almuerzo y cena
                 s += 2 * deficit(grupos_de_items([item(k, c2, rec) for k, c2 in its]))
                 return s
             hr = elegir(DESAYUNO_HAR, p_har)
@@ -521,6 +565,7 @@ def generar_menus(intro, por_dia, batch):
                 if not requiere_ok(rec, ok): return None
                 if k == "huevo" and nonlocal_huevos >= 1: return None
                 if evita_prot and k == evita_prot: return None
+                if (descansa(rec, d) or descansa(k, d)) and "prot" not in fz: return None
                 if k in ("arroz",) : return None
                 if "har" in fz and rec in ("camaron-papa", "pasta-mariscos", "pescado-tortitas"): return None
                 if k == "atun" and "prot" not in fz and hist.alimento("atun", 7) >= 1: return None   # ocasional
@@ -551,6 +596,7 @@ def generar_menus(intro, por_dia, batch):
                     if "har" in fz and k != fz["har"]: return None
                     if "har" not in fz and k not in disp: return None
                     if k == "arroz" and arroz_semana() >= 3: return None
+                    if descansa(k, d) and "har" not in fz: return None
                     if edad_minima(k) > meses: return None
                     s = -5 * hist.usado(slot + "-har", k, 2) - hist.alimento(k, 4) + (3 if batch.disponible(rec2, k, d) else 0)
                     if k in usados_hoy: s -= 4
@@ -562,6 +608,7 @@ def generar_menus(intro, por_dia, batch):
             cands = [k for k in VER_MAIN if (k in disp or fz.get("ver") == k) and edad_minima(k) <= meses]
             def p_ver(k):
                 if "ver" in fz: return 100 if k == fz["ver"] else None
+                if descansa(k, d): return None
                 s = -5 * hist.usado(slot + "-ver", k, 2) - hist.alimento(k, 4) + (2 if batch.disponible(VER_MAIN[k], k, d) else 0)
                 if k in usados_hoy: s -= 6
                 g = grupo_alergeno(k)
@@ -587,7 +634,7 @@ def generar_menus(intro, por_dia, batch):
                         its.append(item(g_k, "gra", rec_g, nota="En capa finísima sobre los bastones de verdura o diluida en el puré." if rec_g == "crema-fruto-seco" else None))
                         usados_hoy.add(g_k); usados_gra.add(g_k); reqgrupo[grupo_alergeno(g_k)] = reqgrupo.get(grupo_alergeno(g_k), 0) + 1; break
                 else:
-                    if "aguacate" not in usados_hoy and hist.alimento("aguacate", 1) == 0:
+                    if "aguacate" not in usados_hoy and hist.alimento("aguacate", 1) == 0 and not descansa("aguacate", d):
                         its.append(item("aguacate", "gra", "simple-aguacate")); usados_hoy.add("aguacate")
             slots[slot + "-prot"].add(rec); slots[slot + "-har"].add(its[1]["k"]); slots[slot + "-ver"].add(vk)
             return its
@@ -677,7 +724,8 @@ def sesiones():
         if d.weekday() == 6:   # domingo
             out.append(d)
         d += dt.timedelta(days=1)
-    return out
+    out.append(dt.date(2026, 10, 21))   # mie 21: de hoy al sabado (peticion de la familia)
+    return sorted(out)
 
 def plan_batch(dias, batch):
     out = []
@@ -798,7 +846,7 @@ def lista_compra(dias, plan_b, cocina_dia=()):
 
 # ---------------------------------------------------------------- pautas
 PAUTAS = [
-    dict(desde="2026-10-08", hasta="2026-11-04", etiqueta="7 meses: 2 comidas", bloques={
+    dict(desde="2026-10-08", hasta="2026-10-20", etiqueta="7 meses: 2 comidas", bloques={
         "de": dict(et="Desayuno", hora="06:00-08:00", orden=1, tipo="comida", fruta=True, bib="150-180 ml justo DESPUÉS"),
         "mm": dict(et="Media mañana", hora="09:30-10:00", orden=2, tipo="leche", fruta=False, bib="120-180 ml (el primero que bajará según hambre)"),
         "c": dict(et="Almuerzo", hora="12:00-13:00", orden=3, tipo="comida", fruta=True, bib=None,
@@ -807,7 +855,7 @@ PAUTAS = [
         "ad": dict(et="Antes de dormir", hora="18:30", orden=5, tipo="leche", fruta=False, bib="150-180 ml antes de dormir (se duerme ~19:00)"),
         "no": dict(et="Noche", hora="si lo pide", orden=6, tipo="leche", fruta=False, bib="Si lo pide"),
     }),
-    dict(desde="2026-11-05", hasta=FIN.isoformat(), etiqueta="Desde 8 meses: 3 comidas", bloques={
+    dict(desde="2026-10-21", hasta=FIN.isoformat(), etiqueta="3 comidas: desayuno, almuerzo y cena", bloques={
         "de": dict(et="Desayuno", hora="06:00-08:00", orden=1, tipo="comida", fruta=True, bib="150-180 ml justo DESPUÉS"),
         "mm": dict(et="Media mañana (opcional)", hora="09:30-10:00", orden=2, tipo="leche", fruta=False, bib="Opcional: 120-180 ml si tiene hambre"),
         "c": dict(et="Almuerzo", hora="12:00-13:00", orden=3, tipo="comida", fruta=False, bib=None),
@@ -838,7 +886,7 @@ def verificar(dias, intro, batch):
         orden = [PAUTA_DE(d)["bloques"][s]["orden"] for s in cols]
         if orden != sorted(orden): errores.append(f"{d}: bloques fuera de orden")
         if d >= OCHO_MESES and ("ce" not in cols or "ad" in cols): errores.append(f"{d}: falta cena o sobra 'antes de dormir'")
-        if d < OCHO_MESES and ("ce" in cols or "ad" not in cols): errores.append(f"{d}: cena antes del 5 nov.")
+        if d < OCHO_MESES and ("ce" in cols or "ad" not in cols): errores.append(f"{d}: cena antes del {OCHO_MESES}")
         if d >= OCHO_MESES and any(i["cat"] == "fru" for i in e.get("c", [])): errores.append(f"{d}: fruta en el almuerzo")
         if d < OCHO_MESES and sum(1 for i in e.get("c", []) if i["cat"] == "fru") != 1: errores.append(f"{d}: falta la fruta del almuerzo")
         frutas = sum(1 for s in cols for i in e[s] if i["cat"] == "fru")
@@ -1048,7 +1096,7 @@ def main():
                     if "(va " in (i.get("n") or ""): i["cant"] = VA_DENTRO
     intro, por_dia = calendario()
     bt = Batch({x["k"]: dt.date.fromisoformat(x["fecha"]) for x in intro})
-    dias = generar_menus(intro, por_dia, bt)
+    dias = generar_menus(intro, por_dia, bt, semilla_historia(historia))
     batch = marcar_dias(dias, bt, plan_batch(dias, bt))
     cocina_dia = plan_cocina_dia(bt)
     compra = lista_compra(dias, batch, cocina_dia)
