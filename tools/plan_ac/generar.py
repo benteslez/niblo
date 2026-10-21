@@ -414,10 +414,10 @@ COMIDO = {f: {"c-prot": {"hamb-pollo"}, "c-har": {"trigo_pasta"}, "c-ver": {"zan
 COMIDO_AL = {"pollo", "ahuyama", "zanahoria", "trigo_pasta", "aguacate"}
 # Descanso tras esos tres dias: hasta esa fecha (incluida) no vuelven al
 # almuerzo ni a la cena.
-# Tilapia (pescado_blanco): fuera del 21 al 23-10, a peticion de la familia
+# Tilapia (pescado_blanco): fuera del 21 al 25-10 (vuelve el lunes 26, cocinada en la sesion del domingo 25), a peticion de la familia
 # (21-10-2026); vuelve desde el 24. Para que la cena tenga proteina esos dias,
 # el pollo vuelve ya (en guiso); la hamburguesita de pollo sigue en descanso.
-DESCANSO = {"hamb-pollo": "2026-10-27", "pescado_blanco": "2026-10-23", "res": "2026-10-24", "trigo_pasta": "2026-10-21",
+DESCANSO = {"hamb-pollo": "2026-10-27", "pescado_blanco": "2026-10-25", "res": "2026-10-24", "trigo_pasta": "2026-10-21",
             "zanahoria": "2026-10-22", "aguacate": "2026-10-22"}
 def descansa(clave, d):
     return iso(d) <= DESCANSO.get(clave, "")
