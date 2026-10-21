@@ -405,7 +405,10 @@ COMIDO = {f: {"c-prot": {"hamb-pollo"}, "c-har": {"trigo_pasta"}, "c-ver": {"zan
 COMIDO_AL = {"pollo", "ahuyama", "zanahoria", "trigo_pasta", "aguacate"}
 # Descanso tras esos tres dias: hasta esa fecha (incluida) no vuelven al
 # almuerzo ni a la cena.
-DESCANSO = {"hamb-pollo": "2026-10-27", "pollo": "2026-10-23", "trigo_pasta": "2026-10-21",
+# Tilapia (pescado_blanco): fuera del 21 al 23-10, a peticion de la familia
+# (21-10-2026); vuelve desde el 24. Para que la cena tenga proteina esos dias,
+# el pollo vuelve ya (en guiso); la hamburguesita de pollo sigue en descanso.
+DESCANSO = {"hamb-pollo": "2026-10-27", "pescado_blanco": "2026-10-23", "trigo_pasta": "2026-10-21",
             "zanahoria": "2026-10-22", "aguacate": "2026-10-22"}
 def descansa(clave, d):
     return iso(d) <= DESCANSO.get(clave, "")
@@ -569,7 +572,8 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 if k in ("arroz",) : return None
                 if "har" in fz and rec in ("camaron-papa", "pasta-mariscos", "pescado-tortitas"): return None
                 if k == "atun" and "prot" not in fz and hist.alimento("atun", 7) >= 1: return None   # ocasional
-                s = -5 * hist.usado(slot + "-prot", rec, 2) - 2 * hist.usado_dia(rec, 3) - hist.alimento(k, 4) - 0.7 * hist.alimento(k, 14)
+                # El mismo alimento dias seguidos (aunque cambie la receta) pesa mas.
+                s = -5 * hist.usado(slot + "-prot", rec, 2) - 2 * hist.usado_dia(rec, 3) - 3 * hist.alimento(k, 2) - hist.alimento(k, 4) - 0.7 * hist.alimento(k, 14)
                 if batch.disponible(rec, k, d): s += 3
                 # Varias recetas del mismo alimento (tilapia): que roten en la semana.
                 if sum(1 for r_, k_ in PROT_MAIN if k_ == k) > 1: s -= 2 * hist.usado_dia(rec, 7)
