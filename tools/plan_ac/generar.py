@@ -249,6 +249,23 @@ FRUTAS = [k for k, a in ALIMENTOS.items() if a["cat"] == "fru"]
 NUECES = ["cacahuete", "tahini", "almendra", "maranon", "nuez", "avellana", "pistacho"]
 GUISOS = {"pollo-desmenuzado", "res-guisada", "cerdo-guisado", "pavo-guisado", "hamb-pollo", "hamb-res", "lenteja-chafada"}
 
+# Recetas de proteina que llevan DENTRO, y se comen con ella, una harina o
+# una verdura (la zanahoria de los guisos no cuenta: se cuece en el caldo).
+INTEGRA = {"hamb-pollo": "las hamburguesitas", "hamb-res": "las hamburguesitas", "hamb-lenteja": "las hamburguesitas",
+           "pescado-crema": "la crema", "pescado-tortitas": "las tortitas", "pescado-laminas": "el papillote",
+           "lenteja-chafada": "las lentejas", "garbanzo-chafado": "el puré de garbanzo", "camaron-papa": "los pastelitos",
+           "pasta-mariscos": "la misma receta", "atun-pastelito": "los pastelitos", "tortilla-calabacin": "la tortilla",
+           "frijol-chafado": "el puré de fríjol"}
+
+def dentro_de(rec, kp):
+    """(harinas que van dentro, verduras que van dentro, todo lo que lleva) de una receta de proteina."""
+    req = set(RECETAS[rec]["requiere"]) - {kp} if rec in RECETAS else set()
+    if rec not in INTEGRA:
+        return [], [], req
+    har = [x for x in sorted(req) if x in ALIMENTOS and ALIMENTOS[x]["cat"] == "har"]
+    ver = [x for x in sorted(req) if x in ALIMENTOS and ALIMENTOS[x]["cat"] == "ver"]
+    return har, ver, req
+
 def requiere_ok(rec, disp):
     r = RECETAS.get(rec)
     return r is None or r["requiere"] <= disp
@@ -579,7 +596,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 if evita_prot and k == evita_prot: return None
                 if (descansa(rec, d) or descansa(k, d)) and "prot" not in fz: return None
                 if k in ("arroz",) : return None
-                if "har" in fz and rec in ("camaron-papa", "pasta-mariscos", "pescado-tortitas"): return None
+                if "har" in fz and dentro_de(rec, k)[0]: return None
                 if k == "atun" and "prot" not in fz and hist.alimento("atun", 7) >= 1: return None   # ocasional
                 # El mismo alimento dias seguidos (aunque cambie la receta) pesa mas.
                 s = -5 * hist.usado(slot + "-prot", rec, 2) - 2 * hist.usado_dia(rec, 3) - 3 * hist.alimento(k, 2) - hist.alimento(k, 4) - 0.7 * hist.alimento(k, 14)
@@ -598,11 +615,15 @@ def generar_menus(intro, por_dia, batch, semilla=()):
             rec, kp = pr
             its.append(item(kp, "prot", rec))
             usados_hoy.add(kp)
-            COMBO = {"camaron-papa": ("papa", "Papa (va en los pastelitos)"), "pasta-mariscos": ("trigo_pasta", "Pasta (va en la misma receta)"),
-                     "pescado-tortitas": ("papa", "Papa (va en las tortitas)")}
-            if rec in COMBO:
-                its.append(item(COMBO[rec][0], "har", rec, COMBO[rec][1]))
-                usados_hoy.add(COMBO[rec][0])
+            # La harina y la verdura que ya van DENTRO de la receta de la
+            # proteina salen como «Papa (va en las lentejas)» y no se repiten
+            # aparte (peticion de la familia, 21-10-2026).
+            har_d, ver_d, evitar = dentro_de(rec, kp)
+            for x in ver_d:
+                usados_hoy.add(x)
+            if har_d:
+                its.append(item(har_d[0], "har", rec, f"{nombre_corto(har_d[0])} (va en {INTEGRA[rec]})"))
+                usados_hoy.add(har_d[0])
             else:
                 def p_har(c):
                     rec2, k = c
@@ -610,6 +631,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                     if "har" not in fz and k not in disp: return None
                     if k == "arroz" and arroz_semana() >= 3: return None
                     if descansa(k, d) and "har" not in fz: return None
+                    if k in evitar and "har" not in fz: return None
                     if edad_minima(k) > meses: return None
                     s = -5 * hist.usado(slot + "-har", k, 2) - hist.alimento(k, 4) + (3 if batch.disponible(rec2, k, d) else 0)
                     if k in usados_hoy: s -= 4
@@ -618,7 +640,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 its.append(item(hr[1], "har", hr[0]))
                 usados_hoy.add(hr[1])
             # verduras: una (dos desde los 9 meses, una de ellas "en guiso" si toca)
-            cands = [k for k in VER_MAIN if (k in disp or fz.get("ver") == k) and edad_minima(k) <= meses]
+            cands = [k for k in VER_MAIN if (k in disp or fz.get("ver") == k) and edad_minima(k) <= meses and (k not in evitar or fz.get("ver") == k)]
             def p_ver(k):
                 if "ver" in fz: return 100 if k == fz["ver"] else None
                 if descansa(k, d): return None
@@ -628,8 +650,13 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 if g and reqgrupo.get(g, 9) < 2: s += 6
                 if k in ("espinaca", "acelga") and hist.alimento("espinaca", 1) + hist.alimento("acelga", 1): return None
                 return s
-            vk = elegir(sorted(cands), p_ver)
-            its.append(item(vk, "ver", VER_MAIN[vk])); usados_hoy.add(vk)
+            for x in ver_d:
+                its.append(item(x, "ver", rec, f"{nombre_corto(x)} (va en {INTEGRA[rec]})"))
+            if ver_d and "ver" not in fz:
+                vk = ver_d[0]   # la verdura del plato ya va en la receta
+            else:
+                vk = elegir(sorted(cands), p_ver)
+                its.append(item(vk, "ver", VER_MAIN[vk])); usados_hoy.add(vk)
             if meses >= 9 and "ver" not in fz:
                 cands2 = [k for k in cands if k != vk]
                 vk2 = elegir(sorted(cands2), p_ver)
@@ -643,7 +670,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
             else:
                 opciones = [("tahini", "crema-fruto-seco"), ("mostaza", "mostaza-punta")] + [(n, "crema-fruto-seco") for n in NUECES if n != "tahini"]
                 for g_k, rec_g in opciones:
-                    if g_k in disp and reqgrupo.get(grupo_alergeno(g_k), 9) < 2 and hist.alimento(g_k, 2) == 0 and g_k not in usados_hoy and g_k not in usados_gra:
+                    if g_k in disp and reqgrupo.get(grupo_alergeno(g_k), 9) < 2 and hist.alimento(g_k, 2) == 0 and g_k not in usados_hoy and g_k not in usados_gra and g_k not in evitar:
                         its.append(item(g_k, "gra", rec_g, nota="En capa finísima sobre los bastones de verdura o diluida en el puré." if rec_g == "crema-fruto-seco" else None))
                         usados_hoy.add(g_k); usados_gra.add(g_k); reqgrupo[grupo_alergeno(g_k)] = reqgrupo.get(grupo_alergeno(g_k), 0) + 1; break
                 else:
