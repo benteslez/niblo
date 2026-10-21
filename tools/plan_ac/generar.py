@@ -666,6 +666,8 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                         i["origen"] = hecho[i["rec"]]; continue
                     fresco = bool(nuevo and nuevo[0] == i["k"] and nuevo[1] == 1)
                     batch.consumir(i, d, fresco)
+                    if i.get("rec") in SIMPLES and (i.get("origen") or "") == "Cocinar hoy":
+                        i["ingRacion"] = ing_hoy_txt(i["rec"], i["k"], 1, [iso(d)])
                     if i.get("rec") and i["rec"] not in GENERICAS: hecho[i["rec"]] = i.get("origen")
             for s_ in ("mm", "me"):
                 for i in dia_items.get(s_, []):
@@ -727,6 +729,54 @@ def sesiones():
     out.append(dt.date(2026, 10, 21))   # mie 21: de hoy al sabado (peticion de la familia)
     return sorted(out)
 
+# ---------------------------------------------------------------- cuanto cocinar
+# Recetas de un solo alimento (papa, yuca, batata, tuberculos, verdura,
+# ahuyama, pasta, arroz): lo que se cocina sale de la RACION de ese dia (la
+# misma que dice «Cuánto»), pasada a peso en crudo o en seco, y no de la
+# cantidad fija de la receta, que no crecia con la edad (peticion de la
+# familia, 21-10-2026: «150 g de papa para 2 raciones de 30-45 g»).
+# Factores orientativos (practica habitual): papa, yuca y tuberculos cocidos
+# en agua pesan casi lo mismo que en crudo pelados; la verdura al vapor
+# pierde ~10 %; asada (ahuyama, batata, pimenton, berenjena) ~25-30 %;
+# la pasta cocida pesa ~2,5 veces su peso en seco y el arroz ~3.
+SIMPLES = {"bastones-papa": ("papa", "pelada", 1.0), "bastones-yuca": ("yuca", "pelada y sin la fibra central", 1.0),
+           "bastones-batata": ("batata", "pelada", 1.3), "tuberculo-cocido": (None, "pelado", 1.0),
+           "verduras-vapor": (None, "", 1.1), "ahuyama-asada": ("ahuyama", "pelada y sin pepas", 1.3),
+           "verdura-asada": (None, "", 1.3), "pasta-verdura": ("pasta corta (fusilli, conchitas)", "en seco", 1 / 2.5),
+           "arroz-blando": ("arroz", "en seco", 1 / 3)}
+
+def racion_cruda(rec, d):
+    m, _ = edad(d)
+    _, y = PLATO_G[min(max(m, 6), 12)]
+    return max(5, int(round(y / 2 * SIMPLES[rec][2] / 5.0)) * 5)
+
+def ing_cocinar(rec, k, raciones, fechas):
+    """[(producto, gramos, 'g', seccion), ...] de lo que hay que cocinar, y la racion media."""
+    r = RECETAS[rec]
+    porr = [racion_cruda(rec, dt.date.fromisoformat(f)) for f in fechas] or [racion_cruda(rec, HOY_PLAN)]
+    media = sum(porr) / len(porr)
+    nombre = SIMPLES[rec][0] or ALIMENTOS[k]["n"].split(" (")[0].lower()
+    sec = r["ing"][0][3] or "Frutas y verduras"
+    total = int(round(media * raciones / 5.0)) * 5 or 5
+    otros = [(p, c * raciones / r["rinde"], u, s2) for p, c, u, s2 in r["ing"][1:]]
+    return [(nombre, total, "g", sec)] + otros, media
+
+def ing_hoy_txt(rec, k, raciones, fechas):
+    ings, media = ing_cocinar(rec, k, raciones, fechas)
+    (nombre, total, _, _), otros = ings[0], ings[1:]
+    estado = SIMPLES[rec][1]
+    if estado == "pelado" and k in FEM: estado = "pelada"
+    if estado == "en seco":
+        prim = f"{total} g de {nombre}, en seco"
+    else:
+        prim = f"{total} g de {nombre}{' ' + estado if estado else ''}, en crudo"
+    if raciones > 1: prim += f" ({raciones} raciones de ≈ {int(round(media / 5.0)) * 5} g)"
+    def ot(p, c, u):
+        if u in ("cucharadita", "cucharada"):
+            c = max(0.5, round(c * 2) / 2)
+        return ing_txt(p, c, u)
+    return [prim] + [ot(p, c, u) for p, c, u, _ in otros]
+
 def plan_batch(dias, batch):
     out = []
     for S in batch.ses:
@@ -735,9 +785,12 @@ def plan_batch(dias, batch):
         cocinar = []
         for clave, x in sorted(t.items(), key=lambda kv: titulo_clave(kv[1]["rec"], kv[1]["k"])):
             r = RECETAS[x["rec"]]
-            cocinar.append(dict(rec=x["rec"], k=x["k"], titulo=titulo_clave(x["rec"], x["k"]), raciones=x["raciones"],
-                                tandas=x["tandas"], rinde=r["rinde"], dias=x["dias"], congelar=x["congelar"],
-                                sobran=x["tandas"] * r["rinde"] - x["raciones"]))
+            e = dict(rec=x["rec"], k=x["k"], titulo=titulo_clave(x["rec"], x["k"]), raciones=x["raciones"],
+                     tandas=x["tandas"], rinde=r["rinde"], dias=x["dias"], congelar=x["congelar"],
+                     sobran=x["tandas"] * r["rinde"] - x["raciones"])
+            if x["rec"] in SIMPLES:
+                e.update(ingHoy=ing_hoy_txt(x["rec"], x["k"], x["raciones"], x["dias"]), sobran=0)
+            cocinar.append(e)
         out.append(dict(fecha=iso(S), cocinar=cocinar))
     return out
 
@@ -746,9 +799,12 @@ def plan_cocina_dia(batch):
     for d in sorted(batch.cocina_dia):
         for clave, x in sorted(batch.cocina_dia[d].items()):
             r = RECETAS[x["rec"]]
-            out.append(dict(fecha=iso(d), rec=x["rec"], k=x["k"], titulo=titulo_clave(x["rec"], x["k"]), raciones=x["raciones"],
-                            tandas=x["tandas"], rinde=r["rinde"], dias=x["dias"], congelar=x["congelar"],
-                            sobran=x["tandas"] * r["rinde"] - x["raciones"]))
+            e = dict(fecha=iso(d), rec=x["rec"], k=x["k"], titulo=titulo_clave(x["rec"], x["k"]), raciones=x["raciones"],
+                     tandas=x["tandas"], rinde=r["rinde"], dias=x["dias"], congelar=x["congelar"],
+                     sobran=x["tandas"] * r["rinde"] - x["raciones"])
+            if x["rec"] in SIMPLES:
+                e.update(ingHoy=ing_hoy_txt(x["rec"], x["k"], x["raciones"], x["dias"]), sobran=0)
+            out.append(e)
     return out
 
 def marcar_dias(dias, batch, out):
@@ -790,6 +846,10 @@ def lista_compra(dias, plan_b, cocina_dia=()):
         for c in b["cocinar"]:
             r = RECETAS[c["rec"]]
             de = titulo_clave(c["rec"], c["k"])
+            if c["rec"] in SIMPLES:
+                for prod, cant, uni, sec in ing_cocinar(c["rec"], c["k"], c["raciones"], c["dias"])[0]:
+                    suma(d, prod, cant, uni, sec, de)
+                continue
             if c["rec"] in GENERICAS:
                 suma(d, ALIMENTOS[c["k"]]["n"], r["ing"][0][1] * c["tandas"] * r["rinde"], "g", "Frutas y verduras", de)
                 for prod, cant, uni, sec in r["ing"][1:]: suma(d, prod, cant * c["tandas"], uni, sec, de)
@@ -810,6 +870,10 @@ def lista_compra(dias, plan_b, cocina_dia=()):
                     suma(d, ALIMENTOS[k]["n"], q, u, ALIMENTOS[k]["sec"], "fruta del día" if ALIMENTOS[k]["cat"] == "fru" else "en el plato, al natural"); continue
                 r = RECETAS.get(rec)
                 if not r or i.get("lote") == "dia" or (i.get("origen") or "").startswith(("Del batch", "Cocinar hoy (sesión", "Sobra de lo cocinado")):
+                    continue
+                if rec in SIMPLES:
+                    for prod, cant, uni, sec in ing_cocinar(rec, i["k"], 1, [e["fecha"]])[0]:
+                        suma(d, prod, cant, uni, sec, titulo_clave(rec, i["k"]))
                     continue
                 if rec in GENERICAS:
                     suma(d, ALIMENTOS[i["k"]]["n"], r["ing"][0][1], "g", "Frutas y verduras", titulo_clave(rec, i["k"])); continue
