@@ -17,6 +17,7 @@ from collections import defaultdict, Counter
 sys.path.insert(0, os.path.dirname(__file__))
 from alimentos import ALIMENTOS, ALERGENO_TXT, formato, edad_minima
 from recetas import RECETAS, receta_simple, POR_RACION_FRUTA
+from orden import orden_cocina
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 INDEX = os.path.join(RAIZ, "index.html")
@@ -1255,6 +1256,7 @@ def main():
                 introducciones=intro, introducidosAntes=[k for k in INTRODUCIDOS if k != "agua"],
                 batch=batch, cocinaDia=cocina_dia, compra=compra, hotel=HOTEL_GUIA)
     plan = especializar(plan)
+    plan["cocinaOrden"] = orden_cocina(plan, iso(HOY_PLAN), ALIMENTOS)
     txt = json.dumps(plan, ensure_ascii=False, separators=(",", ":"))
     print(f"días: {len(plan['dias'])} ({len(historia)} conservados + {len(dias)} nuevos) · recetas: {len(recetas)} · "
           f"introducciones: {len(intro)} · sesiones de batch: {len(batch)} · semanas de compra: {len(compra)} · {len(txt)//1024} KB")
