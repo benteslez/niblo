@@ -6364,6 +6364,11 @@
     .pb-app .pd-item { padding: 8px 0; border-bottom: 1px solid var(--line-soft, var(--border)); }
     .pb-app .pd-item:last-child { border-bottom: 0; }
     .pb-app .pd-item-cab { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.9375rem; }
+    .pb-app summary.pd-item-cab { list-style: none; cursor: pointer; padding: 2px 0; }
+    .pb-app summary.pd-item-cab::-webkit-details-marker { display: none; }
+    .pb-app .pd-item-chev { margin-left: auto; color: var(--text-muted); font-size: 1.25rem; line-height: 1; transition: transform .15s; }
+    .pb-app .pd-item-det[open] > summary .pd-item-chev { transform: rotate(90deg); }
+    .pb-app .pd-item-det[open] > summary { margin-bottom: 4px; }
     .pb-app .pd-linea { display: flex; gap: 8px; font-size: 0.84375rem; line-height: 1.5; margin-top: 3px; }
     .pb-app .pd-linea > span { flex: none; width: 58px; font-weight: 600; color: var(--text-muted); }
     .pb-app .pd-origen { font-size: 0.8125rem; color: var(--teal); font-weight: 600; margin-top: 4px; }
@@ -8646,7 +8651,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "408";
+const NIBLO_BUILD = "409";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -12212,11 +12217,14 @@ function pdItem(dia, it, marcarFn, recetaAqui, bloque) {
   const et = b => (pauta && pauta.bloques[b] ? pauta.bloques[b].et.toLowerCase() : b);
   const RES_TXT = { tolerado: "tolerado", rechazo: "rechazo", reaccion: "reacción" };
   const fn = (r) => bloque ? `PB.marcarComida('${marcaId}','${r}','${dia.fecha}','${bloque}','${/Drawer/.test(marcarFn) ? "drawer" : "hoy"}')` : `${marcarFn}('${marcaId}','${r}')`;
+  /* Todo lo de debajo del nombre, en un desplegable cerrado por defecto
+     (petición de la familia, 21-10-2026); «¿Cómo le fue?» queda a la vista. */
   return `<div class="pd-item${nuevo ? " nuevo" : ""}">
-    <div class="pd-item-cab"><b>${esc(it.nombre)}</b>
+    <details class="pd-item-det"><summary class="pd-item-cab"><b>${esc(it.nombre)}</b>
       ${nuevo ? `<span class="pd-tag nuevo">${it.nuevoDia === 1 ? "NUEVO" : `NUEVO · día ${it.nuevoDia}`}</span>` : ""}
       ${al ? `<span class="pd-tag al">ALÉRGENO: ${esc(al)}</span>` : ""}
-    </div>
+      <span class="pd-item-chev" aria-hidden="true">&#8250;</span>
+    </summary>
     ${it.cantidad ? `<div class="pd-linea"><span>Cuánto</span>${esc(it.cantidad)}</div>` : ""}
     ${dentro ? "" : blw ? `<div class="pd-linea"><span>BLW</span>${esc(blw)}</div>` : ""}
     ${dentro ? "" : cuch ? `<div class="pd-linea"><span>Cuchara</span>${esc(cuch)}</div>` : ""}
@@ -12224,12 +12232,13 @@ function pdItem(dia, it, marcarFn, recetaAqui, bloque) {
     ${notaAl ? `<div class="pd-linea"><span>Ojo</span>${esc(notaAl)}</div>` : ""}
     ${it.origen ? `<div class="pd-origen">${esc(it.origen)}</div>` : ""}
     ${recetaAqui ? pdComoCocinar(dia, it) : ""}
+    ${recetaAqui ? pdReceta(it.rec, pdLoteDe(dia, it)) : ""}
+    </details>
     ${marcaId ? `<div class="pd-reac"><span>¿Cómo le fue?</span><div class="seg-btns">
         <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}" onclick="${fn('tolerado')}" aria-pressed="${est === 'tolerado'}">Tolerado</button>
         <button type="button" class="${est === 'rechazo' ? 'on rechazo' : ''}" onclick="${fn('rechazo')}" aria-pressed="${est === 'rechazo'}">Rechazo</button>
         <button type="button" class="${est === 'reaccion' ? 'on reaccion' : ''}" onclick="${fn('reaccion')}" aria-pressed="${est === 'reaccion'}">Reacción</button>
       </div>${otras.length ? `<div class="pd-reac-otra">Hoy también: ${otras.map(([b, r]) => `${esc(et(b))}, ${RES_TXT[r] || r}`).join(" · ")}</div>` : ""}</div>` : ""}
-    ${recetaAqui ? pdReceta(it.rec, pdLoteDe(dia, it)) : ""}
   </div>`;
 }
 function pdBiberon(dia, s, meta, tomasObj) {
