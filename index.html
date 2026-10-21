@@ -6389,7 +6389,9 @@
     .pb-app .pd-sem-prep { list-style: none; margin-left: -18px; padding: 6px 0; border-bottom: 1px solid var(--border); }
     .pb-app .pd-sem-check { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
     .pb-app .pd-sem-check input { width: 20px; height: 20px; accent-color: var(--green); }
-    .pb-app .pd-sem-prep.hecho .pd-sem-check b { text-decoration: line-through; opacity: .6; }
+    .pb-app .pd-sem-prep.hecho .pd-sem-check b, .pb-app .pd-coc.hecho .pd-sem-check b { color: var(--green); font-weight: 800; }
+    .pb-app .pd-coc { list-style: none; margin-left: -18px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .pb-app .pd-coc.hecho .pd-sem-dias { color: var(--green); }
     .pb-app .pd-sem-cuenta { font-weight: 600; color: var(--green); margin-left: 6px; }
     .pb-app .pd-ingsem > summary { cursor: pointer; font-weight: 700; color: var(--blue); }
     .pb-app .pd-ingsem-l { list-style: none; margin: 4px 0; padding: 0; }
@@ -8641,7 +8643,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "406";
+const NIBLO_BUILD = "407";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -11820,14 +11822,99 @@ function pdBatchMarcar(clave, el) {
   if (el.checked) { STATE.batchHecho[clave] = HOY_ISO; olvidarBorradoClave("batchHecho", clave); }
   else { delete STATE.batchHecho[clave]; anotarBorradoClave("batchHecho", clave); }
   guardarEstado();
-  const li = el.closest("li"); if (li) li.classList.toggle("hecho", el.checked);
-  /* El contador de arriba, sin repintar (no se cierran las recetas abiertas). */
-  const caja = el.closest(".pd-semana");
-  if (caja) {
-    const cs = caja.querySelectorAll(".pd-sem-prep input[type=checkbox]");
-    const n = [...cs].filter(x => x.checked).length;
-    const t = caja.querySelector(".pd-sem-cuenta"); if (t) t.textContent = `${n} de ${cs.length} hechas`;
+  /* Contadores y casillas gemelas («Qué cocinar hoy»), sin repintar. */
+  pdSincCasillas(clave, el.checked);
+}
+/* «Qué cocinar hoy» (petición de la familia, 21-10-2026): las recetas de
+   desayuno, almuerzo y cena del día con un tic. El tic es el mismo que el de
+   «Cocina de la semana» (STATE.batchHecho, clave «fecha de cocinado|receta|
+   alimento»), así que marcar en un sitio marca en el otro. Lo que se cocinó
+   un día anterior (sesión del domingo, sobras) sale ya marcado; si en
+   realidad no se hizo, se desmarca y queda guardado como «no». */
+function pdHechoV(clave) { const v = (STATE.batchHecho || {})[clave]; return !!v && v !== "no"; }
+function pdOrigenLote(dia, it) {
+  const f = dia.fecha, o = it.origen || "";
+  const igual = x => x.rec === it.rec && (!PD_GENERICAS.has(it.rec) || x.k === it.k);
+  const hoy = pdLoteDe(dia, it);
+  if (hoy) return { fecha: hoy.fecha || f, rec: hoy.rec, k: hoy.k, lote: hoy, antes: false };
+  if (/^(Del batch|Sobra)/.test(o)) {
+    let src = null;
+    for (const b of PLAN_DOC.batch || []) {
+      if (b.fecha >= f) continue;
+      const c = b.cocinar.find(x => igual(x) && x.dias.includes(f));
+      if (c && (!src || b.fecha > src.fecha)) src = { fecha: b.fecha, rec: c.rec, k: c.k };
+    }
+    for (const c of PLAN_DOC.cocinaDia || []) {
+      if (c.fecha >= f || !igual(c) || !c.dias.includes(f)) continue;
+      if (!src || c.fecha > src.fecha) src = { fecha: c.fecha, rec: c.rec, k: c.k };
+    }
+    if (src) return Object.assign(src, { antes: true });
+    return { fecha: f, rec: it.rec, k: it.k, antes: true };
   }
+  return { fecha: f, rec: it.rec, k: it.k, antes: false };
+}
+function htmlCocinarHoy(dia, pauta, porBloque) {
+  const R = PLAN_DOC.recetas || {};
+  const secciones = [], cuenta = new Map();
+  for (const s of dia.v2.cols) {
+    const meta = pauta.bloques[s];
+    if (!meta || meta.tipo !== "comida") continue;
+    const vistos = new Set(), filas = [];
+    for (const cat of ["prot", "har", "ver", "gra", "fru"]) {
+      for (const it of (porBloque[s] || []).filter(x => x.cat === cat)) {
+        const o = it.origen || "";
+        if (!it.rec || !R[it.rec] || !/^(Cocinar hoy|Del batch|Sobra)/.test(o)) continue;
+        const src = pdOrigenLote(dia, it);
+        const clave = `${src.fecha}|${src.rec}|${src.k}`;
+        if (vistos.has(clave)) continue;
+        vistos.add(clave);
+        const r = R[it.rec];
+        const tit = PD_GENERICAS.has(it.rec) ? `${r.titulo}: ${pdNombreCorto(it).toLowerCase()}` : r.titulo;
+        const v = (STATE.batchHecho || {})[clave];
+        /* Cocinado otro dia (ya pasado): marcado salvo que se desmarcara. */
+        const previo = src.antes && src.fecha < HOY_ISO;
+        const on = previo ? v !== "no" : pdHechoV(clave);
+        const pista = src.antes
+          ? `${src.fecha < HOY_ISO ? "cocinado" : "se cocina"} el ${pdDiaCorto(src.fecha)} · ${/congelador/.test(o) ? "del congelador (pásalo a la nevera la noche antes)" : "de la nevera"}`
+          : /sesión/.test(o) ? "cocinar hoy (sesión de cocina)" : "cocinar hoy";
+        cuenta.set(clave, on);
+        filas.push(`<li class="pd-coc${on ? " hecho" : ""}"><label class="pd-sem-check"><input type="checkbox"${on ? " checked" : ""} data-coc="${esc(clave)}"
+            onchange='PB.pdCocinarMarcar(${esc(JSON.stringify(clave))}, ${previo ? "true" : "false"}, this)' aria-label="Cocinado: ${esc(tit)}">
+          <span><b>${esc(tit)}</b></span></label><div class="pd-sem-dias">${esc(pista)}</div>
+          ${src.antes ? "" : pdReceta(it.rec, src.lote || null)}</li>`);
+      }
+    }
+    if (filas.length) secciones.push(`<div class="pd-rec-sub">${esc(meta.et)}</div><ul class="pd-lista">${filas.join("")}</ul>`);
+  }
+  if (!secciones.length) return "";
+  return `<details class="pd-semana pd-cochoy" open><summary>Qué cocinar hoy <span class="pd-sem-cuenta">${[...cuenta.values()].filter(Boolean).length} de ${cuenta.size} listas</span></summary>
+    <p class="pd-nota">Marca cada receta cuando esté cocinada. Lo que ya se cocinó otro día sale marcado en verde.</p>
+    ${secciones.join("")}</details>`;
+}
+function pdCocinarMarcar(clave, previo, el) {
+  if (!STATE.batchHecho) STATE.batchHecho = {};
+  if (el.checked) { STATE.batchHecho[clave] = HOY_ISO; olvidarBorradoClave("batchHecho", clave); }
+  else if (previo) { STATE.batchHecho[clave] = "no"; olvidarBorradoClave("batchHecho", clave); }
+  else { delete STATE.batchHecho[clave]; anotarBorradoClave("batchHecho", clave); }
+  guardarEstado();
+  pdSincCasillas(clave, el.checked);
+}
+/* La misma receta sale en varias comidas y en «Cocina de la semana»: todas
+   sus casillas y los contadores a la vez, sin repintar. */
+function pdSincCasillas(clave, on) {
+  document.querySelectorAll("input[data-coc]").forEach(x => {
+    if (x.dataset.coc !== clave) return;
+    x.checked = on; const li = x.closest("li"); if (li) li.classList.toggle("hecho", on);
+  });
+  document.querySelectorAll(".pd-cochoy").forEach(caja => {
+    const cs = [...caja.querySelectorAll("input[data-coc]")];
+    const n = new Set(cs.filter(x => x.checked).map(x => x.dataset.coc)).size;
+    const t = caja.querySelector(".pd-sem-cuenta"); if (t) t.textContent = `${n} de ${new Set(cs.map(x => x.dataset.coc)).size} listas`;
+  });
+  document.querySelectorAll(".pd-semana:not(.pd-cochoy)").forEach(caja => {
+    const cs = caja.querySelectorAll(".pd-sem-prep input[type=checkbox]");
+    const t = caja.querySelector(".pd-sem-cuenta"); if (t) t.textContent = `${[...cs].filter(x => x.checked).length} de ${cs.length} hechas`;
+  });
 }
 function htmlSemanaCocina(ses) {
   const sesiones = (PLAN_DOC.batch || []).map(b => b.fecha).sort();
@@ -11836,13 +11923,13 @@ function htmlSemanaCocina(ses) {
   const R = PLAN_DOC.recetas || {};
   const hechas = STATE.batchHecho || {};
   const claveDe = c => `${ses.fecha}|${c.rec}|${c.k}`;
-  const nHechas = ses.cocinar.filter(c => hechas[claveDe(c)]).length;
+  const nHechas = ses.cocinar.filter(c => pdHechoV(claveDe(c))).length;
   const filas = ses.cocinar.map(c => {
     const r = R[c.rec] || { ing: [] };
     const semana = c.dias.filter(d => d <= fin), despues = c.dias.filter(d => d > fin);
     const nevera = c.raciones - (c.congelar || 0);
-    const on = !!hechas[claveDe(c)];
-    return `<li class="pd-sem-prep${on ? " hecho" : ""}"><label class="pd-sem-check"><input type="checkbox"${on ? " checked" : ""}
+    const on = pdHechoV(claveDe(c));
+    return `<li class="pd-sem-prep${on ? " hecho" : ""}"><label class="pd-sem-check"><input type="checkbox"${on ? " checked" : ""} data-coc="${esc(claveDe(c))}"
         onchange='PB.pdBatchMarcar(${esc(JSON.stringify(claveDe(c)))}, this)' aria-label="Hecha: ${esc(c.titulo)}">
       <span><b>${esc(c.titulo)}</b></span></label>: ${c.raciones} ${c.raciones === 1 ? "ración" : "raciones"}
       (${c.tandas === 1 ? "la receta una vez" : `la receta ${c.tandas} veces`}${c.rinde > 1 ? `, rinde ${c.rinde} cada vez` : ""})
@@ -12198,6 +12285,7 @@ function htmlPlanDia(dia, marcarFn) {
       </div>` : `<div class="pd-cab-l">Sin alimento nuevo hoy.</div>`}
       ${tareas.map(t => `<div class="pd-tarea">${t}</div>`).join("")}
       ${hotel ? `<details class="pd-hotel"><summary>${esc(hotel.titulo)}</summary><ul>${hotel.puntos.map(p => `<li>${esc(p)}</li>`).join("")}</ul></details>` : ""}
+      ${htmlCocinarHoy(dia, pauta, porBloque)}
       ${ses ? htmlSemanaCocina(ses) : ""}
     </div>`;
   /* --- bloques --- */
@@ -18880,7 +18968,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, pdCocinarMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, medEditar, medGuardar, medBorrarPedir, medBorrar, medVer, medElegir, medRefrescar, medTelMas, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
