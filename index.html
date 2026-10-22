@@ -5204,6 +5204,8 @@
     .gs-sin-chips { display: flex; flex-wrap: wrap; gap: 6px; }
     .gs-chip { font-size: .8125rem; padding: 3px 9px; border-radius: var(--r-pill); background: var(--bg-soft); }
     .gs-sint-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+    .gs-sint-otro { display: flex; gap: 8px; margin-top: 8px; }
+    .gs-sint-otro input { flex: 1; min-width: 0; }
     .gs-sint-op { display: flex; align-items: center; gap: 6px; font-size: .875rem; padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer; }
     @media (max-width: 420px) { .gs-sint-grid { grid-template-columns: 1fr; } }
     .gs-fam { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-3); align-items: start; margin-bottom: var(--gap-4); }
@@ -8651,7 +8653,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "409";
+const NIBLO_BUILD = "410";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -31214,6 +31216,26 @@ function boot(vistaInicial) {
       picor: ["Picor / se rasca mucho", "\u{1F43E}"], piel: ["Heridas o rojeces en la piel", "\u{1F534}"], ojos: ["Ojos con legañas", "\u{1F441}"],
       oidos: ["Se sacude la cabeza / oídos", "\u{1F442}"], sed: ["Bebe mucho más", "\u{1F4A7}"], orina: ["Orina distinta", "\u{1F6BD}"],
       jadeo: ["Jadeo", "\u{1F975}"], dolor: ["Se queja / dolor", "\u{1F623}"] };
+    /* Un sintoma guardado es una clave de la lista (vomitos…) o, si se escribio a mano, el texto tal cual. */
+    const gsSinEt = k => VET_SINTOMAS[k] ? { t: VET_SINTOMAS[k][0], e: VET_SINTOMAS[k][1] } : { t: k, e: "\u270D\uFE0F" };
+    const gsSinPropios = () => [...new Set(GS.vsin.flatMap(x => x.lista || []).filter(k => !VET_SINTOMAS[k]))].sort((a, b) => a.localeCompare(b, "es"));
+    function gsSinOp(k, marcado) {
+      const { t, e } = gsSinEt(k);
+      return `<label class="gs-sint-op"><input type="checkbox" data-s="${esc(k)}"${marcado ? " checked" : ""}> <span aria-hidden="true">${e}</span> ${esc(t)}</label>`;
+    }
+    /* «Añadir» un sintoma escrito: si ya esta en la lista se marca; si no, se crea marcado. */
+    function gsSinOtro() {
+      const inp = document.getElementById("gs-sint-nuevo"), grid = document.getElementById("gs-sint-grid");
+      if (!inp || !grid) return false;
+      let t = inp.value.replace(/\s+/g, " ").trim().slice(0, 60);
+      if (!t) return false;
+      t = t.charAt(0).toUpperCase() + t.slice(1);
+      const ya = [...grid.querySelectorAll("input[data-s]")].find(i => gsNorm(i.dataset.s) === gsNorm(t) || gsNorm(gsSinEt(i.dataset.s).t) === gsNorm(t));
+      if (ya) ya.checked = true;
+      else grid.insertAdjacentHTML("beforeend", gsSinOp(t, true));
+      inp.value = ""; inp.focus();
+      return true;
+    }
     const gsVetMotivo = v => [VET_MOTIVOS[v.motivo] || v.motivo || "Visita", v.detalle].filter(Boolean).join(" · ");
     const gsNorm = t => String(t || "").trim().toLowerCase();
     const gsKg = n => String(n).replace(".", ",") + " kg";
@@ -31288,12 +31310,15 @@ function boot(vistaInicial) {
           { id: "temp", label: "Temperatura (°C)", tipo: "number", hint: "Rectal. Lo habitual en perros: 38–39,2 °C. Orientativo: no sustituye al veterinario." },
           { id: "notas", label: "Notas", tipo: "textarea", ph: "Desde cuándo, qué ha comido, qué le habéis dado…" },
         ],
-        extra: `<div class="campo gs-campo gs-ancho"><label>Qué le pasa</label><div class="gs-sint-grid" id="gs-sint-grid">${Object.entries(VET_SINTOMAS).map(([k, [t, e]]) =>
-          `<label class="gs-sint-op"><input type="checkbox" data-s="${k}"${x && (x.lista || []).includes(k) ? " checked" : ""}> <span aria-hidden="true">${e}</span> ${esc(t)}</label>`).join("")}</div>
+        extra: `<div class="campo gs-campo gs-ancho"><label>Qué le pasa</label><div class="gs-sint-grid" id="gs-sint-grid">${Object.keys(VET_SINTOMAS).concat(gsSinPropios(), ((x && x.lista) || []).filter(k => !VET_SINTOMAS[k] && !gsSinPropios().includes(k)))
+            .map(k => gsSinOp(k, x && (x.lista || []).includes(k))).join("")}</div>
+          <div class="gs-sint-otro"><input type="text" id="gs-sint-nuevo" maxlength="60" placeholder="¿Otro síntoma? Escríbelo" autocomplete="off"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();GSUI.sintOtro()}"><button type="button" class="gs-btn" onclick="GSUI.sintOtro()">Añadir</button></div>
           <span class="hint">La temperatura y los síntomas son independientes: puedes apuntar solo uno de ellos.</span></div>`,
         valores: x || { fecha: gsHoy(), hora: String(ahora.getHours()).padStart(2, "0") + ":" + String(ahora.getMinutes()).padStart(2, "0") },
         borrar: x ? () => gsConfirmarBorrar("gs_lima_sintomas", x.id, "Síntomas del " + gsFecha(x.fecha), "", "Borrado") : null,
         guardar: async f => {
+          gsSinOtro();   // lo que quede escrito sin pulsar «Añadir» tambien se guarda
           const lista = [...document.querySelectorAll("#gs-sint-grid input[data-s]:checked")].map(e => e.dataset.s);
           if (f.temp === null && !lista.length && !f.notas) throw gsErr("Pon la temperatura o marca algo.");
           if (f.temp !== null && (f.temp < 30 || f.temp > 43)) throw gsErr("La temperatura no parece correcta (entre 30 y 43 °C).");
@@ -31329,7 +31354,7 @@ function boot(vistaInicial) {
       return `<li class="gs-sin"><button type="button" class="gs-sin-main" onclick="GSUI.editarSintoma('${x.id}')">
         <span class="gs-sin-cab"><b>${esc(gsFecha(x.fecha))}${x.hora ? " · " + esc(x.hora) : ""}</b>
           ${x.temp ? `<span class="gs-pill ${n.cl}">${String(x.temp).replace(".", ",")} °C · ${n.et}</span>` : ""}</span>
-        ${(x.lista || []).length ? `<span class="gs-sin-chips">${x.lista.map(k => VET_SINTOMAS[k] ? `<span class="gs-chip">${VET_SINTOMAS[k][1]} ${esc(VET_SINTOMAS[k][0])}</span>` : "").join("")}</span>` : ""}
+        ${(x.lista || []).length ? `<span class="gs-sin-chips">${x.lista.map(k => `<span class="gs-chip">${gsSinEt(k).e} ${esc(gsSinEt(k).t)}</span>`).join("")}</span>` : ""}
         ${x.notas ? `<span class="gs-fila-sub">${esc(x.notas)}</span>` : ""}</button></li>`;
     }
     function gsVistaLima() {
@@ -31396,7 +31421,7 @@ function boot(vistaInicial) {
         <h1>Informe para el veterinario · Lima</h1><p class="sub">Generado el ${esc(gsFecha(hoy))} · ${dias ? "últimos " + dias + " días" : "todo el historial"}</p>
         ${sec("Peso", pesos.length ? `<table><tr><th>Fecha</th><th>Peso</th></tr>${pesos.map(v => `<tr><td>${esc(gsFecha(v.fecha))}</td><td>${gsKg(v.peso)}</td></tr>`).join("")}</table>` : "")}
         ${sec("Síntomas", sin.length ? `<table><tr><th>Fecha</th><th>Temp.</th><th>Síntomas</th><th>Notas</th></tr>${sin.map(x => `<tr><td>${esc(gsFecha(x.fecha))}${x.hora ? " " + esc(x.hora) : ""}</td><td>${x.temp ? String(x.temp).replace(".", ",") + " °C" : ""}</td>
-          <td>${(x.lista || []).map(k => VET_SINTOMAS[k] ? esc(VET_SINTOMAS[k][0]) : "").filter(Boolean).join(", ")}</td><td>${esc(x.notas || "")}</td></tr>`).join("")}</table>` : "")}
+          <td>${(x.lista || []).map(k => esc(gsSinEt(k).t)).join(", ")}</td><td>${esc(x.notas || "")}</td></tr>`).join("")}</table>` : "")}
         ${sec("Visitas al veterinario", vis.length ? `<table><tr><th>Fecha</th><th>Motivo</th><th>Veterinario</th><th>Cómo quedó</th><th>Notas</th></tr>${vis.map(v => `<tr><td>${esc(gsFecha(v.fecha))}</td><td>${esc(gsVetMotivo(v))}</td>
           <td>${esc([v.veterinario, v.clinica].filter(Boolean).join(", "))}</td><td>${esc(v.resultado ? VET_RESULTADOS[v.resultado][0] : "")}</td><td>${esc(v.notas || "")}</td></tr>`).join("")}</table>` : "")}
         ${sec("Vacunas y desparasitación", vac.length ? `<table><tr><th>Fecha</th><th>Qué</th></tr>${vac.map(g => `<tr><td>${esc(gsFecha(g.fecha))}</td><td>${esc(g.titulo)}${g.notas ? " · " + esc(g.notas) : ""}</td></tr>`).join("")}</table>` : "")}
@@ -32687,7 +32712,7 @@ function boot(vistaInicial) {
       editarVisita: id => { const v = GS.vvis.find(x => x.id === id); if (v) gsFormVisita(v); },
       nuevoSintoma: () => { gsCerrar(); gsFormSintoma(null); },
       editarSintoma: id => { const x = GS.vsin.find(y => y.id === id); if (x) gsFormSintoma(x); },
-      vetAuto: gsVetAuto, informeVet: () => { gsCerrar(); gsFormInformeVet(); },
+      vetAuto: gsVetAuto, sintOtro: gsSinOtro, informeVet: () => { gsCerrar(); gsFormInformeVet(); },
       verLima: () => fijarVista("gs_lima"),
       nuevoPiso: () => gsFormPiso(null),
       editarPiso: id => gsFormPiso(gsProp(id)),
