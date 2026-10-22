@@ -7141,6 +7141,8 @@
     /* Como le sento la vacuna: cuatro casillas, que es lo que preguntan en la
        siguiente consulta y nadie se acuerda. */
     .pb-app .reacc-lista { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pb-app .sn-otro { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+    .pb-app .sn-otro input { flex: 1; min-width: 0; }
     .pb-app .reacc-op {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 6px 11px; border: 1px solid var(--border); border-radius: var(--r-pill);
@@ -8653,7 +8655,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "410";
+const NIBLO_BUILD = "411";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -9672,6 +9674,7 @@ const CAMPOS_REGISTRO = {
   sintomas: { titulo: "registro", col: "sintomas", campos: [
     { k: "datetime", et: "Fecha y hora", tipo: "datetime-local" },
     { k: "temp",  et: "Temperatura (°C)", tipo: "number", paso: "0.1" },
+    { k: "lista", et: "Qué le pasa", tipo: "sintomas", ancho: true },
     { k: "notas", et: "Notas", tipo: "textarea" },
   ]},
   pediatricVisits: { titulo: "visita", col: "pediatricVisits", campos: [
@@ -9721,6 +9724,7 @@ function editarRegistro(col, id) {
     if (c.tipo === "textarea") {
       return `<div class="campo"${attrs}><label>${c.et}</label><textarea id="ed-${c.k}" rows="3" class="notas-crece">${esc(v)}</textarea></div>`;
     }
+    if (c.tipo === "sintomas") return `<div class="campo"${attrs}><label>${c.et}</label>${htmlSintomaOpciones("ed", reg.lista || [])}</div>`;
     if (c.tipo === "especialidad") return htmlEspecialista("ed", v);
     if (c.tipo === "medico") return htmlDatosMedico("ed", reg, especialistaDe(reg));
     return `<div class="campo"${attrs}><label>${c.et}</label><input type="${c.tipo}" id="ed-${c.k}"
@@ -9761,6 +9765,7 @@ function guardarEdicion() {
   if (!def || !reg) return cerrarModal();
   const nuevo = {};
   for (const c of def.campos) {
+    if (c.tipo === "sintomas") { nuevo[c.k] = leerSintomas("ed"); continue; }
     if (c.tipo === "especialidad") { nuevo[c.k] = leerEspecialista("ed"); continue; }
     if (c.tipo === "medico") { Object.assign(nuevo, leerDatosMedico("ed")); continue; }
     const el = document.getElementById("ed-" + c.k);
@@ -13663,7 +13668,7 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
     /* Un dia con fiebre es lo primero que se cuenta en la consulta: tiene que
        verse en la linea del dia como todo lo demas. */
     ...(STATE.sintomas || []).filter(x => (x.datetime || "").slice(0, 10) === dia.fecha).map(x => {
-      const etiquetas = (x.lista || []).map(k => (SINTOMAS[k] || {}).et).filter(Boolean);
+      const etiquetas = (x.lista || []).map(sintEt);
       const titulo = x.temp ? `${String(x.temp).replace(".", ",")} °C` : (etiquetas.shift() || "Síntomas");
       return { hora: (x.datetime || "").slice(11, 16), html: `
       <button type="button" class="linea-fila" onclick="PB.editarRegistro('sintomas','${x.id}')">
@@ -14389,10 +14394,7 @@ function modalSintomas(fecha) {
       <div class="campo"><label for="ms-temp">Temperatura (°C)</label>
         <input type="number" id="ms-temp" step="0.1" min="30" max="43" inputmode="decimal" placeholder="38,2"></div>
     </div>
-    <div class="campo"><label>Qué le pasa</label>
-      <div class="reacc-lista">${Object.entries(SINTOMAS).map(([k, v]) =>
-        `<label class="reacc-op"><input type="checkbox" id="ms-${k}">${v.et}</label>`).join("")}
-      </div></div>
+    <div class="campo"><label>Qué le pasa</label>${htmlSintomaOpciones("ms", [])}</div>
     <div class="campo"><label for="ms-notas">Notas</label>
       <textarea id="ms-notas" placeholder="Desde cuándo, qué le habéis dado…"></textarea></div>
     <div class="modal-aviso" id="ms-aviso"></div>`,
@@ -14402,7 +14404,7 @@ function modalSintomas(fecha) {
 function guardarSintomaRapido() {
   const dt = document.getElementById("ms-dt").value || nowDatetimeLocal();
   const temp = document.getElementById("ms-temp").value;
-  const marcados = Object.keys(SINTOMAS).filter(k => (document.getElementById("ms-" + k) || {}).checked);
+  const marcados = leerSintomas("ms");
   const notas = (document.getElementById("ms-notas").value || "").trim();
   const av = document.getElementById("ms-aviso");
   if (!temp && !marcados.length && !notas) {
@@ -17011,7 +17013,7 @@ function generarInformeCompleto() {
         fmtFechaCorta((x.datetime || "").slice(0, 10)),
         (x.datetime || "").slice(11, 16),
         x.temp ? `${String(x.temp).replace(".", ",")} °C` : "—",
-        (x.lista || []).map(k => (SINTOMAS[k] || {}).et).filter(Boolean).join(" · ") || "—",
+        (x.lista || []).map(sintEt).map(esc).join(" · ") || "—",
         esc(x.notas || "—"),
       ]));
   }
@@ -17498,9 +17500,7 @@ function renderPediatra(el) {
         <input type="number" id="sn-temp" step="0.1" min="30" max="43" inputmode="decimal" placeholder="38,2"></div>
     </div>
     <div class="campo"><label>Qué le pasa</label>
-      <div class="reacc-lista" id="sn-lista">${Object.entries(SINTOMAS).map(([k, v]) =>
-        `<label class="reacc-op"><input type="checkbox" id="sn-${k}">${v.et}</label>`).join("")}
-      </div>
+      ${htmlSintomaOpciones("sn", [])}
       <div class="faint" style="margin-top:8px">La temperatura y los síntomas son independientes:
         puedes apuntar solo fiebre, solo vómitos, o las dos cosas a la vez.</div></div>
     <div class="campo"><label for="sn-notas">Notas</label>
@@ -17738,6 +17738,39 @@ function recCita(id, conCita) {
    Un registro puede llevar temperatura, sintomas, las dos cosas o solo notas.
    La fiebre no es un sintoma de la lista: es un numero, y ese numero es lo
    que pregunta el pediatra. */
+/* Un sintoma guardado es una clave de SINTOMAS (vomitos…) o, si se escribio a mano, el texto tal cual.
+   Los registros viven en STATE.sintomas: son los mismos en el diario del dia y en Pediatra. */
+const sintEt = k => (SINTOMAS[k] || {}).et || String(k);
+function sintomasPropios(extra) {
+  const set = new Set([...(STATE.sintomas || []).flatMap(x => x.lista || []), ...(extra || [])].filter(k => !SINTOMAS[k]));
+  return [...set].sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+}
+function htmlSintomaOpciones(pre, marcados) {
+  marcados = marcados || [];
+  const ks = Object.keys(SINTOMAS).concat(sintomasPropios(marcados));
+  return `<div class="reacc-lista" id="${pre}-lista">${ks.map(k => htmlSintomaOp(k, marcados.includes(k))).join("")}</div>
+    <div class="sn-otro"><input type="text" id="${pre}-otro" maxlength="60" placeholder="¿Otro síntoma? Escríbelo" autocomplete="off"
+      onkeydown="if(event.key==='Enter'){event.preventDefault();PB.sintOtro('${pre}')}"><button type="button" class="ed-row" onclick="PB.sintOtro('${pre}')">Añadir</button></div>`;
+}
+const htmlSintomaOp = (k, marcado) => `<label class="reacc-op"><input type="checkbox" data-s="${esc(k)}"${marcado ? " checked" : ""}>${esc(sintEt(k))}</label>`;
+/* «Añadir»: si ya esta en la lista se marca; si no, se crea marcado. */
+function sintOtro(pre) {
+  const inp = document.getElementById(pre + "-otro"), lista = document.getElementById(pre + "-lista");
+  if (!inp || !lista) return false;
+  let t = inp.value.replace(/\s+/g, " ").trim().slice(0, 60);
+  if (!t) return false;
+  t = t.charAt(0).toUpperCase() + t.slice(1);
+  const nrm = x => String(x || "").trim().toLowerCase();
+  const ya = [...lista.querySelectorAll("input[data-s]")].find(i => nrm(i.dataset.s) === nrm(t) || nrm(sintEt(i.dataset.s)) === nrm(t));
+  if (ya) ya.checked = true; else lista.insertAdjacentHTML("beforeend", htmlSintomaOp(t, true));
+  inp.value = ""; inp.focus();
+  return true;
+}
+/* Lo marcado, incluido lo escrito sin pulsar «Añadir». */
+function leerSintomas(pre) {
+  sintOtro(pre);
+  return [...document.querySelectorAll(`#${pre}-lista input[data-s]:checked`)].map(e => e.dataset.s);
+}
 const SINTOMAS = {
   vomitos:    { et: "Vómitos",    ico: "🤮" },
   diarrea:    { et: "Diarrea",    ico: "💩" },
@@ -17760,7 +17793,7 @@ function nivelFiebre(t) {
 function guardarSintoma() {
   const dt = document.getElementById("sn-dt").value || nowDatetimeLocal();
   const temp = document.getElementById("sn-temp").value;
-  const marcados = Object.keys(SINTOMAS).filter(k => (document.getElementById("sn-" + k) || {}).checked);
+  const marcados = leerSintomas("sn");
   const notas = (document.getElementById("sn-notas").value || "").trim();
   const av = document.getElementById("sn-aviso");
   if (!temp && !marcados.length && !notas) {
@@ -17787,7 +17820,7 @@ function htmlSintomas() {
   return `<div class="card"><h2>Síntomas <span class="n">${lista.length}</span></h2>
     <div class="sn-lista">${lista.slice(0, 40).map(x => {
       const f = nivelFiebre(x.temp);
-      const etiquetas = (x.lista || []).map(k => (SINTOMAS[k] || {}).et).filter(Boolean);
+      const etiquetas = (x.lista || []).map(sintEt);
       return `<details class="sn-item">
         <summary>
           <span class="sn-fecha">${fmtFechaCorta((x.datetime || "").slice(0, 10))}
@@ -18995,7 +19028,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, pdCocinarMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { sintOtro, setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, pdCocinarMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, medEditar, medGuardar, medBorrarPedir, medBorrar, medVer, medElegir, medRefrescar, medTelMas, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
