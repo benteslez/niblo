@@ -64,7 +64,7 @@ RECETAS = {
         [("avena en hojuelas", 15, "g", D), ("agua", 100, "ml", None), ("fórmula preparada", 30, "ml", None)],
         ["Cuece la avena en el agua 5 minutos, removiendo, hasta que esté espesa.",
          "Fuera del fuego, añade la fórmula ya preparada como siempre (no pongas los polvos directamente en la olla) y remueve.",
-         "Sin azúcar ni miel: la fruta ya endulza."],
+         "Sin azúcar ni miel. Si la quieres más dulce, chafa con el tenedor 1-2 cucharadas de la fruta de ese desayuno (la que sale en el plato) y mézclala; si no, se da tal cual: no necesita nada más."],
         "Espesa, en cuchara precargada que coge él.", "A cuchara, templada.",
         {"avena"}, False, False, extra="Indicada por la pediatra."),
     "yogur-fruta": R("Yogur natural con fruta chafada", 1,
