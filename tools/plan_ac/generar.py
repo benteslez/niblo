@@ -16,7 +16,7 @@ from collections import defaultdict, Counter
 
 sys.path.insert(0, os.path.dirname(__file__))
 from alimentos import ALIMENTOS, ALERGENO_TXT, formato, edad_minima
-from recetas import RECETAS, receta_simple, POR_RACION_FRUTA
+from recetas import RECETAS, receta_simple, POR_RACION_FRUTA, CENAS_REC
 from orden import orden_cocina
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -24,7 +24,7 @@ INDEX = os.path.join(RAIZ, "index.html")
 
 NACE = dt.date(2026, 3, 5)
 INICIO_AC = dt.date(2026, 9, 5)          # dia 1 del plan
-HOY_PLAN = dt.date(2026, 10, 21)         # primer dia que se regenera (cenas desde hoy y almuerzos variados, 21-10-2026)
+HOY_PLAN = dt.date(2026, 10, 26)         # primer dia que se regenera (cenas nuevas, 26-10-2026; antes, 21-10)
 FIN = dt.date(2027, 6, 2)                # ultimo dia del plan (FECHA_FIN en la app)
 # Tres comidas (desayuno, almuerzo y cena) desde el 21-10-2026, a peticion de
 # la familia (antes, el 5 de noviembre, a los 8 meses). La variable conserva
@@ -174,6 +174,10 @@ def racion_mezcla(rec, x, y):
     if len(g) < 2 or not any(w in p for p, _ in g[1:] for w in ("papa", "zanahoria", "ahuyama")): return ""
     if "seco" in g[0][0]: return ""   # pesada en seco: la proporcion cocida no sale de la receta
     leg = g[0][1]
+    if rec == "cena-falafel":
+        pz = leg / (r["rinde"] * 2)   # 16 piezas
+        a_, b_ = max(1, round(x / pz)), max(1, round(y / pz))
+        return f": {a_}{'-' + str(b_) if b_ != a_ else ''} falafel (cada uno lleva ≈ {round(pz)} g de garbanzo y la zanahoria); ofrece y repón"
     if rec.startswith("hamb-"):
         pz = leg / r["rinde"]
         a_, b_ = max(1, round(x / pz)), max(1, round(y / pz))
@@ -204,7 +208,13 @@ def cantidad(k, meses, nuevo_dia, frase_mm=False, slot=None, rec=None):
             return txt + (racion_mezcla(rec, x, y) if k != "tofu" else "")
         x, y = ANIMAL_G[m]
         pieza = {"hamb-pollo": "1 hamburguesita", "hamb-res": "1 hamburguesita", "pescado-tortitas": "1 tortita",
-                 "camaron-papa": "1 pastelito", "atun-pastelito": "1 pastelito"}.get(rec)
+                 "camaron-papa": "1 pastelito", "atun-pastelito": "1 pastelito", "cena-croquetas-pollo": "2 croquetas",
+                 "cena-albondigas-res": "2 albóndigas", "cena-bolitas-batata": "2 bolitas"}.get(rec)
+        if rec in CENAS_REC and not pieza:   # plato de cena: lo que se sirve es el plato entero
+            r = RECETAS[rec]
+            g = sum(c for _, c, u, _ in r["ing"] if u == "g")
+            por = round(g / r["rinde"] / 10) * 10
+            return f"{rango(x, y)} de {a['n'].split(' (')[0].lower()}: ≈ {por} g del plato (lleva la harina y la verdura)"
         return rango(x, y) + (f" (≈ {pieza}; ofrece y repón)" if pieza else " (≈ 1-2 cucharadas desmenuzado)" if y <= 20 else "")
     if a["cat"] == "fru":
         q, u = POR_RACION_FRUTA.get(k, (60, "g"))
@@ -271,7 +281,20 @@ GUISOS = {"pollo-desmenuzado", "res-guisada", "cerdo-guisado", "pavo-guisado", "
 
 # Recetas de proteina que llevan DENTRO, y se comen con ella, una harina o
 # una verdura (la zanahoria de los guisos no cuenta: se cuece en el caldo).
-INTEGRA = {"hamb-pollo": "las hamburguesitas", "hamb-res": "las hamburguesitas", "hamb-lenteja": "las hamburguesitas",
+# Platos de cena (peticion de la familia, 26-10-2026): solo en la cena, y
+# cada uno como mucho una vez por semana. FORZAR_CENA: lo que pidio la familia.
+CENA_MAIN = [("cena-pollo-horno", "pollo"), ("cena-pasta-pollo", "pollo"), ("cena-croquetas-pollo", "pollo"),
+             ("cena-albondigas-res", "res"), ("cena-guiso-res", "res"), ("cena-pescado-pasta", "pescado_blanco"),
+             ("cena-crema-pollo", "pollo"), ("cena-falafel", "garbanzo"), ("cena-bolitas-batata", "pollo"),
+             ("cena-salmon-batata", "salmon"), ("cena-arroz-pollo", "pollo"), ("cena-tortilla-papa", "huevo")]
+FORZAR_CENA = {"2026-10-26": "cena-pollo-horno"}   # «para hoy, algo con pollo»
+# Avisos de un dia concreto (salen arriba, en «Qué le toca hoy»).
+AVISOS = {"2026-10-26": "La tilapia en crema que había en la nevera para la cena de hoy: congélala hoy en su porción (se cocinó ayer); sale más adelante en el plan, del congelador."}
+INTEGRA = {"cena-pollo-horno": "la bandeja", "cena-pasta-pollo": "la pasta", "cena-croquetas-pollo": "las croquetas",
+           "cena-albondigas-res": "la salsa", "cena-guiso-res": "el guiso", "cena-pescado-pasta": "la pasta",
+           "cena-crema-pollo": "la crema", "cena-falafel": "el falafel", "cena-bolitas-batata": "las bolitas",
+           "cena-salmon-batata": "el plato", "cena-arroz-pollo": "el arroz", "cena-tortilla-papa": "la tortilla",
+           "hamb-pollo": "las hamburguesitas", "hamb-res": "las hamburguesitas", "hamb-lenteja": "las hamburguesitas",
            "pescado-crema": "la crema", "pescado-tortitas": "las tortitas", "pescado-laminas": "el papillote",
            "lenteja-chafada": "las lentejas", "garbanzo-chafado": "el puré de garbanzo", "camaron-papa": "los pastelitos",
            "pasta-mariscos": "la misma receta", "atun-pastelito": "los pastelitos", "tortilla-calabacin": "la tortilla",
@@ -343,12 +366,28 @@ class Batch:
         self.descongelar = defaultdict(list)
     def clave(self, rec, k):
         return f"{rec}|{k}" if rec in GENERICAS else rec
+    def sembrar(self, viejas):
+        """Lo cocinado en sesiones ya pasadas (antes de HOY_PLAN) sigue en la
+        nevera o el congelador: las raciones que el plan anterior guardaba
+        para hoy o despues se gastan primero, y esas sesiones no se tocan."""
+        for e in viejas:
+            f = dt.date.fromisoformat(e["fecha"])
+            for c in e["cocinar"]:
+                rec = c["rec"].split("~")[0]
+                quedan = sum(1 for x in c["dias"] if x >= iso(HOY_PLAN))
+                c["_nuevos"] = []
+                if rec in RECETAS and quedan and RECETAS[rec]["batch"]:
+                    self.stock[self.clave(rec, c["k"])].append(dict(ses=f, quedan=quedan, viejo=True, ref=c))
     def sesion(self, d):
         c = [x for x in self.ses if x <= d]
         return c[-1] if c else None
     def _usable(self, lote, d, r):
         gap = (d - lote["ses"]).days
         return lote["quedan"] > 0 and (gap <= 1 or (r["congela"] and gap <= CADUCA_CONGELADO))
+    def viejo(self, rec, k, d):
+        """Quedan raciones de una sesion ya pasada (hay que gastarlas antes de que caduquen)."""
+        r = RECETAS.get(rec or "")
+        return bool(r and r["batch"]) and any(l.get("viejo") and self._usable(l, d, r) for l in self.stock[self.clave(rec, k)])
     def disponible(self, rec, k, d):
         r = RECETAS.get(rec or "")
         if not r or not r["batch"]:
@@ -372,7 +411,7 @@ class Batch:
         lotes = [] if fresco else [l for l in self.stock[clave] if self._usable(l, d, r)]
         if lotes:
             lote = lotes[0]
-        elif (fresco and S != d) or (estreno and S < estreno):
+        elif (fresco and S != d) or (estreno and S < estreno) or S < HOY_PLAN:   # sesion ya pasada: no se le añade nada
             # receta entera hoy: lo que sobre, para los dias siguientes
             lote = dict(ses=d, quedan=r["rinde"], dia=True)
             self.stock[clave].append(lote)
@@ -387,6 +426,15 @@ class Batch:
             t["tandas"] += 1
         lote["quedan"] -= 1
         gap = (d - lote["ses"]).days
+        if lote.get("viejo"):
+            lote["ref"]["_nuevos"].append(iso(d))
+            cuando = fecha_txt(lote["ses"])
+            if gap <= 1:
+                it["origen"] = f"Del batch del {cuando}: en la nevera"
+            else:
+                it["origen"] = f"Del batch del {cuando}: sacar del congelador la noche anterior"
+                self.descongelar[iso(d - dt.timedelta(days=1))].append(titulo_clave(rec, it["k"]))
+            return
         t = (self.cocina_dia if lote.get("dia") else self.tareas)[lote["ses"]][clave]
         t["raciones"] += 1
         if iso(d) not in t["dias"]: t["dias"].append(iso(d))
@@ -621,6 +669,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 # El mismo alimento dias seguidos (aunque cambie la receta) pesa mas.
                 s = -5 * hist.usado(slot + "-prot", rec, 2) - 2 * hist.usado_dia(rec, 3) - 3 * hist.alimento(k, 2) - hist.alimento(k, 4) - 0.7 * hist.alimento(k, 14)
                 if batch.disponible(rec, k, d): s += 3
+                if slot == "c" and batch.viejo(rec, k, d): s += 7   # lo ya congelado, primero (en el almuerzo)
                 # Varias recetas del mismo alimento (tilapia): que roten en la semana.
                 if sum(1 for r_, k_ in PROT_MAIN if k_ == k) > 1: s -= 2 * hist.usado_dia(rec, 7)
                 g = grupo_alergeno(k)
@@ -629,7 +678,18 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 return s
             def arroz_semana():
                 return hist.alimento("arroz", 6) + (1 if "arroz" in usados_hoy else 0)
-            pr = elegir(PROT_MAIN, p_prot)
+            cands_p = PROT_MAIN + (CENA_MAIN if slot == "ce" else [])
+            forz = FORZAR_CENA.get(iso(d)) if slot == "ce" and not fz else None
+            if forz:
+                cands_p = [c for c in PROT_MAIN + CENA_MAIN if c[0] == forz]
+            def p_total(c):
+                s0 = p_prot(c)
+                if s0 is None or slot != "ce": return s0
+                if c[0] in CENAS_REC:   # plato de cena: preferido; no se repite en 4 dias y poco en la semana
+                    if hist.usado_dia(c[0], 4): return None
+                    return s0 + 9 - 4 * hist.usado_dia(c[0], 7)
+                return s0
+            pr = elegir(cands_p, p_total)
             if pr is None:
                 raise SystemExit(f"Sin proteína para {d} {slot}: nuevo={nk} fz={fz} disp={sorted(disp)}")
             rec, kp = pr
@@ -755,6 +815,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
 
         entrada = dict(v=2, fecha=iso(d), d=(d - INICIO_AC).days + 1, m=meses, cols=cols,
                        nuevo=None, pri=False, nuevoId=None, hotel=hotel)
+        if iso(d) in AVISOS: entrada["aviso"] = AVISOS[iso(d)]
         if nuevo:
             k, dn, tot, comida = nuevo
             entrada.update(nuevo=ALIMENTOS[k]["n"], nuevoId=ALIMENTOS[k]["id"], nuevoK=k, pri=dn == 1,
@@ -1224,11 +1285,24 @@ def main():
                     if "(va " in (i.get("n") or ""): i["cant"] = VA_DENTRO
     intro, por_dia = calendario()
     bt = Batch({x["k"]: dt.date.fromisoformat(x["fecha"]) for x in intro})
+    viejo_batch = [b for b in viejo.get("batch", []) if b["fecha"] < iso(HOY_PLAN)]
+    viejo_cd = [c for c in viejo.get("cocinaDia", []) if c["fecha"] < iso(HOY_PLAN)]
+    bt.sembrar(viejo_batch + [dict(fecha=c["fecha"], cocinar=[c]) for c in viejo_cd])
     dias = generar_menus(intro, por_dia, bt, semilla_historia(historia))
     batch = marcar_dias(dias, bt, plan_batch(dias, bt))
     cocina_dia = plan_cocina_dia(bt)
     compra = lista_compra(dias, batch, cocina_dia)
     errores, avisos, usadas = verificar(dias, intro, batch)
+    # Lo ya pasado (sesiones, recetas del dia y listas de la compra de antes
+    # de HOY_PLAN) se conserva tal cual: es lo que se cocino y se compro.
+    sem_hoy = iso(HOY_PLAN - dt.timedelta(days=(HOY_PLAN.weekday() + 1) % 7))
+    # Los dias de cada racion ya cocinada: los pasados, tal cual; los de hoy en adelante, los del plan nuevo.
+    for c in [c for b in viejo_batch for c in b["cocinar"]] + viejo_cd:
+        c["rec"] = c["rec"].split("~")[0]
+        c["dias"] = [x for x in c["dias"] if x < iso(HOY_PLAN)] + sorted(set(c.pop("_nuevos", [])))
+    batch = viejo_batch + batch
+    cocina_dia = viejo_cd + cocina_dia
+    compra = [w for w in viejo.get("compra", []) if w["semana"] <= sem_hoy] + [w for w in compra if w["semana"] > sem_hoy]
 
     # Las recetas de los dias conservados tambien tienen que seguir ahi.
     for e in historia:
@@ -1236,6 +1310,9 @@ def main():
             for i in e.get(c_, []) or []:
                 if isinstance(i, dict) and i.get("rec") and (i["rec"] in RECETAS or i["rec"].startswith("simple-")):
                     usadas.add(i["rec"])
+    for b in batch:
+        for c in b["cocinar"]:
+            if c["rec"] in RECETAS: usadas.add(c["rec"])
     recetas = {}
     for rid in sorted(usadas):
         if rid.startswith("simple-"):
