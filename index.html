@@ -6472,6 +6472,18 @@
     }
 
     .pb-app .linea-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    /* Registro en pausa: apagado (gris), pero se puede seguir usando. */
+    .pb-app .card.reg-pausado .linea-resumen, .pb-app .card.reg-pausado .linea, .pb-app .card.reg-pausado .linea-vacio { filter: grayscale(1); opacity: .45; }
+    .pb-app .acc-rapido.reg-pausado { filter: grayscale(1); opacity: .5; }
+    .pb-app .reg-pausa-tag { font-size: 0.6875rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: var(--border); color: var(--text-muted); vertical-align: middle; }
+    .pb-app .reg-pausa-aviso { margin: 8px 0; padding: 8px 10px; border-radius: 10px; background: var(--line-soft, rgba(0,0,0,.05)); color: var(--text-muted); font-size: 0.8125rem; }
+    .pb-app .reg-pausa-btn { display: block; margin-top: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); border-radius: 10px; padding: 7px 12px; font-weight: 700; cursor: pointer; }
+    .pb-app .reg-pausa-opcion { display: flex; gap: 10px; align-items: center; width: 100%; margin-top: 12px; padding: 10px 12px; border: 1px dashed var(--border); border-radius: 12px; background: transparent; color: var(--text); text-align: left; cursor: pointer; font-size: 1.1rem; }
+    .pb-app .reg-pausa-opcion b { display: block; font-size: 0.875rem; }
+    .pb-app .reg-pausa-opcion small { display: block; font-size: 0.75rem; color: var(--text-muted); }
+    .pb-app .reg-pausa-opcion.activa { border-style: solid; border-color: var(--green); }
+    .pb-app .reg-pausa-lista { margin-top: 10px; font-size: 0.8125rem; }
+    .pb-app .reg-pausa-lista > div { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid var(--border); }
     .pb-app .linea-cab h2 { margin: 0; }
     .pb-app .btn-anadir {
       border: none; background: var(--blue-soft); color: var(--blue);
@@ -8664,7 +8676,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "413";
+const NIBLO_BUILD = "414";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -9270,6 +9282,8 @@ function defaultState() {
     /* Recordatorios creados desde una visita: { visitId, texto, desde, hasta,
        hecho, citaId }. Salen en Pendientes entre desde y hasta. */
     recordatorios: [],
+    /* Pausas del registro diario: { id, ini, fin } (fin null = sigue en pausa). */
+    pausasRegistro: [],
     /* Ficha de cada doctor por especialidad: "esp|doctor" -> { esp, doctor,
        centro, consultorio, direccion, telefonos } o { esp, doctor, borrado }.
        Manda sobre lo que sale de las visitas. */
@@ -9869,7 +9883,20 @@ function cerrarModal() {
    Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
-const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos", "recordatorios"];
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos", "recordatorios", "pausasRegistro"];
+
+/* ---- Pausa del registro diario (petición de la familia, 29-10-2026) ----
+   Cuando no se va a apuntar (viaje, unos días sin ganas…), el registro se
+   pone en pausa: esos días no cuentan para nada. No hacer pis no es no
+   apuntar pañales. Fuera quedan el semáforo (sueño, leche y pañales), las
+   medias y gráficas del Resumen, el informe, las comparaciones con ayer y
+   las previsiones. Lo que se apunte durante la pausa se guarda, pero
+   tampoco cuenta. Una pausa es { id, ini, fin }: fin null mientras dura; al
+   reanudar, fin = ese día (un día a medias tampoco cuenta). Se sincroniza
+   como las demás colecciones. */
+function pausasRegistro() { return (STATE.pausasRegistro || []).filter(p => p && p.ini); }
+function diaPausado(f) { return pausasRegistro().some(p => p.ini <= f && (!p.fin || f <= p.fin)); }
+function pausaActual() { return pausasRegistro().find(p => !p.fin && p.ini <= HOY_ISO) || null; }
 const MAPAS = ["milestonesAchieved", "cdcAchieved", "teethErupted", "vaccinesDone", "vaccinesInfo", "vitaminaD", "alimentosPropios", "batchHecho", "hitosPropios", "especialidades", "medicos"];
 
 function sello() { return new Date().toISOString(); }
@@ -10714,7 +10741,7 @@ function renderHoy(el) {
   /* Tres accesos en una sola fila: con "Registrar" delante no caben ni en el
      movil ni en escritorio, y el icono ya dice de que va cada uno. El nombre
      largo se queda en la etiqueta de accesibilidad. */
-  html += `<div class="acc-rapido">
+  html += `<div class="acc-rapido${pausaActual() ? " reg-pausado" : ""}">
     <button type="button" class="acc-btn" aria-label="Registrar toma"
       onclick="PB.TOMAS_HOY.nuevaToma('${dia.fecha}')">${iconoLinea("toma")}<span>Toma</span></button>
     <button type="button" class="acc-btn" aria-label="Registrar sueño"
@@ -10798,6 +10825,8 @@ function esquemaDia() { return HOY_ISO >= "2026-10-21" ? ESQUEMA_8M : ESQUEMA_7M
    (cerca) o rojo (no). Nada hasta que llega su hora; las franjas se juzgan
    cuando acaban. Minutos del dia en todo, con el sueño recortado a hoy. */
 function esquemaEstados() {
+  /* En pausa no se puntúa: no apuntar no es no hacerlo. */
+  if (diaPausado(HOY_ISO)) return esquemaDia().map(() => "");
   const d = new Date(), ahora = d.getHours() * 60 + d.getMinutes();
   const min = hhmm => minutoDelDia(hhmm);
   const tomas = tomasDelDia(HOY_ISO).map(t => min(t.hora));
@@ -11088,13 +11117,18 @@ const SEM_MINIMO_DIAS = 4;   // dias con registro para fiarse de una media
    misma hora de los dias anteriores, que evitaba ese falso aviso, pero hacia
    que la tarjeta cambiara de color a lo largo del dia; se prefiere una
    lectura estable sobre dias cerrados. No volver a meter hoy en estas medias. */
-function semDiasPrevios(n) {
+function semDiasPrevios(n, registro) {
   const out = [];
   for (let i = 1; i <= n; i++) {
     const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i);
     out.push(isoLocal(d));
   }
-  return out;
+  /* Con «registro», sin los días en pausa: ni cuentan ni se sustituyen. */
+  return registro ? out.filter(f => !diaPausado(f)) : out;
+}
+function semEnPausa() {
+  const p = pausaActual();
+  return p ? { nivel: "sindatos", txt: `Registro en pausa desde el ${fmtFechaCorta(p.ini)}: no se valora.` } : null;
 }
 /** "P42.3" | "< P1" | "> P99" -> numero. */
 function semPercentil(etiqueta) {
@@ -11119,7 +11153,8 @@ function semBandaLeche(meses) {
 }
 
 function semSueno(meses) {
-  const dias = semDiasPrevios(SEM_DIAS)
+  if (semEnPausa()) return semEnPausa();
+  const dias = semDiasPrevios(SEM_DIAS, true)
     .map(f => ({ f, h: sueniosDelDia(f).reduce((t, x) => t + x.minutos, 0) / 60 }))
     .filter(d => d.h > 0);
   if (dias.length < SEM_MINIMO_DIAS) {
@@ -11148,7 +11183,8 @@ function semSueno(meses) {
 }
 
 function semLeche(meses) {
-  const dias = semDiasPrevios(SEM_DIAS).map(f => totalMlDia(f)).filter(ml => ml > 0);
+  if (semEnPausa()) return semEnPausa();
+  const dias = semDiasPrevios(SEM_DIAS, true).map(f => totalMlDia(f)).filter(ml => ml > 0);
   if (dias.length < SEM_MINIMO_DIAS) {
     return { nivel: "sindatos", txt: `Solo hay ${dias.length} de los últimos ${SEM_DIAS} días apuntados.` };
   }
@@ -11287,7 +11323,8 @@ function semDesarrollo(meses) {
 
 const PANAL_DIAS_MINIMOS = 8;   // mas de una semana apuntando
 function semPanales() {
-  const dias = semDiasPrevios(14).map(f => (STATE.diapers || []).filter(d => (d.datetime || "").slice(0, 10) === f));
+  if (semEnPausa() && (STATE.diapers || []).length) return semEnPausa();
+  const dias = semDiasPrevios(14, true).map(f => (STATE.diapers || []).filter(d => (d.datetime || "").slice(0, 10) === f));
   const conDatos = dias.filter(l => l.length);
   /* Si no se apuntan, no se opina: fuera de la tarjeta. */
   if (!conDatos.length) return null;
@@ -12352,9 +12389,11 @@ function htmlPlanDia(dia, marcarFn) {
   /* --- pie --- */
   const total = totalMlDia(dia.fecha);
   const pasado = dia.fecha < HOY_ISO;
-  html += `<div class="pd-pie${total < 500 && (pasado || dia.fecha === HOY_ISO) ? " bajo" : ""}">
-    <b>Fórmula hoy: ${total} ml</b>
-    ${total < 500 ? `<div>${pasado ? "Quedó" : "Va"} por debajo de ~500 ml/día. El total de fórmula no debería bajar de ahí de forma sostenida (AEPap): si se repite varios días, coméntalo con la pediatra.</div>` : ""}
+  /* Con el registro en pausa, 0 ml no es poca leche: no se avisa. */
+  const enPausa = diaPausado(dia.fecha);
+  html += `<div class="pd-pie${total < 500 && !enPausa && (pasado || dia.fecha === HOY_ISO) ? " bajo" : ""}">
+    <b>Fórmula hoy: ${enPausa ? "registro en pausa" : `${total} ml`}</b>
+    ${total < 500 && !enPausa ? `<div>${pasado ? "Quedó" : "Va"} por debajo de ~500 ml/día. El total de fórmula no debería bajar de ahí de forma sostenida (AEPap): si se repite varios días, coméntalo con la pediatra.</div>` : ""}
     <div class="pd-nota">BLW: siempre sentado y erguido, con un adulto delante; 2-3 trozos a la vez y él decide cuánto come. Las cantidades son orientativas.</div>
   </div></details>`;
   return html;
@@ -12582,7 +12621,7 @@ function wnDiasConDatos() {
   for (const t of STATE.tomas) if (new Date(t.fecha + "T00:00:00") >= desde) dias.add(t.fecha);
   for (const x of STATE.sleep) if (new Date(x.start) >= desde) dias.add(x.start.slice(0, 10));
   for (const p of STATE.diapers) if (new Date(p.datetime) >= desde) dias.add(p.datetime.slice(0, 10));
-  return dias.size;
+  return [...dias].filter(f => !diaPausado(f)).length;
 }
 /* ---- Modelo local ponderado --------------------------------------------
    En vez de escalones (esta franja si, esta no; ±30 % de ml si, si no nada),
@@ -12639,6 +12678,7 @@ function wnPeso(caso, q, A, escala) {
      tomas de madrugada, 4-4,5. No se mezclan: un caso del otro tipo casi no
      cuenta. */
   if (q.pre !== undefined && caso.pre !== undefined && q.pre !== caso.pre) w *= WN_PESO_OTRA_FASE;
+  if (caso.raro === 2) return 0;   // día con el registro en pausa: no cuenta
   if (caso.raro) w *= WN_PESO_RARO;
   return w;
 }
@@ -12725,7 +12765,9 @@ function wnDiasRaros() {
   const out = new Set();
   for (const x of (STATE.sintomas || [])) if (x.datetime) out.add(x.datetime.slice(0, 10));
   for (const f of Object.values(STATE.vaccinesDone || {})) if (f && f <= HOY_ISO) out.add(f);
-  return out;
+  /* has() devuelve 2 en los días con el registro en pausa (peso 0 en wnPeso)
+     y 1 / 0 en los demás, así que sigue valiendo como «es raro». */
+  return { has: f => diaPausado(f) ? 2 : out.has(f) ? 1 : 0 };
 }
 function wnDesdeLarga() {
   const d = new Date(); d.setDate(d.getDate() - WN_VENTANA_LARGA); d.setHours(0, 0, 0, 0);
@@ -13093,6 +13135,7 @@ function htmlOrientacionEdad(diasConDatos) {
 let WN_EVENTOS = [];
 const AB_ANTES = 90, AB_DESPUES = 270;       // minutos a cada lado de ahora
 function htmlBarraAhora() {
+  if (pausaActual()) return "";   // registro en pausa: sin línea de tiempo ni previsiones
   const ahora = new Date();
   const ini = ahora.getTime() - AB_ANTES * 60000, span = (AB_ANTES + AB_DESPUES) * 60000;
   const pct = d => Math.max(0, Math.min(100, (d.getTime() - ini) / span * 100));
@@ -13194,6 +13237,7 @@ function ticBarraAhora() {
 function arrancarTicBarra() { if (!AB_TIC) AB_TIC = setInterval(ticBarraAhora, 60000); }
 
 function htmlLoQueSueleVenir() {
+  if (pausaActual()) return "";   // registro en pausa: no se prevé nada
   const diasConDatos = wnDiasConDatos();
   if (diasConDatos < WN_DIAS_MINIMOS) return htmlOrientacionEdad(diasConDatos);
   const meses = ageInMonthsDecimal(CONFIG.fechaNacimiento, new Date());
@@ -13582,7 +13626,7 @@ function htmlCeldaSueno(fecha, esHoy) {
   const ahoraMin = esHoy ? (new Date().getHours() * 60 + new Date().getMinutes()) : 1440;
   const cmp = htmlComparativa(
     minutosSuenoHasta(fecha, ahoraMin), minutosSuenoHasta(ayer, ahoraMin),
-    min, minAyer, "min", suenioAyer.length > 0, esHoy);
+    min, minAyer, "min", suenioAyer.length > 0 && !diaPausado(ayer) && !diaPausado(fecha), esHoy);
   return `<b>${min ? duracionHtml(min) : "—"}${vivo
     ? `<span class="linea-vivo" role="img" aria-label="cronómetro en marcha"></span>` : ""}</b>
     <span>Sueño${cmp}</span>`;
@@ -13756,7 +13800,8 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
      minutos si son comparables. */
   const ayer = isoAyer(dia.fecha);
   const mlAyer = totalMlDia(ayer);
-  const hayTomasAyer = tomasDelDia(ayer).length > 0;
+  /* Si ayer o hoy el registro estaba en pausa, no hay con qué comparar. */
+  const hayTomasAyer = tomasDelDia(ayer).length > 0 && !diaPausado(ayer) && !diaPausado(dia.fecha);
   /* Solo el dia de hoy tiene "a esta hora"; el panel del calendario abre dias
      cerrados, donde lo unico que cabe comparar son los totales. */
   const esHoy = dia.fecha === HOY_ISO;
@@ -13766,12 +13811,21 @@ function htmlLineaDelDia(dia, refrescarFn, conBoton) {
      dia se acabo a medianoche y no se mueve. */
   const vivo = esHoy && suenios.some(x => x.enCurso);
 
-  return `<div class="card">
+  /* En pausa, la tarjeta sale apagada (gris) y dice desde cuándo. */
+  const pausa = diaPausado(dia.fecha) ? (pausasRegistro().find(p => p.ini <= dia.fecha && (!p.fin || dia.fecha <= p.fin)) || {}) : null;
+  /* Reanudado hoy: la tarjeta vuelve a estar activa; solo se avisa de que hoy
+     (a medias) todavía no cuenta. */
+  const reanudadoHoy = pausa && esHoy && pausa.fin === dia.fecha;
+  return `<div class="card${pausa && !reanudadoHoy ? " reg-pausado" : ""}">
     <div class="linea-cab">
-      <h2>Registrado hoy</h2>
-      <button type="button" class="btn-anadir btn-mas" aria-label="Añadir un registro"
+      <h2>Registrado hoy${pausa && !reanudadoHoy ? ` <span class="reg-pausa-tag">En pausa</span>` : ""}</h2>
+      <button type="button" class="btn-anadir btn-mas" aria-label="Añadir un registro o pausar el registro"
         onclick="PB.modalAnadir('${dia.fecha}','${refrescarFn}')">+</button>
     </div>
+    ${reanudadoHoy ? `<div class="reg-pausa-aviso">▶ Registro reanudado hoy (estuvo en pausa desde el ${fmtFechaCorta(pausa.ini)}). Desde mañana vuelve a contar todo; hoy, a medias, todavía no.</div>`
+      : pausa ? `<div class="reg-pausa-aviso">⏸ Registro en pausa desde el ${fmtFechaCorta(pausa.ini)}${pausa.fin ? ` hasta el ${fmtFechaCorta(pausa.fin)}` : ""}.
+      Estos días no cuentan en el semáforo, el Resumen, el informe ni las previsiones.
+      ${!pausa.fin && esHoy ? `<button type="button" class="reg-pausa-btn" onclick="PB.reanudarRegistro()">▶ Reanudar el registro</button>` : ""}</div>` : ""}
     <div class="linea-resumen">
       <div><b>${total}<i>ml</i></b><span>Leche${htmlComparativa(
         mlHasta(dia.fecha, ahoraMin), mlHasta(ayer, ahoraMin), total, mlAyer, "ml", hayTomasAyer, esHoy)}</span></div>
@@ -13858,10 +13912,68 @@ function modalAnadir(fecha, refrescarFn) {
     ["medicamento", "Medicamento", `PB.modalMedicamento('${fecha}')`],
     ["compra",   "Compra", `PB.modalCompra('${fecha}')`],
   ];
+  const enPausa = !!pausaActual();
   abrirModal("Añadir", `<div class="anadir-lista">${opciones.map(([ico, et, fn]) =>
     `<button type="button" class="acc-btn" onclick="PB.cerrarModal();${fn}">${iconoLinea(ico)}<span>${et}</span></button>`
-  ).join("")}</div>`,
+  ).join("")}</div>
+  <button type="button" class="reg-pausa-opcion${enPausa ? " activa" : ""}" onclick="PB.cerrarModal();PB.${enPausa ? "reanudarRegistro" : "modalPausarRegistro"}()">
+    <span aria-hidden="true">${enPausa ? "▶" : "⏸"}</span>
+    <span><b>${enPausa ? "Reanudar el registro" : "Pausar el registro"}</b><small>${enPausa
+      ? `En pausa desde el ${fmtFechaCorta(pausaActual().ini)}.`
+      : "Para los días en que no vais a apuntar: no cuentan en el semáforo, el Resumen ni las previsiones."}</small></span>
+  </button>`,
   [{ et: "Cancelar", accion: "PB.cerrarModal()" }]);
+}
+/* Pausar: desde hoy (o desde un día anterior, si ya se dejó de apuntar). */
+function modalPausarRegistro() {
+  const antes = pausasRegistro().filter(p => p.fin).sort((a, b) => b.ini.localeCompare(a.ini));
+  abrirModal("Pausar el registro", `
+    <p class="faint">Mientras dure la pausa, la tarjeta «Registrado hoy» sale apagada y esos días no cuentan
+      en el semáforo (sueño, leche y pañales), las medias y gráficas del Resumen, el informe ni las previsiones.
+      Si apuntas algo, se guarda igual. Se reanuda desde el mismo botón «+».</p>
+    <div class="campo"><label for="rp-ini">En pausa desde</label>
+      <input type="date" id="rp-ini" value="${HOY_ISO}" max="${HOY_ISO}"></div>
+    <div class="modal-aviso" id="rp-aviso"></div>
+    ${antes.length ? `<div class="reg-pausa-lista"><b>Pausas anteriores</b>${antes.map(p => `<div>
+        ${fmtFechaCorta(p.ini)} – ${fmtFechaCorta(p.fin)}
+        <button type="button" class="linea-mas" onclick="PB.borrarPausaRegistro('${p.id}')">Quitar</button></div>`).join("")}</div>` : ""}`,
+    [{ et: "Cancelar", accion: "PB.cerrarModal()" },
+     { et: "Pausar", primario: true, accion: "PB.pausarRegistro()" }]);
+}
+function refrescarTrasPausa() {
+  if (VISTA_ACTUAL === "hoy") renderHoy(document.getElementById("view-hoy"));
+  else irA(VISTA_ACTUAL);
+}
+function pausarRegistro() {
+  const ini = (document.getElementById("rp-ini") || {}).value || HOY_ISO;
+  const av = document.getElementById("rp-aviso");
+  if (ini > HOY_ISO) { if (av) { av.textContent = "La pausa no puede empezar en el futuro."; av.hidden = false; } return; }
+  /* Una pausa anterior que se solape con esta se recorta hasta el día antes. */
+  for (const p of pausasRegistro()) {
+    if (p.fin && p.fin >= ini) { if (p.ini >= ini) { anotarBorrado(p.id, p); } else { p.fin = isoAyer(ini); sellar(p); } }
+  }
+  STATE.pausasRegistro = pausasRegistro().filter(p => !(p.fin && p.ini >= ini));
+  STATE.pausasRegistro.push(sellar({ id: "rp_" + Date.now().toString(36), ini, fin: null }));
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasPausa();
+}
+function reanudarRegistro() {
+  const p = pausaActual();
+  if (!p) return;
+  p.fin = HOY_ISO;   // el día en que se reanuda, a medias, tampoco cuenta
+  sellar(p);
+  guardarEstado();
+  refrescarTrasPausa();
+}
+function borrarPausaRegistro(id) {
+  const p = pausasRegistro().find(x => x.id === id);
+  if (!p) return;
+  STATE.pausasRegistro = pausasRegistro().filter(x => x.id !== id);
+  anotarBorrado(id, p);
+  guardarEstado();
+  cerrarModal();
+  refrescarTrasPausa();
 }
 /* Alimento apuntado a mano: lo que se le da fuera del plan (o del plan, si
    se prefiere apuntarlo asi). Se elige del libro o se escribe uno nuevo; la
@@ -15183,7 +15295,7 @@ function borrarMarcaAlimento() {
 // Suma ml de STATE.tomas por dia.
 function mlPorDia() {
   const porDia = {};
-  for (const t of STATE.tomas) porDia[t.fecha] = (porDia[t.fecha] || 0) + (Number(t.ml) || 0);
+  for (const t of STATE.tomas) if (!diaPausado(t.fecha)) porDia[t.fecha] = (porDia[t.fecha] || 0) + (Number(t.ml) || 0);
   return porDia;
 }
 
@@ -16915,7 +17027,7 @@ function generarInformeCompleto() {
   /* ---- tomas ---- */
   if (S("tomas")) {
     const porDia = new Map();
-    STATE.tomas.filter(t => enRango(t.fecha)).forEach(t => {
+    STATE.tomas.filter(t => enRango(t.fecha) && !diaPausado(t.fecha)).forEach(t => {
       const p = porDia.get(t.fecha) || { ml: 0, n: 0 };
       p.ml += Number(t.ml) || 0; p.n++; porDia.set(t.fecha, p);
     });
@@ -16963,7 +17075,7 @@ function generarInformeCompleto() {
   /* ---- panales ---- */
   if (S("panales")) {
     const porDia = new Map();
-    STATE.diapers.filter(d => enRango(d.datetime.slice(0, 10))).forEach(d => {
+    STATE.diapers.filter(d => enRango(d.datetime.slice(0, 10)) && !diaPausado(d.datetime.slice(0, 10))).forEach(d => {
       const f = d.datetime.slice(0, 10);
       const p = porDia.get(f) || { pis: 0, caca: 0 };
       if (d.type === "pis" || d.type === "mixto") p.pis++;
@@ -17949,7 +18061,7 @@ function minutosPorDia() {
       const finDia = new Date(ini.getFullYear(), ini.getMonth(), ini.getDate() + 1);
       const corte = fin < finDia ? fin : finDia;
       const iso = isoDeFecha(ini);
-      mapa.set(iso, (mapa.get(iso) || 0) + (corte - ini) / 60000);
+      if (!diaPausado(iso)) mapa.set(iso, (mapa.get(iso) || 0) + (corte - ini) / 60000);
       ini = corte;
     }
   }
@@ -18652,8 +18764,10 @@ function renderDiaperChart14(idCanvas) {
   if (!ctx) return;
   const dias = last14Dias();
   const labels = dias.map(d => `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}`);
-  const pisPorDia = dias.map(d => STATE.diapers.filter(x=>mismoDia(x.datetime,d)&&(x.type==='pis'||x.type==='mixto')).length);
-  const cacaPorDia = dias.map(d => STATE.diapers.filter(x=>mismoDia(x.datetime,d)&&(x.type==='caca'||x.type==='mixto')).length);
+  /* Los días con el registro en pausa van vacíos (null), no a cero. */
+  const pausa = d => diaPausado(isoDeFecha(d));
+  const pisPorDia = dias.map(d => pausa(d) ? null : STATE.diapers.filter(x=>mismoDia(x.datetime,d)&&(x.type==='pis'||x.type==='mixto')).length);
+  const cacaPorDia = dias.map(d => pausa(d) ? null : STATE.diapers.filter(x=>mismoDia(x.datetime,d)&&(x.type==='caca'||x.type==='mixto')).length);
   const clave = idCanvas || "chart-diapers14";
   if (CHARTS[clave]) CHARTS[clave].destroy();
   CHARTS[clave] = new Chart(ctx, { type:"bar", data:{ labels, datasets:[
@@ -19028,7 +19142,7 @@ function boot(vistaInicial) {
 
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
-  return { sintOtro, setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, pdCocinarMarcar, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
+  return { sintOtro, setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, pdCocinarMarcar, modalPausarRegistro, pausarRegistro, reanudarRegistro, borrarPausaRegistro, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
            exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, medEditar, medGuardar, medBorrarPedir, medBorrar, medVer, medElegir, medRefrescar, medTelMas, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
