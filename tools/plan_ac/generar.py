@@ -313,7 +313,9 @@ FORZAR = {("2026-10-30", "c"): "res-guisada",   # el de hoy, ya descongelado
 VIAJE_RECETAS = set(VIAJE_REC)
 VIAJE_MAIN = [("viaje-pollo-papa", "pollo"), ("viaje-res-ahuyama", "res"), ("viaje-pollo-pasta", "pollo"), ("viaje-res-papa", "res")]
 SIN_FRUTOS_SECOS_HASTA = dt.date(2026, 11, 4)   # «la crema de maní, no hasta el día 4»
-DESAYUNO_VIAJE = {"tortita-trigo"}   # sin batidora, en una sartén (sin avena: peticion de la familia)
+DESAYUNO_VIAJE = {"tortita-trigo", "bastones-papa"}   # sin batidora, en una sartén o un cazo (sin avena: peticion de la familia)
+# Algun dia, papa en bastones con tortilla de huevo y calabacin (peticion de la familia).
+FORZAR_DESAYUNO = {"2026-11-01": ("bastones-papa", "tortilla-calabacin"), "2026-11-03": ("bastones-papa", "tortilla-calabacin")}
 # Avisos de un dia concreto (salen arriba, en «Qué le toca hoy»).
 AVISOS = {"2026-10-30": "Hoy se cocina todo lo del puente (8 comidas y cenas): abajo, «Cocina de la semana» y «Para llevar».",
           "2026-10-26": "La tilapia en crema que había en la nevera para la cena de hoy: congélala hoy en su porción (se cocinó ayer); sale más adelante en el plan, del congelador."}
@@ -609,7 +611,9 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 if rec == "bastones-papa": s -= 8   # la papa ya sale mucho en almuerzo y cena
                 s += 2 * deficit(grupos_de_items([item(k, c2, rec) for k, c2 in its]))
                 return s
-            hr = elegir([c for c in DESAYUNO_HAR if not en_viaje(d) or c[0] in DESAYUNO_VIAJE], p_har)
+            fd = FORZAR_DESAYUNO.get(iso(d)) if not nk else None
+            hr = (next(c for c in DESAYUNO_HAR if c[0] == fd[0]) if fd else
+                  elegir([c for c in DESAYUNO_HAR if (not en_viaje(d) or c[0] in DESAYUNO_VIAJE) and c[0] != "bastones-papa"], p_har))
             NOMBRE_HAR = {"tortita-trigo": "Tortita (pancake) de banano y harina de trigo", "tortita-avena": "Tortita de avena y banano",
                           "muffins": "Muffin jugoso de zanahoria, manzana y banano (harina de trigo)", "avena-formula": "Avena con fórmula",
                           "pan-tostado": "Pan sin sal tostado (trigo)", "arepa": "Arepa de maíz casera sin sal"}
@@ -631,7 +635,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
             if con_huevo and not prot_forzada:
                 prot_items = [item("huevo", "prot", hr[0], "Huevo (va dentro de la " + ("tortita" if "tortita" in hr[0] else "masa del muffin") + ")")]
             else:
-                pr = elegir(DESAYUNO_PROT, p_prot)
+                pr = next(c for c in DESAYUNO_PROT if c[0] == fd[1]) if fd else elegir(DESAYUNO_PROT, p_prot)
                 prot_items = [item(k, c2, pr[0]) for k, c2 in pr[1]]
             if any(i["k"] == "huevo" for i in prot_items): huevos += 1
             de += prot_items + har_items
@@ -1278,9 +1282,12 @@ def lista_viaje(plan):
                     botes.add(f"El bote de {ALIMENTOS[i['k']]['n'].split(' (')[0].lower()} (crema 100 %, sin sal ni azúcar)")
                 elif col == "de" and (e["fecha"], rec) not in hechos and rec in RECETAS:
                     hechos.add((e["fecha"], rec))
-                    for prod, c, u, _ in RECETAS[rec]["ing"]:
+                    # Lo de una racion (papa en bastones) sale de la racion del dia, no de la receta entera.
+                    ings = ing_cocinar(rec, i["k"], 1, [e["fecha"]])[0] if rec in SIMPLES else RECETAS[rec]["ing"]
+                    for prod, c, u, _ in ings:
                         desayunos[(re.sub(r"\s*\(≈[^)]*\)", "", prod), u)] += c
     def cant(c, u):
+        if u.startswith("cucharadita"): return f"{c:g} cucharadita{'s' if c > 1 else ''}"
         if u in ("unidad", "unidades"):
             n = math.ceil(c); return f"{n} {'unidad' if n == 1 else 'unidades'}"
         if u in ("g", "ml"): return f"{int(math.ceil(c / 10.0) * 10)} {u}"
@@ -1292,7 +1299,26 @@ def lista_viaje(plan):
         if p.endswith(" rallado"): return f"{p[:-8]}: {cant(c, u)} (se ralla allí)"
         if "yogur" in p: return f"{p}: {cant(c, u)} (vale griego natural, sin azúcar ni sabor; cómpralo allí o llévalo en la nevera portátil)"
         return f"{p}: {cant(c, u)}"
+    # Para cocinar ya: los gramos de todo lo de las 8 raciones, en crudo.
+    tot, de = defaultdict(float), defaultdict(list)
+    for b in plan["batch"]:
+        if b["fecha"] != iso(SESION_VIAJE): continue
+        for c in b["cocinar"]:
+            if c["rec"] not in VIAJE_RECETAS: continue
+            for prod, q, u, _ in RECETAS[c["rec"]]["ing"]:
+                pr = re.sub(r"\s*\(≈[^)]*\)", "", prod)
+                tot[(pr, u)] += q * c["tandas"]
+                de[(pr, u)].append(f"{q * c['tandas']:g} {u} → {RECETAS[c['rec']]['titulo'].lower()}")
+    NOTA_CRUDO = {"papa": "pelada", "zanahoria": "pelada", "ahuyama": "pelada y sin pepas", "calabacín": "con piel",
+                  "pasta corta (fusilli, conchitas)": "en seco"}
+    def tot_txt(p, u, q):
+        if u.startswith("cucharadita"):
+            return f"{p}: {q:g} cucharaditas (en crudo al servir: lleva la botellita)"
+        n = NOTA_CRUDO.get(p)
+        return f"{p}: {q:g} {u}{' ' + n if n else ''} — " + "; ".join(de[(p, u)])
+    cocinar = [tot_txt(p, u, q) for (p, u), q in sorted(tot.items(), key=lambda kv: (kv[0][1] != "g", -kv[1]))]
     llevar = [
+        dict(tit="Para cocinar ya las 8 raciones (todo junto, en crudo)", items=cocinar),
         dict(tit="Lo cocinado hoy (8 raciones justas, cada una con su etiqueta)",
              items=[f"{t}: {len(v)} {'ración' if len(v) == 1 else 'raciones'} — {', '.join(v)}" for t, v in platos.items()]),
         dict(tit="Para los desayunos (se hacen allí, sin batidora)",
