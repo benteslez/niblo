@@ -82,15 +82,11 @@ COCCION = {
     "verdura-en-guiso": [O("vapor", None, 0, (8, 12), "picada muy fina, hasta que esté muy blanda")],
     "verdura-cruda": [O("escaldar", None, 0, None, "30 s para pelarlo")],
     # viaje (puente, 30-10-2026): una olla con el pollo, la papa y la zanahoria; la res en su cazo
-    "viaje-pollo-papa": [O("olla", "pollo", 0, (20, 25), "en trozos pequeños"), O("olla", "papa", 1, (15, 20), "pelada, en trozos"),
-                         O("olla", "zanahoria", 2, (15, 20), "pelada, en trozos")],
-    "viaje-pollo-pasta": [O("olla", "pollo", 0, (20, 25), "en trozos pequeños"), O("vapor", "calabacín", 2, (6, 8), "con piel, en trozos"),
-                          O("despues", "pasta", 1, None, "2-3 min más de lo que diga el paquete")],
-    "viaje-lenteja-ahuyama": [O("vapor", "ahuyama", 1, (15, 15), "pelada, en trozos"),
-                              O("vapor", "lenteja de bote", 0, (3, 4), "ya enjuagada, solo para calentarla"),
-                              O("despues", "pasta", 2, None, "2-3 min más de lo que diga el paquete")],
-    "viaje-garbanzo-papa": [O("olla", "papa", 1, (15, 20), "pelada, en trozos"), O("vapor", "calabacín", 2, (6, 8), "con piel, en trozos"),
-                            O("vapor", "garbanzo de bote", 0, (3, 4), "ya enjuagado, solo para calentarlo")],
+    # viaje (puente, 30-10-2026): la base (papa, zanahoria y ahuyama) en una olla, con el pollo; la legumbre, al final
+    "viaje-base-pollo": [O("olla", "pollo", 0, (20, 25), "en trozos pequeños")] + [O("olla", "papa", 1 + 0, (15, 20), "pelada, en trozos"), O("olla", "zanahoria", 2 + 0, (15, 20), "pelada, en trozos"), O("olla", "ahuyama", 3 + 0, (15, 20), "pelada, sin pepas, en trozos")],
+    "viaje-base-lenteja": [O("olla", "papa", 1 + 0, (15, 20), "pelada, en trozos"), O("olla", "zanahoria", 2 + 0, (15, 20), "pelada, en trozos"), O("olla", "ahuyama", 3 + 0, (15, 20), "pelada, sin pepas, en trozos")] + [O("vapor", "lenteja de bote", 0, (3, 4), "ya enjuagada, solo para calentarla")],
+    "viaje-base-garbanzo": [O("olla", "papa", 1 + 0, (15, 20), "pelada, en trozos"), O("olla", "zanahoria", 2 + 0, (15, 20), "pelada, en trozos"), O("olla", "ahuyama", 3 + 0, (15, 20), "pelada, sin pepas, en trozos")] + [O("vapor", "garbanzo de bote", 0, (3, 4), "ya enjuagado, solo para calentarlo")],
+    "viaje-base-pollo-pasta": [O("olla", "pollo", 0, (20, 25), "en trozos pequeños")] + [O("olla", "papa", 1 + 1, (15, 20), "pelada, en trozos"), O("olla", "zanahoria", 2 + 1, (15, 20), "pelada, en trozos"), O("olla", "ahuyama", 3 + 1, (15, 20), "pelada, sin pepas, en trozos")] + [O("despues", "pasta", 1, None, "2-3 min más de lo que diga el paquete")],
     # cenas (26-10-2026)
     "cena-pollo-horno": [O("horno", "bandeja de pollo, papa y zanahoria", t=(25, 30), temp=200)],
     "cena-pasta-pollo": [O("sarten", "daditos de pollo", t=(8, 10), forma="tapada, a fuego medio-bajo"),
@@ -223,6 +219,13 @@ def orden_dia(plan, fecha, alimentos):
         que, tm = key
         partes = []
         total, uni = 0, None
+        base = [o for o in os_ if o["para"].startswith("Base de papa, zanahoria y ahuyama")]
+        if len(base) > 1:   # la base comun de los platos del viaje: una sola linea
+            q = sum(o["cant"][0] for o in base if o["cant"])
+            otros = [o for o in os_ if o not in base]
+            os_ = otros + [dict(base[0], cant=(q, base[0]["cant"][1]) if base[0]["cant"] else None,
+                                para=(f"la base común de los {len(base)} platos del viaje" if que in ("papa", "zanahoria", "ahuyama")
+                                      else f"los {len(base)} platos del viaje con {que} ({_fmt(*base[0]['cant']) if base[0]['cant'] else ''} cada uno)"))]
         for o in os_:
             if o["cant"]:
                 total += o["cant"][0]; uni = o["cant"][1]

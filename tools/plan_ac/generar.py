@@ -302,16 +302,16 @@ SESION_VIAJE = dt.date(2026, 10, 30)
 def en_viaje(d): return VIAJE[0] <= d <= VIAJE[1]
 # Platos completos (proteina, papa y verdura dentro), todos con papa y
 # zanahoria o calabacin: una sola olla para todo.
-# Segunda version (misma tarde): solo 8 raciones, platos sencillos de res o
-# pollo chafado con papa, zanahoria, ahuyama, pasta o calabacin.
+# Version final (misma tarde): solo 8 raciones, una base comun de papa,
+# zanahoria y ahuyama con pollo, lenteja, garbanzo o pollo y pasta.
 FORZAR = {("2026-10-30", "c"): "res-guisada",   # el de hoy, ya descongelado
           ("2026-10-30", "ce"): "cena-pasta-pollo",
-          ("2026-10-31", "c"): "viaje-pollo-papa", ("2026-10-31", "ce"): "viaje-lenteja-ahuyama",
-          ("2026-11-01", "c"): "viaje-garbanzo-papa", ("2026-11-01", "ce"): "viaje-pollo-pasta",
-          ("2026-11-02", "c"): "viaje-lenteja-ahuyama", ("2026-11-02", "ce"): "viaje-pollo-papa",
-          ("2026-11-03", "c"): "viaje-pollo-pasta", ("2026-11-03", "ce"): "viaje-garbanzo-papa"}
+          ("2026-10-31", "c"): "viaje-base-pollo", ("2026-10-31", "ce"): "viaje-base-lenteja",
+          ("2026-11-01", "c"): "viaje-base-garbanzo", ("2026-11-01", "ce"): "viaje-base-pollo-pasta",
+          ("2026-11-02", "c"): "viaje-base-lenteja", ("2026-11-02", "ce"): "viaje-base-pollo",
+          ("2026-11-03", "c"): "viaje-base-pollo-pasta", ("2026-11-03", "ce"): "viaje-base-garbanzo"}
 VIAJE_RECETAS = set(VIAJE_REC)
-VIAJE_MAIN = [("viaje-pollo-papa", "pollo"), ("viaje-lenteja-ahuyama", "lenteja"), ("viaje-pollo-pasta", "pollo"), ("viaje-garbanzo-papa", "garbanzo")]
+VIAJE_MAIN = [("viaje-base-pollo", "pollo"), ("viaje-base-lenteja", "lenteja"), ("viaje-base-pollo-pasta", "pollo"), ("viaje-base-garbanzo", "garbanzo")]
 SIN_FRUTOS_SECOS_HASTA = dt.date(2026, 11, 4)   # «la crema de maní, no hasta el día 4»
 DESAYUNO_VIAJE = {"tortita-trigo", "bastones-papa"}   # sin batidora, en una sartén o un cazo (sin avena: peticion de la familia)
 # Algun dia, papa en bastones con tortilla de huevo y calabacin (peticion de la familia).
@@ -319,7 +319,7 @@ FORZAR_DESAYUNO = {"2026-11-01": ("bastones-papa", "tortilla-calabacin"), "2026-
 # Avisos de un dia concreto (salen arriba, en «Qué le toca hoy»).
 AVISOS = {"2026-10-30": "Hoy se cocina todo lo del puente (8 comidas y cenas): abajo, «Cocina de la semana» y «Para llevar».",
           "2026-10-26": "La tilapia en crema que había en la nevera para la cena de hoy: congélala hoy en su porción (se cocinó ayer); sale más adelante en el plan, del congelador."}
-INTEGRA = {"viaje-pollo-papa": "el chafado", "viaje-lenteja-ahuyama": "el chafado", "viaje-pollo-pasta": "el chafado", "viaje-garbanzo-papa": "el chafado",
+INTEGRA = {"viaje-base-pollo": "el chafado", "viaje-base-lenteja": "el chafado", "viaje-base-pollo-pasta": "el chafado", "viaje-base-garbanzo": "el chafado",
            "cena-pollo-horno": "la bandeja", "cena-pasta-pollo": "la pasta", "cena-croquetas-pollo": "las croquetas",
            "cena-albondigas-res": "la salsa", "cena-guiso-res": "el guiso", "cena-pescado-pasta": "la pasta",
            "cena-crema-pollo": "la crema", "cena-falafel": "el falafel", "cena-bolitas-batata": "las bolitas",
@@ -1311,6 +1311,13 @@ def lista_viaje(plan):
                 de[(pr, u)].append(f"{q * c['tandas']:g} {u} → {RECETAS[c['rec']]['titulo'].lower()}")
     NOTA_CRUDO = {"lenteja cocida de bote, escurrida": "(enjuagada)", "garbanzo cocido de bote, escurrido": "(enjuagado)","papa": "pelada", "zanahoria": "pelada", "ahuyama": "pelada y sin pepas", "calabacín": "con piel",
                   "pasta corta (fusilli, conchitas)": "en seco"}
+    for kq, l in de.items():   # la base comun, en una sola linea
+        base = [x for x in l if "→ base de papa, zanahoria y ahuyama" in x]
+        if len(base) > 1:
+            qb = sum(float(x.split(" ")[0]) for x in base)
+            dest = (f"la base común de los {len(base)} platos" if kq[0] in ("papa", "zanahoria", "ahuyama")
+                    else f"los {len(base)} platos con {'pollo' if 'pollo' in kq[0] else kq[0].split(' ')[0]} ({base[0].split(' ')[0]} {kq[1]} cada uno)")
+            de[kq] = [x for x in l if x not in base] + [f"{qb:g} {kq[1]} → {dest}"]
     def tot_txt(p, u, q):
         if u.startswith("cucharadita"):
             return f"{p}: {q:g} cucharaditas (en crudo al servir: lleva la botellita)"
