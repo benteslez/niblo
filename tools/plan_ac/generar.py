@@ -24,7 +24,7 @@ INDEX = os.path.join(RAIZ, "index.html")
 
 NACE = dt.date(2026, 3, 5)
 INICIO_AC = dt.date(2026, 9, 5)          # dia 1 del plan
-HOY_PLAN = dt.date(2026, 10, 26)         # primer dia que se regenera (cenas nuevas, 26-10-2026; antes, 21-10)
+HOY_PLAN = dt.date(2026, 10, 30)         # primer dia que se regenera (puente del 31-10 al 3-11; antes, 26-10)
 FIN = dt.date(2027, 6, 2)                # ultimo dia del plan (FECHA_FIN en la app)
 # Tres comidas (desayuno, almuerzo y cena) desde el 21-10-2026, a peticion de
 # la familia (antes, el 5 de noviembre, a los 8 meses). La variable conserva
@@ -116,6 +116,8 @@ def calendario():
                 elegido = pendientes.pop(i); break
         if not elegido:
             d += dt.timedelta(days=1); continue
+        if en_viaje(d):   # de viaje no empieza ningun alimento nuevo
+            pendientes.insert(0, elegido); d += dt.timedelta(days=1); continue
         k, comida = elegido
         total = DURACION.get(k) or (3 if es_alergeno_nuevo(k) else 2)
         intro.append(dict(k=k, n=ALIMENTOS[k]["n"], id=ALIMENTOS[k]["id"], fecha=iso(d),
@@ -288,8 +290,26 @@ CENA_MAIN = [("cena-pollo-horno", "pollo"), ("cena-pasta-pollo", "pollo"), ("cen
              ("cena-crema-pollo", "pollo"), ("cena-falafel", "garbanzo"), ("cena-bolitas-batata", "pollo"),
              ("cena-salmon-batata", "salmon"), ("cena-arroz-pollo", "pollo"), ("cena-tortilla-papa", "huevo")]
 FORZAR_CENA = {"2026-10-26": "cena-pollo-horno"}   # «para hoy, algo con pollo»
+# Puente del sabado 31-10 al martes 3-11 (peticion de la familia, 30-10-2026):
+# las 8 comidas y cenas se cocinan hoy (viernes 30) y se llevan congeladas;
+# los desayunos se hacen alli, al momento y sin batidora; ningun alimento
+# nuevo empieza durante el viaje, y la sesion del domingo 1 pasa al miercoles 4.
+VIAJE = (dt.date(2026, 10, 31), dt.date(2026, 11, 3))
+SESION_VIAJE = dt.date(2026, 10, 30)
+def en_viaje(d): return VIAJE[0] <= d <= VIAJE[1]
+# Platos completos (proteina, papa y verdura dentro), todos con papa y
+# zanahoria o calabacin: una sola olla para todo.
+FORZAR = {("2026-10-30", "c"): "res-guisada",   # el de hoy, ya descongelado
+          ("2026-10-30", "ce"): "cena-croquetas-pollo",
+          ("2026-10-31", "c"): "cena-guiso-res", ("2026-10-31", "ce"): "pescado-tortitas",
+          ("2026-11-01", "c"): "cena-croquetas-pollo", ("2026-11-01", "ce"): "hamb-lenteja",
+          ("2026-11-02", "c"): "pescado-tortitas", ("2026-11-02", "ce"): "cena-guiso-res",
+          ("2026-11-03", "c"): "hamb-lenteja", ("2026-11-03", "ce"): "cena-croquetas-pollo"}
+VIAJE_RECETAS = {"cena-guiso-res", "pescado-tortitas", "cena-croquetas-pollo", "hamb-lenteja"}
+DESAYUNO_VIAJE = {"tortita-trigo", "avena-formula"}   # sin batidora, en una sartén o un cazo
 # Avisos de un dia concreto (salen arriba, en «Qué le toca hoy»).
-AVISOS = {"2026-10-26": "La tilapia en crema que había en la nevera para la cena de hoy: congélala hoy en su porción (se cocinó ayer); sale más adelante en el plan, del congelador."}
+AVISOS = {"2026-10-30": "Hoy se cocina todo lo del puente (8 comidas y cenas): abajo, «Cocina de la semana» y «Para llevar».",
+          "2026-10-26": "La tilapia en crema que había en la nevera para la cena de hoy: congélala hoy en su porción (se cocinó ayer); sale más adelante en el plan, del congelador."}
 INTEGRA = {"cena-pollo-horno": "la bandeja", "cena-pasta-pollo": "la pasta", "cena-croquetas-pollo": "las croquetas",
            "cena-albondigas-res": "la salsa", "cena-guiso-res": "el guiso", "cena-pescado-pasta": "la pasta",
            "cena-crema-pollo": "la crema", "cena-falafel": "el falafel", "cena-bolitas-batata": "las bolitas",
@@ -409,6 +429,8 @@ class Batch:
         # entraban en una sesion anterior al primer dia de la avena.
         estreno = max([self.estrenos[x] for x in (r["requiere"] | {it["k"]}) if x in self.estrenos], default=None)
         lotes = [] if fresco else [l for l in self.stock[clave] if self._usable(l, d, r)]
+        if rec in VIAJE_RECETAS and SESION_VIAJE <= d <= VIAJE[1]:   # lo del puente, solo de lo cocinado el 30
+            lotes = [l for l in lotes if l["ses"] == SESION_VIAJE]
         if lotes:
             lote = lotes[0]
         elif (fresco and S != d) or (estreno and S < estreno) or S < HOY_PLAN:   # sesion ya pasada: no se le añade nada
@@ -579,7 +601,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 if rec == "bastones-papa": s -= 8   # la papa ya sale mucho en almuerzo y cena
                 s += 2 * deficit(grupos_de_items([item(k, c2, rec) for k, c2 in its]))
                 return s
-            hr = elegir(DESAYUNO_HAR, p_har)
+            hr = elegir([c for c in DESAYUNO_HAR if not en_viaje(d) or c[0] in DESAYUNO_VIAJE], p_har)
             NOMBRE_HAR = {"tortita-trigo": "Tortita (pancake) de banano y harina de trigo", "tortita-avena": "Tortita de avena y banano",
                           "muffins": "Muffin jugoso de zanahoria, manzana y banano (harina de trigo)", "avena-formula": "Avena con fórmula",
                           "pan-tostado": "Pan sin sal tostado (trigo)", "arepa": "Arepa de maíz casera sin sal"}
@@ -679,7 +701,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
             def arroz_semana():
                 return hist.alimento("arroz", 6) + (1 if "arroz" in usados_hoy else 0)
             cands_p = PROT_MAIN + (CENA_MAIN if slot == "ce" else [])
-            forz = FORZAR_CENA.get(iso(d)) if slot == "ce" and not fz else None
+            forz = (FORZAR.get((iso(d), slot)) or (FORZAR_CENA.get(iso(d)) if slot == "ce" else None)) if not fz else None
             if forz:
                 cands_p = [c for c in PROT_MAIN + CENA_MAIN if c[0] == forz]
             def p_total(c):
@@ -689,7 +711,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                     if hist.usado_dia(c[0], 4): return None
                     return s0 + 9 - 4 * hist.usado_dia(c[0], 7)
                 return s0
-            pr = elegir(cands_p, p_total)
+            pr = cands_p[0] if forz and cands_p else elegir(cands_p, p_total)   # lo pedido manda
             if pr is None:
                 raise SystemExit(f"Sin proteína para {d} {slot}: nuevo={nk} fz={fz} disp={sorted(disp)}")
             rec, kp = pr
@@ -784,6 +806,9 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 for i in dia_items.get(s_, []):
                     if i.get("rec") in hecho:
                         i["origen"] = hecho[i["rec"]]; continue
+                    if en_viaje(d) and s_ == "de" and i.get("rec") and not i["rec"].startswith("simple-"):
+                        i["origen"] = "Hacer allí, al momento (sin batidora)"
+                        hecho[i["rec"]] = i["origen"]; continue
                     fresco = bool(nuevo and nuevo[0] == i["k"] and nuevo[1] == 1)
                     batch.consumir(i, d, fresco)
                     if i.get("rec") in SIMPLES and (i.get("origen") or "") == "Cocinar hoy":
@@ -848,7 +873,10 @@ def sesiones():
             out.append(d)
         d += dt.timedelta(days=1)
     out.append(dt.date(2026, 10, 21))   # mie 21: de hoy al sabado (peticion de la familia)
-    return sorted(out)
+    # Puente: se cocina el viernes 30 para el viaje y, a la vuelta, el miercoles 4
+    # en vez del domingo 1 (estan fuera).
+    out = [x for x in out if x != dt.date(2026, 11, 1)] + [SESION_VIAJE, dt.date(2026, 11, 4)]
+    return sorted(set(out))
 
 # ---------------------------------------------------------------- cuanto cocinar
 # Recetas de un solo alimento (papa, yuca, batata, tuberculos, verdura,
@@ -941,7 +969,7 @@ CANON = {"calabacín rallado": "calabacín", "calabacín (zucchini)": "calabací
          "banano (plátano)": "banano", "papa (patata)": "papa", "papa cocida": "papa", "zanahoria rallada": "zanahoria",
          "ahuyama (calabaza)": "ahuyama", "lenteja cocida y escurrida": "lenteja", "lenteja cocida de bote, escurrida": "lenteja cocida de bote",
          "garbanzo cocido de bote, escurrido": "garbanzo cocido de bote", "manzana": "manzana", "garbanzo cocido": "garbanzo",
-         "harina de trigo o avena": "harina de trigo", "agua o fórmula": None, "agua": None, "agua tibia": None,
+         "harina de trigo o avena": "harina de trigo", "avena en hojuelas (molida, para rebozar)": "avena en hojuelas", "muslo de pollo deshuesado sin piel": "muslo de pollo sin piel", "agua o fórmula": None, "agua": None, "agua tibia": None,
          "fórmula preparada": None, "agua de la cocción": None, "aceite de oliva": None}
 UNIDAD_G = {"zanahoria": 80, "calabacín": 200, "papa": 150}
 PIEZA_G = {"banano": 100, "manzana": 150}
@@ -1217,6 +1245,64 @@ def receta_de(rec, k, base):
         r["titulo"] = ("Tahini diluido" if k == "tahini" else ALIMENTOS[k]["n"].replace(" 100 %", "") + ", diluida")
     return r
 
+def lista_viaje(plan):
+    """Para el puente: que se lleva (lo cocinado hoy por comida, lo de los
+    desayunos que se hacen alli y la fruta) y como se conserva."""
+    ini, fin = iso(VIAJE[0]), iso(VIAJE[1])
+    dias = [e for e in plan["dias"] if ini <= e["fecha"] <= fin]
+    ET = {"de": "desayuno", "c": "almuerzo", "ce": "cena"}
+    corto = lambda f: fecha_txt(dt.date.fromisoformat(f)).split(" ")[0][:3] + " " + str(int(f[8:]))
+    platos, desayunos, frutas, botes = defaultdict(list), defaultdict(float), defaultdict(float), set()
+    hechos = set()
+    for e in dias:
+        for col in ("de", "c", "me", "ce"):
+            for i in e.get(col) or []:
+                rec = (i.get("rec") or "").split("~")[0]
+                if not rec: continue
+                if rec in VIAJE_RECETAS and i["cat"] == "prot":
+                    platos[RECETAS[rec]["titulo"]].append(f"{corto(e['fecha'])} ({ET[col]})")
+                elif rec.startswith("simple-"):
+                    k = rec[7:]
+                    q, u = POR_RACION_FRUTA.get(k, (0.25, "unidad")) if k != "aguacate" else POR_RACION_FRUTA["aguacate"]
+                    frutas[(ALIMENTOS[k]["n"].split(" (")[0].lower(), u)] += q
+                elif rec == "crema-fruto-seco":
+                    botes.add(f"El bote de {ALIMENTOS[i['k']]['n'].split(' (')[0].lower()} (crema 100 %, sin sal ni azúcar)")
+                elif col == "de" and (e["fecha"], rec) not in hechos and rec in RECETAS:
+                    hechos.add((e["fecha"], rec))
+                    for prod, c, u, _ in RECETAS[rec]["ing"]:
+                        desayunos[(re.sub(r"\s*\(≈[^)]*\)", "", prod), u)] += c
+    def cant(c, u):
+        if u in ("unidad", "unidades"):
+            n = math.ceil(c); return f"{n} {'unidad' if n == 1 else 'unidades'}"
+        if u in ("g", "ml"): return f"{int(math.ceil(c / 10.0) * 10)} {u}"
+        return f"{c:g} {u}"
+    def desayuno_txt(p, c, u):
+        base = CANON.get(p.lower(), p.lower()) or p
+        if u == "g" and base in PIEZA_G:   # el banano se lleva por piezas
+            n = math.ceil(c / PIEZA_G[base]); return f"{p}: {n} {'unidad' if n == 1 else 'unidades'} (≈ {PIEZA_G[base]} g cada una)"
+        if "yogur" in p: return f"{p}: {cant(c, u)} (cómpralo allí o llévalo en la nevera portátil)"
+        return f"{p}: {cant(c, u)}"
+    llevar = [
+        dict(tit="Lo cocinado hoy (8 raciones, cada una con su etiqueta)",
+             items=[f"{t}: {len(v)} {'ración' if len(v) == 1 else 'raciones'} — {', '.join(v)}" for t, v in platos.items()]),
+        dict(tit="Para los desayunos (se hacen allí, sin batidora)",
+             items=[desayuno_txt(p, c, u) for (p, u), c in sorted(desayunos.items()) if p not in ("agua", "agua o fórmula", "fórmula preparada")]
+                   + sorted(botes)),
+        dict(tit="Fruta y aguacate (para 4 días)",
+             items=[f"{p}: {cant(c, u)}" for (p, u), c in sorted(frutas.items())]),
+        dict(tit="Lo de siempre",
+             items=["La fórmula y los biberones de los 4 días", "Una botellita de aceite de oliva",
+                    "Nevera portátil con placas de hielo", "Si allí no hay: una sartén pequeña antiadherente, un cazo y un tenedor para chafar"]),
+    ]
+    notas = [
+        "Hoy, al terminar: deja templar, reparte en porciones con su etiqueta (plato y día) y a la nevera la del sábado; todo lo demás, al congelador.",
+        "Para el viaje: todo en la nevera portátil con placas de hielo, lo congelado junto, y al llegar a la nevera o al congelador cuanto antes.",
+        "Allí: la noche antes, pasa a la nevera la porción del día siguiente (el plan lo recuerda cada día). Recalienta a fondo, hasta que humee, y deja templar.",
+        "Si allí no hay congelador: lo del domingo, a la nevera al llegar; lo del lunes y el martes no aguanta tanto. Esos días, pedid pollo o pescado y papa cocidos sin sal (como en el hotel) o comprad y coced allí lo sencillo.",
+        "No empieza ningún alimento nuevo durante el viaje: la habichuela pasa al miércoles 4.",
+    ]
+    return dict(ini=ini, fin=fin, sesion=iso(SESION_VIAJE), titulo="Puente del sábado 31 al martes 3", llevar=llevar, notas=notas)
+
 def especializar(plan):
     nuevos = {}
     def cambia(o):
@@ -1302,7 +1388,7 @@ def main():
         c["dias"] = [x for x in c["dias"] if x < iso(HOY_PLAN)] + sorted(set(c.pop("_nuevos", [])))
     batch = viejo_batch + batch
     cocina_dia = viejo_cd + cocina_dia
-    compra = [w for w in viejo.get("compra", []) if w["semana"] <= sem_hoy] + [w for w in compra if w["semana"] > sem_hoy]
+    compra = [w for w in viejo.get("compra", []) if w["semana"] < sem_hoy] + [w for w in compra if w["semana"] >= sem_hoy]
 
     # Las recetas de los dias conservados tambien tienen que seguir ahi.
     for e in historia:
@@ -1334,6 +1420,7 @@ def main():
                 batch=batch, cocinaDia=cocina_dia, compra=compra, hotel=HOTEL_GUIA)
     plan = especializar(plan)
     plan["cocinaOrden"] = orden_cocina(plan, iso(HOY_PLAN), ALIMENTOS)
+    plan["viaje"] = lista_viaje(plan)
     txt = json.dumps(plan, ensure_ascii=False, separators=(",", ":"))
     print(f"días: {len(plan['dias'])} ({len(historia)} conservados + {len(dias)} nuevos) · recetas: {len(recetas)} · "
           f"introducciones: {len(intro)} · sesiones de batch: {len(batch)} · semanas de compra: {len(compra)} · {len(txt)//1024} KB")
