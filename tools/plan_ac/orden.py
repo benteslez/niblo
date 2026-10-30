@@ -84,13 +84,13 @@ COCCION = {
     # viaje (puente, 30-10-2026): una olla con el pollo, la papa y la zanahoria; la res en su cazo
     "viaje-pollo-papa": [O("olla", "pollo", 0, (20, 25), "en trozos pequeños"), O("olla", "papa", 1, (15, 20), "pelada, en trozos"),
                          O("olla", "zanahoria", 2, (15, 20), "pelada, en trozos")],
-    "viaje-res-ahuyama": [O("cazo", "carne de res molida", 0, (12, 15), "con un dedo de agua, deshaciéndola con el tenedor, hasta que no quede nada rosado"),
-                          O("vapor", "ahuyama", 1, (15, 15), "pelada, en trozos"),
-                          O("despues", "pasta", 2, None, "2-3 min más de lo que diga el paquete")],
     "viaje-pollo-pasta": [O("olla", "pollo", 0, (20, 25), "en trozos pequeños"), O("vapor", "calabacín", 2, (6, 8), "con piel, en trozos"),
                           O("despues", "pasta", 1, None, "2-3 min más de lo que diga el paquete")],
-    "viaje-res-papa": [O("cazo", "carne de res molida", 0, (12, 15), "con un dedo de agua, deshaciéndola con el tenedor, hasta que no quede nada rosado"),
-                       O("olla", "papa", 1, (15, 20), "pelada, en trozos"), O("vapor", "calabacín", 2, (6, 8), "con piel, en trozos")],
+    "viaje-lenteja-ahuyama": [O("vapor", "ahuyama", 1, (15, 15), "pelada, en trozos"),
+                              O("vapor", "lenteja de bote", 0, (3, 4), "ya enjuagada, solo para calentarla"),
+                              O("despues", "pasta", 2, None, "2-3 min más de lo que diga el paquete")],
+    "viaje-garbanzo-papa": [O("olla", "papa", 1, (15, 20), "pelada, en trozos"), O("vapor", "calabacín", 2, (6, 8), "con piel, en trozos"),
+                            O("vapor", "garbanzo de bote", 0, (3, 4), "ya enjuagado, solo para calentarlo")],
     # cenas (26-10-2026)
     "cena-pollo-horno": [O("horno", "bandeja de pollo, papa y zanahoria", t=(25, 30), temp=200)],
     "cena-pasta-pollo": [O("sarten", "daditos de pollo", t=(8, 10), forma="tapada, a fuego medio-bajo"),

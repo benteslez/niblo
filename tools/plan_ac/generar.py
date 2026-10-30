@@ -306,12 +306,12 @@ def en_viaje(d): return VIAJE[0] <= d <= VIAJE[1]
 # pollo chafado con papa, zanahoria, ahuyama, pasta o calabacin.
 FORZAR = {("2026-10-30", "c"): "res-guisada",   # el de hoy, ya descongelado
           ("2026-10-30", "ce"): "cena-pasta-pollo",
-          ("2026-10-31", "c"): "viaje-pollo-papa", ("2026-10-31", "ce"): "viaje-res-ahuyama",
-          ("2026-11-01", "c"): "viaje-res-papa", ("2026-11-01", "ce"): "viaje-pollo-pasta",
-          ("2026-11-02", "c"): "viaje-res-ahuyama", ("2026-11-02", "ce"): "viaje-pollo-papa",
-          ("2026-11-03", "c"): "viaje-pollo-pasta", ("2026-11-03", "ce"): "viaje-res-papa"}
+          ("2026-10-31", "c"): "viaje-pollo-papa", ("2026-10-31", "ce"): "viaje-lenteja-ahuyama",
+          ("2026-11-01", "c"): "viaje-garbanzo-papa", ("2026-11-01", "ce"): "viaje-pollo-pasta",
+          ("2026-11-02", "c"): "viaje-lenteja-ahuyama", ("2026-11-02", "ce"): "viaje-pollo-papa",
+          ("2026-11-03", "c"): "viaje-pollo-pasta", ("2026-11-03", "ce"): "viaje-garbanzo-papa"}
 VIAJE_RECETAS = set(VIAJE_REC)
-VIAJE_MAIN = [("viaje-pollo-papa", "pollo"), ("viaje-res-ahuyama", "res"), ("viaje-pollo-pasta", "pollo"), ("viaje-res-papa", "res")]
+VIAJE_MAIN = [("viaje-pollo-papa", "pollo"), ("viaje-lenteja-ahuyama", "lenteja"), ("viaje-pollo-pasta", "pollo"), ("viaje-garbanzo-papa", "garbanzo")]
 SIN_FRUTOS_SECOS_HASTA = dt.date(2026, 11, 4)   # «la crema de maní, no hasta el día 4»
 DESAYUNO_VIAJE = {"tortita-trigo", "bastones-papa"}   # sin batidora, en una sartén o un cazo (sin avena: peticion de la familia)
 # Algun dia, papa en bastones con tortilla de huevo y calabacin (peticion de la familia).
@@ -319,7 +319,7 @@ FORZAR_DESAYUNO = {"2026-11-01": ("bastones-papa", "tortilla-calabacin"), "2026-
 # Avisos de un dia concreto (salen arriba, en «Qué le toca hoy»).
 AVISOS = {"2026-10-30": "Hoy se cocina todo lo del puente (8 comidas y cenas): abajo, «Cocina de la semana» y «Para llevar».",
           "2026-10-26": "La tilapia en crema que había en la nevera para la cena de hoy: congélala hoy en su porción (se cocinó ayer); sale más adelante en el plan, del congelador."}
-INTEGRA = {"viaje-pollo-papa": "el chafado", "viaje-res-ahuyama": "el chafado", "viaje-pollo-pasta": "el chafado", "viaje-res-papa": "el chafado",
+INTEGRA = {"viaje-pollo-papa": "el chafado", "viaje-lenteja-ahuyama": "el chafado", "viaje-pollo-pasta": "el chafado", "viaje-garbanzo-papa": "el chafado",
            "cena-pollo-horno": "la bandeja", "cena-pasta-pollo": "la pasta", "cena-croquetas-pollo": "las croquetas",
            "cena-albondigas-res": "la salsa", "cena-guiso-res": "el guiso", "cena-pescado-pasta": "la pasta",
            "cena-crema-pollo": "la crema", "cena-falafel": "el falafel", "cena-bolitas-batata": "las bolitas",
@@ -1309,7 +1309,7 @@ def lista_viaje(plan):
                 pr = re.sub(r"\s*\(≈[^)]*\)", "", prod)
                 tot[(pr, u)] += q * c["tandas"]
                 de[(pr, u)].append(f"{q * c['tandas']:g} {u} → {RECETAS[c['rec']]['titulo'].lower()}")
-    NOTA_CRUDO = {"papa": "pelada", "zanahoria": "pelada", "ahuyama": "pelada y sin pepas", "calabacín": "con piel",
+    NOTA_CRUDO = {"lenteja cocida de bote, escurrida": "(enjuagada)", "garbanzo cocido de bote, escurrido": "(enjuagado)","papa": "pelada", "zanahoria": "pelada", "ahuyama": "pelada y sin pepas", "calabacín": "con piel",
                   "pasta corta (fusilli, conchitas)": "en seco"}
     def tot_txt(p, u, q):
         if u.startswith("cucharadita"):
