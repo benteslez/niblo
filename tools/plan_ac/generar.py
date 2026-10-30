@@ -116,9 +116,12 @@ def calendario():
                 elegido = pendientes.pop(i); break
         if not elegido:
             d += dt.timedelta(days=1); continue
-        if en_viaje(d):   # de viaje no empieza ningun alimento nuevo
-            pendientes.insert(0, elegido); d += dt.timedelta(days=1); continue
         k, comida = elegido
+        total = DURACION.get(k) or (3 if es_alergeno_nuevo(k) else 2)
+        # De viaje no se introduce nada: ni empieza ni sigue ningun alimento
+        # nuevo (el yogur, que empezaba el 30-10, se retoma a la vuelta).
+        if any(en_viaje(d + dt.timedelta(days=j)) for j in range(total)):
+            pendientes.insert(0, elegido); d += dt.timedelta(days=1); continue
         total = DURACION.get(k) or (3 if es_alergeno_nuevo(k) else 2)
         intro.append(dict(k=k, n=ALIMENTOS[k]["n"], id=ALIMENTOS[k]["id"], fecha=iso(d),
                           alergeno=texto_alergeno(k) if es_alergeno_nuevo(k) else None,
@@ -1286,6 +1289,7 @@ def lista_viaje(plan):
         base = CANON.get(p.lower(), p.lower()) or p
         if u == "g" and base in PIEZA_G:   # el banano se lleva por piezas
             n = math.ceil(c / PIEZA_G[base]); return f"{p}: {n} {'unidad' if n == 1 else 'unidades'} (≈ {PIEZA_G[base]} g cada una)"
+        if p.endswith(" rallado"): return f"{p[:-8]}: {cant(c, u)} (se ralla allí)"
         if "yogur" in p: return f"{p}: {cant(c, u)} (vale griego natural, sin azúcar ni sabor; cómpralo allí o llévalo en la nevera portátil)"
         return f"{p}: {cant(c, u)}"
     llevar = [
@@ -1305,7 +1309,7 @@ def lista_viaje(plan):
         "Para el viaje: todo en la nevera portátil con placas de hielo, lo congelado junto, y al llegar a la nevera o al congelador cuanto antes.",
         "Allí: la noche antes, pasa a la nevera la porción del día siguiente (el plan lo recuerda cada día). Recalienta a fondo, hasta que humee, y deja templar.",
         "Si allí no hay congelador: lo del domingo, a la nevera al llegar; lo del lunes y el martes no aguanta tanto. Esos días, pedid pollo o pescado y papa cocidos sin sal (como en el hotel) o comprad y coced allí lo sencillo.",
-        "No empieza ningún alimento nuevo durante el viaje: la habichuela pasa al miércoles 4.",
+        "Ningún alimento nuevo durante el viaje: el yogur se retoma a la vuelta (miércoles 4, sus 3 días) y la habichuela va después.",
     ]
     return dict(ini=ini, fin=fin, sesion=iso(SESION_VIAJE), titulo="Puente del sábado 31 al martes 3", llevar=llevar, notas=notas)
 
