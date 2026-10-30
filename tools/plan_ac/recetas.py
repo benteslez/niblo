@@ -533,48 +533,39 @@ CENAS_REC = {
 RECETAS.update(CENAS_REC)
 
 # ------------------------------------------------------------ viaje (puente)
-# Peticion de la familia (30-10-2026): para el puente, platos sencillos de res
-# o pollo chafado con papa, zanahoria, ahuyama, pasta o calabacin, y solo las
+# Peticion de la familia (30-10-2026): para el puente, una misma base de
+# papa, zanahoria y ahuyama (se cuece toda junta) y en cada plato cambia lo
+# que se le añade: pollo, lenteja, garbanzo o pollo con pasta. Solo las
 # raciones que hacen falta (2 de cada uno: 8 en total). Se cocinan el viernes
 # y se congelan; alli solo hay que recalentar.
-VIAJE_REC = {
-    "viaje-pollo-papa": R("Pollo chafado con papa y zanahoria", 2,
-        [("muslo de pollo deshuesado sin piel", 50, "g", C), ("papa", 100, "g", V), ("zanahoria (≈ 1 mediana)", 100, "g", V),
-         ("aceite de oliva", 1, "cucharadita", D)],
-        ["Pela la papa y la zanahoria y córtalas en trozos; el pollo, en trozos pequeños.",
-         "Cuécelo todo junto en agua sin sal que lo cubra, 20-25 min, hasta que la papa y la zanahoria se aplasten entre tus dedos y el pollo esté hecho (sin nada rosado).",
-         "Escurre guardando el caldo. Desmenuza el pollo muy fino y chafa todo junto con el tenedor y un poco del caldo (con grumos, no liso). El aceite, en crudo al servir."],
-        "Hebras de pollo y trozos blandos de papa y zanahoria, o bolitas apretadas del chafado.", "Todo chafado con su caldo.",
-        {"pollo", "papa", "zanahoria"}, True, True),
-    "viaje-pollo-pasta": R("Pollo chafado con pasta y calabacín", 2,
-        [("muslo de pollo deshuesado sin piel", 50, "g", C), ("pasta corta (fusilli, conchitas)", 30, "g", D), ("calabacín", 100, "g", V),
-         ("aceite de oliva", 1, "cucharadita", D)],
-        ["Cuece el pollo en trozos pequeños en agua sin sal 15-20 min, hasta que esté hecho (sin nada rosado), y desmenúzalo muy fino.",
-         "Cuece la pasta 2-3 min más de lo que diga el paquete; el calabacín con piel, en trozos, al vapor 6-8 min (o con la pasta los últimos minutos).",
-         "Chafa el calabacín y mézclalo con el pollo y la pasta, con un poco del caldo. El aceite, en crudo al servir."],
-        "Fusilli con el calabacín chafado y hebras de pollo.", "Todo chafado junto.",
-        {"pollo", "trigo_pasta", "calabacin"}, True, True),
-}
-# La familia cambio la res por legumbre de bote (30-10-2026).
 BOTE_PASO = "Escurre la legumbre de bote y enjuágala bajo el grifo, en un colador, 1-2 minutos (así se va gran parte de la sal)."
-VIAJE_REC.update({
-    "viaje-lenteja-ahuyama": R("Lenteja chafada con ahuyama y pasta", 2,
-        [("lenteja cocida de bote, escurrida", 70, "g", D), ("ahuyama", 100, "g", V), ("pasta corta (fusilli, conchitas)", 30, "g", D),
-         ("aceite de oliva", 1, "cucharadita", D)],
-        [BOTE_PASO,
-         "Pela la ahuyama, quítale las pepas y cuécela en trozos 15 min (al vapor o en el agua de la pasta); las lentejas, en la vaporera los últimos 3-4 min, solo para calentarlas.",
-         "Cuece la pasta 2-3 min más de lo que diga el paquete.",
-         "Chafa la lenteja con la ahuyama (pásala por el colador si quieres quitar las pieles) y mézclalo con la pasta y un poco del agua de cocción. El aceite, en crudo al servir."],
-        "Fusilli bañados en el chafado de lenteja y ahuyama.", "Todo chafado junto.",
-        {"lenteja", "ahuyama", "trigo_pasta"}, True, True),
-    "viaje-garbanzo-papa": R("Garbanzo chafado con papa y calabacín", 2,
-        [("garbanzo cocido de bote, escurrido", 70, "g", D), ("papa", 100, "g", V), ("calabacín", 100, "g", V),
-         ("aceite de oliva", 1, "cucharadita", D)],
-        [BOTE_PASO,
-         "Cuece la papa pelada en trozos 15-20 min; el calabacín con piel, en trozos, en la vaporera los últimos 6-8 min, y el garbanzo con él los últimos 3-4 min.",
-         "Quítale la piel al garbanzo (se suelta apretándolo entre los dedos) o pásalo por el colador. Nunca entero ni en mitades: atraganta.",
-         "Chafa todo junto con un poco del agua de cocción (con grumos pequeños, no liso). El aceite, en crudo al servir."],
-        "Bolitas apretadas del chafado, o untado en capa fina sobre bastones de papa.", "Todo chafado junto.",
-        {"garbanzo", "papa", "calabacin"}, True, True),
-})
+BASE_ING = [("papa", 80, "g", V), ("zanahoria", 50, "g", V), ("ahuyama", 50, "g", V)]
+BASE_PASO = ("Base (la misma para los cuatro platos): pela la papa, la zanahoria y la ahuyama (sin pepas), córtalas en trozos y cuécelas "
+             "juntas en agua sin sal 15-20 min, hasta que se aplasten entre tus dedos. Chafa todo junto con un poco del agua (con grumos, no liso) "
+             "y reparte la base en partes iguales: cada plato lleva la cuarta parte.")
+ACEITE = ("aceite de oliva", 1, "cucharadita", D)
+FIN_PASO = "Mezcla con su parte de la base y un poco del agua de cocción. El aceite, en crudo al servir."
+VIAJE_REC = {
+    "viaje-base-pollo": R("Base de papa, zanahoria y ahuyama con pollo", 2,
+        [("muslo de pollo deshuesado sin piel", 50, "g", C)] + BASE_ING + [ACEITE],
+        [BASE_PASO, "Cuece el pollo en trozos pequeños en el agua de la base (desde el principio, 20-25 min), hasta que esté hecho sin nada rosado, y desmenúzalo muy fino.", FIN_PASO],
+        "Bolitas apretadas del chafado con hebras de pollo.", "Todo chafado junto.",
+        {"pollo", "papa", "zanahoria", "ahuyama"}, True, True),
+    "viaje-base-lenteja": R("Base de papa, zanahoria y ahuyama con lenteja", 2,
+        [("lenteja cocida de bote, escurrida", 70, "g", D)] + BASE_ING + [ACEITE],
+        [BASE_PASO, BOTE_PASO + " Caliéntala 3-4 min en el agua de la base y cháfala (pásala por el colador si quieres quitar las pieles).", FIN_PASO],
+        "Bolitas apretadas del chafado, o untado en una tira de tortita.", "Todo chafado junto.",
+        {"lenteja", "papa", "zanahoria", "ahuyama"}, True, True),
+    "viaje-base-garbanzo": R("Base de papa, zanahoria y ahuyama con garbanzo", 2,
+        [("garbanzo cocido de bote, escurrido", 70, "g", D)] + BASE_ING + [ACEITE],
+        [BASE_PASO, BOTE_PASO + " Caliéntalo 3-4 min en el agua de la base, quítale la piel (se suelta apretándolo entre los dedos) o pásalo por el colador, y cháfalo. Nunca entero ni en mitades: atraganta.", FIN_PASO],
+        "Bolitas apretadas del chafado.", "Todo chafado junto.",
+        {"garbanzo", "papa", "zanahoria", "ahuyama"}, True, True),
+    "viaje-base-pollo-pasta": R("Base de papa, zanahoria y ahuyama con pollo y pasta", 2,
+        [("muslo de pollo deshuesado sin piel", 50, "g", C), ("pasta corta (fusilli, conchitas)", 30, "g", D)] + BASE_ING + [ACEITE],
+        [BASE_PASO, "Cuece el pollo en trozos pequeños en el agua de la base (desde el principio, 20-25 min) y desmenúzalo muy fino.",
+         "Cuece la pasta 2-3 min más de lo que diga el paquete, en la misma agua cuando saques la base.", FIN_PASO],
+        "Fusilli bañados en la base chafada, con hebras de pollo.", "Todo chafado junto.",
+        {"pollo", "trigo_pasta", "papa", "zanahoria", "ahuyama"}, True, True),
+}
 RECETAS.update(VIAJE_REC)
