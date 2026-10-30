@@ -537,7 +537,6 @@ RECETAS.update(CENAS_REC)
 # o pollo chafado con papa, zanahoria, ahuyama, pasta o calabacin, y solo las
 # raciones que hacen falta (2 de cada uno: 8 en total). Se cocinan el viernes
 # y se congelan; alli solo hay que recalentar.
-RES_HECHA = "La carne picada, siempre bien hecha: sin nada rosado (AESAN)."
 VIAJE_REC = {
     "viaje-pollo-papa": R("Pollo chafado con papa y zanahoria", 2,
         [("muslo de pollo deshuesado sin piel", 50, "g", C), ("papa", 100, "g", V), ("zanahoria (≈ 1 mediana)", 100, "g", V),
@@ -547,15 +546,6 @@ VIAJE_REC = {
          "Escurre guardando el caldo. Desmenuza el pollo muy fino y chafa todo junto con el tenedor y un poco del caldo (con grumos, no liso). El aceite, en crudo al servir."],
         "Hebras de pollo y trozos blandos de papa y zanahoria, o bolitas apretadas del chafado.", "Todo chafado con su caldo.",
         {"pollo", "papa", "zanahoria"}, True, True),
-    "viaje-res-ahuyama": R("Res chafada con ahuyama y pasta", 2,
-        [("carne de res molida magra", 50, "g", C), ("ahuyama", 100, "g", V), ("pasta corta (fusilli, conchitas)", 30, "g", D),
-         ("aceite de oliva", 1, "cucharadita", D)],
-        ["Pon la carne en un cazo con un dedo de agua, sin sal, y cuécela 12-15 min a fuego medio, deshaciéndola con el tenedor. " + RES_HECHA,
-         "Pela la ahuyama, quítale las pepas y cuécela en trozos 15 min (al vapor o en el agua de la pasta).",
-         "Cuece la pasta 2-3 min más de lo que diga el paquete.",
-         "Chafa la ahuyama y mézclala con la carne y la pasta, con un poco del agua de cocción. El aceite, en crudo al servir."],
-        "Fusilli bañados en la ahuyama chafada con la carne.", "Todo chafado junto.",
-        {"res", "ahuyama", "trigo_pasta"}, True, True),
     "viaje-pollo-pasta": R("Pollo chafado con pasta y calabacín", 2,
         [("muslo de pollo deshuesado sin piel", 50, "g", C), ("pasta corta (fusilli, conchitas)", 30, "g", D), ("calabacín", 100, "g", V),
          ("aceite de oliva", 1, "cucharadita", D)],
@@ -564,13 +554,27 @@ VIAJE_REC = {
          "Chafa el calabacín y mézclalo con el pollo y la pasta, con un poco del caldo. El aceite, en crudo al servir."],
         "Fusilli con el calabacín chafado y hebras de pollo.", "Todo chafado junto.",
         {"pollo", "trigo_pasta", "calabacin"}, True, True),
-    "viaje-res-papa": R("Res chafada con papa y calabacín", 2,
-        [("carne de res molida magra", 50, "g", C), ("papa", 100, "g", V), ("calabacín", 100, "g", V),
-         ("aceite de oliva", 1, "cucharadita", D)],
-        ["Pon la carne en un cazo con un dedo de agua, sin sal, y cuécela 12-15 min a fuego medio, deshaciéndola con el tenedor. " + RES_HECHA,
-         "Cuece la papa pelada en trozos 15-20 min; el calabacín con piel, en trozos, en la misma olla los últimos 6-8 min.",
-         "Chafa la papa y el calabacín y mézclalos con la carne y un poco del agua de cocción. El aceite, en crudo al servir."],
-        "Bolitas apretadas del chafado, o trozos blandos de papa con la carne.", "Todo chafado junto.",
-        {"res", "papa", "calabacin"}, True, True),
 }
+# La familia cambio la res por legumbre de bote (30-10-2026).
+BOTE_PASO = "Escurre la legumbre de bote y enjuágala bajo el grifo, en un colador, 1-2 minutos (así se va gran parte de la sal)."
+VIAJE_REC.update({
+    "viaje-lenteja-ahuyama": R("Lenteja chafada con ahuyama y pasta", 2,
+        [("lenteja cocida de bote, escurrida", 70, "g", D), ("ahuyama", 100, "g", V), ("pasta corta (fusilli, conchitas)", 30, "g", D),
+         ("aceite de oliva", 1, "cucharadita", D)],
+        [BOTE_PASO,
+         "Pela la ahuyama, quítale las pepas y cuécela en trozos 15 min (al vapor o en el agua de la pasta); las lentejas, en la vaporera los últimos 3-4 min, solo para calentarlas.",
+         "Cuece la pasta 2-3 min más de lo que diga el paquete.",
+         "Chafa la lenteja con la ahuyama (pásala por el colador si quieres quitar las pieles) y mézclalo con la pasta y un poco del agua de cocción. El aceite, en crudo al servir."],
+        "Fusilli bañados en el chafado de lenteja y ahuyama.", "Todo chafado junto.",
+        {"lenteja", "ahuyama", "trigo_pasta"}, True, True),
+    "viaje-garbanzo-papa": R("Garbanzo chafado con papa y calabacín", 2,
+        [("garbanzo cocido de bote, escurrido", 70, "g", D), ("papa", 100, "g", V), ("calabacín", 100, "g", V),
+         ("aceite de oliva", 1, "cucharadita", D)],
+        [BOTE_PASO,
+         "Cuece la papa pelada en trozos 15-20 min; el calabacín con piel, en trozos, en la vaporera los últimos 6-8 min, y el garbanzo con él los últimos 3-4 min.",
+         "Quítale la piel al garbanzo (se suelta apretándolo entre los dedos) o pásalo por el colador. Nunca entero ni en mitades: atraganta.",
+         "Chafa todo junto con un poco del agua de cocción (con grumos pequeños, no liso). El aceite, en crudo al servir."],
+        "Bolitas apretadas del chafado, o untado en capa fina sobre bastones de papa.", "Todo chafado junto.",
+        {"garbanzo", "papa", "calabacin"}, True, True),
+})
 RECETAS.update(VIAJE_REC)
