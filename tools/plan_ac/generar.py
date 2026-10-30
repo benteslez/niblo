@@ -313,7 +313,7 @@ FORZAR = {("2026-10-30", "c"): "res-guisada",   # el de hoy, ya descongelado
 VIAJE_RECETAS = set(VIAJE_REC)
 VIAJE_MAIN = [("viaje-pollo-papa", "pollo"), ("viaje-res-ahuyama", "res"), ("viaje-pollo-pasta", "pollo"), ("viaje-res-papa", "res")]
 SIN_FRUTOS_SECOS_HASTA = dt.date(2026, 11, 4)   # «la crema de maní, no hasta el día 4»
-DESAYUNO_VIAJE = {"tortita-trigo", "avena-formula"}   # sin batidora, en una sartén o un cazo
+DESAYUNO_VIAJE = {"tortita-trigo"}   # sin batidora, en una sartén (sin avena: peticion de la familia)
 # Avisos de un dia concreto (salen arriba, en «Qué le toca hoy»).
 AVISOS = {"2026-10-30": "Hoy se cocina todo lo del puente (8 comidas y cenas): abajo, «Cocina de la semana» y «Para llevar».",
           "2026-10-26": "La tilapia en crema que había en la nevera para la cena de hoy: congélala hoy en su porción (se cocinó ayer); sale más adelante en el plan, del congelador."}
