@@ -531,3 +531,46 @@ CENAS_REC = {
         {"huevo", "papa", "calabacin"}, False, False),
 }
 RECETAS.update(CENAS_REC)
+
+# ------------------------------------------------------------ viaje (puente)
+# Peticion de la familia (30-10-2026): para el puente, platos sencillos de res
+# o pollo chafado con papa, zanahoria, ahuyama, pasta o calabacin, y solo las
+# raciones que hacen falta (2 de cada uno: 8 en total). Se cocinan el viernes
+# y se congelan; alli solo hay que recalentar.
+RES_HECHA = "La carne picada, siempre bien hecha: sin nada rosado (AESAN)."
+VIAJE_REC = {
+    "viaje-pollo-papa": R("Pollo chafado con papa y zanahoria", 2,
+        [("muslo de pollo deshuesado sin piel", 50, "g", C), ("papa", 100, "g", V), ("zanahoria (≈ 1 mediana)", 100, "g", V),
+         ("aceite de oliva", 1, "cucharadita", D)],
+        ["Pela la papa y la zanahoria y córtalas en trozos; el pollo, en trozos pequeños.",
+         "Cuécelo todo junto en agua sin sal que lo cubra, 20-25 min, hasta que la papa y la zanahoria se aplasten entre tus dedos y el pollo esté hecho (sin nada rosado).",
+         "Escurre guardando el caldo. Desmenuza el pollo muy fino y chafa todo junto con el tenedor y un poco del caldo (con grumos, no liso). El aceite, en crudo al servir."],
+        "Hebras de pollo y trozos blandos de papa y zanahoria, o bolitas apretadas del chafado.", "Todo chafado con su caldo.",
+        {"pollo", "papa", "zanahoria"}, True, True),
+    "viaje-res-ahuyama": R("Res chafada con ahuyama y pasta", 2,
+        [("carne de res molida magra", 50, "g", C), ("ahuyama", 100, "g", V), ("pasta corta (fusilli, conchitas)", 30, "g", D),
+         ("aceite de oliva", 1, "cucharadita", D)],
+        ["Pon la carne en un cazo con un dedo de agua, sin sal, y cuécela 12-15 min a fuego medio, deshaciéndola con el tenedor. " + RES_HECHA,
+         "Pela la ahuyama, quítale las pepas y cuécela en trozos 15 min (al vapor o en el agua de la pasta).",
+         "Cuece la pasta 2-3 min más de lo que diga el paquete.",
+         "Chafa la ahuyama y mézclala con la carne y la pasta, con un poco del agua de cocción. El aceite, en crudo al servir."],
+        "Fusilli bañados en la ahuyama chafada con la carne.", "Todo chafado junto.",
+        {"res", "ahuyama", "trigo_pasta"}, True, True),
+    "viaje-pollo-pasta": R("Pollo chafado con pasta y calabacín", 2,
+        [("muslo de pollo deshuesado sin piel", 50, "g", C), ("pasta corta (fusilli, conchitas)", 30, "g", D), ("calabacín", 100, "g", V),
+         ("aceite de oliva", 1, "cucharadita", D)],
+        ["Cuece el pollo en trozos pequeños en agua sin sal 15-20 min, hasta que esté hecho (sin nada rosado), y desmenúzalo muy fino.",
+         "Cuece la pasta 2-3 min más de lo que diga el paquete; el calabacín con piel, en trozos, al vapor 6-8 min (o con la pasta los últimos minutos).",
+         "Chafa el calabacín y mézclalo con el pollo y la pasta, con un poco del caldo. El aceite, en crudo al servir."],
+        "Fusilli con el calabacín chafado y hebras de pollo.", "Todo chafado junto.",
+        {"pollo", "trigo_pasta", "calabacin"}, True, True),
+    "viaje-res-papa": R("Res chafada con papa y calabacín", 2,
+        [("carne de res molida magra", 50, "g", C), ("papa", 100, "g", V), ("calabacín", 100, "g", V),
+         ("aceite de oliva", 1, "cucharadita", D)],
+        ["Pon la carne en un cazo con un dedo de agua, sin sal, y cuécela 12-15 min a fuego medio, deshaciéndola con el tenedor. " + RES_HECHA,
+         "Cuece la papa pelada en trozos 15-20 min; el calabacín con piel, en trozos, en la misma olla los últimos 6-8 min.",
+         "Chafa la papa y el calabacín y mézclalos con la carne y un poco del agua de cocción. El aceite, en crudo al servir."],
+        "Bolitas apretadas del chafado, o trozos blandos de papa con la carne.", "Todo chafado junto.",
+        {"res", "papa", "calabacin"}, True, True),
+}
+RECETAS.update(VIAJE_REC)

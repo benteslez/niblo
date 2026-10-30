@@ -16,7 +16,7 @@ from collections import defaultdict, Counter
 
 sys.path.insert(0, os.path.dirname(__file__))
 from alimentos import ALIMENTOS, ALERGENO_TXT, formato, edad_minima
-from recetas import RECETAS, receta_simple, POR_RACION_FRUTA, CENAS_REC
+from recetas import RECETAS, receta_simple, POR_RACION_FRUTA, CENAS_REC, VIAJE_REC
 from orden import orden_cocina
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -212,7 +212,7 @@ def cantidad(k, meses, nuevo_dia, frase_mm=False, slot=None, rec=None):
         pieza = {"hamb-pollo": "1 hamburguesita", "hamb-res": "1 hamburguesita", "pescado-tortitas": "1 tortita",
                  "camaron-papa": "1 pastelito", "atun-pastelito": "1 pastelito", "cena-croquetas-pollo": "2 croquetas",
                  "cena-albondigas-res": "2 albóndigas", "cena-bolitas-batata": "2 bolitas"}.get(rec)
-        if rec in CENAS_REC and not pieza:   # plato de cena: lo que se sirve es el plato entero
+        if (rec in CENAS_REC or rec in VIAJE_REC) and not pieza:   # plato de cena: lo que se sirve es el plato entero
             r = RECETAS[rec]
             g = sum(c for _, c, u, _ in r["ing"] if u == "g")
             por = round(g / r["rinde"] / 10) * 10
@@ -299,18 +299,23 @@ SESION_VIAJE = dt.date(2026, 10, 30)
 def en_viaje(d): return VIAJE[0] <= d <= VIAJE[1]
 # Platos completos (proteina, papa y verdura dentro), todos con papa y
 # zanahoria o calabacin: una sola olla para todo.
+# Segunda version (misma tarde): solo 8 raciones, platos sencillos de res o
+# pollo chafado con papa, zanahoria, ahuyama, pasta o calabacin.
 FORZAR = {("2026-10-30", "c"): "res-guisada",   # el de hoy, ya descongelado
-          ("2026-10-30", "ce"): "cena-croquetas-pollo",
-          ("2026-10-31", "c"): "cena-guiso-res", ("2026-10-31", "ce"): "pescado-tortitas",
-          ("2026-11-01", "c"): "cena-croquetas-pollo", ("2026-11-01", "ce"): "hamb-lenteja",
-          ("2026-11-02", "c"): "pescado-tortitas", ("2026-11-02", "ce"): "cena-guiso-res",
-          ("2026-11-03", "c"): "hamb-lenteja", ("2026-11-03", "ce"): "cena-croquetas-pollo"}
-VIAJE_RECETAS = {"cena-guiso-res", "pescado-tortitas", "cena-croquetas-pollo", "hamb-lenteja"}
+          ("2026-10-30", "ce"): "cena-pasta-pollo",
+          ("2026-10-31", "c"): "viaje-pollo-papa", ("2026-10-31", "ce"): "viaje-res-ahuyama",
+          ("2026-11-01", "c"): "viaje-res-papa", ("2026-11-01", "ce"): "viaje-pollo-pasta",
+          ("2026-11-02", "c"): "viaje-res-ahuyama", ("2026-11-02", "ce"): "viaje-pollo-papa",
+          ("2026-11-03", "c"): "viaje-pollo-pasta", ("2026-11-03", "ce"): "viaje-res-papa"}
+VIAJE_RECETAS = set(VIAJE_REC)
+VIAJE_MAIN = [("viaje-pollo-papa", "pollo"), ("viaje-res-ahuyama", "res"), ("viaje-pollo-pasta", "pollo"), ("viaje-res-papa", "res")]
+SIN_FRUTOS_SECOS_HASTA = dt.date(2026, 11, 4)   # «la crema de maní, no hasta el día 4»
 DESAYUNO_VIAJE = {"tortita-trigo", "avena-formula"}   # sin batidora, en una sartén o un cazo
 # Avisos de un dia concreto (salen arriba, en «Qué le toca hoy»).
 AVISOS = {"2026-10-30": "Hoy se cocina todo lo del puente (8 comidas y cenas): abajo, «Cocina de la semana» y «Para llevar».",
           "2026-10-26": "La tilapia en crema que había en la nevera para la cena de hoy: congélala hoy en su porción (se cocinó ayer); sale más adelante en el plan, del congelador."}
-INTEGRA = {"cena-pollo-horno": "la bandeja", "cena-pasta-pollo": "la pasta", "cena-croquetas-pollo": "las croquetas",
+INTEGRA = {"viaje-pollo-papa": "el chafado", "viaje-res-ahuyama": "el chafado", "viaje-pollo-pasta": "el chafado", "viaje-res-papa": "el chafado",
+           "cena-pollo-horno": "la bandeja", "cena-pasta-pollo": "la pasta", "cena-croquetas-pollo": "las croquetas",
            "cena-albondigas-res": "la salsa", "cena-guiso-res": "el guiso", "cena-pescado-pasta": "la pasta",
            "cena-crema-pollo": "la crema", "cena-falafel": "el falafel", "cena-bolitas-batata": "las bolitas",
            "cena-salmon-batata": "el plato", "cena-arroz-pollo": "el arroz", "cena-tortilla-papa": "la tortilla",
@@ -635,7 +640,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
             # (practica habitual: mantenerlos 2 o mas veces por semana)
             gras = [gra] if gra else []
             if not gra:
-                cands = [k for k in NUECES if k in disp and k != "tahini"]
+                cands = [k for k in NUECES if k in disp and k != "tahini" and d >= SIN_FRUTOS_SECOS_HASTA]
                 def p_gra(k):
                     g = grupo_alergeno(k)
                     if g and reqgrupo.get(g, 9) < 2 and k not in gras: return 10 - reqgrupo.get(g, 0) - hist.alimento(k, 2)
@@ -703,7 +708,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
             cands_p = PROT_MAIN + (CENA_MAIN if slot == "ce" else [])
             forz = (FORZAR.get((iso(d), slot)) or (FORZAR_CENA.get(iso(d)) if slot == "ce" else None)) if not fz else None
             if forz:
-                cands_p = [c for c in PROT_MAIN + CENA_MAIN if c[0] == forz]
+                cands_p = [c for c in PROT_MAIN + CENA_MAIN + VIAJE_MAIN if c[0] == forz]
             def p_total(c):
                 s0 = p_prot(c)
                 if s0 is None or slot != "ce": return s0
@@ -772,6 +777,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
             else:
                 opciones = [("tahini", "crema-fruto-seco"), ("mostaza", "mostaza-punta")] + [(n, "crema-fruto-seco") for n in NUECES if n != "tahini"]
                 for g_k, rec_g in opciones:
+                    if g_k in NUECES and d < SIN_FRUTOS_SECOS_HASTA: continue
                     if g_k in disp and reqgrupo.get(grupo_alergeno(g_k), 9) < 2 and hist.alimento(g_k, 2) == 0 and g_k not in usados_hoy and g_k not in usados_gra and g_k not in evitar:
                         its.append(item(g_k, "gra", rec_g, nota="En capa finísima sobre los bastones de verdura o diluida en el puré." if rec_g == "crema-fruto-seco" else None))
                         usados_hoy.add(g_k); usados_gra.add(g_k); reqgrupo[grupo_alergeno(g_k)] = reqgrupo.get(grupo_alergeno(g_k), 0) + 1; break
@@ -1280,10 +1286,10 @@ def lista_viaje(plan):
         base = CANON.get(p.lower(), p.lower()) or p
         if u == "g" and base in PIEZA_G:   # el banano se lleva por piezas
             n = math.ceil(c / PIEZA_G[base]); return f"{p}: {n} {'unidad' if n == 1 else 'unidades'} (≈ {PIEZA_G[base]} g cada una)"
-        if "yogur" in p: return f"{p}: {cant(c, u)} (cómpralo allí o llévalo en la nevera portátil)"
+        if "yogur" in p: return f"{p}: {cant(c, u)} (vale griego natural, sin azúcar ni sabor; cómpralo allí o llévalo en la nevera portátil)"
         return f"{p}: {cant(c, u)}"
     llevar = [
-        dict(tit="Lo cocinado hoy (8 raciones, cada una con su etiqueta)",
+        dict(tit="Lo cocinado hoy (8 raciones justas, cada una con su etiqueta)",
              items=[f"{t}: {len(v)} {'ración' if len(v) == 1 else 'raciones'} — {', '.join(v)}" for t, v in platos.items()]),
         dict(tit="Para los desayunos (se hacen allí, sin batidora)",
              items=[desayuno_txt(p, c, u) for (p, u), c in sorted(desayunos.items()) if p not in ("agua", "agua o fórmula", "fórmula preparada")]
