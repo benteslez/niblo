@@ -24,7 +24,7 @@ INDEX = os.path.join(RAIZ, "index.html")
 
 NACE = dt.date(2026, 3, 5)
 INICIO_AC = dt.date(2026, 9, 5)          # dia 1 del plan
-HOY_PLAN = dt.date(2026, 10, 30)         # primer dia que se regenera (puente del 31-10 al 3-11; antes, 26-10)
+HOY_PLAN = dt.date(2026, 11, 8)          # primer dia que se regenera (Thermomix y cada alimento por separado; antes, 30-10)
 FIN = dt.date(2027, 6, 2)                # ultimo dia del plan (FECHA_FIN en la app)
 # Tres comidas (desayuno, almuerzo y cena) desde el 21-10-2026, a peticion de
 # la familia (antes, el 5 de noviembre, a los 8 meses). La variable conserva
@@ -298,6 +298,28 @@ FORZAR_CENA = {"2026-10-26": "cena-pollo-horno"}   # «para hoy, algo con pollo�
 # los desayunos se hacen alli, al momento y sin batidora; ningun alimento
 # nuevo empieza durante el viaje, y la sesion del domingo 1 pasa al miercoles 4.
 VIAJE = (dt.date(2026, 10, 31), dt.date(2026, 11, 3))
+# Desde el 8-11 (peticion de la familia, 7-11-2026): almuerzo y cena con cada
+# alimento por separado, cocinados a la vez en la Thermomix (rec «tm»).
+TM_DESDE = dt.date(2026, 11, 8)
+TM_PROT = ["pollo", "res", "pescado_blanco", "salmon", "lenteja", "garbanzo", "arveja", "huevo", "pavo", "cerdo", "tofu", "camaron"]
+TM_HAR = ["papa", "batata", "yuca", "trigo_pasta", "arroz", "quinua", "name", "arracacha", "platano_macho"]
+LEG_BOTE = {"lenteja", "garbanzo"}
+TM_PROD = {"pollo": "muslo de pollo deshuesado sin piel", "res": "carne de res molida magra", "pescado_blanco": "filete de tilapia",
+           "salmon": "filete de salmón o trucha", "lenteja": "lenteja cocida de bote", "garbanzo": "garbanzo cocido de bote",
+           "arveja": "arveja (guisante) desgranada o congelada", "pavo": "contramuslo de pavo deshuesado", "cerdo": "lomo de cerdo",
+           "tofu": "tofu firme", "camaron": "camarón pelado", "trigo_pasta": "pasta corta (fusilli, conchitas)"}   # de bote: se pesan escurridas, ya cocidas
+def tm_crudo(k, cat, meses):
+    """Gramos en crudo (o en seco, o escurridos de bote) de una toma, para la Thermomix y la compra.
+    Factores orientativos (practica habitual): carne y pescado pierden ~25 % al cocerse;
+    la verdura al vapor ~10 %; la pasta cocida pesa ~2,5 veces su peso en seco y el arroz y la quinua ~3."""
+    m = min(max(meses, 6), 12)
+    if cat == "prot":
+        if k in LEGUMBRES: return LEGUMBRE_G[m][1] if k != "arveja" else round(LEGUMBRE_G[m][1] / 1.1)
+        if k == "huevo": return 50
+        return round(ANIMAL_G[m][1] / 0.75)
+    x = PLATO_G[m][1] / 2
+    if cat == "har": return round(x / {"trigo_pasta": 2.5, "arroz": 3, "quinua": 3}.get(k, 1.0))
+    return round(x / 0.9)
 SESION_VIAJE = dt.date(2026, 10, 30)
 def en_viaje(d): return VIAJE[0] <= d <= VIAJE[1]
 # Platos completos (proteina, papa y verdura dentro), todos con papa y
@@ -705,14 +727,16 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 if batch.disponible(rec, k, d): s += 3
                 if slot == "c" and batch.viejo(rec, k, d): s += 7   # lo ya congelado, primero (en el almuerzo)
                 # Varias recetas del mismo alimento (tilapia): que roten en la semana.
-                if sum(1 for r_, k_ in PROT_MAIN if k_ == k) > 1: s -= 2 * hist.usado_dia(rec, 7)
+                if rec != "tm" and sum(1 for r_, k_ in PROT_MAIN if k_ == k) > 1: s -= 2 * hist.usado_dia(rec, 7)
                 g = grupo_alergeno(k)
                 if g and reqgrupo.get(g, 9) < 2: s += 6
                 if g and reqgrupo.get(g, 9) >= 2: s -= 2
                 return s
             def arroz_semana():
                 return hist.alimento("arroz", 6) + (1 if "arroz" in usados_hoy else 0)
-            cands_p = PROT_MAIN + (CENA_MAIN if slot == "ce" else [])
+            tm = d >= TM_DESDE
+            cands_p = [("tm", k) for k in TM_PROT + ([fz["prot"]] if fz.get("prot") and fz["prot"] not in TM_PROT else [])] if tm \
+                else PROT_MAIN + (CENA_MAIN if slot == "ce" else [])
             forz = (FORZAR.get((iso(d), slot)) or (FORZAR_CENA.get(iso(d)) if slot == "ce" else None)) if not fz else None
             if forz:
                 cands_p = [c for c in PROT_MAIN + CENA_MAIN + VIAJE_MAIN if c[0] == forz]
@@ -750,7 +774,7 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                     s = -5 * hist.usado(slot + "-har", k, 2) - hist.alimento(k, 4) + (3 if batch.disponible(rec2, k, d) else 0)
                     if k in usados_hoy: s -= 4
                     return s
-                hr = elegir(HAR_MAIN, p_har)
+                hr = elegir([("tm", k) for k in TM_HAR + ([fz["har"]] if fz.get("har") and fz["har"] not in TM_HAR else [])] if tm else HAR_MAIN, p_har)
                 its.append(item(hr[1], "har", hr[0]))
                 usados_hoy.add(hr[1])
             # verduras: una (dos desde los 9 meses, una de ellas "en guiso" si toca)
@@ -770,12 +794,12 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                 vk = ver_d[0]   # la verdura del plato ya va en la receta
             else:
                 vk = elegir(sorted(cands), p_ver)
-                its.append(item(vk, "ver", VER_MAIN[vk])); usados_hoy.add(vk)
+                its.append(item(vk, "ver", "tm" if tm and VER_MAIN[vk] != "verdura-cruda" else VER_MAIN[vk])); usados_hoy.add(vk)
             if meses >= 9 and "ver" not in fz:
                 cands2 = [k for k in cands if k != vk]
                 vk2 = elegir(sorted(cands2), p_ver)
                 if vk2:
-                    its.append(item(vk2, "ver", VER_MAIN[vk2])); usados_hoy.add(vk2)
+                    its.append(item(vk2, "ver", "tm" if tm and VER_MAIN[vk2] != "verdura-cruda" else VER_MAIN[vk2])); usados_hoy.add(vk2)
             # grasa: alergeno nuevo de grasa, tahini/mostaza de mantenimiento, o aguacate
             if "gra" in fz:
                 its.append(item(fz["gra"], "gra", "crema-fruto-seco" if fz["gra"] == "tahini" else
@@ -792,6 +816,8 @@ def generar_menus(intro, por_dia, batch, semilla=()):
                     if "aguacate" not in usados_hoy and hist.alimento("aguacate", 1) == 0 and not descansa("aguacate", d):
                         its.append(item("aguacate", "gra", "simple-aguacate")); usados_hoy.add("aguacate")
             slots[slot + "-prot"].add(rec); slots[slot + "-har"].add(its[1]["k"]); slots[slot + "-ver"].add(vk)
+            for x in its:
+                if x.get("rec") == "tm": x["crudo"] = tm_crudo(x["k"], x["cat"], meses)
             return its
 
         usados_hoy = set(i["k"] for i in de)
@@ -1034,6 +1060,10 @@ def lista_compra(dias, plan_b, cocina_dia=()):
                     if k in ("cacahuete", "almendra", "maranon", "nuez", "avellana", "pistacho", "chia", "tahini", "mostaza"): continue
                     q, u = POR_RACION_FRUTA.get(k, (25, "g"))
                     suma(d, ALIMENTOS[k]["n"], q, u, ALIMENTOS[k]["sec"], "fruta del día" if ALIMENTOS[k]["cat"] == "fru" else "en el plato, al natural"); continue
+                if rec == "tm":   # Thermomix: lo de la toma, en crudo
+                    a = ALIMENTOS[i["k"]]
+                    nom = TM_PROD.get(i["k"]) or a["n"].split(" (")[0].lower()
+                    suma(d, nom, i.get("crudo") or 0, "g", a.get("sec") or "Frutas y verduras", "comida en la Thermomix"); continue
                 r = RECETAS.get(rec)
                 if not r or i.get("lote") == "dia" or (i.get("origen") or "").startswith(("Del batch", "Cocinar hoy (sesión", "Sobra de lo cocinado")):
                     continue

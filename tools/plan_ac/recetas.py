@@ -569,3 +569,12 @@ VIAJE_REC = {
         {"pollo", "trigo_pasta", "papa", "zanahoria", "ahuyama"}, True, True),
 }
 RECETAS.update(VIAJE_REC)
+
+# ------------------------------------------------------------ thermomix
+# Peticion de la familia (7-11-2026): desde el 8-11, almuerzo y cena con cada
+# alimento por separado (nada de «lentejas con zanahoria») y todo cocinado a
+# la vez en la Thermomix. La receta de cada comida la arma la app con los
+# alimentos de ese dia (vaso, cestillo y Varoma).
+RECETAS["tm"] = R("Cocinado en la Thermomix (todo a la vez)", 1, [],
+    ["La receta de esta comida está en «Cocina de hoy»: todos los alimentos a la vez en la Thermomix, cada uno por separado."],
+    None, None, set(), False, False)
