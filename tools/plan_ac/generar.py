@@ -24,7 +24,7 @@ INDEX = os.path.join(RAIZ, "index.html")
 
 NACE = dt.date(2026, 3, 5)
 INICIO_AC = dt.date(2026, 9, 5)          # dia 1 del plan
-HOY_PLAN = dt.date(2026, 11, 8)          # primer dia que se regenera (Thermomix y cada alimento por separado; antes, 30-10)
+HOY_PLAN = dt.date(2026, 11, 7)          # primer dia que se regenera: empieza de cero, sin nada congelado (7-11-2026)
 FIN = dt.date(2027, 6, 2)                # ultimo dia del plan (FECHA_FIN en la app)
 # Tres comidas (desayuno, almuerzo y cena) desde el 21-10-2026, a peticion de
 # la familia (antes, el 5 de noviembre, a los 8 meses). La variable conserva
@@ -300,7 +300,7 @@ FORZAR_CENA = {"2026-10-26": "cena-pollo-horno"}   # «para hoy, algo con pollo�
 VIAJE = (dt.date(2026, 10, 31), dt.date(2026, 11, 3))
 # Desde el 8-11 (peticion de la familia, 7-11-2026): almuerzo y cena con cada
 # alimento por separado, cocinados a la vez en la Thermomix (rec «tm»).
-TM_DESDE = dt.date(2026, 11, 8)
+TM_DESDE = dt.date(2026, 11, 7)
 TM_PROT = ["pollo", "res", "pescado_blanco", "salmon", "lenteja", "garbanzo", "arveja", "huevo", "pavo", "cerdo", "tofu", "camaron"]
 TM_HAR = ["papa", "batata", "yuca", "trigo_pasta", "arroz", "quinua", "name", "arracacha", "platano_macho"]
 LEG_BOTE = {"lenteja", "garbanzo"}
@@ -1446,7 +1446,10 @@ def main():
     bt = Batch({x["k"]: dt.date.fromisoformat(x["fecha"]) for x in intro})
     viejo_batch = [b for b in viejo.get("batch", []) if b["fecha"] < iso(HOY_PLAN)]
     viejo_cd = [c for c in viejo.get("cocinaDia", []) if c["fecha"] < iso(HOY_PLAN)]
-    bt.sembrar(viejo_batch + [dict(fecha=c["fecha"], cocinar=[c]) for c in viejo_cd])
+    # Desde el 7-11 se empieza de cero: no queda nada congelado de antes (la familia).
+    SIN_STOCK_DESDE = dt.date(2026, 11, 7)
+    if HOY_PLAN < SIN_STOCK_DESDE:
+        bt.sembrar(viejo_batch + [dict(fecha=c["fecha"], cocinar=[c]) for c in viejo_cd])
     dias = generar_menus(intro, por_dia, bt, semilla_historia(historia))
     batch = marcar_dias(dias, bt, plan_batch(dias, bt))
     cocina_dia = plan_cocina_dia(bt)
