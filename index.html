@@ -6367,6 +6367,43 @@
     .pb-app .pd-item:last-child { border-bottom: 0; }
     .pb-app .pd-item-cab { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.9375rem; }
     .pb-app summary.pd-item-cab { list-style: none; cursor: pointer; padding: 2px 0; }
+    /* Una comida de arriba abajo (pdComida) */
+    .pb-app .pdc { padding: 2px 0 6px; }
+    .pb-app .pdc-sec { font-size: 0.6875rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); margin: 12px 0 6px; }
+    .pb-app .pdc-platos { display: flex; flex-direction: column; gap: 6px; }
+    .pb-app .pdc-plato { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; }
+    .pb-app .pdc-plato.nuevo { border-color: var(--purple); box-shadow: 0 0 0 1px var(--purple-soft) inset; }
+    .pb-app .pdc-plato > summary { list-style: none; display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; }
+    .pb-app .pdc-plato > summary::-webkit-details-marker { display: none; }
+    .pb-app .pdc-ico { font-size: 1.5rem; line-height: 1; width: 1.8rem; text-align: center; flex: none; }
+    .pb-app .pdc-nom { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .pb-app .pdc-nom b { font-size: 0.9375rem; line-height: 1.25; }
+    .pb-app .pdc-sub { font-size: 0.78rem; color: var(--text-muted); }
+    .pb-app .pdc-sub.frio { color: #2f6fb3; }
+    .pb-app .pdc-sub.hoy { color: var(--green); }
+    .pb-app .pdc-postre { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); }
+    .pb-app .pdc-tags { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+    .pb-app .pdc-chev { color: var(--text-muted); font-size: 1.25rem; transition: transform .15s; }
+    .pb-app .pdc-plato[open] .pdc-chev { transform: rotate(90deg); }
+    .pb-app .pdc-det { padding: 0 12px 10px 50px; font-size: 0.84rem; line-height: 1.45; display: flex; flex-direction: column; gap: 4px; }
+    .pb-app .pdc-det span { display: block; font-size: 0.6875rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+    .pb-app .pdc-receta { color: var(--green); font-weight: 600; }
+    .pb-app .pdc-nuevo { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--purple-soft); color: var(--text); font-size: 0.875rem; }
+    .pb-app .pdc-pasos { margin: 0; padding-left: 22px; font-size: 0.875rem; line-height: 1.5; }
+    .pb-app .pdc-pasos li { margin: 4px 0; padding-left: 2px; }
+    .pb-app .pdc-pasos li::marker { font-weight: 800; color: var(--text-muted); }
+    .pb-app .pdc-reac { display: flex; flex-direction: column; }
+    .pb-app .pdc-reac-fila { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .pb-app .pdc-reac-fila:last-child { border-bottom: 0; }
+    .pb-app .pdc-reac-nom { font-size: 0.875rem; font-weight: 600; display: flex; flex-direction: column; min-width: 0; }
+    .pb-app .pdc-reac-nom small { font-weight: 400; font-size: 0.72rem; color: var(--text-muted); }
+    .pb-app .pdc-reac-btns { display: flex; gap: 4px; flex: none; }
+    .pb-app .pdc-reac-btns button { border: 1px solid var(--border); background: var(--bg-card); border-radius: 999px; width: 40px; height: 34px; font-size: 1rem; cursor: pointer; filter: grayscale(.6); opacity: .75; }
+    .pb-app .pdc-reac-btns button.on { filter: none; opacity: 1; }
+    .pb-app .pdc-leyenda { font-weight: 500; letter-spacing: 0; text-transform: none; margin-left: 6px; }
+    .pb-app .pdc-reac-btns button.on.tolerado { background: var(--green-soft); color: var(--green); border-color: transparent; }
+    .pb-app .pdc-reac-btns button.on.rechazo { background: var(--amber-soft); color: var(--amber); border-color: transparent; }
+    .pb-app .pdc-reac-btns button.on.reaccion { background: var(--red-soft); color: var(--red); border-color: transparent; }
     .pb-app .pd-g { font-weight: 600; color: var(--text); background: var(--line-soft, rgba(0,0,0,.05)); border-radius: 999px; padding: 1px 8px; font-size: 0.8125rem; }
     .pb-app .pd-org { font-size: 0.75rem; color: var(--text-muted); border: 1px solid var(--border); border-radius: 999px; padding: 0 7px; }
     .pb-app .pd-org.hoy { color: var(--green); border-color: currentColor; }
@@ -8676,7 +8713,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "421";
+const NIBLO_BUILD = "422";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -12215,98 +12252,112 @@ function pdOrigenCorto(it) {
   if (/^Preparar al momento/.test(o)) return { t: "al momento", c: "" };
   return o ? { t: o, c: "" } : null;
 }
-/* ---- Cómo servir (antes «Cómo montar el plato») ------------------------
-   Petición de la familia (26-10-2026): «Qué le toca hoy» repetía lo mismo
-   tres veces (preparación, bandeja con la forma de cada cosa y la ficha de
-   cada alimento con su receta). Ahora cada cosa sale una vez: las recetas,
-   solo en «Cocina de hoy»; la forma y la cantidad, en la fila de cada
-   alimento; y aquí, solo lo que hay que hacer al servir. */
-function pdMontaje(dia, s, its) {
+/* ---- Una comida, de arriba abajo (petición de la familia, 7-11-2026) ----
+   «Muy enrevesado, sin lógica en el orden». Ahora cada comida dice, por
+   este orden: 1) En el plato: un plato por fila (lo que va dentro de una
+   receta, en su misma fila), con gramos y de dónde sale; al tocarlo, cómo se
+   le da; 2) el alimento nuevo, destacado; 3) Cómo darlo: pocos pasos
+   numerados; 4) ¿Cómo le fue?: una fila por alimento con botones pequeños. */
+const PD_EMOJI = { pollo: "🍗", res: "🥩", cerdo: "🥩", pavo: "🍗", pescado_blanco: "🐟", salmon: "🐟", atun: "🐟", camaron: "🦐",
+  lenteja: "🫘", garbanzo: "🫘", frijol: "🫘", arveja: "🫛", tofu: "🧈", huevo: "🥚", yogur: "🥛", queso: "🧀",
+  papa: "🥔", batata: "🍠", yuca: "🥔", trigo_pasta: "🍝", pan: "🍞", avena: "🥣", arroz: "🍚", maiz: "🫓", quinua: "🍚",
+  zanahoria: "🥕", ahuyama: "🎃", calabacin: "🥒", habichuela: "🫛", brocoli: "🥦", coliflor: "🥦", tomate: "🍅", pepino: "🥒",
+  aguacate: "🥑", banano: "🍌", manzana: "🍎", pera: "🍐", papaya: "🥭", mango: "🥭", fresa: "🍓", uva: "🍇", kiwi: "🥝",
+  mandarina: "🍊", pina: "🍍", melon: "🍈", patilla: "🍉", durazno: "🍑", cacahuete: "🥜", tahini: "🥜" };
+const PD_EMOJI_CAT = { prot: "🍽️", har: "🥔", ver: "🥕", gra: "🥑", fru: "🍎" };
+function pdComida(dia, s, its, marcarFn) {
   const comida = its.filter(it => it.cat && it.cat !== "agua");
   if (!comida.length) return "";
   const R = rid => (PLAN_DOC.recetas || {})[rid] || {};
   const minus = t => t.charAt(0).toLowerCase() + t.slice(1);
   const lista = a => a.length > 1 ? a.slice(0, -1).join(", ") + " y " + a[a.length - 1] : (a[0] || "");
-  const vistos = new Set(), recalentar = [], hoy = [], cortar = [];
-  for (const it of comida) {
-    if (!it.rec || vistos.has(it.rec + "|" + (PD_GENERICAS.has(it.rec) ? it.k : ""))) continue;
-    vistos.add(it.rec + "|" + (PD_GENERICAS.has(it.rec) ? it.k : ""));
-    const o = it.origen || "", tit = R(it.rec).titulo || pdNombreCorto(it);
-    if (/^(Del batch|Sobra)/.test(o)) recalentar.push(tit + (/congelador/.test(o) ? " (del congelador, pasado a la nevera anoche)" : ""));
-    else if (/^Cocinar hoy/.test(o)) hoy.push(it.rec.startsWith("simple-") || PD_GENERICAS.has(it.rec.split("~")[0]) ? pdNombreCorto(it) : tit);
-    else if (it.rec.startsWith("simple-")) cortar.push(minus(pdNombreCorto(it)));
-  }
-  const enPlato = comida.filter(it => it.cat !== "fru" && !/\(va (dentro de|en) /.test(it.nombre || ""));
+  const dentroDe = it => /\(va (dentro de|en) /.test(it.nombre || "");
   const principal = s === "c" || s === "ce";
-  const base = enPlato.filter(it => ["prot", "har", "ver"].includes(it.cat)).map(it => minus(pdNombreCorto(it)));
-  const grasa = enPlato.filter(it => it.cat === "gra").map(it => minus(pdNombreCorto(it)));
-  const salsa = comida.some(it => /crema|salsa|guiso/i.test(R(it.rec).titulo || ""));
-  const cuchara = principal && base.length
-    ? `${base.length > 1 ? `chafa juntos ${esc(lista(base))}` : `chafa ${esc(base[0])}`} con el tenedor y un poco de agua${salsa ? " o de su salsa" : ""} (con grumos, no liso)${grasa.length ? `; al final, ${esc(lista(grasa))}` : ""}.`
-    : "";
-  const frutas = comida.filter(it => it.cat === "fru");
-  const nuevo = comida.find(it => it.nuevoPlan && it.nuevoDia === 1);
-  const mezcla = it => it.notaPlan && /^Mézcl/i.test(it.notaPlan);
-  const notas = comida.filter(it => it.notaPlan && !/^(En la avena|En capa|Tahini|Remojada)/.test(it.notaPlan));
-  const li = [];
-  if (hoy.length) li.push(`<b>Recién hecho</b> (receta arriba, en «Cocina de hoy»): ${esc(lista(hoy))}.`);
-  if (recalentar.length) li.push(`<b>Recalienta</b> hasta que humee por dentro y deja templar: ${esc(lista(recalentar))}.`);
-  if (cortar.filter(x => !frutas.some(f => minus(pdNombreCorto(f)) === x)).length)
-    li.push(`<b>Corta al servir</b>: ${esc(lista(cortar.filter(x => !frutas.some(f => minus(pdNombreCorto(f)) === x))))}.`);
-  if (principal || enPlato.length) li.push(`<b>Para la mano</b>: cada cosa por separado, 2-3 trozos y repón (toca cada alimento para ver cómo se le da).`);
-  if (cuchara) li.push(`<b>A cuchara</b>, si le cuesta: aparta un poco antes de servir y ${cuchara}`);
-  if (frutas.length) li.push(`<b>${principal ? "De postre" : "Fruta"}</b>: ${esc(lista(frutas.map(f => minus(pdNombreCorto(f)) + (pdGramos(f) ? " " + pdGramos(f) : ""))))}, cortada al momento.`);
-  if (nuevo) li.push(`<b>El nuevo (${esc(pdNombreCorto(nuevo))})</b>: primer día. Ofrécelo primero, que se vea bien, y fíjate en cómo le sienta.`);
-  notas.forEach(it => li.push(`<b>Hoy</b>: ${esc(it.notaPlan)}`));
-  return `<ul class="pd-servir">${li.map(x => `<li>${x}</li>`).join("")}</ul>`;
-}
-function pdItem(dia, it, marcarFn, recetaAqui, bloque) {
+  /* 1) Platos: lo que comparte receta va junto. */
+  const grupos = new Map();
+  for (const it of comida) {
+    const clave = it.rec && !it.rec.startsWith("simple-") ? it.rec : (it.rec || it.k);
+    if (!grupos.has(clave)) grupos.set(clave, []);
+    grupos.get(clave).push(it);
+  }
+  const orden = { prot: 0, har: 1, ver: 2, gra: 3, fru: 4 };
+  const platos = [...grupos.values()].map(g => {
+    const main = g.find(x => !dentroDe(x)) || g[0];
+    const dentro = g.filter(x => x !== main);
+    const tit = dentro.length && R(main.rec).titulo ? R(main.rec).titulo : pdNombreCorto(main);
+    return { main, dentro, tit };
+  }).sort((a, b) => orden[a.main.cat] - orden[b.main.cat]);
   const meses = dia.edadMeses;
-  const r = (PLAN_DOC.recetas || {})[it.rec] || {};
-  const al = it.k && (PLAN_DOC.alimentos || {})[it.k] ? PLAN_DOC.alimentos[it.k].al : null;
-  const blw = r.blw || pdFormato(it.k, meses, "blw");
-  const cuch = r.cuchara || pdFormato(it.k, meses, "cuch");
-  const nuevo = it.nuevoPlan;
-  /* «Huevo (va dentro de la tortita)», «Papa (va en las tortitas)»: es un
-     ingrediente de otra receta; la forma de darlo es la de esa receta. */
-  const dentro = /\(va (dentro de|en) /.test(it.nombre || "");
-  const notaAl = it.k && (PLAN_DOC.alimentos || {})[it.k] ? PLAN_DOC.alimentos[it.k].nota : null;
-  const marcaId = it.id;
-  const marca = marcaId ? marcaDelDia(marcaId, dia.fecha) : null;
-  const est = marca ? (bloque ? porComidaDe(marca, dia, marcaId)[bloque] || null : marca.resultado) : null;
-  /* Si el alimento ya esta marcado en otra comida de hoy, se dice: asi no
-     parece que esta este sin marcar ni que este se haya marcado solo. */
-  const otras = marca && bloque ? Object.entries(porComidaDe(marca, dia, marcaId)).filter(([b]) => b !== bloque) : [];
+  const filaPlato = ({ main, dentro, tit }) => {
+    const r = R(main.rec);
+    const blw = r.blw || pdFormato(main.k, meses, "blw");
+    const cuch = r.cuchara || pdFormato(main.k, meses, "cuch");
+    const notaAl = main.k && (PLAN_DOC.alimentos || {})[main.k] ? PLAN_DOC.alimentos[main.k].nota : null;
+    const g = pdGramos(main), org = pdOrigenCorto(main);
+    const nuevo = [main, ...dentro].find(x => x.nuevoPlan);
+    const al = [main, ...dentro].map(x => x.k && (PLAN_DOC.alimentos || {})[x.k] ? PLAN_DOC.alimentos[x.k].al : null).filter(Boolean);
+    const postre = main.cat === "fru" && principal;
+    const sub = [g, org && org.t].filter(Boolean).join(" · ");
+    return `<details class="pdc-plato${nuevo ? " nuevo" : ""}">
+      <summary><span class="pdc-ico" aria-hidden="true">${PD_EMOJI[main.k] || PD_EMOJI_CAT[main.cat] || "🍽️"}</span>
+        <span class="pdc-nom">${postre ? `<small class="pdc-postre">De postre</small>` : ""}<b>${esc(tit)}</b>
+          ${sub ? `<small class="pdc-sub${org ? " " + org.c : ""}">${esc(sub)}</small>` : ""}</span>
+        <span class="pdc-tags">${nuevo ? `<span class="pd-tag nuevo">${nuevo.nuevoDia === 1 ? "NUEVO" : "NUEVO · día " + nuevo.nuevoDia}</span>` : ""}${
+          al.length ? `<span class="pd-tag al">${esc([...new Set(al)].join(", "))}</span>` : ""}</span>
+        <span class="pdc-chev" aria-hidden="true">&#8250;</span></summary>
+      <div class="pdc-det">
+        ${blw ? `<div><span>Con la mano</span>${esc(blw)}</div>` : ""}
+        ${cuch ? `<div><span>A cuchara</span>${esc(cuch)}</div>` : ""}
+        ${main.notaPlan ? `<div><span>Nota</span>${esc(main.notaPlan)}</div>` : ""}
+        ${notaAl ? `<div><span>Ojo</span>${esc(notaAl)}</div>` : ""}
+        ${main.cantidad && main.cantidad !== g ? `<div><span>Cuánto</span>${esc(main.cantidad)}</div>` : ""}
+        ${/^Cocinar hoy/.test(main.origen || "") && !String(main.rec || "").startsWith("simple-") ? `<div class="pdc-receta">La receta, arriba, en «🍳 Cocina de hoy».</div>` : ""}
+      </div></details>`;
+  };
+  /* 2) El nuevo. */
+  const nuevo = comida.find(it => it.nuevoPlan && it.nuevoDia === 1);
+  /* 3) Pasos. */
+  const recalentar = [], hoy = [];
+  for (const { main, tit } of platos) {
+    const o = main.origen || "";
+    if (/^(Del batch|Sobra)/.test(o)) recalentar.push(tit + (/congelador/.test(o) ? " (pasado a la nevera anoche)" : ""));
+    else if (/^Cocinar hoy|^Hacer allí/.test(o) && main.cat !== "fru" && main.cat !== "gra") hoy.push(tit);
+  }
+  const enPlato = platos.filter(p => p.main.cat !== "fru");
+  const frutas = platos.filter(p => p.main.cat === "fru");
+  const base = enPlato.flatMap(p => [p.main, ...p.dentro]).filter(it => ["prot", "har", "ver"].includes(it.cat))
+    .map(it => minus(pdNombreCorto(it).replace(/\s*\(va [^)]*\)/, "")));
+  const pasos = [];
+  if (recalentar.length) pasos.push(`<b>Recalienta</b> hasta que humee por dentro y deja templar: ${esc(lista(recalentar))}.`);
+  if (hoy.length) pasos.push(`<b>Ten listo lo de hoy</b>: ${esc(lista(hoy))} (receta en «🍳 Cocina de hoy»).`);
+  if (enPlato.length) pasos.push(`<b>Sírvelo en la bandeja</b>, cada cosa por separado: 2-3 trozos y repón. Toca cada plato para ver cómo se le da.`);
+  if (principal && base.length) pasos.push(`<b>Si le cuesta</b>, aparta un poco y chafa ${base.length > 1 ? `juntos ${esc(lista(base))}` : esc(base[0])} con un poco de agua (con grumos, no liso).`);
+  if (frutas.length) pasos.push(`<b>${principal ? "Al final, la fruta" : "La fruta"}</b>, cortada al momento.`);
+  if (principal) pasos.push(`<b>Agua</b> en vaso abierto.`);
+  comida.filter(it => it.notaPlan && /^Mézcl/i.test(it.notaPlan)).forEach(it => pasos.push(`<b>Hoy</b>: ${esc(it.notaPlan)}`));
+  /* 4) ¿Cómo le fue? */
   const pauta = pdPauta(dia.fecha);
   const et = b => (pauta && pauta.bloques[b] ? pauta.bloques[b].et.toLowerCase() : b);
-  const RES_TXT = { tolerado: "tolerado", rechazo: "rechazo", reaccion: "reacción" };
-  const fn = (r) => bloque ? `PB.marcarComida('${marcaId}','${r}','${dia.fecha}','${bloque}','${/Drawer/.test(marcarFn) ? "drawer" : "hoy"}')` : `${marcarFn}('${marcaId}','${r}')`;
-  /* Todo lo de debajo del nombre, en un desplegable cerrado por defecto
-     (petición de la familia, 21-10-2026); «¿Cómo le fue?» queda a la vista. */
-  /* Una fila por alimento: nombre, gramos y de dónde sale; la forma de
-     darlo y las notas, en el desplegable. Las recetas ya no salen aquí: están
-     en «Cocina de hoy» (petición de la familia, 26-10-2026). */
-  const g = pdGramos(it), org = dentro ? null : pdOrigenCorto(it);
-  const hayDet = !dentro && (blw || cuch || it.notaPlan || notaAl || (it.cantidad && it.cantidad !== g));
-  const cab = `<b>${esc(it.nombre)}</b>${g ? ` <span class="pd-g">${esc(g)}</span>` : ""}
-      ${nuevo ? `<span class="pd-tag nuevo">${it.nuevoDia === 1 ? "NUEVO" : `NUEVO · día ${it.nuevoDia}`}</span>` : ""}
-      ${al ? `<span class="pd-tag al">ALÉRGENO: ${esc(al)}</span>` : ""}
-      ${org ? `<span class="pd-org ${org.c}">${esc(org.t)}</span>` : ""}`;
-  return `<div class="pd-item${nuevo ? " nuevo" : ""}${dentro ? " dentro" : ""}">
-    ${hayDet ? `<details class="pd-item-det"><summary class="pd-item-cab">${cab}
-      <span class="pd-item-chev" aria-hidden="true">&#8250;</span>
-    </summary>
-    ${it.cantidad && it.cantidad !== g ? `<div class="pd-linea"><span>Cuánto</span>${esc(it.cantidad)}</div>` : ""}
-    ${blw ? `<div class="pd-linea"><span>Mano</span>${esc(blw)}</div>` : ""}
-    ${cuch ? `<div class="pd-linea"><span>Cuchara</span>${esc(cuch)}</div>` : ""}
-    ${it.notaPlan ? `<div class="pd-linea"><span>Nota</span>${esc(it.notaPlan)}</div>` : ""}
-    ${notaAl ? `<div class="pd-linea"><span>Ojo</span>${esc(notaAl)}</div>` : ""}
-    </details>` : `<div class="pd-item-cab">${cab}</div>`}
-    ${marcaId ? `<div class="pd-reac"><span>¿Cómo le fue?</span><div class="seg-btns">
-        <button type="button" class="${est === 'tolerado' ? 'on tolerado' : ''}" onclick="${fn('tolerado')}" aria-pressed="${est === 'tolerado'}">Tolerado</button>
-        <button type="button" class="${est === 'rechazo' ? 'on rechazo' : ''}" onclick="${fn('rechazo')}" aria-pressed="${est === 'rechazo'}">Rechazo</button>
-        <button type="button" class="${est === 'reaccion' ? 'on reaccion' : ''}" onclick="${fn('reaccion')}" aria-pressed="${est === 'reaccion'}">Reacción</button>
-      </div>${otras.length ? `<div class="pd-reac-otra">Hoy también: ${otras.map(([b, r]) => `${esc(et(b))}, ${RES_TXT[r] || r}`).join(" · ")}</div>` : ""}</div>` : ""}
+  const RES = [["tolerado", "👍", "Bien"], ["rechazo", "✋", "No quiso"], ["reaccion", "⚠️", "Reacción"]];
+  const filasReac = [];
+  for (const { main, dentro } of platos) {
+    for (const it of [main, ...dentro]) {
+      if (!it.id) continue;
+      const marca = marcaDelDia(it.id, dia.fecha);
+      const est = marca ? porComidaDe(marca, dia, it.id)[s] || null : null;
+      const otras = marca ? Object.entries(porComidaDe(marca, dia, it.id)).filter(([b]) => b !== s) : [];
+      const fn = r => `PB.marcarComida('${it.id}','${r}','${dia.fecha}','${s}','${/Drawer/.test(marcarFn) ? "drawer" : "hoy"}')`;
+      filasReac.push(`<div class="pdc-reac-fila"><span class="pdc-reac-nom">${esc(pdNombreCorto(it).replace(/\s*\(va [^)]*\)/, ""))}${
+        otras.length ? `<small>hoy también: ${otras.map(([b]) => esc(et(b))).join(", ")}</small>` : ""}</span>
+        <span class="pdc-reac-btns">${RES.map(([v, e, t]) => `<button type="button" class="${est === v ? "on " + v : ""}" onclick="${fn(v)}" aria-pressed="${est === v}" title="${t}" aria-label="${t}">${e}</button>`).join("")}</span></div>`);
+    }
+  }
+  return `<div class="pdc">
+    <div class="pdc-sec">En el plato</div>
+    <div class="pdc-platos">${platos.map(filaPlato).join("")}</div>
+    ${nuevo ? `<div class="pdc-nuevo">🆕 <b>${esc(pdNombreCorto(nuevo))}: primer día.</b> Ofrécelo primero, que se vea bien, y fíjate en cómo le sienta.</div>` : ""}
+    ${pasos.length ? `<div class="pdc-sec">Cómo darlo</div><ol class="pdc-pasos">${pasos.map(x => `<li>${x}</li>`).join("")}</ol>` : ""}
+    ${filasReac.length ? `<div class="pdc-sec">¿Cómo le fue? <span class="pdc-leyenda">👍 bien · ✋ no quiso · ⚠️ reacción</span></div><div class="pdc-reac">${filasReac.join("")}</div>` : ""}
   </div>`;
 }
 function pdBiberon(dia, s, meta, tomasObj) {
@@ -12393,21 +12444,10 @@ function htmlPlanDia(dia, marcarFn) {
       <summary class="pd-bloque-cab"><span class="pd-bloque-tit">${esc(meta.et)}</span><span class="pd-bloque-hora">${esc(meta.hora)}</span><span class="pd-bloque-chev" aria-hidden="true">&#8250;</span></summary>
       ${meta.nota ? `<p class="pd-nota">${esc(meta.nota)}</p>` : ""}`;
     if (comida) {
-      html += pdMontaje(dia, s, its);
-      /* receta debajo del último alimento que la usa en este bloque */
-      const ultimoDe = {};
-      its.forEach((it, i) => { if (it.rec) ultimoDe[it.rec] = i; });
-      for (const cat of PD_ORDEN_CAT) {
-        const grupo = its.map((it, i) => ({ it, i })).filter(x => x.it.cat === cat);
-        if (!grupo.length) continue;
-        html += `<div class="pd-cat"><div class="pd-cat-tit">${PD_CAT[cat]}</div>
-          ${grupo.map(({ it, i }) => pdItem(dia, it, marcarFn, ultimoDe[it.rec] === i, s)).join("")}</div>`;
-      }
-      if (its.some(it => it.cat === "agua")) html += `<div class="pd-agua">Agua en vaso abierto.</div>`;
+      html += pdComida(dia, s, its, marcarFn);
       html += s === "c" ? `<div class="pd-sin">${meta.fruta ? "Sin biberón" : "Sin fruta ni biberón"}</div>` : pdBiberon(dia, s, meta, tomasObj);
     } else {
-      const frutas = its.filter(it => it.cat === "fru");
-      if (frutas.length) html += `<div class="pd-cat"><div class="pd-cat-tit">Fruta${s === "mm" ? " (pequeña)" : ""}</div>${frutas.map(it => pdItem(dia, it, marcarFn, true, s)).join("")}</div>`;
+      if (its.some(it => it.cat === "fru")) html += pdComida(dia, s, its.filter(it => it.cat === "fru"), marcarFn);
       html += pdBiberon(dia, s, meta, tomasObj);
     }
     html += `</details>`;
