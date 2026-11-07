@@ -8724,7 +8724,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "424";
+const NIBLO_BUILD = "425";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -12288,7 +12288,7 @@ function pdOrigenCorto(it) {
    giro inverso y velocidad cuchara) es la misma en TM5, TM6 y TM7. */
 const TM_ALT = 1.2;
 const TM_INFO = {
-  /* lugar: cestillo (en el agua del vaso) · recipiente (Varoma, abajo) · bandeja (Varoma, arriba) · vaso (después, en el agua) */
+  /* lugar: cestillo (dentro del vaso; se cuece con el vapor, el agua no lo cubre) · recipiente (Varoma, abajo) · bandeja (Varoma, arriba) · vaso (después, en el agua) */
   papa: { l: "cestillo", t: 20, prep: "Lávala, pélala y córtala en bastones del grosor de un dedo adulto.", f: 1 },
   batata: { l: "cestillo", t: 18, prep: "Lávala, pélala y córtala en bastones del grosor de un dedo adulto.", f: 1 },
   yuca: { l: "cestillo", t: 30, prep: "Pélala (también la capa rosada), quítale la fibra central y córtala en bastones.", f: 1 },
@@ -12326,7 +12326,7 @@ const TM_INFO = {
   garbanzo: { l: "bandeja", t: 6, prep: "De bote: escúrrelo y enjuágalo bajo el grifo 1-2 min (lleva sal). Ponlo en un cuenco pequeño apto para el Varoma.", f: 1, hierro: true, legumbre: true, entero: true },
   arveja: { l: "bandeja", t: 12, prep: "Desgranada o congelada, tal cual.", f: 1.1, hierro: true, legumbre: true, entero: true },
 };
-const TM_LUGAR = { cestillo: "cestillo (dentro del vaso, en el agua)", recipiente: "recipiente Varoma (abajo)", bandeja: "bandeja Varoma (arriba)", vaso: "vaso, después" };
+const TM_LUGAR = { cestillo: "cestillo (dentro del vaso)", recipiente: "recipiente Varoma (abajo)", bandeja: "bandeja Varoma (arriba)", vaso: "vaso, después" };
 function tmRecetaHTML(dia, s, its) {
   const pauta = pdPauta(dia.fecha);
   const meta = pauta && pauta.bloques[s];
@@ -12370,7 +12370,7 @@ function tmRecetaHTML(dia, s, its) {
     ...recalentar.map(it => `<tr><td>${esc(nomR(it))}</td><td>ya cocinado (${/congelador/.test(it.origen || "") ? "del congelador, pasado a la nevera anoche" : "de la nevera"})</td><td>${esc(pdGramos(it) || "1 ración")}</td></tr>`)].join("");
   /* 3) Montaje */
   const montaje = [];
-  if (por("cestillo").length) montaje.push(`<b>Cestillo</b> (en el agua del vaso): ${esc(lista(por("cestillo").map(it => minus(nom(it)))))}. Lo duro y que más tarda va donde más calor hay.`);
+  if (por("cestillo").length) montaje.push(`<b>Cestillo</b> (dentro del vaso): ${esc(lista(por("cestillo").map(it => minus(nom(it)))))}. Lo duro y que más tarda va aquí, lo más cerca del agua hirviendo. El agua <b>no lo cubre</b>: se cuece con el vapor.`);
   if (por("recipiente").length) montaje.push(`<b>Recipiente Varoma</b> (abajo): ${esc(lista(por("recipiente").map(it => minus(nom(it)))))}. La proteína cruda abajo, para que sus jugos no goteen sobre lo demás.`);
   if (por("bandeja").length || recalentar.length) montaje.push(`<b>Bandeja Varoma</b> (arriba): ${esc(lista([...por("bandeja").map(it => minus(nom(it))), ...recalentar.map(it => minus(R(it.rec).titulo || nom(it)) + " (a recalentar, en un cuenco)")]))}. Lo que se hace antes, arriba, donde llega menos vapor.`);
   if (enVaso.length) montaje.push(`<b>Vaso</b>, al final: ${esc(lista(enVaso.map(it => minus(nom(it)))))}, en la misma agua cuando saques el cestillo y el Varoma.`);
@@ -12380,7 +12380,7 @@ function tmRecetaHTML(dia, s, its) {
   const ces = por("cestillo").map(it => minus(nom(it)));
   add("—", `<b>Prepara y pesa</b> cada alimento como dice el punto 2. Ten a mano un cuenco pequeño apto para el Varoma${cocer.some(it => TM_INFO[it.k].legumbre && it.k !== "arveja") || recalentar.length ? " (para la legumbre o lo que se recalienta)" : ""} y la espátula.`);
   add("—", `<b>Agua</b>: pon <b>${agua} g de agua</b> en el vaso. Es la que hace el vapor${T > 30 ? " (más de 30 min de programa: por eso 750 g)" : ""}; sin sal.`);
-  if (ces.length) add("—", `<b>Cestillo</b>: mete ${esc(lista(ces))} en el cestillo y colócalo dentro del vaso. Se cuece sumergido en el agua, donde más calor hay.`);
+  if (ces.length) add("—", `<b>Cestillo</b>: mete ${esc(lista(ces))} en el cestillo y colócalo dentro del vaso. <b>Es normal que el agua no lo cubra</b>: no se hierve, se cuece con el vapor que sube del agua del fondo (como todo lo del Varoma, pero más cerca del calor). No añadas agua para taparlo: no hace falta y, si te pasas de la marca máxima del vaso, puede salirse al hervir. Para que se haga igual, corta los trozos del mismo tamaño y no aprietes el cestillo hasta arriba.`);
   add("—", `<b>Tapa del vaso</b>: ciérrala <b>sin el cubilete</b> (si no, el vapor no sube al Varoma).`);
   const desdeIni = [...metidos("recipiente").map(x => x + " (recipiente)"), ...metidos("bandeja").map(x => x + " (bandeja)")];
   add("—", `<b>Varoma</b>: ${desdeIni.length ? `pon desde el principio ${esc(lista(desdeIni))}; ` : ""}coloca el recipiente sobre la tapa del vaso, la bandeja encima y cierra con la tapa del Varoma. ${por("recipiente").length ? "Reparte la proteína en una sola capa, sin tapar todas las ranuras, para que pase el vapor." : "Deja ranuras libres para que pase el vapor."}`);
