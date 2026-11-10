@@ -8860,7 +8860,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "428";
+const NIBLO_BUILD = "429";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -9468,6 +9468,9 @@ function defaultState() {
     recordatorios: [],
     /* Pausas del registro diario: { id, ini, fin } (fin null = sigue en pausa). */
     pausasRegistro: [],
+    /* Casillas de la lista de la compra del menú (Cocina → Compra):
+       { id: "m8c_<sesión>_<producto>", ses, k, hecho }. Se sincronizan. */
+    compraMenu: [],
     /* Ficha de cada doctor por especialidad: "esp|doctor" -> { esp, doctor,
        centro, consultorio, direccion, telefonos } o { esp, doctor, borrado }.
        Manda sobre lo que sale de las visitas. */
@@ -10067,7 +10070,7 @@ function cerrarModal() {
    Cada registro lleva "mod" (cuando se creo o se edito) y los borrados dejan
    una lapida en STATE.borrados, para que borrar en un movil no reviva el
    registro desde el otro. */
-const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos", "recordatorios", "pausasRegistro"];
+const COLECCIONES = ["tomas", "sleep", "diapers", "growth", "pediatricVisits", "notes", "sintomas", "banos", "comprasLeche", "compras", "medicamentos", "recordatorios", "pausasRegistro", "compraMenu"];
 
 /* ---- Pausa del registro diario (petición de la familia, 29-10-2026) ----
    Cuando no se va a apuntar (viaje, unos días sin ganas…), el registro se
@@ -13019,8 +13022,24 @@ function m8Sesion(n) {
 
 /* ---- Cocina → Compra: lista de la semana con casillas ---- */
 const M8_SEC_EMO = { "Carne y pescado": "🥩", "Huevos y lácteos": "🥚", "Verdura": "🥕", "Fruta": "🍎", "Despensa": "🫙" };
+/* Las casillas van en STATE.compraMenu (colección sincronizada): lo que
+   marca un móvil lo ve el otro. Antes (v427-428) vivían en localStorage de
+   cada dispositivo; se pasan una vez a la colección. */
 function m8Marcados(ses) {
-  try { return new Set(JSON.parse(localStorage.getItem("niblo.m8.compra." + ses) || "[]")); } catch (e) { return new Set(); }
+  m8MigrarLocal(ses);
+  return new Set((STATE.compraMenu || []).filter(r => r && r.ses === ses && r.hecho).map(r => r.k));
+}
+function m8MigrarLocal(ses) {
+  let viejos = [];
+  try { viejos = JSON.parse(localStorage.getItem("niblo.m8.compra." + ses) || "[]"); } catch (e) { return; }
+  if (!viejos.length) return;
+  if (!STATE.compraMenu) STATE.compraMenu = [];
+  for (const k of viejos) {
+    const id = `m8c_${ses}_${k}`;
+    if (!STATE.compraMenu.some(r => r.id === id)) STATE.compraMenu.push(sellar({ id, ses, k, hecho: true }));
+  }
+  try { localStorage.removeItem("niblo.m8.compra." + ses); } catch (e) {}
+  guardarEstado();
 }
 function htmlM8Compra() {
   if (!M8_SES) M8_SES = m8SesionActual();
@@ -13042,9 +13061,14 @@ function htmlM8Compra() {
   </div>`;
 }
 function m8Marcar(ses, k) {
-  const h = m8Marcados(ses);
-  if (h.has(k)) h.delete(k); else h.add(k);
-  try { localStorage.setItem("niblo.m8.compra." + ses, JSON.stringify([...h])); } catch (e) {}
+  if (!STATE.compraMenu) STATE.compraMenu = [];
+  const id = `m8c_${ses}_${k}`;
+  const r = STATE.compraMenu.find(x => x.id === id);
+  /* Se desmarca cambiando «hecho» (no borrando): así, con dos móviles, gana
+     el último que tocó la casilla. */
+  if (r) { r.hecho = !r.hecho; sellar(r); }
+  else STATE.compraMenu.push(sellar({ id, ses, k, hecho: true }));
+  guardarEstado();
   renderCocina(document.getElementById("view-cocina"));
 }
 function m8Copiar() {
