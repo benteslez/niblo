@@ -6533,6 +6533,9 @@
     .pb-app .m8-ing li:last-child { border-bottom: 0; }
     .pb-app .m8-ing b { font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
     .pb-app details.m8-como-se { margin-top: 10px; }
+    .pb-app details.m8-receta { margin-top: 0; background: var(--bg-soft, var(--line-soft)); border-radius: 12px; padding: 10px 12px; }
+    .pb-app details.m8-receta .m8-sec:first-of-type { margin-top: 8px; }
+    .pb-app .m8-receta-nota { font-size: .8125rem; margin: 10px 0 0; }
     .pb-app details.m8-como-se summary { cursor: pointer; font-weight: 700; color: var(--blue); font-size: .9375rem; }
     .pb-app details.m8-como-se .m8-pasos { margin-top: 8px; }
     .pb-app .m8-reglas-l { margin: 0; padding-left: 18px; font-size: .875rem; line-height: 1.5; }
@@ -8860,7 +8863,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "430";
+const NIBLO_BUILD = "431";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -12869,9 +12872,16 @@ function m8Fila(d, slot, et, modo) {
   const det = [];
   if (p.base) {
     const recien = p.lote === d.f;
-    det.push(`<div class="m8-linea">🧊 <span><b>Base ${p.base}</b>, del lote del ${esc(fmtFechaCorta(p.lote))}. ${recien
-      ? "Recién cocinada hoy."
-      : "Pasada a la nevera anoche: recalienta hasta que humee, remueve bien y deja templar. Lo que sobre del plato, se tira."}</span></div>`);
+    /* La receta del lote, directamente en un desplegable (petición de la familia, 10-11-2026). */
+    const b = (m8SesionDe(p.lote).lote || {})[p.base];
+    if (b) det.push(`<details class="m8-como-se m8-receta"><summary>📖 Receta${b.pdf ? " · del PDF" : ""}</summary>
+      <div class="m8-sec">Ingredientes del lote <small>(${b.pdfRac && b.pdfRac > b.rac ? b.pdfRac : b.rac} raciones, orientativos)</small></div>
+      <ul class="m8-ing">${b.ing.map(([n, q]) => `<li><span>${esc(n)}</span><b>${esc(q)}</b></li>`).join("")}</ul>
+      <div class="m8-sec">Pasos</div>
+      <ol class="m8-pasos">${b.pasos.map(x => `<li>${esc(x)}</li>`).join("")}</ol>
+      ${b.mano.length ? `<div class="m8-sec">Para la mano, aparte</div><ul class="m8-ing">${b.mano.map(([t, n]) => `<li><span>${esc(capitalizar(t))}</span><b>× ${n}</b></li>`).join("")}</ul>` : ""}
+      <p class="faint m8-receta-nota">${recien ? "Se cocina hoy (día de cocinar)." : `Cocinada el ${esc(fmtFechaCorta(p.lote))} y congelada: recalienta la ración hasta que humee, remueve bien y deja templar. Lo que sobre del plato, se tira.`}</p>
+    </details>`);
   } else {
     det.push(`<div class="m8-linea">⏱ <span><b>${esc(p.tiempo)}</b>${p.src === "pdf" ? " · receta del PDF" : p.src === "pdf~" ? " · como la del PDF" : ""}</span></div>
       <ol class="m8-pasos">${p.pasos.map(x => `<li>${esc(x)}</li>`).join("")}</ol>`);
