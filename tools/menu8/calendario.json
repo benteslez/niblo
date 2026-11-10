@@ -1,0 +1,973 @@
+{
+ "_fuente": "«Menú semanal de Pablo (8 meses)», PDF aportado por la familia el 10-11-2026: tabla «Calendario día a día (10 nov 2026 – 10 mar 2027)», copiada tal cual.",
+ "dias": [
+  {
+   "fecha": "2026-11-10",
+   "f": "Mar 10 nov",
+   "cocinar": "Para hoy-dom 15 nov: A Res guisada con pimiento, cebolla, tomate, zanahoria y papa; B Pollo con auyama, calabacín y arracacha; C Tilapia con papa, brócoli y cebolla; D Pollo con lentejas, zanahoria, tomate y pasta",
+   "de": "Pancakes de banano, avena y huevo + papaya",
+   "c": "Tilapia con papa, brócoli y cebolla + lascas de tilapia + pera",
+   "ce": "Pollo con auyama, calabacín y arracacha + auyama asada + mango"
+  },
+  {
+   "fecha": "2026-11-11",
+   "f": "Mié 11 nov",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + pitahaya",
+   "c": "Res guisada con pimiento, cebolla, tomate, zanahoria y papa + bastones de papa + una pizca de parmesano + kiwi",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + banano"
+  },
+  {
+   "fecha": "2026-11-12",
+   "f": "Jue 12 nov",
+   "cocinar": "",
+   "de": "Avena con su fórmula + banano + naranja machacada",
+   "c": "Tilapia con papa, brócoli y cebolla + lascas de tilapia + fresas en cuartos",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + sandía"
+  },
+  {
+   "fecha": "2026-11-13",
+   "f": "Vie 13 nov",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + manzana cocida",
+   "c": "Res guisada con pimiento, cebolla, tomate, zanahoria y papa + bastones de papa + papaya",
+   "ce": "Pollo con auyama, calabacín y arracacha + auyama asada + pera"
+  },
+  {
+   "fecha": "2026-11-14",
+   "f": "Sáb 14 nov",
+   "cocinar": "",
+   "de": "NUEVO ALÉRGENO: avena con su fórmula + banano + crema de cacahuete diluida (único alimento nuevo del día)",
+   "c": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + mango",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + pitahaya"
+  },
+  {
+   "fecha": "2026-11-15",
+   "f": "Dom 15 nov",
+   "cocinar": "Para lun 16 nov-dom 22 nov: A Ternera con auyama, plátano maduro y cebolla; B Pollo con papa, zanahoria y arveja; C Salmón con batata y zanahoria; D Pollo con garbanzos, auyama y cebolla",
+   "de": "Huevo revuelto con tomate + bastones de papa + kiwi",
+   "c": "Pollo con auyama, calabacín y arracacha + auyama asada + banano",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + naranja machacada"
+  },
+  {
+   "fecha": "2026-11-16",
+   "f": "Lun 16 nov",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + fresas en cuartos",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + sandía",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + manzana cocida"
+  },
+  {
+   "fecha": "2026-11-17",
+   "f": "Mar 17 nov",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + papaya",
+   "c": "Salmón con batata y zanahoria + lascas de salmón + pera",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + mango"
+  },
+  {
+   "fecha": "2026-11-18",
+   "f": "Mié 18 nov",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + pitahaya",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + una pizca de parmesano + kiwi",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + banano"
+  },
+  {
+   "fecha": "2026-11-19",
+   "f": "Jue 19 nov",
+   "cocinar": "",
+   "de": "Avena con su fórmula + naranja machacada + crema de cacahuete diluida (mantener alérgeno)",
+   "c": "Salmón con batata y zanahoria + lascas de salmón + fresas en cuartos",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + sandía"
+  },
+  {
+   "fecha": "2026-11-20",
+   "f": "Vie 20 nov",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + manzana cocida",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + papaya",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + pera"
+  },
+  {
+   "fecha": "2026-11-21",
+   "f": "Sáb 21 nov",
+   "cocinar": "",
+   "de": "NUEVO ALÉRGENO: avena con su fórmula + banano + tahini diluida (único alimento nuevo del día)",
+   "c": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + mango",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + pitahaya"
+  },
+  {
+   "fecha": "2026-11-22",
+   "f": "Dom 22 nov",
+   "cocinar": "Para lun 23 nov-dom 29 nov: A Albóndigas blandas de res con calabacín, en salsa de tomate, con papa; B Pollo con batata, brócoli y cebolla; C Trucha con arracacha y habichuela; D Pollo con fríjol, plátano maduro y tomate",
+   "de": "Yogur Baby Gü natural con banano y avena + kiwi",
+   "c": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + banano",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + naranja machacada"
+  },
+  {
+   "fecha": "2026-11-23",
+   "f": "Lun 23 nov",
+   "cocinar": "",
+   "de": "Tortilla de huevo con calabacín + tiras de arepa sin sal + fresas en cuartos",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + sandía",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + manzana cocida"
+  },
+  {
+   "fecha": "2026-11-24",
+   "f": "Mar 24 nov",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + papaya",
+   "c": "Trucha con arracacha y habichuela + lascas de trucha + melón (nueva)",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + pera"
+  },
+  {
+   "fecha": "2026-11-25",
+   "f": "Mié 25 nov",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + mango",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + una pizca de parmesano + pitahaya",
+   "ce": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + kiwi"
+  },
+  {
+   "fecha": "2026-11-26",
+   "f": "Jue 26 nov",
+   "cocinar": "",
+   "de": "Avena con su fórmula + banano + tahini diluida (mantener alérgeno)",
+   "c": "Trucha con arracacha y habichuela + lascas de trucha + naranja machacada",
+   "ce": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + fresas en cuartos"
+  },
+  {
+   "fecha": "2026-11-27",
+   "f": "Vie 27 nov",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + sandía",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + manzana cocida",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + papaya"
+  },
+  {
+   "fecha": "2026-11-28",
+   "f": "Sáb 28 nov",
+   "cocinar": "",
+   "de": "NUEVO ALÉRGENO: avena con su fórmula + banano + crema de almendra diluida (único alimento nuevo del día)",
+   "c": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + pera",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + mango"
+  },
+  {
+   "fecha": "2026-11-29",
+   "f": "Dom 29 nov",
+   "cocinar": "Para lun 30 nov-dom 6 dic: A Res con arveja, zanahoria y arracacha; B Pollo con yuca, auyama y tomate; C Tilapia con yuca, tomate y pimiento; D Pollo con lentejas, calabacín y zanahoria",
+   "de": "Huevo revuelto con tomate + bastones de papa + pitahaya",
+   "c": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + kiwi",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + banano"
+  },
+  {
+   "fecha": "2026-11-30",
+   "f": "Lun 30 nov",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + naranja machacada",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + fresas en cuartos",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + sandía"
+  },
+  {
+   "fecha": "2026-12-01",
+   "f": "Mar 1 dic",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + manzana cocida",
+   "c": "Tilapia con yuca, tomate y pimiento + bastones de yuca + durazno (nueva)",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + papaya"
+  },
+  {
+   "fecha": "2026-12-02",
+   "f": "Mié 2 dic",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + pera",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + una pizca de parmesano + mango",
+   "ce": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + pitahaya"
+  },
+  {
+   "fecha": "2026-12-03",
+   "f": "Jue 3 dic",
+   "cocinar": "",
+   "de": "Avena con su fórmula + kiwi + crema de cacahuete diluida (mantener alérgeno)",
+   "c": "Tilapia con yuca, tomate y pimiento + bastones de yuca + banano",
+   "ce": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + naranja machacada"
+  },
+  {
+   "fecha": "2026-12-04",
+   "f": "Vie 4 dic",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + fresas en cuartos",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + sandía",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + manzana cocida"
+  },
+  {
+   "fecha": "2026-12-05",
+   "f": "Sáb 5 dic",
+   "cocinar": "",
+   "de": "NUEVO ALÉRGENO: avena con su fórmula + banano + crema de anacardo diluida (único alimento nuevo del día)",
+   "c": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + papaya",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + pera"
+  },
+  {
+   "fecha": "2026-12-06",
+   "f": "Dom 6 dic",
+   "cocinar": "Para lun 7 dic-dom 13 dic: A Lomo de cerdo con manzana, cebolla y batata; B Pollo con quinoa, calabacín y zanahoria; C Salmón con papa, coliflor y cebolla; D Pollo con lentejas, zanahoria, tomate y pasta",
+   "de": "Yogur Baby Gü natural con banano y avena + mango",
+   "c": "Pollo con yuca, auyama y tomate + bastones de yuca + pitahaya",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + kiwi"
+  },
+  {
+   "fecha": "2026-12-07",
+   "f": "Lun 7 dic",
+   "cocinar": "",
+   "de": "Tortilla de huevo con calabacín + tiras de arepa sin sal + banano",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + naranja machacada",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + fresas en cuartos"
+  },
+  {
+   "fecha": "2026-12-08",
+   "f": "Mar 8 dic",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + sandía",
+   "c": "Salmón con papa, coliflor y cebolla + ramitos de coliflor + arándanos aplastados (nueva)",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + manzana cocida"
+  },
+  {
+   "fecha": "2026-12-09",
+   "f": "Mié 9 dic",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + papaya",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + una pizca de parmesano + pera",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + mango"
+  },
+  {
+   "fecha": "2026-12-10",
+   "f": "Jue 10 dic",
+   "cocinar": "",
+   "de": "Avena con su fórmula + pitahaya + crema de anacardo diluida (mantener alérgeno)",
+   "c": "Salmón con papa, coliflor y cebolla + ramitos de coliflor + kiwi",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + banano"
+  },
+  {
+   "fecha": "2026-12-11",
+   "f": "Vie 11 dic",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + naranja machacada",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + fresas en cuartos",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + sandía"
+  },
+  {
+   "fecha": "2026-12-12",
+   "f": "Sáb 12 dic",
+   "cocinar": "",
+   "de": "NUEVO ALÉRGENO: yogur de soja natural sin azúcar con avena (único alimento nuevo del día)",
+   "c": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + manzana cocida",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + papaya"
+  },
+  {
+   "fecha": "2026-12-13",
+   "f": "Dom 13 dic",
+   "cocinar": "Para lun 14 dic-dom 20 dic: A Res con habichuela, papa y pimiento; B Pollo con arroz, zanahoria y pimiento; C Trucha con quinoa y calabacín; D Pollo con garbanzos, auyama y cebolla",
+   "de": "Huevo revuelto con tomate + bastones de papa + pera",
+   "c": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + mango",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + pitahaya"
+  },
+  {
+   "fecha": "2026-12-14",
+   "f": "Lun 14 dic",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + kiwi",
+   "c": "Res con habichuela, papa y pimiento + habichuela cocida blanda + banano",
+   "ce": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + naranja machacada"
+  },
+  {
+   "fecha": "2026-12-15",
+   "f": "Mar 15 dic",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + fresas en cuartos",
+   "c": "Trucha con quinoa y calabacín + lascas de trucha + guayaba sin semillas (nueva)",
+   "ce": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + sandía"
+  },
+  {
+   "fecha": "2026-12-16",
+   "f": "Mié 16 dic",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + manzana cocida",
+   "c": "Res con habichuela, papa y pimiento + habichuela cocida blanda + una pizca de parmesano + papaya",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + pera"
+  },
+  {
+   "fecha": "2026-12-17",
+   "f": "Jue 17 dic",
+   "cocinar": "",
+   "de": "Avena con su fórmula + mango + crema de cacahuete diluida (mantener alérgeno)",
+   "c": "Trucha con quinoa y calabacín + lascas de trucha + pitahaya",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + kiwi"
+  },
+  {
+   "fecha": "2026-12-18",
+   "f": "Vie 18 dic",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + banano",
+   "c": "Res con habichuela, papa y pimiento + habichuela cocida blanda + naranja machacada",
+   "ce": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + fresas en cuartos"
+  },
+  {
+   "fecha": "2026-12-19",
+   "f": "Sáb 19 dic",
+   "cocinar": "",
+   "de": "Avena con su fórmula + sandía + crema de almendra diluida (mantener alérgeno)",
+   "c": "NUEVO ALÉRGENO: gambas peladas y picadas con papa y calabacín (al momento; único nuevo del día) + manzana cocida",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + papaya"
+  },
+  {
+   "fecha": "2026-12-20",
+   "f": "Dom 20 dic",
+   "cocinar": "Para lun 21 dic-dom 27 dic: A Res guisada con pimiento, cebolla, tomate, zanahoria y papa; B Pollo con auyama, calabacín y arracacha; C Tilapia con papa, brócoli y cebolla; D Pollo con fríjol, plátano maduro y tomate",
+   "de": "Yogur Baby Gü natural con banano y avena + pera",
+   "c": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + mango",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + pitahaya"
+  },
+  {
+   "fecha": "2026-12-21",
+   "f": "Lun 21 dic",
+   "cocinar": "",
+   "de": "Tortilla de huevo con calabacín + tiras de arepa sin sal + kiwi",
+   "c": "Res guisada con pimiento, cebolla, tomate, zanahoria y papa + bastones de papa + banano",
+   "ce": "Pollo con auyama, calabacín y arracacha + auyama asada + naranja machacada"
+  },
+  {
+   "fecha": "2026-12-22",
+   "f": "Mar 22 dic",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + fresas en cuartos",
+   "c": "Tilapia con papa, brócoli y cebolla + lascas de tilapia + mandarina en gajos sin piel (nueva)",
+   "ce": "Pollo con auyama, calabacín y arracacha + auyama asada + sandía"
+  },
+  {
+   "fecha": "2026-12-23",
+   "f": "Mié 23 dic",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + manzana cocida",
+   "c": "Res guisada con pimiento, cebolla, tomate, zanahoria y papa + bastones de papa + una pizca de parmesano + papaya",
+   "ce": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + pera"
+  },
+  {
+   "fecha": "2026-12-24",
+   "f": "Jue 24 dic",
+   "cocinar": "",
+   "de": "Avena con su fórmula + mango + tahini diluida (mantener alérgeno)",
+   "c": "Tilapia con papa, brócoli y cebolla + lascas de tilapia + pitahaya",
+   "ce": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + kiwi"
+  },
+  {
+   "fecha": "2026-12-25",
+   "f": "Vie 25 dic",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + banano",
+   "c": "Res guisada con pimiento, cebolla, tomate, zanahoria y papa + bastones de papa + naranja machacada",
+   "ce": "Pollo con auyama, calabacín y arracacha + auyama asada + fresas en cuartos"
+  },
+  {
+   "fecha": "2026-12-26",
+   "f": "Sáb 26 dic",
+   "cocinar": "",
+   "de": "Avena con su fórmula + sandía + crema de anacardo diluida (mantener alérgeno)",
+   "c": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + manzana cocida",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + papaya"
+  },
+  {
+   "fecha": "2026-12-27",
+   "f": "Dom 27 dic",
+   "cocinar": "Para lun 28 dic-dom 3 ene: A Ternera con auyama, plátano maduro y cebolla; B Pollo con papa, zanahoria y arveja; C Salmón con batata y zanahoria; D Pollo con lentejas, calabacín y zanahoria",
+   "de": "Huevo revuelto con tomate + bastones de papa + pera",
+   "c": "Pollo con auyama, calabacín y arracacha + auyama asada + mango",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + pitahaya"
+  },
+  {
+   "fecha": "2026-12-28",
+   "f": "Lun 28 dic",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + kiwi",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + banano",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + naranja machacada"
+  },
+  {
+   "fecha": "2026-12-29",
+   "f": "Mar 29 dic",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + fresas en cuartos",
+   "c": "Salmón con batata y zanahoria + lascas de salmón + sandía",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + manzana cocida"
+  },
+  {
+   "fecha": "2026-12-30",
+   "f": "Mié 30 dic",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + papaya",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + una pizca de parmesano + pera",
+   "ce": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + mango"
+  },
+  {
+   "fecha": "2026-12-31",
+   "f": "Jue 31 dic",
+   "cocinar": "",
+   "de": "Avena con su fórmula + pitahaya + crema de almendra diluida (mantener alérgeno)",
+   "c": "Salmón con batata y zanahoria + lascas de salmón + kiwi",
+   "ce": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + banano"
+  },
+  {
+   "fecha": "2027-01-01",
+   "f": "Vie 1 ene",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + naranja machacada",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + fresas en cuartos",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + sandía"
+  },
+  {
+   "fecha": "2027-01-02",
+   "f": "Sáb 2 ene",
+   "cocinar": "",
+   "de": "Avena con su fórmula + manzana cocida + crema de cacahuete diluida (mantener alérgeno)",
+   "c": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + papaya",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + pera"
+  },
+  {
+   "fecha": "2027-01-03",
+   "f": "Dom 3 ene",
+   "cocinar": "Para lun 4 ene-dom 10 ene: A Albóndigas blandas de res con calabacín, en salsa de tomate, con papa; B Pollo con batata, brócoli y cebolla; C Trucha con arracacha y habichuela; D Pollo con lentejas, zanahoria, tomate y pasta",
+   "de": "Yogur Baby Gü natural con banano y avena + mango",
+   "c": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + pitahaya",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + kiwi"
+  },
+  {
+   "fecha": "2027-01-04",
+   "f": "Lun 4 ene",
+   "cocinar": "",
+   "de": "Tortilla de huevo con calabacín + tiras de arepa sin sal + banano",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + naranja machacada",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + fresas en cuartos"
+  },
+  {
+   "fecha": "2027-01-05",
+   "f": "Mar 5 ene",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + sandía",
+   "c": "Trucha con arracacha y habichuela + lascas de trucha + feijoa (nueva)",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + manzana cocida"
+  },
+  {
+   "fecha": "2027-01-06",
+   "f": "Mié 6 ene",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + papaya",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + una pizca de parmesano + pera",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + mango"
+  },
+  {
+   "fecha": "2027-01-07",
+   "f": "Jue 7 ene",
+   "cocinar": "",
+   "de": "Avena con su fórmula + pitahaya + crema de anacardo diluida (mantener alérgeno)",
+   "c": "Trucha con arracacha y habichuela + lascas de trucha + kiwi",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + banano"
+  },
+  {
+   "fecha": "2027-01-08",
+   "f": "Vie 8 ene",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + naranja machacada",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + fresas en cuartos",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + sandía"
+  },
+  {
+   "fecha": "2027-01-09",
+   "f": "Sáb 9 ene",
+   "cocinar": "",
+   "de": "NUEVO ALÉRGENO: avena con su fórmula + banano + crema de nuez diluida (único alimento nuevo del día)",
+   "c": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + manzana cocida",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + papaya"
+  },
+  {
+   "fecha": "2027-01-10",
+   "f": "Dom 10 ene",
+   "cocinar": "Para lun 11 ene-dom 17 ene: A Res con arveja, zanahoria y arracacha; B Pollo con yuca, auyama y tomate; C Tilapia con yuca, tomate y pimiento; D Pollo con garbanzos, auyama y cebolla",
+   "de": "Huevo revuelto con tomate + bastones de papa + pera",
+   "c": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + mango",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + pitahaya"
+  },
+  {
+   "fecha": "2027-01-11",
+   "f": "Lun 11 ene",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + kiwi",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + banano",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + naranja machacada"
+  },
+  {
+   "fecha": "2027-01-12",
+   "f": "Mar 12 ene",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + fresas en cuartos",
+   "c": "Tilapia con yuca, tomate y pimiento + bastones de yuca + sandía",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + manzana cocida"
+  },
+  {
+   "fecha": "2027-01-13",
+   "f": "Mié 13 ene",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + papaya",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + una pizca de parmesano + pera",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + mango"
+  },
+  {
+   "fecha": "2027-01-14",
+   "f": "Jue 14 ene",
+   "cocinar": "",
+   "de": "Avena con su fórmula + pitahaya + crema de almendra diluida (mantener alérgeno)",
+   "c": "Tilapia con yuca, tomate y pimiento + bastones de yuca + kiwi",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + banano"
+  },
+  {
+   "fecha": "2027-01-15",
+   "f": "Vie 15 ene",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + naranja machacada",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + fresas en cuartos",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + sandía"
+  },
+  {
+   "fecha": "2027-01-16",
+   "f": "Sáb 16 ene",
+   "cocinar": "",
+   "de": "NUEVO ALÉRGENO: avena con su fórmula + banano + crema de avellana diluida (único alimento nuevo del día)",
+   "c": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + manzana cocida",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + papaya"
+  },
+  {
+   "fecha": "2027-01-17",
+   "f": "Dom 17 ene",
+   "cocinar": "Para lun 18 ene-dom 24 ene: A Lomo de cerdo con manzana, cebolla y batata; B Pollo con quinoa, calabacín y zanahoria; C Salmón con papa, coliflor y cebolla; D Pollo con fríjol, plátano maduro y tomate",
+   "de": "Yogur Baby Gü natural con banano y avena + pera",
+   "c": "Pollo con yuca, auyama y tomate + bastones de yuca + mango",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + pitahaya"
+  },
+  {
+   "fecha": "2027-01-18",
+   "f": "Lun 18 ene",
+   "cocinar": "",
+   "de": "Tortilla de huevo con calabacín + tiras de arepa sin sal + kiwi",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + banano",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + naranja machacada"
+  },
+  {
+   "fecha": "2027-01-19",
+   "f": "Mar 19 ene",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + fresas en cuartos",
+   "c": "Salmón con papa, coliflor y cebolla + ramitos de coliflor + sandía",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + manzana cocida"
+  },
+  {
+   "fecha": "2027-01-20",
+   "f": "Mié 20 ene",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + papaya",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + una pizca de parmesano + pera",
+   "ce": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + mango"
+  },
+  {
+   "fecha": "2027-01-21",
+   "f": "Jue 21 ene",
+   "cocinar": "",
+   "de": "Avena con su fórmula + pitahaya + tahini diluida (mantener alérgeno)",
+   "c": "Salmón con papa, coliflor y cebolla + ramitos de coliflor + kiwi",
+   "ce": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + banano"
+  },
+  {
+   "fecha": "2027-01-22",
+   "f": "Vie 22 ene",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + naranja machacada",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + fresas en cuartos",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + sandía"
+  },
+  {
+   "fecha": "2027-01-23",
+   "f": "Sáb 23 ene",
+   "cocinar": "",
+   "de": "NUEVO ALÉRGENO: avena con su fórmula + banano + crema de pistacho diluida (único alimento nuevo del día)",
+   "c": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + manzana cocida",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + papaya"
+  },
+  {
+   "fecha": "2027-01-24",
+   "f": "Dom 24 ene",
+   "cocinar": "Para lun 25 ene-dom 31 ene: A Res con habichuela, papa y pimiento; B Pollo con arroz, zanahoria y pimiento; C Trucha con quinoa y calabacín; D Pollo con lentejas, calabacín y zanahoria",
+   "de": "Huevo revuelto con tomate + bastones de papa + pera",
+   "c": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + mango",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + pitahaya"
+  },
+  {
+   "fecha": "2027-01-25",
+   "f": "Lun 25 ene",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + kiwi",
+   "c": "Res con habichuela, papa y pimiento + habichuela cocida blanda + banano",
+   "ce": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + naranja machacada"
+  },
+  {
+   "fecha": "2027-01-26",
+   "f": "Mar 26 ene",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + fresas en cuartos",
+   "c": "Trucha con quinoa y calabacín + lascas de trucha + sandía",
+   "ce": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + manzana cocida"
+  },
+  {
+   "fecha": "2027-01-27",
+   "f": "Mié 27 ene",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + papaya",
+   "c": "Res con habichuela, papa y pimiento + habichuela cocida blanda + una pizca de parmesano + pera",
+   "ce": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + mango"
+  },
+  {
+   "fecha": "2027-01-28",
+   "f": "Jue 28 ene",
+   "cocinar": "",
+   "de": "Avena con su fórmula + pitahaya + crema de cacahuete diluida (mantener alérgeno)",
+   "c": "Trucha con quinoa y calabacín + lascas de trucha + kiwi",
+   "ce": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + banano"
+  },
+  {
+   "fecha": "2027-01-29",
+   "f": "Vie 29 ene",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + naranja machacada",
+   "c": "Res con habichuela, papa y pimiento + habichuela cocida blanda + fresas en cuartos",
+   "ce": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + sandía"
+  },
+  {
+   "fecha": "2027-01-30",
+   "f": "Sáb 30 ene",
+   "cocinar": "",
+   "de": "Avena con su fórmula + manzana cocida + crema de almendra diluida (mantener alérgeno)",
+   "c": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + papaya",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + pera"
+  },
+  {
+   "fecha": "2027-01-31",
+   "f": "Dom 31 ene",
+   "cocinar": "Para lun 1 feb-dom 7 feb: A Res guisada con pimiento, cebolla, tomate, zanahoria y papa; B Pollo con auyama, calabacín y arracacha; C Tilapia con papa, brócoli y cebolla; D Pollo con lentejas, zanahoria, tomate y pasta",
+   "de": "Yogur Baby Gü natural con banano y avena + mango",
+   "c": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + pitahaya",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + kiwi"
+  },
+  {
+   "fecha": "2027-02-01",
+   "f": "Lun 1 feb",
+   "cocinar": "",
+   "de": "Tortilla de huevo con calabacín + tiras de arepa sin sal + banano",
+   "c": "Res guisada con pimiento, cebolla, tomate, zanahoria y papa + bastones de papa + naranja machacada",
+   "ce": "Pollo con auyama, calabacín y arracacha + auyama asada + fresas en cuartos"
+  },
+  {
+   "fecha": "2027-02-02",
+   "f": "Mar 2 feb",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + sandía",
+   "c": "Tilapia con papa, brócoli y cebolla + lascas de tilapia + manzana cocida",
+   "ce": "Pollo con auyama, calabacín y arracacha + auyama asada + papaya"
+  },
+  {
+   "fecha": "2027-02-03",
+   "f": "Mié 3 feb",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + pera",
+   "c": "Res guisada con pimiento, cebolla, tomate, zanahoria y papa + bastones de papa + una pizca de parmesano + mango",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + pitahaya"
+  },
+  {
+   "fecha": "2027-02-04",
+   "f": "Jue 4 feb",
+   "cocinar": "",
+   "de": "Avena con su fórmula + kiwi + tahini diluida (mantener alérgeno)",
+   "c": "Tilapia con papa, brócoli y cebolla + lascas de tilapia + banano",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + naranja machacada"
+  },
+  {
+   "fecha": "2027-02-05",
+   "f": "Vie 5 feb",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + fresas en cuartos",
+   "c": "Res guisada con pimiento, cebolla, tomate, zanahoria y papa + bastones de papa + sandía",
+   "ce": "Pollo con auyama, calabacín y arracacha + auyama asada + manzana cocida"
+  },
+  {
+   "fecha": "2027-02-06",
+   "f": "Sáb 6 feb",
+   "cocinar": "",
+   "de": "Avena con su fórmula + papaya + crema de anacardo diluida (mantener alérgeno)",
+   "c": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + pera",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + mango"
+  },
+  {
+   "fecha": "2027-02-07",
+   "f": "Dom 7 feb",
+   "cocinar": "Para lun 8 feb-dom 14 feb: A Ternera con auyama, plátano maduro y cebolla; B Pollo con papa, zanahoria y arveja; C Salmón con batata y zanahoria; D Pollo con garbanzos, auyama y cebolla",
+   "de": "Huevo revuelto con tomate + bastones de papa + pitahaya",
+   "c": "Pollo con auyama, calabacín y arracacha + auyama asada + kiwi",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + banano"
+  },
+  {
+   "fecha": "2027-02-08",
+   "f": "Lun 8 feb",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + naranja machacada",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + fresas en cuartos",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + sandía"
+  },
+  {
+   "fecha": "2027-02-09",
+   "f": "Mar 9 feb",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + manzana cocida",
+   "c": "Salmón con batata y zanahoria + lascas de salmón + papaya",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + pera"
+  },
+  {
+   "fecha": "2027-02-10",
+   "f": "Mié 10 feb",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + mango",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + una pizca de parmesano + pitahaya",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + kiwi"
+  },
+  {
+   "fecha": "2027-02-11",
+   "f": "Jue 11 feb",
+   "cocinar": "",
+   "de": "Avena con su fórmula + banano + crema de almendra diluida (mantener alérgeno)",
+   "c": "Salmón con batata y zanahoria + lascas de salmón + naranja machacada",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + fresas en cuartos"
+  },
+  {
+   "fecha": "2027-02-12",
+   "f": "Vie 12 feb",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + sandía",
+   "c": "Ternera con auyama, plátano maduro y cebolla + bastones de plátano maduro + manzana cocida",
+   "ce": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + papaya"
+  },
+  {
+   "fecha": "2027-02-13",
+   "f": "Sáb 13 feb",
+   "cocinar": "",
+   "de": "Avena con su fórmula + pera + crema de nuez diluida (mantener alérgeno)",
+   "c": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + mango",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + pitahaya"
+  },
+  {
+   "fecha": "2027-02-14",
+   "f": "Dom 14 feb",
+   "cocinar": "Para lun 15 feb-dom 21 feb: A Albóndigas blandas de res con calabacín, en salsa de tomate, con papa; B Pollo con batata, brócoli y cebolla; C Trucha con arracacha y habichuela; D Pollo con fríjol, plátano maduro y tomate",
+   "de": "Yogur Baby Gü natural con banano y avena + kiwi",
+   "c": "Pollo con papa, zanahoria y arveja + bastones de zanahoria + banano",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + naranja machacada"
+  },
+  {
+   "fecha": "2027-02-15",
+   "f": "Lun 15 feb",
+   "cocinar": "",
+   "de": "Tortilla de huevo con calabacín + tiras de arepa sin sal + fresas en cuartos",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + sandía",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + manzana cocida"
+  },
+  {
+   "fecha": "2027-02-16",
+   "f": "Mar 16 feb",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + papaya",
+   "c": "Trucha con arracacha y habichuela + lascas de trucha + pera",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + mango"
+  },
+  {
+   "fecha": "2027-02-17",
+   "f": "Mié 17 feb",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + pitahaya",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + una pizca de parmesano + kiwi",
+   "ce": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + banano"
+  },
+  {
+   "fecha": "2027-02-18",
+   "f": "Jue 18 feb",
+   "cocinar": "",
+   "de": "Avena con su fórmula + naranja machacada + crema de anacardo diluida (mantener alérgeno)",
+   "c": "Trucha con arracacha y habichuela + lascas de trucha + fresas en cuartos",
+   "ce": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + sandía"
+  },
+  {
+   "fecha": "2027-02-19",
+   "f": "Vie 19 feb",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + manzana cocida",
+   "c": "Albóndigas blandas de res con calabacín, en salsa de tomate, con papa + media albóndiga aplastada + papaya",
+   "ce": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + pera"
+  },
+  {
+   "fecha": "2027-02-20",
+   "f": "Sáb 20 feb",
+   "cocinar": "",
+   "de": "Avena con su fórmula + mango + crema de avellana diluida (mantener alérgeno)",
+   "c": "Pollo con fríjol, plátano maduro y tomate + bastones de plátano maduro + pitahaya",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + kiwi"
+  },
+  {
+   "fecha": "2027-02-21",
+   "f": "Dom 21 feb",
+   "cocinar": "Para lun 22 feb-dom 28 feb: A Res con arveja, zanahoria y arracacha; B Pollo con yuca, auyama y tomate; C Tilapia con yuca, tomate y pimiento; D Pollo con lentejas, calabacín y zanahoria",
+   "de": "Huevo revuelto con tomate + bastones de papa + banano",
+   "c": "Pollo con batata, brócoli y cebolla + ramitos de brócoli + naranja machacada",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + fresas en cuartos"
+  },
+  {
+   "fecha": "2027-02-22",
+   "f": "Lun 22 feb",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + sandía",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + manzana cocida",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + papaya"
+  },
+  {
+   "fecha": "2027-02-23",
+   "f": "Mar 23 feb",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + pera",
+   "c": "Tilapia con yuca, tomate y pimiento + bastones de yuca + mango",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + pitahaya"
+  },
+  {
+   "fecha": "2027-02-24",
+   "f": "Mié 24 feb",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + kiwi",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + una pizca de parmesano + banano",
+   "ce": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + naranja machacada"
+  },
+  {
+   "fecha": "2027-02-25",
+   "f": "Jue 25 feb",
+   "cocinar": "",
+   "de": "Avena con su fórmula + fresas en cuartos + crema de nuez diluida (mantener alérgeno)",
+   "c": "Tilapia con yuca, tomate y pimiento + bastones de yuca + sandía",
+   "ce": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + manzana cocida"
+  },
+  {
+   "fecha": "2027-02-26",
+   "f": "Vie 26 feb",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + papaya",
+   "c": "Res con arveja, zanahoria y arracacha + bastones de arracacha + pera",
+   "ce": "Pollo con yuca, auyama y tomate + bastones de yuca + mango"
+  },
+  {
+   "fecha": "2027-02-27",
+   "f": "Sáb 27 feb",
+   "cocinar": "",
+   "de": "Avena con su fórmula + pitahaya + crema de pistacho diluida (mantener alérgeno)",
+   "c": "Pollo con lentejas, calabacín y zanahoria + bastones de calabacín + kiwi",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + banano"
+  },
+  {
+   "fecha": "2027-02-28",
+   "f": "Dom 28 feb",
+   "cocinar": "Para lun 1 mar-dom 7 mar: A Lomo de cerdo con manzana, cebolla y batata; B Pollo con quinoa, calabacín y zanahoria; C Salmón con papa, coliflor y cebolla; D Pollo con lentejas, zanahoria, tomate y pasta",
+   "de": "Yogur Baby Gü natural con banano y avena + naranja machacada",
+   "c": "Pollo con yuca, auyama y tomate + bastones de yuca + fresas en cuartos",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + sandía"
+  },
+  {
+   "fecha": "2027-03-01",
+   "f": "Lun 1 mar",
+   "cocinar": "",
+   "de": "Tortilla de huevo con calabacín + tiras de arepa sin sal + manzana cocida",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + papaya",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + pera"
+  },
+  {
+   "fecha": "2027-03-02",
+   "f": "Mar 2 mar",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + mango",
+   "c": "Salmón con papa, coliflor y cebolla + ramitos de coliflor + pitahaya",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + kiwi"
+  },
+  {
+   "fecha": "2027-03-03",
+   "f": "Mié 3 mar",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con avena + banano",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + una pizca de parmesano + naranja machacada",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + fresas en cuartos"
+  },
+  {
+   "fecha": "2027-03-04",
+   "f": "Jue 4 mar",
+   "cocinar": "",
+   "de": "Avena con su fórmula + sandía + crema de avellana diluida (mantener alérgeno)",
+   "c": "Salmón con papa, coliflor y cebolla + ramitos de coliflor + manzana cocida",
+   "ce": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + papaya"
+  },
+  {
+   "fecha": "2027-03-05",
+   "f": "Vie 5 mar",
+   "cocinar": "",
+   "de": "Muffin de huevo, auyama y avena + pera",
+   "c": "Lomo de cerdo con manzana, cebolla y batata + bastones de batata + mango",
+   "ce": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + pitahaya. Cumple 12 meses: comentar con la pediatra la leche entera como bebida y la miel"
+  },
+  {
+   "fecha": "2027-03-06",
+   "f": "Sáb 6 mar",
+   "cocinar": "",
+   "de": "Avena con su fórmula + kiwi + crema de cacahuete diluida (mantener alérgeno)",
+   "c": "Pollo con lentejas, zanahoria, tomate y pasta + pasta grande + banano",
+   "ce": "Tortilla de huevo, papa y calabacín (al momento) + naranja machacada"
+  },
+  {
+   "fecha": "2027-03-07",
+   "f": "Dom 7 mar",
+   "cocinar": "Para lun 8-mié 10 mar (3 días, lotes pequeños): A Res con habichuela, papa y pimiento; B Pollo con arroz, zanahoria y pimiento; C Trucha con quinoa y calabacín; D Pollo con garbanzos, auyama y cebolla",
+   "de": "Huevo revuelto con tomate + bastones de papa + fresas en cuartos",
+   "c": "Pollo con quinoa, calabacín y zanahoria + calabacín al vapor + sandía",
+   "ce": "Huevo revuelto con tomate y cebolla (al momento) + tiras de arepa sin sal + manzana cocida"
+  },
+  {
+   "fecha": "2027-03-08",
+   "f": "Lun 8 mar",
+   "cocinar": "",
+   "de": "Arepa sin sal con huevo revuelto y aguacate + papaya",
+   "c": "Res con habichuela, papa y pimiento + habichuela cocida blanda + pera",
+   "ce": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + mango"
+  },
+  {
+   "fecha": "2027-03-09",
+   "f": "Mar 9 mar",
+   "cocinar": "",
+   "de": "Pancakes de banano, avena y huevo + pitahaya",
+   "c": "Trucha con quinoa y calabacín + lascas de trucha + kiwi",
+   "ce": "Pollo con arroz, zanahoria y pimiento + tiras de pollo desmechado + banano"
+  },
+  {
+   "fecha": "2027-03-10",
+   "f": "Mié 10 mar",
+   "cocinar": "",
+   "de": "Yogur Baby Gü natural con banano y avena + naranja machacada",
+   "c": "Res con habichuela, papa y pimiento + habichuela cocida blanda + una pizca de parmesano + fresas en cuartos",
+   "ce": "Pollo con garbanzos, auyama y cebolla + garbanzos aplastados + sandía"
+  }
+ ]
+}
