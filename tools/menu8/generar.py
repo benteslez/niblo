@@ -28,6 +28,21 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 INDEX = os.path.join(os.path.dirname(os.path.dirname(AQUI)), "index.html")
 CAL = json.load(open(os.path.join(AQUI, "calendario.json"), encoding="utf-8"))["dias"]
 
+# Sustituciones pedidas por la familia (el calendario.json queda como el PDF;
+# el cambio se hace aquí y la app lo dice en la comida). Mismo papel en el
+# plato: la arracacha es la «harina» (PDF: papa, yuca, arracacha, plátano
+# maduro, pasta o arepa) y no es fácil de encontrar (10-11-2026) → papa.
+SUSTITUCIONES = [("arracacha", "papa")]
+def sustituir(txt):
+    for a, b in SUSTITUCIONES:
+        txt = re.sub(rf"\b{a}\b", b, txt)
+        txt = re.sub(rf"\b{a.capitalize()}\b", b.capitalize(), txt)
+    return txt
+CAL_PDF = {d["fecha"]: dict(d) for d in CAL}
+for d in CAL:
+    for campo in ("cocinar", "de", "c", "ce"):
+        d[campo] = sustituir(d[campo])
+
 D = lambda s: dt.date.fromisoformat(s)
 
 # ---------------------------------------------------------------------------
@@ -175,7 +190,7 @@ EMO_BASE = {"legumbre": "🫘", "albondigas": "🧆", "pescado": "🐟", "pollo"
 
 # Pasos de las bases. Las 4 de la primera semana son las recetas del PDF;
 # el resto sigue el mismo método según el tipo (y se dice así).
-RECETA_PDF = {
+RECETA_PDF_ORIG = {
   "Res guisada con pimiento, cebolla, tomate, zanahoria y papa": [
     "Rehoga a fuego suave ½ cebolla, ½ pimiento rojo y 1 tomate pelado, picados, con un chorrito de aceite.",
     "Añade unos 120-150 g de res magra en dados, 1 zanahoria y 1 papa en trozos; cubre con agua.",
@@ -193,6 +208,7 @@ RECETA_PDF = {
     "Añade pollo en dados y, al final, pasta pequeña (o yuca en trozos si aún no ha probado trigo).",
     "Tritura. Cuece aparte bastones de yuca o pasta grande (tipo fusilli) muy blanda."],
 }
+RECETA_PDF = {sustituir(t): [sustituir(x) for x in pasos] for t, pasos in RECETA_PDF_ORIG.items()}
 CORTO = {"cebolla": "la cebolla", "pimiento": "el pimiento", "tomate": "el tomate (pelado)", "papa": "la papa", "batata": "la batata",
          "yuca": "la yuca (sin la fibra central)", "arracacha": "la arracacha", "platano": "el plátano maduro", "zanahoria": "la zanahoria",
          "auyama": "la auyama", "calabacin": "el calabacín", "brocoli": "el brócoli", "coliflor": "la coliflor", "habichuela": "la habichuela",
@@ -336,7 +352,10 @@ for i, d in enumerate(CAL):
     for parte in re.split(r"; (?=[ABCD] )", m.group(2)):
         bases[parte[0]] = parte[2:].strip()
     assert list(bases) == ["A", "B", "C", "D"], bases
-    sesiones.append({"fecha": d["fecha"], "para": m.group(1), "bases": bases})
+    orig = re.match(r"Para (.*?): (A .*)$", CAL_PDF[d["fecha"]]["cocinar"])
+    orig = {p[0]: p[2:].strip() for p in re.split(r"; (?=[ABCD] )", orig.group(2))}
+    sesiones.append({"fecha": d["fecha"], "para": m.group(1), "bases": bases,
+                     "sust": {L: orig[L] for L in bases if orig[L] != bases[L]}})
 for i, s in enumerate(sesiones):
     s["desde"] = s["fecha"] if i == 0 else (D(s["fecha"]) + dt.timedelta(1)).isoformat()
     s["hasta"] = sesiones[i + 1]["fecha"] if i + 1 < len(sesiones) else CAL[-1]["fecha"]
@@ -388,6 +407,9 @@ for d in CAL:
     for slot in ("de", "c", "ce"):
         partes = [p.strip() for p in d[slot].split(" + ")]
         tit = partes[0]; plato = {"t": tit}
+        if d[slot] != CAL_PDF[f][slot]:
+            cambios = [f"{a} → {b}" for a, b in SUSTITUCIONES if re.search(rf"\b{a}\b", CAL_PDF[f][slot], re.I)]
+            plato["sust"] = "Cambiado respecto al PDF: " + ", ".join(cambios) + " (más fácil de encontrar; mismo papel en el plato)."
         if tit.startswith("NUEVO ALÉRGENO: "):
             tit = tit[len("NUEVO ALÉRGENO: "):]; tit = tit[0].upper() + tit[1:]
             plato["alergenoNuevo"] = True
@@ -490,6 +512,7 @@ for s in sesiones:
         if k in ("avena", "harina_maiz", "quinoa", "arroz", "pasta_peq", "pasta_gr", "lentejas", "garbanzos", "frijol"):
             cant = ud(k, compra[k]); por[k].add("revisa la despensa")
         secs[SECCION[k]].append({"k": k, "n": nom, "q": cant, "spec": spec, "para": sorted(por[k])})
+    for L, o in s.pop("sust").items(): lote[L]["pdfT"] = o
     s["lote"] = lote
     s["compra"] = OrderedDict((n, xs) for n, xs in secs.items() if xs)
     del s["bases"]
