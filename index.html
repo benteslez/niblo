@@ -6186,6 +6186,32 @@
     .pb-app .vh-rec-txt b { font-size: .9375rem; font-weight: 600; }
     .pb-app .vh-rec-txt span { font-size: .8125rem; color: var(--text-muted); }
     .pb-app .vh-btn-rec { flex: none; padding: 4px 10px; border-radius: 999px; border: 0; background: var(--blue-soft); color: var(--blue); font: inherit; font-weight: 600; font-size: .8125rem; cursor: pointer; }
+    /* Calendario de visitas: mismo tono que la etiqueta de su especialidad. */
+    .pb-app .pv-vistas { display: inline-flex; gap: 4px; padding: 3px; border-radius: 999px; background: var(--bg-soft, var(--line-soft)); margin: 0 0 12px; }
+    .pb-app .pv-vistas button { border: 0; background: transparent; color: var(--text-muted); font: inherit; font-size: .8125rem; font-weight: 600; padding: 5px 12px; border-radius: 999px; cursor: pointer; }
+    .pb-app .pv-vistas button.on { background: var(--bg-card); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+    .pb-app .pv-cal .des-cal { max-width: 460px; margin: 0 auto; }
+    .pb-app .pv-cal .des-cal-cab { max-width: 460px; margin: 0 auto 8px; }
+    .pb-app .pv-cel span { font-size: .8125rem; }
+    .pb-app .pv-cel.con { border-color: transparent; font-weight: 700; cursor: pointer; }
+    .pb-app .pv-cel.con.t-blue { background: var(--blue-soft); color: var(--blue); }
+    .pb-app .pv-cel.con.t-green { background: var(--green-soft); color: var(--green); }
+    .pb-app .pv-cel.con.t-amber { background: var(--amber-soft); color: var(--amber); }
+    .pb-app .pv-cel.con.t-red { background: var(--red-soft); color: var(--red); }
+    .pb-app .pv-cel.con.t-violet { background: #ede9fe; color: #6d28d9; }
+    :root[data-tema="oscuro"] .pb-app .pv-cel.con.t-violet { background: rgba(139,92,246,.18); color: #c4b5fd; }
+    .pb-app .pv-cel.con.futura { border: 2px dashed currentColor; }
+    .pb-app .pv-cel.hoy { border: 2px solid var(--blue); }
+    .pb-app .des-cel.pv-cel.sel { outline: 2px solid var(--text); outline-offset: 1px; }
+    .pb-app .pv-puntos { display: flex; gap: 2px; margin-top: 2px; }
+    .pb-app .pv-puntos em, .pb-app .pv-leyenda em { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; border: 1px solid rgba(255,255,255,.7); }
+    .pb-app .pv-puntos em[class*="t-"], .pb-app .pv-leyenda em[class*="t-"] { background: currentColor; }
+    .pb-app .pv-leyenda { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; margin: 12px 0 2px; font-size: .8125rem; color: var(--text-muted); }
+    .pb-app .pv-leyenda span { display: inline-flex; align-items: center; gap: 6px; }
+    .pb-app .pv-leyenda em { width: 12px; height: 12px; border: 0; }
+    .pb-app .pv-leyenda em.pv-ley-prog { background: transparent; border: 2px dashed var(--text-muted); width: 10px; height: 10px; border-radius: 3px; }
+    .pb-app .pv-meses { text-align: center; margin-top: 6px; }
+    .pb-app .pv-meses a.on { font-weight: 700; }
     .pb-app .vh-acciones { display: flex; justify-content: flex-end; gap: 6px; margin-top: 12px; }
     .pb-app .vh-acciones button { flex: none; padding: 5px 12px; font-size: .8125rem; }
     /* Peso, longitud y perimetro siempre en una fila, tambien en el movil. */
@@ -8724,7 +8750,7 @@
 
   <script>
 /* Version del documento de Niblo, la misma que CACHE_NAME de sw.js y BUILD_ID de oposicion.html (subirlas juntas). Se ve en Ajustes > «¿La app no se actualiza?». */
-const NIBLO_BUILD = "425";
+const NIBLO_BUILD = "426";
   /* ==========================================================================
      PABLO — seguimiento de alimentacion complementaria y crianza.
      Modulo autonomo: todo su codigo vive dentro de este IIFE y solo publica
@@ -17916,14 +17942,78 @@ function renderPediatra(el) {
   html = "";
   const futuras = sorted.filter(v => v.date > HOY_ISO).reverse();
   const pasadas = sorted.filter(v => v.date <= HOY_ISO);
+  const vista = pvVista();
   html += `<div class="card visitas-card"><h2>Historial de visitas <span class="n">${sorted.length}</span></h2>`;
+  if (sorted.length) html += `<div class="pv-vistas" role="tablist">${[["lista", "☰ Lista"], ["cal", "📅 Calendario"]].map(([v, et]) =>
+    `<button type="button" role="tab" aria-selected="${vista === v}" class="${vista === v ? "on" : ""}" onclick="PB.pvVer('${v}')">${et}</button>`).join("")}</div>`;
   if (!sorted.length) html += `<div class="faint">Sin visitas registradas.</div>`;
-  if (futuras.length) html += `<div class="vh-grupo">Programadas</div>` + futuras.map(htmlVisita).join("");
-  if (futuras.length && pasadas.length) html += `<div class="vh-grupo">Anteriores</div>`;
-  html += pasadas.map(htmlVisita).join("");
+  else if (vista === "cal") html += htmlCalVisitas(sorted);
+  else {
+    if (futuras.length) html += `<div class="vh-grupo">Programadas</div>` + futuras.map(htmlVisita).join("");
+    if (futuras.length && pasadas.length) html += `<div class="vh-grupo">Anteriores</div>`;
+    html += pasadas.map(htmlVisita).join("");
+  }
   html += `</div>`;
   html += htmlRegistro("pediatra-doctores", "Doctores guardados", htmlListaMedicos());
   el.innerHTML = visitas + html + resto;
+}
+/* ---- Calendario de visitas (petición del usuario, 10-11-2026) -----------
+   Vista alternativa del historial: cada día con visita se colorea con el
+   tono de su especialidad (el mismo de la lista, `tonoEspecialidad`); si hay
+   varias, un punto por visita. Pulsar un día muestra sus visitas debajo. La
+   vista elegida se recuerda en este dispositivo (`niblo.pv.vista`). */
+let PV_MES = null, PV_DIA = null;
+const PV_SUAVE = { blue: "var(--blue-soft)", green: "var(--green-soft)", amber: "var(--amber-soft)", red: "var(--red-soft)", violet: "rgba(139,92,246,.2)" };
+function pvVista() { try { return localStorage.getItem("niblo.pv.vista") === "cal" ? "cal" : "lista"; } catch (e) { return "lista"; } }
+function pvRepintar() { renderPediatra(document.getElementById("view-pediatra")); }
+function pvVer(v) { try { localStorage.setItem("niblo.pv.vista", v); } catch (e) {} pvRepintar(); }
+function pvMes(n) {
+  const [y, m] = (PV_MES || HOY_ISO.slice(0, 7)).split("-").map(Number);
+  const d = new Date(y, m - 1 + n, 1);
+  PV_MES = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`; PV_DIA = null; pvRepintar();
+}
+function pvIrMes(m) { PV_MES = m; PV_DIA = null; pvRepintar(); }
+function pvDia(f) { PV_DIA = PV_DIA === f ? null : f; pvRepintar(); }
+function htmlCalVisitas(visitas) {
+  const porDia = {};
+  visitas.forEach(v => (porDia[v.date] = porDia[v.date] || []).push(v));
+  if (!PV_MES) PV_MES = HOY_ISO.slice(0, 7);
+  const [y, mo] = PV_MES.split("-").map(Number);
+  const primero = new Date(y, mo - 1, 1), dias = new Date(y, mo, 0).getDate();
+  const hueco = (primero.getDay() + 6) % 7;
+  let celdas = "";
+  for (let i = 0; i < hueco; i++) celdas += `<div></div>`;
+  for (let d = 1; d <= dias; d++) {
+    const f = `${PV_MES}-${String(d).padStart(2, "0")}`;
+    const vs = (porDia[f] || []).slice().sort((a, b) => (a.hora || "").localeCompare(b.hora || ""));
+    const tono = vs.length ? tonoEspecialidad(especialistaDe(vs[0])) : "";
+    /* Varias especialidades el mismo día: la casilla se parte en sus colores. */
+    const tonos = [...new Set(vs.map(v => tonoEspecialidad(especialistaDe(v))))];
+    const parte = tonos.length > 1 ? ` style="background:linear-gradient(135deg, ${tonos.slice(0, 3).map((t, i, l) =>
+      `${PV_SUAVE[t]} ${Math.round(i / l.length * 100)}% ${Math.round((i + 1) / l.length * 100)}%`).join(", ")})"` : "";
+    const tit = vs.map(v => `${especialistaDe(v)}: ${motivoDe(v)}${v.hora ? ` (${v.hora})` : ""}`).join(" · ");
+    celdas += `<button type="button" class="des-cel pv-cel${vs.length ? ` con t-${tono}` : ""}${f > HOY_ISO && vs.length ? " futura" : ""}${f === HOY_ISO ? " hoy" : ""}${f === PV_DIA ? " sel" : ""}"${parte}
+      ${vs.length ? `onclick="PB.pvDia('${f}')" title="${esc(tit)}"` : "disabled"}><span>${d}</span>${vs.length > 1
+        ? `<i class="pv-puntos">${vs.slice(0, 4).map(v => `<em class="t-${tonoEspecialidad(especialistaDe(v))}"></em>`).join("")}</i>` : ""}</button>`;
+  }
+  const nombreMes = capitalizar(primero.toLocaleDateString("es-ES", { month: "long", year: "numeric" }));
+  const delMes = visitas.filter(v => v.date.startsWith(PV_MES)).sort((a, b) => a.date.localeCompare(b.date) || (a.hora || "").localeCompare(b.hora || ""));
+  const enDia = PV_DIA && PV_DIA.startsWith(PV_MES);
+  const sel = enDia ? delMes.filter(v => v.date === PV_DIA) : delMes;
+  const meses = [...new Set(visitas.map(v => v.date.slice(0, 7)))].sort();
+  /* Leyenda: las especialidades que hay en las visitas, con su color. */
+  const esps = [...new Set(visitas.map(especialistaDe))].sort((a, b) => a.localeCompare(b, "es"));
+  return `<div class="pv-cal">
+    <div class="des-cal-cab">
+      <button type="button" onclick="PB.pvMes(-1)" aria-label="Mes anterior">‹</button>
+      <b>${nombreMes}</b>
+      <button type="button" onclick="PB.pvMes(1)" aria-label="Mes siguiente">›</button></div>
+    <div class="des-cal">${["L", "M", "X", "J", "V", "S", "D"].map(x => `<div class="des-cal-d">${x}</div>`).join("")}${celdas}</div>
+    <div class="pv-leyenda">${esps.map(e => `<span><em class="t-${tonoEspecialidad(e)}"></em>${esc(e)}</span>`).join("")}<span><em class="pv-ley-prog"></em>Programada</span></div>
+    ${meses.length > 1 ? `<p class="faint pv-meses">Meses con visitas: ${meses.map(m => `<a href="#" class="${m === PV_MES ? "on" : ""}" onclick="PB.pvIrMes('${m}');return false">${new Date(m + "-01T00:00:00").toLocaleDateString("es-ES", { month: "short", year: "2-digit" })}</a>`).join(" · ")}</p>` : ""}
+    <div class="vh-grupo">${enDia ? esc(capitalizar(fmtFechaLarga(PV_DIA))) : `En ${nombreMes.toLowerCase()}`} · ${sel.length}</div>
+    ${sel.length ? sel.map(htmlVisita).join("") : `<p class="faint">Ninguna visita este mes.</p>`}
+  </div>`;
 }
 /* ---- Historial de visitas ----------------------------------------------
    Cada visita es una tarjeta plegada: fecha en un bloque a la izquierda,
@@ -19426,7 +19516,7 @@ function boot(vistaInicial) {
   function numeroAlimentos() { return (LIBRO.alimentos || []).length; }
 
   return { sintOtro, setOnVista, setOnGuardar, setSync, sincronizarAhora, refrescarAjustes, fusionarConRemoto, toggleRegistro, guardarToma, borrarToma, modalSueno, suenoModoRapido, guardarSuenoRapido, modalPanal, guardarPanalRapido, modalAnadir, darDosisRepetida, marcarComida, pdCompraMarcar, pdBatchMarcar, pdCocinarMarcar, viajeMarcar, modalPausarRegistro, pausarRegistro, reanudarRegistro, borrarPausaRegistro, modalAlimentoManual, modalPropio, guardarPropio, borrarPropio, confirmarBorrarPropio, amResultado, guardarAlimentoManual, pdToggle, modalBano, guardarBanoRapido, modalCompra, guardarCompra, modalMedicamento, guardarMedicamento, qltToggle, lineaCompleta, modalHoraVacunas, guardarHoraVacunas, modalSintomas, guardarSintomaRapido, marcarAvisoVisto, marcarVitaminaD, modalVitaminaD, guardarHoraVitaminaD, marcarApiretal, guardarApiretal, plegarBarra, activarNotificaciones, notificar, infcToggle, infcRango, infcAtajo, infcTodas, generarInformeCompleto, editarRegistro, guardarEdicion, pedirBorrado, confirmarBorrado, editarMarcaAlimento, guardarMarcaAlimento, borrarMarcaAlimento, verHistorialAlimento, cerrarModal, numeroAlimentos, irASeccionGuia,
-           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, medEditar, medGuardar, medBorrarPedir, medBorrar, medVer, medElegir, medRefrescar, medTelMas, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
+           exportarEstadoSync, importarEstadoSync, marcaDeTiempo, remotoDesfasado, irA, volverAMas, volverDesdeAlimento, cerrarDrawer, abrirDiaCalendario, addDiaper, addGrowth, addNote, addSleep, borrarTodo, exportarDatos, importarDatos, deleteDiaper, deleteGrowth, deleteNote, deletePediatricVisit, deleteSleep, savePediatricVisit, pvMedicoAuto, medEditar, medGuardar, medBorrarPedir, medBorrar, medVer, medElegir, medRefrescar, medTelMas, edSi, recModal, recGuardar, recBorrar, recMarcar, recCita, pvMotivo, pvVer, pvMes, pvIrMes, pvDia, pvResultado, guardarSintoma, deleteSintoma, stopSleep, addSleepManual, fecharVacuna, detallesVacuna, guardarInfoVacuna, vacunasEditar, nuevaVacuna, guardarVacunaNueva, borrarVacuna, confirmarBorrarVacuna, suenoModo, suenoPeriodo, lechePeriodo, resMes, resHoy, exportarAlimentos, suenoMes, suenoInforme, infTipo, infNav, infElegir, marcarEstadoDesdeFicha, marcarEstadoRapidoHoy, marcarEstadoRapidoDrawer, alternarCmp, resumenDia, toggleCdcMilestone, toggleOmsMilestone, toggleTooth, desTab, desMes, desIrMes, desDia, desNuevo, desEditar, desGuardar, desQuitar, toggleVaccine, TOMAS_HOY, TOMAS_DRAWER, boot, renderHeader, cocinaTab };
 })();
   </script>
 
