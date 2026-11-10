@@ -221,40 +221,133 @@ def nombres(ks):
 SOFRITO = ("cebolla", "pimiento", "tomate")
 FIN_MANO = "Aparta sin triturar lo que va para la mano (abajo, «Para la mano»)."
 
-def pasos_base(titulo):
-    """Pasos de una base. Las 4 de la primera semana son las del PDF; el resto
-    siguen su mismo método según el tipo de base."""
-    if titulo in RECETA_PDF: return RECETA_PDF[titulo], True
+# ---------------------------------------------------------------------------
+# Tiempos (petición de la familia, 10-11-2026: «¿cuánto se cuece?, ¿a qué
+# temperatura?»). El PDF no los da: son ORIENTATIVOS, para Bogotá (~2.600 m,
+# el agua hierve a ~91 °C y todo tarda algo más que a nivel del mar), en
+# minutos desde que el agua vuelve a hervir, a fuego medio y tapado, con
+# trozos de unos 2-3 cm. Manda siempre la prueba (se aplasta entre los dedos;
+# la carne, sin nada rosado). Las temperaturas internas de seguridad sí son
+# las oficiales (USDA, tabla de temperaturas mínimas seguras): ave 74 °C,
+# carne picada 71 °C, cerdo y pescado 63 °C, platos de huevo 71 °C.
+# ---------------------------------------------------------------------------
+T = {"res": (100, 120), "ternera": (80, 100), "cerdo": (45, 55), "pollo_muslo": (30, 35), "pollo_dados": (20, 25),
+     "garbanzos": (120, 150), "frijol": (90, 120), "lentejas": (35, 45),
+     "papa": (20, 25), "batata": (20, 25), "yuca": (30, 40), "platano": (15, 20), "zanahoria": (20, 25), "auyama": (20, 25),
+     "calabacin": (10, 12), "brocoli": (8, 10), "coliflor": (10, 12), "habichuela": (12, 15), "arveja": (10, 12),
+     "manzana": (12, 15), "quinoa": (18, 20), "arroz": (22, 25), "pasta_peq": (10, 12),
+     "tilapia": (6, 8), "salmon": (6, 8), "trucha": (6, 8)}
+PRESION = {"res": (30, 35), "ternera": (25, 30), "garbanzos": (35, 40), "frijol": (30, 35)}
+LARGO = ("res", "ternera", "garbanzos", "frijol")
+PESCADO = ("tilapia", "salmon", "trucha")
+NOM = {"res": "la carne de res en dados", "ternera": "la ternera en dados", "cerdo": "el lomo de cerdo en dados",
+       "pollo_muslo": "los muslos de pollo sin piel", "pollo_dados": "el pollo en dados",
+       "garbanzos": "los garbanzos (remojados 12 h y escurridos)", "frijol": "el fríjol (remojado 12 h y escurrido)",
+       "lentejas": "las lentejas lavadas", **{k: v for k, v in CORTO.items()}}
+def mm(k): a, b = T[k]; return f"{a}-{b} min"
+def lista_y(xs): return ", ".join(xs[:-1]) + " y " + xs[-1] if len(xs) > 1 else xs[0]
+def m(n): return f"{n} min"
+TEMP = {"pollo": "74 °C en el centro (USDA, aves)", "cerdo": "63 °C en el centro (USDA)",
+        "pescado": "63 °C en el centro (USDA/FDA)", "molida": "71 °C en el centro (USDA, carne picada)"}
+
+def pasos_mano(mano, ks, cocina_con):
+    """Lo de «para la mano», con su tiempo. cocina_con = claves que van en la olla."""
+    out = []
+    for t in mano:
+        tl = t.lower()
+        if "auyama asada" in tl:
+            out.append("Auyama asada: bastones del tamaño de un dedo, en bandeja con papel de horno y un poco de aceite; horno precalentado a 200 °C, 20-25 min, dándoles la vuelta a mitad, hasta que se aplasten con los dedos.")
+        elif "pasta grande" in tl:
+            out.append("Pasta grande (fusilli): aparte, en agua hirviendo sin sal, los minutos del paquete + 3, para que quede muy blanda.")
+        elif "lascas" in tl:
+            out.append("Lascas: antes de triturar, aparta unos trozos grandes de pescado y revisa las espinas con los dedos.")
+        elif "pollo desmechado" in tl:
+            out.append("Tiras de pollo: antes de triturar, aparta un trozo de pollo y desméchalo en tiras con dos tenedores.")
+        elif "garbanzos aplastados" in tl:
+            out.append("Garbanzos aplastados: aparta unos garbanzos enteros antes de triturar; se aplastan con el tenedor al servir.")
+        elif "albóndiga" in tl:
+            continue
+        else:
+            k = next((k for rx, k in [(r"papa", "papa"), (r"zanahoria", "zanahoria"), (r"yuca", "yuca"), (r"batata", "batata"),
+                                       (r"plátano", "platano"), (r"calabacín", "calabacin"), (r"brócoli", "brocoli"),
+                                       (r"coliflor", "coliflor"), (r"habichuela", "habichuela")] if re.search(rx, tl)), None)
+            if not k: continue
+            forma = " (del tamaño de un dedo)" if "bastones" in tl else "" if "ramitos" in tl else " (en trozos grandes)"
+            if k in cocina_con:
+                out.append(f"{capital(t)}{forma}: en la misma olla y a la vez que {CORTO[k]}; sácalos antes de triturar.")
+            else:
+                out.append(f"{capital(t)}{forma}: aparte, en agua hirviendo sin sal, {mm(k)}, hasta que se aplasten entre los dedos.")
+    return out
+
+def capital(t): return t[:1].upper() + t[1:]
+
+def pasos_base(titulo, mano=()):
+    """Pasos con tiempos. Las 4 bases de la primera semana siguen el método de
+    las recetas del PDF; las demás, el mismo método según el tipo."""
     ks = list(ings_base(titulo)); tb = tipo_base(titulo)
-    verd = [k for k in ks if k not in PROTE and k not in LEGUM]
-    if tb == "carne":
-        sof = [k for k in verd if k in SOFRITO]; resto = [k for k in verd if k not in SOFRITO]
-        p = ([f"Rehoga a fuego suave, picados, {nombres(sof)} con un chorrito de aceite."] if sof else []) + [
-             f"Añade la carne en dados" + (f" y {nombres(resto)} en trozos" if resto else "") + "; cubre con agua.",
-             "Cuece hasta que la carne esté muy tierna, que se deshaga con el tenedor (la olla a presión acorta mucho).",
-             "Tritura con parte del caldo hasta la textura que maneje. " + FIN_MANO]
-    elif tb == "albondigas":
-        p = ["Ralla el calabacín y escúrrelo bien. Mézclalo con la carne molida y forma albóndigas pequeñas y blandas (sin sal).",
-             "Rehoga la cebolla picada con un chorrito de aceite, añade el tomate pelado y picado y cuece la salsa unos minutos.",
-             "Cuece las albóndigas en la salsa, tapadas, hasta que estén hechas por dentro (sin nada rosado). Cuece la papa aparte o en la misma salsa.",
-             "Tritura una parte con la salsa y la papa; guarda albóndigas enteras para la «media albóndiga aplastada»."]
-    elif tb == "pollo":
-        p = [f"Cuece el pollo sin piel con {nombres(verd)}, cubierto de agua.",
-             "Deshuesa con cuidado (si tenía hueso) y tritura con el caldo hasta la textura que maneje.",
-             FIN_MANO]
-    elif tb == "pescado":
-        duro = [k for k in verd if k in ("papa", "batata", "yuca", "arracacha", "quinoa")]
-        resto = [k for k in verd if k not in duro]
-        p = [f"Cuece {nombres(duro)}" + (f" con {nombres(resto)}" if resto else "") + "; al final, añade el pescado (pocos minutos).",
-             "Revisa espinas con los dedos antes de triturar. Reserva lascas de pescado y la verdura para la mano sin triturar."]
-    else:
-        leg = [k for k in ks if k in LEGUM][0]
-        pasta = "pasta_peq" in verd
-        v = [k for k in verd if k != "pasta_peq"]
-        p = [f"Cuece {LEG_TXT[leg]} con {nombres(v)}.",
-             "Añade el pollo en dados" + (" y, al final, la pasta pequeña." if pasta else "."),
-             "Tritura. " + FIN_MANO]
-    return p, False
+    pdf = titulo in RECETA_PDF
+    p = []
+    if tb == "albondigas":
+        p = ["Ralla el calabacín y escúrrelo bien apretándolo con las manos. Mézclalo con la carne molida y forma albóndigas pequeñas (2-3 cm), sin sal.",
+             "Rehoga la cebolla picada con un chorrito de aceite a fuego medio-bajo, 8-10 min, hasta que esté transparente. Añade el tomate pelado y picado y cuece 10 min.",
+             "Añade la papa en dados y un vaso de agua; cuando hierva, baja a fuego medio y tapa.",
+             "A los 5 min, mete las albóndigas en la salsa y cuece todo tapado 15-20 min más, dándoles la vuelta una vez.",
+             f"Están cuando por dentro no queda nada rosado: {TEMP['molida']}. La papa, que se aplaste.",
+             "Guarda albóndigas enteras (para «media albóndiga aplastada») y tritura el resto con la salsa y la papa."]
+        return p + pasos_mano(mano, ks, set(ks)) + ["Enfría rápido y congela en raciones el mismo día."], pdf, "≈ 45 min"
+    d_pollo = "pollo_dados" if tb == "legumbre" else "pollo_muslo"
+    olla = [d_pollo if k == "pollo_muslo" else k for k in ks]
+    sof = [k for k in olla if k in SOFRITO] if tb == "carne" else []
+    largo = [k for k in olla if k in LARGO]
+    pesc = [k for k in olla if k in PESCADO]
+    resto = [k for k in olla if k not in sof and k not in largo and k not in pesc]
+    con_t = [k for k in resto if k in T]
+    sin_t = [k for k in resto if k not in T]          # cebolla, tomate, pimiento: desde el principio
+    if sof:
+        if sof == ["cebolla"]:
+            p.append("Pica la cebolla y rehógala con un chorrito de aceite a fuego medio-bajo, 8-10 min, hasta que esté transparente.")
+        else:
+            p.append(f"Pica {lista_y([CORTO[k] for k in sof])} y rehógalo todo con un chorrito de aceite a fuego medio-bajo, 8-10 min, hasta que esté blando"
+                     + (" y la cebolla transparente." if "cebolla" in sof else "."))
+    if largo:
+        k = largo[0]; a, b = T[k]; pa, pb = PRESION[k]
+        con = f" con {lista_y([CORTO[x] for x in sin_t])}" if sin_t else ""
+        sin_t = []
+        p.append(f"{'Añade' if sof else 'Pon en la olla'} {NOM[k]}{con}, cubre con agua sin sal y cuece tapado a fuego medio: {a}-{b} min en olla normal desde que hierva, "
+                 f"o {pa}-{pb} min en olla a presión desde que suba la válvula (lo más práctico). "
+                 "Lo demás se añade cuando esté casi tierno; en la olla a presión, abre cuando haya bajado la presión.")
+    orden = sorted(con_t, key=lambda k: -T[k][1])
+    total = max([T[k][1] for k in orden] + [T[k][1] for k in pesc] + [0])
+    if orden or pesc or sin_t:
+        primero = [k for k in orden if T[k][1] == total] if orden else []
+        ini = [NOM[k] for k in primero + sin_t if k in NOM or k in CORTO]
+        if largo and ini:
+            p.append(f"Añade {lista_y(ini)} y un poco más de agua si hace falta; cuando vuelva a hervir, fuego medio y tapado.")
+        elif not largo:
+            p.append(f"{'Añade' if sof else 'Pon en la olla'} {lista_y(ini)}, cubre con agua sin sal y lleva a ebullición; después, fuego medio y tapado.")
+        agenda = {}
+        for k in orden:
+            if k in primero: continue
+            agenda.setdefault(total - T[k][1], []).append(NOM[k])
+        for k in pesc:
+            agenda.setdefault(total - T[k][1], []).append("el pescado en trozos grandes")
+        for t0 in sorted(agenda):
+            p.append(f"A los {t0} min, añade {lista_y(agenda[t0])}" + (" (pocos minutos: se hace enseguida)" if any('pescado' in x for x in agenda[t0]) else "") + ".")
+        p.append(f"En total, unos {total} min desde que hierve" + (" (después de la carne o la legumbre)" if largo else "") + ". La verdura está cuando se aplasta entre los dedos.")
+    if "pollo_muslo" in olla:
+        p.append(f"El pollo está cuando no queda nada rosado y el jugo sale transparente: {TEMP['pollo']}. Deshuésalo con cuidado.")
+    elif "pollo_dados" in olla:
+        p.append(f"El pollo, sin nada rosado por dentro: {TEMP['pollo']}.")
+    if "cerdo" in olla:
+        p.append(f"El cerdo, muy tierno y sin nada rosado: como mínimo {TEMP['cerdo']}.")
+    if largo and largo[0] in ("res", "ternera"):
+        p.append("La carne está cuando se deshace con el tenedor.")
+    if pesc:
+        p.append(f"El pescado está cuando se vuelve opaco y se separa en lascas: {TEMP['pescado']}. Revisa espinas con los dedos antes de triturar.")
+    p += pasos_mano(mano, ks, set(olla))
+    p.append("Tritura con parte del caldo hasta la textura que maneje. Enfría rápido y congela en raciones el mismo día.")
+    tot = total + (T[largo[0]][1] if largo else 0) + (10 if sof else 0)
+    return p, pdf, f"≈ {tot} min" + (" (menos con olla a presión)" if largo else "")
 
 # ---------------------------------------------------------------------------
 # Componentes del calendario: papel, emoji, ingredientes por ración y cómo darlo.
@@ -284,40 +377,59 @@ ID_APP = {"guayaba": "guayaba", "melon": "melon", "durazno": "durazno", "arandan
 
 # Desayunos y platos al momento: emoji, ingredientes por toma y receta (la del PDF, «Desayunos rápidos»).
 PLATOS = [
+  # Recetas del PDF («Desayunos rápidos»), con el fuego y los minutos añadidos
+  # (orientativos; el PDF no los da). Platos de huevo: 71 °C (USDA), es decir,
+  # sin nada líquido ni brillante.
   (r"^pancakes de banano, avena y huevo", "🥞", {"banano": 120, "huevo": 1, "avena": 15},
-   "10 min o la noche antes", ["1 banano maduro + 1 huevo + 2-3 cucharadas de avena molida.", "Sartén antiadherente.", "Nevera máx. 1 día; si no, congelar."], "pdf"),
+   "10 min o la noche antes", ["Aplasta 1 banano maduro y mézclalo con 1 huevo y 2-3 cucharadas de avena molida.",
+     "Sartén antiadherente a fuego medio-bajo con unas gotas de aceite: echa cucharadas de masa y cuájalas 2-3 min por cada lado.",
+     "Están cuando al partir uno no queda masa cruda por dentro.", "Nevera máx. 1 día; si no, congelar."], "pdf"),
   (r"^tortilla de huevo con calabacín", "🍳", {"huevo": 1, "calabacin": 30},
-   "5 min", ["1 huevo batido + 2-3 cucharadas de calabacín rallado y escurrido.", "Cuajar bien por ambos lados con poco aceite.", "Cortar en tiras."], "pdf"),
+   "5 min", ["1 huevo batido + 2-3 cucharadas de calabacín rallado y escurrido.",
+     "Sartén antiadherente a fuego medio-bajo con poco aceite: 2-3 min por cada lado, tapada, hasta que no quede nada líquido.", "Cortar en tiras."], "pdf"),
   (r"^yogur baby gü natural con banano y avena", "🥣", {"yogur": 1, "avena": 10, "banano": 60},
-   "La noche antes", ["Yogur Alpina Baby Gü natural + 1-2 cucharadas de avena en hojuelas; nevera toda la noche.", "Por la mañana, el banano aplastado y la fruta."], "pdf"),
+   "La noche antes", ["Yogur Alpina Baby Gü natural + 1-2 cucharadas de avena en hojuelas; nevera toda la noche (8-12 h).", "Por la mañana, el banano aplastado y la fruta."], "pdf"),
   (r"^yogur de soja natural sin azúcar con avena", "🥣", {"yogur_soja": 1, "avena": 10},
-   "La noche antes", ["Yogur de soja natural sin azúcar + 1-2 cucharadas de avena en hojuelas; nevera toda la noche.", "La fruta, por la mañana. Es el único alimento nuevo del día."], "propia"),
+   "La noche antes", ["Yogur de soja natural sin azúcar + 1-2 cucharadas de avena en hojuelas; nevera toda la noche (8-12 h).", "La fruta, por la mañana. Es el único alimento nuevo del día."], "propia"),
   (r"^yogur baby gü natural con avena", "🥣", {"yogur": 1, "avena": 10},
-   "La noche antes", ["Yogur Alpina Baby Gü natural + 1-2 cucharadas de avena en hojuelas; nevera toda la noche.", "La fruta, por la mañana."], "pdf"),
+   "La noche antes", ["Yogur Alpina Baby Gü natural + 1-2 cucharadas de avena en hojuelas; nevera toda la noche (8-12 h).", "La fruta, por la mañana."], "pdf"),
   (r"^huevo revuelto con tomate$", "🍳", {"huevo": 1, "tomate": 20},
-   "5 min", ["Huevo revuelto con un poco de tomate pelado y picado, bien hecho (sin partes líquidas).", "Papa cocida en bastones (reserva de la base o cocida aparte)."], "pdf~"),
+   "5 min (+ la papa)", ["Bastones de papa: los reservados de la base o, si no hay, en agua hirviendo sin sal 20-25 min, hasta que se aplasten.",
+     "Rehoga el tomate pelado y muy picado con unas gotas de aceite a fuego medio-bajo, 2-3 min.",
+     "Añade 1 huevo batido y remueve 2-3 min, hasta que no quede nada líquido ni brillante."], "pdf~"),
   (r"^huevo revuelto$", "🍳", {"huevo": 1},
-   "5 min", ["Huevo revuelto bien hecho (sin partes líquidas).", "Papa cocida reservada de la base, en bastones."], "pdf"),
+   "5 min", ["Huevo revuelto a fuego medio-bajo, removiendo 2-3 min, hasta que no quede nada líquido ni brillante.",
+     "Papa cocida reservada de la base, en bastones (si no hay: en agua hirviendo sin sal 20-25 min)."], "pdf"),
   (r"^muffin de huevo, auyama y avena", "🧁", {},
-   "Lote congelado", ["3 huevos + ~100 g de auyama cocida aplastada + 3 cucharadas de avena.", "Horno a 180 °C hasta que estén cuajados.", "Congelar; pasar a nevera la noche antes."], "pdf"),
+   "Lote congelado", ["Auyama en trozos, en agua hirviendo sin sal 20-25 min (o la de la base); aplasta unos 100 g.",
+     "Mezcla 3 huevos + la auyama aplastada + 3 cucharadas de avena.",
+     "Horno precalentado a 180 °C: 18-22 min en moldes de magdalena (12-15 min si son mini), hasta que estén cuajados y un palillo salga limpio.",
+     "Congelar; pasar a nevera la noche antes. Recalentar hasta que esté caliente por dentro."], "pdf"),
   (r"^avena con su fórmula", "🥣", {"avena": 15},
-   "5 min", ["Cocer avena en agua, dejar templar y mezclar con su fórmula ya preparada.", "La crema de fruto seco (si toca): ½ cucharadita, 100 % (sin sal ni azúcar), bien disuelta."], "pdf"),
+   "5 min", ["Cuece 2 cucharadas de avena en hojuelas en unos 80 ml de agua, a fuego bajo y removiendo, 5-7 min, hasta que esté espesa y blanda.",
+     "Deja templar y mezcla con su fórmula ya preparada.",
+     "La crema de fruto seco (si toca): ½ cucharadita, 100 % (sin sal ni azúcar), bien disuelta."], "pdf"),
   (r"^arepa sin sal con huevo revuelto y aguacate", "🫓", {"harina_maiz": 25, "huevo": 1, "aguacate": 50},
-   "10 min", ["Arepa casera: harina de maíz precocida y agua, sin sal; hazla fina y blanda.", "Huevo revuelto bien cuajado.", "Aguacate aplastado encima o en tiras gruesas."], "propia"),
+   "15 min", ["Arepa casera sin sal: mezcla unos 25 g de harina de maíz precocida con 30-35 ml de agua tibia; amasa hasta que no se pegue y deja reposar 2-3 min.",
+     "Forma una arepa fina (menos de 1 cm) y ásala en sartén antiadherente a fuego medio, 4-5 min por cada lado, hasta que se dore un poco y esté hecha por dentro.",
+     "Huevo revuelto a fuego medio-bajo, 2-3 min, hasta que no quede nada líquido.", "Aguacate aplastado encima o en tiras gruesas."], "propia"),
   (r"^gambas peladas y picadas con papa y calabacín", "🦐", {"gambas": 40, "papa": 60, "calabacin": 40},
-   "15 min", ["Cuece la papa y el calabacín hasta que estén muy blandos.", "Añade las gambas peladas y picadas finas los últimos minutos, hasta que estén opacas y firmes por dentro.",
-              "Aplasta todo junto o dalo en trocitos blandos. De día, sin otro alimento nuevo, y vigila después (alérgeno)."], "propia"),
+   "25 min", ["Papa en dados en agua hirviendo sin sal; a los 10 min añade el calabacín en dados (25 min en total).",
+     "Los últimos 2-3 min, añade las gambas peladas y picadas finas: están cuando se vuelven opacas y firmes (63 °C, USDA/FDA).",
+     "Aplasta todo junto o dalo en trocitos blandos. De día, sin otro alimento nuevo, y vigila después (alérgeno)."], "propia"),
   (r"^tortilla de huevo, papa y calabacín \(al momento\)", "🍳", {"huevo": 1, "papa": 40, "calabacin": 30},
-   "10 min", ["Papa cocida en dados pequeños y calabacín rallado y escurrido.", "Mezcla con 1 huevo batido y cuaja bien por los dos lados con poco aceite.", "En tiras."], "propia"),
+   "10 min (+ la papa)", ["Papa cocida en dados pequeños (reservada de la base o 20-25 min en agua) y calabacín rallado y escurrido.",
+     "Mezcla con 1 huevo batido y cuaja en sartén antiadherente a fuego medio-bajo con poco aceite, tapada, 3-4 min por cada lado, hasta que no quede nada líquido.", "En tiras."], "propia"),
   (r"^huevo revuelto con tomate y cebolla \(al momento\)", "🍳", {"huevo": 1, "tomate": 20, "cebolla": 10},
-   "5 min", ["Rehoga un poco de cebolla y tomate pelado, muy picados, con poco aceite.", "Añade 1 huevo batido y remueve hasta que esté bien hecho, sin partes líquidas."], "propia"),
+   "10 min", ["Rehoga un poco de cebolla y tomate pelado, muy picados, con unas gotas de aceite a fuego medio-bajo, 5 min, hasta que estén blandos.",
+     "Añade 1 huevo batido y remueve 2-3 min, hasta que no quede nada líquido ni brillante."], "propia"),
 ]
 MUFFIN_LOTE = {"huevo": 3, "auyama": 100, "avena": 20}
 
 # Cómo dar lo que puede quedar duro (tabla del PDF, «Seguridad»).
 COMO = [
-  (r"\bpera\b", "Cocida: pelada, en gajos gruesos, al vapor o en microondas tapada con un poco de agua hasta que se aplaste entre los dedos. Cruda solo si está muy madura y blanda."),
-  (r"manzana", "Siempre cocida en gajos, rallada fina o en compota."),
+  (r"\bpera\b", "Cocida: pelada, en gajos gruesos, al vapor o en microondas tapada con un poco de agua hasta que se aplaste entre los dedos (orientativo: al vapor 8-12 min; microondas 2-3 min a máxima potencia). Cruda solo si está muy madura y blanda."),
+  (r"manzana", "Siempre cocida en gajos, rallada fina o en compota (orientativo: gajos al vapor 8-12 min o en microondas 2-3 min tapada con un poco de agua, hasta que se aplasten)."),
   (r"guayaba", "Madura, sin piel y sin la parte central de semillas; si está firme, cocida o en compota colada."),
   (r"durazno", "Muy maduro y pelado, en gajos grandes; si está firme, cocido como la pera."),
   (r"zanahoria", "Siempre cocida hasta que se aplaste; nunca cruda en bastones."),
@@ -493,7 +605,7 @@ for s in sesiones:
         for k, g in MUFFIN_LOTE.items(): compra[k] += g; por[k].add("lote de muffins")
     for L, b in lote.items():
         b["e"] = EMO_BASE[tipo_base(b["t"])]
-        b["pasos"], b["pdf"] = pasos_base(b["t"])
+        b["pasos"], b["pdf"], b["tiempo"] = pasos_base(b["t"], list(mano[L]))
         # Con la receta del PDF se cocina su lote entero (sus cantidades son
         # para N raciones): las que sobren, al congelador.
         n = b["rac"]
