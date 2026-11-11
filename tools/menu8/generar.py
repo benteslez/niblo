@@ -247,54 +247,60 @@ NOM = {"res": "la carne de res en dados", "ternera": "la ternera en dados", "cer
 def mm(k): a, b = T[k]; return f"{a}-{b} min"
 def lista_y(xs): return ", ".join(xs[:-1]) + " y " + xs[-1] if len(xs) > 1 else xs[0]
 def m(n): return f"{n} min"
-TEMP = {"pollo": "74 °C en el centro (USDA, aves)", "cerdo": "63 °C en el centro (USDA)",
-        "pescado": "63 °C en el centro (USDA/FDA)", "molida": "71 °C en el centro (USDA, carne picada)"}
+TEMP = {"pollo": "74 °C en el centro, según el USDA para aves", "cerdo": "63 °C en el centro, según el USDA",
+        "pescado": "63 °C en el centro, según el USDA", "molida": "71 °C en el centro, según el USDA para carne picada"}
 
-def pasos_mano(mano, ks, cocina_con):
-    """Lo de «para la mano», con su tiempo. cocina_con = claves que van en la olla."""
+def capital(t): return t[:1].upper() + t[1:]
+
+def _mano(mano, olla):
+    """Lo de «para la mano»: (clave de la olla con la que entra | None, texto)."""
     out = []
     for t in mano:
         tl = t.lower()
+        if "albóndiga" in tl: continue
         if "auyama asada" in tl:
-            out.append("Auyama asada: bastones del tamaño de un dedo, en bandeja con papel de horno y un poco de aceite; horno precalentado a 200 °C, 20-25 min, dándoles la vuelta a mitad, hasta que se aplasten con los dedos.")
+            out.append((None, "aparte", "Auyama asada: bastones del tamaño de un dedo en bandeja con papel de horno y un poco de aceite; horno precalentado a 200 °C, 20-25 min, dándoles la vuelta a mitad, hasta que se aplasten con los dedos."))
         elif "pasta grande" in tl:
-            out.append("Pasta grande (fusilli): aparte, en agua hirviendo sin sal, los minutos del paquete + 3, para que quede muy blanda.")
+            out.append((None, "aparte", "Pasta grande (fusilli): en otra olla con agua hirviendo sin sal, los minutos del paquete + 3, para que quede muy blanda."))
         elif "lascas" in tl:
-            out.append("Lascas: antes de triturar, aparta unos trozos grandes de pescado y revisa las espinas con los dedos.")
+            out.append((None, "fin", "Aparta unos trozos grandes de pescado para las lascas y revisa las espinas con los dedos."))
         elif "pollo desmechado" in tl:
-            out.append("Tiras de pollo: antes de triturar, aparta un trozo de pollo y desméchalo en tiras con dos tenedores.")
+            out.append((None, "fin", "Aparta un trozo de pollo y desméchalo en tiras con dos tenedores."))
         elif "garbanzos aplastados" in tl:
-            out.append("Garbanzos aplastados: aparta unos garbanzos enteros antes de triturar; se aplastan con el tenedor al servir.")
-        elif "albóndiga" in tl:
-            continue
+            out.append((None, "fin", "Aparta unos garbanzos enteros: se aplastan con el tenedor al servir."))
         else:
             k = next((k for rx, k in [(r"papa", "papa"), (r"zanahoria", "zanahoria"), (r"yuca", "yuca"), (r"batata", "batata"),
                                        (r"plátano", "platano"), (r"calabacín", "calabacin"), (r"brócoli", "brocoli"),
                                        (r"coliflor", "coliflor"), (r"habichuela", "habichuela")] if re.search(rx, tl)), None)
             if not k: continue
-            forma = " (del tamaño de un dedo)" if "bastones" in tl else "" if "ramitos" in tl else " (en trozos grandes)"
-            if k in cocina_con:
-                out.append(f"{capital(t)}{forma}: en la misma olla y a la vez que {CORTO[k]}; sácalos antes de triturar.")
+            if k in olla:
+                txt = ("los " + t + " (del tamaño de un dedo)") if t.startswith("bastones") else \
+                      ("unos " + t + " enteros") if t.startswith("ramitos") else \
+                      "unos trozos grandes para la mano"
+                out.append((k, "con", txt))
             else:
-                out.append(f"{capital(t)}{forma}: aparte, en agua hirviendo sin sal, {mm(k)}, hasta que se aplasten entre los dedos.")
+                out.append((None, "aparte", f"{capital(t)}: en otra olla con agua hirviendo sin sal, {mm(k)}, hasta que se aplasten entre los dedos."))
     return out
 
-def capital(t): return t[:1].upper() + t[1:]
+def _min(n): return f"Min {n} · "
 
 def pasos_base(titulo, mano=()):
-    """Pasos con tiempos. Las 4 bases de la primera semana siguen el método de
-    las recetas del PDF; las demás, el mismo método según el tipo."""
+    """Pasos ordenados por minutos (petición de la familia, 11-11-2026).
+    «Min 0» es cuando el agua rompe a hervir; lo de antes va en «Antes de
+    empezar». Las 4 bases de la primera semana siguen el método del PDF; las
+    demás, el mismo método según el tipo."""
     ks = list(ings_base(titulo)); tb = tipo_base(titulo)
     pdf = titulo in RECETA_PDF
-    p = []
+    fin_comun = "Tritura con parte del caldo hasta la textura que maneje. Enfría rápido y congela en raciones el mismo día."
     if tb == "albondigas":
-        p = ["Ralla el calabacín y escúrrelo bien apretándolo con las manos. Mézclalo con la carne molida y forma albóndigas pequeñas (2-3 cm), sin sal.",
-             "Rehoga la cebolla picada con un chorrito de aceite a fuego medio-bajo, 8-10 min, hasta que esté transparente. Añade el tomate pelado y picado y cuece 10 min.",
-             "Añade la papa en dados y un vaso de agua; cuando hierva, baja a fuego medio y tapa.",
-             "A los 5 min, mete las albóndigas en la salsa y cuece todo tapado 15-20 min más, dándoles la vuelta una vez.",
-             f"Están cuando por dentro no queda nada rosado: {TEMP['molida']}. La papa, que se aplaste.",
-             "Guarda albóndigas enteras (para «media albóndiga aplastada») y tritura el resto con la salsa y la papa."]
-        return p + pasos_mano(mano, ks, set(ks)) + ["Enfría rápido y congela en raciones el mismo día."], pdf, "≈ 45 min"
+        p = ["Antes de empezar · Ralla el calabacín y escúrrelo bien apretándolo con las manos. Mézclalo con la carne molida y forma albóndigas pequeñas (2-3 cm), sin sal.",
+             _min(0) + "Rehoga la cebolla picada con un chorrito de aceite a fuego medio-bajo.",
+             _min(10) + "Cebolla transparente: añade el tomate pelado y picado.",
+             _min(20) + "Añade la papa en dados y un vaso de agua; cuando hierva, fuego medio y tapado.",
+             _min(25) + "Mete las albóndigas en la salsa y tapa. Dales la vuelta a mitad (hacia el min 35).",
+             _min(45) + f"Apaga. Por dentro, nada rosado: {TEMP['molida']}; la papa se aplasta.",
+             "Al terminar · Guarda albóndigas enteras (para «media albóndiga aplastada») y tritura el resto con la salsa y la papa. Enfría rápido y congela en raciones el mismo día."]
+        return p, pdf, "≈ 45 min"
     d_pollo = "pollo_dados" if tb == "legumbre" else "pollo_muslo"
     olla = [d_pollo if k == "pollo_muslo" else k for k in ks]
     sof = [k for k in olla if k in SOFRITO] if tb == "carne" else []
@@ -303,51 +309,64 @@ def pasos_base(titulo, mano=()):
     resto = [k for k in olla if k not in sof and k not in largo and k not in pesc]
     con_t = [k for k in resto if k in T]
     sin_t = [k for k in resto if k not in T]          # cebolla, tomate, pimiento: desde el principio
+    mano_l = _mano(mano, olla)
+    antes, agenda, aparte = [], {}, []
+    # Lo que más tarda marca el final: todo lo demás entra a tiempo de acabar a la vez.
+    total = max([T[k][1] for k in largo + con_t + pesc] + [0])
     if sof:
-        if sof == ["cebolla"]:
-            p.append("Pica la cebolla y rehógala con un chorrito de aceite a fuego medio-bajo, 8-10 min, hasta que esté transparente.")
+        if len(sof) == 1:
+            fem = CORTO[sof[0]].startswith("la ")
+            antes.append(f"Pica {CORTO[sof[0]]} y rehóga{'la' if fem else 'lo'} con un chorrito de aceite a fuego medio-bajo, 8-10 min, hasta que esté "
+                         + ("transparente." if sof == ["cebolla"] else "blando."))
         else:
-            p.append(f"Pica {lista_y([CORTO[k] for k in sof])} y rehógalo todo con un chorrito de aceite a fuego medio-bajo, 8-10 min, hasta que esté blando"
-                     + (" y la cebolla transparente." if "cebolla" in sof else "."))
+            antes.append(f"Pica {lista_y([CORTO[k] for k in sof])} y rehógalo todo con un chorrito de aceite a fuego medio-bajo, 8-10 min, hasta que esté blando"
+                         + (" y la cebolla transparente." if "cebolla" in sof else "."))
+    def entra(k):
+        return 0 if k in largo else total - T[k][1]
+    for k in largo + con_t + pesc:
+        agenda.setdefault(entra(k), []).append(k)
+    inicio = agenda.pop(0, [])
+    nom0 = [NOM[k] for k in inicio] + [CORTO[k] for k in sin_t]
+    antes.append(f"{'Añade' if sof else 'Pon en la olla'} {lista_y(nom0)}, cubre con agua sin sal y lleva a ebullición a fuego fuerte.")
+    p = ["Antes de empezar · " + x for x in antes]
+    p.append(_min(0) + "Cuando hierva, baja a fuego medio y tapa." + (
+        f" {capital(NOM[largo[0]])} necesita{'n' if largo[0] == 'garbanzos' else ''} {mm(largo[0])}." if largo else ""))
+    for t0 in sorted(agenda):
+        ks0 = agenda[t0]
+        txt = lista_y(["el pescado en trozos grandes" if k in PESCADO else NOM[k] for k in ks0])
+        extra = [m[2] for m in mano_l if m[1] == "con" and m[0] in ks0]
+        p.append(_min(t0) + f"Añade {txt}" + (f", y también {lista_y(extra)}" if extra else "")
+                 + (". Se hace enseguida." if any(k in PESCADO for k in ks0) else ".")
+                 + (" Si la carne ya se deshace antes, adelanta este paso." if largo and largo[0] in ("res", "ternera") else "")
+                 + (" Si la legumbre ya está tierna antes, adelanta este paso." if largo and largo[0] in LEGUM else ""))
+    # Mano que entra con lo del principio
+    extra0 = [m[2] for m in mano_l if m[1] == "con" and m[0] in inicio]
+    if extra0:
+        p[len(antes)] += f" Mete también {lista_y(extra0)}."
+    chk = ["la verdura se aplasta entre los dedos"]
+    if "pollo_muslo" in olla: chk.append(f"el pollo no tiene nada rosado y el jugo sale transparente ({TEMP['pollo']})")
+    elif "pollo_dados" in olla: chk.append(f"el pollo no tiene nada rosado ({TEMP['pollo']})")
+    if "cerdo" in olla: chk.append(f"el cerdo está muy tierno y sin nada rosado (como mínimo {TEMP['cerdo']})")
+    if largo and largo[0] in ("res", "ternera"): chk.append("la carne se deshace con el tenedor")
+    if largo and largo[0] in LEGUM: chk.append("la legumbre se aplasta con la lengua contra el paladar")
+    if pesc: chk.append(f"el pescado está opaco y se separa en lascas ({TEMP['pescado']})")
+    p.append(_min(total) + "Apaga y comprueba: " + "; ".join(chk) + ". Si algo no está, 5 min más.")
+    fin = []
+    if any(m[1] == "con" for m in mano_l): fin.append("Saca lo que va para la mano antes de triturar.")
+    if "pollo_muslo" in olla: fin.append("Deshuesa el pollo con cuidado.")
+    if pesc and not any("lascas" in m[2] for m in mano_l): fin.append("Revisa espinas con los dedos.")
+    fin += [m[2] for m in mano_l if m[1] == "fin"]
+    fin.append(fin_comun)
+    p.append("Al terminar · " + " ".join(fin))
+    for m in mano_l:
+        if m[1] == "aparte": p.append("Mientras se cuece · " + m[2])
     if largo:
-        k = largo[0]; a, b = T[k]; pa, pb = PRESION[k]
-        con = f" con {lista_y([CORTO[x] for x in sin_t])}" if sin_t else ""
-        sin_t = []
-        p.append(f"{'Añade' if sof else 'Pon en la olla'} {NOM[k]}{con}, cubre con agua sin sal y cuece tapado a fuego medio: {a}-{b} min en olla normal desde que hierva, "
-                 f"o {pa}-{pb} min en olla a presión desde que suba la válvula (lo más práctico). "
-                 "Lo demás se añade cuando esté casi tierno; en la olla a presión, abre cuando haya bajado la presión.")
-    orden = sorted(con_t, key=lambda k: -T[k][1])
-    total = max([T[k][1] for k in orden] + [T[k][1] for k in pesc] + [0])
-    if orden or pesc or sin_t:
-        primero = [k for k in orden if T[k][1] == total] if orden else []
-        ini = [NOM[k] for k in primero + sin_t if k in NOM or k in CORTO]
-        if largo and ini:
-            p.append(f"Añade {lista_y(ini)} y un poco más de agua si hace falta; cuando vuelva a hervir, fuego medio y tapado.")
-        elif not largo:
-            p.append(f"{'Añade' if sof else 'Pon en la olla'} {lista_y(ini)}, cubre con agua sin sal y lleva a ebullición; después, fuego medio y tapado.")
-        agenda = {}
-        for k in orden:
-            if k in primero: continue
-            agenda.setdefault(total - T[k][1], []).append(NOM[k])
-        for k in pesc:
-            agenda.setdefault(total - T[k][1], []).append("el pescado en trozos grandes")
-        for t0 in sorted(agenda):
-            p.append(f"A los {t0} min, añade {lista_y(agenda[t0])}" + (" (pocos minutos: se hace enseguida)" if any('pescado' in x for x in agenda[t0]) else "") + ".")
-        p.append(f"En total, unos {total} min desde que hierve" + (" (después de la carne o la legumbre)" if largo else "") + ". La verdura está cuando se aplasta entre los dedos.")
-    if "pollo_muslo" in olla:
-        p.append(f"El pollo está cuando no queda nada rosado y el jugo sale transparente: {TEMP['pollo']}. Deshuésalo con cuidado.")
-    elif "pollo_dados" in olla:
-        p.append(f"El pollo, sin nada rosado por dentro: {TEMP['pollo']}.")
-    if "cerdo" in olla:
-        p.append(f"El cerdo, muy tierno y sin nada rosado: como mínimo {TEMP['cerdo']}.")
-    if largo and largo[0] in ("res", "ternera"):
-        p.append("La carne está cuando se deshace con el tenedor.")
-    if pesc:
-        p.append(f"El pescado está cuando se vuelve opaco y se separa en lascas: {TEMP['pescado']}. Revisa espinas con los dedos antes de triturar.")
-    p += pasos_mano(mano, ks, set(olla))
-    p.append("Tritura con parte del caldo hasta la textura que maneje. Enfría rápido y congela en raciones el mismo día.")
-    tot = total + (T[largo[0]][1] if largo else 0) + (10 if sof else 0)
-    return p, pdf, f"≈ {tot} min" + (" (menos con olla a presión)" if largo else "")
+        pa, pb = PRESION[largo[0]]
+        p.append(f"Con olla a presión · {capital(NOM[largo[0]])}{' (con el sofrito)' if sof else ''}, con agua que lo cubra, {pa}-{pb} min desde que suba la válvula; "
+                 f"deja bajar la presión, abre y sigue desde el «Min {min(agenda) if agenda else total}» con lo demás, tapado a fuego medio "
+                 f"(unos {total - (min(agenda) if agenda else total)} min más).")
+    tot = total + (10 if sof else 0)
+    return p, pdf, f"≈ {tot} min" + (f" (≈ {PRESION[largo[0]][1] + (total - min(agenda) if agenda else 0) + (10 if sof else 0)} con olla a presión)" if largo else "")
 
 # ---------------------------------------------------------------------------
 # Componentes del calendario: papel, emoji, ingredientes por ración y cómo darlo.
